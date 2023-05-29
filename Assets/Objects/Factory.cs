@@ -4,7 +4,6 @@ public class Factory : MyGameObject
 {
     void Start()
     {
-        Metal = 0;
     }
 
     void Update()
@@ -12,5 +11,8 @@ public class Factory : MyGameObject
         Metal += 10 * Time.deltaTime;
     }
 
-    public float Metal { get; set; }
+    public float Metal { get => _metal; set => _metal = value; }
+
+    [SerializeField]
+    private float _metal = 0;
 }
