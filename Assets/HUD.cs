@@ -5,7 +5,7 @@ public class HUD : MonoBehaviour
 {
     void Start()
     {
-        selected = new List<GameObject>();
+        selected = new List<MyGameObject>();
     }
 
     void Update()
@@ -16,21 +16,30 @@ public class HUD : MonoBehaviour
 
             if (Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out hitInfo))
             {
-                var result = hitInfo.transform.gameObject;
-
-                if (selected.Contains(result))
+                if (hitInfo.transform.tag == "Terrain")
                 {
-                    selected.Remove(result);
+                    foreach (var gameObject in selected)
+                    {
+                        gameObject.Order = OrderType.Move;
+                        gameObject.Target = hitInfo.point;
+                    }
                 }
                 else
                 {
-                    selected.Add(result);
+                    var result = hitInfo.transform.GetComponent<MyGameObject>();
+
+                    if (selected.Contains(result))
+                    {
+                        selected.Remove(result);
+                    }
+                    else
+                    {
+                        selected.Add(result);
+                    }
                 }
             }
-
-            Debug.Log(selected.Count);
         }
     }
 
-    private List<GameObject> selected;
+    private List<MyGameObject> selected;
 }

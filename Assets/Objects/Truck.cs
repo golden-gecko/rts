@@ -1,16 +1,21 @@
 using UnityEngine;
 
-public class Unit : MonoBehaviour
+public class Truck : MyGameObject
 {
     void Start()
     {
-        target = new Vector3(10, 0, 10);
     }
 
     void Update()
     {
-        transform.Translate((target - transform.position).normalized * 10 * Time.deltaTime);
-    }
+        if (Order == OrderType.Move)
+        {
+            transform.Translate((Target - transform.position).normalized * 10 * Time.deltaTime);
 
-    private Vector3 target;
+            if ((Target - transform.position).magnitude < 0.1f)
+            {
+                Order = OrderType.Idle;
+            }
+        }
+    }
 }
