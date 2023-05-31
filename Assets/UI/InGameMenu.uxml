@@ -1,0 +1,17 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" editor-extension-mode="False">
+    <ui:GroupBox name="OrderList" style="right: 0; bottom: 0; left: 0; position: absolute; align-items: flex-start; justify-content: flex-start; align-self: auto; flex-direction: row;">
+        <ui:Button text="Extract" display-tooltip-when-elided="true" name="Extract" />
+        <ui:Button text="Move" display-tooltip-when-elided="true" name="Move" />
+        <ui:Button text="Stop" display-tooltip-when-elided="true" name="Stop" />
+    </ui:GroupBox>
+    <ui:GroupBox name="ResourceList" style="height: auto; align-items: flex-start; justify-content: flex-start; position: absolute; left: 0; top: 0; right: 0; flex-direction: column;">
+        <ui:GroupBox name="Metal" style="flex-direction: row;">
+            <ui:Label tabindex="-1" text="Metal" display-tooltip-when-elided="true" name="Name" />
+            <ui:Label tabindex="-1" text="0" display-tooltip-when-elided="true" name="Value" />
+        </ui:GroupBox>
+        <ui:GroupBox name="Wood" style="flex-direction: row;">
+            <ui:Label tabindex="-1" text="Wood" display-tooltip-when-elided="true" name="Name" />
+            <ui:Label tabindex="-1" text="0" display-tooltip-when-elided="true" name="Value" enable-rich-text="false" />
+        </ui:GroupBox>
+    </ui:GroupBox>
+</ui:UXML>
