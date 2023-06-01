@@ -1,5 +1,5 @@
-using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class HUD : MonoBehaviour
@@ -21,8 +21,16 @@ public class HUD : MonoBehaviour
                 {
                     foreach (var gameObject in Selected)
                     {
-                        gameObject.Stop();
-                        gameObject.Move(hitInfo.point);
+                        switch (Order)
+                        {
+                            case OrderType.Patrol:
+                                gameObject.Patrol(hitInfo.point);
+                                break;
+
+                            default:
+                                gameObject.Move(hitInfo.point);
+                                break;
+                        }
                     }
                 }
                 else
@@ -34,16 +42,20 @@ public class HUD : MonoBehaviour
                     if (myGameObject != null)
                     {
                         Selected.Add(myGameObject);
-
-                        foreach (var item in myGameObject.Resources)
-                        {
-                            Debug.Log(item.Key + " " + item.Value.Value);
-                        }
                     }
                 }
             }
         }
     }
+    public void Stop()
+    {
+        foreach (var item in Selected)
+        {
+            item.Stop();
+        }
+    }
 
     public List<MyGameObject> Selected { get; private set; }
+
+    public OrderType Order { get; set; } = OrderType.None;
 }

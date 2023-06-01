@@ -7,11 +7,6 @@ public class unit_Quad_A_yup : MyGameObject
         base.Start();
 
         Orders.Allow(OrderType.Move);
-
-    }
-
-    protected override void Update()
-    {
-        base.Update();
+        Orders.Allow(OrderType.Patrol);
     }
 }

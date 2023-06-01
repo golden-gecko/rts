@@ -1,8 +1,5 @@
 using System.Collections.Generic;
-using System.Linq;
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.Rendering;
 
 public class MyGameObject : MonoBehaviour
 {
@@ -24,16 +21,20 @@ public class MyGameObject : MonoBehaviour
             {
                 switch (order.Type)
                 {
-                    case OrderType.Produce:
-                        OnProduceOrder();
-                        break;
-
                     case OrderType.Idle:
                         OnIdleOrder();
                         break;
 
                     case OrderType.Move:
                         OnMoveOrder();
+                        break;
+
+                    case OrderType.Patrol:
+                        OnPatrolOrder();
+                        break;
+
+                    case OrderType.Produce:
+                        OnProduceOrder();
                         break;
 
                     case OrderType.Stop:
@@ -43,7 +44,7 @@ public class MyGameObject : MonoBehaviour
             }
             else
             {
-                Orders.RemoveAt(0);
+                Orders.Pop();
             }
         }
         else
@@ -69,6 +70,18 @@ public class MyGameObject : MonoBehaviour
         Orders.Add(new Order(OrderType.Move, target));
     }
 
+    public void Patrol(Vector3 target)
+    {
+        Orders.Add(new Order(OrderType.Patrol, target));
+        Orders.Add(new Order(OrderType.Patrol, transform.position));
+    }
+
+    public void Patrol(MyGameObject target)
+    {
+        Orders.Add(new Order(OrderType.Patrol, target));
+        Orders.Add(new Order(OrderType.Patrol, transform.position));
+    }
+
     public void Produce()
     {
     }
@@ -92,7 +105,7 @@ public class MyGameObject : MonoBehaviour
             break;
         }
 
-        Orders.RemoveAt(0);
+        Orders.Pop();
     }
 
     void OnMoveOrder()
@@ -120,7 +133,36 @@ public class MyGameObject : MonoBehaviour
             transform.LookAt(order.TargetPosition);
             transform.position = order.TargetPosition;
 
-            Orders.RemoveAt(0);
+            Orders.Pop();
+        }
+    }
+
+    void OnPatrolOrder()
+    {
+        var order = Orders.First();
+
+        var distanceToTarget = (order.TargetPosition - transform.position).magnitude;
+        var distanceToTravel = 10 * Time.deltaTime;
+
+        if (distanceToTarget > distanceToTravel)
+        {
+            var direction = order.TargetPosition - transform.position;
+            direction.y = 0;
+            direction.Normalize();
+
+            transform.LookAt(order.TargetPosition);
+            transform.Translate(Vector3.forward * distanceToTravel);
+        }
+        else
+        {
+            var direction = order.TargetPosition - transform.position;
+            direction.y = 0;
+            direction.Normalize();
+
+            transform.LookAt(order.TargetPosition);
+            transform.position = order.TargetPosition;
+
+            Orders.MoveToEnd();
         }
     }
 
@@ -130,17 +172,19 @@ public class MyGameObject : MonoBehaviour
 
         if (order.TargetGameObject == null)
         {
-            Orders.RemoveAt(0);
+            Orders.Pop();
         }
         else
         {
-            order.Timer += Time.deltaTime;
+            order.Timer.Update(Time.deltaTime);
 
-            if (order.Timer >= order.TimerMax)
+            if (order.Timer.Finished)
             {
                 Resources["Wood"].Value += 1;
 
-                Orders.RemoveAt(0);
+                order.Timer.Reset();
+
+                Orders.Pop();
             }
         }
     }

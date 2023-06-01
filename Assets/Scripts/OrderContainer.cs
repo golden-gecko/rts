@@ -47,9 +47,15 @@ public class OrderContainer
         Items.Insert(index, item);
     }
 
-    public void RemoveAt(int index)
+    public void MoveToEnd()
     {
-        Items.RemoveAt(index);
+        Add(Items.First());
+        Pop();
+    }
+
+    public void Pop()
+    {
+        Items.RemoveAt(0);
     }
 
     public List<Order> Items { get; }

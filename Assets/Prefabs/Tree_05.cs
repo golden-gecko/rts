@@ -6,9 +6,4 @@ public class Tree_05 : MyGameObject
 
         Resources.Add("Wood", new Resource("Wood", 100));
     }
-
-    protected override void Update()
-    {
-        base.Update();
-    }
 }
