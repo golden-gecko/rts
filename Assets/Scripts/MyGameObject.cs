@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Rendering;
 
@@ -23,8 +24,8 @@ public class MyGameObject : MonoBehaviour
             {
                 switch (order.Type)
                 {
-                    case OrderType.Extract:
-                        OnExtractOrder();
+                    case OrderType.Produce:
+                        OnProduceOrder();
                         break;
 
                     case OrderType.Idle:
@@ -52,10 +53,6 @@ public class MyGameObject : MonoBehaviour
     }
 
     #region Orders
-    public void Extract()
-    {
-    }
-
     public void Idle()
     {
         // TODO: Restore.
@@ -72,6 +69,10 @@ public class MyGameObject : MonoBehaviour
         Orders.Add(new Order(OrderType.Move, target));
     }
 
+    public void Produce()
+    {
+    }
+
     public void Stop()
     {
         Orders.Insert(0, new Order(OrderType.Stop));
@@ -79,26 +80,6 @@ public class MyGameObject : MonoBehaviour
     #endregion
 
     #region Handlers
-    void OnExtractOrder()
-    {
-        var order = Orders.First();
-
-        if (order.TargetGameObject == null)
-        {
-            Orders.RemoveAt(0);
-        }
-        else
-        {
-            order.Timer += Time.deltaTime;
-
-            if (order.Timer >= order.TimerMax)
-            {
-                Resources["Wood"].Value += 1;
-
-                Orders.RemoveAt(0);
-            }
-        }
-    }
 
     void OnIdleOrder()
     {
@@ -118,18 +99,49 @@ public class MyGameObject : MonoBehaviour
     {
         var order = Orders.First();
 
-        var distanceToTravel = 10 * Time.deltaTime;
         var distanceToTarget = (order.TargetPosition - transform.position).magnitude;
+        var distanceToTravel = 10 * Time.deltaTime;
 
         if (distanceToTarget > distanceToTravel)
         {
-            transform.Translate((order.TargetPosition - transform.position).normalized * distanceToTravel);
+            var direction = order.TargetPosition - transform.position;
+            direction.y = 0;
+            direction.Normalize();
+
+            transform.LookAt(order.TargetPosition);
+            transform.Translate(Vector3.forward * distanceToTravel);
         }
         else
         {
+            var direction = order.TargetPosition - transform.position;
+            direction.y = 0;
+            direction.Normalize();
+
+            transform.LookAt(order.TargetPosition);
             transform.position = order.TargetPosition;
 
             Orders.RemoveAt(0);
+        }
+    }
+
+    void OnProduceOrder()
+    {
+        var order = Orders.First();
+
+        if (order.TargetGameObject == null)
+        {
+            Orders.RemoveAt(0);
+        }
+        else
+        {
+            order.Timer += Time.deltaTime;
+
+            if (order.Timer >= order.TimerMax)
+            {
+                Resources["Wood"].Value += 1;
+
+                Orders.RemoveAt(0);
+            }
         }
     }
 
