@@ -4,6 +4,6 @@ public class Tree_01 : MyGameObject
     {
         base.Start();
 
-        Resources.Add("Wood", new Resource("Wood", 20));
+        Resources.Add("Wood", new Resource("Wood", 20, 20));
     }
 }

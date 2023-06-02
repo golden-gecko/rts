@@ -1,7 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
-using static UnityEngine.GraphicsBuffer;
 
 public class MyGameObject : MonoBehaviour
 {
@@ -10,16 +9,18 @@ public class MyGameObject : MonoBehaviour
         var whitelist = new HashSet<OrderType> { OrderType.Idle, OrderType.Stop };
 
         Orders = new OrderContainer(whitelist);
-        Resources = new Dictionary<string, Resource>();
+        Resources = new ResourceContainer();
         Recipes = new List<Recipe>();
 
         OrderHandlers = new Dictionary<OrderType, UnityAction>()
         {
-            { OrderType.Idle, OnIdleOrder },
-            { OrderType.Move, OnMoveOrder },
-            { OrderType.Patrol, OnPatrolOrder },
-            { OrderType.Produce, OnProduceOrder },
-            { OrderType.Stop, OnStopOrder },
+            { OrderType.Idle, OnOrderIdle },
+            { OrderType.Load, OnOrderLoad },
+            { OrderType.Move, OnOrderMove },
+            { OrderType.Patrol, OnOrderPatrol },
+            { OrderType.Produce, OnOrderProduce },
+            { OrderType.Stop, OnOrderStop },
+            { OrderType.Unload, OnOrderUnload },
         };
     }
 
@@ -51,6 +52,11 @@ public class MyGameObject : MonoBehaviour
     public void Idle()
     {
         Orders.Add(new Order(OrderType.Idle));
+    }
+
+    public void Load(MyGameObject target, Dictionary<string, int> resources)
+    {
+        Orders.Add(new Order(OrderType.Load, target, resources));
     }
 
     public void Move(MyGameObject target)
@@ -88,12 +94,51 @@ public class MyGameObject : MonoBehaviour
     #endregion
 
     #region Handlers
-
-    protected virtual void OnIdleOrder()
+    protected virtual void OnOrderIdle()
     {
     }
 
-    protected virtual void OnMoveOrder()
+    protected virtual void OnOrderLoad()
+    {
+        var order = Orders.First();
+
+        // Have all resources to give.
+        bool toGive = true;
+
+        foreach (var i in order.Resources)
+        {
+            if (order.TargetGameObject.Resources.ContainsKey(i.Key) == false || order.TargetGameObject.Resources[i.Key].Value - i.Value < 0)
+            {
+                toGive = false;
+                break;
+            }
+        }
+
+        // Have all resources to take.
+        bool toTake = true;
+
+        foreach (var i in order.Resources)
+        {
+            if (Resources.ContainsKey(i.Key) == false || Resources[i.Key].Value + i.Value > Resources[i.Key].Max)
+            {
+                toTake = false;
+                break;
+            }
+        }
+
+        if (toGive && toTake)
+        {
+            foreach (var i in order.Resources)
+            {
+                order.TargetGameObject.Resources[i.Key].Remove(i.Value);
+                Resources[i.Key].Add(i.Value);
+            }
+        }
+
+        Orders.Pop();
+    }
+
+    protected virtual void OnOrderMove()
     {
         var order = Orders.First();
 
@@ -122,7 +167,7 @@ public class MyGameObject : MonoBehaviour
         }
     }
 
-    protected virtual void OnPatrolOrder()
+    protected virtual void OnOrderPatrol()
     {
         var order = Orders.First();
 
@@ -151,7 +196,7 @@ public class MyGameObject : MonoBehaviour
         }
     }
 
-    protected virtual void OnProduceOrder()
+    protected virtual void OnOrderProduce()
     {
         var order = Orders.First();
 
@@ -159,18 +204,58 @@ public class MyGameObject : MonoBehaviour
 
         if (order.Timer.Finished)
         {
-            foreach (var item in Resources)
+            foreach (var recipe in Recipes)
             {
-                item.Value.Add(1);
+                // Have all resources to consume.
+                bool toConsume = true;
+
+                foreach (var i in recipe.ToConsume)
+                {
+                    if (Resources.ContainsKey(i.Name) == false || Resources[i.Name].Value - i.Count < 0)
+                    {
+                        toConsume = false;
+                        break;
+                    }
+                }
+
+                // Have all resources to produce.
+                bool toProduce = true;
+
+                foreach (var i in recipe.ToConsume)
+                {
+                    if (Resources.ContainsKey(i.Name) == false || Resources[i.Name].Value + i.Count > Resources[i.Name].Max)
+                    {
+                        toProduce = false;
+                        break;
+                    }
+                }
+
+                // Produce new resources.
+                if (toConsume && toProduce)
+                {
+                    foreach (var i in recipe.ToConsume)
+                    {
+                        Resources[i.Name].Remove(i.Count);
+                    }
+
+                    foreach (var i in recipe.ToProduce)
+                    {
+                        Resources[i.Name].Add(i.Count);
+                    }
+                }
             }
 
             order.Timer.Reset();
         }
     }
 
-    protected virtual void OnStopOrder()
+    protected virtual void OnOrderStop()
     {
         Orders.Clear();
+    }
+
+    protected virtual void OnOrderUnload()
+    {
     }
     #endregion
 
@@ -178,7 +263,7 @@ public class MyGameObject : MonoBehaviour
 
     public Dictionary<OrderType, UnityAction> OrderHandlers { get; private set; }
 
-    public Dictionary<string, Resource> Resources { get; private set; }
+    public ResourceContainer Resources { get; private set; }
 
     public List<Recipe> Recipes { get; private set; }
 }

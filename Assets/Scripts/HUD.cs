@@ -34,13 +34,33 @@ public class HUD : MonoBehaviour
                 }
                 else
                 {
-                    Selected.Clear();
-
                     var myGameObject = hitInfo.transform.GetComponentInParent<MyGameObject>();
 
-                    if (myGameObject != null)
+                    if (myGameObject != null && Order != OrderType.None)
                     {
-                        Selected.Add(myGameObject);
+                        foreach (var gameObject in Selected)
+                        {
+                            switch (Order)
+                            {
+                                case OrderType.Load:
+                                    var resources = new Dictionary<string, int>
+                                    {
+                                        { "Coal", 10 },
+                                    };
+
+                                    gameObject.Load(myGameObject, resources);
+                                    break;
+                            }
+                        }
+                    }
+                    else
+                    {
+                        Selected.Clear();
+
+                        if (myGameObject != null)
+                        {
+                            Selected.Add(myGameObject);
+                        }
                     }
                 }
             }
