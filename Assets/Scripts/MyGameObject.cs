@@ -1,5 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
+using static UnityEngine.GraphicsBuffer;
 
 public class MyGameObject : MonoBehaviour
 {
@@ -9,6 +11,16 @@ public class MyGameObject : MonoBehaviour
 
         Orders = new OrderContainer(whitelist);
         Resources = new Dictionary<string, Resource>();
+        Recipes = new List<Recipe>();
+
+        OrderHandlers = new Dictionary<OrderType, UnityAction>()
+        {
+            { OrderType.Idle, OnIdleOrder },
+            { OrderType.Move, OnMoveOrder },
+            { OrderType.Patrol, OnPatrolOrder },
+            { OrderType.Produce, OnProduceOrder },
+            { OrderType.Stop, OnStopOrder },
+        };
     }
 
     protected virtual void Update()
@@ -19,27 +31,9 @@ public class MyGameObject : MonoBehaviour
 
             if (Orders.Contains(order.Type))
             {
-                switch (order.Type)
+                if (OrderHandlers.ContainsKey(order.Type))
                 {
-                    case OrderType.Idle:
-                        OnIdleOrder();
-                        break;
-
-                    case OrderType.Move:
-                        OnMoveOrder();
-                        break;
-
-                    case OrderType.Patrol:
-                        OnPatrolOrder();
-                        break;
-
-                    case OrderType.Produce:
-                        OnProduceOrder();
-                        break;
-
-                    case OrderType.Stop:
-                        OnStopOrder();
-                        break;
+                    OrderHandlers[order.Type]();
                 }
             }
             else
@@ -56,8 +50,7 @@ public class MyGameObject : MonoBehaviour
     #region Orders
     public void Idle()
     {
-        // TODO: Restore.
-        // Orders.Add(new Order(OrderType.Idle));
+        Orders.Add(new Order(OrderType.Idle));
     }
 
     public void Move(MyGameObject target)
@@ -84,6 +77,8 @@ public class MyGameObject : MonoBehaviour
 
     public void Produce()
     {
+        // TODO: Make it virtual and take timer value from object.
+        Orders.Add(new Order(OrderType.Produce, 3));
     }
 
     public void Stop()
@@ -94,21 +89,11 @@ public class MyGameObject : MonoBehaviour
 
     #region Handlers
 
-    void OnIdleOrder()
+    protected virtual void OnIdleOrder()
     {
-        var objects = GameObject.FindGameObjectsWithTag("Resource");
-
-        foreach (var item in objects)
-        {
-            Orders.Add(new Order(OrderType.Move, item.transform.position));
-
-            break;
-        }
-
-        Orders.Pop();
     }
 
-    void OnMoveOrder()
+    protected virtual void OnMoveOrder()
     {
         var order = Orders.First();
 
@@ -137,7 +122,7 @@ public class MyGameObject : MonoBehaviour
         }
     }
 
-    void OnPatrolOrder()
+    protected virtual void OnPatrolOrder()
     {
         var order = Orders.First();
 
@@ -166,30 +151,24 @@ public class MyGameObject : MonoBehaviour
         }
     }
 
-    void OnProduceOrder()
+    protected virtual void OnProduceOrder()
     {
         var order = Orders.First();
 
-        if (order.TargetGameObject == null)
-        {
-            Orders.Pop();
-        }
-        else
-        {
-            order.Timer.Update(Time.deltaTime);
+        order.Timer.Update(Time.deltaTime);
 
-            if (order.Timer.Finished)
+        if (order.Timer.Finished)
+        {
+            foreach (var item in Resources)
             {
-                Resources["Wood"].Value += 1;
-
-                order.Timer.Reset();
-
-                Orders.Pop();
+                item.Value.Add(1);
             }
+
+            order.Timer.Reset();
         }
     }
 
-    void OnStopOrder()
+    protected virtual void OnStopOrder()
     {
         Orders.Clear();
     }
@@ -197,5 +176,9 @@ public class MyGameObject : MonoBehaviour
 
     public OrderContainer Orders { get; private set; }
 
+    public Dictionary<OrderType, UnityAction> OrderHandlers { get; private set; }
+
     public Dictionary<string, Resource> Resources { get; private set; }
+
+    public List<Recipe> Recipes { get; private set; }
 }
