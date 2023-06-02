@@ -107,7 +107,7 @@ public class MyGameObject : MonoBehaviour
 
         foreach (var i in order.Resources)
         {
-            if (order.TargetGameObject.Resources.ContainsKey(i.Key) == false || order.TargetGameObject.Resources[i.Key].Value - i.Value < 0)
+            if (order.TargetGameObject.Resources.CanRemove(i.Key, i.Value) == false)
             {
                 toGive = false;
                 break;
@@ -119,7 +119,7 @@ public class MyGameObject : MonoBehaviour
 
         foreach (var i in order.Resources)
         {
-            if (Resources.ContainsKey(i.Key) == false || Resources[i.Key].Value + i.Value > Resources[i.Key].Max)
+            if (Resources.CanAdd(i.Key, i.Value) == false)
             {
                 toTake = false;
                 break;
@@ -130,8 +130,8 @@ public class MyGameObject : MonoBehaviour
         {
             foreach (var i in order.Resources)
             {
-                order.TargetGameObject.Resources[i.Key].Remove(i.Value);
-                Resources[i.Key].Add(i.Value);
+                order.TargetGameObject.Resources.Remove(i.Key, i.Value);
+                Resources.Add(i.Key, i.Value);
             }
         }
 
@@ -211,7 +211,7 @@ public class MyGameObject : MonoBehaviour
 
                 foreach (var i in recipe.ToConsume)
                 {
-                    if (Resources.ContainsKey(i.Name) == false || Resources[i.Name].Value - i.Count < 0)
+                    if (Resources.CanRemove(i.Name, i.Count) == false)
                     {
                         toConsume = false;
                         break;
@@ -223,7 +223,7 @@ public class MyGameObject : MonoBehaviour
 
                 foreach (var i in recipe.ToConsume)
                 {
-                    if (Resources.ContainsKey(i.Name) == false || Resources[i.Name].Value + i.Count > Resources[i.Name].Max)
+                    if (Resources.CanAdd(i.Name, i.Count) == false)
                     {
                         toProduce = false;
                         break;
@@ -235,12 +235,12 @@ public class MyGameObject : MonoBehaviour
                 {
                     foreach (var i in recipe.ToConsume)
                     {
-                        Resources[i.Name].Remove(i.Count);
+                        Resources.Remove(i.Name, i.Count);
                     }
 
                     foreach (var i in recipe.ToProduce)
                     {
-                        Resources[i.Name].Add(i.Count);
+                        Resources.Add(i.Name, i.Count);
                     }
                 }
             }

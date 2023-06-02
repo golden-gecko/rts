@@ -13,11 +13,10 @@ public class unit_Harvester_A_yup : MyGameObject
         Orders.Allow(OrderType.Unload);
         Orders.Allow(OrderType.Transport);
 
-        // TODO: Move to ResourceContainer.
-        Resources.Add("Coal", new Resource("Coal", 0, 20));
-        Resources.Add("Metal", new Resource("Coal", 0, 20));
-        Resources.Add("Metal Ore", new Resource("Coal", 0, 20));
-        Resources.Add("Wood", new Resource("Coal", 0, 20));
+        Resources.Add("Coal", 0, 20);
+        Resources.Add("Metal", 0, 20);
+        Resources.Add("Metal Ore", 0, 20);
+        Resources.Add("Wood", 0, 20);
     }
 
     #region Handlers

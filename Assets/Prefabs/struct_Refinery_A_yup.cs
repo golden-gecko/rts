@@ -1,5 +1,3 @@
-using UnityEngine;
-
 public class struct_Refinery_A_yup : MyGameObject
 {
     protected override void Start()
@@ -8,9 +6,9 @@ public class struct_Refinery_A_yup : MyGameObject
 
         Orders.Allow(OrderType.Produce);
 
-        Resources.Add("Coal", new Resource("Coal", 20, 300));
-        Resources.Add("Metal Ore", new Resource("Metal Ore", 100, 100));
-        Resources.Add("Metal", new Resource("Metal", 0, 100));
+        Resources.Add("Coal", 20, 300);
+        Resources.Add("Metal Ore", 100, 100);
+        Resources.Add("Metal", 0, 100);
 
         var r1 = new Recipe();
 
