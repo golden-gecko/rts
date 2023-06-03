@@ -20,6 +20,7 @@ public class InGameMenuController : MonoBehaviour
         var patrol = rootVisualElement.Q<Button>("Patrol");
         var produce = rootVisualElement.Q<Button>("Produce");
         var stop = rootVisualElement.Q<Button>("Stop");
+        var transport = rootVisualElement.Q<Button>("Transport");
         var unload = rootVisualElement.Q<Button>("Unload");
 
         load.RegisterCallback<ClickEvent>(ev => OnLoad());
@@ -27,6 +28,7 @@ public class InGameMenuController : MonoBehaviour
         patrol.RegisterCallback<ClickEvent>(ev => OnPatrol());
         produce.RegisterCallback<ClickEvent>(ev => OnProduce());
         stop.RegisterCallback<ClickEvent>(ev => OnStop());
+        transport.RegisterCallback<ClickEvent>(ev => OnTransport());
         unload.RegisterCallback<ClickEvent>(ev => OnUnload());
     }
 
@@ -53,6 +55,11 @@ public class InGameMenuController : MonoBehaviour
     void OnStop()
     {
         hud.Stop();
+    }
+
+    void OnTransport()
+    {
+        hud.Order = OrderType.Transport;
     }
 
     void OnUnload()

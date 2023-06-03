@@ -11,8 +11,8 @@ GameObject:
   - component: {fileID: 2207475100940521903}
   - component: {fileID: 2958123325397360138}
   - component: {fileID: 1074577127326329536}
-  - component: {fileID: -2182117504668185234}
   - component: {fileID: 3444934898535418200}
+  - component: {fileID: -2182117504668185234}
   m_Layer: 0
   m_Name: unit_Harvester_A_yup
   m_TagString: Untagged
@@ -93,18 +93,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!114 &-2182117504668185234
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1578887994438585109}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4bafe07d2462ea046a814c94a0a55879, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!65 &3444934898535418200
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -126,6 +114,18 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 5.1180763, y: 3.1238492, z: 7.151764}
   m_Center: {x: 0.00073873997, y: 1.8617672, z: 0.14592445}
+--- !u!114 &-2182117504668185234
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1578887994438585109}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4bafe07d2462ea046a814c94a0a55879, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2488149496584009299
 GameObject:
   m_ObjectHideFlags: 0

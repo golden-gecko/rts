@@ -4,6 +4,7 @@ using UnityEngine;
 public enum OrderType
 {
     Attack,
+    Construct,
     Guard,
     Idle,
     Move,
@@ -11,6 +12,7 @@ public enum OrderType
     Load,
     Patrol,
     Produce,
+    Research,
     Stop,
     Transport,
     Unload,
@@ -42,6 +44,14 @@ public class Order
         Resources = resources;
     }
 
+    public Order(OrderType type, MyGameObject source, MyGameObject target, Dictionary<string, int> resources)
+    {
+        Type = type;
+        SourceGameObject = source;
+        TargetGameObject = target;
+        Resources = resources;
+    }
+
     public Order(OrderType type, float max)
     {
         Type = type;
@@ -49,6 +59,8 @@ public class Order
     }
 
     public OrderType Type { get; }
+
+    public MyGameObject SourceGameObject { get; }
 
     public MyGameObject TargetGameObject { get; }
 

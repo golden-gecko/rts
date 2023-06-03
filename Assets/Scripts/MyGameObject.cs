@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
+using static UnityEngine.GraphicsBuffer;
 
 public class MyGameObject : MonoBehaviour
 {
@@ -20,6 +21,7 @@ public class MyGameObject : MonoBehaviour
             { OrderType.Patrol, OnOrderPatrol },
             { OrderType.Produce, OnOrderProduce },
             { OrderType.Stop, OnOrderStop },
+            { OrderType.Transport, OnOrderTransport },
             { OrderType.Unload, OnOrderUnload },
         };
     }
@@ -91,6 +93,16 @@ public class MyGameObject : MonoBehaviour
     {
         Orders.Insert(0, new Order(OrderType.Stop));
     }
+
+    public void Transport(MyGameObject source, MyGameObject target, Dictionary<string, int> resources)
+    {
+        Orders.Add(new Order(OrderType.Transport, source, target, resources));
+    }
+
+    public void Unload(MyGameObject target, Dictionary<string, int> resources)
+    {
+        Orders.Add(new Order(OrderType.Unload, target, resources));
+    }
     #endregion
 
     #region Handlers
@@ -126,6 +138,7 @@ public class MyGameObject : MonoBehaviour
             }
         }
 
+        // Move resources.
         if (toGive && toTake)
         {
             foreach (var i in order.Resources)
@@ -141,27 +154,37 @@ public class MyGameObject : MonoBehaviour
     protected virtual void OnOrderMove()
     {
         var order = Orders.First();
+        Vector3 target;
 
-        var distanceToTarget = (order.TargetPosition - transform.position).magnitude;
+        if (order.TargetGameObject != null)
+        {
+            target = order.TargetGameObject.transform.position;
+        }
+        else
+        {
+            target = order.TargetPosition;
+        }
+
+        var distanceToTarget = (target - transform.position).magnitude;
         var distanceToTravel = 10 * Time.deltaTime;
 
         if (distanceToTarget > distanceToTravel)
         {
-            var direction = order.TargetPosition - transform.position;
+            var direction = target - transform.position;
             direction.y = 0;
             direction.Normalize();
 
-            transform.LookAt(order.TargetPosition);
+            transform.LookAt(target);
             transform.Translate(Vector3.forward * distanceToTravel);
         }
         else
         {
-            var direction = order.TargetPosition - transform.position;
+            var direction = target - transform.position;
             direction.y = 0;
             direction.Normalize();
 
-            transform.LookAt(order.TargetPosition);
-            transform.position = order.TargetPosition;
+            transform.LookAt(target);
+            transform.position = target;
 
             Orders.Pop();
         }
@@ -171,29 +194,10 @@ public class MyGameObject : MonoBehaviour
     {
         var order = Orders.First();
 
-        var distanceToTarget = (order.TargetPosition - transform.position).magnitude;
-        var distanceToTravel = 10 * Time.deltaTime;
+        Move(order.TargetPosition);
+        Move(transform.position);
 
-        if (distanceToTarget > distanceToTravel)
-        {
-            var direction = order.TargetPosition - transform.position;
-            direction.y = 0;
-            direction.Normalize();
-
-            transform.LookAt(order.TargetPosition);
-            transform.Translate(Vector3.forward * distanceToTravel);
-        }
-        else
-        {
-            var direction = order.TargetPosition - transform.position;
-            direction.y = 0;
-            direction.Normalize();
-
-            transform.LookAt(order.TargetPosition);
-            transform.position = order.TargetPosition;
-
-            Orders.MoveToEnd();
-        }
+        Orders.MoveToEnd();
     }
 
     protected virtual void OnOrderProduce()
@@ -247,6 +251,8 @@ public class MyGameObject : MonoBehaviour
 
             order.Timer.Reset();
         }
+
+        Orders.MoveToEnd();
     }
 
     protected virtual void OnOrderStop()
@@ -254,8 +260,57 @@ public class MyGameObject : MonoBehaviour
         Orders.Clear();
     }
 
+    protected virtual void OnOrderTransport()
+    {
+        var order = Orders.First();
+
+        Move(order.SourceGameObject);
+        Load(order.SourceGameObject, order.Resources);
+        Move(order.TargetGameObject);
+        Unload(order.TargetGameObject, order.Resources);
+
+        Orders.MoveToEnd();
+    }
+
     protected virtual void OnOrderUnload()
     {
+        var order = Orders.First();
+
+        // Have all resources to give.
+        bool toGive = true;
+
+        foreach (var i in order.Resources)
+        {
+            if (Resources.CanRemove(i.Key, i.Value) == false)
+            {
+                toGive = false;
+                break;
+            }
+        }
+
+        // Have all resources to take.
+        bool toTake = true;
+
+        foreach (var i in order.Resources)
+        {
+            if (order.TargetGameObject.Resources.CanAdd(i.Key, i.Value) == false)
+            {
+                toTake = false;
+                break;
+            }
+        }
+
+        // Move resources.
+        if (toGive && toTake)
+        {
+            foreach (var i in order.Resources)
+            {
+                Resources.Remove(i.Key, i.Value);
+                order.TargetGameObject.Resources.Add(i.Key, i.Value);
+            }
+        }
+
+        Orders.Pop();
     }
     #endregion
 
