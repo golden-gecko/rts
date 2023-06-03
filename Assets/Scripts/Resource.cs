@@ -1,16 +1,46 @@
 public class Resource
 {
-    public Resource(string name, float value)
+    public Resource(string name, int value, int max)
     {
         Name = name;
         Value = value;
+        Max = max;
     }
 
-    public void Add(float value)
+    public void Add(int value)
     {
         Value += value;
+
+        if (Value > Max)
+        {
+            Value = Max;
+        }
+    }
+
+    public bool CanAdd(int value)
+    {
+        return Value + value <= Max;
+    }
+
+    public bool CanRemove(int value)
+    {
+        return Value - value >= 0;
+    }
+
+    public void Remove(int value)
+    {
+        Value -= value;
+
+        if (Value < 0)
+        {
+            Value = 0;
+        }
     }
 
     public string Name { get; }
-    public float Value { get; private set; }
+
+    public int Value { get; private set; }
+
+    // TODO: Hide setter.
+    public int Max { get; set; }
 }

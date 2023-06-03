@@ -10,16 +10,19 @@ public class MyGameObject : MonoBehaviour
         var whitelist = new HashSet<OrderType> { OrderType.Idle, OrderType.Stop };
 
         Orders = new OrderContainer(whitelist);
-        Resources = new Dictionary<string, Resource>();
+        Resources = new ResourceContainer();
         Recipes = new List<Recipe>();
 
         OrderHandlers = new Dictionary<OrderType, UnityAction>()
         {
-            { OrderType.Idle, OnIdleOrder },
-            { OrderType.Move, OnMoveOrder },
-            { OrderType.Patrol, OnPatrolOrder },
-            { OrderType.Produce, OnProduceOrder },
-            { OrderType.Stop, OnStopOrder },
+            { OrderType.Idle, OnOrderIdle },
+            { OrderType.Load, OnOrderLoad },
+            { OrderType.Move, OnOrderMove },
+            { OrderType.Patrol, OnOrderPatrol },
+            { OrderType.Produce, OnOrderProduce },
+            { OrderType.Stop, OnOrderStop },
+            { OrderType.Transport, OnOrderTransport },
+            { OrderType.Unload, OnOrderUnload },
         };
     }
 
@@ -51,6 +54,11 @@ public class MyGameObject : MonoBehaviour
     public void Idle()
     {
         Orders.Add(new Order(OrderType.Idle));
+    }
+
+    public void Load(MyGameObject target, Dictionary<string, int> resources)
+    {
+        Orders.Add(new Order(OrderType.Load, target, resources));
     }
 
     public void Move(MyGameObject target)
@@ -85,73 +93,114 @@ public class MyGameObject : MonoBehaviour
     {
         Orders.Insert(0, new Order(OrderType.Stop));
     }
+
+    public void Transport(MyGameObject source, MyGameObject target, Dictionary<string, int> resources)
+    {
+        Orders.Add(new Order(OrderType.Transport, source, target, resources));
+    }
+
+    public void Unload(MyGameObject target, Dictionary<string, int> resources)
+    {
+        Orders.Add(new Order(OrderType.Unload, target, resources));
+    }
     #endregion
 
     #region Handlers
-
-    protected virtual void OnIdleOrder()
+    protected virtual void OnOrderIdle()
     {
     }
 
-    protected virtual void OnMoveOrder()
+    protected virtual void OnOrderLoad()
     {
         var order = Orders.First();
 
-        var distanceToTarget = (order.TargetPosition - transform.position).magnitude;
+        // Have all resources to give.
+        bool toGive = true;
+
+        foreach (var i in order.Resources)
+        {
+            if (order.TargetGameObject.Resources.CanRemove(i.Key, i.Value) == false)
+            {
+                toGive = false;
+                break;
+            }
+        }
+
+        // Have all resources to take.
+        bool toTake = true;
+
+        foreach (var i in order.Resources)
+        {
+            if (Resources.CanAdd(i.Key, i.Value) == false)
+            {
+                toTake = false;
+                break;
+            }
+        }
+
+        // Move resources.
+        if (toGive && toTake)
+        {
+            foreach (var i in order.Resources)
+            {
+                order.TargetGameObject.Resources.Remove(i.Key, i.Value);
+                Resources.Add(i.Key, i.Value);
+            }
+        }
+
+        Orders.Pop();
+    }
+
+    protected virtual void OnOrderMove()
+    {
+        var order = Orders.First();
+        Vector3 target;
+
+        if (order.TargetGameObject != null)
+        {
+            target = order.TargetGameObject.transform.position;
+        }
+        else
+        {
+            target = order.TargetPosition;
+        }
+
+        var distanceToTarget = (target - transform.position).magnitude;
         var distanceToTravel = 10 * Time.deltaTime;
 
         if (distanceToTarget > distanceToTravel)
         {
-            var direction = order.TargetPosition - transform.position;
+            var direction = target - transform.position;
             direction.y = 0;
             direction.Normalize();
 
-            transform.LookAt(order.TargetPosition);
+            transform.LookAt(target);
             transform.Translate(Vector3.forward * distanceToTravel);
         }
         else
         {
-            var direction = order.TargetPosition - transform.position;
+            var direction = target - transform.position;
             direction.y = 0;
             direction.Normalize();
 
-            transform.LookAt(order.TargetPosition);
-            transform.position = order.TargetPosition;
+            transform.LookAt(target);
+            transform.position = target;
 
             Orders.Pop();
         }
     }
 
-    protected virtual void OnPatrolOrder()
+    protected virtual void OnOrderPatrol()
     {
         var order = Orders.First();
 
-        var distanceToTarget = (order.TargetPosition - transform.position).magnitude;
-        var distanceToTravel = 10 * Time.deltaTime;
+        Move(order.TargetPosition);
+        Move(transform.position);
 
-        if (distanceToTarget > distanceToTravel)
-        {
-            var direction = order.TargetPosition - transform.position;
-            direction.y = 0;
-            direction.Normalize();
-
-            transform.LookAt(order.TargetPosition);
-            transform.Translate(Vector3.forward * distanceToTravel);
-        }
-        else
-        {
-            var direction = order.TargetPosition - transform.position;
-            direction.y = 0;
-            direction.Normalize();
-
-            transform.LookAt(order.TargetPosition);
-            transform.position = order.TargetPosition;
-
-            Orders.MoveToEnd();
-        }
+        Orders.MoveToEnd();
     }
 
-    protected virtual void OnProduceOrder()
+    protected virtual void OnOrderProduce()
     {
         var order = Orders.First();
 
@@ -159,18 +208,109 @@ public class MyGameObject : MonoBehaviour
 
         if (order.Timer.Finished)
         {
-            foreach (var item in Resources)
+            foreach (var recipe in Recipes)
             {
-                item.Value.Add(1);
+                // Have all resources to consume.
+                bool toConsume = true;
+
+                foreach (var i in recipe.ToConsume)
+                {
+                    if (Resources.CanRemove(i.Name, i.Count) == false)
+                    {
+                        toConsume = false;
+                        break;
+                    }
+                }
+
+                // Have all resources to produce.
+                bool toProduce = true;
+
+                foreach (var i in recipe.ToConsume)
+                {
+                    if (Resources.CanAdd(i.Name, i.Count) == false)
+                    {
+                        toProduce = false;
+                        break;
+                    }
+                }
+
+                // Produce new resources.
+                if (toConsume && toProduce)
+                {
+                    foreach (var i in recipe.ToConsume)
+                    {
+                        Resources.Remove(i.Name, i.Count);
+                    }
+
+                    foreach (var i in recipe.ToProduce)
+                    {
+                        Resources.Add(i.Name, i.Count);
+                    }
+                }
             }
 
             order.Timer.Reset();
         }
+
+        Orders.MoveToEnd();
     }
 
-    protected virtual void OnStopOrder()
+    protected virtual void OnOrderStop()
     {
         Orders.Clear();
+    }
+
+    protected virtual void OnOrderTransport()
+    {
+        var order = Orders.First();
+
+        Move(order.SourceGameObject);
+        Load(order.SourceGameObject, order.Resources);
+        Move(order.TargetGameObject);
+        Unload(order.TargetGameObject, order.Resources);
+
+        Orders.MoveToEnd();
+    }
+
+    protected virtual void OnOrderUnload()
+    {
+        var order = Orders.First();
+
+        // Have all resources to give.
+        bool toGive = true;
+
+        foreach (var i in order.Resources)
+        {
+            if (Resources.CanRemove(i.Key, i.Value) == false)
+            {
+                toGive = false;
+                break;
+            }
+        }
+
+        // Have all resources to take.
+        bool toTake = true;
+
+        foreach (var i in order.Resources)
+        {
+            if (order.TargetGameObject.Resources.CanAdd(i.Key, i.Value) == false)
+            {
+                toTake = false;
+                break;
+            }
+        }
+
+        // Move resources.
+        if (toGive && toTake)
+        {
+            foreach (var i in order.Resources)
+            {
+                Resources.Remove(i.Key, i.Value);
+                order.TargetGameObject.Resources.Add(i.Key, i.Value);
+            }
+        }
+
+        Orders.Pop();
     }
     #endregion
 
@@ -178,7 +318,7 @@ public class MyGameObject : MonoBehaviour
 
     public Dictionary<OrderType, UnityAction> OrderHandlers { get; private set; }
 
-    public Dictionary<string, Resource> Resources { get; private set; }
+    public ResourceContainer Resources { get; private set; }
 
     public List<Recipe> Recipes { get; private set; }
 }

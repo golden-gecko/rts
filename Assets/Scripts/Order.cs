@@ -1,14 +1,21 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public enum OrderType
 {
+    Attack,
+    Construct,
     Guard,
     Idle,
     Move,
     None,
+    Load,
     Patrol,
     Produce,
+    Research,
     Stop,
+    Transport,
+    Unload,
 }
 
 public class Order
@@ -16,9 +23,6 @@ public class Order
     public Order(OrderType type)
     {
         Type = type;
-        TargetGameObject = null;
-        TargetPosition = Vector3.zero;
-        Timer = new Timer();
     }
 
     public Order(OrderType type, MyGameObject target)
@@ -33,19 +37,36 @@ public class Order
         TargetPosition = target;
     }
 
+    public Order(OrderType type, MyGameObject target, Dictionary<string, int> resources)
+    {
+        Type = type;
+        TargetGameObject = target;
+        Resources = resources;
+    }
+
+    public Order(OrderType type, MyGameObject source, MyGameObject target, Dictionary<string, int> resources)
+    {
+        Type = type;
+        SourceGameObject = source;
+        TargetGameObject = target;
+        Resources = resources;
+    }
+
     public Order(OrderType type, float max)
     {
         Type = type;
-        TargetGameObject = null;
-        TargetPosition = Vector3.zero;
         Timer = new Timer(max);
     }
 
     public OrderType Type { get; }
 
+    public MyGameObject SourceGameObject { get; }
+
     public MyGameObject TargetGameObject { get; }
 
     public Vector3 TargetPosition { get; }
+
+    public Dictionary<string, int> Resources { get; private set; }
 
     public Timer Timer { get; }
 }
