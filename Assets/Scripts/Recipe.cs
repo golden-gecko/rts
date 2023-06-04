@@ -21,18 +21,17 @@ public class Recipe
         ToProduce = new List<RecipeComponent>();
     }
 
-    // TODO: Implemented count.
     public void Consume(string name, int count)
     {
         ToConsume.Add(new RecipeComponent(name, count));
     }
 
-    // TODO: Implemented count.
     public void Produce(string name, int count)
     {
         ToProduce.Add(new RecipeComponent(name, count));
     }
 
     public List<RecipeComponent> ToConsume { get; }
+
     public List<RecipeComponent> ToProduce { get; }
 }

@@ -48,26 +48,6 @@ public class FreeCamera : MonoBehaviour
         }
 
         transform.Translate(direction * Time.deltaTime);
-
-        // Do not allow camera to go below terrain.
-        /*
-        RaycastHit raycastHit = new RaycastHit();
-
-        bool hit = Physics.Raycast(
-            transform.position + Vector3.up * 10.0f,
-            Vector3.down,
-            out raycastHit,
-            Mathf.Infinity,
-            1 << 10
-        );
-
-        if (hit)
-        {
-            Vector3 position = GetComponent<Camera>().transform.position;
-            position.y = raycastHit.point.y + height;
-            GetComponent<Camera>().transform.position = position;
-        }
-        */
     }
 
     void Rotate()

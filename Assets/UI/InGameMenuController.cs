@@ -23,48 +23,45 @@ public class InGameMenuController : MonoBehaviour
         var transport = rootVisualElement.Q<Button>("Transport");
         var unload = rootVisualElement.Q<Button>("Unload");
 
-        load.RegisterCallback<ClickEvent>(ev => OnLoad());
-        move.RegisterCallback<ClickEvent>(ev => OnMove());
-        patrol.RegisterCallback<ClickEvent>(ev => OnPatrol());
-        produce.RegisterCallback<ClickEvent>(ev => OnProduce());
-        stop.RegisterCallback<ClickEvent>(ev => OnStop());
-        transport.RegisterCallback<ClickEvent>(ev => OnTransport());
-        unload.RegisterCallback<ClickEvent>(ev => OnUnload());
+        var heavyFactory = rootVisualElement.Q<Button>("HeavyFactory");
+        var lightFactory = rootVisualElement.Q<Button>("LightFactory");
+        var radar = rootVisualElement.Q<Button>("Radar");
+        var refinery = rootVisualElement.Q<Button>("Refinery");
+        var researchLab = rootVisualElement.Q<Button>("ResearchLab");
+        var storage = rootVisualElement.Q<Button>("Storage");
+
+        load.RegisterCallback<ClickEvent>(ev => OnOrder(OrderType.Load));
+        move.RegisterCallback<ClickEvent>(ev => OnOrder(OrderType.Move));
+        patrol.RegisterCallback<ClickEvent>(ev => OnOrder(OrderType.Patrol));
+        produce.RegisterCallback<ClickEvent>(ev => OnOrder(OrderType.Produce));
+        stop.RegisterCallback<ClickEvent>(ev => OnOrder(OrderType.Stop));
+        transport.RegisterCallback<ClickEvent>(ev => OnOrder(OrderType.Transport));
+        unload.RegisterCallback<ClickEvent>(ev => OnOrder(OrderType.Unload));
+
+        heavyFactory.RegisterCallback<ClickEvent>(ev => OnConstruct("HeavyFactory"));
+        lightFactory.RegisterCallback<ClickEvent>(ev => OnConstruct("LightFactory"));
+        radar.RegisterCallback<ClickEvent>(ev => OnConstruct("Radar"));
+        refinery.RegisterCallback<ClickEvent>(ev => OnConstruct("Refinery"));
+        researchLab.RegisterCallback<ClickEvent>(ev => OnConstruct("ResearchLab"));
+        storage.RegisterCallback<ClickEvent>(ev => OnConstruct("Storage"));
     }
 
-    void OnLoad()
+    void OnConstruct(string blueprint)
     {
-        hud.Order = OrderType.Load;
+        hud.Order = OrderType.Construct;
+        hud.Blueprint = blueprint;
     }
 
-    void OnMove()
+    void OnOrder(OrderType orderType)
     {
-        hud.Order = OrderType.Move;
-    }
-
-    void OnPatrol()
-    {
-        hud.Order = OrderType.Patrol;
-    }
-
-    void OnProduce()
-    {
-        hud.Order = OrderType.Produce;
-    }
-
-    void OnStop()
-    {
-        hud.Stop();
-    }
-
-    void OnTransport()
-    {
-        hud.Order = OrderType.Transport;
-    }
-
-    void OnUnload()
-    {
-        hud.Order = OrderType.Unload;
+        if (orderType == OrderType.Stop)
+        {
+            hud.Stop();
+        }
+        else
+        {
+            hud.Order = OrderType.Load;
+        }
     }
 
     HUD hud;
