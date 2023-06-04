@@ -18,22 +18,4 @@ public class unit_Harvester_A_yup : MyGameObject
         Resources.Add("Metal Ore", 0, 20);
         Resources.Add("Wood", 0, 20);
     }
-
-    #region Handlers
-    protected override void OnOrderIdle()
-    {
-        /*
-        var objects = GameObject.FindGameObjectsWithTag("Resource");
-
-        foreach (var item in objects)
-        {
-            Orders.Add(new Order(OrderType.Move, item.transform.position));
-
-            break;
-        }
-        */
-
-        Orders.Pop();
-    }
-    #endregion
 }

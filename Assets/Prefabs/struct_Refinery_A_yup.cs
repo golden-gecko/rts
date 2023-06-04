@@ -19,12 +19,10 @@ public class struct_Refinery_A_yup : MyGameObject
         Recipes.Add(r1);
     }
 
-    #region Handlers
     protected override void OnOrderIdle()
     {
         Produce();
 
         Orders.Pop();
     }
-    #endregion
 }
