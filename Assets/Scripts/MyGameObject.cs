@@ -29,16 +29,22 @@ public class MyGameObject : MonoBehaviour
 
         Orders.Allow(OrderType.Idle);
         Orders.Allow(OrderType.Stop);
+
+        var size = GetComponent<Collider>().bounds.size;
+        var selection = transform.Find("Selection");
+
+        if (selection)
+        {
+            selection.gameObject.transform.localScale = size;
+        }
     }
 
     protected virtual void Update()
     {
-        Select(false);
+        Select(true);
 
         if (Orders.Count > 0)
         {
-            Select(true);
-
             var order = Orders.First();
 
             if (Orders.Contains(order.Type))
@@ -59,12 +65,9 @@ public class MyGameObject : MonoBehaviour
         }
     }
 
-    [SerializeField]
-    public SpriteRenderer SelectionSprite;
-
     public void Select(bool status)
     {
-        SelectionSprite.gameObject.SetActive(status);
+        var size = GetComponent<Collider>().bounds.size;
     }
 
     public void Attack(Vector3 target)

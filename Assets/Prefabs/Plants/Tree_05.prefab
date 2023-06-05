@@ -198,6 +198,7 @@ GameObject:
   m_Component:
   - component: {fileID: 9069115365609054727}
   - component: {fileID: 1282714561840611028}
+  - component: {fileID: 6540626888764729118}
   - component: {fileID: 7730801625349624797}
   m_Layer: 0
   m_Name: Tree_05
@@ -246,6 +247,27 @@ LODGroup:
     renderers:
     - renderer: {fileID: 2848415721444642165}
   m_Enabled: 1
+--- !u!65 &6540626888764729118
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9069115365609291303}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &7730801625349624797
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -258,3 +280,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 29a6efc01bcf4ed4992afe9e57b6b0b0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  SelectionSprite: {fileID: 0}
