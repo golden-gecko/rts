@@ -33,8 +33,12 @@ public class MyGameObject : MonoBehaviour
 
     protected virtual void Update()
     {
+        Select(false);
+
         if (Orders.Count > 0)
         {
+            Select(true);
+
             var order = Orders.First();
 
             if (Orders.Contains(order.Type))
@@ -56,7 +60,7 @@ public class MyGameObject : MonoBehaviour
     }
 
     [SerializeField]
-    private SpriteRenderer SelectionSprite;
+    public SpriteRenderer SelectionSprite;
 
     public void Select(bool status)
     {
