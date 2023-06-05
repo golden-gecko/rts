@@ -1,31 +1,30 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" editor-extension-mode="False">
-    <ui:GroupBox name="ResourceList" style="height: auto; align-items: flex-start; justify-content: flex-start; position: absolute; left: 0; top: 0; right: 0; flex-direction: column;">
-        <ui:GroupBox name="Metal" style="flex-direction: row;">
-            <ui:Label tabindex="-1" text="Metal" display-tooltip-when-elided="true" name="Name" />
-            <ui:Label tabindex="-1" text="0" display-tooltip-when-elided="true" name="Value" />
-        </ui:GroupBox>
-        <ui:GroupBox name="Wood" style="flex-direction: row;">
-            <ui:Label tabindex="-1" text="Wood" display-tooltip-when-elided="true" name="Name" />
-            <ui:Label tabindex="-1" text="0" display-tooltip-when-elided="true" name="Value" enable-rich-text="false" />
-        </ui:GroupBox>
-    </ui:GroupBox>
-    <ui:GroupBox style="left: 0; right: 0; bottom: 0; position: absolute;">
-        <ui:GroupBox name="OrderList" style="flex-direction: row;">
-            <ui:Button text="Load" display-tooltip-when-elided="true" name="Load" />
-            <ui:Button text="Move" display-tooltip-when-elided="true" name="Move" />
-            <ui:Button text="Patrol" display-tooltip-when-elided="true" name="Patrol" />
-            <ui:Button text="Produce" display-tooltip-when-elided="true" name="Produce" />
-            <ui:Button text="Stop" display-tooltip-when-elided="true" name="Stop" />
-            <ui:Button text="Transport" display-tooltip-when-elided="true" name="Transport" />
-            <ui:Button text="Unload" display-tooltip-when-elided="true" name="Unload" />
-        </ui:GroupBox>
-        <ui:GroupBox name="ConstructionList" style="flex-direction: row;">
-            <ui:Button text="Heavy Factory" display-tooltip-when-elided="true" name="HeavyFactory" />
-            <ui:Button text="Light Factory" display-tooltip-when-elided="true" name="LightFactory" />
-            <ui:Button text="Radar" display-tooltip-when-elided="true" name="Radar" />
-            <ui:Button text="Refinery" display-tooltip-when-elided="true" name="Refinery" />
-            <ui:Button text="Research Lab" display-tooltip-when-elided="true" name="ResearchLab" />
-            <ui:Button text="Storage" display-tooltip-when-elided="true" name="Storage" />
-        </ui:GroupBox>
-    </ui:GroupBox>
+    <Style src="project://database/Assets/UI/InGameMenu.uss?fileID=7433441132597879392&amp;guid=231d51774ac67094591621cc55974d8c&amp;type=3#InGameMenu" />
+    <ui:VisualElement name="BottomPanel" style="flex-grow: 1; background-color: rgba(0, 0, 0, 0); position: absolute; left: 0; right: 0; bottom: 0;">
+        <ui:VisualElement name="OrderList" style="flex-grow: 1; background-color: rgba(0, 0, 0, 0); align-items: flex-start; justify-content: flex-start; flex-direction: row;">
+            <ui:Button text="Construct" name="Construct" class="button-order" />
+            <ui:Button text="Follow" name="Follow" class="button-order" />
+            <ui:Button text="Guard" name="Guard" class="button-order" />
+            <ui:Button text="Load" display-tooltip-when-elided="true" name="Load" class="button-order" />
+            <ui:Button text="Move" display-tooltip-when-elided="true" name="Move" class="button-order" />
+            <ui:Button text="Patrol" display-tooltip-when-elided="true" name="Patrol" class="button-order" />
+            <ui:Button text="Produce" display-tooltip-when-elided="true" name="Produce" class="button-order" />
+            <ui:Button text="Stop" display-tooltip-when-elided="true" name="Stop" class="button-order" />
+            <ui:Button text="Unload" display-tooltip-when-elided="true" name="Unload" class="button-order" />
+            <ui:Button text="Transport" display-tooltip-when-elided="true" name="Transport" class="button-order" />
+        </ui:VisualElement>
+        <ui:VisualElement name="PrefabList" style="flex-grow: 1; background-color: rgba(0, 0, 0, 0); flex-direction: row; align-items: flex-start;">
+            <ui:Button text="Heavy Factory" display-tooltip-when-elided="true" name="HeavyFactory" class="button-construct" />
+            <ui:Button text="Light Factory" display-tooltip-when-elided="true" name="LightFactory" class="button-construct" />
+            <ui:Button text="Radar" display-tooltip-when-elided="true" name="Radar" class="button-construct" />
+            <ui:Button text="Refinery" display-tooltip-when-elided="true" name="Refinery" class="button-construct" />
+            <ui:Button text="Research Lab" display-tooltip-when-elided="true" name="ResearchLab" class="button-construct" />
+            <ui:Button text="Storage" display-tooltip-when-elided="true" name="Storage" class="button-construct" />
+        </ui:VisualElement>
+    </ui:VisualElement>
+    <ui:VisualElement name="TopPanel" style="flex-grow: 1; background-color: rgba(0, 0, 0, 0); left: 0; top: 0; right: 0; position: absolute;">
+        <ui:Label tabindex="-1" text="Order" name="Order" />
+        <ui:Label tabindex="-1" text="Prefab" name="Prefab" />
+        <ui:Label tabindex="-1" text="Selected" name="Selected" />
+    </ui:VisualElement>
 </ui:UXML>
