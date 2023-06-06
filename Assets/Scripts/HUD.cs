@@ -7,6 +7,10 @@ public class HUD : MonoBehaviour
     void Start()
     {
         Selected = new List<MyGameObject>();
+
+        ResetVisual();
+        DrawVisual();
+        DrawSelection();
     }
 
     void Update()
@@ -17,22 +21,117 @@ public class HUD : MonoBehaviour
 
     void UpdateMouse()
     {
-        if (IsOverlappingUI() == false)
+        if (Input.GetMouseButtonDown(0))
         {
-            if (Input.GetMouseButtonDown(0))
+            if (IsOverlappingUI() == false)
             {
-                if (Order == OrderType.None)
-                {
-                    ProcessSelection();
-                }
-                else
-                {
-                    ProcessOrder();
-                }
+                startPosition = Input.mousePosition;
+                drag = true;
             }
-            else if (Input.GetMouseButtonDown(1))
+        }
+        else if (Input.GetMouseButtonDown(1))
+        {
+            if (IsOverlappingUI() == false)
             {
                 ProcessOrder();
+            }
+        }
+
+        if (Input.GetMouseButton(0))
+        {
+            if (drag)
+            {
+                endPosition = Input.mousePosition;
+
+                DrawVisual();
+                DrawSelection();
+            }
+        }
+
+        if (Input.GetMouseButtonUp(0))
+        {
+            drag = false;
+
+            if ((startPosition - endPosition).magnitude > 10)
+            {
+                SelectUnitInBox();
+            }
+            else
+            {
+                if (IsOverlappingUI() == false)
+                {
+                    if (Order == OrderType.None)
+                    {
+                        ProcessSelection();
+                    }
+                    else
+                    {
+                        ProcessOrder();
+                    }
+                }
+            }
+
+            ResetVisual();
+            DrawVisual();
+            DrawSelection();
+        }
+    }
+
+    void ResetVisual()
+    {
+        startPosition = Vector2.zero;
+        endPosition = Vector2.zero;
+    }
+
+    void DrawVisual()
+    {
+        var boxCenter = (startPosition + endPosition) / 2;
+        boxVisual.position = boxCenter;
+
+        var boxSize = new Vector2(Mathf.Abs(startPosition.x - endPosition.x), Mathf.Abs(startPosition.y - endPosition.y));
+        boxVisual.sizeDelta = boxSize;
+    }
+
+    void DrawSelection()
+    {
+        if (Input.mousePosition.x < startPosition.x)
+        {
+            // Drag left.
+            selectionBox.xMin = Input.mousePosition.x;
+            selectionBox.xMax = startPosition.x;
+        }
+        else
+        {
+            // Drag right.
+            selectionBox.xMin = startPosition.x;
+            selectionBox.xMax = Input.mousePosition.x;
+        }
+
+        if (Input.mousePosition.y < startPosition.y)
+        {
+            // Drag down.
+            selectionBox.yMin = Input.mousePosition.y;
+            selectionBox.yMax = startPosition.y;
+        }
+        else
+        {
+            // Drag up.
+            selectionBox.yMin = startPosition.y;
+            selectionBox.yMax = Input.mousePosition.y;
+        }
+    }
+
+    void SelectUnitInBox()
+    {
+        // TODO: Not very efficient. Refactor into raycast.
+        foreach (var i in GameObject.FindObjectsByType<MyGameObject>(FindObjectsSortMode.None))
+        {
+            var screenPosition = Camera.main.WorldToScreenPoint(i.transform.position);
+
+            if (selectionBox.Contains(screenPosition))
+            {
+                i.Select(true);
+                Selected.Add(i);
             }
         }
     }
@@ -191,6 +290,16 @@ public class HUD : MonoBehaviour
     {
         return Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift);
     }
+
+    public RectTransform boxVisual;
+
+    Rect selectionBox;
+
+    Vector2 startPosition = Vector2.zero;
+
+    Vector2 endPosition = Vector2.zero;
+
+    bool drag = false;
 
     public List<MyGameObject> Selected { get; private set; }
 
