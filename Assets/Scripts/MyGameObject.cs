@@ -6,23 +6,29 @@ public class MyGameObject : MonoBehaviour
 {
     protected virtual void Start()
     {
-        var whitelist = new HashSet<OrderType> { OrderType.Idle, OrderType.Stop };
-
-        Orders = new OrderContainer(whitelist);
+        Orders = new OrderContainer();
         Resources = new ResourceContainer();
         Recipes = new List<Recipe>();
 
         OrderHandlers = new Dictionary<OrderType, UnityAction>()
         {
+            { OrderType.Attack, OnOrderAttack },
+            { OrderType.Construct, OnOrderConstruct },
+            { OrderType.Follow, OnOrderFollow },
+            { OrderType.Guard, OnOrderGuard },
             { OrderType.Idle, OnOrderIdle },
             { OrderType.Load, OnOrderLoad },
             { OrderType.Move, OnOrderMove },
             { OrderType.Patrol, OnOrderPatrol },
             { OrderType.Produce, OnOrderProduce },
+            { OrderType.Research, OnOrderResearch },
             { OrderType.Stop, OnOrderStop },
             { OrderType.Transport, OnOrderTransport },
             { OrderType.Unload, OnOrderUnload },
         };
+
+        Orders.Allow(OrderType.Idle);
+        Orders.Allow(OrderType.Stop);
     }
 
     protected virtual void Update()
@@ -49,6 +55,26 @@ public class MyGameObject : MonoBehaviour
         }
     }
 
+    public void Select(bool status)
+    {
+        var selection = transform.Find("Selection");
+
+        if (selection != null)
+        {
+            selection.gameObject.SetActive(status);
+        }
+    }
+
+    public void Attack(Vector3 target)
+    {
+        Orders.Add(new Order(OrderType.Attack, target));
+    }
+
+    public void Attack(MyGameObject target)
+    {
+        Orders.Add(new Order(OrderType.Attack, target));
+    }
+
     public void Idle()
     {
         Orders.Add(new Order(OrderType.Idle));
@@ -59,12 +85,12 @@ public class MyGameObject : MonoBehaviour
         Orders.Add(new Order(OrderType.Load, target, resources));
     }
 
-    public void Move(MyGameObject target)
+    public void Move(Vector3 target)
     {
         Orders.Add(new Order(OrderType.Move, target));
     }
 
-    public void Move(Vector3 target)
+    public void Move(MyGameObject target)
     {
         Orders.Add(new Order(OrderType.Move, target));
     }
@@ -72,24 +98,20 @@ public class MyGameObject : MonoBehaviour
     public void Patrol(Vector3 target)
     {
         Orders.Add(new Order(OrderType.Patrol, target));
-        Orders.Add(new Order(OrderType.Patrol, transform.position));
     }
 
     public void Patrol(MyGameObject target)
     {
         Orders.Add(new Order(OrderType.Patrol, target));
-        Orders.Add(new Order(OrderType.Patrol, transform.position));
     }
 
     public void Produce()
     {
-        // TODO: Take timer value from object.
-        Orders.Add(new Order(OrderType.Produce, 3));
     }
 
     public void Stop()
     {
-        Orders.Insert(0, new Order(OrderType.Stop));
+        Orders.Add(new Order(OrderType.Stop));
     }
 
     public void Transport(MyGameObject source, MyGameObject target, Dictionary<string, int> resources)
@@ -100,6 +122,48 @@ public class MyGameObject : MonoBehaviour
     public void Unload(MyGameObject target, Dictionary<string, int> resources)
     {
         Orders.Add(new Order(OrderType.Unload, target, resources));
+    }
+
+    protected virtual void OnOrderAttack()
+    {
+        var order = Orders.First();
+    }
+
+    protected virtual void OnOrderConstruct()
+    {
+        var order = Orders.First();
+    }
+
+    protected virtual void OnOrderFollow()
+    {
+        var order = Orders.First();
+
+        if (order.TargetGameObject == null)
+        {
+            Move(order.TargetPosition);
+        }
+        else
+        {
+            Move(order.TargetGameObject);
+        }
+
+        Orders.MoveToEnd();
+    }
+
+    protected virtual void OnOrderGuard()
+    {
+        var order = Orders.First();
+
+        if (order.TargetGameObject == null)
+        {
+            Move(order.TargetPosition);
+        }
+        else
+        {
+            Move(order.TargetGameObject);
+        }
+
+        Orders.MoveToEnd();
     }
 
     protected virtual void OnOrderIdle()
@@ -137,11 +201,7 @@ public class MyGameObject : MonoBehaviour
         // Move resources.
         if (toGive && toTake)
         {
-            foreach (var i in order.Resources)
-            {
-                order.TargetGameObject.Resources.Remove(i.Key, i.Value);
-                Resources.Add(i.Key, i.Value);
-            }
+            MoveResources(order.TargetGameObject, this, order.Resources);
         }
 
         Orders.Pop();
@@ -187,8 +247,16 @@ public class MyGameObject : MonoBehaviour
     {
         var order = Orders.First();
 
-        Move(order.TargetPosition);
-        Move(transform.position);
+        if (order.TargetGameObject == null)
+        {
+            Move(order.TargetPosition);
+            Move(transform.position);
+        }
+        else
+        {
+            Move(order.TargetGameObject);
+            Move(transform.position);
+        }
 
         Orders.MoveToEnd();
     }
@@ -248,6 +316,11 @@ public class MyGameObject : MonoBehaviour
         Orders.MoveToEnd();
     }
 
+    protected virtual void OnOrderResearch()
+    {
+        var order = Orders.First();
+    }
+
     protected virtual void OnOrderStop()
     {
         Orders.Clear();
@@ -296,14 +369,19 @@ public class MyGameObject : MonoBehaviour
         // Move resources.
         if (toGive && toTake)
         {
-            foreach (var i in order.Resources)
-            {
-                Resources.Remove(i.Key, i.Value);
-                order.TargetGameObject.Resources.Add(i.Key, i.Value);
-            }
+            MoveResources(this, order.TargetGameObject, order.Resources);
         }
 
         Orders.Pop();
+    }
+
+    void MoveResources(MyGameObject source, MyGameObject target, Dictionary<string, int> resources)
+    {
+        foreach (var i in resources)
+        {
+            source.Resources.Remove(i.Key, i.Value);
+            target.Resources.Add(i.Key, i.Value);
+        }
     }
 
     public Vector3 Entrance

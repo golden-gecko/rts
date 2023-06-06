@@ -11,12 +11,6 @@ public class OrderContainer
         Whitelist = new HashSet<OrderType>();
     }
 
-    public OrderContainer(HashSet<OrderType> whitelist)
-    {
-        Items = new List<Order>();
-        Whitelist = whitelist;
-    }
-
     public void Add(Order item)
     {
         Items.Add(item);

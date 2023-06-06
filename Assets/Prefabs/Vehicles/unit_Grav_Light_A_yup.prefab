@@ -286,6 +286,7 @@ Transform:
   - {fileID: 7257313429246574431}
   - {fileID: 4648361478899845688}
   - {fileID: 6078140847519508594}
+  - {fileID: 1856515025719540062}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -622,3 +623,49 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!1001 &1036684291858685877
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 6358198605777279878}
+    m_Modifications:
+    - target: {fileID: 1702536901321746155, guid: b7507c7e7b8343546931126549961dab, type: 3}
+      propertyPath: m_RootOrder
+      value: -1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1702536901321746155, guid: b7507c7e7b8343546931126549961dab, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1702536901321746155, guid: b7507c7e7b8343546931126549961dab, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1702536901321746155, guid: b7507c7e7b8343546931126549961dab, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 90
+      objectReference: {fileID: 0}
+    - target: {fileID: 1702536901321746155, guid: b7507c7e7b8343546931126549961dab, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1702536901321746155, guid: b7507c7e7b8343546931126549961dab, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3414595845619286626, guid: b7507c7e7b8343546931126549961dab, type: 3}
+      propertyPath: m_Name
+      value: Selection
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: b7507c7e7b8343546931126549961dab, type: 3}
+--- !u!4 &1856515025719540062 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 1702536901321746155, guid: b7507c7e7b8343546931126549961dab, type: 3}
+  m_PrefabInstance: {fileID: 1036684291858685877}
+  m_PrefabAsset: {fileID: 0}

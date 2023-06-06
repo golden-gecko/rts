@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using UnityEditor.PackageManager;
 using UnityEngine;
 using UnityEngine.UIElements;
 
@@ -22,35 +21,18 @@ public class HUD : MonoBehaviour
         {
             if (Input.GetMouseButtonDown(0))
             {
-                RaycastHit hitInfo = new RaycastHit();
-
-                if (Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out hitInfo))
+                if (Order == OrderType.None)
                 {
-                    if (hitInfo.transform.tag == "Terrain")
-                    {
-                        Select(null);
-                    }
-                    else
-                    {
-                        Select(hitInfo.transform.GetComponentInParent<MyGameObject>());
-                    }
+                    ProcessSelection();
+                }
+                else
+                {
+                    ProcessOrder();
                 }
             }
             else if (Input.GetMouseButtonDown(1))
             {
-                RaycastHit hitInfo = new RaycastHit();
-
-                if (Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out hitInfo))
-                {
-                    if (hitInfo.transform.tag == "Terrain")
-                    {
-                        IssueOrder(hitInfo.point);
-                    }
-                    else
-                    {
-                        IssueOrder(hitInfo.transform.GetComponentInParent<MyGameObject>());
-                    }
-                }
+                ProcessOrder();
             }
         }
     }
@@ -60,6 +42,40 @@ public class HUD : MonoBehaviour
         if (Input.GetKey(KeyCode.Escape))
         {
             Application.Quit();
+        }
+    }
+
+    void ProcessSelection()
+    {
+        RaycastHit hitInfo = new RaycastHit();
+
+        if (Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out hitInfo))
+        {
+            if (hitInfo.transform.tag == "Terrain")
+            {
+                Select(null);
+            }
+            else
+            {
+                Select(hitInfo.transform.GetComponentInParent<MyGameObject>());
+            }
+        }
+    }
+
+    void ProcessOrder()
+    {
+        RaycastHit hitInfo = new RaycastHit();
+
+        if (Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out hitInfo))
+        {
+            if (hitInfo.transform.tag == "Terrain")
+            {
+                IssueOrder(hitInfo.point);
+            }
+            else
+            {
+                IssueOrder(hitInfo.transform.GetComponentInParent<MyGameObject>());
+            }
         }
     }
 
@@ -73,7 +89,7 @@ public class HUD : MonoBehaviour
 
     public bool IsOverlappingUI()
     {
-        var ui = GameObject.Find("UIDocument");
+        var ui = GameObject.Find("InGameMenu");
         var uiDocument = ui.GetComponent<UIDocument>();
         var rootVisualElement = uiDocument.rootVisualElement;
 
@@ -99,6 +115,10 @@ public class HUD : MonoBehaviour
 
             switch (Order)
             {
+                case OrderType.Attack:
+                    gameObject.Attack(position);
+                    break;
+
                 case OrderType.Patrol:
                     gameObject.Patrol(position);
                     break;
@@ -116,6 +136,10 @@ public class HUD : MonoBehaviour
         {
             switch (Order)
             {
+                case OrderType.Attack:
+                    gameObject.Attack(gameObject);
+                    break;
+
                 case OrderType.Transport:
                     var resources = new Dictionary<string, int>
                     {
@@ -140,15 +164,29 @@ public class HUD : MonoBehaviour
     {
         if (IsMulti() == false)
         {
+            foreach (var i in Selected)
+            {
+                i.Select(false);
+            }
+
             Selected.Clear();
         }
 
         if (myGameObject != null)
         {
-            Selected.Add(myGameObject);
+            if (IsMulti() && Selected.Contains(myGameObject))
+            {
+                myGameObject.Select(false);
+                Selected.Remove(myGameObject);
+            }
+            else
+            {
+                myGameObject.Select(true);
+                Selected.Add(myGameObject);
+            }
         }
     }
-
+     
     bool IsMulti()
     {
         return Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift);
@@ -156,7 +194,42 @@ public class HUD : MonoBehaviour
 
     public List<MyGameObject> Selected { get; private set; }
 
-    public OrderType Order { get; set; } = OrderType.None;
+    public OrderType Order
+    {
+        get
+        {
+            return order;
+        }
 
-    public string Blueprint { get; set; } = "";
+        set
+        {
+            if (value == OrderType.Stop)
+            {
+                order = OrderType.None;
+
+                Stop();
+            }
+            else
+            {
+                order = value;
+            }
+        }
+    }
+
+    private OrderType order = OrderType.None;
+
+    public string Prefab
+    {
+        get
+        {
+            return prefab;
+        }
+
+        set
+        {
+            prefab = value;
+        }
+    }
+
+    private string prefab = string.Empty;
 }
