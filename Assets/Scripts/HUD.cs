@@ -164,15 +164,29 @@ public class HUD : MonoBehaviour
     {
         if (IsMulti() == false)
         {
+            foreach (var i in Selected)
+            {
+                i.Select(false);
+            }
+
             Selected.Clear();
         }
 
         if (myGameObject != null)
         {
-            Selected.Add(myGameObject);
+            if (IsMulti() && Selected.Contains(myGameObject))
+            {
+                myGameObject.Select(false);
+                Selected.Remove(myGameObject);
+            }
+            else
+            {
+                myGameObject.Select(true);
+                Selected.Add(myGameObject);
+            }
         }
     }
-
+     
     bool IsMulti()
     {
         return Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift);

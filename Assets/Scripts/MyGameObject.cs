@@ -29,20 +29,10 @@ public class MyGameObject : MonoBehaviour
 
         Orders.Allow(OrderType.Idle);
         Orders.Allow(OrderType.Stop);
-
-        var size = GetComponent<Collider>().bounds.size;
-        var selection = transform.Find("Selection");
-
-        if (selection)
-        {
-            selection.gameObject.transform.localScale = size;
-        }
     }
 
     protected virtual void Update()
     {
-        Select(true);
-
         if (Orders.Count > 0)
         {
             var order = Orders.First();
@@ -67,7 +57,12 @@ public class MyGameObject : MonoBehaviour
 
     public void Select(bool status)
     {
-        var size = GetComponent<Collider>().bounds.size;
+        var selection = transform.Find("Selection");
+
+        if (selection != null)
+        {
+            selection.gameObject.SetActive(status);
+        }
     }
 
     public void Attack(Vector3 target)
