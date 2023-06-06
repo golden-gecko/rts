@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UIElements;
 
 public class HUD : MonoBehaviour
@@ -23,6 +24,11 @@ public class HUD : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(0))
         {
+            if (EventSystem.current.IsPointerOverGameObject())
+            {
+                return;
+            }
+
             if (IsOverlappingUI() == false)
             {
                 startPosition = Input.mousePosition;
@@ -31,6 +37,11 @@ public class HUD : MonoBehaviour
         }
         else if (Input.GetMouseButtonDown(1))
         {
+            if (EventSystem.current.IsPointerOverGameObject())
+            {
+                return;
+            }
+
             if (IsOverlappingUI() == false)
             {
                 ProcessOrder();
@@ -39,6 +50,11 @@ public class HUD : MonoBehaviour
 
         if (Input.GetMouseButton(0))
         {
+            if (EventSystem.current.IsPointerOverGameObject())
+            {
+                return;
+            }
+
             if (drag)
             {
                 endPosition = Input.mousePosition;
@@ -50,6 +66,11 @@ public class HUD : MonoBehaviour
 
         if (Input.GetMouseButtonUp(0))
         {
+            if (EventSystem.current.IsPointerOverGameObject())
+            {
+                return;
+            }
+
             drag = false;
 
             if ((startPosition - endPosition).magnitude > 10)

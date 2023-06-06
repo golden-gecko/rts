@@ -1,6 +1,11 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" editor-extension-mode="False">
     <Style src="project://database/Assets/UI/InGameMenu.uss?fileID=7433441132597879392&amp;guid=231d51774ac67094591621cc55974d8c&amp;type=3#InGameMenu" />
-    <ui:VisualElement name="BottomPanel" style="flex-grow: 1; background-color: rgba(0, 0, 0, 0); position: absolute; left: 0; right: 0; bottom: 0;">
+    <ui:VisualElement name="TopPanel" class="panel-background" style="flex-grow: 1; left: 0; top: 0; right: auto; position: absolute;">
+        <ui:Label tabindex="-1" text="Order" name="Order" />
+        <ui:Label tabindex="-1" text="Prefab" name="Prefab" />
+        <ui:Label tabindex="-1" text="Selected" name="Selected" />
+    </ui:VisualElement>
+    <ui:VisualElement name="BottomPanel" class="panel-background" style="flex-grow: 1; position: absolute; left: 0; right: auto; bottom: 0; padding-left: 5px; padding-right: 0; padding-top: 5px; padding-bottom: 5px;">
         <ui:VisualElement name="OrderList" style="flex-grow: 1; background-color: rgba(0, 0, 0, 0); align-items: flex-start; justify-content: flex-start; flex-direction: row;">
             <ui:Button text="Construct" name="Construct" class="button-order" />
             <ui:Button text="Follow" name="Follow" class="button-order" />
@@ -22,9 +27,7 @@
             <ui:Button text="Storage" display-tooltip-when-elided="true" name="Storage" class="button-construct" />
         </ui:VisualElement>
     </ui:VisualElement>
-    <ui:VisualElement name="TopPanel" style="flex-grow: 1; background-color: rgba(0, 0, 0, 0); left: 0; top: 0; right: 0; position: absolute;">
-        <ui:Label tabindex="-1" text="Order" name="Order" />
-        <ui:Label tabindex="-1" text="Prefab" name="Prefab" />
-        <ui:Label tabindex="-1" text="Selected" name="Selected" />
+    <ui:VisualElement name="InfoPanel" class="panel-background" style="flex-grow: 1; left: 20%; top: 0; right: auto; position: absolute;">
+        <ui:Label tabindex="-1" name="Info" />
     </ui:VisualElement>
 </ui:UXML>
