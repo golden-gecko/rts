@@ -379,7 +379,15 @@ public class MyGameObject : MonoBehaviour
 
     public string GetInfo()
     {
-        return String.Format("ID: {0}\nName: {1}\nHP: {2}\nSpeed: {3}", GetInstanceID(), name, Health, Speed);
+        // TODO: Move to ResourceContainer::toString().
+        var resources = "";
+
+        foreach (var i in Resources.Items)
+        {
+            resources += String.Format("\n  {0} {1}", i.Key, i.Value.Value);
+        }
+
+        return String.Format("ID: {0}\nName: {1}\nHP: {2}\nSpeed: {3}\nResources:{4}", GetInstanceID(), name, Health, Speed, resources);
     }
 
     void MoveResources(MyGameObject source, MyGameObject target, Dictionary<string, int> resources)

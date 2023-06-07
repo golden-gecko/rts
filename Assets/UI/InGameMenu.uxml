@@ -27,7 +27,7 @@
             <ui:Button text="Storage" display-tooltip-when-elided="true" name="Storage" class="button-construct" />
         </ui:VisualElement>
     </ui:VisualElement>
-    <ui:VisualElement name="InfoPanel" class="panel-background" style="flex-grow: 1; left: 20%; top: 0; right: auto; position: absolute;">
+    <ui:VisualElement name="InfoPanel" class="panel-background" style="flex-grow: 1; left: auto; top: auto; right: 0; position: absolute; bottom: 0;">
         <ui:Label tabindex="-1" name="Info" />
     </ui:VisualElement>
 </ui:UXML>
