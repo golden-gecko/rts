@@ -59,6 +59,11 @@ public class Order
         Timer = new Timer(max);
     }
 
+    public string GetInfo()
+    {
+        return string.Format("{0} ({1:0.}/{2})", Type.ToString(), Timer.Value, Timer.Max);
+    }
+
     public OrderType Type { get; }
 
     public MyGameObject SourceGameObject { get; }

@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
+using static UnityEngine.GraphicsBuffer;
 
 public class MyGameObject : MonoBehaviour
 {
@@ -52,8 +53,19 @@ public class MyGameObject : MonoBehaviour
         }
         else
         {
-            // TODO: Enable.
-            // Idle();
+            Idle();
+        }
+
+        // Set position to terrain.
+        var hitInfo = new RaycastHit();
+        var ray = new Ray(transform.position + new Vector3(0, 1000, 0), Vector3.down);
+
+        if (Physics.Raycast(ray, out hitInfo, 2000, LayerMask.GetMask("Terrain")))
+        {
+            if (hitInfo.transform.tag == "Terrain")
+            {
+                transform.position = new Vector3(transform.position.x, hitInfo.point.y, transform.position.z);
+            }
         }
     }
 
@@ -109,6 +121,8 @@ public class MyGameObject : MonoBehaviour
 
     public void Produce()
     {
+        // TODO: Refactor.
+        Orders.Add(new Order(OrderType.Produce, 3));
     }
 
     public void Stop()
@@ -228,17 +242,16 @@ public class MyGameObject : MonoBehaviour
         target.y = 0;
         position.y = 0;
 
-        var distanceToTarget = (target - transform.position).magnitude;
+        var distanceToTarget = (target - position).magnitude;
         var distanceToTravel = Speed * Time.deltaTime;
 
         if (distanceToTarget > distanceToTravel)
         {
-            transform.LookAt(target);
+            transform.LookAt(new Vector3(target.x, transform.position.y, target.z));
             transform.Translate(Vector3.forward * distanceToTravel);
         }
         else
         {
-            transform.LookAt(target);
             transform.position = target;
 
             Orders.Pop();
@@ -288,7 +301,7 @@ public class MyGameObject : MonoBehaviour
                 // Have all resources to produce.
                 bool toProduce = true;
 
-                foreach (var i in recipe.ToConsume)
+                foreach (var i in recipe.ToProduce)
                 {
                     if (Resources.CanAdd(i.Name, i.Count) == false)
                     {
@@ -309,6 +322,8 @@ public class MyGameObject : MonoBehaviour
                     {
                         Resources.Add(i.Name, i.Count);
                     }
+
+                    break;
                 }
             }
 
@@ -379,15 +394,7 @@ public class MyGameObject : MonoBehaviour
 
     public string GetInfo()
     {
-        // TODO: Move to ResourceContainer::toString().
-        var resources = "";
-
-        foreach (var i in Resources.Items)
-        {
-            resources += String.Format("\n  {0} {1}", i.Key, i.Value.Value);
-        }
-
-        return String.Format("ID: {0}\nName: {1}\nHP: {2}\nSpeed: {3}\nResources:{4}", GetInstanceID(), name, Health, Speed, resources);
+        return string.Format("ID: {0}\nName: {1}\nHP: {2}\nSpeed: {3}\nResources:{4}\nOrders: {5}", GetInstanceID(), name, Health, Speed, Resources.GetInfo(), Orders.GetInfo());
     }
 
     void MoveResources(MyGameObject source, MyGameObject target, Dictionary<string, int> resources)
