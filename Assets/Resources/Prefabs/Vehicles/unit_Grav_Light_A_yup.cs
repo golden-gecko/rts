@@ -4,8 +4,8 @@ public class unit_Grav_Light_A_yup : MyGameObject
     {
         base.Start();
 
-        Orders.Allow(OrderType.Attack);
-        Orders.Allow(OrderType.Move);
-        Orders.Allow(OrderType.Patrol);
+        Orders.AllowOrder(OrderType.Attack);
+        Orders.AllowOrder(OrderType.Move);
+        Orders.AllowOrder(OrderType.Patrol);
     }
 }

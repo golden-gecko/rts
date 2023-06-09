@@ -4,6 +4,6 @@ public class struct_Research_Lab_A_yup : MyGameObject
     {
         base.Start();
 
-        Orders.Allow(OrderType.Research);
+        Orders.AllowOrder(OrderType.Research);
     }
 }

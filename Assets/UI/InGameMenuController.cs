@@ -1,3 +1,6 @@
+using System;
+using System.Collections.Generic;
+using System.IO;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.UIElements;
@@ -21,41 +24,14 @@ public class InGameMenuController : MonoBehaviour
         selected = rootVisualElement.Q<Label>("Selected");
         info = rootVisualElement.Q<Label>("Info");
 
-        var construct = rootVisualElement.Q<Button>("Construct");
-        var follow = rootVisualElement.Q<Button>("Follow");
-        var guard = rootVisualElement.Q<Button>("Guard");
-        var load = rootVisualElement.Q<Button>("Load");
-        var move = rootVisualElement.Q<Button>("Move");
-        var patrol = rootVisualElement.Q<Button>("Patrol");
-        var produce = rootVisualElement.Q<Button>("Produce");
-        var stop = rootVisualElement.Q<Button>("Stop");
-        var transport = rootVisualElement.Q<Button>("Transport");
-        var unload = rootVisualElement.Q<Button>("Unload");
+        orders = rootVisualElement.Q<VisualElement>("OrderList");
+        prefabs = rootVisualElement.Q<VisualElement>("PrefabList");
 
-        var heavyFactory = rootVisualElement.Q<Button>("HeavyFactory");
-        var lightFactory = rootVisualElement.Q<Button>("LightFactory");
-        var radar = rootVisualElement.Q<Button>("Radar");
-        var refinery = rootVisualElement.Q<Button>("Refinery");
-        var researchLab = rootVisualElement.Q<Button>("ResearchLab");
-        var storage = rootVisualElement.Q<Button>("Storage");
+        ordersButtons = new Dictionary<OrderType, Button>();
+        prefabsButtons = new Dictionary<string, Button>();
 
-        construct.RegisterCallback<ClickEvent>(ev => OnOrder(OrderType.Construct));
-        follow.RegisterCallback<ClickEvent>(ev => OnOrder(OrderType.Follow));
-        guard.RegisterCallback<ClickEvent>(ev => OnOrder(OrderType.Guard));
-        load.RegisterCallback<ClickEvent>(ev => OnOrder(OrderType.Load));
-        move.RegisterCallback<ClickEvent>(ev => OnOrder(OrderType.Move));
-        patrol.RegisterCallback<ClickEvent>(ev => OnOrder(OrderType.Patrol));
-        produce.RegisterCallback<ClickEvent>(ev => OnOrder(OrderType.Produce));
-        stop.RegisterCallback<ClickEvent>(ev => OnOrder(OrderType.Stop));
-        transport.RegisterCallback<ClickEvent>(ev => OnOrder(OrderType.Transport));
-        unload.RegisterCallback<ClickEvent>(ev => OnOrder(OrderType.Unload));
-
-        heavyFactory.RegisterCallback<ClickEvent>(ev => OnConstruct("HeavyFactory"));
-        lightFactory.RegisterCallback<ClickEvent>(ev => OnConstruct("LightFactory"));
-        radar.RegisterCallback<ClickEvent>(ev => OnConstruct("Radar"));
-        refinery.RegisterCallback<ClickEvent>(ev => OnConstruct("Refinery"));
-        researchLab.RegisterCallback<ClickEvent>(ev => OnConstruct("ResearchLab"));
-        storage.RegisterCallback<ClickEvent>(ev => OnConstruct("Storage"));
+        CreateOrders();
+        CreatePrefabs();
     }
 
     void Update()
@@ -70,7 +46,70 @@ public class InGameMenuController : MonoBehaviour
         }
         else
         {
-            info.text = "";
+            info.text = string.Empty;
+        }
+
+        var orderWhitelist = new HashSet<OrderType>();
+
+        foreach (var i in hud.Selected)
+        {
+            orderWhitelist.UnionWith(i.Orders.OrderWhitelist);
+        }
+
+        foreach (var i in ordersButtons)
+        {
+            i.Value.style.display = DisplayStyle.None;
+        }
+
+        foreach (var i in orderWhitelist)
+        {
+            if (ordersButtons.ContainsKey(i))
+            {
+                ordersButtons[i].style.display = DisplayStyle.Flex;
+            }
+        }
+    }
+
+    void CreateOrders()
+    {
+        orders.Clear();
+
+        foreach (var i in Enum.GetNames(typeof(OrderType)))
+        {
+            var buttonContainer = templateButton.Instantiate();
+            var button = buttonContainer.Q<Button>();
+
+            button.RegisterCallback<ClickEvent>(ev => OnOrder(Enum.Parse<OrderType>(i)));
+            button.style.display = DisplayStyle.None;
+            button.text = i;
+            button.userData = Enum.Parse<OrderType>(i);
+
+            orders.Add(buttonContainer);
+            ordersButtons[Enum.Parse<OrderType>(i)] = button;
+        }
+    }
+
+    void CreatePrefabs()
+    {
+        prefabs.Clear();
+
+        foreach (var i in AssetDatabase.GetAllAssetPaths())
+        {
+            if (i.Contains("Assets/Resources/"))
+            {
+                var buttonContainer = templateButton.Instantiate();
+                var button = buttonContainer.Q<Button>();
+                var prefabPath = i.Replace("Assets/Resources/", "").Replace(".prefab", "");
+                var resource = Resources.Load<MyGameObject>(prefabPath);
+
+                button.RegisterCallback<ClickEvent>(ev => OnConstruct(i));
+                button.style.display = DisplayStyle.None;
+                button.text = Path.GetFileName(i).Replace(".prefab", "");
+                button.userData = prefabPath;
+
+                prefabs.Add(buttonContainer);
+                prefabsButtons[prefabPath] = button;
+            }
         }
     }
 
@@ -86,10 +125,19 @@ public class InGameMenuController : MonoBehaviour
         hud.Prefab = string.Empty;
     }
 
+    public VisualTreeAsset templateButton;
+    
+    HUD hud;
+
     Label order;
     Label prefab;
     Label selected;
     Label info;
 
-    HUD hud;
+    VisualElement orders;
+    VisualElement prefabs;
+
+    Dictionary<OrderType, Button> ordersButtons;
+    Dictionary<string, Button> prefabsButtons;
+
 }

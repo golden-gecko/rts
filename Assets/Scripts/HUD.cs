@@ -1,7 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
-using UnityEngine.UIElements;
 
 public class HUD : MonoBehaviour
 {
@@ -29,23 +28,8 @@ public class HUD : MonoBehaviour
                 return;
             }
 
-            if (IsOverlappingUI() == false)
-            {
-                startPosition = Input.mousePosition;
-                drag = true;
-            }
-        }
-        else if (Input.GetMouseButtonDown(1))
-        {
-            if (EventSystem.current.IsPointerOverGameObject())
-            {
-                return;
-            }
-
-            if (IsOverlappingUI() == false)
-            {
-                ProcessOrder();
-            }
+            startPosition = Input.mousePosition;
+            drag = true;
         }
 
         if (Input.GetMouseButton(0))
@@ -66,35 +50,45 @@ public class HUD : MonoBehaviour
 
         if (Input.GetMouseButtonUp(0))
         {
+            if ((startPosition - endPosition).magnitude <= 10)
+            {
+                drag = false;
+            }
+
+            if (drag)
+            {
+                SelectUnitInBox();
+            }
+
             if (EventSystem.current.IsPointerOverGameObject())
             {
                 return;
             }
 
-            drag = false;
-
-            if ((startPosition - endPosition).magnitude > 10)
+            if (drag == false)
             {
-                SelectUnitInBox();
-            }
-            else
-            {
-                if (IsOverlappingUI() == false)
+                if (Order == OrderType.None)
                 {
-                    if (Order == OrderType.None)
-                    {
-                        ProcessSelection();
-                    }
-                    else
-                    {
-                        ProcessOrder();
-                    }
+                    ProcessSelection();
+                }
+                else
+                {
+                    ProcessOrder();
                 }
             }
+
+            drag = false;
 
             ResetVisual();
             DrawVisual();
             DrawSelection();
+        }
+        else if (Input.GetMouseButtonUp(1))
+        {
+            if (Order != OrderType.None)
+            {
+                Order = OrderType.None;
+            }
         }
     }
 
@@ -217,23 +211,6 @@ public class HUD : MonoBehaviour
         }
     }
 
-    bool IsOverlappingUI()
-    {
-        var ui = GameObject.Find("InGameMenu");
-        var uiDocument = ui.GetComponent<UIDocument>();
-        var rootVisualElement = uiDocument.rootVisualElement;
-
-        foreach (var visualElement in rootVisualElement.Children())
-        {
-            if (visualElement.visible && visualElement.ContainsPoint(visualElement.WorldToLocal(Input.mousePosition)))
-            {
-                return true;
-            }
-        }
-
-        return false;
-    }
-
     void Construct(Vector3 position)
     {
         var prefabs = new Dictionary<string, string>()
@@ -247,7 +224,7 @@ public class HUD : MonoBehaviour
             { "ResearchLab", "Prefabs/Buildings/struct_Research_Lab_A_yup" },
         };
 
-        var resource = Resources.Load<GameObject>(prefabs[Prefab]);
+        var resource = Resources.Load<MyGameObject>(prefabs[Prefab]);
 
         Instantiate(resource, position, Quaternion.identity);
     }

@@ -1,8 +1,6 @@
-using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
-using static UnityEngine.GraphicsBuffer;
 
 public class MyGameObject : MonoBehaviour
 {
@@ -23,14 +21,15 @@ public class MyGameObject : MonoBehaviour
             { OrderType.Move, OnOrderMove },
             { OrderType.Patrol, OnOrderPatrol },
             { OrderType.Produce, OnOrderProduce },
+            { OrderType.Rally, OnOrderRally },
             { OrderType.Research, OnOrderResearch },
             { OrderType.Stop, OnOrderStop },
             { OrderType.Transport, OnOrderTransport },
             { OrderType.Unload, OnOrderUnload },
         };
 
-        Orders.Allow(OrderType.Idle);
-        Orders.Allow(OrderType.Stop);
+        Orders.AllowOrder(OrderType.Idle);
+        Orders.AllowOrder(OrderType.Stop);
     }
 
     protected virtual void Update()
@@ -143,11 +142,15 @@ public class MyGameObject : MonoBehaviour
     protected virtual void OnOrderAttack()
     {
         var order = Orders.First();
+
+        Orders.Pop();
     }
 
     protected virtual void OnOrderConstruct()
     {
         var order = Orders.First();
+
+        Orders.Pop();
     }
 
     protected virtual void OnOrderFollow()
@@ -333,9 +336,18 @@ public class MyGameObject : MonoBehaviour
         Orders.MoveToEnd();
     }
 
+    protected virtual void OnOrderRally()
+    {
+        var order = Orders.First();
+
+        Orders.Pop();
+    }
+
     protected virtual void OnOrderResearch()
     {
         var order = Orders.First();
+
+        Orders.Pop();
     }
 
     protected virtual void OnOrderStop()
