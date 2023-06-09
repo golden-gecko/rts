@@ -247,12 +247,9 @@ public class HUD : MonoBehaviour
             { "ResearchLab", "Prefabs/Buildings/struct_Research_Lab_A_yup" },
         };
 
-        var prefabName = prefabs[Prefab];
-        var resource = Resources.Load(prefabName) as GameObject;
+        var resource = Resources.Load<GameObject>(prefabs[Prefab]);
 
-        // TODO: Check if prefab exists.
-        var result = Instantiate(resource, position, Quaternion.identity);
-        Debug.Log(result);
+        Instantiate(resource, position, Quaternion.identity);
     }
 
     void IssueOrder(Vector3 position)
