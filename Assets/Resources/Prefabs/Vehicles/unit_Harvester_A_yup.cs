@@ -10,11 +10,11 @@ public class unit_Harvester_A_yup : MyGameObject
         Orders.AllowOrder(OrderType.Unload);
         Orders.AllowOrder(OrderType.Transport);
 
-        Resources.Add("Coal", 0, 20);
-        Resources.Add("Metal", 0, 20);
-        Resources.Add("Metal Ore", 0, 20);
-        Resources.Add("Wood", 0, 20);
-
         Speed = 4;
+    }
+
+    protected override void OnOrderIdle()
+    {
+        Produce();
     }
 }

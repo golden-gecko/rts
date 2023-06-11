@@ -1,4 +1,4 @@
-public class struct_Misc_Building_B_yup : MyGameObject
+public class struct_Wall_A_yup : MyGameObject
 {
     protected override void Start()
     {

@@ -1,7 +1,7 @@
-using System;
+using System.Collections;
 using System.Collections.Generic;
 
-public class ResourceContainer
+public class ResourceContainer : IEnumerable<KeyValuePair<string, Resource>>
 {
     public ResourceContainer()
     {
@@ -50,6 +50,11 @@ public class ResourceContainer
         return Items[name].CanRemove(value);
     }
 
+    public IEnumerator<KeyValuePair<string, Resource>> GetEnumerator()
+    {
+        return Items.GetEnumerator();
+    }
+
     public string GetInfo()
     {
         var info = string.Empty;
@@ -70,6 +75,11 @@ public class ResourceContainer
         }
 
         Items[name].Remove(value);
+    }
+
+    IEnumerator IEnumerable.GetEnumerator()
+    {
+        return GetEnumerator();
     }
 
     public Dictionary<string, Resource> Items { get; }

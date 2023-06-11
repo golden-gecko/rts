@@ -5,5 +5,11 @@ public class struct_Research_Lab_A_yup : MyGameObject
         base.Start();
 
         Orders.AllowOrder(OrderType.Research);
+
+        var r1 = new Recipe();
+
+        r1.Consume("Crystal", 0);
+
+        Recipes.Add(r1);
     }
 }
