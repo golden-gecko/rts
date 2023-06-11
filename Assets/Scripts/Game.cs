@@ -16,18 +16,22 @@ public class Game : MonoBehaviour
         {
             foreach (var recipe in myGameObject.Recipes)
             {
-                if (recipe.ToConsume.Count > 0)
+                foreach (var resource in recipe.ToConsume)
                 {
-                    consumers.Add(myGameObject);
+                    if (myGameObject.Resources.CanAdd(resource.Name, 1))
+                    {
+                        consumers.Add(myGameObject);
+                    }
                 }
 
-                if (recipe.ToProduce.Count > 0)
+                foreach (var resource in recipe.ToProduce)
                 {
-                    producers.Add(myGameObject);
+                    if (myGameObject.Resources.CanRemove(resource.Name, 1))
+                    {
+                        producers.Add(myGameObject);
+                    }
                 }
             }
         }
-
-
     }
 }
