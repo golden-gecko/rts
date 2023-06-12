@@ -19,6 +19,7 @@ public enum OrderType
     Stop,
     Transport,
     Unload,
+    Wait,
 }
 
 public class Order

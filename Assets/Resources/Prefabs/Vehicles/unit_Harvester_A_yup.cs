@@ -1,3 +1,5 @@
+using UnityEngine;
+
 public class unit_Harvester_A_yup : MyGameObject
 {
     protected override void Start()
@@ -15,6 +17,13 @@ public class unit_Harvester_A_yup : MyGameObject
 
     protected override void OnOrderIdle()
     {
-        Produce();
+        // TODO: Optimize.
+        var game = GameObject.Find("Game").GetComponent<Game>();
+        var order = game.CreateTransportOrder();
+
+        if (order != null)
+        {
+            Orders.Add(order);
+        }
     }
 }

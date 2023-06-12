@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UIElements;
@@ -283,9 +282,11 @@ public class HUD : MonoBehaviour
             switch (Order)
             {
                 case OrderType.Attack:
-                    gameObject.Attack(gameObject);
+                    gameObject.Attack(myGameObject);
                     break;
 
+                /*
+                TODO: Implement UI for this order first.
                 case OrderType.Transport:
                     var resources = new Dictionary<string, int>
                     {
@@ -302,6 +303,7 @@ public class HUD : MonoBehaviour
 
                     gameObject.Transport(source, target, resources);
                     break;
+                */
             }
         }
     }

@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine;
 
 public class ResourceContainer : IEnumerable<KeyValuePair<string, Resource>>
 {
@@ -48,6 +49,16 @@ public class ResourceContainer : IEnumerable<KeyValuePair<string, Resource>>
         }
 
         return Items[name].CanRemove(value);
+    }
+
+    public int Capacity(string name)
+    {
+        if (Items.ContainsKey(name) == false)
+        {
+            Items.Add(name, new Resource(name, 0, 0));
+        }
+
+        return Items[name].Capacity();
     }
 
     public IEnumerator<KeyValuePair<string, Resource>> GetEnumerator()

@@ -27,6 +27,11 @@ public class Resource
         return Value - value >= 0;
     }
 
+    public int Capacity()
+    {
+        return Max - Value;
+    }
+
     public void Remove(int value)
     {
         Value -= value;
