@@ -12,7 +12,7 @@ public class struct_Factory_Light_A_yup : MyGameObject
         Orders.AllowPrefab("Prefabs/Vehicles/unit_Quad_A_yup");
         Orders.AllowPrefab("Prefabs/Vehicles/unit_Trike_A_yup");
         
-        Resources.Add("Metal", 0, 100);
+        Resources.Add("Metal", 0, 40);
 
         var r1 = new Recipe();
 

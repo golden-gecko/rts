@@ -88,6 +88,16 @@ public class ResourceContainer : IEnumerable<KeyValuePair<string, Resource>>
         Items[name].Remove(value);
     }
 
+    public int Storage(string name)
+    {
+        if (Items.ContainsKey(name) == false)
+        {
+            Items.Add(name, new Resource(name, 0, 0));
+        }
+
+        return Items[name].Storage();
+    }
+
     IEnumerator IEnumerable.GetEnumerator()
     {
         return GetEnumerator();

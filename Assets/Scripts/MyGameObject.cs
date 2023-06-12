@@ -446,7 +446,9 @@ public class MyGameObject : MonoBehaviour
         {
             foreach (var resource in recipe.ToConsume)
             {
-                if (Resources.CanAdd(resource.Name, 1))
+                var capacity = Resources.Capacity(resource.Name);
+
+                if (capacity > 0)
                 {
                     game.Consumers.Add(this, resource.Name, Resources.Capacity(resource.Name));
                 }
@@ -454,9 +456,11 @@ public class MyGameObject : MonoBehaviour
 
             foreach (var resource in recipe.ToProduce)
             {
-                if (Resources.CanRemove(resource.Name, 1))
+                var storage = Resources.Storage(resource.Name);
+
+                if (storage > 0)
                 {
-                    game.Producers.Add(this, resource.Name, Resources.Capacity(resource.Name));
+                    game.Producers.Add(this, resource.Name, Resources.Storage(resource.Name));
                 }
             }
         }

@@ -6,9 +6,9 @@ public class struct_Refinery_A_yup : MyGameObject
 
         Orders.AllowOrder(OrderType.Produce);
 
-        Resources.Add("Coal", 0, 100);
-        Resources.Add("Metal", 0, 100);
-        Resources.Add("Metal Ore", 0, 100);
+        Resources.Add("Coal", 0, 60);
+        Resources.Add("Metal", 0, 60);
+        Resources.Add("Metal Ore", 0, 60);
 
         var r1 = new Recipe();
         var r2 = new Recipe();

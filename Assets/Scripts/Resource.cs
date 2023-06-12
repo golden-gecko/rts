@@ -42,6 +42,11 @@ public class Resource
         }
     }
 
+    public int Storage()
+    {
+        return Value;
+    }
+
     public string Name { get; }
 
     public int Value { get; private set; }
