@@ -1,6 +1,8 @@
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.UIElements;
 
 public class HUD : MonoBehaviour
 {
@@ -158,6 +160,21 @@ public class HUD : MonoBehaviour
         if (Input.GetKey(KeyCode.Escape))
         {
             Application.Quit();
+        }
+
+        if (Input.GetKeyDown(KeyCode.F10))
+        {
+            var canvas = GameObject.Find("Canvas");
+
+            foreach (var i in canvas.GetComponentsInChildren<UIDocument>(true))
+            {
+                if (i.name == "MainMenu")
+                {
+                    i.enabled = !i.enabled;
+
+                    break;
+                }
+            }
         }
     }
 
