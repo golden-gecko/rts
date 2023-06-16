@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class ConsumerProducerContainer
@@ -16,6 +17,21 @@ public class ConsumerProducerContainer
         }
 
         Items[myGameObject][name] = value;
+    }
+
+    public void Remove(MyGameObject myGameObject, string name)
+    {
+        if (Items.ContainsKey(myGameObject) == false)
+        {
+            Items[myGameObject] = new Dictionary<string, int>();
+        }
+
+        Items[myGameObject].Remove(name);
+    }
+
+    public void Clear()
+    {
+        Items.Clear();
     }
 
     public int Count { get => Items.Count; }

@@ -61,6 +61,16 @@ public class MyGameObject : MonoBehaviour
         Orders.Add(new Order(OrderType.Attack, target));
     }
 
+    public void Guard(Vector3 target)
+    {
+        Orders.Add(new Order(OrderType.Guard, target));
+    }
+
+    public void Guard(MyGameObject target)
+    {
+        Orders.Add(new Order(OrderType.Guard, target));
+    }
+
     public void Idle()
     {
         Orders.Add(new Order(OrderType.Idle));
@@ -68,7 +78,7 @@ public class MyGameObject : MonoBehaviour
 
     public void Load(MyGameObject target, Dictionary<string, int> resources)
     {
-        Orders.Add(new Order(OrderType.Load, target, resources));
+        Orders.Add(new Order(OrderType.Load, target, resources, LoadTime, 3));
     }
 
     public void Move(Vector3 target)
@@ -108,12 +118,20 @@ public class MyGameObject : MonoBehaviour
 
     public void Unload(MyGameObject target, Dictionary<string, int> resources)
     {
-        Orders.Add(new Order(OrderType.Unload, target, resources));
+        Orders.Add(new Order(OrderType.Unload, target, resources, UnloadTime, 3));
     }
 
-    public void Wait()
+    public void Wait(int priority = -1)
     {
-        Orders.Add(new Order(OrderType.Wait, WaitTime));
+        // TODO: Test.
+        if (0 <= priority && priority < Orders.Count)
+        {
+            Orders.Insert(priority, new Order(OrderType.Wait, WaitTime)); 
+        }
+        else
+        {
+            Orders.Add(new Order(OrderType.Wait, WaitTime));
+        }
     }
 
     protected virtual void OnOrderAttack()
@@ -164,37 +182,50 @@ public class MyGameObject : MonoBehaviour
     {
         var order = Orders.First();
 
-        // Have all resources to give.
-        bool toGive = true;
+        // Update timer.
+        order.Timer.Update(Time.deltaTime);
+
+        if (order.Timer.Finished == false)
+        {
+            return;
+        }
+
+        // Check storage and capacity.
+        var resources = new Dictionary<string, int>();
 
         foreach (var i in order.Resources)
         {
-            if (order.TargetGameObject.Resources.CanRemove(i.Key, i.Value) == false)
+            var value = Mathf.Min(new int[] { i.Value, order.TargetGameObject.Resources.Storage(i.Key), Resources.Capacity(i.Key) });
+
+            if (value > 0)
             {
-                toGive = false;
-                break;
+                resources[i.Key] = value;
             }
         }
 
-        // Have all resources to take.
-        bool toTake = true;
-
-        foreach (var i in order.Resources)
+        // Move resources or wait for them.
+        if (resources.Count > 0)
         {
-            if (Resources.CanAdd(i.Key, i.Value) == false)
+            MoveResources(order.TargetGameObject, this, resources);
+
+            Orders.Pop();
+        }
+        else
+        {
+            order.Retry();
+            order.Timer.Reset();
+
+            if (order.CanRetry)
             {
-                toTake = false;
-                break;
+                Wait(0);
+            }
+            else
+            {
+                Orders.Pop();
+
+                GameObject.Find("Canvas").GetComponentInChildren<InGameMenuController>().Log("Failed to execute load order");
             }
         }
-
-        // Move resources.
-        if (toGive && toTake)
-        {
-            MoveResources(order.TargetGameObject, this, order.Resources);
-        }
-
-        Orders.Pop();
     }
 
     protected virtual void OnOrderMove()
@@ -339,37 +370,50 @@ public class MyGameObject : MonoBehaviour
     {
         var order = Orders.First();
 
-        // Have all resources to give.
-        bool toGive = true;
+        // Update timer.
+        order.Timer.Update(Time.deltaTime);
+
+        if (order.Timer.Finished == false)
+        {
+            return;
+        }
+
+        // Check storage and capacity.
+        var resources = new Dictionary<string, int>();
 
         foreach (var i in order.Resources)
         {
-            if (Resources.CanRemove(i.Key, i.Value) == false)
+            var value = Mathf.Min(new int[] { i.Value, Resources.Storage(i.Key), order.TargetGameObject.Resources.Capacity(i.Key) });
+
+            if (value > 0)
             {
-                toGive = false;
-                break;
+                resources[i.Key] = value;
             }
         }
 
-        // Have all resources to take.
-        bool toTake = true;
-
-        foreach (var i in order.Resources)
+        // Move resources or wait for them.
+        if (resources.Count > 0)
         {
-            if (order.TargetGameObject.Resources.CanAdd(i.Key, i.Value) == false)
+            MoveResources(this, order.TargetGameObject, resources);
+
+            Orders.Pop();
+        }
+        else
+        {
+            order.Retry();
+            order.Timer.Reset();
+
+            if (order.CanRetry)
             {
-                toTake = false;
-                break;
+                Wait(0);
+            }
+            else
+            {
+                Orders.Pop();
+
+                GameObject.Find("Canvas").GetComponentInChildren<InGameMenuController>().Log("Failed to execute load order");
             }
         }
-
-        // Move resources.
-        if (toGive && toTake)
-        {
-            MoveResources(this, order.TargetGameObject, order.Resources);
-        }
-
-        Orders.Pop();
     }
 
     protected virtual void OnOrderWait()
@@ -450,7 +494,11 @@ public class MyGameObject : MonoBehaviour
 
                 if (capacity > 0)
                 {
-                    game.Consumers.Add(this, resource.Name, Resources.Capacity(resource.Name));
+                    game.Consumers.Add(this, resource.Name, capacity);
+                }
+                else
+                {
+                    game.Consumers.Remove(this, resource.Name);
                 }
             }
 
@@ -460,7 +508,11 @@ public class MyGameObject : MonoBehaviour
 
                 if (storage > 0)
                 {
-                    game.Producers.Add(this, resource.Name, Resources.Storage(resource.Name));
+                    game.Producers.Add(this, resource.Name, storage);
+                }
+                else
+                {
+                    game.Producers.Remove(this, resource.Name);
                 }
             }
         }
@@ -475,7 +527,7 @@ public class MyGameObject : MonoBehaviour
             return new Vector3(transform.position.x, transform.position.y, transform.position.z + size.x * 0.75f);
         }
     }
-
+     
     public OrderContainer Orders { get; private set; }
 
     public Dictionary<OrderType, UnityAction> OrderHandlers { get; private set; }
@@ -486,9 +538,15 @@ public class MyGameObject : MonoBehaviour
 
     public float Health { get; protected set; } = 100;
 
-    public float ProduceTime { get; protected set; } = 3;
+    public float MaxHealth { get; protected set; } = 100;
+
+    public float LoadTime { get; protected set; } = 2;
+
+    public float ProduceTime { get; protected set; } = 4;
 
     public float Speed { get; protected set; } = 10;
 
-    public float WaitTime { get; protected set; } = 1;
+    public float UnloadTime { get; protected set; } = 2;
+
+    public float WaitTime { get; protected set; } = 2;
 }

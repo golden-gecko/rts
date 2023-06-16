@@ -24,52 +24,71 @@ public enum OrderType
 
 public class Order
 {
-    public Order(OrderType type)
+    public Order(OrderType type, int maxRetries = 0)
     {
         Type = type;
+        MaxRetries = maxRetries;
     }
 
-    public Order(OrderType type, MyGameObject target)
+    public Order(OrderType type, MyGameObject target, int maxRetries = 0)
     {
         Type = type;
         TargetGameObject = target;
+        MaxRetries = maxRetries;
     }
 
-    public Order(OrderType type, Vector3 target)
+    public Order(OrderType type, Vector3 target, int maxRetries = 0)
     {
         Type = type;
         TargetPosition = target;
+        MaxRetries = maxRetries;
     }
 
-    public Order(OrderType type, MyGameObject target, Dictionary<string, int> resources)
+    public Order(OrderType type, MyGameObject target, Dictionary<string, int> resources, float time, int maxRetries = 0)
     {
         Type = type;
         TargetGameObject = target;
         Resources = resources;
+        Timer = new Timer(time);
+        MaxRetries = maxRetries;
     }
 
-    public Order(OrderType type, MyGameObject source, MyGameObject target, Dictionary<string, int> resources)
+    public Order(OrderType type, MyGameObject source, MyGameObject target, Dictionary<string, int> resources, int maxRetries = 0)
     {
         Type = type;
         SourceGameObject = source;
         TargetGameObject = target;
         Resources = resources;
+        MaxRetries = maxRetries;
     }
 
-    public Order(OrderType type, float max)
+    public Order(OrderType type, float time, int maxRetries = 0)
     {
         Type = type;
-        Timer = new Timer(max);
+        Timer = new Timer(time);
+        MaxRetries = maxRetries;
     }
 
     public string GetInfo()
     {
-        if (Timer == null)
+        var info = string.Format("{0}", Type.ToString());
+
+        if (Timer != null)
         {
-            return string.Format("{0}", Type.ToString());
+            info += string.Format(" {0:0.}/{1}", Timer.Value, Timer.Max);
         }
 
-        return string.Format("{0} ({1:0.}/{2})", Type.ToString(), Timer.Value, Timer.Max);
+        if (MaxRetries > 0)
+        {
+            info += string.Format(" {0}/{1}", Retries, MaxRetries);
+        }
+
+        return info;
+    }
+
+    public void Retry()
+    {
+        Retries += 1;
     }
 
     public OrderType Type { get; }
@@ -83,4 +102,10 @@ public class Order
     public Dictionary<string, int> Resources { get; private set; }
 
     public Timer Timer { get; }
+
+    public int Retries { get; private set; } = 1;
+
+    public int MaxRetries { get; private set; } = 0;
+
+    public bool CanRetry { get => Retries < MaxRetries; }
 }

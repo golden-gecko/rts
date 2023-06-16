@@ -72,7 +72,7 @@ public class ResourceContainer : IEnumerable<KeyValuePair<string, Resource>>
 
         foreach (var i in Items)
         {
-            info += string.Format("\n  {0} {1}", i.Key, i.Value.Value);
+            info += string.Format("\n  {0} {1}/{2}", i.Key, i.Value.Value, i.Value.Max);
         }
 
         return info;

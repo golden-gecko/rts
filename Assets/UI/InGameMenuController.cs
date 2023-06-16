@@ -6,12 +6,19 @@ using UnityEngine.UIElements;
 
 public class InGameMenuController : MonoBehaviour
 {
+    public void Log(string message)
+    {
+        log.text = message;
+    }
+
     void Start()
     {
         hud = GameObject.FindGameObjectWithTag("HUD").GetComponent<HUD>();
 
         var uiDocument = GetComponent<UIDocument>();
         var rootVisualElement = uiDocument.rootVisualElement;
+
+        log = rootVisualElement.Q<Label>("Log");
 
         order = rootVisualElement.Q<Label>("Order");
         prefab = rootVisualElement.Q<Label>("Prefab");
@@ -185,6 +192,8 @@ public class InGameMenuController : MonoBehaviour
     public VisualTreeAsset templateButton;
     
     HUD hud;
+
+    Label log;
 
     Label order;
     Label prefab;
