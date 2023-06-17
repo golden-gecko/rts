@@ -1,43 +1,5 @@
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
-
-public class ConsumerProducerContainer
-{
-    public ConsumerProducerContainer()
-    {
-        Items = new Dictionary<MyGameObject, Dictionary<string, int>>();
-    }
-
-    public void Add(MyGameObject myGameObject, string name, int value)
-    {
-        if (Items.ContainsKey(myGameObject) == false)
-        {
-            Items[myGameObject] = new Dictionary<string, int>();
-        }
-
-        Items[myGameObject][name] = value;
-    }
-
-    public void Remove(MyGameObject myGameObject, string name)
-    {
-        if (Items.ContainsKey(myGameObject) == false)
-        {
-            Items[myGameObject] = new Dictionary<string, int>();
-        }
-
-        Items[myGameObject].Remove(name);
-    }
-
-    public void Clear()
-    {
-        Items.Clear();
-    }
-
-    public int Count { get => Items.Count; }
-
-    public Dictionary<MyGameObject, Dictionary<string, int>> Items { get; }
-}
 
 public class Game : MonoBehaviour
 {
@@ -47,30 +9,25 @@ public class Game : MonoBehaviour
         {
             foreach (var consumer in Consumers.Items)
             {
-                // Skip the same game objects in both lists.
-                if (producer.Key == consumer.Key)
+                if (producer.MyGameObject == consumer.MyGameObject)
                 {
                     continue;
                 }
 
-                foreach (var output in producer.Value)
+                if (producer.Name != consumer.Name)
                 {
-                    foreach (var input in consumer.Value)
-                    {
-                        // Skip different resources.
-                        if (output.Key != input.Key)
-                        {
-                            continue;
-                        }
-
-                        var resources = new Dictionary<string, int>()
-                        {
-                            { input.Key, input.Value },
-                        };
-
-                        return new Order(OrderType.Transport, producer.Key, consumer.Key, resources);
-                    }
+                    continue;
                 }
+
+                var resources = new Dictionary<string, int>()
+                {
+                    { producer.Name, producer.Value },
+                };
+
+                Consumers.MoveToEnd();
+                Producers.MoveToEnd();
+
+                return new Order(OrderType.Transport, producer.MyGameObject, consumer.MyGameObject, resources);
             }
         }
 

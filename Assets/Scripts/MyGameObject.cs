@@ -9,6 +9,7 @@ public class MyGameObject : MonoBehaviour
         Orders = new OrderContainer();
         Resources = new ResourceContainer();
         Recipes = new RecipeContainer();
+        Stats = new Stats();
 
         OrderHandlers = new Dictionary<OrderType, UnityAction>()
         {
@@ -209,6 +210,8 @@ public class MyGameObject : MonoBehaviour
             MoveResources(order.TargetGameObject, this, resources);
 
             Orders.Pop();
+
+            Stats.Add(Stats.OrdersExecuted, 1);
         }
         else
         {
@@ -222,6 +225,8 @@ public class MyGameObject : MonoBehaviour
             else
             {
                 Orders.Pop();
+
+                Stats.Add(Stats.OrdersFailed, 1);
 
                 GameObject.Find("Canvas").GetComponentInChildren<InGameMenuController>().Log("Failed to execute load order");
             }
@@ -254,10 +259,15 @@ public class MyGameObject : MonoBehaviour
         {
             transform.LookAt(new Vector3(target.x, transform.position.y, target.z));
             transform.Translate(Vector3.forward * distanceToTravel);
+
+            Stats.Add(Stats.DistanceDriven, distanceToTravel);
         }
         else
         {
             transform.position = target;
+
+            Stats.Add(Stats.DistanceDriven, distanceToTarget);
+            Stats.Add(Stats.OrdersExecuted, 1);
 
             Orders.Pop();
         }
@@ -336,6 +346,8 @@ public class MyGameObject : MonoBehaviour
                     order.Timer.Reset();
 
                     Orders.MoveToEnd();
+
+                    Stats.Add(Stats.OrdersExecuted, 1);
                 }
             }
         }
@@ -388,6 +400,8 @@ public class MyGameObject : MonoBehaviour
             if (value > 0)
             {
                 resources[i.Key] = value;
+
+                Stats.Add(Stats.ResourcesTransported, value);
             }
         }
 
@@ -397,6 +411,8 @@ public class MyGameObject : MonoBehaviour
             MoveResources(this, order.TargetGameObject, resources);
 
             Orders.Pop();
+
+            Stats.Add(Stats.OrdersExecuted, 1);
         }
         else
         {
@@ -411,6 +427,8 @@ public class MyGameObject : MonoBehaviour
             {
                 Orders.Pop();
 
+                Stats.Add(Stats.OrdersFailed, 1);
+
                 GameObject.Find("Canvas").GetComponentInChildren<InGameMenuController>().Log("Failed to execute load order");
             }
         }
@@ -422,11 +440,15 @@ public class MyGameObject : MonoBehaviour
 
         order.Timer.Update(Time.deltaTime);
 
+        Stats.Add(Stats.TimeWaited, Time.deltaTime);
+
         if (order.Timer.Finished)
         {
             order.Timer.Reset();
 
             Orders.Pop();
+
+            Stats.Add(Stats.OrdersExecuted, 1);
         }
     }
 
@@ -446,7 +468,8 @@ public class MyGameObject : MonoBehaviour
 
     public string GetInfo()
     {
-        return string.Format("ID: {0}\nName: {1}\nHP: {2}\nSpeed: {3}\nResources:{4}\nOrders: {5}", GetInstanceID(), name, Health, Speed, Resources.GetInfo(), Orders.GetInfo());
+        return string.Format("ID: {0}\nName: {1}\nHP: {2}\nSpeed: {3}\nResources:{4}\nOrders: {5}\nStats: {6}",
+            GetInstanceID(), name, Health, Speed, Resources.GetInfo(), Orders.GetInfo(), Stats.GetInfo());
     }
 
     void MoveResources(MyGameObject source, MyGameObject target, Dictionary<string, int> resources)
@@ -549,4 +572,6 @@ public class MyGameObject : MonoBehaviour
     public float UnloadTime { get; protected set; } = 2;
 
     public float WaitTime { get; protected set; } = 2;
+
+    public Stats Stats { get; private set; }
 }

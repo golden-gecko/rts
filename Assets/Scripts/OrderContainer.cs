@@ -1,6 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 
 public class OrderContainer : IEnumerable<Order>
 {
@@ -38,7 +37,7 @@ public class OrderContainer : IEnumerable<Order>
 
     public Order First()
     {
-        return Items.First();
+        return Items[0];
     }
 
     public void Insert(int index, Order item)
@@ -48,7 +47,7 @@ public class OrderContainer : IEnumerable<Order>
 
     public void MoveToEnd()
     {
-        Add(Items.First());
+        Add(Items[0]);
         Pop();
     }
 
