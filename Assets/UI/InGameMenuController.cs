@@ -1,18 +1,24 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
-using UnityEditor;
 using UnityEngine;
 using UnityEngine.UIElements;
 
 public class InGameMenuController : MonoBehaviour
 {
+    public void Log(string message)
+    {
+        log.text = message;
+    }
+
     void Start()
     {
         hud = GameObject.FindGameObjectWithTag("HUD").GetComponent<HUD>();
 
         var uiDocument = GetComponent<UIDocument>();
         var rootVisualElement = uiDocument.rootVisualElement;
+
+        log = rootVisualElement.Q<Label>("Log");
 
         order = rootVisualElement.Q<Label>("Order");
         prefab = rootVisualElement.Q<Label>("Prefab");
@@ -85,31 +91,43 @@ public class InGameMenuController : MonoBehaviour
     {
         prefabs.Clear();
 
-        foreach (var i in AssetDatabase.GetAllAssetPaths())
+        // TODO: AssetDatabase does not work outside editor.
+        var prefabList = new List<string>()
         {
-            if (i.Contains("Assets/Resources/") == false)
-            {
-                continue;
-            }
+            "Prefabs/Buildings/struct_Barracks_A_yup",
+            "Prefabs/Buildings/struct_Factory_Heavy_A_yup",
+            "Prefabs/Buildings/struct_Factory_Light_A_yup",
+            "Prefabs/Buildings/struct_Headquarters_A_yup",
+            "Prefabs/Buildings/struct_Misc_Building_B_yup",
+            "Prefabs/Buildings/struct_Radar_Outpost_A_yup",
+            "Prefabs/Buildings/struct_Refinery_A_yup",
+            "Prefabs/Buildings/struct_Research_Lab_A_yup",
+            "Prefabs/Buildings/struct_Spaceport_A_yup",
+            "Prefabs/Buildings/struct_Turret_Gun_A_yup",
+            "Prefabs/Buildings/struct_Turret_Missile_A_yup",
+            "Prefabs/Buildings/struct_Wall_A_yup",
+            "Prefabs/Vehicles/unit_Grav_Light_A_yup",
+            "Prefabs/Vehicles/unit_Harvester_A_yup",
+            "Prefabs/Vehicles/unit_Infantry_Light_B_yup",
+            "Prefabs/Vehicles/unit_Quad_A_yup",
+            "Prefabs/Vehicles/unit_Tank_Combat_A_yup",
+            "Prefabs/Vehicles/unit_Tank_Missile_A_yup",
+            "Prefabs/Vehicles/unit_Trike_A_yup",
+        };
 
-            if (i.Contains(".prefab") == false)
-            {
-                continue;
-            }
-
-
+        foreach (var i in prefabList)
+        {
             var buttonContainer = templateButton.Instantiate();
             var button = buttonContainer.Q<Button>();
-            var prefabPath = i.Replace("Assets/Resources/", "").Replace(".prefab", "");
-            var resource = Resources.Load<MyGameObject>(prefabPath);
+            var resource = Resources.Load<MyGameObject>(i);
 
-            button.RegisterCallback<ClickEvent>(ev => OnConstruct(prefabPath));
+            button.RegisterCallback<ClickEvent>(ev => OnConstruct(i));
             button.style.display = DisplayStyle.None;
-            button.text = Path.GetFileName(i).Replace(".prefab", "");
-            button.userData = prefabPath;
+            button.text = Path.GetFileName(i).Replace("struct_", "").Replace("unit_", "").Replace("_A_yup", "").Replace("_B_yup", "").Replace("_", " ");
+            button.userData = i;
 
             prefabs.Add(buttonContainer);
-            prefabsButtons[prefabPath] = button;
+            prefabsButtons[i] = button;
         }
     }
 
@@ -174,6 +192,8 @@ public class InGameMenuController : MonoBehaviour
     public VisualTreeAsset templateButton;
     
     HUD hud;
+
+    Label log;
 
     Label order;
     Label prefab;
