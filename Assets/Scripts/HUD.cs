@@ -75,6 +75,9 @@ public class HUD : MonoBehaviour
                 else
                 {
                     ProcessOrder();
+
+                    Order = OrderType.None;
+                    Prefab = string.Empty;
                 }
             }
 
@@ -86,12 +89,15 @@ public class HUD : MonoBehaviour
         }
         else if (Input.GetMouseButtonUp(1))
         {
-            if (Order != OrderType.None)
+            if (Order == OrderType.None)
+            {
+                ProcessOrder();
+            }
+            else
             {
                 Order = OrderType.None;
+                Prefab = string.Empty;
             }
-
-            ProcessOrder();
         }
     }
 
@@ -231,7 +237,15 @@ public class HUD : MonoBehaviour
 
     void Construct(Vector3 position)
     {
-        Instantiate<MyGameObject>(Resources.Load<MyGameObject>(Prefab), position, Quaternion.identity);
+        var resource = Resources.Load<MyGameObject>(Prefab);
+        var gameObject = Instantiate<MyGameObject>(resource, position, Quaternion.identity);
+
+        gameObject.State = MyGameObjectState.UnderConstruction;
+
+        foreach (var selected in Selected)
+        {
+            selected.Construct(gameObject, PrefabConstructionType.Structure);
+        }
     }
 
     void IssueOrder(Vector3 position)

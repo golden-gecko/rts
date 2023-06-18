@@ -33,6 +33,8 @@ public class InGameMenuController : MonoBehaviour
 
         CreateOrders();
         CreatePrefabs();
+
+        Log("");
     }
 
     void Update()
@@ -156,11 +158,14 @@ public class InGameMenuController : MonoBehaviour
 
     void UpdatePrefabs()
     {
-        var whitelist = new HashSet<string>();
+        var whitelist = new Dictionary<string, PrefabConstructionType>();
 
-        foreach (var i in hud.Selected)
+        foreach (var selected in hud.Selected)
         {
-            whitelist.UnionWith(i.Orders.PrefabWhitelist);
+            foreach (var prefab in selected.Orders.PrefabWhitelist)
+            {
+                whitelist[prefab.Key] = prefab.Value;
+            }
         }
 
         foreach (var i in prefabsButtons)
@@ -170,9 +175,9 @@ public class InGameMenuController : MonoBehaviour
 
         foreach (var i in whitelist)
         {
-            if (prefabsButtons.ContainsKey(i))
+            if (prefabsButtons.ContainsKey(i.Key))
             {
-                prefabsButtons[i].style.display = DisplayStyle.Flex;
+                prefabsButtons[i.Key].style.display = DisplayStyle.Flex;
             }
         }
     }

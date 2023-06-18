@@ -69,6 +69,15 @@ public class Order
         MaxRetries = maxRetries;
     }
 
+    public Order(OrderType type, MyGameObject target, PrefabConstructionType prefabConstructionType, float time, int maxRetries = 0)
+    {
+        Type = type;
+        TargetGameObject = target;
+        PrefabConstructionType = prefabConstructionType;
+        Timer = new Timer(time);
+        MaxRetries = maxRetries;
+    }
+
     public string GetInfo()
     {
         var info = string.Format("{0}", Type.ToString());
@@ -99,13 +108,15 @@ public class Order
 
     public Vector3 TargetPosition { get; }
 
-    public Dictionary<string, int> Resources { get; private set; }
+    public Dictionary<string, int> Resources { get; }
 
     public Timer Timer { get; }
 
+    public PrefabConstructionType PrefabConstructionType { get; }
+
     public int Retries { get; private set; } = 1;
 
-    public int MaxRetries { get; private set; } = 0;
+    public int MaxRetries { get; } = 0;
 
     public bool CanRetry { get => Retries < MaxRetries; }
 }

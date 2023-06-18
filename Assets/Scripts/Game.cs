@@ -3,7 +3,12 @@ using UnityEngine;
 
 public class Game : MonoBehaviour
 {
-    public Order CreateTransportOrder()
+    public Order CreateConstruction()
+    {
+        return null;
+    }
+
+    public Order CreateTransport()
     {
         foreach (var producer in Producers.Items)
         {
@@ -31,6 +36,10 @@ public class Game : MonoBehaviour
             }
         }
 
+        return null;
+    }
+    public Order CreateUnload()
+    {
         return null;
     }
 
