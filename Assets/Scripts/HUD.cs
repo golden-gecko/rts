@@ -416,6 +416,8 @@ public class HUD : MonoBehaviour
         }
     }
 
+    public PrefabConstructionType PrefabConstructionType { get; set; }
+
     private string prefab = string.Empty;
 
     private MyGameObject Cursor { get; set; } = null;

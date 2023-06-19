@@ -13,7 +13,7 @@ public class OrderContainer : IEnumerable<Order>
     {
         Items = new List<Order>();
         OrderWhitelist = new HashSet<OrderType>();
-        PrefabWhitelist = new Dictionary<string, PrefabConstructionType>();
+        PrefabWhitelist = new HashSet<string>();
     }
 
     public void Add(Order item)
@@ -26,9 +26,9 @@ public class OrderContainer : IEnumerable<Order>
         OrderWhitelist.Add(item);
     }
 
-    public void AllowPrefab(string item, PrefabConstructionType prefabConstructionType)
+    public void AllowPrefab(string item)
     {
-        PrefabWhitelist[item] = prefabConstructionType;
+        PrefabWhitelist.Add(item);
     }
 
     public bool Contains(OrderType item)
@@ -93,7 +93,7 @@ public class OrderContainer : IEnumerable<Order>
 
     public HashSet<OrderType> OrderWhitelist { get; }
 
-    public Dictionary<string, PrefabConstructionType> PrefabWhitelist { get; }
+    public HashSet<string> PrefabWhitelist { get; }
 
     public int Count { get => Items.Count; }
 }

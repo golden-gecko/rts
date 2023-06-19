@@ -79,6 +79,14 @@ public class Order
         MaxRetries = maxRetries;
     }
 
+    public Order(OrderType type, string prefab, float time, int maxRetries = 0)
+    {
+        Type = type;
+        Prefab = prefab;
+        Timer = new Timer(time);
+        MaxRetries = maxRetries;
+    }
+
     public string GetInfo()
     {
         var info = string.Format("{0}", Type.ToString());
@@ -112,6 +120,8 @@ public class Order
     public Dictionary<string, int> Resources { get; }
 
     public Timer Timer { get; }
+
+    public string Prefab { get; }
 
     public PrefabConstructionType PrefabConstructionType { get; }
 
