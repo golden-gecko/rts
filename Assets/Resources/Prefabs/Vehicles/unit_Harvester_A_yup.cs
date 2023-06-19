@@ -34,6 +34,52 @@ public class unit_Harvester_A_yup : MyGameObject
         Speed = 4;
     }
 
+    protected override void OnOrderConstruct()
+    {
+        var order = Orders.First();
+
+        if (order.TargetGameObject.IsConstructed())
+        {
+            order.Timer.Update(Time.deltaTime);
+
+            if (order.Timer.Finished)
+            {
+                order.TargetGameObject.State = MyGameObjectState.Operational;
+                order.Timer.Reset();
+
+                Orders.Pop();
+
+                Stats.Add(Stats.OrdersExecuted, 1);
+                Stats.Add(Stats.TimeConstructing, order.Timer.Max);
+            }
+        }
+        else if (IsCloseTo(order.TargetGameObject.Entrance) == false)
+        {
+            Move(order.TargetGameObject, 0);
+        }
+        else
+        {
+            // TODO: Wait for working to bring resources.
+            Wait(0);
+
+            /*
+            TODO: Fix this logic by keeping the priority when decomposing Transport order.
+
+            var game = GameObject.Find("Game").GetComponent<Game>();
+            var newOrder = game.CreateTransport(null, order.TargetGameObject);
+
+            if (order != null)
+            {
+                Orders.Insert(0, newOrder);
+            }
+            else
+            {
+                Wait(0);
+            }
+            */
+        }
+    }
+
     protected override void OnOrderIdle()
     {
         var game = GameObject.Find("Game").GetComponent<Game>();

@@ -8,12 +8,22 @@ public class Game : MonoBehaviour
         return null;
     }
 
-    public Order CreateTransport()
+    public Order CreateTransport(MyGameObject targetProducer = null, MyGameObject targetConsumer = null)
     {
         foreach (var producer in Producers.Items)
         {
+            if (targetProducer != null && producer.MyGameObject != targetProducer)
+            {
+                continue;
+            }
+
             foreach (var consumer in Consumers.Items)
             {
+                if (targetConsumer != null && consumer.MyGameObject != targetConsumer)
+                {
+                    continue;
+                }
+
                 if (producer.MyGameObject == consumer.MyGameObject)
                 {
                     continue;

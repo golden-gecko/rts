@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEditor.Build;
 using UnityEngine;
 using UnityEngine.Events;
@@ -69,11 +70,6 @@ public class MyGameObject : MonoBehaviour
                 RaiseConstructionResourceFlags();
                 break;
         }
-
-        if (IsConstructed())
-        {
-            State = MyGameObjectState.Operational;
-        }
     }
 
     public bool IsConstructed()
@@ -134,14 +130,30 @@ public class MyGameObject : MonoBehaviour
         Orders.Add(new Order(OrderType.Load, target, resources, LoadTime, 3));
     }
 
-    public void Move(Vector3 target)
+    public void Move(Vector3 target, int priority = -1)
     {
-        Orders.Add(new Order(OrderType.Move, target));
+        // TODO: Test.
+        if (0 <= priority && priority < Orders.Count)
+        {
+            Orders.Insert(priority, new Order(OrderType.Move, target, priority));
+        }
+        else
+        {
+            Orders.Add(new Order(OrderType.Move, target, priority));
+        }
     }
 
-    public void Move(MyGameObject target)
+    public void Move(MyGameObject target, int priority = -1)
     {
-        Orders.Add(new Order(OrderType.Move, target));
+        // TODO: Test.
+        if (0 <= priority && priority < Orders.Count)
+        {
+            Orders.Insert(priority, new Order(OrderType.Move, target, priority));
+        }
+        else
+        {
+            Orders.Add(new Order(OrderType.Move, target, priority));
+        }
     }
 
     public void Patrol(Vector3 target)
@@ -193,9 +205,6 @@ public class MyGameObject : MonoBehaviour
 
     protected virtual void OnOrderConstruct()
     {
-        // Add transport job if target has not enough resouces.
-
-        // TODO: Implement.
     }
 
     protected virtual void OnOrderFollow()
@@ -647,16 +656,29 @@ public class MyGameObject : MonoBehaviour
         }
     }
 
+    public bool IsCloseTo(Vector3 position)
+    {
+        var a = position;
+        var b = transform.position;
+
+        a.y = 0;
+        b.y = 0;
+
+        return (b - a).magnitude < 1;
+    }
+
     public Vector3 Entrance
     {
         get
         {
             var size = GetComponent<Collider>().bounds.size;
 
-            return new Vector3(transform.position.x, transform.position.y, transform.position.z + size.x * 0.75f);
+            return new Vector3(transform.position.x, transform.position.y, transform.position.z + size.z * 0.75f);
         }
     }
-     
+
+    public Vector3 Position { get => transform.position; }
+
     public OrderContainer Orders { get; private set; }
 
     public Dictionary<OrderType, UnityAction> OrderHandlers { get; private set; }
