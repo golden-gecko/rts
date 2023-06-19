@@ -105,14 +105,14 @@ public class MyGameObject : MonoBehaviour
         Orders.Add(new Order(OrderType.Attack, target));
     }
 
-    public void Construct(string prefab)
+    public void Construct(string prefab, PrefabConstructionType prefabConstructionType)
     {
-        Orders.Add(new Order(OrderType.Construct, prefab, ConstructionTime));
+        Orders.Add(new Order(OrderType.Construct, prefab, prefabConstructionType, ConstructionTime));
     }
 
-    public void Construct(MyGameObject target, PrefabConstructionType prefabConstructionType)
+    public void Construct(string prefab, PrefabConstructionType prefabConstructionType, Vector3 target)
     {
-        Orders.Add(new Order(OrderType.Construct, target, prefabConstructionType, ConstructionTime));
+        Orders.Add(new Order(OrderType.Construct, prefab, prefabConstructionType, target, ConstructionTime));
     }
 
     public void Guard(Vector3 target)

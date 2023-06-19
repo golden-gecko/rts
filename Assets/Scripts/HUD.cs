@@ -248,10 +248,10 @@ public class HUD : MonoBehaviour
 
     void Construct(Vector3 position)
     {
-        var resource = Resources.Load<MyGameObject>(Prefab);
-        var gameObject = Instantiate<MyGameObject>(resource, position, Quaternion.identity);
+        // var resource = Resources.Load<MyGameObject>(Prefab);
+        // var gameObject = Instantiate<MyGameObject>(resource, position, Quaternion.identity);
 
-        gameObject.State = MyGameObjectState.UnderConstruction;
+        // gameObject.State = MyGameObjectState.UnderConstruction;
 
         foreach (var selected in Selected)
         {
@@ -260,7 +260,7 @@ public class HUD : MonoBehaviour
                 selected.Orders.Clear();
             }
 
-            selected.Construct(gameObject, PrefabConstructionType.Structure);
+            selected.Construct(prefab, PrefabConstructionType.Structure, position);
         }
     }
 
@@ -268,7 +268,7 @@ public class HUD : MonoBehaviour
     {
         foreach (var selected in Selected)
         {
-            selected.Construct(prefab);
+            selected.Construct(prefab, PrefabConstructionType.Unit);
         }
     }
 

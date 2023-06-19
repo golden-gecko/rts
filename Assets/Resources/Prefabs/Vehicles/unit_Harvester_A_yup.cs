@@ -1,3 +1,4 @@
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class unit_Harvester_A_yup : MyGameObject
@@ -38,45 +39,44 @@ public class unit_Harvester_A_yup : MyGameObject
     {
         var order = Orders.First();
 
-        if (order.TargetGameObject.IsConstructed())
+        switch (order.PrefabConstructionType)
         {
-            order.Timer.Update(Time.deltaTime);
+            case PrefabConstructionType.Structure:
+                if (IsCloseTo(order.TargetPosition + new Vector3(0, 0, 1)) == false)
+                {
+                    Move(order.TargetPosition + new Vector3(0, 0, 1), 0); // TODO: Add offset based on object size.
+                }
+                else if (order.TargetGameObject == null)
+                {
+                    var resource = UnityEngine.Resources.Load<MyGameObject>(order.Prefab); // TODO: Remove name conflict.
 
-            if (order.Timer.Finished)
-            {
-                order.TargetGameObject.State = MyGameObjectState.Operational;
-                order.Timer.Reset();
+                    order.TargetGameObject = Instantiate<MyGameObject>(resource, order.TargetPosition, Quaternion.identity);
+                    order.TargetGameObject.State = MyGameObjectState.UnderConstruction;
+                }
+                else if (order.TargetGameObject.IsConstructed())
+                {
+                    order.Timer.Update(Time.deltaTime);
 
-                Orders.Pop();
+                    if (order.Timer.Finished)
+                    {
+                        order.TargetGameObject.State = MyGameObjectState.Operational;
+                        order.Timer.Reset();
 
-                Stats.Add(Stats.OrdersExecuted, 1);
-                Stats.Add(Stats.TimeConstructing, order.Timer.Max);
-            }
-        }
-        else if (IsCloseTo(order.TargetGameObject.Entrance) == false)
-        {
-            Move(order.TargetGameObject, 0);
-        }
-        else
-        {
-            // TODO: Wait for working to bring resources.
-            Wait(0);
+                        Orders.Pop();
 
-            /*
-            TODO: Fix this logic by keeping the priority when decomposing Transport order.
+                        Stats.Add(Stats.OrdersExecuted, 1);
+                        Stats.Add(Stats.TimeConstructing, order.Timer.Max);
+                    }
+                }
+                else
+                {
+                    Wait(0);
+                }
 
-            var game = GameObject.Find("Game").GetComponent<Game>();
-            var newOrder = game.CreateTransport(null, order.TargetGameObject);
+                break;
 
-            if (order != null)
-            {
-                Orders.Insert(0, newOrder);
-            }
-            else
-            {
-                Wait(0);
-            }
-            */
+            case PrefabConstructionType.Unit:
+                break;
         }
     }
 
