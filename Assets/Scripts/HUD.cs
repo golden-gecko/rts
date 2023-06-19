@@ -255,80 +255,93 @@ public class HUD : MonoBehaviour
 
         foreach (var selected in Selected)
         {
+            if (IsMulti() == false)
+            {
+                selected.Orders.Clear();
+            }
+
             selected.Construct(gameObject, PrefabConstructionType.Structure);
+        }
+    }
+
+    public void ConstructUnit()
+    {
+        foreach (var selected in Selected)
+        {
+            selected.Construct(prefab);
         }
     }
 
     void IssueOrder(Vector3 position)
     {
-        foreach (var gameObject in Selected)
+        foreach (var selected in Selected)
         {
             if (IsMulti() == false)
             {
-                gameObject.Orders.Clear();
+                selected.Orders.Clear();
             }
 
             switch (Order)
             {
                 case OrderType.Attack:
-                    gameObject.Attack(position);
+                    selected.Attack(position);
                     break;
 
                 case OrderType.Patrol:
-                    gameObject.Patrol(position);
+                    selected.Patrol(position);
                     break;
 
                 default:
-                    gameObject.Move(position);
+                    selected.Move(position);
                     break;
             }
         }
     }
 
-    void IssueOrder(MyGameObject myGameObject)
+    void IssueOrder(MyGameObject gameObject)
     {
-        foreach (var gameObject in Selected)
+        foreach (var selected in Selected)
         {
             switch (Order)
             {
                 case OrderType.Attack:
-                    gameObject.Attack(myGameObject);
+                    selected.Attack(gameObject);
                     break;
 
                 case OrderType.Guard:
-                    gameObject.Guard(myGameObject);
+                    selected.Guard(gameObject);
                     break;
 
                 case OrderType.Patrol:
-                    gameObject.Patrol(myGameObject);
+                    selected.Patrol(gameObject);
                     break;
             }
         }
     }
 
-    void Select(MyGameObject myGameObject)
+    void Select(MyGameObject gameObject)
     {
         if (IsMulti() == false)
         {
-            foreach (var i in Selected)
+            foreach (var selected in Selected)
             {
-                i.Select(false);
+                selected.Select(false);
             }
 
             Selected.Clear();
         }
 
-        if (myGameObject != null)
+        if (gameObject != null)
         {
-            if (IsMulti() && Selected.Contains(myGameObject))
+            if (IsMulti() && Selected.Contains(gameObject))
             {
-                myGameObject.Select(false);
-                Selected.Remove(myGameObject);
+                gameObject.Select(false);
+                Selected.Remove(gameObject);
             }
             else
             {
-                myGameObject.Select(true);
-                Selected.Add(myGameObject);
+                gameObject.Select(true);
+                Selected.Add(gameObject);
             }
         }
     }

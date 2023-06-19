@@ -201,15 +201,10 @@ public class InGameMenuController : MonoBehaviour
                 hud.Order = OrderType.Construct;
                 hud.Prefab = prefab;
                 hud.PrefabConstructionType = prefabConstructionType;
-
                 break;
 
             case PrefabConstructionType.Unit:
-                foreach (var selected in hud.Selected)
-                {
-                    selected.Construct(prefab);
-                }
-
+                hud.ConstructUnit();
                 break;
         }
     }
