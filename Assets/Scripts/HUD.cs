@@ -99,6 +99,17 @@ public class HUD : MonoBehaviour
                 Prefab = string.Empty;
             }
         }
+
+        if (Cursor != null)
+        {
+            var hitInfo = new RaycastHit();
+            var ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+
+            if (Physics.Raycast(ray, out hitInfo, 2000, LayerMask.GetMask("Terrain")))
+            {
+                Cursor.transform.position = hitInfo.point;
+            }
+        }
     }
 
     void ResetVisual()
@@ -373,8 +384,39 @@ public class HUD : MonoBehaviour
         set
         {
             prefab = value;
+
+            if (Cursor != null)
+            {
+                GameObject.Destroy(Cursor.gameObject);
+            }
+
+            if (prefab.Equals(string.Empty) == false)
+            {
+                var resource = Resources.Load<MyGameObject>(Prefab);
+                var gameObject = Instantiate<MyGameObject>(resource, Vector3.zero, Quaternion.identity);
+
+                gameObject.GetComponent<BoxCollider>().enabled = false;
+                gameObject.GetComponent<MyGameObject>().enabled = false;
+
+                foreach (var renderer in gameObject.GetComponentsInChildren<Renderer>())
+                {
+                    Color color;
+
+                    foreach (var material in renderer.materials)
+                    {
+                        color = material.color;
+                        color.a = 0.5f;
+
+                        material.color = color;
+                    }
+                }
+
+                Cursor = gameObject;
+            }
         }
     }
 
     private string prefab = string.Empty;
+
+    private MyGameObject Cursor { get; set; } = null;
 }
