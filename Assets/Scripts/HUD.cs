@@ -158,8 +158,17 @@ public class HUD : MonoBehaviour
 
     void SelectUnitInBox()
     {
-        // TODO: Not very efficient. Refactor into raycast.
-        foreach (var i in GameObject.FindObjectsByType<MyGameObject>(FindObjectsSortMode.None))
+        if (IsMulti() == false)
+        {
+            foreach (var selected in Selected)
+            {
+                selected.Select(false);
+            }
+
+            Selected.Clear();
+        }
+
+        foreach (var i in GameObject.FindObjectsByType<MyGameObject>(FindObjectsSortMode.None)) // TODO: Not very efficient. Refactor into raycast.
         {
             var screenPosition = Camera.main.WorldToScreenPoint(i.transform.position);
 
@@ -248,87 +257,98 @@ public class HUD : MonoBehaviour
 
     void Construct(Vector3 position)
     {
-        var resource = Resources.Load<MyGameObject>(Prefab);
-        var gameObject = Instantiate<MyGameObject>(resource, position, Quaternion.identity);
-
-        gameObject.State = MyGameObjectState.UnderConstruction;
-
         foreach (var selected in Selected)
         {
-            selected.Construct(gameObject, PrefabConstructionType.Structure);
+            if (IsMulti() == false)
+            {
+                selected.Orders.Clear();
+            }
+
+            selected.Construct(prefab, PrefabConstructionType.Structure, position);
         }
+    }
+
+    public void ConstructUnit()
+    {
+        foreach (var selected in Selected)
+        {
+            selected.Construct(prefab, PrefabConstructionType.Unit);
+        }
+
+        Order = OrderType.None;
+        Prefab = string.Empty;
     }
 
     void IssueOrder(Vector3 position)
     {
-        foreach (var gameObject in Selected)
+        foreach (var selected in Selected)
         {
             if (IsMulti() == false)
             {
-                gameObject.Orders.Clear();
+                selected.Orders.Clear();
             }
 
             switch (Order)
             {
                 case OrderType.Attack:
-                    gameObject.Attack(position);
+                    selected.Attack(position);
                     break;
 
                 case OrderType.Patrol:
-                    gameObject.Patrol(position);
+                    selected.Patrol(position);
                     break;
 
                 default:
-                    gameObject.Move(position);
+                    selected.Move(position);
                     break;
             }
         }
     }
 
-    void IssueOrder(MyGameObject myGameObject)
+    void IssueOrder(MyGameObject gameObject)
     {
-        foreach (var gameObject in Selected)
+        foreach (var selected in Selected)
         {
             switch (Order)
             {
                 case OrderType.Attack:
-                    gameObject.Attack(myGameObject);
+                    selected.Attack(gameObject);
                     break;
 
                 case OrderType.Guard:
-                    gameObject.Guard(myGameObject);
+                    selected.Guard(gameObject);
                     break;
 
                 case OrderType.Patrol:
-                    gameObject.Patrol(myGameObject);
+                    selected.Patrol(gameObject);
                     break;
             }
         }
     }
 
-    void Select(MyGameObject myGameObject)
+    void Select(MyGameObject gameObject)
     {
         if (IsMulti() == false)
         {
-            foreach (var i in Selected)
+            foreach (var selected in Selected)
             {
-                i.Select(false);
+                selected.Select(false);
             }
 
             Selected.Clear();
         }
 
-        if (myGameObject != null)
+        if (gameObject != null)
         {
-            if (IsMulti() && Selected.Contains(myGameObject))
+            if (IsMulti() && Selected.Contains(gameObject))
             {
-                myGameObject.Select(false);
-                Selected.Remove(myGameObject);
+                gameObject.Select(false);
+                Selected.Remove(gameObject);
             }
             else
             {
-                myGameObject.Select(true);
-                Selected.Add(myGameObject);
+                gameObject.Select(true);
+                Selected.Add(gameObject);
             }
         }
     }
@@ -390,7 +410,7 @@ public class HUD : MonoBehaviour
                 GameObject.Destroy(Cursor.gameObject);
             }
 
-            if (prefab.Equals(string.Empty) == false)
+            if (prefab.Equals(string.Empty) == false && PrefabConstructionType == PrefabConstructionType.Structure)
             {
                 var resource = Resources.Load<MyGameObject>(Prefab);
                 var gameObject = Instantiate<MyGameObject>(resource, Vector3.zero, Quaternion.identity);
@@ -415,6 +435,8 @@ public class HUD : MonoBehaviour
             }
         }
     }
+
+    public PrefabConstructionType PrefabConstructionType { get; set; }
 
     private string prefab = string.Empty;
 

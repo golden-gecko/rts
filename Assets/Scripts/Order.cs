@@ -70,11 +70,21 @@ public class Order
         MaxRetries = maxRetries;
     }
 
-    public Order(OrderType type, MyGameObject target, PrefabConstructionType prefabConstructionType, float time, int maxRetries = 0)
+    public Order(OrderType type, string prefab, PrefabConstructionType prefabConstructionType, float time, int maxRetries = 0)
     {
         Type = type;
-        TargetGameObject = target;
+        Prefab = prefab;
         PrefabConstructionType = prefabConstructionType;
+        Timer = new Timer(time);
+        MaxRetries = maxRetries;
+    }
+
+    public Order(OrderType type, string prefab, PrefabConstructionType prefabConstructionType, Vector3 target, float time, int maxRetries = 0)
+    {
+        Type = type;
+        Prefab = prefab;
+        PrefabConstructionType = prefabConstructionType;
+        TargetPosition = target;
         Timer = new Timer(time);
         MaxRetries = maxRetries;
     }
@@ -105,13 +115,15 @@ public class Order
 
     public MyGameObject SourceGameObject { get; }
 
-    public MyGameObject TargetGameObject { get; }
+    public MyGameObject TargetGameObject { get; set; }
 
     public Vector3 TargetPosition { get; }
 
     public Dictionary<string, int> Resources { get; }
 
     public Timer Timer { get; }
+
+    public string Prefab { get; }
 
     public PrefabConstructionType PrefabConstructionType { get; }
 
