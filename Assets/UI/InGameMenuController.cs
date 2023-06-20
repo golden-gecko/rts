@@ -195,12 +195,13 @@ public class InGameMenuController : MonoBehaviour
 
     void OnConstruct(string prefab, PrefabConstructionType prefabConstructionType)
     {
+        hud.Order = OrderType.Construct;
+        hud.PrefabConstructionType = prefabConstructionType; // TODO: Put both into class. Order is important.
+        hud.Prefab = prefab;
+
         switch (prefabConstructionType)
         {
             case PrefabConstructionType.Structure:
-                hud.Order = OrderType.Construct;
-                hud.Prefab = prefab;
-                hud.PrefabConstructionType = prefabConstructionType;
                 break;
 
             case PrefabConstructionType.Unit:

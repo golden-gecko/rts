@@ -158,8 +158,17 @@ public class HUD : MonoBehaviour
 
     void SelectUnitInBox()
     {
-        // TODO: Not very efficient. Refactor into raycast.
-        foreach (var i in GameObject.FindObjectsByType<MyGameObject>(FindObjectsSortMode.None))
+        if (IsMulti() == false)
+        {
+            foreach (var selected in Selected)
+            {
+                selected.Select(false);
+            }
+
+            Selected.Clear();
+        }
+
+        foreach (var i in GameObject.FindObjectsByType<MyGameObject>(FindObjectsSortMode.None)) // TODO: Not very efficient. Refactor into raycast.
         {
             var screenPosition = Camera.main.WorldToScreenPoint(i.transform.position);
 
@@ -248,11 +257,6 @@ public class HUD : MonoBehaviour
 
     void Construct(Vector3 position)
     {
-        // var resource = Resources.Load<MyGameObject>(Prefab);
-        // var gameObject = Instantiate<MyGameObject>(resource, position, Quaternion.identity);
-
-        // gameObject.State = MyGameObjectState.UnderConstruction;
-
         foreach (var selected in Selected)
         {
             if (IsMulti() == false)
@@ -270,6 +274,9 @@ public class HUD : MonoBehaviour
         {
             selected.Construct(prefab, PrefabConstructionType.Unit);
         }
+
+        Order = OrderType.None;
+        Prefab = string.Empty;
     }
 
     void IssueOrder(Vector3 position)
@@ -403,7 +410,7 @@ public class HUD : MonoBehaviour
                 GameObject.Destroy(Cursor.gameObject);
             }
 
-            if (prefab.Equals(string.Empty) == false)
+            if (prefab.Equals(string.Empty) == false && PrefabConstructionType == PrefabConstructionType.Structure)
             {
                 var resource = Resources.Load<MyGameObject>(Prefab);
                 var gameObject = Instantiate<MyGameObject>(resource, Vector3.zero, Quaternion.identity);

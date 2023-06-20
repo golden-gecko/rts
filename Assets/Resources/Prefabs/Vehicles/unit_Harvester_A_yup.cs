@@ -35,51 +35,6 @@ public class unit_Harvester_A_yup : MyGameObject
         Speed = 4;
     }
 
-    protected override void OnOrderConstruct()
-    {
-        var order = Orders.First();
-
-        switch (order.PrefabConstructionType)
-        {
-            case PrefabConstructionType.Structure:
-                if (IsCloseTo(order.TargetPosition + new Vector3(0, 0, 1)) == false)
-                {
-                    Move(order.TargetPosition + new Vector3(0, 0, 1), 0); // TODO: Add offset based on object size.
-                }
-                else if (order.TargetGameObject == null)
-                {
-                    var resource = UnityEngine.Resources.Load<MyGameObject>(order.Prefab); // TODO: Remove name conflict.
-
-                    order.TargetGameObject = Instantiate<MyGameObject>(resource, order.TargetPosition, Quaternion.identity);
-                    order.TargetGameObject.State = MyGameObjectState.UnderConstruction;
-                }
-                else if (order.TargetGameObject.IsConstructed())
-                {
-                    order.Timer.Update(Time.deltaTime);
-
-                    if (order.Timer.Finished)
-                    {
-                        order.TargetGameObject.State = MyGameObjectState.Operational;
-                        order.Timer.Reset();
-
-                        Orders.Pop();
-
-                        Stats.Add(Stats.OrdersExecuted, 1);
-                        Stats.Add(Stats.TimeConstructing, order.Timer.Max);
-                    }
-                }
-                else
-                {
-                    Wait(0);
-                }
-
-                break;
-
-            case PrefabConstructionType.Unit:
-                break;
-        }
-    }
-
     protected override void OnOrderIdle()
     {
         var game = GameObject.Find("Game").GetComponent<Game>();
