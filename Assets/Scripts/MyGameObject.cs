@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -217,8 +218,45 @@ public class MyGameObject : MonoBehaviour
         }
     }
 
+    private void GetPositionToAttack(Vector3 target)
+    {
+
+    }
+
     protected virtual void OnOrderAttack()
     {
+        Order order = Orders.First();
+
+        Vector3 position;
+
+        if (order.TargetGameObject == null)
+        {
+            position = order.TargetPosition;
+        }
+        else
+        {
+            position = order.TargetGameObject.Position;
+        }
+
+        GetPositionToAttack()
+
+        Vector3 direction = position - Position;
+        direction.Normalize();
+
+        if ((position - Position).magnitude > MissileRange)
+        {
+            Move(position);
+        }
+        else
+        {
+            MyGameObject resource = UnityEngine.Resources.Load<MyGameObject>(order.Prefab); // TODO: Remove name conflict.
+            MyGameObject missile = Instantiate<MyGameObject>(resource, Position, Quaternion.identity);
+
+            missile.Move(position);
+
+            Orders.Pop();
+            // Orders.MoveToEnd();
+        }
     }
 
     protected virtual void OnOrderConstruct()
@@ -818,20 +856,28 @@ public class MyGameObject : MonoBehaviour
 
     public RecipeContainer Recipes { get; private set; }
 
+    [field: SerializeField]
     public float ConstructionTime { get; protected set; } = 10;
 
+    [field: SerializeField]
     public float Health { get; protected set; } = 100;
 
+    [field: SerializeField]
     public float MaxHealth { get; protected set; } = 100;
 
+    [field: SerializeField]
     public float LoadTime { get; protected set; } = 2;
 
+    [field: SerializeField]
     public float ProduceTime { get; protected set; } = 4;
 
+    [field: SerializeField]
     public float Speed { get; protected set; } = 0;
 
+    [field: SerializeField]
     public float UnloadTime { get; protected set; } = 2;
 
+    [field: SerializeField]
     public float WaitTime { get; protected set; } = 2;
 
     public Stats Stats { get; private set; }
@@ -843,4 +889,19 @@ public class MyGameObject : MonoBehaviour
     public RecipeContainer ConstructionRecipies { get; private set; }
 
     public Vector3 RallyPoint { get; protected set; }
+
+    [field: SerializeField]
+    public Player Player { get; set; }
+    
+    [field: SerializeField]
+    public float Damage { get; protected set; } = 0;
+
+    [field: SerializeField]
+    public string MissilePrefab { get; protected set; }
+
+    [field: SerializeField]
+    public float MissileRange { get; protected set; } = 0;
+
+    [field: SerializeField]
+    public float ReloadTime { get; protected set; } = 0;
 }
