@@ -10,9 +10,6 @@ public class Missile : MyGameObject
 
         Damage = 10;
         Speed = 10;
-        MissilePrefab = "Prefabs/Missiles/Missile";
-        MissileRange = 100;
-        ReloadTime = 3;
     }
 
     protected override void OnOrderMove()

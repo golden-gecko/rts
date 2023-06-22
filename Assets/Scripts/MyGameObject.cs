@@ -12,9 +12,16 @@ public enum MyGameObjectState
 
 public class MyGameObject : MonoBehaviour
 {
-    protected virtual void Start()
+    protected virtual void Awake()
     {
+        // TODO: Move initialization of other objects to Awake method.
+
         Orders = new OrderContainer();
+        Orders.AllowOrder(OrderType.Explode);
+        Orders.AllowOrder(OrderType.Idle);
+        Orders.AllowOrder(OrderType.Stop);
+        Orders.AllowOrder(OrderType.Wait);
+
         Resources = new ResourceContainer();
         Recipes = new RecipeContainer();
         Stats = new Stats();
@@ -23,6 +30,8 @@ public class MyGameObject : MonoBehaviour
         {
             { OrderType.Attack, OnOrderAttack },
             { OrderType.Construct, OnOrderConstruct },
+            { OrderType.Destroy, OnOrderDestroy },
+            { OrderType.Explode, OnOrderExplode },
             { OrderType.Follow, OnOrderFollow },
             { OrderType.Guard, OnOrderGuard },
             { OrderType.Idle, OnOrderIdle },
@@ -31,16 +40,13 @@ public class MyGameObject : MonoBehaviour
             { OrderType.Patrol, OnOrderPatrol },
             { OrderType.Produce, OnOrderProduce },
             { OrderType.Rally, OnOrderRally },
+            { OrderType.Repair, OnOrderRepair },
             { OrderType.Research, OnOrderResearch },
             { OrderType.Stop, OnOrderStop },
             { OrderType.Transport, OnOrderTransport },
             { OrderType.Unload, OnOrderUnload },
             { OrderType.Wait, OnOrderWait },
         };
-
-        Orders.AllowOrder(OrderType.Idle);
-        Orders.AllowOrder(OrderType.Stop);
-        Orders.AllowOrder(OrderType.Wait);
 
         ConstructionResources = new ResourceContainer();
         ConstructionResources.Add("Metal", 0, 30);
@@ -52,7 +58,10 @@ public class MyGameObject : MonoBehaviour
         r1.Consume("Metal", 0);
 
         ConstructionRecipies.Add(r1);
+    }
 
+    protected virtual void Start()
+    {
         RallyPoint = Exit;
     }
 
@@ -74,6 +83,7 @@ public class MyGameObject : MonoBehaviour
         }
 
         AlignPositionToTerrain();
+        Reload();
     }
 
     public bool IsConstructed()
@@ -117,6 +127,11 @@ public class MyGameObject : MonoBehaviour
     public void Construct(string prefab, PrefabConstructionType prefabConstructionType, Vector3 target)
     {
         Orders.Add(new Order(OrderType.Construct, prefab, prefabConstructionType, target, ConstructionTime));
+    }
+
+    public void Explode()
+    {
+        Orders.Add(new Order(OrderType.Explode));
     }
 
     public void Guard(Vector3 target)
@@ -207,7 +222,6 @@ public class MyGameObject : MonoBehaviour
 
     public void Wait(int priority = -1)
     {
-        // TODO: Test.
         if (0 <= priority && priority < Orders.Count)
         {
             Orders.Insert(priority, new Order(OrderType.Wait, WaitTime)); 
@@ -218,9 +232,13 @@ public class MyGameObject : MonoBehaviour
         }
     }
 
-    private void GetPositionToAttack(Vector3 target)
+    private Vector3 GetPositionToAttack(Vector3 target)
     {
+        Vector3 direction = target - Position;
 
+        direction.Normalize();
+
+        return target - direction * MissileRangeMax * 0.9f;
     }
 
     protected virtual void OnOrderAttack()
@@ -238,24 +256,26 @@ public class MyGameObject : MonoBehaviour
             position = order.TargetGameObject.Position;
         }
 
-        GetPositionToAttack()
-
-        Vector3 direction = position - Position;
-        direction.Normalize();
-
-        if ((position - Position).magnitude > MissileRange)
+        if (IsCloseTo(position, MissileRangeMax) == false) // TODO: Test by adding visual debug.
         {
-            Move(position);
+            Move(GetPositionToAttack(position), 0); // TODO: Test by adding visual debug.
         }
         else
         {
-            MyGameObject resource = UnityEngine.Resources.Load<MyGameObject>(order.Prefab); // TODO: Remove name conflict.
-            MyGameObject missile = Instantiate<MyGameObject>(resource, Position, Quaternion.identity);
+            transform.LookAt(new Vector3(position.x, Position.y, position.z));
 
-            missile.Move(position);
+            if (ReloadTimer.Finished)
+            {
+                MyGameObject resource = UnityEngine.Resources.Load<MyGameObject>(MissilePrefab); // TODO: Remove name conflict.
+                MyGameObject missile = Instantiate<MyGameObject>(resource, Position, Quaternion.identity);
 
-            Orders.Pop();
-            // Orders.MoveToEnd();
+                missile.Move(position);
+                missile.Explode();
+
+                ReloadTimer.Reset();
+
+                Orders.MoveToEnd();
+            }
         }
     }
 
@@ -334,6 +354,19 @@ public class MyGameObject : MonoBehaviour
 
                 break;
         }
+    }
+
+    protected virtual void OnOrderDestroy()
+    {
+    }
+
+    protected virtual void OnOrderExplode()
+    {
+        var order = Orders.First();
+
+        // TODO: Destroy object.
+
+        Orders.Pop();
     }
 
     protected virtual void OnOrderFollow()
@@ -554,6 +587,10 @@ public class MyGameObject : MonoBehaviour
         RallyPoint = order.TargetPosition;
 
         Orders.Pop();
+    }
+
+    protected virtual void OnOrderRepair()
+    {
     }
 
     protected virtual void OnOrderResearch()
@@ -815,15 +852,23 @@ public class MyGameObject : MonoBehaviour
         }
     }
 
-    public bool IsCloseTo(Vector3 position)
+    protected bool IsCloseTo(Vector3 position, float radius = 1.0f)
     {
-        var a = position;
-        var b = transform.position;
+        Vector3 a = position;
+        Vector3 b = transform.position;
 
-        a.y = 0;
-        b.y = 0;
+        a.y = 0.0f;
+        b.y = 0.0f;
 
-        return (b - a).magnitude < 1;
+        return (b - a).magnitude < radius;
+    }
+
+    protected void Reload()
+    {
+        if (ReloadTimer != null)
+        {
+            ReloadTimer.Update(Time.deltaTime);
+        }
     }
 
     public Vector3 Entrance
@@ -900,8 +945,10 @@ public class MyGameObject : MonoBehaviour
     public string MissilePrefab { get; protected set; }
 
     [field: SerializeField]
-    public float MissileRange { get; protected set; } = 0;
+    public float MissileRangeMax { get; protected set; } = 0;
 
     [field: SerializeField]
-    public float ReloadTime { get; protected set; } = 0;
+    public float MissileRangeMin { get; protected set; } = 0; // TODO: Implement.
+
+    public Timer ReloadTimer { get; protected set; }
 }

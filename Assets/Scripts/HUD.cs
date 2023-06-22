@@ -76,8 +76,11 @@ public class HUD : MonoBehaviour
                 {
                     ProcessOrder();
 
-                    Order = OrderType.None;
-                    Prefab = string.Empty;
+                    if (IsMulti() == false)
+                    {
+                        Order = OrderType.None;
+                        Prefab = string.Empty;
+                    }
                 }
             }
 
@@ -95,8 +98,11 @@ public class HUD : MonoBehaviour
             }
             else
             {
-                Order = OrderType.None;
-                Prefab = string.Empty;
+                if (IsMulti() == false)
+                {
+                    Order = OrderType.None;
+                    Prefab = string.Empty;
+                }
             }
         }
 
@@ -323,6 +329,11 @@ public class HUD : MonoBehaviour
     {
         foreach (var selected in Selected)
         {
+            if (IsMulti() == false)
+            {
+                selected.Orders.Clear();
+            }
+
             switch (Order)
             {
                 case OrderType.Attack:

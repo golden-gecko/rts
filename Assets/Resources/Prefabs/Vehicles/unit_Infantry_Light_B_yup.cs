@@ -11,5 +11,8 @@ public class unit_Infantry_Light_B_yup : MyGameObject
         Orders.AllowOrder(OrderType.Patrol);
 
         Speed = 2;
+        MissilePrefab = "Prefabs/Missiles/Missile";
+        MissileRangeMax = 5;
+        ReloadTimer = new Timer(1.0f);
     }
 }
