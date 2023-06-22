@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Events;
+using static UnityEngine.GraphicsBuffer;
 
 public enum MyGameObjectState
 {
@@ -68,6 +69,11 @@ public class MyGameObject : MonoBehaviour
 
     protected virtual void Update()
     {
+        if (Health <= 0.0f)
+        {
+            Destroy(0);
+        }
+
         switch (State)
         {
             case MyGameObjectState.Operational:
@@ -87,17 +93,11 @@ public class MyGameObject : MonoBehaviour
         Reload();
     }
 
-    protected void OnTriggerEnter(Collider other)
+    public void OnDamage(float damage)
     {
-        MyGameObject gameObject = other.GetComponent<MyGameObject>();
+        Health -= damage;
 
-        if (gameObject != null)
-        {
-            if (Player != gameObject.Player)
-            {
-                gameObject.OnDamage(Damage);
-            }
-        }
+        Stats.Add(Stats.DamageTaken, damage);
     }
 
     public bool IsConstructed()
@@ -143,14 +143,28 @@ public class MyGameObject : MonoBehaviour
         Orders.Add(new Order(OrderType.Construct, prefab, prefabConstructionType, target, ConstructionTime));
     }
 
-    public void Destroy()
+    public void Destroy(int priority = -1)
     {
-        Orders.Add(new Order(OrderType.Destroy));
+        if (0 <= priority && priority < Orders.Count)
+        {
+            Orders.Insert(priority, new Order(OrderType.Destroy));
+        }
+        else
+        {
+            Orders.Add(new Order(OrderType.Destroy));
+        }
     }
 
-    public void Explode()
+    public void Explode(int priority = -1)
     {
-        Orders.Add(new Order(OrderType.Explode));
+        if (0 <= priority && priority < Orders.Count)
+        {
+            Orders.Insert(priority, new Order(OrderType.Explode));
+        }
+        else
+        {
+            Orders.Add(new Order(OrderType.Explode));
+        }
     }
 
     public void Guard(Vector3 target)
@@ -294,6 +308,8 @@ public class MyGameObject : MonoBehaviour
                 ReloadTimer.Reset();
 
                 Orders.MoveToEnd();
+
+                Stats.Add(Stats.MissilesFired, 1);
             }
         }
     }
@@ -382,11 +398,7 @@ public class MyGameObject : MonoBehaviour
 
     protected virtual void OnOrderExplode()
     {
-        var order = Orders.First();
-
-        Destroy();
-
-        Orders.Pop();
+        Destroy(0);
     }
 
     protected virtual void OnOrderFollow()
@@ -744,7 +756,7 @@ public class MyGameObject : MonoBehaviour
                 return string.Format("ID: {0}\nName: {1}\nResources:{2}", GetInstanceID(), name, ConstructionResources.GetInfo());
         }
 
-        string info = string.Format("ID: {0}\nName: {1}\nHP: {2}", GetInstanceID(), name, Health);
+        string info = string.Format("ID: {0}\nName: {1}\nHP: {2}/{3}", GetInstanceID(), name, Health, MaxHealth);
 
         if (Speed > 0)
         {

@@ -2,6 +2,21 @@ using UnityEngine;
 
 public class Missile : MyGameObject
 {
+    protected void OnTriggerEnter(Collider other)
+    {
+        MyGameObject gameObject = other.GetComponent<MyGameObject>();
+
+        if (gameObject != null)
+        {
+            if (Player != gameObject.Player)
+            {
+                gameObject.OnDamage(Damage);
+
+                Explode(0);
+            }
+        }
+    }
+
     protected override void Start()
     {
         base.Start();

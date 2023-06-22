@@ -2,7 +2,10 @@ using System.Collections.Generic;
 
 public class Stats
 {
+    public static string DamageDealt = "Damage Dealt";
+    public static string DamageTaken = "Damage Taken";
     public static string DistanceDriven = "Distance Driven";
+    public static string MissilesFired = "Missiles Fired";
     public static string OrdersExecuted = "Orders Executed";
     public static string OrdersFailed = "Orders Failed";
     public static string ResourcesProduced = "Resources Produced";
