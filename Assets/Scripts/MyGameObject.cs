@@ -17,6 +17,7 @@ public class MyGameObject : MonoBehaviour
         // TODO: Move initialization of other objects to Awake method.
 
         Orders = new OrderContainer();
+        Orders.AllowOrder(OrderType.Destroy);
         Orders.AllowOrder(OrderType.Explode);
         Orders.AllowOrder(OrderType.Idle);
         Orders.AllowOrder(OrderType.Stop);
@@ -86,6 +87,19 @@ public class MyGameObject : MonoBehaviour
         Reload();
     }
 
+    protected void OnTriggerEnter(Collider other)
+    {
+        MyGameObject gameObject = other.GetComponent<MyGameObject>();
+
+        if (gameObject != null)
+        {
+            if (Player != gameObject.Player)
+            {
+                gameObject.OnDamage(Damage);
+            }
+        }
+    }
+
     public bool IsConstructed()
     {
         foreach (var i in ConstructionResources)
@@ -127,6 +141,11 @@ public class MyGameObject : MonoBehaviour
     public void Construct(string prefab, PrefabConstructionType prefabConstructionType, Vector3 target)
     {
         Orders.Add(new Order(OrderType.Construct, prefab, prefabConstructionType, target, ConstructionTime));
+    }
+
+    public void Destroy()
+    {
+        Orders.Add(new Order(OrderType.Destroy));
     }
 
     public void Explode()
@@ -358,13 +377,14 @@ public class MyGameObject : MonoBehaviour
 
     protected virtual void OnOrderDestroy()
     {
+        GameObject.Destroy(gameObject);
     }
 
     protected virtual void OnOrderExplode()
     {
         var order = Orders.First();
 
-        // TODO: Destroy object.
+        Destroy();
 
         Orders.Pop();
     }

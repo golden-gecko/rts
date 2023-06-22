@@ -186,7 +186,7 @@ BoxCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
@@ -204,6 +204,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8250af67065492040aceab3a8520dd4a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  <ConstructionTime>k__BackingField: 10
+  <Health>k__BackingField: 100
+  <MaxHealth>k__BackingField: 100
+  <LoadTime>k__BackingField: 2
+  <ProduceTime>k__BackingField: 4
+  <Speed>k__BackingField: 0
+  <UnloadTime>k__BackingField: 2
+  <WaitTime>k__BackingField: 2
+  <Player>k__BackingField: {fileID: 0}
+  <Damage>k__BackingField: 0
+  <MissilePrefab>k__BackingField: 
+  <MissileRangeMax>k__BackingField: 0
+  <MissileRangeMin>k__BackingField: 0
 --- !u!1 &7983128493678465121
 GameObject:
   m_ObjectHideFlags: 0
