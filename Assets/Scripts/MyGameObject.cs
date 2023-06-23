@@ -71,7 +71,7 @@ public class MyGameObject : MonoBehaviour
     {
         if (Health <= 0.0f)
         {
-            Destroy(0);
+            Explode(0);
         }
 
         switch (State)
@@ -394,11 +394,18 @@ public class MyGameObject : MonoBehaviour
     protected virtual void OnOrderDestroy()
     {
         GameObject.Destroy(gameObject);
+
+        Orders.Pop();
     }
 
     protected virtual void OnOrderExplode()
     {
+        Object resource = UnityEngine.Resources.Load("Effects/WFXMR_ExplosiveSmoke"); // TODO: Remove name conflict.
+        Object effect = Instantiate(resource, Position, Quaternion.identity);
+
         Destroy(0);
+
+        Orders.Pop();
     }
 
     protected virtual void OnOrderFollow()
@@ -756,11 +763,16 @@ public class MyGameObject : MonoBehaviour
                 return string.Format("ID: {0}\nName: {1}\nResources:{2}", GetInstanceID(), name, ConstructionResources.GetInfo());
         }
 
-        string info = string.Format("ID: {0}\nName: {1}\nHP: {2}/{3}", GetInstanceID(), name, Health, MaxHealth);
+        string info = string.Format("ID: {0}\nName: {1}\nHP: {2:0.}/{3:0.}", GetInstanceID(), name, Health, MaxHealth);
 
         if (Speed > 0)
         {
-            info += string.Format("\nSpeed: {0}", Speed);
+            info += string.Format("\nSpeed: {0:0.}", Speed);
+        }
+
+        if (ReloadTimer != null)
+        {
+            info += string.Format("\nReload: {0:0.}/{1:0.}", ReloadTimer.Value, ReloadTimer.Max);
         }
 
         info += string.Format("\nResources:{0}\nOrders: {1}\nStats: {2}", Resources.GetInfo(), Orders.GetInfo(), Stats.GetInfo());
