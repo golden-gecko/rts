@@ -76,7 +76,6 @@ public class InGameMenuController : MonoBehaviour
         var forbiddenInUI = new List<OrderType>()
         {
             OrderType.Construct,
-            OrderType.Destroy,
             OrderType.Idle,
             OrderType.None,
             OrderType.Produce,
@@ -111,25 +110,25 @@ public class InGameMenuController : MonoBehaviour
         // TODO: AssetDatabase does not work outside editor.
         var prefabList = new Dictionary<string, PrefabConstructionType>()
         {
-            { "Prefabs/Buildings/struct_Barracks_A_yup", PrefabConstructionType.Structure },
-            { "Prefabs/Buildings/struct_Factory_Heavy_A_yup", PrefabConstructionType.Structure },
-            { "Prefabs/Buildings/struct_Factory_Light_A_yup", PrefabConstructionType.Structure },
-            { "Prefabs/Buildings/struct_Headquarters_A_yup", PrefabConstructionType.Structure },
-            { "Prefabs/Buildings/struct_Misc_Building_B_yup", PrefabConstructionType.Structure },
-            { "Prefabs/Buildings/struct_Radar_Outpost_A_yup", PrefabConstructionType.Structure },
-            { "Prefabs/Buildings/struct_Refinery_A_yup", PrefabConstructionType.Structure },
-            { "Prefabs/Buildings/struct_Research_Lab_A_yup", PrefabConstructionType.Structure },
-            { "Prefabs/Buildings/struct_Spaceport_A_yup", PrefabConstructionType.Structure },
-            { "Prefabs/Buildings/struct_Turret_Gun_A_yup", PrefabConstructionType.Structure },
-            { "Prefabs/Buildings/struct_Turret_Missile_A_yup", PrefabConstructionType.Structure },
-            { "Prefabs/Buildings/struct_Wall_A_yup", PrefabConstructionType.Structure },
-            { "Prefabs/Vehicles/unit_Grav_Light_A_yup", PrefabConstructionType.Unit },
-            { "Prefabs/Vehicles/unit_Harvester_A_yup", PrefabConstructionType.Unit },
-            { "Prefabs/Vehicles/unit_Infantry_Light_B_yup", PrefabConstructionType.Unit },
-            { "Prefabs/Vehicles/unit_Quad_A_yup", PrefabConstructionType.Unit },
-            { "Prefabs/Vehicles/unit_Tank_Combat_A_yup", PrefabConstructionType.Unit },
-            { "Prefabs/Vehicles/unit_Tank_Missile_A_yup", PrefabConstructionType.Unit },
-            { "Prefabs/Vehicles/unit_Trike_A_yup", PrefabConstructionType.Unit },
+            { "Buildings/struct_Barracks_A_yup", PrefabConstructionType.Structure },
+            { "Buildings/struct_Factory_Heavy_A_yup", PrefabConstructionType.Structure },
+            { "Buildings/struct_Factory_Light_A_yup", PrefabConstructionType.Structure },
+            { "Buildings/struct_Headquarters_A_yup", PrefabConstructionType.Structure },
+            { "Buildings/struct_Misc_Building_B_yup", PrefabConstructionType.Structure },
+            { "Buildings/struct_Radar_Outpost_A_yup", PrefabConstructionType.Structure },
+            { "Buildings/struct_Refinery_A_yup", PrefabConstructionType.Structure },
+            { "Buildings/struct_Research_Lab_A_yup", PrefabConstructionType.Structure },
+            { "Buildings/struct_Spaceport_A_yup", PrefabConstructionType.Structure },
+            { "Buildings/struct_Turret_Gun_A_yup", PrefabConstructionType.Structure },
+            { "Buildings/struct_Turret_Missile_A_yup", PrefabConstructionType.Structure },
+            { "Buildings/struct_Wall_A_yup", PrefabConstructionType.Structure },
+            { "Vehicles/unit_Grav_Light_A_yup", PrefabConstructionType.Unit },
+            { "Vehicles/unit_Harvester_A_yup", PrefabConstructionType.Unit },
+            { "Vehicles/unit_Infantry_Light_B_yup", PrefabConstructionType.Unit },
+            { "Vehicles/unit_Quad_A_yup", PrefabConstructionType.Unit },
+            { "Vehicles/unit_Tank_Combat_A_yup", PrefabConstructionType.Unit },
+            { "Vehicles/unit_Tank_Missile_A_yup", PrefabConstructionType.Unit },
+            { "Vehicles/unit_Trike_A_yup", PrefabConstructionType.Unit },
         };
 
         foreach (var i in prefabList)
