@@ -31,7 +31,9 @@ public class unit_Harvester_A_yup : MyGameObject
         Resources.Add("Metal Ore", 0, 10);
         Resources.Add("Wood", 0, 10);
 
-        Speed = 4;
+        Speed = 4.0f;
+        Health = 50.0f;
+        MaxHealth = 50.0f;
     }
 
     protected override void OnOrderIdle()
@@ -40,7 +42,7 @@ public class unit_Harvester_A_yup : MyGameObject
 
         Order order;
 
-        order = game.CreateUnload();
+        order = game.CreateOrderUnload();
 
         if (order != null)
         {
@@ -49,7 +51,7 @@ public class unit_Harvester_A_yup : MyGameObject
             return;
         }
 
-        order = game.CreateTransport();
+        order = game.CreateOrderTransport();
 
         if (order != null)
         {
@@ -58,7 +60,7 @@ public class unit_Harvester_A_yup : MyGameObject
             return;
         }
 
-        order = game.CreateConstruction();
+        order = game.CreateOrderConstruction();
 
         if (order != null)
         {

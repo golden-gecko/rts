@@ -5,5 +5,8 @@ public class struct_Turret_Missile_A_yup : MyGameObject
         base.Awake();
 
         Orders.AllowOrder(OrderType.Attack);
+
+        Health = 100.0f;
+        MaxHealth = 100.0f;
     }
 }

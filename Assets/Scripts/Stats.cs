@@ -33,7 +33,7 @@ public class Stats
 
     public string GetInfo()
     {
-        var info = string.Empty;
+        string info = string.Empty;
 
         foreach (var i in Items)
         {

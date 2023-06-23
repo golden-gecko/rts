@@ -8,9 +8,11 @@ public class unit_Tank_Combat_A_yup : MyGameObject
         Orders.AllowOrder(OrderType.Move);
         Orders.AllowOrder(OrderType.Patrol);
 
-        Speed = 6;
+        Speed = 6.0f;
         MissilePrefab = "Missiles/Missile";
-        MissileRangeMax = 30;
+        MissileRangeMax = 30.0f;
         ReloadTimer = new Timer(5.0f);
+        Health = 50.0f;
+        MaxHealth = 50.0f;
     }
 }

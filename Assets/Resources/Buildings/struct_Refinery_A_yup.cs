@@ -23,6 +23,9 @@ public class struct_Refinery_A_yup : MyGameObject
 
         Recipes.Add(r1);
         Recipes.Add(r2);
+
+        Health = 100.0f;
+        MaxHealth = 100.0f;
     }
 
     protected override void OnOrderIdle()

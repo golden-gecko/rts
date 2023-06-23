@@ -51,6 +51,5 @@ public class Resource
 
     public int Value { get; private set; }
 
-    // TODO: Hide setter.
-    public int Max { get; set; }
+    public int Max { get; set; } // TODO: Hide setter.
 }

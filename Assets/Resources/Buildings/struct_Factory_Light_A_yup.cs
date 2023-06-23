@@ -20,5 +20,8 @@ public class struct_Factory_Light_A_yup : MyGameObject
         r1.Consume("Metal", 0);
 
         Recipes.Add(r1);
+
+        Health = 100.0f;
+        MaxHealth = 100.0f;
     }
 }

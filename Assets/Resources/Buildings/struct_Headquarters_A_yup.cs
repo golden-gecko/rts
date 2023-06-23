@@ -25,5 +25,8 @@ public class struct_Headquarters_A_yup : MyGameObject
         r1.Produce("Wood", 0);
 
         Recipes.Add(r1);
+
+        Health = 100.0f;
+        MaxHealth = 100.0f;
     }
 }

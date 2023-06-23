@@ -2,13 +2,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
-public enum MyGameObjectState
-{
-    Operational,
-    UnderAssembly,
-    UnderConstruction,
-}
-
 public class MyGameObject : MonoBehaviour
 {
     protected virtual void Awake()
@@ -915,6 +908,33 @@ public class MyGameObject : MonoBehaviour
         }
     }
 
+    [field: SerializeField]
+    public Player Player { get; set; }
+
+    public float ConstructionTime { get; protected set; } = 0.0f;
+
+    public float Health { get; protected set; } = 0.0f;
+
+    public float MaxHealth { get; protected set; } = 0.0f;
+
+    public float LoadTime { get; protected set; } = 0.0f;
+
+    public float ProduceTime { get; protected set; } = 0.0f;
+
+    public float Speed { get; protected set; } = 0.0f;
+
+    public float UnloadTime { get; protected set; } = 0.0f;
+
+    public float WaitTime { get; protected set; } = 0.0f;
+
+    public float Damage { get; protected set; } = 0.0f;
+
+    public string MissilePrefab { get; protected set; } = string.Empty;
+
+    public float MissileRangeMax { get; protected set; } = 0.0f;
+
+    public float MissileRangeMin { get; protected set; } = 0.0f; // TODO: Implement.
+
     public Vector3 Position { get => transform.position; }
 
     public OrderContainer Orders { get; private set; }
@@ -925,30 +945,6 @@ public class MyGameObject : MonoBehaviour
 
     public RecipeContainer Recipes { get; private set; }
 
-    [field: SerializeField]
-    public float ConstructionTime { get; protected set; } = 10;
-
-    [field: SerializeField]
-    public float Health { get; protected set; } = 100;
-
-    [field: SerializeField]
-    public float MaxHealth { get; protected set; } = 100;
-
-    [field: SerializeField]
-    public float LoadTime { get; protected set; } = 2;
-
-    [field: SerializeField]
-    public float ProduceTime { get; protected set; } = 4;
-
-    [field: SerializeField]
-    public float Speed { get; protected set; } = 0;
-
-    [field: SerializeField]
-    public float UnloadTime { get; protected set; } = 2;
-
-    [field: SerializeField]
-    public float WaitTime { get; protected set; } = 2;
-
     public Stats Stats { get; private set; }
 
     public MyGameObjectState State { get; set; } = MyGameObjectState.Operational;
@@ -958,24 +954,8 @@ public class MyGameObject : MonoBehaviour
     public RecipeContainer ConstructionRecipies { get; private set; }
 
     public Vector3 RallyPoint { get; protected set; }
-
-    [field: SerializeField]
-    public Player Player { get; set; }
     
-    [field: SerializeField]
-    public float Damage { get; protected set; } = 0;
-
-    [field: SerializeField]
-    public string MissilePrefab { get; protected set; }
-
-    [field: SerializeField]
-    public float MissileRangeMax { get; protected set; } = 0;
-
-    [field: SerializeField]
-    public float MissileRangeMin { get; protected set; } = 0; // TODO: Implement.
-
     public Timer ReloadTimer { get; protected set; }
 
-    [field: SerializeField]
     public MyGameObject Parent { get; protected set; }
 }

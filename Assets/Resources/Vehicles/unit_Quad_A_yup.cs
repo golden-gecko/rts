@@ -12,5 +12,7 @@ public class unit_Quad_A_yup : MyGameObject
         MissilePrefab = "Missiles/Missile";
         MissileRangeMax = 20.0f;
         ReloadTimer = new Timer(3.0f);
+        Health = 50.0f;
+        MaxHealth = 50.0f;
     }
 }
