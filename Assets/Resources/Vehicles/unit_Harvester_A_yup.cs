@@ -1,11 +1,10 @@
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class unit_Harvester_A_yup : MyGameObject
 {
-    protected override void Start()
+    protected override void Awake()
     {
-        base.Start();
+        base.Awake();
 
         Orders.AllowOrder(OrderType.Construct);
         Orders.AllowOrder(OrderType.Load);

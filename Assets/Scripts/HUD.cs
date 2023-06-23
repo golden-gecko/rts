@@ -253,17 +253,25 @@ public class HUD : MonoBehaviour
         }
     }
 
+    public void Destroy()
+    {
+        foreach (MyGameObject selected in Selected)
+        {
+            selected.Destroy();
+        }
+    }
+
     public void Stop()
     {
-        foreach (var item in Selected)
+        foreach (MyGameObject selected in Selected)
         {
-            item.Stop();
+            selected.Stop();
         }
     }
 
     void Construct(Vector3 position)
     {
-        foreach (var selected in Selected)
+        foreach (MyGameObject selected in Selected)
         {
             if (IsMulti() == false)
             {
@@ -276,7 +284,7 @@ public class HUD : MonoBehaviour
 
     public void ConstructUnit()
     {
-        foreach (var selected in Selected)
+        foreach (MyGameObject selected in Selected)
         {
             selected.Construct(prefab, PrefabConstructionType.Unit);
         }
@@ -287,7 +295,7 @@ public class HUD : MonoBehaviour
 
     void IssueOrder(Vector3 position)
     {
-        foreach (var selected in Selected)
+        foreach (MyGameObject selected in Selected)
         {
             switch (Order)
             {
@@ -404,15 +412,21 @@ public class HUD : MonoBehaviour
 
         set
         {
-            if (value == OrderType.Stop)
+            switch (value)
             {
-                order = OrderType.None;
+                case OrderType.Destroy:
+                    order = OrderType.None;
+                    Destroy();
+                    break;
 
-                Stop();
-            }
-            else
-            {
-                order = value;
+                case OrderType.Stop:
+                    order = OrderType.None;
+                    Stop();
+                    break;
+
+                default:
+                    order = value;
+                    break;
             }
         }
     }

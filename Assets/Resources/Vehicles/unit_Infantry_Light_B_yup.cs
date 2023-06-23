@@ -1,10 +1,8 @@
-using UnityEngine;
-
 public class unit_Infantry_Light_B_yup : MyGameObject
 {
-    protected override void Start()
+    protected override void Awake()
     {
-        base.Start();
+        base.Awake();
 
         Orders.AllowOrder(OrderType.Attack);
         Orders.AllowOrder(OrderType.Move);

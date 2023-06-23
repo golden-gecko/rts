@@ -1,8 +1,8 @@
 public class struct_Headquarters_A_yup : MyGameObject
 {
-    protected override void Start()
+    protected override void Awake()
     {
-        base.Start();
+        base.Awake();
 
         Resources.Add("Coal", 100, 100);
         Resources.Add("Crystal", 100, 100);

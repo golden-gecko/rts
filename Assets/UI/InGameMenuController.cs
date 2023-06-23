@@ -76,7 +76,6 @@ public class InGameMenuController : MonoBehaviour
         var forbiddenInUI = new List<OrderType>()
         {
             OrderType.Construct,
-            OrderType.Destroy,
             OrderType.Idle,
             OrderType.None,
             OrderType.Produce,

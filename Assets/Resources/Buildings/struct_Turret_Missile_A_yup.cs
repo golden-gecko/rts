@@ -1,8 +1,8 @@
 public class struct_Turret_Missile_A_yup : MyGameObject
 {
-    protected override void Start()
+    protected override void Awake()
     {
-        base.Start();
+        base.Awake();
 
         Orders.AllowOrder(OrderType.Attack);
     }

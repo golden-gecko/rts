@@ -1,8 +1,8 @@
 public class struct_Refinery_A_yup : MyGameObject
 {
-    protected override void Start()
+    protected override void Awake()
     {
-        base.Start();
+        base.Awake();
 
         Orders.AllowOrder(OrderType.Produce);
 

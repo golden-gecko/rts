@@ -1,8 +1,8 @@
 public class unit_Tank_Missile_A_yup : MyGameObject
 {
-    protected override void Start()
+    protected override void Awake()
     {
-        base.Start();
+        base.Awake();
 
         Orders.AllowOrder(OrderType.Attack);
         Orders.AllowOrder(OrderType.Move);

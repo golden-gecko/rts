@@ -18,7 +18,10 @@ public class OrderContainer : IEnumerable<Order>
 
     public void Add(Order item)
     {
-        Items.Add(item);
+        if (OrderWhitelist.Contains(item.Type))
+        {
+            Items.Add(item);
+        }
     }
 
     public void AllowOrder(OrderType item)
@@ -28,7 +31,10 @@ public class OrderContainer : IEnumerable<Order>
 
     public void AllowPrefab(string item)
     {
-        PrefabWhitelist.Add(item);
+        if (PrefabWhitelist.Contains(item))
+        {
+            PrefabWhitelist.Add(item);
+        }
     }
 
     public bool Contains(OrderType item)

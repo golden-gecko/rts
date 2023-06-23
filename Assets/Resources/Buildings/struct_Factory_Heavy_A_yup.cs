@@ -1,8 +1,8 @@
 public class struct_Factory_Heavy_A_yup : MyGameObject
 {
-    protected override void Start()
+    protected override void Awake()
     {
-        base.Start();
+        base.Awake();
 
         Orders.AllowOrder(OrderType.Construct);
         Orders.AllowOrder(OrderType.Rally);

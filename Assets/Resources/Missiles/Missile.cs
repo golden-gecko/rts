@@ -2,6 +2,16 @@ using UnityEngine;
 
 public class Missile : MyGameObject
 {
+    protected override void Awake()
+    {
+        base.Awake();
+
+        Orders.AllowOrder(OrderType.Move);
+
+        Damage = 10;
+        Speed = 10;
+    }
+
     protected void OnTriggerEnter(Collider other)
     {
         MyGameObject gameObject = other.GetComponent<MyGameObject>();
@@ -12,27 +22,19 @@ public class Missile : MyGameObject
             {
                 gameObject.OnDamage(Damage);
 
-                Explode(0);
+                Destroy(0);
             }
         }
     }
 
-    protected override void Start()
-    {
-        base.Start();
-
-        Orders.AllowOrder(OrderType.Move);
-
-        Damage = 10;
-        Speed = 10;
-    }
-
-    protected override void OnOrderExplode()
+    protected override void OnOrderDestroy()
     {
         Object resource = UnityEngine.Resources.Load("Effects/WFXMR_Explosion StarSmoke"); // TODO: Remove name conflict.
         Object effect = Instantiate(resource, Position, Quaternion.identity);
 
-        Destroy(0);
+        GameObject.Destroy(gameObject);
+
+        Orders.Pop();
     }
 
     protected override void OnOrderMove()

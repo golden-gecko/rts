@@ -1,8 +1,8 @@
 public class Tree_05 : MyGameObject
 {
-    protected override void Start()
+    protected override void Awake()
     {
-        base.Start();
+        base.Awake();
 
         Resources.Add("Wood", 80, 80);
 

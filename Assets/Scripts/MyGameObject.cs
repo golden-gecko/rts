@@ -1,8 +1,6 @@
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Events;
-using static UnityEngine.GraphicsBuffer;
 
 public enum MyGameObjectState
 {
@@ -19,7 +17,6 @@ public class MyGameObject : MonoBehaviour
 
         Orders = new OrderContainer();
         Orders.AllowOrder(OrderType.Destroy);
-        Orders.AllowOrder(OrderType.Explode);
         Orders.AllowOrder(OrderType.Idle);
         Orders.AllowOrder(OrderType.Stop);
         Orders.AllowOrder(OrderType.Wait);
@@ -33,7 +30,6 @@ public class MyGameObject : MonoBehaviour
             { OrderType.Attack, OnOrderAttack },
             { OrderType.Construct, OnOrderConstruct },
             { OrderType.Destroy, OnOrderDestroy },
-            { OrderType.Explode, OnOrderExplode },
             { OrderType.Follow, OnOrderFollow },
             { OrderType.Guard, OnOrderGuard },
             { OrderType.Idle, OnOrderIdle },
@@ -71,7 +67,7 @@ public class MyGameObject : MonoBehaviour
     {
         if (Health <= 0.0f)
         {
-            Explode(0);
+            Destroy(0);
         }
 
         switch (State)
@@ -152,18 +148,6 @@ public class MyGameObject : MonoBehaviour
         else
         {
             Orders.Add(new Order(OrderType.Destroy));
-        }
-    }
-
-    public void Explode(int priority = -1)
-    {
-        if (0 <= priority && priority < Orders.Count)
-        {
-            Orders.Insert(priority, new Order(OrderType.Explode));
-        }
-        else
-        {
-            Orders.Add(new Order(OrderType.Explode));
         }
     }
 
@@ -302,8 +286,11 @@ public class MyGameObject : MonoBehaviour
                 MyGameObject resource = UnityEngine.Resources.Load<MyGameObject>(MissilePrefab); // TODO: Remove name conflict.
                 MyGameObject missile = Instantiate<MyGameObject>(resource, Position, Quaternion.identity);
 
+                missile.Parent = this;
+                missile.Player = Player;
+
                 missile.Move(position);
-                missile.Explode();
+                missile.Destroy();
 
                 ReloadTimer.Reset();
 
@@ -393,17 +380,10 @@ public class MyGameObject : MonoBehaviour
 
     protected virtual void OnOrderDestroy()
     {
-        GameObject.Destroy(gameObject);
-
-        Orders.Pop();
-    }
-
-    protected virtual void OnOrderExplode()
-    {
         Object resource = UnityEngine.Resources.Load("Effects/WFXMR_ExplosiveSmoke"); // TODO: Remove name conflict.
         Object effect = Instantiate(resource, Position, Quaternion.identity);
 
-        Destroy(0);
+        GameObject.Destroy(gameObject);
 
         Orders.Pop();
     }
@@ -995,4 +975,7 @@ public class MyGameObject : MonoBehaviour
     public float MissileRangeMin { get; protected set; } = 0; // TODO: Implement.
 
     public Timer ReloadTimer { get; protected set; }
+
+    [field: SerializeField]
+    public MyGameObject Parent { get; protected set; }
 }

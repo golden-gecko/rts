@@ -6,7 +6,6 @@ public enum OrderType
     Attack,
     Construct,
     Destroy,
-    Explode,
     Follow,
     Guard,
     Idle,
