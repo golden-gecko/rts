@@ -144,7 +144,7 @@ public class InGameMenuController : MonoBehaviour
         prefab.text = "Prefab: " + hud.Prefab;
         selected.text = "Selected: " + hud.Selected.Count;
 
-        if (hud.Selected.Count > 0)
+        if (hud.Selected.Count > 0 && hud.Selected[0] != null)
         {
             info.text = hud.Selected[0].GetInfo();
         }

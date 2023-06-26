@@ -14,18 +14,15 @@ public class Missile : MyGameObject
         MaxHealth = 1.0f;
     }
 
-    protected void OnTriggerEnter(Collider other)
+    protected override void OnTriggerEnter(Collider other)
     {
         MyGameObject gameObject = other.GetComponent<MyGameObject>();
 
-        if (gameObject != null)
+        if (gameObject != null && gameObject != Parent && gameObject.Player != Player)
         {
-            if (gameObject.Player != Player)
-            {
-                gameObject.OnDamage(Damage);
+            gameObject.OnDamage(Damage);
 
-                Destroy(0);
-            }
+            Destroy(0);
         }
     }
 

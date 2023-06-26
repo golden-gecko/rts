@@ -251,19 +251,35 @@ public class MyGameObject : MonoBehaviour
         return target - direction * MissileRangeMax * 0.9f;
     }
 
+    protected virtual void OnTriggerEnter(Collider other)
+    {
+    }
+
     protected virtual void OnOrderAttack()
     {
         Order order = Orders.First();
 
         Vector3 position;
 
-        if (order.TargetGameObject == null)
+        if (order.IsTargetGameObject)
         {
-            position = order.TargetPosition;
+            if (order.TargetGameObject == null)
+            {
+                Stats.Add(Stats.OrdersExecuted, 1);
+                Stats.Add(Stats.TargetsDestroyed, 1);
+
+                Orders.Pop();
+
+                return;
+            }
+            else
+            {
+                position = order.TargetGameObject.Position;
+            }
         }
         else
         {
-            position = order.TargetGameObject.Position;
+            position = order.TargetPosition;
         }
 
         if (IsCloseTo(position, MissileRangeMax) == false) // TODO: Test by adding visual debug.
