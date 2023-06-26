@@ -44,7 +44,7 @@ public class MyGameObject : MonoBehaviour
 
         ConstructionRecipies = new RecipeContainer();
 
-        var r1 = new Recipe();
+        Recipe r1 = new Recipe();
 
         r1.Consume("Metal", 0);
 
@@ -533,7 +533,7 @@ public class MyGameObject : MonoBehaviour
     {
         Order order = Orders.First();
 
-        foreach (var recipe in Recipes)
+        foreach (Recipe recipe in Recipes)
         {
             // Have all resources to consume.
             bool toConsume = true;
@@ -755,7 +755,7 @@ public class MyGameObject : MonoBehaviour
 
     void MoveResources(MyGameObject source, MyGameObject target, Dictionary<string, int> resources)
     {
-        foreach (var i in resources)
+        foreach (KeyValuePair<string, int> i in resources)
         {
             source.Resources.Remove(i.Key, i.Value);
 
@@ -814,7 +814,7 @@ public class MyGameObject : MonoBehaviour
                 }
             }
 
-            foreach (var resource in recipe.ToProduce)
+            foreach (RecipeComponent resource in recipe.ToProduce)
             {
                 int storage = Resources.Storage(resource.Name);
 

@@ -10,8 +10,8 @@ public class struct_Refinery_A_yup : MyGameObject
         Resources.Add("Metal", 0, 60);
         Resources.Add("Metal Ore", 0, 60);
 
-        var r1 = new Recipe();
-        var r2 = new Recipe();
+        Recipe r1 = new Recipe();
+        Recipe r2 = new Recipe();
 
         r1.Consume("Coal", 2);
         r1.Consume("Metal Ore", 1);

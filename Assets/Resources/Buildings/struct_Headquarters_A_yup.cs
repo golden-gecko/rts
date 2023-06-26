@@ -10,7 +10,7 @@ public class struct_Headquarters_A_yup : MyGameObject
         Resources.Add("Metal Ore", 100, 100);
         Resources.Add("Wood", 100, 100);
 
-        var r1 = new Recipe();
+        Recipe r1 = new Recipe();
 
         r1.Consume("Coal", 0);
         r1.Consume("Crystal", 0);
