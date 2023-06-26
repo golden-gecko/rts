@@ -6,6 +6,8 @@ public class struct_Refinery_A_yup : MyGameObject
 
         Orders.AllowOrder(OrderType.Produce);
 
+        OrderHandlers[OrderType.Idle] = new OrderHandlerIdleProduce();
+
         Resources.Add("Coal", 0, 60);
         Resources.Add("Metal", 0, 60);
         Resources.Add("Metal Ore", 0, 60);
@@ -26,10 +28,5 @@ public class struct_Refinery_A_yup : MyGameObject
 
         Health = 100.0f;
         MaxHealth = 100.0f;
-    }
-
-    protected override void OnOrderIdle()
-    {
-        Produce();
     }
 }

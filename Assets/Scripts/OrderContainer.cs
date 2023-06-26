@@ -24,15 +24,7 @@ public class OrderContainer
 
     public void AllowPrefab(string item)
     {
-        if (PrefabWhitelist.Contains(item))
-        {
-            PrefabWhitelist.Add(item);
-        }
-    }
-
-    public bool Contains(OrderType item)
-    {
-        return OrderWhitelist.Contains(item);
+        PrefabWhitelist.Add(item);
     }
 
     public void Clear()
@@ -65,6 +57,11 @@ public class OrderContainer
     public void Insert(int index, Order item)
     {
         Items.Insert(index, item);
+    }
+
+    public bool IsAllowed(OrderType item)
+    {
+        return OrderWhitelist.Contains(item);
     }
 
     public void MoveToEnd()
