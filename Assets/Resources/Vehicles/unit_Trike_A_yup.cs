@@ -9,7 +9,7 @@ public class unit_Trike_A_yup : MyGameObject
         Orders.AllowOrder(OrderType.Patrol);
 
         Speed = 12.0f;
-        MissilePrefab = "Missiles/Missile";
+        MissilePrefab = "Missiles/Bullet";
         MissileRangeMax = 4.0f;
         ReloadTimer = new Timer(2.0f);
         Health = 50.0f;
