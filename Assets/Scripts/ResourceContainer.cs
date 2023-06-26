@@ -1,6 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
 
 public class ResourceContainer : IEnumerable<KeyValuePair<string, Resource>>
 {
@@ -68,9 +67,9 @@ public class ResourceContainer : IEnumerable<KeyValuePair<string, Resource>>
 
     public string GetInfo()
     {
-        var info = string.Empty;
+        string info = string.Empty;
 
-        foreach (var i in Items)
+        foreach (KeyValuePair<string, Resource> i in Items)
         {
             info += string.Format("\n  {0} {1}/{2}", i.Key, i.Value.Value, i.Value.Max);
         }

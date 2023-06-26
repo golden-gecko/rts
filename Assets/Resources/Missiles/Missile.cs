@@ -8,8 +8,10 @@ public class Missile : MyGameObject
 
         Orders.AllowOrder(OrderType.Move);
 
-        Damage = 10;
-        Speed = 10;
+        Damage = 10.0f;
+        Speed = 10.0f;
+        Health = 1.0f;
+        MaxHealth = 1.0f;
     }
 
     protected void OnTriggerEnter(Collider other)
@@ -18,7 +20,7 @@ public class Missile : MyGameObject
 
         if (gameObject != null)
         {
-            if (Player != gameObject.Player)
+            if (gameObject.Player != Player)
             {
                 gameObject.OnDamage(Damage);
 
@@ -39,7 +41,7 @@ public class Missile : MyGameObject
 
     protected override void OnOrderMove()
     {
-        var order = Orders.First();
+        Order order = Orders.First();
 
         Vector3 target;
         Vector3 position = transform.position;
@@ -53,8 +55,8 @@ public class Missile : MyGameObject
             target = order.TargetPosition;
         }
 
-        var distanceToTarget = (target - position).magnitude;
-        var distanceToTravel = Speed * Time.deltaTime;
+        float distanceToTarget = (target - position).magnitude;
+        float distanceToTravel = Speed * Time.deltaTime;
 
         if (distanceToTarget > distanceToTravel)
         {

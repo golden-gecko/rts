@@ -3,21 +3,21 @@ using UnityEngine;
 
 public class Game : MonoBehaviour
 {
-    public Order CreateConstruction()
+    public Order CreateOrderConstruction()
     {
         return null;
     }
 
-    public Order CreateTransport(MyGameObject targetProducer = null, MyGameObject targetConsumer = null)
+    public Order CreateOrderTransport(MyGameObject targetProducer = null, MyGameObject targetConsumer = null)
     {
-        foreach (var producer in Producers.Items)
+        foreach (ConsumerProducerRequest producer in Producers.Items)
         {
             if (targetProducer != null && producer.MyGameObject != targetProducer)
             {
                 continue;
             }
 
-            foreach (var consumer in Consumers.Items)
+            foreach (ConsumerProducerRequest consumer in Consumers.Items)
             {
                 if (targetConsumer != null && consumer.MyGameObject != targetConsumer)
                 {
@@ -34,7 +34,7 @@ public class Game : MonoBehaviour
                     continue;
                 }
 
-                var resources = new Dictionary<string, int>()
+                Dictionary<string, int> resources = new Dictionary<string, int>()
                 {
                     { producer.Name, producer.Value },
                 };
@@ -48,7 +48,7 @@ public class Game : MonoBehaviour
 
         return null;
     }
-    public Order CreateUnload()
+    public Order CreateOrderUnload()
     {
         return null;
     }

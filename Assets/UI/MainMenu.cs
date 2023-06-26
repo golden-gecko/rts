@@ -6,8 +6,8 @@ public class MainMenu : MonoBehaviour
 {
     void Start()
     {
-        var uiDocument = GetComponent<UIDocument>();
-        var rootVisualElement = uiDocument.rootVisualElement;
+        UIDocument uiDocument = GetComponent<UIDocument>();
+        VisualElement rootVisualElement = uiDocument.rootVisualElement;
 
         rootVisualElement.Q<Button>("New").RegisterCallback<ClickEvent>(ev => OnButtonNew());
         rootVisualElement.Q<Button>("Quit").RegisterCallback<ClickEvent>(ev => OnButtonQuit());

@@ -10,7 +10,7 @@ public class struct_Headquarters_A_yup : MyGameObject
         Resources.Add("Metal Ore", 100, 100);
         Resources.Add("Wood", 100, 100);
 
-        var r1 = new Recipe();
+        Recipe r1 = new Recipe();
 
         r1.Consume("Coal", 0);
         r1.Consume("Crystal", 0);
@@ -25,5 +25,8 @@ public class struct_Headquarters_A_yup : MyGameObject
         r1.Produce("Wood", 0);
 
         Recipes.Add(r1);
+
+        Health = 100.0f;
+        MaxHealth = 100.0f;
     }
 }
