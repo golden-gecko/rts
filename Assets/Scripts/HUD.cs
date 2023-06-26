@@ -108,8 +108,8 @@ public class HUD : MonoBehaviour
 
         if (Cursor != null)
         {
-            var hitInfo = new RaycastHit();
-            var ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+            RaycastHit hitInfo;
+            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 
             if (Physics.Raycast(ray, out hitInfo, 2000, LayerMask.GetMask("Terrain")))
             {
@@ -126,10 +126,10 @@ public class HUD : MonoBehaviour
 
     void DrawVisual()
     {
-        var boxCenter = (startPosition + endPosition) / 2;
+        Vector2 boxCenter = (startPosition + endPosition) / 2;
         boxVisual.position = boxCenter;
 
-        var boxSize = new Vector2(Mathf.Abs(startPosition.x - endPosition.x), Mathf.Abs(startPosition.y - endPosition.y));
+        Vector2 boxSize = new Vector2(Mathf.Abs(startPosition.x - endPosition.x), Mathf.Abs(startPosition.y - endPosition.y));
         boxVisual.sizeDelta = boxSize;
     }
 
@@ -166,7 +166,7 @@ public class HUD : MonoBehaviour
     {
         if (IsMulti() == false)
         {
-            foreach (var selected in Selected)
+            foreach (MyGameObject selected in Selected)
             {
                 selected.Select(false);
             }
@@ -174,9 +174,9 @@ public class HUD : MonoBehaviour
             Selected.Clear();
         }
 
-        foreach (var i in GameObject.FindObjectsByType<MyGameObject>(FindObjectsSortMode.None)) // TODO: Not very efficient. Refactor into raycast.
+        foreach (MyGameObject i in GameObject.FindObjectsByType<MyGameObject>(FindObjectsSortMode.None)) // TODO: Not very efficient. Refactor into raycast.
         {
-            var screenPosition = Camera.main.WorldToScreenPoint(i.transform.position);
+            Vector3 screenPosition = Camera.main.WorldToScreenPoint(i.transform.position);
 
             if (selectionBox.Contains(screenPosition))
             {
@@ -195,9 +195,9 @@ public class HUD : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.F10))
         {
-            var canvas = GameObject.Find("Canvas");
+            GameObject canvas = GameObject.Find("Canvas");
 
-            foreach (var i in canvas.GetComponentsInChildren<UIDocument>(true))
+            foreach (UIDocument i in canvas.GetComponentsInChildren<UIDocument>(true))
             {
                 if (i.name == "MainMenu")
                 {
@@ -211,7 +211,7 @@ public class HUD : MonoBehaviour
 
     void ProcessSelection()
     {
-        RaycastHit hitInfo = new RaycastHit();
+        RaycastHit hitInfo;
 
         if (Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out hitInfo))
         {
@@ -228,7 +228,7 @@ public class HUD : MonoBehaviour
 
     void ProcessOrder()
     {
-        RaycastHit hitInfo = new RaycastHit();
+        RaycastHit hitInfo;
 
         if (Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out hitInfo))
         {
@@ -335,7 +335,7 @@ public class HUD : MonoBehaviour
 
     void IssueOrder(MyGameObject gameObject)
     {
-        foreach (var selected in Selected)
+        foreach (MyGameObject selected in Selected)
         {
             if (IsMulti() == false)
             {
@@ -363,7 +363,7 @@ public class HUD : MonoBehaviour
     {
         if (IsMulti() == false)
         {
-            foreach (var selected in Selected)
+            foreach (MyGameObject selected in Selected)
             {
                 selected.Select(false);
             }
@@ -451,17 +451,17 @@ public class HUD : MonoBehaviour
 
             if (prefab.Equals(string.Empty) == false && PrefabConstructionType == PrefabConstructionType.Structure)
             {
-                var resource = Resources.Load<MyGameObject>(Prefab);
-                var gameObject = Instantiate<MyGameObject>(resource, Vector3.zero, Quaternion.identity);
+                MyGameObject resource = Resources.Load<MyGameObject>(Prefab);
+                MyGameObject myGameObject = Instantiate<MyGameObject>(resource, Vector3.zero, Quaternion.identity);
 
-                gameObject.GetComponent<BoxCollider>().enabled = false;
-                gameObject.GetComponent<MyGameObject>().enabled = false;
+                myGameObject.GetComponent<BoxCollider>().enabled = false;
+                myGameObject.GetComponent<MyGameObject>().enabled = false;
 
-                foreach (var renderer in gameObject.GetComponentsInChildren<Renderer>())
+                foreach (Renderer renderer in myGameObject.GetComponentsInChildren<Renderer>())
                 {
                     Color color;
 
-                    foreach (var material in renderer.materials)
+                    foreach (Material material in renderer.materials)
                     {
                         color = material.color;
                         color.a = 0.5f;
@@ -470,7 +470,7 @@ public class HUD : MonoBehaviour
                     }
                 }
 
-                Cursor = gameObject;
+                Cursor = myGameObject;
             }
         }
     }

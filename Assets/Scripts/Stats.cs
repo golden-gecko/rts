@@ -35,7 +35,7 @@ public class Stats
     {
         string info = string.Empty;
 
-        foreach (var i in Items)
+        foreach (KeyValuePair<string, float> i in Items)
         {
             info += string.Format("\n  {0}: {1:0.}", i.Key, i.Value);
         }

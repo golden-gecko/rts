@@ -38,7 +38,7 @@ public class unit_Harvester_A_yup : MyGameObject
 
     protected override void OnOrderIdle()
     {
-        var game = GameObject.Find("Game").GetComponent<Game>();
+        Game game = GameObject.Find("Game").GetComponent<Game>();
 
         Order order;
 

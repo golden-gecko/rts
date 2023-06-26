@@ -91,7 +91,7 @@ public class MyGameObject : MonoBehaviour
 
     public bool IsConstructed()
     {
-        foreach (var i in ConstructionResources)
+        foreach (KeyValuePair<string, Resource> i in ConstructionResources)
         {
             if (i.Value.Value < i.Value.Max)
             {
@@ -104,7 +104,7 @@ public class MyGameObject : MonoBehaviour
 
     public void Select(bool status)
     {
-        var selection = transform.Find("Selection");
+        Transform selection = transform.Find("Selection");
 
         if (selection != null)
         {
@@ -296,7 +296,7 @@ public class MyGameObject : MonoBehaviour
 
     protected virtual void OnOrderConstruct()
     {
-        var order = Orders.First();
+        Order order = Orders.First();
 
         switch (order.PrefabConstructionType)
         {
@@ -307,7 +307,7 @@ public class MyGameObject : MonoBehaviour
                 }
                 else if (order.TargetGameObject == null)
                 {
-                    var resource = UnityEngine.Resources.Load<MyGameObject>(order.Prefab); // TODO: Remove name conflict.
+                    MyGameObject resource = UnityEngine.Resources.Load<MyGameObject>(order.Prefab); // TODO: Remove name conflict.
 
                     order.TargetGameObject = Instantiate<MyGameObject>(resource, order.TargetPosition, Quaternion.identity);
                     order.TargetGameObject.State = MyGameObjectState.UnderConstruction;
@@ -337,7 +337,7 @@ public class MyGameObject : MonoBehaviour
             case PrefabConstructionType.Unit:
                 if (order.TargetGameObject == null)
                 {
-                    var resource = UnityEngine.Resources.Load<MyGameObject>(order.Prefab); // TODO: Remove name conflict.
+                    MyGameObject resource = UnityEngine.Resources.Load<MyGameObject>(order.Prefab); // TODO: Remove name conflict.
 
                     order.TargetGameObject = Instantiate<MyGameObject>(resource, Exit, Quaternion.identity);
                     order.TargetGameObject.State = MyGameObjectState.UnderAssembly;
@@ -383,7 +383,7 @@ public class MyGameObject : MonoBehaviour
 
     protected virtual void OnOrderFollow()
     {
-        var order = Orders.First();
+        Order order = Orders.First();
 
         if (order.TargetGameObject == null)
         {
@@ -399,7 +399,7 @@ public class MyGameObject : MonoBehaviour
 
     protected virtual void OnOrderGuard()
     {
-        var order = Orders.First();
+        Order order = Orders.First();
 
         if (order.TargetGameObject == null)
         {
@@ -419,7 +419,7 @@ public class MyGameObject : MonoBehaviour
 
     protected virtual void OnOrderLoad()
     {
-        var order = Orders.First();
+        Order order = Orders.First();
 
         // Update timer.
         order.Timer.Update(Time.deltaTime);
@@ -430,11 +430,11 @@ public class MyGameObject : MonoBehaviour
         }
 
         // Check storage and capacity.
-        var resources = new Dictionary<string, int>();
+        Dictionary<string, int> resources = new Dictionary<string, int>();
 
-        foreach (var i in order.Resources)
+        foreach (KeyValuePair<string, int> i in order.Resources)
         {
-            var value = Mathf.Min(new int[] { i.Value, order.TargetGameObject.Resources.Storage(i.Key), Resources.Capacity(i.Key) });
+            int value = Mathf.Min(new int[] { i.Value, order.TargetGameObject.Resources.Storage(i.Key), Resources.Capacity(i.Key) });
 
             if (value > 0)
             {
@@ -473,7 +473,7 @@ public class MyGameObject : MonoBehaviour
 
     protected virtual void OnOrderMove()
     {
-        var order = Orders.First();
+        Order order = Orders.First();
 
         Vector3 target;
         Vector3 position = transform.position;
@@ -490,8 +490,8 @@ public class MyGameObject : MonoBehaviour
         target.y = 0;
         position.y = 0;
 
-        var distanceToTarget = (target - position).magnitude;
-        var distanceToTravel = Speed * Time.deltaTime;
+        float distanceToTarget = (target - position).magnitude;
+        float distanceToTravel = Speed * Time.deltaTime;
 
         if (distanceToTarget > distanceToTravel)
         {
@@ -513,7 +513,7 @@ public class MyGameObject : MonoBehaviour
 
     protected virtual void OnOrderPatrol()
     {
-        var order = Orders.First();
+        Order order = Orders.First();
 
         if (order.TargetGameObject == null)
         {
@@ -531,14 +531,14 @@ public class MyGameObject : MonoBehaviour
 
     protected virtual void OnOrderProduce()
     {
-        var order = Orders.First();
+        Order order = Orders.First();
 
         foreach (var recipe in Recipes)
         {
             // Have all resources to consume.
             bool toConsume = true;
 
-            foreach (var i in recipe.ToConsume)
+            foreach (RecipeComponent i in recipe.ToConsume)
             {
                 if (Resources.CanRemove(i.Name, i.Count) == false)
                 {
@@ -550,7 +550,7 @@ public class MyGameObject : MonoBehaviour
             // Have all resources to produce.
             bool toProduce = true;
 
-            foreach (var i in recipe.ToProduce)
+            foreach (RecipeComponent i in recipe.ToProduce)
             {
                 if (Resources.CanAdd(i.Name, i.Count) == false)
                 {
@@ -568,12 +568,12 @@ public class MyGameObject : MonoBehaviour
                 {
                     if (toConsume && toProduce)
                     {
-                        foreach (var i in recipe.ToConsume)
+                        foreach (RecipeComponent i in recipe.ToConsume)
                         {
                             Resources.Remove(i.Name, i.Count);
                         }
 
-                        foreach (var i in recipe.ToProduce)
+                        foreach (RecipeComponent i in recipe.ToProduce)
                         {
                             Resources.Add(i.Name, i.Count);
 
@@ -594,7 +594,7 @@ public class MyGameObject : MonoBehaviour
 
     protected virtual void OnOrderRally()
     {
-        var order = Orders.First();
+        Order order = Orders.First();
 
         RallyPoint = order.TargetPosition;
 
@@ -616,7 +616,7 @@ public class MyGameObject : MonoBehaviour
 
     protected virtual void OnOrderTransport()
     {
-        var order = Orders.First();
+        Order order = Orders.First();
 
         Move(order.SourceGameObject);
         Load(order.SourceGameObject, order.Resources);
@@ -628,7 +628,7 @@ public class MyGameObject : MonoBehaviour
 
     protected virtual void OnOrderUnload()
     {
-        var order = Orders.First();
+        Order order = Orders.First();
 
         // Update timer.
         order.Timer.Update(Time.deltaTime);
@@ -639,13 +639,13 @@ public class MyGameObject : MonoBehaviour
         }
 
         // Check storage and capacity.
-        var resources = new Dictionary<string, int>();
+        Dictionary<string, int> resources = new Dictionary<string, int>();
 
-        foreach (var i in order.Resources)
+        foreach (KeyValuePair<string, int> i in order.Resources)
         {
             if (order.TargetGameObject.State == MyGameObjectState.UnderConstruction)
             {
-                var value = Mathf.Min(new int[] { i.Value, Resources.Storage(i.Key), order.TargetGameObject.ConstructionResources.Capacity(i.Key) });
+                int value = Mathf.Min(new int[] { i.Value, Resources.Storage(i.Key), order.TargetGameObject.ConstructionResources.Capacity(i.Key) });
 
                 if (value > 0)
                 {
@@ -656,7 +656,7 @@ public class MyGameObject : MonoBehaviour
             }
             else
             {
-                var value = Mathf.Min(new int[] { i.Value, Resources.Storage(i.Key), order.TargetGameObject.Resources.Capacity(i.Key) });
+                int value = Mathf.Min(new int[] { i.Value, Resources.Storage(i.Key), order.TargetGameObject.Resources.Capacity(i.Key) });
 
                 if (value > 0)
                 {
@@ -698,7 +698,7 @@ public class MyGameObject : MonoBehaviour
 
     protected virtual void OnOrderWait()
     {
-        var order = Orders.First();
+        Order order = Orders.First();
 
         order.Timer.Update(Time.deltaTime);
 
@@ -715,8 +715,8 @@ public class MyGameObject : MonoBehaviour
 
     void AlignPositionToTerrain()
     {
-        var hitInfo = new RaycastHit();
-        var ray = new Ray(transform.position + new Vector3(0, 1000, 0), Vector3.down);
+        RaycastHit hitInfo;
+        Ray ray = new Ray(transform.position + new Vector3(0, 1000, 0), Vector3.down);
 
         if (Physics.Raycast(ray, out hitInfo, 2000, LayerMask.GetMask("Terrain")))
         {
@@ -774,7 +774,7 @@ public class MyGameObject : MonoBehaviour
     {
         if (Orders.Count > 0)
         {
-            var order = Orders.First();
+            Order order = Orders.First();
 
             if (Orders.Contains(order.Type))
             {
@@ -796,13 +796,13 @@ public class MyGameObject : MonoBehaviour
 
     void RaiseResourceFlags()
     {
-        var game = GameObject.Find("Game").GetComponent<Game>();
+        Game game = GameObject.Find("Game").GetComponent<Game>();
 
-        foreach (var recipe in Recipes)
+        foreach (Recipe recipe in Recipes)
         {
-            foreach (var resource in recipe.ToConsume)
+            foreach (RecipeComponent resource in recipe.ToConsume)
             {
-                var capacity = Resources.Capacity(resource.Name);
+                int capacity = Resources.Capacity(resource.Name);
 
                 if (capacity > 0)
                 {
@@ -816,7 +816,7 @@ public class MyGameObject : MonoBehaviour
 
             foreach (var resource in recipe.ToProduce)
             {
-                var storage = Resources.Storage(resource.Name);
+                int storage = Resources.Storage(resource.Name);
 
                 if (storage > 0)
                 {
@@ -832,13 +832,13 @@ public class MyGameObject : MonoBehaviour
 
     void RaiseConstructionResourceFlags()
     {
-        var game = GameObject.Find("Game").GetComponent<Game>();
+        Game game = GameObject.Find("Game").GetComponent<Game>();
 
-        foreach (var recipe in ConstructionRecipies)
+        foreach (Recipe recipe in ConstructionRecipies)
         {
-            foreach (var resource in recipe.ToConsume)
+            foreach (RecipeComponent resource in recipe.ToConsume)
             {
-                var capacity = ConstructionResources.Capacity(resource.Name);
+                int capacity = ConstructionResources.Capacity(resource.Name);
 
                 if (capacity > 0)
                 {
@@ -854,12 +854,11 @@ public class MyGameObject : MonoBehaviour
 
     void MoveResourcesToUnit(Order order)
     {
-        foreach (var i in order.TargetGameObject.ConstructionResources)
+        foreach (KeyValuePair<string, Resource> i in order.TargetGameObject.ConstructionResources)
         {
-            var capacity = i.Value.Capacity();
-            var storage = Resources.Storage(i.Key);
-
-            var value = Mathf.Min(new int[] { capacity, storage });
+            int capacity = i.Value.Capacity();
+            int storage = Resources.Storage(i.Key);
+            int value = Mathf.Min(new int[] { capacity, storage });
 
             if (value > 0)
             {
@@ -892,7 +891,7 @@ public class MyGameObject : MonoBehaviour
     {
         get
         {
-            var size = GetComponent<Collider>().bounds.size;
+            Vector3 size = GetComponent<Collider>().bounds.size;
 
             return new Vector3(transform.position.x, transform.position.y, transform.position.z + size.z * 0.75f);
         }
@@ -902,7 +901,7 @@ public class MyGameObject : MonoBehaviour
     {
         get
         {
-            var size = GetComponent<Collider>().bounds.size;
+            Vector3 size = GetComponent<Collider>().bounds.size;
 
             return new Vector3(transform.position.x, transform.position.y, transform.position.z - size.z * 0.75f);
         }
