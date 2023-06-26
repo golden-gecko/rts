@@ -1,84 +1,8 @@
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Events;
 
 public class MyGameObject : MonoBehaviour
 {
-    protected virtual void Awake()
-    {
-        Orders = new OrderContainer();
-        Orders.AllowOrder(OrderType.Destroy);
-        Orders.AllowOrder(OrderType.Idle);
-        Orders.AllowOrder(OrderType.Stop);
-        Orders.AllowOrder(OrderType.Wait);
-
-        Resources = new ResourceContainer();
-        Recipes = new RecipeContainer();
-        Stats = new Stats();
-
-        OrderHandlers = new Dictionary<OrderType, IOrderHandler>()
-        {
-            { OrderType.Attack, new OrderHandlerAttack() },
-            { OrderType.Construct, new OrderHandlerConstruct() },
-            { OrderType.Destroy, new OrderHandlerDestroy() },
-            { OrderType.Follow, new OrderHandlerFollow() },
-            { OrderType.Guard, new OrderHandlerGuard() },
-            { OrderType.Load, new OrderHandlerLoad() },
-            { OrderType.Move, new OrderHandlerMove() },
-            { OrderType.Patrol, new OrderHandlerPatrol() },
-            { OrderType.Produce, new OrderHandlerProduce() },
-            { OrderType.Rally, new OrderHandlerRally() },
-            { OrderType.Repair, new OrderHandlerRepair() },
-            { OrderType.Research, new OrderHandlerResearch() },
-            { OrderType.Stop, new OrderHandlerStop() },
-            { OrderType.Transport, new OrderHandlerTransport() },
-            { OrderType.Unload, new OrderHandlerUnload() },
-            { OrderType.Wait, new OrderHandlerWait() },
-        };
-
-        ConstructionResources = new ResourceContainer();
-        ConstructionResources.Add("Metal", 0, 30);
-
-        ConstructionRecipies = new RecipeContainer();
-
-        Recipe r1 = new Recipe();
-
-        r1.Consume("Metal", 0);
-
-        ConstructionRecipies.Add(r1);
-    }
-
-    protected virtual void Start()
-    {
-        RallyPoint = Exit;
-    }
-
-    protected virtual void Update()
-    {
-        if (Health <= 0.0f)
-        {
-            Destroy(0);
-        }
-
-        switch (State)
-        {
-            case MyGameObjectState.Operational:
-                ProcessOrders();
-                RaiseResourceFlags();
-                break;
-
-            case MyGameObjectState.UnderAssembly:
-                break;
-
-            case MyGameObjectState.UnderConstruction:
-                RaiseConstructionResourceFlags();
-                break;
-        }
-
-        AlignPositionToTerrain();
-        Reload();
-    }
-
     public void OnDamage(float damage)
     {
         Health -= damage;
@@ -88,7 +12,7 @@ public class MyGameObject : MonoBehaviour
 
     public bool IsConstructed()
     {
-        foreach (KeyValuePair<string, Resource> i in ConstructionResources)
+        foreach (KeyValuePair<string, Resource> i in ConstructionResources.Items)
         {
             if (i.Value.Value < i.Value.Max)
             {
@@ -231,25 +155,11 @@ public class MyGameObject : MonoBehaviour
     {
         if (0 <= priority && priority < Orders.Count)
         {
-            Orders.Insert(priority, new Order(OrderType.Wait, WaitTime)); 
+            Orders.Insert(priority, new Order(OrderType.Wait, WaitTime));
         }
         else
         {
             Orders.Add(new Order(OrderType.Wait, WaitTime));
-        }
-    }
-
-    void AlignPositionToTerrain()
-    {
-        RaycastHit hitInfo;
-        Ray ray = new Ray(transform.position + new Vector3(0, 1000, 0), Vector3.down);
-
-        if (Physics.Raycast(ray, out hitInfo, 2000, LayerMask.GetMask("Terrain")))
-        {
-            if (hitInfo.transform.tag == "Terrain")
-            {
-                transform.position = new Vector3(transform.position.x, hitInfo.point.y, transform.position.z);
-            }
         }
     }
 
@@ -296,7 +206,96 @@ public class MyGameObject : MonoBehaviour
         }
     }
 
-    void ProcessOrders()
+    protected virtual void Awake()
+    {
+        Orders = new OrderContainer();
+        Orders.AllowOrder(OrderType.Destroy);
+        Orders.AllowOrder(OrderType.Idle);
+        Orders.AllowOrder(OrderType.Stop);
+        Orders.AllowOrder(OrderType.Wait);
+
+        Resources = new ResourceContainer();
+        Recipes = new RecipeContainer();
+        Stats = new Stats();
+
+        OrderHandlers = new Dictionary<OrderType, IOrderHandler>()
+        {
+            { OrderType.Attack, new OrderHandlerAttack() },
+            { OrderType.Construct, new OrderHandlerConstruct() },
+            { OrderType.Destroy, new OrderHandlerDestroy() },
+            { OrderType.Follow, new OrderHandlerFollow() },
+            { OrderType.Guard, new OrderHandlerGuard() },
+            { OrderType.Load, new OrderHandlerLoad() },
+            { OrderType.Move, new OrderHandlerMove() },
+            { OrderType.Patrol, new OrderHandlerPatrol() },
+            { OrderType.Produce, new OrderHandlerProduce() },
+            { OrderType.Rally, new OrderHandlerRally() },
+            { OrderType.Repair, new OrderHandlerRepair() },
+            { OrderType.Research, new OrderHandlerResearch() },
+            { OrderType.Stop, new OrderHandlerStop() },
+            { OrderType.Transport, new OrderHandlerTransport() },
+            { OrderType.Unload, new OrderHandlerUnload() },
+            { OrderType.Wait, new OrderHandlerWait() },
+        };
+
+        ConstructionResources = new ResourceContainer();
+        ConstructionResources.Add("Metal", 0, 30);
+
+        ConstructionRecipies = new RecipeContainer();
+
+        Recipe r1 = new Recipe();
+
+        r1.Consume("Metal", 0);
+
+        ConstructionRecipies.Add(r1);
+    }
+
+    protected virtual void Start()
+    {
+        RallyPoint = Exit;
+    }
+
+    protected virtual void Update()
+    {
+        if (Health <= 0.0f)
+        {
+            Destroy(0);
+        }
+
+        switch (State)
+        {
+            case MyGameObjectState.Operational:
+                ProcessOrders();
+                RaiseResourceFlags();
+                break;
+
+            case MyGameObjectState.UnderAssembly:
+                break;
+
+            case MyGameObjectState.UnderConstruction:
+                RaiseConstructionResourceFlags();
+                break;
+        }
+
+        AlignPositionToTerrain();
+        Reload();
+    }
+
+    private void AlignPositionToTerrain()
+    {
+        RaycastHit hitInfo;
+        Ray ray = new Ray(transform.position + new Vector3(0, 1000, 0), Vector3.down);
+
+        if (Physics.Raycast(ray, out hitInfo, 2000, LayerMask.GetMask("Terrain")))
+        {
+            if (hitInfo.transform.tag == "Terrain")
+            {
+                transform.position = new Vector3(transform.position.x, hitInfo.point.y, transform.position.z);
+            }
+        }
+    }
+
+    private void ProcessOrders()
     {
         if (Orders.Count > 0)
         {
@@ -319,7 +318,7 @@ public class MyGameObject : MonoBehaviour
 
     void RaiseResourceFlags()
     {
-        foreach (Recipe recipe in Recipes)
+        foreach (Recipe recipe in Recipes.Items)
         {
             foreach (RecipeComponent resource in recipe.ToConsume)
             {
@@ -355,7 +354,7 @@ public class MyGameObject : MonoBehaviour
     {
         Game game = GameObject.Find("Game").GetComponent<Game>();
 
-        foreach (Recipe recipe in ConstructionRecipies)
+        foreach (Recipe recipe in ConstructionRecipies.Items)
         {
             foreach (RecipeComponent resource in recipe.ToConsume)
             {

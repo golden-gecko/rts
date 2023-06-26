@@ -6,7 +6,7 @@ public class OrderHandlerProduce : IOrderHandler
     {
         Order order = myGameObject.Orders.First();
 
-        foreach (Recipe recipe in myGameObject.Recipes)
+        foreach (Recipe recipe in myGameObject.Recipes.Items)
         {
             // Have all resources to consume.
             bool toConsume = true;

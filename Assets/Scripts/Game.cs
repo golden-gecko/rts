@@ -50,15 +50,10 @@ public class Game : MonoBehaviour
 
         return null;
     }
+
     public Order CreateOrderUnload()
     {
         return null;
-    }
-
-    void Start()
-    {
-        Consumers = new ConsumerProducerContainer();
-        Producers = new ConsumerProducerContainer();
     }
 
     private void Awake()
@@ -73,7 +68,7 @@ public class Game : MonoBehaviour
         }
     }
 
-    public ConsumerProducerContainer Consumers { get; private set; }
+    public ConsumerProducerContainer Consumers { get; private set; } = new();
 
-    public ConsumerProducerContainer Producers { get; private set; }
+    public ConsumerProducerContainer Producers { get; private set; } = new();
 }

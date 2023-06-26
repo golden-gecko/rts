@@ -12,10 +12,10 @@ GameObject:
   - component: {fileID: 1584278707725542746}
   - component: {fileID: 2264207683422015603}
   - component: {fileID: 8852757854655745743}
-  - component: {fileID: -2821595358411751999}
   - component: {fileID: -4730453693308864987}
+  - component: {fileID: -610857997906868978}
   m_Layer: 0
-  m_Name: Missile
+  m_Name: Rocket
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -64,7 +64,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 4abfc4ec06426624fbed0df15f0fa8c0, type: 2}
+  - {fileID: 2100000, guid: b92ccdad04120894cb97c562a499a17b, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -107,31 +107,6 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &-2821595358411751999
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3841255586236475405}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 28b9b8ccf8757c3429bb7a783fea80a1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  <ConstructionTime>k__BackingField: 10
-  <Health>k__BackingField: 100
-  <MaxHealth>k__BackingField: 100
-  <LoadTime>k__BackingField: 2
-  <ProduceTime>k__BackingField: 4
-  <Speed>k__BackingField: 0
-  <UnloadTime>k__BackingField: 2
-  <WaitTime>k__BackingField: 2
-  <Player>k__BackingField: {fileID: 0}
-  <Damage>k__BackingField: 0
-  <MissilePrefab>k__BackingField: 
-  <MissileRangeMax>k__BackingField: 0
-  <MissileRangeMin>k__BackingField: 0
 --- !u!54 &-4730453693308864987
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -159,3 +134,16 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &-610857997906868978
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3841255586236475405}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ea05d08f5969b634bba4bc266b62bb5a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  <Player>k__BackingField: {fileID: 0}

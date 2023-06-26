@@ -82,7 +82,7 @@ public class OrderHandlerConstruct : IOrderHandler
 
     private void MoveResourcesToUnit(MyGameObject myGameObject, Order order)
     {
-        foreach (KeyValuePair<string, Resource> i in order.TargetGameObject.ConstructionResources)
+        foreach (KeyValuePair<string, Resource> i in order.TargetGameObject.ConstructionResources.Items)
         {
             int capacity = i.Value.Capacity();
             int storage = myGameObject.Resources.Storage(i.Key);
