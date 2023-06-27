@@ -2,13 +2,6 @@ using System.Collections.Generic;
 
 public class OrderContainer
 {
-    public OrderContainer()
-    {
-        Items = new List<Order>();
-        OrderWhitelist = new HashSet<OrderType>();
-        PrefabWhitelist = new HashSet<string>();
-    }
-
     public void Add(Order item)
     {
         if (OrderWhitelist.Contains(item.Type))
@@ -24,15 +17,7 @@ public class OrderContainer
 
     public void AllowPrefab(string item)
     {
-        if (PrefabWhitelist.Contains(item))
-        {
-            PrefabWhitelist.Add(item);
-        }
-    }
-
-    public bool Contains(OrderType item)
-    {
-        return OrderWhitelist.Contains(item);
+        PrefabWhitelist.Add(item);
     }
 
     public void Clear()
@@ -51,12 +36,7 @@ public class OrderContainer
 
         foreach (Order order in Items)
         {
-            info += order.GetInfo() + ", ";
-        }
-
-        if (info.Length > 2)
-        {
-            info = info.Substring(0, info.Length - 2);
+            info += string.Format("\n  {0}", order.GetInfo());
         }
 
         return info;
@@ -65,6 +45,11 @@ public class OrderContainer
     public void Insert(int index, Order item)
     {
         Items.Insert(index, item);
+    }
+
+    public bool IsAllowed(OrderType item)
+    {
+        return OrderWhitelist.Contains(item);
     }
 
     public void MoveToEnd()
@@ -78,11 +63,11 @@ public class OrderContainer
         Items.RemoveAt(0);
     }
 
-    public List<Order> Items { get; }
-
-    public HashSet<OrderType> OrderWhitelist { get; }
-
-    public HashSet<string> PrefabWhitelist { get; }
-
     public int Count { get => Items.Count; }
+
+    public List<Order> Items { get; } = new();
+
+    public HashSet<OrderType> OrderWhitelist { get; } = new();
+
+    public HashSet<string> PrefabWhitelist { get; } = new();
 }

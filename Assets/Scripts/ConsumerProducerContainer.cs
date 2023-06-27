@@ -2,24 +2,18 @@ using System.Collections.Generic;
 
 public class ConsumerProducerContainer
 {
-    public ConsumerProducerContainer()
-    {
-        Items = new List<ConsumerProducerRequest>();
-    }
-
     public void Add(MyGameObject myGameObject, string name, int value)
     {
-        foreach (ConsumerProducerRequest request in Items)
+        ConsumerProducerRequest request = Items.Find(x => x.MyGameObject == myGameObject && x.Name == name);
+
+        if (request == null)
         {
-            if (request.MyGameObject == myGameObject && request.Name == name)
-            {
-                request.Set(value);
-
-                return;
-            }
+            Items.Add(new ConsumerProducerRequest(myGameObject, name, value));
         }
-
-        Items.Add(new ConsumerProducerRequest(myGameObject, name, value));
+        else
+        {
+            request.Set(value);
+        }
     }
 
     public void Clear()
@@ -29,7 +23,7 @@ public class ConsumerProducerContainer
 
     public void MoveToEnd()
     {
-        if (Items.Count > 0)
+        if (Items.Count > 1)
         {
             Items.Add(Items[0]);
             Items.RemoveAt(0);
@@ -38,18 +32,10 @@ public class ConsumerProducerContainer
 
     public void Remove(MyGameObject myGameObject, string name)
     {
-        foreach (ConsumerProducerRequest request in Items)
-        {
-            if (request.MyGameObject == myGameObject && request.Name == name)
-            {
-                Items.Remove(request);
-
-                break;
-            }
-        }
+        Items.RemoveAll(x => x.MyGameObject == myGameObject && x.Name == name);
     }
 
     public int Count { get => Items.Count; }
 
-    public List<ConsumerProducerRequest> Items { get; }
+    public List<ConsumerProducerRequest> Items { get; } = new();
 }

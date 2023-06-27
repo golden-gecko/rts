@@ -5,9 +5,259 @@ using UnityEngine.UIElements;
 
 public class HUD : MonoBehaviour
 {
+    public void ConstructUnit()
+    {
+        foreach (MyGameObject selected in Selected)
+        {
+            selected.Construct(prefab, PrefabConstructionType.Unit);
+        }
+
+        Order = OrderType.None;
+        Prefab = string.Empty;
+    }
+
+    public void Destroy()
+    {
+        foreach (MyGameObject selected in Selected)
+        {
+            selected.Destroy();
+        }
+    }
+
+    public void Stop()
+    {
+        foreach (MyGameObject selected in Selected)
+        {
+            selected.Stop();
+        }
+    }
+
     private void Awake()
     {
         Selected = new List<MyGameObject>();
+    }
+
+    private void Construct(Vector3 position)
+    {
+        foreach (MyGameObject selected in Selected)
+        {
+            if (IsMulti() == false)
+            {
+                selected.Orders.Clear();
+            }
+
+            selected.Construct(prefab, PrefabConstructionType.Structure, position);
+        }
+    }
+
+    private void DrawSelection()
+    {
+        if (Input.mousePosition.x < startPosition.x)
+        {
+            // Drag left.
+            selectionBox.xMin = Input.mousePosition.x;
+            selectionBox.xMax = startPosition.x;
+        }
+        else
+        {
+            // Drag right.
+            selectionBox.xMin = startPosition.x;
+            selectionBox.xMax = Input.mousePosition.x;
+        }
+
+        if (Input.mousePosition.y < startPosition.y)
+        {
+            // Drag down.
+            selectionBox.yMin = Input.mousePosition.y;
+            selectionBox.yMax = startPosition.y;
+        }
+        else
+        {
+            // Drag up.
+            selectionBox.yMin = startPosition.y;
+            selectionBox.yMax = Input.mousePosition.y;
+        }
+    }
+
+    private void DrawVisual()
+    {
+        Vector2 boxCenter = (startPosition + endPosition) / 2;
+        boxVisual.position = boxCenter;
+
+        Vector2 boxSize = new Vector2(Mathf.Abs(startPosition.x - endPosition.x), Mathf.Abs(startPosition.y - endPosition.y));
+        boxVisual.sizeDelta = boxSize;
+    }
+
+    private bool IsMulti()
+    {
+        return Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift);
+    }
+
+    private void IssueOrder(Vector3 position)
+    {
+        foreach (MyGameObject selected in Selected)
+        {
+            switch (Order)
+            {
+                case OrderType.Attack:
+                    if (IsMulti() == false)
+                    {
+                        selected.Orders.Clear();
+                    }
+
+                    selected.Attack(position);
+                    break;
+
+                case OrderType.Patrol:
+                    if (IsMulti() == false)
+                    {
+                        selected.Orders.Clear();
+                    }
+
+                    selected.Patrol(position);
+                    break;
+
+                case OrderType.Rally:
+                    selected.Rally(position, 0);
+                    break;
+
+                default:
+                    if (IsMulti() == false)
+                    {
+                        selected.Orders.Clear();
+                    }
+
+                    selected.Move(position);
+                    break;
+            }
+        }
+    }
+
+    private void IssueOrder(MyGameObject gameObject)
+    {
+        foreach (MyGameObject selected in Selected)
+        {
+            if (IsMulti() == false)
+            {
+                selected.Orders.Clear();
+            }
+
+            switch (Order)
+            {
+                case OrderType.Attack:
+                    selected.Attack(gameObject);
+                    break;
+
+                case OrderType.Guard:
+                    selected.Guard(gameObject);
+                    break;
+
+                case OrderType.Patrol:
+                    selected.Patrol(gameObject);
+                    break;
+            }
+        }
+    }
+
+    private void ProcessOrder()
+    {
+        RaycastHit hitInfo;
+
+        if (Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out hitInfo))
+        {
+            if (Order == OrderType.Construct)
+            {
+                if (hitInfo.transform.tag == "Terrain")
+                {
+                    Construct(hitInfo.point);
+                }
+            }
+            else
+            {
+                if (hitInfo.transform.tag == "Terrain")
+                {
+                    IssueOrder(hitInfo.point);
+                }
+                else
+                {
+                    IssueOrder(hitInfo.transform.GetComponentInParent<MyGameObject>());
+                }
+            }
+        }
+    }
+
+    private void ProcessSelection()
+    {
+        RaycastHit hitInfo;
+
+        if (Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out hitInfo))
+        {
+            if (hitInfo.transform.tag == "Terrain")
+            {
+                Select(null);
+            }
+            else
+            {
+                Select(hitInfo.transform.GetComponentInParent<MyGameObject>());
+            }
+        }
+    }
+
+    private void ResetVisual()
+    {
+        startPosition = Vector2.zero;
+        endPosition = Vector2.zero;
+    }
+
+    private void Select(MyGameObject gameObject)
+    {
+        if (IsMulti() == false)
+        {
+            foreach (MyGameObject selected in Selected)
+            {
+                selected.Select(false);
+            }
+
+            Selected.Clear();
+        }
+
+        if (gameObject != null)
+        {
+            if (IsMulti() && Selected.Contains(gameObject))
+            {
+                gameObject.Select(false);
+                Selected.Remove(gameObject);
+            }
+            else
+            {
+                gameObject.Select(true);
+                Selected.Add(gameObject);
+            }
+        }
+    }
+
+    private void SelectUnitInBox()
+    {
+        if (IsMulti() == false)
+        {
+            foreach (MyGameObject selected in Selected)
+            {
+                selected.Select(false);
+            }
+
+            Selected.Clear();
+        }
+
+        foreach (MyGameObject i in GameObject.FindObjectsByType<MyGameObject>(FindObjectsSortMode.None)) // TODO: Not very efficient. Refactor into raycast.
+        {
+            Vector3 screenPosition = Camera.main.WorldToScreenPoint(i.transform.position);
+
+            if (selectionBox.Contains(screenPosition))
+            {
+                i.Select(true);
+                Selected.Add(i);
+            }
+        }
     }
 
     private void Start()
@@ -36,6 +286,29 @@ public class HUD : MonoBehaviour
 
         UpdateMouse();
         UpdateKeyboard();
+    }
+
+    private void UpdateKeyboard()
+    {
+        if (Input.GetKey(KeyCode.Escape))
+        {
+            Application.Quit();
+        }
+
+        if (Input.GetKeyDown(KeyCode.F10))
+        {
+            GameObject canvas = GameObject.Find("Canvas");
+
+            foreach (UIDocument i in canvas.GetComponentsInChildren<UIDocument>(true))
+            {
+                if (i.name == "MainMenu")
+                {
+                    i.enabled = !i.enabled;
+
+                    break;
+                }
+            }
+        }
     }
 
     private void UpdateMouse()
@@ -136,290 +409,7 @@ public class HUD : MonoBehaviour
         }
     }
 
-    private void ResetVisual()
-    {
-        startPosition = Vector2.zero;
-        endPosition = Vector2.zero;
-    }
-
-    private void DrawVisual()
-    {
-        Vector2 boxCenter = (startPosition + endPosition) / 2;
-        boxVisual.position = boxCenter;
-
-        Vector2 boxSize = new Vector2(Mathf.Abs(startPosition.x - endPosition.x), Mathf.Abs(startPosition.y - endPosition.y));
-        boxVisual.sizeDelta = boxSize;
-    }
-
-    private void DrawSelection()
-    {
-        if (Input.mousePosition.x < startPosition.x)
-        {
-            // Drag left.
-            selectionBox.xMin = Input.mousePosition.x;
-            selectionBox.xMax = startPosition.x;
-        }
-        else
-        {
-            // Drag right.
-            selectionBox.xMin = startPosition.x;
-            selectionBox.xMax = Input.mousePosition.x;
-        }
-
-        if (Input.mousePosition.y < startPosition.y)
-        {
-            // Drag down.
-            selectionBox.yMin = Input.mousePosition.y;
-            selectionBox.yMax = startPosition.y;
-        }
-        else
-        {
-            // Drag up.
-            selectionBox.yMin = startPosition.y;
-            selectionBox.yMax = Input.mousePosition.y;
-        }
-    }
-
-    private void SelectUnitInBox()
-    {
-        if (IsMulti() == false)
-        {
-            foreach (MyGameObject selected in Selected)
-            {
-                selected.Select(false);
-            }
-
-            Selected.Clear();
-        }
-
-        foreach (MyGameObject i in GameObject.FindObjectsByType<MyGameObject>(FindObjectsSortMode.None)) // TODO: Not very efficient. Refactor into raycast.
-        {
-            Vector3 screenPosition = Camera.main.WorldToScreenPoint(i.transform.position);
-
-            if (selectionBox.Contains(screenPosition))
-            {
-                i.Select(true);
-                Selected.Add(i);
-            }
-        }
-    }
-
-    public void UpdateKeyboard()
-    {
-        if (Input.GetKey(KeyCode.Escape))
-        {
-            Application.Quit();
-        }
-
-        if (Input.GetKeyDown(KeyCode.F10))
-        {
-            GameObject canvas = GameObject.Find("Canvas");
-
-            foreach (UIDocument i in canvas.GetComponentsInChildren<UIDocument>(true))
-            {
-                if (i.name == "MainMenu")
-                {
-                    i.enabled = !i.enabled;
-
-                    break;
-                }
-            }
-        }
-    }
-
-    private void ProcessSelection()
-    {
-        RaycastHit hitInfo;
-
-        if (Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out hitInfo))
-        {
-            if (hitInfo.transform.tag == "Terrain")
-            {
-                Select(null);
-            }
-            else
-            {
-                Select(hitInfo.transform.GetComponentInParent<MyGameObject>());
-            }
-        }
-    }
-
-    private void ProcessOrder()
-    {
-        RaycastHit hitInfo;
-
-        if (Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out hitInfo))
-        {
-            if (Order == OrderType.Construct)
-            {
-                if (hitInfo.transform.tag == "Terrain")
-                {
-                    Construct(hitInfo.point);
-                }
-            }
-            else
-            {
-                if (hitInfo.transform.tag == "Terrain")
-                {
-                    IssueOrder(hitInfo.point);
-                }
-                else
-                {
-                    IssueOrder(hitInfo.transform.GetComponentInParent<MyGameObject>());
-                }
-            }
-        }
-    }
-
-    public void Destroy()
-    {
-        foreach (MyGameObject selected in Selected)
-        {
-            selected.Destroy();
-        }
-    }
-
-    public void Stop()
-    {
-        foreach (MyGameObject selected in Selected)
-        {
-            selected.Stop();
-        }
-    }
-
-    private void Construct(Vector3 position)
-    {
-        foreach (MyGameObject selected in Selected)
-        {
-            if (IsMulti() == false)
-            {
-                selected.Orders.Clear();
-            }
-
-            selected.Construct(prefab, PrefabConstructionType.Structure, position);
-        }
-    }
-
-    public void ConstructUnit()
-    {
-        foreach (MyGameObject selected in Selected)
-        {
-            selected.Construct(prefab, PrefabConstructionType.Unit);
-        }
-
-        Order = OrderType.None;
-        Prefab = string.Empty;
-    }
-
-    void IssueOrder(Vector3 position)
-    {
-        foreach (MyGameObject selected in Selected)
-        {
-            switch (Order)
-            {
-                case OrderType.Attack:
-                    if (IsMulti() == false)
-                    {
-                        selected.Orders.Clear();
-                    }
-
-                    selected.Attack(position);
-                    break;
-
-                case OrderType.Patrol:
-                    if (IsMulti() == false)
-                    {
-                        selected.Orders.Clear();
-                    }
-
-                    selected.Patrol(position);
-                    break;
-
-                case OrderType.Rally:
-                    selected.Rally(position, 0);
-                    break;
-
-                default:
-                    if (IsMulti() == false)
-                    {
-                        selected.Orders.Clear();
-                    }
-
-                    selected.Move(position);
-                    break;
-            }
-        }
-    }
-
-    void IssueOrder(MyGameObject gameObject)
-    {
-        foreach (MyGameObject selected in Selected)
-        {
-            if (IsMulti() == false)
-            {
-                selected.Orders.Clear();
-            }
-
-            switch (Order)
-            {
-                case OrderType.Attack:
-                    selected.Attack(gameObject);
-                    break;
-
-                case OrderType.Guard:
-                    selected.Guard(gameObject);
-                    break;
-
-                case OrderType.Patrol:
-                    selected.Patrol(gameObject);
-                    break;
-            }
-        }
-    }
-
-    private void Select(MyGameObject gameObject)
-    {
-        if (IsMulti() == false)
-        {
-            foreach (MyGameObject selected in Selected)
-            {
-                selected.Select(false);
-            }
-
-            Selected.Clear();
-        }
-
-        if (gameObject != null)
-        {
-            if (IsMulti() && Selected.Contains(gameObject))
-            {
-                gameObject.Select(false);
-                Selected.Remove(gameObject);
-            }
-            else
-            {
-                gameObject.Select(true);
-                Selected.Add(gameObject);
-            }
-        }
-    }
-
-    private bool IsMulti()
-    {
-        return Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift);
-    }
-
-    public RectTransform boxVisual;
-
-    private Rect selectionBox;
-
-    private Vector2 startPosition = Vector2.zero;
-
-    private Vector2 endPosition = Vector2.zero;
-
-    private bool drag = false;
-
-    public List<MyGameObject> Selected { get; private set; }
+    private MyGameObject Cursor { get; set; }
 
     public OrderType Order
     {
@@ -448,7 +438,6 @@ public class HUD : MonoBehaviour
             }
         }
     }
-
 
     public string Prefab
     {
@@ -493,10 +482,19 @@ public class HUD : MonoBehaviour
     }
 
     public PrefabConstructionType PrefabConstructionType { get; set; }
+    public List<MyGameObject> Selected { get; private set; }
+
+    public RectTransform boxVisual;
+
+    private bool drag = false;
+
+    private Vector2 endPosition = Vector2.zero;
 
     private OrderType order = OrderType.None;
 
     private string prefab = string.Empty;
 
-    private MyGameObject Cursor { get; set; }
+    private Rect selectionBox;
+
+    private Vector2 startPosition = Vector2.zero;
 }

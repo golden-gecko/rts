@@ -3,6 +3,8 @@ using UnityEngine;
 
 public class Game : MonoBehaviour
 {
+    public static Game Instance { get; private set; }
+
     public Order CreateOrderConstruction()
     {
         return null;
@@ -48,18 +50,25 @@ public class Game : MonoBehaviour
 
         return null;
     }
+
     public Order CreateOrderUnload()
     {
         return null;
     }
 
-    void Start()
+    private void Awake()
     {
-        Consumers = new ConsumerProducerContainer();
-        Producers = new ConsumerProducerContainer();
+        if (Instance != null && Instance != this)
+        {
+            Destroy(this);
+        }
+        else
+        {
+            Instance = this;
+        }
     }
 
-    public ConsumerProducerContainer Consumers { get; private set; }
+    public ConsumerProducerContainer Consumers { get; private set; } = new();
 
-    public ConsumerProducerContainer Producers { get; private set; }
+    public ConsumerProducerContainer Producers { get; private set; } = new();
 }

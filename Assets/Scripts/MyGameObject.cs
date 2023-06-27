@@ -1,87 +1,8 @@
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Events;
 
 public class MyGameObject : MonoBehaviour
 {
-    protected virtual void Awake()
-    {
-        // TODO: Move initialization of other objects to Awake method.
-
-        Orders = new OrderContainer();
-        Orders.AllowOrder(OrderType.Destroy);
-        Orders.AllowOrder(OrderType.Idle);
-        Orders.AllowOrder(OrderType.Stop);
-        Orders.AllowOrder(OrderType.Wait);
-
-        Resources = new ResourceContainer();
-        Recipes = new RecipeContainer();
-        Stats = new Stats();
-
-        OrderHandlers = new Dictionary<OrderType, UnityAction>()
-        {
-            { OrderType.Attack, OnOrderAttack },
-            { OrderType.Construct, OnOrderConstruct },
-            { OrderType.Destroy, OnOrderDestroy },
-            { OrderType.Follow, OnOrderFollow },
-            { OrderType.Guard, OnOrderGuard },
-            { OrderType.Idle, OnOrderIdle },
-            { OrderType.Load, OnOrderLoad },
-            { OrderType.Move, OnOrderMove },
-            { OrderType.Patrol, OnOrderPatrol },
-            { OrderType.Produce, OnOrderProduce },
-            { OrderType.Rally, OnOrderRally },
-            { OrderType.Repair, OnOrderRepair },
-            { OrderType.Research, OnOrderResearch },
-            { OrderType.Stop, OnOrderStop },
-            { OrderType.Transport, OnOrderTransport },
-            { OrderType.Unload, OnOrderUnload },
-            { OrderType.Wait, OnOrderWait },
-        };
-
-        ConstructionResources = new ResourceContainer();
-        ConstructionResources.Add("Metal", 0, 30);
-
-        ConstructionRecipies = new RecipeContainer();
-
-        Recipe r1 = new Recipe();
-
-        r1.Consume("Metal", 0);
-
-        ConstructionRecipies.Add(r1);
-    }
-
-    protected virtual void Start()
-    {
-        RallyPoint = Exit;
-    }
-
-    protected virtual void Update()
-    {
-        if (Health <= 0.0f)
-        {
-            Destroy(0);
-        }
-
-        switch (State)
-        {
-            case MyGameObjectState.Operational:
-                ProcessOrders();
-                RaiseResourceFlags();
-                break;
-
-            case MyGameObjectState.UnderAssembly:
-                break;
-
-            case MyGameObjectState.UnderConstruction:
-                RaiseConstructionResourceFlags();
-                break;
-        }
-
-        AlignPositionToTerrain();
-        Reload();
-    }
-
     public void OnDamage(float damage)
     {
         Health -= damage;
@@ -89,27 +10,9 @@ public class MyGameObject : MonoBehaviour
         Stats.Add(Stats.DamageTaken, damage);
     }
 
-    public bool IsConstructed()
-    {
-        foreach (KeyValuePair<string, Resource> i in ConstructionResources)
-        {
-            if (i.Value.Value < i.Value.Max)
-            {
-                return false;
-            }
-        }
-
-        return true;
-    }
-
     public void Select(bool status)
     {
-        Transform selection = transform.Find("Selection");
-
-        if (selection != null)
-        {
-            selection.gameObject.SetActive(status);
-        }
+        transform.Find("Selection")?.gameObject.SetActive(status);
     }
 
     public void Attack(Vector3 target)
@@ -234,512 +137,11 @@ public class MyGameObject : MonoBehaviour
     {
         if (0 <= priority && priority < Orders.Count)
         {
-            Orders.Insert(priority, new Order(OrderType.Wait, WaitTime)); 
+            Orders.Insert(priority, new Order(OrderType.Wait, WaitTime));
         }
         else
         {
             Orders.Add(new Order(OrderType.Wait, WaitTime));
-        }
-    }
-
-    private Vector3 GetPositionToAttack(Vector3 target)
-    {
-        Vector3 direction = target - Position;
-
-        direction.Normalize();
-
-        return target - direction * MissileRangeMax * 0.9f;
-    }
-
-    protected virtual void OnTriggerEnter(Collider other)
-    {
-    }
-
-    protected virtual void OnOrderAttack()
-    {
-        Order order = Orders.First();
-
-        Vector3 position;
-
-        if (order.IsTargetGameObject)
-        {
-            if (order.TargetGameObject == null)
-            {
-                Stats.Add(Stats.OrdersExecuted, 1);
-                Stats.Add(Stats.TargetsDestroyed, 1);
-
-                Orders.Pop();
-
-                return;
-            }
-            else
-            {
-                position = order.TargetGameObject.Position;
-            }
-        }
-        else
-        {
-            position = order.TargetPosition;
-        }
-
-        if (IsCloseTo(position, MissileRangeMax) == false) // TODO: Test by adding visual debug.
-        {
-            Move(GetPositionToAttack(position), 0); // TODO: Test by adding visual debug.
-        }
-        else
-        {
-            transform.LookAt(new Vector3(position.x, Position.y, position.z));
-
-            if (ReloadTimer.Finished)
-            {
-                MyGameObject resource = UnityEngine.Resources.Load<MyGameObject>(MissilePrefab); // TODO: Remove name conflict.
-                MyGameObject missile = Instantiate<MyGameObject>(resource, Position, Quaternion.identity);
-
-                missile.Parent = this;
-                missile.Player = Player;
-
-                missile.Move(position);
-                missile.Destroy();
-
-                ReloadTimer.Reset();
-
-                Orders.MoveToEnd();
-
-                Stats.Add(Stats.MissilesFired, 1);
-            }
-        }
-    }
-
-    protected virtual void OnOrderConstruct()
-    {
-        Order order = Orders.First();
-
-        switch (order.PrefabConstructionType)
-        {
-            case PrefabConstructionType.Structure:
-                if (IsCloseTo(order.TargetPosition + new Vector3(0, 0, 1)) == false)
-                {
-                    Move(order.TargetPosition + new Vector3(0, 0, 1), 0); // TODO: Add offset based on object size.
-                }
-                else if (order.TargetGameObject == null)
-                {
-                    MyGameObject resource = UnityEngine.Resources.Load<MyGameObject>(order.Prefab); // TODO: Remove name conflict.
-
-                    order.TargetGameObject = Instantiate<MyGameObject>(resource, order.TargetPosition, Quaternion.identity);
-                    order.TargetGameObject.State = MyGameObjectState.UnderConstruction;
-                }
-                else if (order.TargetGameObject.IsConstructed())
-                {
-                    order.Timer.Update(Time.deltaTime);
-
-                    if (order.Timer.Finished)
-                    {
-                        order.TargetGameObject.State = MyGameObjectState.Operational;
-                        order.Timer.Reset();
-
-                        Orders.Pop();
-
-                        Stats.Add(Stats.OrdersExecuted, 1);
-                        Stats.Add(Stats.TimeConstructing, order.Timer.Max);
-                    }
-                }
-                else
-                {
-                    Wait(0);
-                }
-
-                break;
-
-            case PrefabConstructionType.Unit:
-                if (order.TargetGameObject == null)
-                {
-                    MyGameObject resource = UnityEngine.Resources.Load<MyGameObject>(order.Prefab); // TODO: Remove name conflict.
-
-                    order.TargetGameObject = Instantiate<MyGameObject>(resource, Exit, Quaternion.identity);
-                    order.TargetGameObject.State = MyGameObjectState.UnderAssembly;
-                }
-                else if (order.TargetGameObject.IsConstructed() == false)
-                {
-                    MoveResourcesToUnit(order);
-                }
-                else if (order.TargetGameObject.IsConstructed())
-                {
-                    order.Timer.Update(Time.deltaTime);
-
-                    if (order.Timer.Finished)
-                    {
-                        order.TargetGameObject.State = MyGameObjectState.Operational;
-                        order.TargetGameObject.Move(RallyPoint);
-                        order.Timer.Reset();
-
-                        Orders.Pop();
-
-                        Stats.Add(Stats.OrdersExecuted, 1);
-                        Stats.Add(Stats.TimeConstructing, order.Timer.Max);
-                    }
-                }
-                else
-                {
-                    Wait(0);
-                }
-
-                break;
-        }
-    }
-
-    protected virtual void OnOrderDestroy()
-    {
-        Object resource = UnityEngine.Resources.Load("Effects/WFXMR_ExplosiveSmoke"); // TODO: Remove name conflict.
-        Object effect = Instantiate(resource, Position, Quaternion.identity);
-
-        GameObject.Destroy(gameObject);
-
-        Orders.Pop();
-    }
-
-    protected virtual void OnOrderFollow()
-    {
-        Order order = Orders.First();
-
-        if (order.TargetGameObject == null)
-        {
-            Move(order.TargetPosition);
-        }
-        else
-        {
-            Move(order.TargetGameObject);
-        }
-
-        Orders.MoveToEnd();
-    }
-
-    protected virtual void OnOrderGuard()
-    {
-        Order order = Orders.First();
-
-        if (order.TargetGameObject == null)
-        {
-            Move(order.TargetPosition);
-        }
-        else
-        {
-            Move(order.TargetGameObject);
-        }
-
-        Orders.MoveToEnd();
-    }
-
-    protected virtual void OnOrderIdle()
-    {
-    }
-
-    protected virtual void OnOrderLoad()
-    {
-        Order order = Orders.First();
-
-        // Update timer.
-        order.Timer.Update(Time.deltaTime);
-
-        if (order.Timer.Finished == false)
-        {
-            return;
-        }
-
-        // Check storage and capacity.
-        Dictionary<string, int> resources = new Dictionary<string, int>();
-
-        foreach (KeyValuePair<string, int> i in order.Resources)
-        {
-            int value = Mathf.Min(new int[] { i.Value, order.TargetGameObject.Resources.Storage(i.Key), Resources.Capacity(i.Key) });
-
-            if (value > 0)
-            {
-                resources[i.Key] = value;
-            }
-        }
-
-        // Move resources or wait for them.
-        if (resources.Count > 0)
-        {
-            MoveResources(order.TargetGameObject, this, resources);
-
-            Orders.Pop();
-
-            Stats.Add(Stats.OrdersExecuted, 1);
-        }
-        else
-        {
-            order.Retry();
-            order.Timer.Reset();
-
-            if (order.CanRetry)
-            {
-                Wait(0);
-            }
-            else
-            {
-                Orders.Pop();
-
-                Stats.Add(Stats.OrdersFailed, 1);
-
-                GameObject.Find("Canvas").GetComponentInChildren<InGameMenuController>().Log("Failed to execute load order");
-            }
-        }
-    }
-
-    protected virtual void OnOrderMove()
-    {
-        Order order = Orders.First();
-
-        Vector3 target;
-        Vector3 position = transform.position;
-
-        if (order.TargetGameObject != null)
-        {
-            target = order.TargetGameObject.Entrance;
-        }
-        else
-        {
-            target = order.TargetPosition;
-        }
-
-        target.y = 0;
-        position.y = 0;
-
-        float distanceToTarget = (target - position).magnitude;
-        float distanceToTravel = Speed * Time.deltaTime;
-
-        if (distanceToTarget > distanceToTravel)
-        {
-            transform.LookAt(new Vector3(target.x, transform.position.y, target.z));
-            transform.Translate(Vector3.forward * distanceToTravel);
-
-            Stats.Add(Stats.DistanceDriven, distanceToTravel);
-        }
-        else
-        {
-            transform.position = target;
-
-            Stats.Add(Stats.DistanceDriven, distanceToTarget);
-            Stats.Add(Stats.OrdersExecuted, 1);
-
-            Orders.Pop();
-        }
-    }
-
-    protected virtual void OnOrderPatrol()
-    {
-        Order order = Orders.First();
-
-        if (order.TargetGameObject == null)
-        {
-            Move(order.TargetPosition);
-            Move(transform.position);
-        }
-        else
-        {
-            Move(order.TargetGameObject);
-            Move(transform.position);
-        }
-
-        Orders.MoveToEnd();
-    }
-
-    protected virtual void OnOrderProduce()
-    {
-        Order order = Orders.First();
-
-        foreach (Recipe recipe in Recipes)
-        {
-            // Have all resources to consume.
-            bool toConsume = true;
-
-            foreach (RecipeComponent i in recipe.ToConsume)
-            {
-                if (Resources.CanRemove(i.Name, i.Count) == false)
-                {
-                    toConsume = false;
-                    break;
-                }
-            }
-
-            // Have all resources to produce.
-            bool toProduce = true;
-
-            foreach (RecipeComponent i in recipe.ToProduce)
-            {
-                if (Resources.CanAdd(i.Name, i.Count) == false)
-                {
-                    toProduce = false;
-                    break;
-                }
-            }
-
-            // Produce new resources.
-            if (toConsume && toProduce)
-            {
-                order.Timer.Update(Time.deltaTime);
-
-                if (order.Timer.Finished)
-                {
-                    if (toConsume && toProduce)
-                    {
-                        foreach (RecipeComponent i in recipe.ToConsume)
-                        {
-                            Resources.Remove(i.Name, i.Count);
-                        }
-
-                        foreach (RecipeComponent i in recipe.ToProduce)
-                        {
-                            Resources.Add(i.Name, i.Count);
-
-                            Stats.Add(Stats.ResourcesProduced, i.Count);
-                        }
-                    }
-
-                    order.Timer.Reset();
-
-                    Orders.MoveToEnd();
-
-                    Stats.Add(Stats.OrdersExecuted, 1);
-                    Stats.Add(Stats.TimeProducing, order.Timer.Max);
-                }
-            }
-        }
-    }
-
-    protected virtual void OnOrderRally()
-    {
-        Order order = Orders.First();
-
-        RallyPoint = order.TargetPosition;
-
-        Orders.Pop();
-    }
-
-    protected virtual void OnOrderRepair()
-    {
-    }
-
-    protected virtual void OnOrderResearch()
-    {
-    }
-
-    protected virtual void OnOrderStop()
-    {
-        Orders.Clear();
-    }
-
-    protected virtual void OnOrderTransport()
-    {
-        Order order = Orders.First();
-
-        Move(order.SourceGameObject);
-        Load(order.SourceGameObject, order.Resources);
-        Move(order.TargetGameObject);
-        Unload(order.TargetGameObject, order.Resources);
-
-        Orders.Pop();
-    }
-
-    protected virtual void OnOrderUnload()
-    {
-        Order order = Orders.First();
-
-        // Update timer.
-        order.Timer.Update(Time.deltaTime);
-
-        if (order.Timer.Finished == false)
-        {
-            return;
-        }
-
-        // Check storage and capacity.
-        Dictionary<string, int> resources = new Dictionary<string, int>();
-
-        foreach (KeyValuePair<string, int> i in order.Resources)
-        {
-            if (order.TargetGameObject.State == MyGameObjectState.UnderConstruction)
-            {
-                int value = Mathf.Min(new int[] { i.Value, Resources.Storage(i.Key), order.TargetGameObject.ConstructionResources.Capacity(i.Key) });
-
-                if (value > 0)
-                {
-                    resources[i.Key] = value;
-
-                    Stats.Add(Stats.ResourcesTransported, value);
-                }
-            }
-            else
-            {
-                int value = Mathf.Min(new int[] { i.Value, Resources.Storage(i.Key), order.TargetGameObject.Resources.Capacity(i.Key) });
-
-                if (value > 0)
-                {
-                    resources[i.Key] = value;
-
-                    Stats.Add(Stats.ResourcesTransported, value);
-                }
-            }
-        }
-
-        // Move resources or wait for them.
-        if (resources.Count > 0)
-        {
-            MoveResources(this, order.TargetGameObject, resources);
-
-            Orders.Pop();
-
-            Stats.Add(Stats.OrdersExecuted, 1);
-        }
-        else
-        {
-            order.Retry();
-            order.Timer.Reset();
-
-            if (order.CanRetry)
-            {
-                Wait(0);
-            }
-            else
-            {
-                Orders.Pop();
-
-                Stats.Add(Stats.OrdersFailed, 1);
-
-                GameObject.Find("Canvas").GetComponentInChildren<InGameMenuController>().Log("Failed to execute load order");
-            }
-        }
-    }
-
-    protected virtual void OnOrderWait()
-    {
-        Order order = Orders.First();
-
-        order.Timer.Update(Time.deltaTime);
-
-        if (order.Timer.Finished)
-        {
-            order.Timer.Reset();
-
-            Orders.Pop();
-
-            // Stats.Add(Stats.OrdersExecuted, 1); // TODO: Should we count wait as order?
-            Stats.Add(Stats.TimeWaiting, order.Timer.Max);
-        }
-    }
-
-    void AlignPositionToTerrain()
-    {
-        RaycastHit hitInfo;
-        Ray ray = new Ray(transform.position + new Vector3(0, 1000, 0), Vector3.down);
-
-        if (Physics.Raycast(ray, out hitInfo, 2000, LayerMask.GetMask("Terrain")))
-        {
-            if (hitInfo.transform.tag == "Terrain")
-            {
-                transform.position = new Vector3(transform.position.x, hitInfo.point.y, transform.position.z);
-            }
         }
     }
 
@@ -769,7 +171,7 @@ public class MyGameObject : MonoBehaviour
         return info;
     }
 
-    void MoveResources(MyGameObject source, MyGameObject target, Dictionary<string, int> resources)
+    public void MoveResources(MyGameObject source, MyGameObject target, Dictionary<string, int> resources)
     {
         foreach (KeyValuePair<string, int> i in resources)
         {
@@ -786,71 +188,126 @@ public class MyGameObject : MonoBehaviour
         }
     }
 
-    void ProcessOrders()
+    public bool IsCloseTo(Vector3 position, float radius = 1.0f)
+    {
+        Vector3 a = position;
+        Vector3 b = transform.position;
+
+        a.y = 0.0f;
+        b.y = 0.0f;
+
+        return (b - a).magnitude < radius;
+    }
+
+    protected virtual void Awake()
+    {
+        Orders.AllowOrder(OrderType.Destroy);
+        Orders.AllowOrder(OrderType.Idle);
+        Orders.AllowOrder(OrderType.Stop);
+        Orders.AllowOrder(OrderType.Wait);
+
+        OrderHandlers[OrderType.Attack] = new OrderHandlerAttack();
+        OrderHandlers[OrderType.Construct] = new OrderHandlerConstruct();
+        OrderHandlers[OrderType.Destroy] = new OrderHandlerDestroy();
+        OrderHandlers[OrderType.Follow] = new OrderHandlerFollow();
+        OrderHandlers[OrderType.Guard] = new OrderHandlerGuard();
+        OrderHandlers[OrderType.Load] = new OrderHandlerLoad();
+        OrderHandlers[OrderType.Move] = new OrderHandlerMove();
+        OrderHandlers[OrderType.Patrol] = new OrderHandlerPatrol();
+        OrderHandlers[OrderType.Produce] = new OrderHandlerProduce();
+        OrderHandlers[OrderType.Rally] = new OrderHandlerRally();
+        OrderHandlers[OrderType.Repair] = new OrderHandlerRepair();
+        OrderHandlers[OrderType.Research] = new OrderHandlerResearch();
+        OrderHandlers[OrderType.Stop] = new OrderHandlerStop();
+        OrderHandlers[OrderType.Transport] = new OrderHandlerTransport();
+        OrderHandlers[OrderType.Unload] = new OrderHandlerUnload();
+        OrderHandlers[OrderType.Wait] = new OrderHandlerWait();
+
+        ConstructionResources.Add("Metal", 0, 30);
+
+        Recipe r1 = new Recipe();
+
+        r1.Consume("Metal", 0);
+
+        ConstructionRecipies.Add(r1);
+    }
+
+    protected virtual void Start()
+    {
+        RallyPoint = Exit;
+    }
+
+    protected virtual void Update()
+    {
+        if (Alive == false)
+        {
+            Destroy(0);
+        }
+
+        switch (State)
+        {
+            case MyGameObjectState.Operational:
+                ProcessOrders();
+                RaiseResourceFlags();
+                break;
+
+            case MyGameObjectState.UnderAssembly:
+                break;
+
+            case MyGameObjectState.UnderConstruction:
+                RaiseConstructionResourceFlags();
+                break;
+        }
+
+        AlignPositionToTerrain();
+        Reload();
+    }
+
+    private void Reload()
+    {
+        ReloadTimer?.Update(Time.deltaTime);
+    }
+
+    private void AlignPositionToTerrain()
+    {
+        RaycastHit hitInfo;
+        Ray ray = new Ray(transform.position + new Vector3(0, 1000, 0), Vector3.down);
+
+        if (Physics.Raycast(ray, out hitInfo, 2000, LayerMask.GetMask("Terrain")))
+        {
+            if (hitInfo.transform.tag == "Terrain")
+            {
+                transform.position = new Vector3(transform.position.x, hitInfo.point.y, transform.position.z);
+            }
+        }
+    }
+
+    private void ProcessOrders()
     {
         if (Orders.Count > 0)
         {
             Order order = Orders.First();
 
-            if (Orders.Contains(order.Type))
+            if (Orders.IsAllowed(order.Type) && OrderHandlers.ContainsKey(order.Type))
             {
-                if (OrderHandlers.ContainsKey(order.Type))
-                {
-                    OrderHandlers[order.Type]();
-                }
+                OrderHandlers[order.Type].OnExecute(this);
             }
             else
             {
                 Orders.Pop();
             }
         }
-        else
+        else if (OrderHandlers.ContainsKey(OrderType.Idle))
         {
-            OnOrderIdle();
+            OrderHandlers[OrderType.Idle].OnExecute(this);
         }
     }
 
-    void RaiseResourceFlags()
+    private void RaiseConstructionResourceFlags()
     {
         Game game = GameObject.Find("Game").GetComponent<Game>();
 
-        foreach (Recipe recipe in Recipes)
-        {
-            foreach (RecipeComponent resource in recipe.ToConsume)
-            {
-                int capacity = Resources.Capacity(resource.Name);
-
-                if (capacity > 0)
-                {
-                    game.Consumers.Add(this, resource.Name, capacity);
-                }
-                else
-                {
-                    game.Consumers.Remove(this, resource.Name);
-                }
-            }
-
-            foreach (RecipeComponent resource in recipe.ToProduce)
-            {
-                int storage = Resources.Storage(resource.Name);
-
-                if (storage > 0)
-                {
-                    game.Producers.Add(this, resource.Name, storage);
-                }
-                else
-                {
-                    game.Producers.Remove(this, resource.Name);
-                }
-            }
-        }
-    }
-
-    void RaiseConstructionResourceFlags()
-    {
-        Game game = GameObject.Find("Game").GetComponent<Game>();
-
-        foreach (Recipe recipe in ConstructionRecipies)
+        foreach (Recipe recipe in ConstructionRecipies.Items)
         {
             foreach (RecipeComponent resource in recipe.ToConsume)
             {
@@ -868,109 +325,112 @@ public class MyGameObject : MonoBehaviour
         }
     }
 
-    void MoveResourcesToUnit(Order order)
+    private void RaiseResourceFlags()
     {
-        foreach (KeyValuePair<string, Resource> i in order.TargetGameObject.ConstructionResources)
+        foreach (Recipe recipe in Recipes.Items)
         {
-            int capacity = i.Value.Capacity();
-            int storage = Resources.Storage(i.Key);
-            int value = Mathf.Min(new int[] { capacity, storage });
-
-            if (value > 0)
+            foreach (RecipeComponent resource in recipe.ToConsume)
             {
-                Resources.Remove(i.Key, value);
-                i.Value.Add(value);
+                int capacity = Resources.Capacity(resource.Name);
+
+                if (capacity > 0)
+                {
+                    Game.Instance.Consumers.Add(this, resource.Name, capacity);
+                }
+                else
+                {
+                    Game.Instance.Consumers.Remove(this, resource.Name);
+                }
+            }
+
+            foreach (RecipeComponent resource in recipe.ToProduce)
+            {
+                int storage = Resources.Storage(resource.Name);
+
+                if (storage > 0)
+                {
+                    Game.Instance.Producers.Add(this, resource.Name, storage);
+                }
+                else
+                {
+                    Game.Instance.Producers.Remove(this, resource.Name);
+                }
             }
         }
     }
 
-    protected bool IsCloseTo(Vector3 position, float radius = 1.0f)
-    {
-        Vector3 a = position;
-        Vector3 b = transform.position;
-
-        a.y = 0.0f;
-        b.y = 0.0f;
-
-        return (b - a).magnitude < radius;
-    }
-
-    protected void Reload()
-    {
-        if (ReloadTimer != null)
-        {
-            ReloadTimer.Update(Time.deltaTime);
-        }
-    }
-
-    public Vector3 Entrance
+    public bool Constructed
     {
         get
         {
-            Vector3 size = GetComponent<Collider>().bounds.size;
+            foreach (KeyValuePair<string, Resource> i in ConstructionResources.Items)
+            {
+                if (i.Value.Value < i.Value.Max)
+                {
+                    return false;
+                }
+            }
 
-            return new Vector3(transform.position.x, transform.position.y, transform.position.z + size.z * 0.75f);
+            return true;
         }
     }
 
-    public Vector3 Exit
-    {
-        get
-        {
-            Vector3 size = GetComponent<Collider>().bounds.size;
+    public Vector3 Entrance { get => new Vector3(transform.position.x, transform.position.y, transform.position.z + Size.z * 0.75f); }
 
-            return new Vector3(transform.position.x, transform.position.y, transform.position.z - size.z * 0.75f);
-        }
-    }
+    public Vector3 Exit { get => new Vector3(transform.position.x, transform.position.y, transform.position.z - Size.z * 0.75f); }
+
+    public Vector3 Size { get => GetComponent<Collider>().bounds.size; }
+
+    public bool Alive { get => Health <= 0.0f; }
 
     [field: SerializeField]
     public Player Player { get; set; }
 
-    public float ConstructionTime { get; protected set; } = 0.0f;
+    public float Damage { get; protected set; } = 10.0f;
 
-    public float Health { get; protected set; } = 0.0f;
+    public float ConstructionTime { get; protected set; } = 10.0f;
 
-    public float MaxHealth { get; protected set; } = 0.0f;
+    public float Health { get; protected set; } = 10.0f;
 
-    public float LoadTime { get; protected set; } = 0.0f;
+    public float MaxHealth { get; protected set; } = 10.0f;
 
-    public float ProduceTime { get; protected set; } = 0.0f;
+    public float LoadTime { get; protected set; } = 10.0f;
 
-    public float Speed { get; protected set; } = 0.0f;
+    public float ProduceTime { get; protected set; } = 10.0f;
 
-    public float UnloadTime { get; protected set; } = 0.0f;
+    public float Speed { get; protected set; } = 10.0f;
 
-    public float WaitTime { get; protected set; } = 0.0f;
+    public float UnloadTime { get; protected set; } = 10.0f;
 
-    public float Damage { get; protected set; } = 0.0f;
+    public float WaitTime { get; protected set; } = 10.0f;
 
     public string MissilePrefab { get; protected set; } = string.Empty;
 
-    public float MissileRangeMax { get; protected set; } = 0.0f;
+    public float MissileRangeMax { get; protected set; } = 10.0f;
 
-    public float MissileRangeMin { get; protected set; } = 0.0f; // TODO: Implement.
+    public float MissileRangeMin { get; protected set; } = 10.0f; // TODO: Implement.
 
-    public Vector3 Position { get => transform.position; }
+    public Vector3 Position { get => transform.position; set => transform.position = value; }
 
-    public OrderContainer Orders { get; private set; }
+    public OrderContainer Orders { get; private set; } = new();
 
-    public Dictionary<OrderType, UnityAction> OrderHandlers { get; private set; }
+    public ResourceContainer Resources { get; private set; } = new();
 
-    public ResourceContainer Resources { get; private set; }
+    public RecipeContainer Recipes { get; private set; } = new();
 
-    public RecipeContainer Recipes { get; private set; }
-
-    public Stats Stats { get; private set; }
+    public Stats Stats { get; private set; } = new();
 
     public MyGameObjectState State { get; set; } = MyGameObjectState.Operational;
 
-    public ResourceContainer ConstructionResources { get; private set; }
+    public ResourceContainer ConstructionResources { get; private set; } = new();
 
-    public RecipeContainer ConstructionRecipies { get; private set; }
+    public RecipeContainer ConstructionRecipies { get; private set; } = new();
 
-    public Vector3 RallyPoint { get; protected set; }
+    public Vector3 RallyPoint { get; set; }
     
     public Timer ReloadTimer { get; protected set; }
 
-    public MyGameObject Parent { get; protected set; }
+    public MyGameObject Parent { get; set; }
+
+    protected Dictionary<OrderType, IOrderHandler> OrderHandlers { get; set; } = new();
 }
