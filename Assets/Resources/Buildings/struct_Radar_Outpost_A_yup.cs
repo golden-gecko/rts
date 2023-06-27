@@ -1,10 +1,3 @@
-public class struct_Radar_Outpost_A_yup : MyGameObject
+public class struct_Radar_Outpost_A_yup : Structure
 {
-    protected override void Awake()
-    {
-        base.Awake();
-
-        Health = 100.0f;
-        MaxHealth = 100.0f;
-    }
 }

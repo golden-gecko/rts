@@ -10,27 +10,9 @@ public class MyGameObject : MonoBehaviour
         Stats.Add(Stats.DamageTaken, damage);
     }
 
-    public bool IsConstructed()
-    {
-        foreach (KeyValuePair<string, Resource> i in ConstructionResources.Items)
-        {
-            if (i.Value.Value < i.Value.Max)
-            {
-                return false;
-            }
-        }
-
-        return true;
-    }
-
     public void Select(bool status)
     {
-        Transform selection = transform.Find("Selection");
-
-        if (selection != null)
-        {
-            selection.gameObject.SetActive(status);
-        }
+        transform.Find("Selection")?.gameObject.SetActive(status);
     }
 
     public void Attack(Vector3 target)
@@ -206,42 +188,42 @@ public class MyGameObject : MonoBehaviour
         }
     }
 
+    public bool IsCloseTo(Vector3 position, float radius = 1.0f)
+    {
+        Vector3 a = position;
+        Vector3 b = transform.position;
+
+        a.y = 0.0f;
+        b.y = 0.0f;
+
+        return (b - a).magnitude < radius;
+    }
+
     protected virtual void Awake()
     {
-        Orders = new OrderContainer();
         Orders.AllowOrder(OrderType.Destroy);
         Orders.AllowOrder(OrderType.Idle);
         Orders.AllowOrder(OrderType.Stop);
         Orders.AllowOrder(OrderType.Wait);
 
-        Resources = new ResourceContainer();
-        Recipes = new RecipeContainer();
-        Stats = new Stats();
+        OrderHandlers[OrderType.Attack] = new OrderHandlerAttack();
+        OrderHandlers[OrderType.Construct] = new OrderHandlerConstruct();
+        OrderHandlers[OrderType.Destroy] = new OrderHandlerDestroy();
+        OrderHandlers[OrderType.Follow] = new OrderHandlerFollow();
+        OrderHandlers[OrderType.Guard] = new OrderHandlerGuard();
+        OrderHandlers[OrderType.Load] = new OrderHandlerLoad();
+        OrderHandlers[OrderType.Move] = new OrderHandlerMove();
+        OrderHandlers[OrderType.Patrol] = new OrderHandlerPatrol();
+        OrderHandlers[OrderType.Produce] = new OrderHandlerProduce();
+        OrderHandlers[OrderType.Rally] = new OrderHandlerRally();
+        OrderHandlers[OrderType.Repair] = new OrderHandlerRepair();
+        OrderHandlers[OrderType.Research] = new OrderHandlerResearch();
+        OrderHandlers[OrderType.Stop] = new OrderHandlerStop();
+        OrderHandlers[OrderType.Transport] = new OrderHandlerTransport();
+        OrderHandlers[OrderType.Unload] = new OrderHandlerUnload();
+        OrderHandlers[OrderType.Wait] = new OrderHandlerWait();
 
-        OrderHandlers = new Dictionary<OrderType, IOrderHandler>()
-        {
-            { OrderType.Attack, new OrderHandlerAttack() },
-            { OrderType.Construct, new OrderHandlerConstruct() },
-            { OrderType.Destroy, new OrderHandlerDestroy() },
-            { OrderType.Follow, new OrderHandlerFollow() },
-            { OrderType.Guard, new OrderHandlerGuard() },
-            { OrderType.Load, new OrderHandlerLoad() },
-            { OrderType.Move, new OrderHandlerMove() },
-            { OrderType.Patrol, new OrderHandlerPatrol() },
-            { OrderType.Produce, new OrderHandlerProduce() },
-            { OrderType.Rally, new OrderHandlerRally() },
-            { OrderType.Repair, new OrderHandlerRepair() },
-            { OrderType.Research, new OrderHandlerResearch() },
-            { OrderType.Stop, new OrderHandlerStop() },
-            { OrderType.Transport, new OrderHandlerTransport() },
-            { OrderType.Unload, new OrderHandlerUnload() },
-            { OrderType.Wait, new OrderHandlerWait() },
-        };
-
-        ConstructionResources = new ResourceContainer();
         ConstructionResources.Add("Metal", 0, 30);
-
-        ConstructionRecipies = new RecipeContainer();
 
         Recipe r1 = new Recipe();
 
@@ -257,7 +239,7 @@ public class MyGameObject : MonoBehaviour
 
     protected virtual void Update()
     {
-        if (Health <= 0.0f)
+        if (Alive == false)
         {
             Destroy(0);
         }
@@ -279,6 +261,11 @@ public class MyGameObject : MonoBehaviour
 
         AlignPositionToTerrain();
         Reload();
+    }
+
+    private void Reload()
+    {
+        ReloadTimer?.Update(Time.deltaTime);
     }
 
     private void AlignPositionToTerrain()
@@ -316,7 +303,29 @@ public class MyGameObject : MonoBehaviour
         }
     }
 
-    void RaiseResourceFlags()
+    private void RaiseConstructionResourceFlags()
+    {
+        Game game = GameObject.Find("Game").GetComponent<Game>();
+
+        foreach (Recipe recipe in ConstructionRecipies.Items)
+        {
+            foreach (RecipeComponent resource in recipe.ToConsume)
+            {
+                int capacity = ConstructionResources.Capacity(resource.Name);
+
+                if (capacity > 0)
+                {
+                    game.Consumers.Add(this, resource.Name, capacity);
+                }
+                else
+                {
+                    game.Consumers.Remove(this, resource.Name);
+                }
+            }
+        }
+    }
+
+    private void RaiseResourceFlags()
     {
         foreach (Recipe recipe in Recipes.Items)
         {
@@ -350,66 +359,29 @@ public class MyGameObject : MonoBehaviour
         }
     }
 
-    void RaiseConstructionResourceFlags()
+    public bool Constructed
     {
-        Game game = GameObject.Find("Game").GetComponent<Game>();
-
-        foreach (Recipe recipe in ConstructionRecipies.Items)
+        get
         {
-            foreach (RecipeComponent resource in recipe.ToConsume)
+            foreach (KeyValuePair<string, Resource> i in ConstructionResources.Items)
             {
-                int capacity = ConstructionResources.Capacity(resource.Name);
-
-                if (capacity > 0)
+                if (i.Value.Value < i.Value.Max)
                 {
-                    game.Consumers.Add(this, resource.Name, capacity);
-                }
-                else
-                {
-                    game.Consumers.Remove(this, resource.Name);
+                    return false;
                 }
             }
+
+            return true;
         }
     }
 
-    public bool IsCloseTo(Vector3 position, float radius = 1.0f)
-    {
-        Vector3 a = position;
-        Vector3 b = transform.position;
+    public Vector3 Entrance { get => new Vector3(transform.position.x, transform.position.y, transform.position.z + Size.z * 0.75f); }
 
-        a.y = 0.0f;
-        b.y = 0.0f;
+    public Vector3 Exit { get => new Vector3(transform.position.x, transform.position.y, transform.position.z - Size.z * 0.75f); }
 
-        return (b - a).magnitude < radius;
-    }
+    public Vector3 Size { get => GetComponent<Collider>().bounds.size; }
 
-    protected void Reload()
-    {
-        if (ReloadTimer != null)
-        {
-            ReloadTimer.Update(Time.deltaTime);
-        }
-    }
-
-    public Vector3 Entrance
-    {
-        get
-        {
-            Vector3 size = GetComponent<Collider>().bounds.size;
-
-            return new Vector3(transform.position.x, transform.position.y, transform.position.z + size.z * 0.75f);
-        }
-    }
-
-    public Vector3 Exit
-    {
-        get
-        {
-            Vector3 size = GetComponent<Collider>().bounds.size;
-
-            return new Vector3(transform.position.x, transform.position.y, transform.position.z - size.z * 0.75f);
-        }
-    }
+    public bool Alive { get => Health <= 0.0f; }
 
     [field: SerializeField]
     public Player Player { get; set; }
@@ -438,21 +410,21 @@ public class MyGameObject : MonoBehaviour
 
     public float MissileRangeMin { get; protected set; } = 10.0f; // TODO: Implement.
 
-    public Vector3 Position { get => transform.position; }
+    public Vector3 Position { get => transform.position; set => transform.position = value; }
 
-    public OrderContainer Orders { get; private set; }
+    public OrderContainer Orders { get; private set; } = new();
 
-    public ResourceContainer Resources { get; private set; }
+    public ResourceContainer Resources { get; private set; } = new();
 
-    public RecipeContainer Recipes { get; private set; }
+    public RecipeContainer Recipes { get; private set; } = new();
 
-    public Stats Stats { get; private set; }
+    public Stats Stats { get; private set; } = new();
 
     public MyGameObjectState State { get; set; } = MyGameObjectState.Operational;
 
-    public ResourceContainer ConstructionResources { get; private set; }
+    public ResourceContainer ConstructionResources { get; private set; } = new();
 
-    public RecipeContainer ConstructionRecipies { get; private set; }
+    public RecipeContainer ConstructionRecipies { get; private set; } = new();
 
     public Vector3 RallyPoint { get; set; }
     
@@ -460,5 +432,5 @@ public class MyGameObject : MonoBehaviour
 
     public MyGameObject Parent { get; set; }
 
-    protected Dictionary<OrderType, IOrderHandler> OrderHandlers { get; set; }
+    protected Dictionary<OrderType, IOrderHandler> OrderHandlers { get; set; } = new();
 }

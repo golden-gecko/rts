@@ -21,7 +21,7 @@ public class OrderHandlerConstruct : IOrderHandler
                     order.TargetGameObject = Object.Instantiate<MyGameObject>(resource, order.TargetPosition, Quaternion.identity);
                     order.TargetGameObject.State = MyGameObjectState.UnderConstruction;
                 }
-                else if (order.TargetGameObject.IsConstructed())
+                else if (order.TargetGameObject.Constructed)
                 {
                     order.Timer.Update(Time.deltaTime);
 
@@ -51,11 +51,11 @@ public class OrderHandlerConstruct : IOrderHandler
                     order.TargetGameObject = Object.Instantiate<MyGameObject>(resource, myGameObject.Exit, Quaternion.identity);
                     order.TargetGameObject.State = MyGameObjectState.UnderAssembly;
                 }
-                else if (order.TargetGameObject.IsConstructed() == false)
+                else if (order.TargetGameObject.Constructed == false)
                 {
                     MoveResourcesToUnit(myGameObject, order);
                 }
-                else if (order.TargetGameObject.IsConstructed())
+                else if (order.TargetGameObject.Constructed)
                 {
                     order.Timer.Update(Time.deltaTime);
 
