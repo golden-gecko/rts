@@ -9,7 +9,7 @@ public class HUD : MonoBehaviour
     {
         foreach (MyGameObject selected in Selected)
         {
-            selected.Construct(prefab, PrefabConstructionType.Unit);
+            selected.Assemble(prefab);
         }
 
         Order = OrderType.None;
@@ -46,7 +46,7 @@ public class HUD : MonoBehaviour
                 selected.Orders.Clear();
             }
 
-            selected.Construct(prefab, PrefabConstructionType.Structure, position);
+            selected.Construct(prefab, position);
         }
     }
 
@@ -150,10 +150,6 @@ public class HUD : MonoBehaviour
 
                 case OrderType.Guard:
                     selected.Guard(gameObject);
-                    break;
-
-                case OrderType.Patrol:
-                    selected.Patrol(gameObject);
                     break;
             }
         }

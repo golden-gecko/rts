@@ -1,9 +1,18 @@
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UIElements;
 
 public class Order
 {
+    public static Order Assemble(string prefab, float time)
+    {
+        return new Order
+        {
+            Type = OrderType.Assemble,
+            Prefab = prefab,
+            Timer = new Timer(time),
+        };
+    }
+
     public static Order Attack(Vector3 position)
     {
         return new Order
@@ -22,7 +31,16 @@ public class Order
         };
     }
 
-    // Construct,
+    public static Order Construct(string prefab, Vector3 position, float time)
+    {
+        return new Order
+        {
+            Type = OrderType.Construct,
+            Prefab = prefab,
+            TargetPosition = position,
+            Timer = new Timer(time),
+        };
+    }
 
     public static Order Destroy()
     {
@@ -59,7 +77,16 @@ public class Order
         };
     }
 
-    // Load,
+    public static Order Load(MyGameObject myGameObject, Dictionary<string, int> resources, float time)
+    {
+        return new Order
+        {
+            Type = OrderType.Load,
+            SourceGameObject = myGameObject,
+            Resources = resources,
+            Timer = new Timer(time),
+        };
+    }
 
     public static Order Move(Vector3 position)
     {
@@ -79,11 +106,12 @@ public class Order
         };
     }
 
-    public static Order Produce() // TODO: Add recipe name.
+    public static Order Produce(float time) // TODO: Add recipe name.
     {
         return new Order
         {
             Type = OrderType.Produce,
+            Timer = new Timer(time),
         };
     }
 
@@ -121,8 +149,28 @@ public class Order
         };
     }
 
-    // Transport,
-    // Unload,
+    public static Order Transport(MyGameObject sourceGameObject, MyGameObject targetGameObject, Dictionary<string, int> resources, float time)
+    {
+        return new Order
+        {
+            Type = OrderType.Transport,
+            SourceGameObject = sourceGameObject,
+            TargetGameObject = targetGameObject,
+            Resources = resources,
+            Timer = new Timer(time),
+        };
+    }
+
+    public static Order Unload(MyGameObject myGameObject, Dictionary<string, int> resources, float time)
+    {
+        return new Order
+        {
+            Type = OrderType.Unload,
+            TargetGameObject = myGameObject,
+            Resources = resources,
+            Timer = new Timer(time),
+        };
+    }
 
     public static Order Wait(float time)
     {
@@ -136,87 +184,6 @@ public class Order
     private Order()
     {
     }
-
-    /*
-    public Order(OrderType type, int maxRetries = 0)
-    {
-        Type = type;
-        MaxRetries = maxRetries;
-    }
-
-    public Order(OrderType type, MyGameObject target, int maxRetries = 0)
-    {
-        Type = type;
-        IsTargetGameObject = true;
-        TargetGameObject = target;
-        MaxRetries = maxRetries;
-    }
-
-    public Order(OrderType type, Vector3 target, int maxRetries = 0)
-    {
-        Type = type;
-        TargetPosition = target;
-        MaxRetries = maxRetries;
-    }
-
-    public Order(OrderType type, MyGameObject target, Dictionary<string, int> resources, float time, int maxRetries = 0)
-    {
-        Type = type;
-        IsTargetGameObject = true;
-        TargetGameObject = target;
-        Resources = resources;
-        Timer = new Timer(time);
-        MaxRetries = maxRetries;
-    }
-
-    public Order(OrderType type, MyGameObject source, MyGameObject target, Dictionary<string, int> resources, int maxRetries = 0)
-    {
-        Type = type;
-        SourceGameObject = source;
-        IsTargetGameObject = true;
-        TargetGameObject = target;
-        Resources = resources;
-        MaxRetries = maxRetries;
-    }
-
-    public Order(OrderType type, float time, int maxRetries = 0)
-    {
-        Type = type;
-        Timer = new Timer(time);
-        MaxRetries = maxRetries;
-    }
-
-    public Order(OrderType type, string prefab, PrefabConstructionType prefabConstructionType, float time, int maxRetries = 0, MyGameObject target = null)
-    {
-        Type = type;
-        Prefab = prefab;
-        PrefabConstructionType = prefabConstructionType;
-        Timer = new Timer(time);
-        MaxRetries = maxRetries;
-        TargetGameObject = target;
-    }
-
-    public Order(OrderType type, string prefab, PrefabConstructionType prefabConstructionType, float time, int maxRetries, MyGameObject target, Vector3 targetPosition)
-    {
-        Type = type;
-        Prefab = prefab;
-        PrefabConstructionType = prefabConstructionType;
-        Timer = new Timer(time);
-        MaxRetries = maxRetries;
-        TargetGameObject = target;
-        TargetPosition = targetPosition;
-    }
-
-    public Order(OrderType type, string prefab, PrefabConstructionType prefabConstructionType, Vector3 target, float time, int maxRetries = 0)
-    {
-        Type = type;
-        Prefab = prefab;
-        PrefabConstructionType = prefabConstructionType;
-        TargetPosition = target;
-        Timer = new Timer(time);
-        MaxRetries = maxRetries;
-    }
-    */
 
     public string GetInfo()
     {
