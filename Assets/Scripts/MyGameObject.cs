@@ -163,7 +163,7 @@ public class MyGameObject : MonoBehaviour
 
         if (ReloadTimer != null)
         {
-            info += string.Format("\nReload: {0:0.}/{1:0.}", ReloadTimer.Value, ReloadTimer.Max);
+            info += string.Format("\nReload: {0:0.}/{1:0.}", ReloadTimer.Current, ReloadTimer.Max);
         }
 
         info += string.Format("\nResources:{0}\nOrders: {1}\nStats: {2}", Resources.GetInfo(), Orders.GetInfo(), Stats.GetInfo());
@@ -365,7 +365,7 @@ public class MyGameObject : MonoBehaviour
         {
             foreach (KeyValuePair<string, Resource> i in ConstructionResources.Items)
             {
-                if (i.Value.Value < i.Value.Max)
+                if (i.Value.Current < i.Value.Max)
                 {
                     return false;
                 }
@@ -381,7 +381,7 @@ public class MyGameObject : MonoBehaviour
 
     public Vector3 Size { get => GetComponent<Collider>().bounds.size; }
 
-    public bool Alive { get => Health <= 0.0f; }
+    public bool Alive { get => Health > 0.0f; }
 
     [field: SerializeField]
     public Player Player { get; set; }

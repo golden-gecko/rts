@@ -7,25 +7,23 @@ public class Game : MonoBehaviour
 
     public Order CreateOrderConstruction()
     {
+        foreach (MyGameObject myGameObject in GameObject.FindObjectsByType<MyGameObject>(FindObjectsSortMode.None)) // TODO: Not very efficient. Refactor into raycast.
+        {
+            if (myGameObject.State == MyGameObjectState.UnderConstruction)
+            {
+                return new Order(OrderType.Construct, "", PrefabConstructionType.Structure, myGameObject.ConstructionTime, 0, myGameObject, myGameObject.Position);
+            }
+        }
+
         return null;
     }
 
-    public Order CreateOrderTransport(MyGameObject targetProducer = null, MyGameObject targetConsumer = null)
+    public Order CreateOrderTransport()
     {
         foreach (ConsumerProducerRequest producer in Producers.Items)
         {
-            if (targetProducer != null && producer.MyGameObject != targetProducer)
-            {
-                continue;
-            }
-
             foreach (ConsumerProducerRequest consumer in Consumers.Items)
             {
-                if (targetConsumer != null && consumer.MyGameObject != targetConsumer)
-                {
-                    continue;
-                }
-
                 if (producer.MyGameObject == consumer.MyGameObject)
                 {
                     continue;
@@ -48,11 +46,6 @@ public class Game : MonoBehaviour
             }
         }
 
-        return null;
-    }
-
-    public Order CreateOrderUnload()
-    {
         return null;
     }
 

@@ -59,9 +59,9 @@ public class ResourceContainer
 
         foreach (KeyValuePair<string, Resource> i in Items)
         {
-            if (i.Value.Value > 0)
+            if (i.Value.Current > 0)
             {
-                info += string.Format("\n  {0} {1}/{2}", i.Key, i.Value.Value, i.Value.Max);
+                info += string.Format("\n  {0} {1}/{2}", i.Key, i.Value.Current, i.Value.Max);
             }
         }
 
