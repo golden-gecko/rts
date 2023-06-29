@@ -1,5 +1,6 @@
 public enum OrderType
 {
+    Assemble,
     Attack,
     Construct,
     Destroy,

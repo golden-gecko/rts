@@ -6,16 +6,8 @@ public class OrderHandlerPatrol : IOrderHandler
     {
         Order order = myGameObject.Orders.First();
 
-        if (order.TargetGameObject == null)
-        {
-            myGameObject.Move(order.TargetPosition);
-            myGameObject.Move(myGameObject.Position);
-        }
-        else
-        {
-            myGameObject.Move(order.TargetGameObject);
-            myGameObject.Move(myGameObject.Position);
-        }
+        myGameObject.Move(order.TargetPosition);
+        myGameObject.Move(myGameObject.Position);
 
         myGameObject.Orders.MoveToEnd();
     }

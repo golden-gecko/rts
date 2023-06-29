@@ -4,9 +4,9 @@ public class OrderHandlerTransport : IOrderHandler
     {
         Order order = myGameObject.Orders.First();
 
-        myGameObject.Move(order.SourceGameObject);
+        myGameObject.Move(order.SourceGameObject.Entrance);
         myGameObject.Load(order.SourceGameObject, order.Resources);
-        myGameObject.Move(order.TargetGameObject);
+        myGameObject.Move(order.TargetGameObject.Entrance);
         myGameObject.Unload(order.TargetGameObject, order.Resources);
 
         myGameObject.Orders.Pop();

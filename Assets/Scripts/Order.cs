@@ -3,71 +3,187 @@ using UnityEngine;
 
 public class Order
 {
-    public Order(OrderType type, int maxRetries = 0)
+    public static Order Assemble(string prefab, float time)
     {
-        Type = type;
-        MaxRetries = maxRetries;
+        return new Order
+        {
+            Type = OrderType.Assemble,
+            Prefab = prefab,
+            Timer = new Timer(time),
+        };
     }
 
-    public Order(OrderType type, MyGameObject target, int maxRetries = 0)
+    public static Order Attack(Vector3 position)
     {
-        Type = type;
-        IsTargetGameObject = true;
-        TargetGameObject = target;
-        MaxRetries = maxRetries;
+        return new Order
+        {
+            Type = OrderType.Attack,
+            TargetPosition = position,
+        };
     }
 
-    public Order(OrderType type, Vector3 target, int maxRetries = 0)
+    public static Order Attack(MyGameObject myGameObject)
     {
-        Type = type;
-        TargetPosition = target;
-        MaxRetries = maxRetries;
+        return new Order
+        {
+            Type = OrderType.Attack,
+            TargetGameObject = myGameObject,
+            IsTargetGameObject = true, // TODO: Get rid of this. Maybe add a new order type.
+        };
     }
 
-    public Order(OrderType type, MyGameObject target, Dictionary<string, int> resources, float time, int maxRetries = 0)
+    public static Order Construct(string prefab, Vector3 position, float time)
     {
-        Type = type;
-        IsTargetGameObject = true;
-        TargetGameObject = target;
-        Resources = resources;
-        Timer = new Timer(time);
-        MaxRetries = maxRetries;
+        return new Order
+        {
+            Type = OrderType.Construct,
+            Prefab = prefab,
+            TargetPosition = position,
+            Timer = new Timer(time),
+        };
     }
 
-    public Order(OrderType type, MyGameObject source, MyGameObject target, Dictionary<string, int> resources, int maxRetries = 0)
+    public static Order Destroy()
     {
-        Type = type;
-        SourceGameObject = source;
-        IsTargetGameObject = true;
-        TargetGameObject = target;
-        Resources = resources;
-        MaxRetries = maxRetries;
+        return new Order
+        {
+            Type = OrderType.Destroy,
+        };
     }
 
-    public Order(OrderType type, float time, int maxRetries = 0)
+    public static Order Follow(MyGameObject myGameObject)
     {
-        Type = type;
-        Timer = new Timer(time);
-        MaxRetries = maxRetries;
+        return new Order
+        {
+            Type = OrderType.Follow,
+            TargetGameObject = myGameObject,
+        };
     }
 
-    public Order(OrderType type, string prefab, PrefabConstructionType prefabConstructionType, float time, int maxRetries = 0)
+    public static Order Guard(Vector3 position)
     {
-        Type = type;
-        Prefab = prefab;
-        PrefabConstructionType = prefabConstructionType;
-        Timer = new Timer(time);
-        MaxRetries = maxRetries;
+        return new Order
+        {
+            Type = OrderType.Guard,
+            TargetPosition = position,
+        };
     }
 
-    public Order(OrderType type, string prefab, PrefabConstructionType prefabConstructionType, Vector3 target, float time, int maxRetries = 0)
+    public static Order Guard(MyGameObject myGameObject)
     {
-        Type = type;
-        Prefab = prefab;
-        PrefabConstructionType = prefabConstructionType;
-        TargetPosition = target;
-        Timer = new Timer(time);
-        MaxRetries = maxRetries;
+        return new Order
+        {
+            Type = OrderType.Guard,
+            TargetGameObject = myGameObject,
+        };
+    }
+
+    public static Order Load(MyGameObject myGameObject, Dictionary<string, int> resources, float time)
+    {
+        return new Order
+        {
+            Type = OrderType.Load,
+            SourceGameObject = myGameObject,
+            Resources = resources,
+            Timer = new Timer(time),
+        };
+    }
+
+    public static Order Move(Vector3 position)
+    {
+        return new Order
+        {
+            Type = OrderType.Move,
+            TargetPosition = position,
+        };
+    }
+
+    public static Order Patrol(Vector3 position)
+    {
+        return new Order
+        {
+            Type = OrderType.Patrol,
+            TargetPosition = position,
+        };
+    }
+
+    public static Order Produce(float time) // TODO: Add recipe name.
+    {
+        return new Order
+        {
+            Type = OrderType.Produce,
+            Timer = new Timer(time),
+        };
+    }
+
+    public static Order Rally(Vector3 position)
+    {
+        return new Order
+        {
+            Type = OrderType.Rally,
+            TargetPosition = position,
+        };
+    }
+
+    public static Order Research() // TODO: Add research name.
+    {
+        return new Order
+        {
+            Type = OrderType.Research,
+        };
+    }
+
+    public static Order Repair(MyGameObject myGameObject)
+    {
+        return new Order
+        {
+            Type = OrderType.Repair,
+            TargetGameObject = myGameObject,
+        };
+    }
+
+    public static Order Stop()
+    {
+        return new Order
+        {
+            Type = OrderType.Stop,
+        };
+    }
+
+    public static Order Transport(MyGameObject sourceGameObject, MyGameObject targetGameObject, Dictionary<string, int> resources, float time)
+    {
+        return new Order
+        {
+            Type = OrderType.Transport,
+            SourceGameObject = sourceGameObject,
+            TargetGameObject = targetGameObject,
+            Resources = resources,
+            Timer = new Timer(time),
+        };
+    }
+
+    public static Order Unload(MyGameObject myGameObject, Dictionary<string, int> resources, float time)
+    {
+        return new Order
+        {
+            Type = OrderType.Unload,
+            TargetGameObject = myGameObject,
+            Resources = resources,
+            Timer = new Timer(time),
+        };
+    }
+
+    public static Order Wait(float time)
+    {
+        return new Order
+        {
+            Type = OrderType.Wait,
+            Timer = new Timer(time),
+        };
+    }
+
+    private Order()
+    {
     }
 
     public string GetInfo()
@@ -76,7 +192,7 @@ public class Order
 
         if (Timer != null)
         {
-            info += string.Format(" {0:0.}/{1}", Timer.Value, Timer.Max);
+            info += string.Format(" {0:0.}/{1}", Timer.Current, Timer.Max);
         }
 
         if (MaxRetries > 0)
@@ -96,23 +212,23 @@ public class Order
 
     public bool IsTargetGameObject { get; private set; }
 
-    public int MaxRetries { get; } = 0;
+    public int MaxRetries { get; private set; } = 0;
 
-    public string Prefab { get; }
+    public string Prefab { get; private set; }
 
-    public PrefabConstructionType PrefabConstructionType { get; }
+    public PrefabConstructionType PrefabConstructionType { get; private set; }
 
-    public Dictionary<string, int> Resources { get; }
+    public Dictionary<string, int> Resources { get; private set; }
 
     public int Retries { get; private set; } = 0;
 
-    public MyGameObject SourceGameObject { get; }
+    public MyGameObject SourceGameObject { get; private set; }
 
     public MyGameObject TargetGameObject { get; set; } // TODO: Hide setter.
 
-    public Vector3 TargetPosition { get; }
+    public Vector3 TargetPosition { get; private set; }
 
-    public Timer Timer { get; }
+    public Timer Timer { get; private set; }
 
-    public OrderType Type { get; }
+    public OrderType Type { get; private set; }
 }

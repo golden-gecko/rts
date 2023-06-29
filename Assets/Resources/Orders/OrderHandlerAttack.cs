@@ -39,7 +39,7 @@ public class OrderHandlerAttack : IOrderHandler
 
             if (myGameObject.ReloadTimer.Finished)
             {
-                MyGameObject resource = Resources.Load<MyGameObject>(myGameObject.MissilePrefab); // TODO: Remove name conflict.
+                MyGameObject resource = Resources.Load<MyGameObject>(myGameObject.MissilePrefab);
                 MyGameObject missile = Object.Instantiate<MyGameObject>(resource, myGameObject.Position, Quaternion.identity);
 
                 missile.Parent = myGameObject;

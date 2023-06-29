@@ -55,7 +55,7 @@ public class FreeCamera : MonoBehaviour
         Rotate();
     }
 
-    private Vector3 Speed = Vector3.zero;
+    private Vector3 Speed = new Vector3(10.0f, 10.0f, 10.0f);
 
     private Vector2 Sensitivity = new Vector2(3.0f, 3.0f);
 }

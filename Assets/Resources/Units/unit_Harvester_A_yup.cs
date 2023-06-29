@@ -1,6 +1,4 @@
-using UnityEngine;
-
-public class unit_Harvester_A_yup : MyGameObject
+public class unit_Harvester_A_yup : Unit
 {
     protected override void Awake()
     {
@@ -8,8 +6,6 @@ public class unit_Harvester_A_yup : MyGameObject
 
         Orders.AllowOrder(OrderType.Construct);
         Orders.AllowOrder(OrderType.Load);
-        Orders.AllowOrder(OrderType.Move);
-        Orders.AllowOrder(OrderType.Patrol);
         Orders.AllowOrder(OrderType.Unload);
         Orders.AllowOrder(OrderType.Transport);
 
@@ -33,11 +29,8 @@ public class unit_Harvester_A_yup : MyGameObject
         Resources.Add("Metal Ore", 0, 10);
         Resources.Add("Wood", 0, 10);
 
-        Health = 50.0f;
-        MaxHealth = 50.0f;
         LoadTime = 2.0f;
         Speed = 4.0f;
-        UnloadTime = 2.0f;
         WaitTime = 2.0f;
     }
 }
