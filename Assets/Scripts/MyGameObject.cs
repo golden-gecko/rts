@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UIElements;
 
 public class MyGameObject : MonoBehaviour
 {
@@ -162,7 +161,19 @@ public class MyGameObject : MonoBehaviour
 
     public void Select(bool status)
     {
-        transform.Find("Selection")?.gameObject.SetActive(status);
+        Transform range = transform.Find("Range");
+        Transform selection = transform.Find("Selection");
+
+        if (range)
+        {
+            range.gameObject.SetActive(status);
+            range.localScale = new Vector3(MissileRangeMax * 5, MissileRangeMax * 5, 1.0f);
+        }
+
+        if (selection)
+        {
+            selection.gameObject.SetActive(status);
+        }
     }
 
     public void MoveResources(MyGameObject source, MyGameObject target, Dictionary<string, int> resources)
@@ -182,7 +193,12 @@ public class MyGameObject : MonoBehaviour
         }
     }
 
-    public bool IsCloseTo(Vector3 position, float radius = 1.0f)
+    public bool IsCloseTo(Vector3 position)
+    {
+        return IsInRange(position, 1.0f);
+    }
+
+    public bool IsInRange(Vector3 position, float radiusMax)
     {
         Vector3 a = position;
         Vector3 b = transform.position;
@@ -190,7 +206,22 @@ public class MyGameObject : MonoBehaviour
         a.y = 0.0f;
         b.y = 0.0f;
 
-        return (b - a).magnitude < radius;
+        float magnitude = (b - a).magnitude;
+
+        return magnitude < radiusMax;
+    }
+
+    public bool IsInRange(Vector3 position, float radiusMin, float radiusMax)
+    {
+        Vector3 a = position;
+        Vector3 b = transform.position;
+
+        a.y = 0.0f;
+        b.y = 0.0f;
+
+        float magnitude = (b - a).magnitude;
+
+        return radiusMin < magnitude && magnitude < radiusMax;
     }
 
     protected virtual void Awake()

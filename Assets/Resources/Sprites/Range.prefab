@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 1702536901321746155}
   - component: {fileID: 1549258153456761822}
   m_Layer: 0
-  m_Name: Selection
+  m_Name: Range
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -52,7 +52,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 017cb1cd67f073149a7248842e507c2a, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -73,7 +73,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: f031e0834fe60c94a9040533b641aaaf, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 1cad4bb6852b979408637a1c57f47ab9, type: 3}
   m_Color: {r: 0.8196079, g: 0.8196079, b: 0.8196079, a: 1}
   m_FlipX: 0
   m_FlipY: 0

@@ -14,7 +14,6 @@ public class OrderHandlerAttack : IOrderHandler
             {
                 myGameObject.Stats.Add(Stats.OrdersExecuted, 1);
                 myGameObject.Stats.Add(Stats.TargetsDestroyed, 1);
-
                 myGameObject.Orders.Pop();
 
                 return;
@@ -29,9 +28,9 @@ public class OrderHandlerAttack : IOrderHandler
             position = order.TargetPosition;
         }
 
-        if (myGameObject.IsCloseTo(position, myGameObject.MissileRangeMax) == false) // TODO: Test by adding visual debug.
+        if (myGameObject.IsInRange(position, myGameObject.MissileRangeMin, myGameObject.MissileRangeMax) == false) // TODO: Test by adding visual debug.
         {
-            myGameObject.Move(GetPositionToAttack(myGameObject.Position, position, myGameObject.MissileRangeMax), 0); // TODO: Test by adding visual debug.
+            myGameObject.Move(GetPositionToAttack(myGameObject.Position, position, myGameObject.MissileRangeMin, myGameObject.MissileRangeMax), 0); // TODO: Test by adding visual debug.
         }
         else
         {
@@ -49,20 +48,31 @@ public class OrderHandlerAttack : IOrderHandler
                 missile.Destroy();
 
                 myGameObject.ReloadTimer.Reset();
-
                 myGameObject.Orders.MoveToEnd();
-
                 myGameObject.Stats.Add(Stats.MissilesFired, 1);
             }
         }
     }
 
-    private Vector3 GetPositionToAttack(Vector3 position, Vector3 target, float missileRangeMax)
+    private Vector3 GetPositionToAttack(Vector3 position, Vector3 target, float missileRangeMin, float missileRangeMax)
     {
         Vector3 direction = target - position;
+        float magnitude = direction.magnitude;
 
-        direction.Normalize();
+        if (magnitude < missileRangeMin)
+        {
+            direction.Normalize();
 
-        return target - direction * missileRangeMax * 0.9f;
+            return target + direction * missileRangeMin * 1.1f;
+        }
+        
+        if (magnitude > missileRangeMax)
+        {
+            direction.Normalize();
+
+            return target - direction * missileRangeMax * 0.9f;
+        }
+
+        return position;
     }
 }

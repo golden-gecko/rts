@@ -10,5 +10,6 @@ public class Unit : MyGameObject
 
         Health = 50.0f;
         MaxHealth = 50.0f;
+        MissileRangeMin = 1.0f;
     }
 }
