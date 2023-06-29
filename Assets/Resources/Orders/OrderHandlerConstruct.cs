@@ -16,7 +16,7 @@ public class OrderHandlerConstruct : IOrderHandler
                 }
                 else if (order.TargetGameObject == null)
                 {
-                    MyGameObject resource = UnityEngine.Resources.Load<MyGameObject>(order.Prefab); // TODO: Remove name conflict.
+                    MyGameObject resource = Resources.Load<MyGameObject>(order.Prefab);
 
                     order.TargetGameObject = Object.Instantiate<MyGameObject>(resource, order.TargetPosition, Quaternion.identity);
                     order.TargetGameObject.State = MyGameObjectState.UnderConstruction;
@@ -46,7 +46,7 @@ public class OrderHandlerConstruct : IOrderHandler
             case PrefabConstructionType.Unit:
                 if (order.TargetGameObject == null)
                 {
-                    MyGameObject resource = Resources.Load<MyGameObject>(order.Prefab); // TODO: Remove name conflict.
+                    MyGameObject resource = Resources.Load<MyGameObject>(order.Prefab);
 
                     order.TargetGameObject = Object.Instantiate<MyGameObject>(resource, myGameObject.Exit, Quaternion.identity);
                     order.TargetGameObject.State = MyGameObjectState.UnderAssembly;
