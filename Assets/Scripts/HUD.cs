@@ -97,23 +97,18 @@ public class HUD : MonoBehaviour
     {
         foreach (MyGameObject selected in Selected)
         {
+            if (IsMulti() == false)
+            {
+                selected.Orders.Clear();
+            }
+
             switch (Order)
             {
                 case OrderType.Attack:
-                    if (IsMulti() == false)
-                    {
-                        selected.Orders.Clear();
-                    }
-
                     selected.Attack(position);
                     break;
 
                 case OrderType.Patrol:
-                    if (IsMulti() == false)
-                    {
-                        selected.Orders.Clear();
-                    }
-
                     selected.Patrol(position);
                     break;
 
@@ -122,18 +117,13 @@ public class HUD : MonoBehaviour
                     break;
 
                 default:
-                    if (IsMulti() == false)
-                    {
-                        selected.Orders.Clear();
-                    }
-
                     selected.Move(position);
                     break;
             }
         }
     }
 
-    private void IssueOrder(MyGameObject gameObject)
+    private void IssueOrder(MyGameObject myGameObject)
     {
         foreach (MyGameObject selected in Selected)
         {
@@ -145,11 +135,26 @@ public class HUD : MonoBehaviour
             switch (Order)
             {
                 case OrderType.Attack:
-                    selected.Attack(gameObject);
+                    selected.Attack(myGameObject);
                     break;
 
                 case OrderType.Guard:
-                    selected.Guard(gameObject);
+                    selected.Guard(myGameObject);
+                    break;
+
+                case OrderType.Follow:
+                    selected.Follow(myGameObject);
+                    break;
+
+                default:
+                    if (selected.IsAlly(myGameObject))
+                    {
+                        selected.Follow(myGameObject);
+                    }
+                    else if (selected.IsEnemy(myGameObject))
+                    {
+                        selected.Attack(myGameObject);
+                    }
                     break;
             }
         }

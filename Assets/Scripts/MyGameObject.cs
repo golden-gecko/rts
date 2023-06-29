@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class MyGameObject : MonoBehaviour
 {
@@ -55,15 +56,15 @@ public class MyGameObject : MonoBehaviour
         Orders.Add(Order.Load(target, resources, LoadTime));
     }
 
-    public void Move(Vector3 target, int priority = -1)
+    public void Move(Vector3 position, int priority = -1)
     {
         if (0 <= priority && priority < Orders.Count)
         {
-            Orders.Insert(priority, Order.Move(Position));
+            Orders.Insert(priority, Order.Move(position));
         }
         else
         {
-            Orders.Add(Order.Move(Position));
+            Orders.Add(Order.Move(position));
         }
     }
 
@@ -140,6 +141,16 @@ public class MyGameObject : MonoBehaviour
         info += string.Format("\nResources:{0}\nOrders: {1}\nStats: {2}", Resources.GetInfo(), Orders.GetInfo(), Stats.GetInfo());
 
         return info;
+    }
+
+    public bool IsAlly(MyGameObject myGameObject)
+    {
+        return myGameObject.Player == Player;
+    }
+
+    public bool IsEnemy(MyGameObject myGameObject)
+    {
+        return myGameObject.Player != Player;
     }
 
     public void OnDamage(float damage)

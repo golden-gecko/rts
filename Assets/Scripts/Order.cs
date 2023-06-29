@@ -223,7 +223,7 @@ public class Order
 
     public MyGameObject SourceGameObject { get; private set; }
 
-    public MyGameObject TargetGameObject { get; private set; }
+    public MyGameObject TargetGameObject { get; set; } // TODO: Hide setter.
 
     public Vector3 TargetPosition { get; private set; }
 
