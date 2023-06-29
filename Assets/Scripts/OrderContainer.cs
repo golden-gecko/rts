@@ -54,8 +54,11 @@ public class OrderContainer
 
     public void MoveToEnd()
     {
-        Add(Items[0]);
-        Pop();
+        if (Items.Count > 1)
+        {
+            Add(Items[0]);
+            Pop();
+        }
     }
 
     public void Pop()

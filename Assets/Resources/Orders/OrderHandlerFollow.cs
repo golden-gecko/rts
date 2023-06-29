@@ -4,8 +4,11 @@ public class OrderHandlerFollow : IOrderHandler
     {
         Order order = myGameObject.Orders.First();
 
-        myGameObject.Move(order.TargetGameObject.Position); // TODO: Check distance first.
+        if (myGameObject.IsCloseTo(order.TargetGameObject.Position) == false)
+        {
+            myGameObject.Move(order.TargetGameObject.Position);
+        }
 
-        myGameObject.Orders.MoveToEnd(); // TODO: Add wait.
+        myGameObject.Orders.MoveToEnd();
     }
 }

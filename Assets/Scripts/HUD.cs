@@ -5,7 +5,7 @@ using UnityEngine.UIElements;
 
 public class HUD : MonoBehaviour
 {
-    public void ConstructUnit()
+    public void Assemble()
     {
         foreach (MyGameObject selected in Selected)
         {

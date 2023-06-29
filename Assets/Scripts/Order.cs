@@ -28,6 +28,7 @@ public class Order
         {
             Type = OrderType.Attack,
             TargetGameObject = myGameObject,
+            IsTargetGameObject = true, // TODO: Get rid of this. Maybe add a new order type.
         };
     }
 
