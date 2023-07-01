@@ -8,7 +8,6 @@ public class unit_Trike_A_yup : Unit
 
         Speed = 12.0f;
         MissilePrefab = "Missiles/Bullet";
-        MissileRangeMax = 4.0f;
         ReloadTimer = new Timer(2.0f);
     }
 }
