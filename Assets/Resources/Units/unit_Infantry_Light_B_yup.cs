@@ -7,7 +7,6 @@ public class unit_Infantry_Light_B_yup : Unit
         Orders.AllowOrder(OrderType.Attack);
 
         MissilePrefab = "Missiles/Bullet";
-        MissileRangeMax = 5.0f;
         ReloadTimer = new Timer(1.0f);
         Speed = 2.0f;
     }

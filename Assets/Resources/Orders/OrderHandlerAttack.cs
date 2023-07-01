@@ -1,3 +1,4 @@
+using TMPro;
 using UnityEngine;
 
 public class OrderHandlerAttack : IOrderHandler
@@ -5,6 +6,10 @@ public class OrderHandlerAttack : IOrderHandler
     public void OnExecute(MyGameObject myGameObject)
     {
         Order order = myGameObject.Orders.First();
+
+        // DEBUG
+        GameDebug.Instance.A.transform.position = order.TargetPosition;
+        // DEBUG
 
         Vector3 position;
 
@@ -28,9 +33,9 @@ public class OrderHandlerAttack : IOrderHandler
             position = order.TargetPosition;
         }
 
-        if (myGameObject.IsInRange(position, myGameObject.MissileRangeMin, myGameObject.MissileRangeMax) == false) // TODO: Test by adding visual debug.
+        if (myGameObject.IsInRange(position, myGameObject.MissileRangeMin, myGameObject.MissileRangeMax) == false)
         {
-            myGameObject.Move(GetPositionToAttack(myGameObject.Position, position, myGameObject.MissileRangeMin, myGameObject.MissileRangeMax), 0); // TODO: Test by adding visual debug.
+            myGameObject.Move(GetPositionToAttack(myGameObject.Position, position, myGameObject.MissileRangeMin, myGameObject.MissileRangeMax), 0);
         }
         else
         {
@@ -56,21 +61,27 @@ public class OrderHandlerAttack : IOrderHandler
 
     private Vector3 GetPositionToAttack(Vector3 position, Vector3 target, float missileRangeMin, float missileRangeMax)
     {
-        Vector3 direction = target - position;
+        Vector3 a = position;
+        Vector3 b = target;
+
+        a.y = 0.0f;
+        b.y = 0.0f;
+
+        Vector3 direction = b - a;
         float magnitude = direction.magnitude;
 
         if (magnitude < missileRangeMin)
         {
             direction.Normalize();
 
-            return target + direction * missileRangeMin * 1.1f;
+            return position - direction;
         }
         
         if (magnitude > missileRangeMax)
         {
             direction.Normalize();
 
-            return target - direction * missileRangeMax * 0.9f;
+            return position + direction;
         }
 
         return position;

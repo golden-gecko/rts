@@ -166,8 +166,10 @@ public class MyGameObject : MonoBehaviour
 
         if (range)
         {
+            Vector3 scale = transform.localScale;
+
             range.gameObject.SetActive(status);
-            range.localScale = new Vector3(MissileRangeMax * 5, MissileRangeMax * 5, 1.0f);
+            range.localScale = new Vector3(MissileRangeMax * 2.0f / scale.x, MissileRangeMax * 2.0f / scale.y, 1.0f); // TODO: Move to Awake method.
         }
 
         if (selection)
@@ -195,26 +197,18 @@ public class MyGameObject : MonoBehaviour
 
     public bool IsCloseTo(Vector3 position)
     {
-        return IsInRange(position, 1.0f);
+        return IsInRange(position, 0.0f, 1.0f);
     }
 
     public bool IsInRange(Vector3 position, float radiusMax)
     {
-        Vector3 a = position;
-        Vector3 b = transform.position;
-
-        a.y = 0.0f;
-        b.y = 0.0f;
-
-        float magnitude = (b - a).magnitude;
-
-        return magnitude < radiusMax;
+        return IsInRange(position, 0.0f, radiusMax);
     }
 
     public bool IsInRange(Vector3 position, float radiusMin, float radiusMax)
     {
         Vector3 a = position;
-        Vector3 b = transform.position;
+        Vector3 b = Position;
 
         a.y = 0.0f;
         b.y = 0.0f;
