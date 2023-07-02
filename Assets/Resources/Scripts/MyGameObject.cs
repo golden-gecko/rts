@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class MyGameObject : MonoBehaviour
 {
@@ -161,20 +162,28 @@ public class MyGameObject : MonoBehaviour
 
     public void Select(bool status)
     {
-        Transform range = transform.Find("Range");
-        Transform selection = transform.Find("Selection");
+        Transform visual = transform.Find("Visual");
 
-        if (range)
+        if (visual)
         {
-            Vector3 scale = transform.localScale;
+            Transform range = visual.transform.Find("Range");
+            Transform selection = visual.transform.Find("Selection");
 
-            range.gameObject.SetActive(status);
-            range.localScale = new Vector3(MissileRangeMax * 2.0f / scale.x, MissileRangeMax * 2.0f / scale.y, 1.0f); // TODO: Move to Awake method.
-        }
+            if (range)
+            {
+                Vector3 scale = transform.localScale;
 
-        if (selection)
-        {
-            selection.gameObject.SetActive(status);
+                range.gameObject.SetActive(status);
+                range.localScale = new Vector3(MissileRangeMax * 2.0f / scale.x, MissileRangeMax * 2.0f / scale.y, 1.0f); // TODO: Move to Awake method.
+            }
+
+            if (selection)
+            {
+                Vector3 scale = transform.localScale;
+
+                selection.gameObject.SetActive(status);
+                selection.localScale = new Vector3(MissileRangeMax * 2.0f / scale.x, MissileRangeMax * 2.0f / scale.y, 1.0f); // TODO: Move to Awake method.
+            }
         }
     }
 
@@ -225,7 +234,6 @@ public class MyGameObject : MonoBehaviour
         Orders.AllowOrder(OrderType.Stop);
         Orders.AllowOrder(OrderType.Wait);
 
-        OrderHandlers[OrderType.Attack] = new OrderHandlerAttack();
         OrderHandlers[OrderType.Construct] = new OrderHandlerConstruct();
         OrderHandlers[OrderType.Destroy] = new OrderHandlerDestroy();
         OrderHandlers[OrderType.Follow] = new OrderHandlerFollow();

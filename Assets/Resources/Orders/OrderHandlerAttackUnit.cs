@@ -1,15 +1,10 @@
-using TMPro;
 using UnityEngine;
 
-public class OrderHandlerAttack : IOrderHandler
+public class OrderHandlerAttackUnit : IOrderHandler
 {
     public void OnExecute(MyGameObject myGameObject)
     {
         Order order = myGameObject.Orders.First();
-
-        // DEBUG
-        GameDebug.Instance.A.transform.position = order.TargetPosition;
-        // DEBUG
 
         Vector3 position;
 

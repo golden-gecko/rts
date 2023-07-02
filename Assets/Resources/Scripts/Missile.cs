@@ -19,7 +19,7 @@ public class Missile : MyGameObject
     {
         MyGameObject gameObject = other.GetComponent<MyGameObject>();
 
-        if (gameObject != null && gameObject != Parent && gameObject.Player != Player)
+        if (gameObject != null && gameObject != Parent && gameObject.Player != null && gameObject.Player != Player)
         {
             gameObject.OnDamage(Damage);
 

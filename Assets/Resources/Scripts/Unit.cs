@@ -7,6 +7,8 @@ public class Unit : MyGameObject
         Orders.AllowOrder(OrderType.Follow);
         Orders.AllowOrder(OrderType.Move);
         Orders.AllowOrder(OrderType.Patrol);
+        
+        OrderHandlers[OrderType.Attack] = new OrderHandlerAttackUnit();
 
         Damage = 10.0f;
         Health = 50.0f;
