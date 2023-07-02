@@ -405,7 +405,7 @@ public class MyGameObject : MonoBehaviour
     [field: SerializeField]
     public Player Player { get; set; }
 
-    public float Damage { get; protected set; } = 10.0f;
+    public float Damage { get; protected set; } = 0.0f;
 
     public float ConstructionTime { get; protected set; } = 10.0f;
 
@@ -423,9 +423,9 @@ public class MyGameObject : MonoBehaviour
 
     public string MissilePrefab { get; protected set; } = string.Empty;
 
-    public float MissileRangeMax { get; protected set; } = 10.0f;
+    public float MissileRangeMax { get; protected set; } = 0.0f;
 
-    public float MissileRangeMin { get; protected set; } = 10.0f; // TODO: Implement.
+    public float MissileRangeMin { get; protected set; } = 0.0f;
 
     public Vector3 Position { get => transform.position; set => transform.position = value; }
 

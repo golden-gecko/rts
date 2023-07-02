@@ -7,8 +7,8 @@ public class struct_Factory_Heavy_A_yup : Structure
         Orders.AllowOrder(OrderType.Construct);
         Orders.AllowOrder(OrderType.Rally);
 
-        Orders.AllowPrefab("Vehicles/unit_Tank_Combat_A_yup");
-        Orders.AllowPrefab("Vehicles/unit_Tank_Missile_A_yup");
+        Orders.AllowPrefab("Objects/Vehicles/unit_Tank_Combat_A_yup");
+        Orders.AllowPrefab("Objects/Vehicles/unit_Tank_Missile_A_yup");
 
         Resources.Add("Metal", 0, 40);
 

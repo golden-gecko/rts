@@ -1,4 +1,4 @@
-public class unit_Trike_A_yup : Unit
+public class unit_Quad_A_yup : Unit
 {
     protected override void Awake()
     {
@@ -7,7 +7,7 @@ public class unit_Trike_A_yup : Unit
         Orders.AllowOrder(OrderType.Attack);
 
         Speed = 12.0f;
-        MissilePrefab = "Missiles/Bullet";
-        ReloadTimer = new Timer(2.0f);
+        MissilePrefab = "Objects/Missiles/Bullet";
+        ReloadTimer = new Timer(3.0f);
     }
 }

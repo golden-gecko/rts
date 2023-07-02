@@ -1,4 +1,4 @@
-public class unit_Tank_Missile_A_yup : Unit
+public class unit_Tank_Combat_A_yup : Unit
 {
     protected override void Awake()
     {
@@ -7,7 +7,7 @@ public class unit_Tank_Missile_A_yup : Unit
         Orders.AllowOrder(OrderType.Attack);
 
         Speed = 6.0f;
-        MissilePrefab = "Missiles/Rocket";
+        MissilePrefab = "Objects/Missiles/Rocket";
         ReloadTimer = new Timer(5.0f);
     }
 }
