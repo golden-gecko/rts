@@ -199,7 +199,7 @@ PrefabInstance:
     - target: {fileID: -6419104339504249234, guid: 2611ed8fbff91a64aa42f06d5f9cdf23, type: 3}
       propertyPath: <Player>k__BackingField
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 1855290423}
     - target: {fileID: 2222111361404534124, guid: 2611ed8fbff91a64aa42f06d5f9cdf23, type: 3}
       propertyPath: m_Name
       value: Tree_0010
@@ -264,7 +264,7 @@ PrefabInstance:
     - target: {fileID: -6419104339504249234, guid: 2611ed8fbff91a64aa42f06d5f9cdf23, type: 3}
       propertyPath: <Player>k__BackingField
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 1855290423}
     - target: {fileID: 2222111361404534124, guid: 2611ed8fbff91a64aa42f06d5f9cdf23, type: 3}
       propertyPath: m_Name
       value: Tree_0011
@@ -405,7 +405,7 @@ PrefabInstance:
     - target: {fileID: 7730801625349624797, guid: 08ce1d492a8b66e429f719032407aaf8, type: 3}
       propertyPath: <Player>k__BackingField
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 1855290423}
     - target: {fileID: 7762923490116116496, guid: 08ce1d492a8b66e429f719032407aaf8, type: 3}
       propertyPath: m_LocalPosition.y
       value: 0.78
@@ -593,6 +593,17 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 61a7c4fca0a2a36409924024a26dbdde, type: 3}
+--- !u!114 &1855290423 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7552484158215349312, guid: 838528c30748ad1409e28e3a543244c6, type: 3}
+  m_PrefabInstance: {fileID: 261081117239525525}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: baea9d914df95914dbf0c76ff885d270, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1988853568
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -604,7 +615,7 @@ PrefabInstance:
     - target: {fileID: -6419104339504249234, guid: 2611ed8fbff91a64aa42f06d5f9cdf23, type: 3}
       propertyPath: <Player>k__BackingField
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 1855290423}
     - target: {fileID: 2222111361404534124, guid: 2611ed8fbff91a64aa42f06d5f9cdf23, type: 3}
       propertyPath: m_Name
       value: Tree_0004
@@ -680,7 +691,7 @@ PrefabInstance:
     - target: {fileID: 7730801625349624797, guid: 08ce1d492a8b66e429f719032407aaf8, type: 3}
       propertyPath: <Player>k__BackingField
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 1855290423}
     - target: {fileID: 9069115365609054727, guid: 08ce1d492a8b66e429f719032407aaf8, type: 3}
       propertyPath: m_RootOrder
       value: 5
