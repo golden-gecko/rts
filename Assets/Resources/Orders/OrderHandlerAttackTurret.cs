@@ -1,0 +1,80 @@
+using UnityEngine;
+
+public class OrderHandlerAttackTurret : IOrderHandler
+{
+    public void OnExecute(MyGameObject myGameObject)
+    {
+        Order order = myGameObject.Orders.First();
+
+        Vector3 position;
+
+        if (order.IsTargetGameObject)
+        {
+            if (order.TargetGameObject == null)
+            {
+                myGameObject.Stats.Add(Stats.OrdersExecuted, 1);
+                myGameObject.Stats.Add(Stats.TargetsDestroyed, 1);
+                myGameObject.Orders.Pop();
+
+                return;
+            }
+            else
+            {
+                position = order.TargetGameObject.Position;
+            }
+        }
+        else
+        {
+            position = order.TargetPosition;
+        }
+
+        if (myGameObject.IsInRange(position, myGameObject.MissileRangeMin, myGameObject.MissileRangeMax))
+        {
+            myGameObject.transform.LookAt(new Vector3(position.x, myGameObject.Position.y, position.z));
+
+            if (myGameObject.ReloadTimer.Finished)
+            {
+                MyGameObject resource = Resources.Load<MyGameObject>(myGameObject.MissilePrefab);
+                MyGameObject missile = Object.Instantiate<MyGameObject>(resource, myGameObject.Position, Quaternion.identity);
+
+                missile.Parent = myGameObject;
+                missile.Player = myGameObject.Player;
+
+                missile.Move(position);
+                missile.Destroy();
+
+                myGameObject.ReloadTimer.Reset();
+                myGameObject.Orders.MoveToEnd();
+                myGameObject.Stats.Add(Stats.MissilesFired, 1);
+            }
+        }
+    }
+
+    private Vector3 GetPositionToAttack(Vector3 position, Vector3 target, float missileRangeMin, float missileRangeMax)
+    {
+        Vector3 a = position;
+        Vector3 b = target;
+
+        a.y = 0.0f;
+        b.y = 0.0f;
+
+        Vector3 direction = b - a;
+        float magnitude = direction.magnitude;
+
+        if (magnitude < missileRangeMin)
+        {
+            direction.Normalize();
+
+            return position - direction;
+        }
+        
+        if (magnitude > missileRangeMax)
+        {
+            direction.Normalize();
+
+            return position + direction;
+        }
+
+        return position;
+    }
+}

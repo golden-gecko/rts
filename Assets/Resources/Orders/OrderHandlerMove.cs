@@ -6,10 +6,6 @@ public class OrderHandlerMove : IOrderHandler
     {
         Order order = myGameObject.Orders.First();
 
-        // DEBUG
-        GameDebug.Instance.B.transform.position = order.TargetPosition;
-        // DEBUG
-
         Vector3 target = order.TargetPosition;
         Vector3 position = myGameObject.Position;
 
