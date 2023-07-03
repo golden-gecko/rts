@@ -11,5 +11,7 @@ public class Turret : Structure
         Damage = 10.0f;
         MissileRangeMax = 10.0f;
         MissileRangeMin = 2.0f;
+        MissilePrefab = "Objects/Missiles/Rocket";
+        ReloadTimer = new Timer(2.0f);
     }
 }

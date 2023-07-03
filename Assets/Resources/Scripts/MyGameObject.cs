@@ -226,7 +226,7 @@ public class MyGameObject : MonoBehaviour
 
         float magnitude = (b - a).magnitude;
 
-        return radiusMin < magnitude && magnitude < radiusMax;
+        return radiusMin <= magnitude && magnitude <= radiusMax;
     }
 
     protected virtual void Awake()
