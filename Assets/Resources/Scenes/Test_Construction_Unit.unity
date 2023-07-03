@@ -134,7 +134,7 @@ PrefabInstance:
     - target: {fileID: -2182117504668185234, guid: 7bf9b4588e172054c9a42a043a553419, type: 3}
       propertyPath: <Player>k__BackingField
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 441752297}
     - target: {fileID: 1578887994438585109, guid: 7bf9b4588e172054c9a42a043a553419, type: 3}
       propertyPath: m_Name
       value: unit_Harvester_A_yup
@@ -277,6 +277,17 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 838528c30748ad1409e28e3a543244c6, type: 3}
+--- !u!114 &441752297 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1874948758393139739, guid: 838528c30748ad1409e28e3a543244c6, type: 3}
+  m_PrefabInstance: {fileID: 441752296}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e13f3e3b21b38b64faad841f9d3fad32, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &535482820
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -288,7 +299,7 @@ PrefabInstance:
     - target: {fileID: 855856442431241174, guid: 15c8c9404fe01ca48853d483a4c6d6e8, type: 3}
       propertyPath: <Player>k__BackingField
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 441752297}
     - target: {fileID: 7263823035188942402, guid: 15c8c9404fe01ca48853d483a4c6d6e8, type: 3}
       propertyPath: m_RootOrder
       value: 2
@@ -405,7 +416,7 @@ PrefabInstance:
     - target: {fileID: 7277517748932437183, guid: 61a7c4fca0a2a36409924024a26dbdde, type: 3}
       propertyPath: <Player>k__BackingField
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 441752297}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

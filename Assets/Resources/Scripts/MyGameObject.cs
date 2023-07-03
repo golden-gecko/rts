@@ -175,7 +175,7 @@ public class MyGameObject : MonoBehaviour
                 Vector3 scale = transform.localScale;
 
                 range.gameObject.SetActive(status);
-                range.localScale = new Vector3(MissileRangeMax * 2.0f / scale.x, MissileRangeMax * 2.0f / scale.y, 1.0f);
+                range.localScale = new Vector3(MissileRangeMax * 2.0f / scale.x, MissileRangeMax * 2.0f / scale.z, 1.0f); // TODO: Why y and z are replaced?
             }
 
             if (selection)
@@ -184,7 +184,7 @@ public class MyGameObject : MonoBehaviour
                 Vector3 size = GetComponent<BoxCollider>().size;
 
                 selection.gameObject.SetActive(status);
-                selection.localScale = new Vector3(size.x, size.y, 1.0f);
+                selection.localScale = new Vector3(size.x, size.z, size.y); // TODO: Why y and z are replaced?
             }
         }
     }
