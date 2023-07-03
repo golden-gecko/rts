@@ -1,10 +1,10 @@
-public class Tree_05 : MyGameObject
+public class Tree_03 : MyGameObject
 {
     protected override void Awake()
     {
         base.Awake();
 
-        Resources.Add("Wood", 50, 50);
+        Resources.Add("Wood", 30, 30);
 
         Recipe r1 = new Recipe();
 
