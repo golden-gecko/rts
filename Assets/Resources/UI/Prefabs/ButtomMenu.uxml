@@ -1,0 +1,3 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements">
+    <ui:Button display-tooltip-when-elided="true" class="button-main-menu" />
+</ui:UXML>

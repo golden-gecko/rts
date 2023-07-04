@@ -384,6 +384,11 @@ public class HUD : MonoBehaviour
         }
         else if (Input.GetMouseButtonUp(1))
         {
+            if (EventSystem.current.IsPointerOverGameObject())
+            {
+                return;
+            }
+
             if (Order == OrderType.None)
             {
                 ProcessOrder();
