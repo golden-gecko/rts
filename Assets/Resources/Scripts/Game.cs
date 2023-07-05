@@ -11,7 +11,7 @@ public class Game : MonoBehaviour
         {
             if (underConstruction.State == MyGameObjectState.UnderConstruction)
             {
-                return Order.Construct("", underConstruction.Position, myGameObject.ConstructionTime); // TODO: Pass prefab name.
+                return Order.Construct(underConstruction, myGameObject.ConstructionTime);
             }
         }
 

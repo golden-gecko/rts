@@ -43,6 +43,16 @@ public class Order
         };
     }
 
+    public static Order Construct(MyGameObject myGameObject, float time)
+    {
+        return new Order
+        {
+            Type = OrderType.Construct,
+            TargetGameObject = myGameObject,
+            Timer = new Timer(time),
+        };
+    }
+
     public static Order Destroy()
     {
         return new Order
