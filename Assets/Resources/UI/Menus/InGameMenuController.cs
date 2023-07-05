@@ -132,6 +132,15 @@ public class InGameMenuController : MonoBehaviour
         orders = rootVisualElement.Q<VisualElement>("OrderList");
         prefabs = rootVisualElement.Q<VisualElement>("PrefabList");
 
+        centerOnMainCamera = rootVisualElement.Q<Button>("CenterOnMainCamera");
+        centerOnMainCamera.RegisterCallback<ClickEvent>(ev => OnCenterOnMainCamera());
+
+        zoomIn = rootVisualElement.Q<Button>("ZoomIn");
+        zoomIn.RegisterCallback<ClickEvent>(ev => OnZoomIn());
+        
+        zoomOut = rootVisualElement.Q<Button>("ZoomOut");
+        zoomOut.RegisterCallback<ClickEvent>(ev => OnZoomOut());
+
         ordersButtons = new Dictionary<OrderType, Button>();
         prefabsButtons = new Dictionary<string, Button>();
 
@@ -246,6 +255,10 @@ public class InGameMenuController : MonoBehaviour
 
     private VisualElement orders;
     private VisualElement prefabs;
+
+    private Button centerOnMainCamera;
+    private Button zoomIn;
+    private Button zoomOut;
 
     private Dictionary<OrderType, Button> ordersButtons;
     private Dictionary<string, Button> prefabsButtons;
