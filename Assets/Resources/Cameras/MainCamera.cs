@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class FreeCamera : MonoBehaviour
+public class MainCamera : MonoBehaviour
 {
     private void Rotate()
     {

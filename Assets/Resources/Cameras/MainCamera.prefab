@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 8637004090399281898}
   - component: {fileID: 2571517457199937465}
   m_Layer: 0
-  m_Name: FreeCamera
+  m_Name: MainCamera
   m_TagString: MainCamera
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -33,7 +33,7 @@ Transform:
   m_Children:
   - {fileID: 2981358283119309662}
   m_Father: {fileID: 0}
-  m_RootOrder: -1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 45, y: 45, z: 0}
 --- !u!20 &4614556670559726822
 Camera:
