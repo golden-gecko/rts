@@ -5,15 +5,12 @@ using UnityEngine.UIElements;
 
 public class HUD : MonoBehaviour
 {
-    public void Assemble()
+    public void Assemble(string prefab)
     {
         foreach (MyGameObject selected in Selected)
         {
             selected.Assemble(prefab);
         }
-
-        Order = OrderType.None;
-        Prefab = string.Empty;
     }
 
     public void Destroy()

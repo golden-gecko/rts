@@ -4,6 +4,7 @@ public class struct_Factory_Light_A_yup : Structure
     {
         base.Awake();
 
+        Orders.AllowOrder(OrderType.Assemble);
         Orders.AllowOrder(OrderType.Construct);
         Orders.AllowOrder(OrderType.Rally);
 

@@ -235,6 +235,7 @@ public class MyGameObject : MonoBehaviour
         Orders.AllowOrder(OrderType.Stop);
         Orders.AllowOrder(OrderType.Wait);
 
+        OrderHandlers[OrderType.Assemble] = new OrderHandlerAssemble();
         OrderHandlers[OrderType.Construct] = new OrderHandlerConstruct();
         OrderHandlers[OrderType.Destroy] = new OrderHandlerDestroy();
         OrderHandlers[OrderType.Follow] = new OrderHandlerFollow();
