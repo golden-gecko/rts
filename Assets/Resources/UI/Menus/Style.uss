@@ -27,3 +27,15 @@
 .button-main-menu {
     min-width: 20%;
 }
+
+.button-minimap {
+    margin-left: 2px;
+    margin-right: 2px;
+    margin-top: 2px;
+    margin-bottom: 2px;
+    padding-left: 4px;
+    padding-right: 4px;
+    padding-top: 4px;
+    padding-bottom: 4px;
+    height: 80%;
+}

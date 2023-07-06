@@ -6,6 +6,20 @@ using UnityEngine.UIElements;
 
 public class InGameMenuController : MonoBehaviour
 {
+    public static InGameMenuController Instance { get; private set; }
+
+    private void Awake()
+    {
+        if (Instance != null && Instance != this)
+        {
+            Destroy(this);
+        }
+        else
+        {
+            Instance = this;
+        }
+    }
+
     public void Log(string message)
     {
         log.text = message;
