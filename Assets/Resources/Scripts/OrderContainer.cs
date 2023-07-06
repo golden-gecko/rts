@@ -68,9 +68,9 @@ public class OrderContainer
 
     public int Count { get => Items.Count; }
 
-    public List<Order> Items { get; } = new();
+    public List<Order> Items { get; } = new List<Order>();
 
-    public HashSet<OrderType> OrderWhitelist { get; } = new();
+    public HashSet<OrderType> OrderWhitelist { get; } = new HashSet<OrderType>();
 
-    public HashSet<string> PrefabWhitelist { get; } = new();
+    public HashSet<string> PrefabWhitelist { get; } = new HashSet<string>();
 }

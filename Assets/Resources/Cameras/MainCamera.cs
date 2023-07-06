@@ -8,8 +8,8 @@ public class MainCamera : MonoBehaviour
         {
             Vector3 localEulerAngles = transform.localEulerAngles;
 
-            localEulerAngles.x -= Input.GetAxis("Mouse Y") * Sensitivity.x;
-            localEulerAngles.y += Input.GetAxis("Mouse X") * Sensitivity.y;
+            localEulerAngles.x -= Input.GetAxis("Mouse Y") * sensitivity.y;
+            localEulerAngles.y += Input.GetAxis("Mouse X") * sensitivity.x;
 
             transform.localEulerAngles = localEulerAngles;
         }
@@ -21,29 +21,29 @@ public class MainCamera : MonoBehaviour
 
         if (Input.GetKey(KeyCode.D))
         {
-            direction.x = Speed.x;
+            direction.x = speed.x;
         }
         else if (Input.GetKey(KeyCode.A))
         {
-            direction.x = -Speed.x;
+            direction.x = -speed.x;
         }
 
-        if (Input.GetKey(KeyCode.Q))
+        if (Input.GetKey(KeyCode.E))
         {
-            direction.y = Speed.y;
+            direction.y = speed.y;
         }
-        else if (Input.GetKey(KeyCode.Z))
+        else if (Input.GetKey(KeyCode.Q))
         {
-            direction.y = -Speed.y;
+            direction.y = -speed.y;
         }
 
         if (Input.GetKey(KeyCode.W))
         {
-            direction.z = Speed.z;
+            direction.z = speed.z;
         }
         else if (Input.GetKey(KeyCode.S))
         {
-            direction.z = -Speed.z;
+            direction.z = -speed.z;
         }
 
         transform.Translate(direction * Time.deltaTime);
@@ -53,9 +53,56 @@ public class MainCamera : MonoBehaviour
     {
         Translate();
         Rotate();
+
+        if (Input.GetKeyDown(KeyCode.Home))
+        {
+            Vector3 localEulerAngles = transform.localEulerAngles;
+
+            localEulerAngles.y = 275.0f;
+
+            transform.localEulerAngles = localEulerAngles;
+        }
+        else if (Input.GetKeyDown(KeyCode.Insert))
+        {
+            Vector3 localEulerAngles = transform.localEulerAngles;
+
+            localEulerAngles.y += 90.0f;
+
+            transform.localEulerAngles = localEulerAngles;
+        }
+        else if (Input.GetKeyDown(KeyCode.PageUp))
+        {
+            Vector3 localEulerAngles = transform.localEulerAngles;
+
+            localEulerAngles.y -= 90.0f;
+
+            transform.localEulerAngles = localEulerAngles;
+        }
+
+        AlignPositionToTerrain();
     }
 
-    private Vector3 Speed = new Vector3(10.0f, 10.0f, 10.0f);
+    private void AlignPositionToTerrain()
+    {
+        RaycastHit hitInfo;
+        Ray ray = new Ray(transform.position + new Vector3(0, 1000, 0), Vector3.down);
 
-    private Vector2 Sensitivity = new Vector2(3.0f, 3.0f);
+        if (Physics.Raycast(ray, out hitInfo, 2000, LayerMask.GetMask("Terrain")))
+        {
+            if (hitInfo.transform.tag == "Terrain")
+            {
+                float y = Mathf.Clamp(transform.position.y, hitInfo.point.y + minHeight, hitInfo.point.y + maxHeight);
+
+                transform.position = new Vector3(transform.position.x, y, transform.position.z);
+            }
+        }
+    }
+
+    private float maxHeight = 100.0f;
+    
+    private float minHeight = 10.0f;
+
+    private Vector3 speed = new Vector3(10.0f, 10.0f, 10.0f);
+
+    private Vector2 sensitivity = new Vector2(3.0f, 3.0f);
 }
