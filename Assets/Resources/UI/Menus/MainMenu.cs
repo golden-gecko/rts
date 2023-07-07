@@ -1,14 +1,38 @@
-using System;
-using UnityEditor;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UIElements;
 
 public class MainMenu : MonoBehaviour
 {
+    public static MainMenu Instance { get; private set; }
+
+    private void Awake()
+    {
+        if (Instance != null && Instance != this)
+        {
+            Destroy(this);
+        }
+        else
+        {
+            Instance = this;
+        }
+    }
+
+    private void Start()
+    {
+        GetButton("New").RegisterCallback<ClickEvent>(ev => OnButtonNew());
+        GetButton("Quit").RegisterCallback<ClickEvent>(ev => OnButtonQuit());
+    }
+
     private void OnButtonScene(string scene)
     {
         SceneManager.LoadScene(scene, LoadSceneMode.Single);
+    }
+
+    private void OnButtonNew()
+    {
+        gameObject.SetActive(false);
+        SceneMenu.Instance.gameObject.SetActive(true);
     }
 
     private void OnButtonQuit()
@@ -16,38 +40,8 @@ public class MainMenu : MonoBehaviour
         Application.Quit();
     }
 
-    private void Start()
+    private Button GetButton(string name)
     {
-        UIDocument uiDocument = GetComponent<UIDocument>();
-        VisualElement rootVisualElement = uiDocument.rootVisualElement;
-
-        menu = rootVisualElement.Q<VisualElement>("MainMenu");
-
-        string[] scenes = new string[]
-        {
-            "Level_001",
-            "Test_Attack",
-            "Test_Construction_Structure",
-            "Test_Construction_Unit",
-            "Test_Transport",
-        };
-
-        foreach (string scene in scenes)
-        {
-            TemplateContainer buttonContainer = templateButton.Instantiate();
-            Button button = buttonContainer.Q<Button>();
-
-            button.RegisterCallback<ClickEvent>(ev => OnButtonScene(scene));
-            button.text = scene;
-            button.userData = scene;
-
-            menu.Insert(menu.childCount - 1, buttonContainer); // TODO: Move to level submenu.
-        }
-
-        rootVisualElement.Q<Button>("Quit").RegisterCallback<ClickEvent>(ev => OnButtonQuit());
+        return GetComponent<UIDocument>().rootVisualElement.Q<Button>(name);
     }
-
-    public VisualTreeAsset templateButton;
-
-    private VisualElement menu;
 }
