@@ -6,7 +6,7 @@ public class struct_Refinery_A_yup : Structure
 
         Orders.AllowOrder(OrderType.Produce);
 
-        OrderHandlers[OrderType.Idle] = new OrderHandlerIdleProduce();
+        OrderHandlers[OrderType.Idle] = new OrderHandlerIdleProducer();
 
         Resources.Add("Coal", 0, 60);
         Resources.Add("Metal", 0, 60);

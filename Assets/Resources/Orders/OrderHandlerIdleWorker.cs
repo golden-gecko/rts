@@ -1,6 +1,3 @@
-using System.Collections.Generic;
-using UnityEngine;
-
 public class OrderHandlerIdleWorker : IOrderHandler
 {
     public void OnExecute(MyGameObject myGameObject)
@@ -18,7 +15,7 @@ public class OrderHandlerIdleWorker : IOrderHandler
         }
         */
 
-        order = Game.Instance.CreateOrderTransport(myGameObject);
+        order = myGameObject.Player.CreateOrderTransport(myGameObject);
 
         if (order != null)
         {
@@ -27,7 +24,7 @@ public class OrderHandlerIdleWorker : IOrderHandler
             return;
         }
 
-        order = Game.Instance.CreateOrderConstruction(myGameObject);
+        order = myGameObject.Player.CreateOrderConstruction(myGameObject);
 
         if (order != null)
         {

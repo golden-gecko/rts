@@ -19,6 +19,7 @@ public class MainMenu : MonoBehaviour
 
     private void OnEnable()
     {
+        GetButton("Continue").RegisterCallback<ClickEvent>(ev => OnButtonContinue());
         GetButton("New").RegisterCallback<ClickEvent>(ev => OnButtonNew());
         GetButton("Quit").RegisterCallback<ClickEvent>(ev => OnButtonQuit());
     }
@@ -26,6 +27,11 @@ public class MainMenu : MonoBehaviour
     private Button GetButton(string name)
     {
         return GetComponent<UIDocument>().rootVisualElement.Q<Button>(name);
+    }
+
+    private void OnButtonContinue()
+    {
+        gameObject.SetActive(false);
     }
 
     private void OnButtonNew()
