@@ -20,7 +20,7 @@ public class GameMenu : MonoBehaviour
         }
     }
 
-    private void Start()
+    private void OnEnable()
     {
         UIDocument uiDocument = GetComponent<UIDocument>();
         VisualElement rootVisualElement = uiDocument.rootVisualElement;
@@ -29,11 +29,13 @@ public class GameMenu : MonoBehaviour
         infoPanel = rootVisualElement.Q<VisualElement>("InfoPanel");
 
         log = rootVisualElement.Q<Label>("Log");
-
         order = rootVisualElement.Q<Label>("Order");
         prefab = rootVisualElement.Q<Label>("Prefab");
         selected = rootVisualElement.Q<Label>("Selected");
         info = rootVisualElement.Q<Label>("Info");
+        
+        menu = rootVisualElement.Q<Button>("Menu");
+        menu.RegisterCallback<ClickEvent>(ev => OnMenu());
 
         orders = rootVisualElement.Q<VisualElement>("OrderList");
         prefabs = rootVisualElement.Q<VisualElement>("PrefabList");
@@ -174,6 +176,11 @@ public class GameMenu : MonoBehaviour
         HUD.Instance.Prefab = prefab;
     }
 
+    private void OnMenu()
+    {
+        MainMenu.Instance.gameObject.SetActive(true);
+    }
+
     private void OnOrder(OrderType orderType)
     {
         HUD.Instance.Order = orderType;
@@ -246,11 +253,11 @@ public class GameMenu : MonoBehaviour
     private VisualElement infoPanel;
 
     private Label log;
-
     private Label order;
     private Label prefab;
     private Label selected;
     private Label info;
+    private Button menu;
 
     private VisualElement orders;
     private VisualElement prefabs;

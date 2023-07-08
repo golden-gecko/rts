@@ -303,7 +303,15 @@ public class HUD : MonoBehaviour
         }
         else if (Input.GetKeyDown(KeyCode.F10))
         {
-            MainMenu.Instance.gameObject.SetActive(!MainMenu.Instance.gameObject.activeInHierarchy);
+            if (MainMenu.Instance.gameObject.activeInHierarchy || SceneMenu.Instance.gameObject.activeInHierarchy)
+            {
+                MainMenu.Instance.gameObject.SetActive(false);
+                SceneMenu.Instance.gameObject.SetActive(false);
+            }
+            else
+            {
+                MainMenu.Instance.gameObject.SetActive(true);
+            }
         }
     }
 

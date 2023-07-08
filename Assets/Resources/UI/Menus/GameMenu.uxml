@@ -1,7 +1,7 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" editor-extension-mode="False">
-    <ui:Template name="Button" src="project://database/Assets/Resources/UI/Templates/Button.uxml?fileID=9197481963319205126&amp;guid=a3fb7fe5ff2f5a5498b9a348c95d0ca1&amp;type=3#Button" />
-    <Style src="project://database/Assets/Resources/UI/Menus/Style.uss?fileID=7433441132597879392&amp;guid=231d51774ac67094591621cc55974d8c&amp;type=3#Style" />
-    <ui:VisualElement name="LogPanel" class="panel-background" style="position: absolute; left: 10%; top: 0; right: 0;">
+    <ui:Template name="Button" src="project://database/Assets/Resources/UI/Templates/ButtonOrder.uxml?fileID=9197481963319205126&amp;guid=a3fb7fe5ff2f5a5498b9a348c95d0ca1&amp;type=3#ButtonOrder" />
+    <Style src="project://database/Assets/Resources/UI/Style.uss?fileID=7433441132597879392&amp;guid=231d51774ac67094591621cc55974d8c&amp;type=3#Style" />
+    <ui:VisualElement name="LogPanel" class="panel-background" style="position: absolute; left: 10%; top: 0; right: 15%;">
         <ui:Label tabindex="-1" display-tooltip-when-elided="true" name="Log" />
     </ui:VisualElement>
     <ui:VisualElement name="TopPanel" class="panel-background" style="flex-grow: 1; left: 0; top: 0; right: auto; position: absolute;">
@@ -27,5 +27,8 @@
             <ui:Button text="Center" display-tooltip-when-elided="true" name="CenterOnMainCamera" class="button-minimap" />
         </ui:VisualElement>
         <ui:VisualElement name="Image" style="background-color: rgba(0, 0, 0, 0); background-image: resource(&apos;Materials/Minimap&apos;); flex-grow: 40; position: absolute; left: 0; right: 0; bottom: 0; top: 10%;" />
+    </ui:VisualElement>
+    <ui:VisualElement name="Menu" class="panel-background" style="position: absolute; left: 90%; top: 0; right: 0;">
+        <ui:Button text="Menu (F10)" display-tooltip-when-elided="true" name="Menu" style="margin-left: 5px; margin-right: 5px; margin-top: 5px; margin-bottom: 5px; padding-left: 0; padding-right: 0; padding-top: 0; padding-bottom: 0;" />
     </ui:VisualElement>
 </ui:UXML>
