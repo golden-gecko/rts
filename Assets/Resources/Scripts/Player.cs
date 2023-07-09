@@ -57,4 +57,7 @@ public class Player : MonoBehaviour
     public ConsumerProducerContainer Consumers { get; } = new ConsumerProducerContainer();
 
     public ConsumerProducerContainer Producers { get; } = new ConsumerProducerContainer();
+
+    [SerializeField]
+    private Material Selection;
 }
