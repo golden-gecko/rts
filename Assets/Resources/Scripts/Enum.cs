@@ -18,6 +18,7 @@ public enum OrderType
     Attack,
     Construct,
     Destroy,
+    Explore,
     Follow,
     Guard,
     Idle,

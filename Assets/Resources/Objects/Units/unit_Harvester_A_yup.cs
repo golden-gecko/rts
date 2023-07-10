@@ -30,8 +30,7 @@ public class unit_Harvester_A_yup : Unit
         Resources.Add("Wood", 0, 10);
 
         LoadTime = 2.0f;
-        MissileRangeMax = 0.0f;
-        MissileRangeMin = 0.0f;
+        MissileRange = 0.0f;
         Speed = 4.0f;
     }
 }

@@ -28,7 +28,7 @@ public class OrderHandlerAttackTurret : IOrderHandler
             position = order.TargetPosition;
         }
 
-        if (myGameObject.IsInRange(position, myGameObject.MissileRangeMin, myGameObject.MissileRangeMax))
+        if (myGameObject.IsInRange(position, myGameObject.MissileRange))
         {
             myGameObject.transform.LookAt(new Vector3(position.x, myGameObject.Position.y, position.z));
 

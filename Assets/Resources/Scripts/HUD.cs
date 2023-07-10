@@ -63,11 +63,27 @@ public class HUD : MonoBehaviour
         }
     }
 
+    public void Explore()
+    {
+        foreach (MyGameObject selected in Selected)
+        {
+            selected.Explore();
+        }
+    }
+
     public void Stop()
     {
         foreach (MyGameObject selected in Selected)
         {
             selected.Stop();
+        }
+    }
+
+    public void Wait()
+    {
+        foreach (MyGameObject selected in Selected)
+        {
+            selected.Wait();
         }
     }
 
@@ -436,9 +452,19 @@ public class HUD : MonoBehaviour
                     Destroy();
                     break;
 
+                case OrderType.Explore:
+                    order = OrderType.None;
+                    Explore();
+                    break;
+
                 case OrderType.Stop:
                     order = OrderType.None;
                     Stop();
+                    break;
+
+                case OrderType.Wait:
+                    order = OrderType.None;
+                    Wait();
                     break;
 
                 default:

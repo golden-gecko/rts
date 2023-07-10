@@ -28,9 +28,9 @@ public class OrderHandlerAttackUnit : IOrderHandler
             position = order.TargetPosition;
         }
 
-        if (myGameObject.IsInRange(position, myGameObject.MissileRangeMin, myGameObject.MissileRangeMax) == false)
+        if (myGameObject.IsInRange(position, myGameObject.MissileRange) == false)
         {
-            myGameObject.Move(GetPositionToAttack(myGameObject.Position, position, myGameObject.MissileRangeMin, myGameObject.MissileRangeMax), 0);
+            myGameObject.Move(GetPositionToAttack(myGameObject.Position, position, myGameObject.MissileRange), 0);
         }
         else
         {
@@ -54,7 +54,7 @@ public class OrderHandlerAttackUnit : IOrderHandler
         }
     }
 
-    private Vector3 GetPositionToAttack(Vector3 position, Vector3 target, float missileRangeMin, float missileRangeMax)
+    private Vector3 GetPositionToAttack(Vector3 position, Vector3 target, float missileRangeMax)
     {
         Vector3 a = position;
         Vector3 b = target;
@@ -65,13 +65,6 @@ public class OrderHandlerAttackUnit : IOrderHandler
         Vector3 direction = b - a;
         float magnitude = direction.magnitude;
 
-        if (magnitude < missileRangeMin)
-        {
-            direction.Normalize();
-
-            return position - direction;
-        }
-        
         if (magnitude > missileRangeMax)
         {
             direction.Normalize();
