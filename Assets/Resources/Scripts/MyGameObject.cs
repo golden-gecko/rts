@@ -1,10 +1,14 @@
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
+using UnityEngine.Assertions;
 
 public class MyGameObject : MonoBehaviour
 {
     protected virtual void Awake()
     {
+        Assert.IsNotNull(Player);
+
         Orders.AllowOrder(OrderType.Destroy);
         Orders.AllowOrder(OrderType.Idle);
         Orders.AllowOrder(OrderType.Stop);
@@ -39,6 +43,18 @@ public class MyGameObject : MonoBehaviour
     protected virtual void Start()
     {
         RallyPoint = Exit;
+
+        Transform visual = transform.Find("Visual");
+        
+        if (visual)
+        {
+            Transform selection = visual.Find("Selection");
+
+            if (selection)
+            {
+                selection.GetComponent<SpriteRenderer>().sprite = Player.Selection;
+            }
+        }
     }
 
     protected virtual void Update()
@@ -409,7 +425,7 @@ public class MyGameObject : MonoBehaviour
     public bool Alive { get => Health > 0.0f; }
 
     [field: SerializeField]
-    public Player Player { get; set; }
+    public Player Player;
 
     public float Damage { get; protected set; } = 0.0f;
 
