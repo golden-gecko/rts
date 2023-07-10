@@ -241,15 +241,24 @@ public class MyGameObject : MonoBehaviour
 
         if (visual)
         {
-            Transform range = visual.transform.Find("Range");
+            Transform rangeMissile = visual.transform.Find("Range_Missile");
+            Transform rangeVisibility = visual.transform.Find("Range_Visibility");
             Transform selection = visual.transform.Find("Selection");
 
-            if (range)
+            if (rangeMissile)
             {
                 Vector3 scale = transform.localScale;
 
-                range.gameObject.SetActive(status);
-                range.localScale = new Vector3(MissileRangeMax * 2.0f / scale.x, MissileRangeMax * 2.0f / scale.z, 1.0f); // TODO: Why y and z are replaced?
+                rangeMissile.gameObject.SetActive(status);
+                rangeMissile.localScale = new Vector3(MissileRange * 2.0f / scale.x, MissileRange * 2.0f / scale.z, 1.0f); // TODO: Why y and z are replaced?
+            }
+
+            if (rangeVisibility)
+            {
+                Vector3 scale = transform.localScale;
+
+                rangeVisibility.gameObject.SetActive(status);
+                rangeVisibility.localScale = new Vector3(VisibilityRange * 2.0f / scale.x, VisibilityRange * 2.0f / scale.z, 1.0f); // TODO: Why y and z are replaced?
             }
 
             if (selection)
@@ -441,9 +450,7 @@ public class MyGameObject : MonoBehaviour
 
     public string MissilePrefab { get; protected set; } = string.Empty;
 
-    public float MissileRangeMax { get; protected set; } = 0.0f;
-
-    public float MissileRangeMin { get; protected set; } = 0.0f;
+    public float MissileRange { get; protected set; } = 0.0f;
 
     public float VisibilityRange { get; protected set; } = 10.0f;
 

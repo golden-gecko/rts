@@ -11,12 +11,12 @@ GameObject:
   - component: {fileID: 1702536901321746155}
   - component: {fileID: 1549258153456761822}
   m_Layer: 30
-  m_Name: Range
+  m_Name: Range_Missile
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1702536901321746155
 Transform:
   m_ObjectHideFlags: 0
