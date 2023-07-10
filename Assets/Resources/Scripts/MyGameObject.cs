@@ -445,6 +445,8 @@ public class MyGameObject : MonoBehaviour
 
     public float MissileRangeMin { get; protected set; } = 0.0f;
 
+    public float VisibilityRange { get; protected set; } = 10.0f;
+
     public Vector3 Position { get => transform.position; set => transform.position = value; }
 
     public OrderContainer Orders { get; private set; } = new OrderContainer();
