@@ -61,6 +61,15 @@ public class Order
         };
     }
 
+    public static Order Explore()
+    {
+
+        return new Order
+        {
+            Type = OrderType.Explore,
+        };
+    }
+
     public static Order Follow(MyGameObject myGameObject)
     {
         return new Order

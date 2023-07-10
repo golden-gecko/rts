@@ -110,6 +110,11 @@ public class MyGameObject : MonoBehaviour
             Orders.Add(Order.Destroy());
         }
     }
+    
+    public void Explore()
+    {
+        Orders.Add(Order.Explore());
+    }
 
     public void Follow(MyGameObject myGameObject)
     {
@@ -446,7 +451,7 @@ public class MyGameObject : MonoBehaviour
 
     public float Speed { get; protected set; } = 10.0f;
 
-    public float WaitTime { get; protected set; } = 10.0f;
+    public float WaitTime { get; protected set; } = 2.0f;
 
     public string MissilePrefab { get; protected set; } = string.Empty;
 
