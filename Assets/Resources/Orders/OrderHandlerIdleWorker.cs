@@ -15,7 +15,7 @@ public class OrderHandlerIdleWorker : IOrderHandler
         }
         */
 
-        order = myGameObject.Player.CreateOrderTransport(myGameObject);
+        order = Game.Instance.CreateOrderTransport(myGameObject);
 
         if (order != null)
         {
@@ -24,7 +24,7 @@ public class OrderHandlerIdleWorker : IOrderHandler
             return;
         }
 
-        order = myGameObject.Player.CreateOrderConstruction(myGameObject);
+        order = Game.Instance.CreateOrderConstruction(myGameObject);
 
         if (order != null)
         {
