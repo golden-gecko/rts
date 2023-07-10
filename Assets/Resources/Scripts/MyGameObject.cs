@@ -1,14 +1,10 @@
 using System.Collections.Generic;
-using UnityEditor;
 using UnityEngine;
-using UnityEngine.Assertions;
 
 public class MyGameObject : MonoBehaviour
 {
     protected virtual void Awake()
     {
-        Assert.IsNotNull(Player);
-
         Orders.AllowOrder(OrderType.Destroy);
         Orders.AllowOrder(OrderType.Idle);
         Orders.AllowOrder(OrderType.Stop);
@@ -224,12 +220,12 @@ public class MyGameObject : MonoBehaviour
 
     public bool IsAlly(MyGameObject myGameObject)
     {
-        return myGameObject.Player == Player;
+        return Game.Instance.Diplomacy[this.Player][myGameObject.Player] == DiplomacyState.Ally;
     }
 
     public bool IsEnemy(MyGameObject myGameObject)
     {
-        return myGameObject.Player != Player;
+        return Game.Instance.Diplomacy[this.Player][myGameObject.Player] == DiplomacyState.Enemy;
     }
 
     public void OnDamage(float damage)

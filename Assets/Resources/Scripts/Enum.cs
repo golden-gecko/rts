@@ -1,3 +1,17 @@
+public enum DiplomacyState
+{
+    Ally,
+    Enemy,
+    Neutral,
+}
+
+public enum MyGameObjectState
+{
+    Operational,
+    UnderAssembly,
+    UnderConstruction,
+}
+
 public enum OrderType
 {
     Assemble,
@@ -19,13 +33,6 @@ public enum OrderType
     Transport,
     Unload,
     Wait,
-}
-
-public enum MyGameObjectState
-{
-    Operational,
-    UnderAssembly,
-    UnderConstruction,
 }
 
 public enum PrefabConstructionType
