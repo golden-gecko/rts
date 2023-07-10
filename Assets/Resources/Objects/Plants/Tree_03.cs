@@ -1,4 +1,4 @@
-public class Tree_03 : MyGameObject
+public class Tree_03 : Plant
 {
     protected override void Awake()
     {
