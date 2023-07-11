@@ -4,7 +4,7 @@ public class OrderHandlerIdleAttacker : IOrderHandler
     {
         Order order;
 
-        order = myGameObject.Player.CreataAttackJob(myGameObject);
+        order = Game.Instance.CreataAttackJob(myGameObject);
 
         if (order != null)
         {

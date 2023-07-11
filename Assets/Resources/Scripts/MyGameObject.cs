@@ -318,10 +318,13 @@ public class MyGameObject : MonoBehaviour
 
     private void Reload()
     {
-        ReloadTimer?.Update(Time.deltaTime);
+        if (ReloadTimer != null)
+        {
+            ReloadTimer.Update(Time.deltaTime);
+        }
     }
 
-    private void AlignPositionToTerrain()
+    protected virtual void AlignPositionToTerrain()
     {
         RaycastHit hitInfo;
         Ray ray = new Ray(transform.position + new Vector3(0, 1000, 0), Vector3.down);
@@ -366,11 +369,11 @@ public class MyGameObject : MonoBehaviour
 
                 if (capacity > 0)
                 {
-                    Player.Consumers.Add(this, resource.Name, capacity);
+                    Game.Instance.RegisterConsumer(this, resource.Name, capacity);
                 }
                 else
                 {
-                    Player.Consumers.Remove(this, resource.Name);
+                    Game.Instance.UnregisterConsumer(this, resource.Name);
                 }
             }
         }
@@ -386,11 +389,11 @@ public class MyGameObject : MonoBehaviour
 
                 if (capacity > 0)
                 {
-                    Player.Consumers.Add(this, resource.Name, capacity);
+                    Game.Instance.RegisterConsumer(this, resource.Name, capacity);
                 }
                 else
                 {
-                    Player.Consumers.Remove(this, resource.Name);
+                    Game.Instance.UnregisterConsumer(this, resource.Name);
                 }
             }
 
@@ -400,11 +403,11 @@ public class MyGameObject : MonoBehaviour
 
                 if (storage > 0)
                 {
-                    Player.Producers.Add(this, resource.Name, storage);
+                    Game.Instance.RegisterProducer(this, resource.Name, storage);
                 }
                 else
                 {
-                    Player.Producers.Remove(this, resource.Name);
+                    Game.Instance.UnregisterProducer(this, resource.Name);
                 }
             }
         }
