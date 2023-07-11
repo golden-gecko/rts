@@ -318,10 +318,13 @@ public class MyGameObject : MonoBehaviour
 
     private void Reload()
     {
-        ReloadTimer?.Update(Time.deltaTime);
+        if (ReloadTimer != null)
+        {
+            ReloadTimer.Update(Time.deltaTime);
+        }
     }
 
-    private void AlignPositionToTerrain()
+    protected virtual void AlignPositionToTerrain()
     {
         RaycastHit hitInfo;
         Ray ray = new Ray(transform.position + new Vector3(0, 1000, 0), Vector3.down);
