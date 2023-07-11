@@ -114,21 +114,65 @@ public class Game : MonoBehaviour
 
     public void RegisterConsumer(MyGameObject myGameObject, string name, int value)
     {
+        // TODO: Refactor. Add flags to player classes.
+        Player cpu = GameObject.Find("CPU").GetComponent<Player>();
+        Player gaia = GameObject.Find("Gaia").GetComponent<Player>();
+        Player human = GameObject.Find("Human").GetComponent<Player>();
+
+        if (myGameObject.Player == gaia)
+        {
+            Consumers[cpu].Add(myGameObject, name, value);
+            Consumers[human].Add(myGameObject, name, value);
+        }
+
         Consumers[myGameObject.Player].Add(myGameObject, name, value);
     }
 
     public void UnregisterConsumer(MyGameObject myGameObject, string name)
     {
+        // TODO: Refactor. Add flags to player classes.
+        Player cpu = GameObject.Find("CPU").GetComponent<Player>();
+        Player gaia = GameObject.Find("Gaia").GetComponent<Player>();
+        Player human = GameObject.Find("Human").GetComponent<Player>();
+
+        if (myGameObject.Player == gaia)
+        {
+            Consumers[cpu].Remove(myGameObject, name);
+            Consumers[human].Remove(myGameObject, name);
+        }
+
         Consumers[myGameObject.Player].Remove(myGameObject, name);
     }
 
     public void RegisterProducer(MyGameObject myGameObject, string name, int value)
     {
+        // TODO: Refactor. Add flags to player classes.
+        Player cpu = GameObject.Find("CPU").GetComponent<Player>();
+        Player gaia = GameObject.Find("Gaia").GetComponent<Player>();
+        Player human = GameObject.Find("Human").GetComponent<Player>();
+
+        if (myGameObject.Player == gaia)
+        {
+            Producers[cpu].Add(myGameObject, name, value);
+            Producers[human].Add(myGameObject, name, value);
+        }
+
         Producers[myGameObject.Player].Add(myGameObject, name, value);
     }
 
     public void UnregisterProducer(MyGameObject myGameObject, string name)
     {
+        // TODO: Refactor. Add flags to player classes.
+        Player cpu = GameObject.Find("CPU").GetComponent<Player>();
+        Player gaia = GameObject.Find("Gaia").GetComponent<Player>();
+        Player human = GameObject.Find("Human").GetComponent<Player>();
+
+        if (myGameObject.Player == gaia)
+        {
+            Producers[cpu].Remove(myGameObject, name);
+            Producers[human].Remove(myGameObject, name);
+        }
+
         Producers[myGameObject.Player].Remove(myGameObject, name);
     }
 
