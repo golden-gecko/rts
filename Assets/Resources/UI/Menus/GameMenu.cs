@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UIElements;
 
@@ -120,51 +121,39 @@ public class GameMenu : MonoBehaviour
     {
         prefabs.Clear();
 
-        Dictionary<string, PrefabConstructionType> prefabList = new Dictionary<string, PrefabConstructionType>() // TODO: AssetDatabase does not work outside editor.
-        {
-            { "Objects/Structures/struct_Barracks_A_yup", PrefabConstructionType.Structure },
-            { "Objects/Structures/struct_Factory_Heavy_A_yup", PrefabConstructionType.Structure },
-            { "Objects/Structures/struct_Factory_Light_A_yup", PrefabConstructionType.Structure },
-            { "Objects/Structures/struct_Headquarters_A_yup", PrefabConstructionType.Structure },
-            { "Objects/Structures/struct_Misc_Building_B_yup", PrefabConstructionType.Structure },
-            { "Objects/Structures/struct_Radar_Outpost_A_yup", PrefabConstructionType.Structure },
-            { "Objects/Structures/struct_Refinery_A_yup", PrefabConstructionType.Structure },
-            { "Objects/Structures/struct_Research_Lab_A_yup", PrefabConstructionType.Structure },
-            { "Objects/Structures/struct_Spaceport_A_yup", PrefabConstructionType.Structure },
-            { "Objects/Structures/struct_Turret_Gun_A_yup", PrefabConstructionType.Structure },
-            { "Objects/Structures/struct_Turret_Missile_A_yup", PrefabConstructionType.Structure },
-            { "Objects/Structures/struct_Wall_A_yup", PrefabConstructionType.Structure },
-            { "Objects/Units/unit_Grav_Light_A_yup", PrefabConstructionType.Unit },
-            { "Objects/Units/unit_Harvester_A_yup", PrefabConstructionType.Unit },
-            { "Objects/Units/unit_Infantry_Light_B_yup", PrefabConstructionType.Unit },
-            { "Objects/Units/unit_Quad_A_yup", PrefabConstructionType.Unit },
-            { "Objects/Units/unit_Tank_Combat_A_yup", PrefabConstructionType.Unit },
-            { "Objects/Units/unit_Tank_Missile_A_yup", PrefabConstructionType.Unit },
-            { "Objects/Units/unit_Trike_A_yup", PrefabConstructionType.Unit },
-        };
+        MyGameObject[] structures = Resources.LoadAll<MyGameObject>("Objects/Structures");
+        MyGameObject[] units = Resources.LoadAll<MyGameObject>("Objects/Units");
 
-        foreach (KeyValuePair<string, PrefabConstructionType> i in prefabList)
+        foreach (MyGameObject myGameObject in structures)
         {
+            string path = "Objects/Structures/" + myGameObject.name;
+
             TemplateContainer buttonContainer = templateButton.Instantiate();
             Button button = buttonContainer.Q<Button>();
 
-            switch (i.Value)
-            {
-                case PrefabConstructionType.Structure:
-                    button.RegisterCallback<ClickEvent>(ev => OnConstruct(i.Key));
-                    break;
-
-                case PrefabConstructionType.Unit:
-                    button.RegisterCallback<ClickEvent>(ev => OnAssemble(i.Key));
-                    break;
-            }
-
+            button.RegisterCallback<ClickEvent>(ev => OnConstruct(path));
             button.style.display = DisplayStyle.None;
-            button.text = Path.GetFileName(i.Key).Replace("struct_", "").Replace("unit_", "").Replace("_A_yup", "").Replace("_B_yup", "").Replace("_", " "); // TODO: Rename prefabs.
-            button.userData = i;
+            button.text = Path.GetFileName(path).Replace("_", " ");
+            button.userData = path;
 
             prefabs.Add(buttonContainer);
-            prefabsButtons[i.Key] = button;
+            prefabsButtons[path] = button;
+        }
+
+        foreach (MyGameObject myGameObject in structures)
+        {
+            string path = "Objects/Units/" + myGameObject.name;
+
+            TemplateContainer buttonContainer = templateButton.Instantiate();
+            Button button = buttonContainer.Q<Button>();
+
+            button.RegisterCallback<ClickEvent>(ev => OnConstruct(path));
+            button.style.display = DisplayStyle.None;
+            button.text = Path.GetFileName(path).Replace("_", " ");
+            button.userData = path;
+
+            prefabs.Add(buttonContainer);
+            prefabsButtons[path] = button;
         }
     }
 
