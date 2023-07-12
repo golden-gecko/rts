@@ -13,7 +13,7 @@ public class struct_Research_Lab_A_yup : Structure
         Orders.AllowTechnology("Static Defences");
         Orders.AllowTechnology("Stationary Defences");
 
-        Resources.Add("Crystal", 0, 20);
+        Resources.Add("Crystal", 0, 80);
 
         Recipe r1 = new Recipe();
 

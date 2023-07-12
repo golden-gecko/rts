@@ -2,24 +2,30 @@ using System.Collections.Generic;
 
 public class Technology
 {
-    public Technology(string name, bool unlockable, bool unlocked)
+    public Technology(string name, bool unlocked)
     {
         Name = name;
-        Unlockable = unlockable;
         Unlocked = unlocked;
     }
 
-    public Technology(string name, bool unlockable, bool unlocked, List<string> unlocks)
+    public Technology(string name, Dictionary<string, int> cost, bool unlocked)
     {
         Name = name;
-        Unlockable = unlockable;
+        Cost = cost;
+        Unlocked = unlocked;
+    }
+
+    public Technology(string name, Dictionary<string, int> cost, bool unlocked, List<string> unlocks)
+    {
+        Name = name;
+        Cost = cost;
         Unlocked = unlocked;
         Unlocks = unlocks;
     }
 
     public string Name { get; }
 
-    public bool Unlockable { get; } = false;
+    public Dictionary<string, int> Cost { get; } = new Dictionary<string, int>();
 
     public bool Unlocked { get; set; } = false;
 

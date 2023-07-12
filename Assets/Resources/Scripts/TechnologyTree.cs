@@ -1,35 +1,42 @@
 using System.Collections.Generic;
+using System.IO;
+using UnityEditor.Experimental.GraphView;
 
 public class TechnologyTree
 {
     public TechnologyTree()
     {
+        Dictionary<string, int> cost = new Dictionary<string, int>
+        {
+            { "Crystal", 50 },
+        };
+
         // Structures
-        Technologies["struct_Barracks_A_yup"] = new Technology("struct_Barracks_A_yup", false, false);
-        Technologies["struct_Factory_Heavy_A_yup"] = new Technology("struct_Factory_Heavy_A_yup", false, false);
-        Technologies["struct_Factory_Light_A_yup"] = new Technology("struct_Factory_Light_A_yup", false, false);
-        Technologies["struct_Headquarters_A_yup"] = new Technology("struct_Headquarters_A_yup", false, false);
-        Technologies["struct_Misc_Building_A_yup"] = new Technology("struct_Misc_Building_A_yup", false, false);
-        Technologies["struct_Misc_Building_B_yup"] = new Technology("struct_Misc_Building_B_yup", false, false);
-        Technologies["struct_Radar_Outpost_A_yup"] = new Technology("struct_Radar_Outpost_A_yup", false, false);
-        Technologies["struct_Refinery_A_yup"] = new Technology("struct_Refinery_A_yup", false, false);
-        Technologies["struct_Research_Lab_A_yup"] = new Technology("struct_Research_Lab_A_yup", false, false);
-        Technologies["struct_Spaceport_A_yup"] = new Technology("struct_Spaceport_A_yup", false, false);
-        Technologies["struct_Turret_Gun_A_yup"] = new Technology("struct_Turret_Gun_A_yup", false, false);
-        Technologies["struct_Turret_Missile_A_yup"] = new Technology("struct_Turret_Missile_A_yup", false, false);
-        Technologies["struct_Wall_A_yup"] = new Technology("struct_Wall_A_yup", false, false);
+        Technologies["struct_Barracks_A_yup"] = new Technology("struct_Barracks_A_yup", false);
+        Technologies["struct_Factory_Heavy_A_yup"] = new Technology("struct_Factory_Heavy_A_yup", false);
+        Technologies["struct_Factory_Light_A_yup"] = new Technology("struct_Factory_Light_A_yup", false);
+        Technologies["struct_Headquarters_A_yup"] = new Technology("struct_Headquarters_A_yup", false);
+        Technologies["struct_Misc_Building_A_yup"] = new Technology("struct_Misc_Building_A_yup", false);
+        Technologies["struct_Misc_Building_B_yup"] = new Technology("struct_Misc_Building_B_yup", false);
+        Technologies["struct_Radar_Outpost_A_yup"] = new Technology("struct_Radar_Outpost_A_yup", false);
+        Technologies["struct_Refinery_A_yup"] = new Technology("struct_Refinery_A_yup", false);
+        Technologies["struct_Research_Lab_A_yup"] = new Technology("struct_Research_Lab_A_yup", false);
+        Technologies["struct_Spaceport_A_yup"] = new Technology("struct_Spaceport_A_yup", false);
+        Technologies["struct_Turret_Gun_A_yup"] = new Technology("struct_Turret_Gun_A_yup", false);
+        Technologies["struct_Turret_Missile_A_yup"] = new Technology("struct_Turret_Missile_A_yup", false);
+        Technologies["struct_Wall_A_yup"] = new Technology("struct_Wall_A_yup", false);
 
         // Units
-        Technologies["unit_Grav_Light_A_yup"] = new Technology("unit_Grav_Light_A_yup", false, false);
-        Technologies["unit_Harvester_A_yup"] = new Technology("unit_Harvester_A_yup", false, false);
-        Technologies["unit_Infantry_Light_B_yup"] = new Technology("unit_Infantry_Light_B_yup", false, false);
-        Technologies["unit_Quad_A_yup"] = new Technology("unit_Quad_A_yup", false, false);
-        Technologies["unit_Tank_Combat_A_yup"] = new Technology("unit_Tank_Combat_A_yup", false, false);
-        Technologies["unit_Tank_Missile_A_yup"] = new Technology("unit_Tank_Missile_A_yup", false, false);
-        Technologies["unit_Trike_A_yup"] = new Technology("unit_Trike_A_yup", false, false);
+        Technologies["unit_Grav_Light_A_yup"] = new Technology("unit_Grav_Light_A_yup", false);
+        Technologies["unit_Harvester_A_yup"] = new Technology("unit_Harvester_A_yup", false);
+        Technologies["unit_Infantry_Light_B_yup"] = new Technology("unit_Infantry_Light_B_yup", false);
+        Technologies["unit_Quad_A_yup"] = new Technology("unit_Quad_A_yup", false);
+        Technologies["unit_Tank_Combat_A_yup"] = new Technology("unit_Tank_Combat_A_yup", false);
+        Technologies["unit_Tank_Missile_A_yup"] = new Technology("unit_Tank_Missile_A_yup", false);
+        Technologies["unit_Trike_A_yup"] = new Technology("unit_Trike_A_yup", false);
 
         // Technologies
-        Technologies["Colonization"] = new Technology("Colonization", true, true, new List<string> {
+        Technologies["Colonization"] = new Technology("Colonization", cost, true, new List<string> {
             "struct_Barracks_A_yup",
             "struct_Factory_Light_A_yup",
             "struct_Headquarters_A_yup",
@@ -39,28 +46,38 @@ public class TechnologyTree
             "struct_Research_Lab_A_yup",
         });
 
-        Technologies["Heavy Industry"] = new Technology("Heavy Industry", true, false, new List<string> {
+        Technologies["Heavy Industry"] = new Technology("Heavy Industry", cost, false, new List<string> {
             "struct_Factory_Heavy_A_yup",
         });
 
-        Technologies["Radar"] = new Technology("Radar", true, false, new List<string> {
+        Technologies["Radar"] = new Technology("Radar", cost, false, new List<string> {
             "struct_Radar_Outpost_A_yup",
         });
 
-        Technologies["Space Travels"] = new Technology("Space Travels", true, false, new List<string> {
+        Technologies["Space Travels"] = new Technology("Space Travels", cost, false, new List<string> {
             "struct_Spaceport_A_yup",
         });
 
-        Technologies["Static Defences"] = new Technology("Static Defences", true, false, new List<string> {
+        Technologies["Static Defences"] = new Technology("Static Defences", cost, false, new List<string> {
             "struct_Wall_A_yup",
         });
 
-        Technologies["Stationary Defences"] = new Technology("Stationary Defences", true, false, new List<string> {
+        Technologies["Stationary Defences"] = new Technology("Stationary Defences", cost, false, new List<string> {
             "struct_Turret_Gun_A_yup",
             "struct_Turret_Missile_A_yup",
         });
 
         UpdateTechnologies();
+    }
+
+    public Dictionary<string, int> GetCost(string name)
+    {
+        if (Technologies.ContainsKey(name))
+        {
+            return Technologies[name].Cost;
+        }
+
+        return new Dictionary<string, int>();
     }
 
     public bool IsUnlocked(string name)
