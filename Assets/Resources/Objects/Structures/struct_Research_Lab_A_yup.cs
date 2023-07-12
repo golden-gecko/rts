@@ -6,6 +6,13 @@ public class struct_Research_Lab_A_yup : Structure
 
         Orders.AllowOrder(OrderType.Research);
 
+        Orders.AllowTechnology("Colonization");
+        Orders.AllowTechnology("Heavy Industry");
+        Orders.AllowTechnology("Radar");
+        Orders.AllowTechnology("Space Travels");
+        Orders.AllowTechnology("Static Defences");
+        Orders.AllowTechnology("Stationary Defences");
+
         Resources.Add("Crystal", 0, 20);
 
         Recipe r1 = new Recipe();

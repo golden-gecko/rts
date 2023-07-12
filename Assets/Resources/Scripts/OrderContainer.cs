@@ -20,6 +20,11 @@ public class OrderContainer
         PrefabWhitelist.Add(item);
     }
 
+    public void AllowTechnology(string item)
+    {
+        TechnologyWhitelist.Add(item);
+    }
+
     public void Clear()
     {
         Items.Clear();
@@ -73,4 +78,6 @@ public class OrderContainer
     public HashSet<OrderType> OrderWhitelist { get; } = new HashSet<OrderType>();
 
     public HashSet<string> PrefabWhitelist { get; } = new HashSet<string>();
+
+    public HashSet<string> TechnologyWhitelist { get; } = new HashSet<string>();
 }

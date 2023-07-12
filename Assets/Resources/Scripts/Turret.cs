@@ -7,6 +7,7 @@ public class Turret : Structure
         Orders.AllowOrder(OrderType.Attack);
 
         OrderHandlers[OrderType.Attack] = new OrderHandlerAttackTurret();
+        OrderHandlers[OrderType.Idle] = new OrderHandlerIdleAttacker();
 
         Damage = 10.0f;
         MissileRange = 10.0f;
