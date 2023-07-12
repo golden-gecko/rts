@@ -147,7 +147,7 @@ public class GameMenu : MonoBehaviour
             TemplateContainer buttonContainer = templateButton.Instantiate();
             Button button = buttonContainer.Q<Button>();
 
-            button.RegisterCallback<ClickEvent>(ev => OnConstruct(path));
+            button.RegisterCallback<ClickEvent>(ev => OnAssemble(path));
             button.style.display = DisplayStyle.None;
             button.text = Path.GetFileName(path).Replace("_", " ");
             button.userData = path;

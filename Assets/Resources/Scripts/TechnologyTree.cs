@@ -12,60 +12,47 @@ public class TechnologyTree
         };
 
         // Structures
-        Technologies["struct_Barracks_A_yup"] = new Technology("struct_Barracks_A_yup", false);
-        Technologies["struct_Factory_Heavy_A_yup"] = new Technology("struct_Factory_Heavy_A_yup", false);
-        Technologies["struct_Factory_Light_A_yup"] = new Technology("struct_Factory_Light_A_yup", false);
-        Technologies["struct_Headquarters_A_yup"] = new Technology("struct_Headquarters_A_yup", false);
-        Technologies["struct_Misc_Building_A_yup"] = new Technology("struct_Misc_Building_A_yup", false);
-        Technologies["struct_Misc_Building_B_yup"] = new Technology("struct_Misc_Building_B_yup", false);
-        Technologies["struct_Radar_Outpost_A_yup"] = new Technology("struct_Radar_Outpost_A_yup", false);
-        Technologies["struct_Refinery_A_yup"] = new Technology("struct_Refinery_A_yup", false);
-        Technologies["struct_Research_Lab_A_yup"] = new Technology("struct_Research_Lab_A_yup", false);
-        Technologies["struct_Spaceport_A_yup"] = new Technology("struct_Spaceport_A_yup", false);
-        Technologies["struct_Turret_Gun_A_yup"] = new Technology("struct_Turret_Gun_A_yup", false);
-        Technologies["struct_Turret_Missile_A_yup"] = new Technology("struct_Turret_Missile_A_yup", false);
-        Technologies["struct_Wall_A_yup"] = new Technology("struct_Wall_A_yup", false);
+        Technologies["Barracks"] = new Technology("Barracks", false);
+        Technologies["Factory_Heavy"] = new Technology("Factory_Heavy", false);
+        Technologies["Factory_Light"] = new Technology("Factory_Light", false);
+        Technologies["Headquarters"] = new Technology("Headquarters", false);
+        Technologies["Misc_Building"] = new Technology("Misc_Building", false);
+        Technologies["Misc_Building"] = new Technology("Misc_Building", false);
+        Technologies["Radar_Outpost"] = new Technology("Radar_Outpost", false);
+        Technologies["Refinery"] = new Technology("Refinery", false);
+        Technologies["Research_Lab"] = new Technology("Research_Lab", false);
+        Technologies["Spaceport"] = new Technology("Spaceport", false);
+        Technologies["Turret_Gun"] = new Technology("Turret_Gun", false);
+        Technologies["Turret_Missile"] = new Technology("Turret_Missile", false);
+        Technologies["Wall"] = new Technology("Wall", false);
 
         // Units
-        Technologies["unit_Grav_Light_A_yup"] = new Technology("unit_Grav_Light_A_yup", false);
-        Technologies["unit_Harvester_A_yup"] = new Technology("unit_Harvester_A_yup", false);
-        Technologies["unit_Infantry_Light_B_yup"] = new Technology("unit_Infantry_Light_B_yup", false);
-        Technologies["unit_Quad_A_yup"] = new Technology("unit_Quad_A_yup", false);
-        Technologies["unit_Tank_Combat_A_yup"] = new Technology("unit_Tank_Combat_A_yup", false);
-        Technologies["unit_Tank_Missile_A_yup"] = new Technology("unit_Tank_Missile_A_yup", false);
-        Technologies["unit_Trike_A_yup"] = new Technology("unit_Trike_A_yup", false);
+        Technologies["Grav_Light"] = new Technology("Grav_Light", false);
+        Technologies["Harvester"] = new Technology("Harvester", false);
+        Technologies["Infantry_Light"] = new Technology("Infantry_Light", false);
+        Technologies["Quad"] = new Technology("Quad", false);
+        Technologies["Tank_Combat"] = new Technology("Tank_Combat", false);
+        Technologies["Tank_Missile"] = new Technology("Tank_Missile", false);
+        Technologies["Trike"] = new Technology("Trike", false);
 
         // Technologies
-        Technologies["Colonization"] = new Technology("Colonization", cost, true, new List<string> {
-            "struct_Barracks_A_yup",
-            "struct_Factory_Light_A_yup",
-            "struct_Headquarters_A_yup",
-            "struct_Misc_Building_A_yup",
-            "struct_Misc_Building_B_yup",
-            "struct_Refinery_A_yup",
-            "struct_Research_Lab_A_yup",
-        });
-
+        Technologies["Colonization"] = new Technology("Colonization", cost, true, new List<string> {"Barracks", "Factory_Light", "Headquarters", "Misc_Building", "Misc_Building", "Refinery", "Research_Lab" });
         Technologies["Heavy Industry"] = new Technology("Heavy Industry", cost, false, new List<string> {
-            "struct_Factory_Heavy_A_yup",
+            "Factory_Heavy",
         });
 
         Technologies["Radar"] = new Technology("Radar", cost, false, new List<string> {
-            "struct_Radar_Outpost_A_yup",
+            "Radar_Outpost",
         });
 
         Technologies["Space Travels"] = new Technology("Space Travels", cost, false, new List<string> {
-            "struct_Spaceport_A_yup",
+            "Spaceport",
         });
 
         Technologies["Static Defences"] = new Technology("Static Defences", cost, false, new List<string> {
-            "struct_Wall_A_yup",
+            "Wall",
         });
-
-        Technologies["Stationary Defences"] = new Technology("Stationary Defences", cost, false, new List<string> {
-            "struct_Turret_Gun_A_yup",
-            "struct_Turret_Missile_A_yup",
-        });
+        Technologies["Stationary Defences"] = new Technology("Stationary Defences", cost, false, new List<string> { "Turret_Gun", "Turret_Missile" });
 
         UpdateTechnologies();
     }
