@@ -1,7 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
-using UnityEngine.UIElements;
 
 public class HUD : MonoBehaviour
 {
@@ -30,7 +29,7 @@ public class HUD : MonoBehaviour
     {
         HashSet<MyGameObject> destroyed = new HashSet<MyGameObject>();
 
-        foreach (MyGameObject selected in Selected)
+        foreach (MyGameObject selected in ActivePlayer.Selected)
         {
             if (selected == null)
             {
@@ -38,9 +37,9 @@ public class HUD : MonoBehaviour
             }
         }
 
-        foreach (MyGameObject x in destroyed)
+        foreach (MyGameObject myGameObject in destroyed)
         {
-            Selected.Remove(x);
+            ActivePlayer.Selected.Remove(myGameObject);
         }
 
         UpdateMouse();
@@ -49,7 +48,7 @@ public class HUD : MonoBehaviour
 
     public void Assemble(string prefab)
     {
-        foreach (MyGameObject selected in Selected)
+        foreach (MyGameObject selected in ActivePlayer.Selected)
         {
             selected.Assemble(prefab);
         }
@@ -57,7 +56,7 @@ public class HUD : MonoBehaviour
 
     public void Destroy()
     {
-        foreach (MyGameObject selected in Selected)
+        foreach (MyGameObject selected in ActivePlayer.Selected)
         {
             if (IsMulti() == false)
             {
@@ -70,7 +69,7 @@ public class HUD : MonoBehaviour
 
     public void Explore()
     {
-        foreach (MyGameObject selected in Selected)
+        foreach (MyGameObject selected in ActivePlayer.Selected)
         {
             if (IsMulti() == false)
             {
@@ -83,7 +82,7 @@ public class HUD : MonoBehaviour
 
     public void Research()
     {
-        foreach (MyGameObject selected in Selected)
+        foreach (MyGameObject selected in ActivePlayer.Selected)
         {
             if (IsMulti() == false)
             {
@@ -96,7 +95,7 @@ public class HUD : MonoBehaviour
 
     public void Stop()
     {
-        foreach (MyGameObject selected in Selected)
+        foreach (MyGameObject selected in ActivePlayer.Selected)
         {
             if (IsMulti() == false)
             {
@@ -109,7 +108,7 @@ public class HUD : MonoBehaviour
 
     public void Wait()
     {
-        foreach (MyGameObject selected in Selected)
+        foreach (MyGameObject selected in ActivePlayer.Selected)
         {
             if (IsMulti() == false)
             {
@@ -122,7 +121,7 @@ public class HUD : MonoBehaviour
 
     private void Construct(Vector3 position)
     {
-        foreach (MyGameObject selected in Selected)
+        foreach (MyGameObject selected in ActivePlayer.Selected)
         {
             if (IsMulti() == false)
             {
@@ -178,7 +177,7 @@ public class HUD : MonoBehaviour
 
     private void IssueOrder(Vector3 position)
     {
-        foreach (MyGameObject selected in Selected)
+        foreach (MyGameObject selected in ActivePlayer.Selected)
         {
             if (IsMulti() == false)
             {
@@ -208,7 +207,7 @@ public class HUD : MonoBehaviour
 
     private void IssueOrder(MyGameObject myGameObject)
     {
-        foreach (MyGameObject selected in Selected)
+        foreach (MyGameObject selected in ActivePlayer.Selected)
         {
             if (IsMulti() == false)
             {
@@ -293,29 +292,29 @@ public class HUD : MonoBehaviour
         endPosition = Vector2.zero;
     }
 
-    private void Select(MyGameObject gameObject)
+    private void Select(MyGameObject myGameObject)
     {
         if (IsMulti() == false)
         {
-            foreach (MyGameObject selected in Selected)
+            foreach (MyGameObject selected in ActivePlayer.Selected)
             {
                 selected.Select(false);
             }
 
-            Selected.Clear();
+            ActivePlayer.Selected.Clear();
         }
 
-        if (gameObject != null)
+        if (gameObject != null && myGameObject.Player == ActivePlayer)
         {
-            if (IsMulti() && Selected.Contains(gameObject))
+            if (IsMulti() && ActivePlayer.Selected.Contains(myGameObject))
             {
-                gameObject.Select(false);
-                Selected.Remove(gameObject);
+                myGameObject.Select(false);
+                ActivePlayer.Selected.Remove(myGameObject);
             }
             else
             {
-                gameObject.Select(true);
-                Selected.Add(gameObject);
+                myGameObject.Select(true);
+                ActivePlayer.Selected.Add(myGameObject);
             }
         }
     }
@@ -324,22 +323,26 @@ public class HUD : MonoBehaviour
     {
         if (IsMulti() == false)
         {
-            foreach (MyGameObject selected in Selected)
+            foreach (MyGameObject selected in ActivePlayer.Selected)
             {
                 selected.Select(false);
             }
 
-            Selected.Clear();
+            ActivePlayer.Selected.Clear();
         }
 
-        foreach (MyGameObject i in GameObject.FindObjectsByType<MyGameObject>(FindObjectsSortMode.None)) // TODO: Not very efficient. Refactor into raycast.
+        foreach (MyGameObject myGameObject in GameObject.FindObjectsByType<MyGameObject>(FindObjectsSortMode.None)) // TODO: Not very efficient. Refactor into raycast.
         {
-            Vector3 screenPosition = Camera.main.WorldToScreenPoint(i.transform.position);
+            Vector3 screenPosition = Camera.main.WorldToScreenPoint(myGameObject.Position);
 
             if (selectionBox.Contains(screenPosition))
             {
-                i.Select(true);
-                Selected.Add(i);
+                if (myGameObject.Player == ActivePlayer)
+                {
+                    myGameObject.Select(true);
+
+                    ActivePlayer.Selected.Add(myGameObject);
+                }
             }
         }
     }
@@ -561,8 +564,6 @@ public class HUD : MonoBehaviour
     public string Technology { get; set; }
 
     public PrefabConstructionType PrefabConstructionType { get; set; }
-
-    public List<MyGameObject> Selected { get; } = new List<MyGameObject>();
 
     private bool drag = false;
 
