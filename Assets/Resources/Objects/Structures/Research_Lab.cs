@@ -7,11 +7,12 @@ public class Research_Lab : Structure
         Orders.AllowOrder(OrderType.Research);
 
         Orders.AllowTechnology("Colonization");
-        Orders.AllowTechnology("Heavy Industry");
+        Orders.AllowTechnology("Infantry");
+        Orders.AllowTechnology("Heavy_Industry");
         Orders.AllowTechnology("Radar");
-        Orders.AllowTechnology("Space Travels");
-        Orders.AllowTechnology("Static Defences");
-        Orders.AllowTechnology("Stationary Defences");
+        Orders.AllowTechnology("Space_Travels");
+        Orders.AllowTechnology("Static_Defences");
+        Orders.AllowTechnology("Stationary_Defences");
 
         Resources.Add("Crystal", 0, 80);
 

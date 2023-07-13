@@ -4,7 +4,7 @@ using System.IO;
 using UnityEngine;
 using UnityEngine.UIElements;
 
-public class GameMenu : MonoBehaviour
+public class GameMenu : Menu
 {
     public static GameMenu Instance { get; private set; }
 
@@ -29,11 +29,8 @@ public class GameMenu : MonoBehaviour
         infoPanel = rootVisualElement.Q<VisualElement>("InfoPanel");
 
         log = rootVisualElement.Q<Label>("Log");
-        order = rootVisualElement.Q<Label>("Order");
-        prefab = rootVisualElement.Q<Label>("Prefab");
-        selected = rootVisualElement.Q<Label>("Selected");
         info = rootVisualElement.Q<Label>("Info");
-        
+
         menu = rootVisualElement.Q<Button>("Menu");
         menu.RegisterCallback<ClickEvent>(ev => OnMenu());
 
@@ -50,10 +47,6 @@ public class GameMenu : MonoBehaviour
 
     private void Update()
     {
-        order.text = "Order: " + HUD.Instance.Order.ToString();
-        prefab.text = "Prefab: " + HUD.Instance.Prefab;
-        selected.text = "Selected: " + HUD.Instance.Selected.Count;
-
         if (HUD.Instance.Selected.Count > 0 && HUD.Instance.Selected[0] != null)
         {
             info.text = HUD.Instance.Selected[0].GetInfo();
@@ -232,7 +225,6 @@ public class GameMenu : MonoBehaviour
             if (ordersButtons.ContainsKey(i))
             {
                 ordersButtons[i].style.display = DisplayStyle.Flex;
-                ordersButtons[i].SetEnabled(true);
             }
         }
     }
@@ -263,13 +255,12 @@ public class GameMenu : MonoBehaviour
         {
             if (prefabsButtons.ContainsKey(i))
             {
-                string technologyName = i.Replace("Objects/Structures/", "").Replace("Objects/Units/", "");
-
-                if (HUD.Instance.ActivePlayer.TechnologyTree.IsUnlocked(technologyName))
-                {
-                    prefabsButtons[i].style.display = DisplayStyle.Flex;
-                    prefabsButtons[i].SetEnabled(true);
-                }
+                prefabsButtons[i].style.display = DisplayStyle.Flex;
+                prefabsButtons[i].SetEnabled(
+                    HUD.Instance.ActivePlayer.TechnologyTree.IsUnlocked(
+                        i.Replace("Objects/Structures/", "").Replace("Objects/Units/", "")
+                    )
+                );
             }
         }
     }
@@ -301,15 +292,9 @@ public class GameMenu : MonoBehaviour
             if (technologiesButtons.ContainsKey(i))
             {
                 technologiesButtons[i].style.display = DisplayStyle.Flex;
-
-                if (HUD.Instance.ActivePlayer.TechnologyTree.IsUnlocked(i))
-                {
-                    technologiesButtons[i].SetEnabled(false);
-                }
-                else
-                {
-                    technologiesButtons[i].SetEnabled(true);
-                }
+                technologiesButtons[i].SetEnabled(
+                    HUD.Instance.ActivePlayer.TechnologyTree.IsUnlocked(i)
+                );
             }
         }
     }
@@ -321,9 +306,6 @@ public class GameMenu : MonoBehaviour
     private VisualElement infoPanel;
 
     private Label log;
-    private Label order;
-    private Label prefab;
-    private Label selected;
     private Label info;
     private Button menu;
 
