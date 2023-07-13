@@ -192,7 +192,7 @@ public class MyGameObject : MonoBehaviour
         }
     }
 
-    public string GetInfo()
+    public string GetInfo(bool ally)
     {
         switch (State)
         {
@@ -213,7 +213,10 @@ public class MyGameObject : MonoBehaviour
             info += string.Format("\nReload: {0:0.}/{1:0.}", ReloadTimer.Current, ReloadTimer.Max);
         }
 
-        info += string.Format("\nResources:{0}\nOrders: {1}\nStats: {2}", Resources.GetInfo(), Orders.GetInfo(), Stats.GetInfo());
+        if (ally)
+        {
+            info += string.Format("\nResources:{0}\nOrders: {1}\nStats: {2}", Resources.GetInfo(), Orders.GetInfo(), Stats.GetInfo());
+        }
 
         return info;
     }
@@ -223,9 +226,19 @@ public class MyGameObject : MonoBehaviour
         return Game.Instance.Diplomacy[this.Player][myGameObject.Player] == DiplomacyState.Ally;
     }
 
+    public bool IsAlly(Player player)
+    {
+        return Game.Instance.Diplomacy[this.Player][player] == DiplomacyState.Ally;
+    }
+
     public bool IsEnemy(MyGameObject myGameObject)
     {
         return Game.Instance.Diplomacy[this.Player][myGameObject.Player] == DiplomacyState.Enemy;
+    }
+
+    public bool IsEnemy(Player player)
+    {
+        return Game.Instance.Diplomacy[this.Player][player] == DiplomacyState.Enemy;
     }
 
     public void OnDamage(float damage)
@@ -321,7 +334,7 @@ public class MyGameObject : MonoBehaviour
 
             if (selection && Player) // TODO: Fix.
             {
-                selection.GetComponent<SpriteRenderer>().sprite = Player.Selection;
+                selection.GetComponent<SpriteRenderer>().sprite = Player.SelectionSprite;
             }
         }
     }

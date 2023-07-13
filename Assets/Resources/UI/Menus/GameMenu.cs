@@ -52,19 +52,23 @@ public class GameMenu : Menu
 
         if (HUD.Instance.Hovered != null)
         {
-            info.text = HUD.Instance.Hovered.GetInfo();
+            bool ally = HUD.Instance.Hovered.IsAlly(activePlayer);
 
-            bottomPanel.style.display = DisplayStyle.Flex;
+            info.text = HUD.Instance.Hovered.GetInfo(ally);
+
+            bottomPanel.style.display = DisplayStyle.None;
             infoPanel.style.display = DisplayStyle.Flex;
 
-            UpdateOrders();
-            UpdatePrefabs();
-            UpdateTechnologies();
+            if (ally)
+            {
+                UpdateOrders();
+                UpdatePrefabs();
+                UpdateTechnologies();
+            }
         }
         else if (activePlayer.Selected.Count > 0 && activePlayer.Selected.First() != null)
         {
-            info.text = activePlayer.Selected.First().GetInfo();
-
+            info.text = activePlayer.Selected.First().GetInfo(true);
             bottomPanel.style.display = DisplayStyle.Flex;
             infoPanel.style.display = DisplayStyle.Flex;
 

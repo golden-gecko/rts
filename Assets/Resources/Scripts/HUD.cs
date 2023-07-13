@@ -304,7 +304,7 @@ public class HUD : MonoBehaviour
             ActivePlayer.Selected.Clear();
         }
 
-        if (gameObject != null && myGameObject.Player == ActivePlayer)
+        if (myGameObject != null && myGameObject.Player == ActivePlayer)
         {
             if (IsMulti() && ActivePlayer.Selected.Contains(myGameObject))
             {
@@ -363,6 +363,22 @@ public class HUD : MonoBehaviour
             else
             {
                 MainMenu.Instance.gameObject.SetActive(true);
+            }
+        }
+
+        for (KeyCode i = KeyCode.Alpha0; i < KeyCode.Alpha9; i++)
+        {
+            if ((Input.GetKey(KeyCode.LeftControl) || Input.GetKey(KeyCode.RightControl)) && Input.GetKeyDown(i))
+            {
+                ActivePlayer.AssignGroup(i);
+            }
+        }
+
+        for (KeyCode i = KeyCode.Alpha0; i < KeyCode.Alpha9; i++)
+        {
+            if (Input.GetKeyDown(i))
+            {
+                ActivePlayer.SelectGroup(i);
             }
         }
     }
