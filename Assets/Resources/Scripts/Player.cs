@@ -11,7 +11,7 @@ public class Player : MonoBehaviour
     [SerializeField]
     public Sprite Selection;
 
-    public List<MyGameObject> Selected { get; } = new List<MyGameObject>();
+    public HashSet<MyGameObject> Selected { get; } = new HashSet<MyGameObject>();
 
     public TechnologyTree TechnologyTree { get; } = new TechnologyTree();
 }

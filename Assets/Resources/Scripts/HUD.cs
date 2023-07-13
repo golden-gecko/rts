@@ -468,6 +468,24 @@ public class HUD : MonoBehaviour
                 Cursor.transform.position = hitInfo.point;
             }
         }
+
+        HoverOverObjects();
+    }
+
+    private void HoverOverObjects()
+    {
+        Hovered = null;
+        RaycastHit hitInfo;
+
+        if (Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out hitInfo))
+        {
+            MyGameObject myGameObject = hitInfo.transform.GetComponentInParent<MyGameObject>();
+
+            if (myGameObject != null)
+            {
+                Hovered = myGameObject;
+            }
+        }
     }
 
     private MyGameObject Cursor { get; set; }
@@ -564,6 +582,8 @@ public class HUD : MonoBehaviour
     public string Technology { get; set; }
 
     public PrefabConstructionType PrefabConstructionType { get; set; }
+
+    public MyGameObject Hovered { get; private set; }
 
     private bool drag = false;
 

@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.UIElements;
 
@@ -49,26 +50,32 @@ public class GameMenu : Menu
     {
         Player activePlayer = HUD.Instance.ActivePlayer;
 
-        if (activePlayer.Selected.Count > 0 && activePlayer.Selected[0] != null)
+        if (HUD.Instance.Hovered != null)
         {
-            info.text = activePlayer.Selected[0].GetInfo();
+            info.text = HUD.Instance.Hovered.GetInfo();
+
+            bottomPanel.style.display = DisplayStyle.Flex;
+            infoPanel.style.display = DisplayStyle.Flex;
+
+            UpdateOrders();
+            UpdatePrefabs();
+            UpdateTechnologies();
+        }
+        else if (activePlayer.Selected.Count > 0 && activePlayer.Selected.First() != null)
+        {
+            info.text = activePlayer.Selected.First().GetInfo();
+
+            bottomPanel.style.display = DisplayStyle.Flex;
+            infoPanel.style.display = DisplayStyle.Flex;
+
+            UpdateOrders();
+            UpdatePrefabs();
+            UpdateTechnologies();
         }
         else
         {
             info.text = string.Empty;
-        }
 
-        UpdateOrders();
-        UpdatePrefabs();
-        UpdateTechnologies();
-
-        if (activePlayer.Selected.Count > 0)
-        {
-            bottomPanel.style.display = DisplayStyle.Flex;
-            infoPanel.style.display = DisplayStyle.Flex;
-        }
-        else
-        {
             bottomPanel.style.display = DisplayStyle.None;
             infoPanel.style.display = DisplayStyle.None;
         }
