@@ -2,10 +2,9 @@ using System.Collections.Generic;
 
 public class Technology
 {
-    public Technology(string name, bool unlocked)
+    public Technology(string name)
     {
         Name = name;
-        Unlocked = unlocked;
     }
 
     public Technology(string name, Dictionary<string, int> cost, bool unlocked)
@@ -15,11 +14,10 @@ public class Technology
         Unlocked = unlocked;
     }
 
-    public Technology(string name, Dictionary<string, int> cost, bool unlocked, List<string> unlocks)
+    public Technology(string name, Dictionary<string, int> cost, HashSet<string> unlocks)
     {
         Name = name;
         Cost = cost;
-        Unlocked = unlocked;
         Unlocks = unlocks;
     }
 
@@ -29,5 +27,5 @@ public class Technology
 
     public bool Unlocked { get; set; } = false;
 
-    public List<string> Unlocks { get; } = new List<string>();
+    public HashSet<string> Unlocks { get; set; } = new HashSet<string>();
 }

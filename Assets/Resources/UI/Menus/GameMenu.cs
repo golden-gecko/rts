@@ -4,7 +4,7 @@ using System.IO;
 using UnityEngine;
 using UnityEngine.UIElements;
 
-public class GameMenu : MonoBehaviour
+public class GameMenu : Menu
 {
     public static GameMenu Instance { get; private set; }
 
@@ -29,11 +29,8 @@ public class GameMenu : MonoBehaviour
         infoPanel = rootVisualElement.Q<VisualElement>("InfoPanel");
 
         log = rootVisualElement.Q<Label>("Log");
-        order = rootVisualElement.Q<Label>("Order");
-        prefab = rootVisualElement.Q<Label>("Prefab");
-        selected = rootVisualElement.Q<Label>("Selected");
         info = rootVisualElement.Q<Label>("Info");
-        
+
         menu = rootVisualElement.Q<Button>("Menu");
         menu.RegisterCallback<ClickEvent>(ev => OnMenu());
 
@@ -50,10 +47,6 @@ public class GameMenu : MonoBehaviour
 
     private void Update()
     {
-        order.text = "Order: " + HUD.Instance.Order.ToString();
-        prefab.text = "Prefab: " + HUD.Instance.Prefab;
-        selected.text = "Selected: " + HUD.Instance.Selected.Count;
-
         if (HUD.Instance.Selected.Count > 0 && HUD.Instance.Selected[0] != null)
         {
             info.text = HUD.Instance.Selected[0].GetInfo();
@@ -120,51 +113,39 @@ public class GameMenu : MonoBehaviour
     {
         prefabs.Clear();
 
-        Dictionary<string, PrefabConstructionType> prefabList = new Dictionary<string, PrefabConstructionType>() // TODO: AssetDatabase does not work outside editor.
-        {
-            { "Objects/Structures/struct_Barracks_A_yup", PrefabConstructionType.Structure },
-            { "Objects/Structures/struct_Factory_Heavy_A_yup", PrefabConstructionType.Structure },
-            { "Objects/Structures/struct_Factory_Light_A_yup", PrefabConstructionType.Structure },
-            { "Objects/Structures/struct_Headquarters_A_yup", PrefabConstructionType.Structure },
-            { "Objects/Structures/struct_Misc_Building_B_yup", PrefabConstructionType.Structure },
-            { "Objects/Structures/struct_Radar_Outpost_A_yup", PrefabConstructionType.Structure },
-            { "Objects/Structures/struct_Refinery_A_yup", PrefabConstructionType.Structure },
-            { "Objects/Structures/struct_Research_Lab_A_yup", PrefabConstructionType.Structure },
-            { "Objects/Structures/struct_Spaceport_A_yup", PrefabConstructionType.Structure },
-            { "Objects/Structures/struct_Turret_Gun_A_yup", PrefabConstructionType.Structure },
-            { "Objects/Structures/struct_Turret_Missile_A_yup", PrefabConstructionType.Structure },
-            { "Objects/Structures/struct_Wall_A_yup", PrefabConstructionType.Structure },
-            { "Objects/Units/unit_Grav_Light_A_yup", PrefabConstructionType.Unit },
-            { "Objects/Units/unit_Harvester_A_yup", PrefabConstructionType.Unit },
-            { "Objects/Units/unit_Infantry_Light_B_yup", PrefabConstructionType.Unit },
-            { "Objects/Units/unit_Quad_A_yup", PrefabConstructionType.Unit },
-            { "Objects/Units/unit_Tank_Combat_A_yup", PrefabConstructionType.Unit },
-            { "Objects/Units/unit_Tank_Missile_A_yup", PrefabConstructionType.Unit },
-            { "Objects/Units/unit_Trike_A_yup", PrefabConstructionType.Unit },
-        };
+        MyGameObject[] structures = Resources.LoadAll<MyGameObject>("Objects/Structures");
+        MyGameObject[] units = Resources.LoadAll<MyGameObject>("Objects/Units");
 
-        foreach (KeyValuePair<string, PrefabConstructionType> i in prefabList)
+        foreach (MyGameObject myGameObject in structures)
         {
+            string path = "Objects/Structures/" + myGameObject.name;
+
             TemplateContainer buttonContainer = templateButton.Instantiate();
             Button button = buttonContainer.Q<Button>();
 
-            switch (i.Value)
-            {
-                case PrefabConstructionType.Structure:
-                    button.RegisterCallback<ClickEvent>(ev => OnConstruct(i.Key));
-                    break;
-
-                case PrefabConstructionType.Unit:
-                    button.RegisterCallback<ClickEvent>(ev => OnAssemble(i.Key));
-                    break;
-            }
-
+            button.RegisterCallback<ClickEvent>(ev => OnConstruct(path));
             button.style.display = DisplayStyle.None;
-            button.text = Path.GetFileName(i.Key).Replace("struct_", "").Replace("unit_", "").Replace("_A_yup", "").Replace("_B_yup", "").Replace("_", " "); // TODO: Rename prefabs.
-            button.userData = i;
+            button.text = Path.GetFileName(path).Replace("_", " ");
+            button.userData = path;
 
             prefabs.Add(buttonContainer);
-            prefabsButtons[i.Key] = button;
+            prefabsButtons[path] = button;
+        }
+
+        foreach (MyGameObject myGameObject in units)
+        {
+            string path = "Objects/Units/" + myGameObject.name;
+
+            TemplateContainer buttonContainer = templateButton.Instantiate();
+            Button button = buttonContainer.Q<Button>();
+
+            button.RegisterCallback<ClickEvent>(ev => OnAssemble(path));
+            button.style.display = DisplayStyle.None;
+            button.text = Path.GetFileName(path).Replace("_", " ");
+            button.userData = path;
+
+            prefabs.Add(buttonContainer);
+            prefabsButtons[path] = button;
         }
     }
 
@@ -244,7 +225,6 @@ public class GameMenu : MonoBehaviour
             if (ordersButtons.ContainsKey(i))
             {
                 ordersButtons[i].style.display = DisplayStyle.Flex;
-                ordersButtons[i].SetEnabled(true);
             }
         }
     }
@@ -275,13 +255,12 @@ public class GameMenu : MonoBehaviour
         {
             if (prefabsButtons.ContainsKey(i))
             {
-                string technologyName = i.Replace("Objects/Structures/", "").Replace("Objects/Units/", "");
-
-                if (HUD.Instance.ActivePlayer.TechnologyTree.IsUnlocked(technologyName))
-                {
-                    prefabsButtons[i].style.display = DisplayStyle.Flex;
-                    prefabsButtons[i].SetEnabled(true);
-                }
+                prefabsButtons[i].style.display = DisplayStyle.Flex;
+                prefabsButtons[i].SetEnabled(
+                    HUD.Instance.ActivePlayer.TechnologyTree.IsUnlocked(
+                        i.Replace("Objects/Structures/", "").Replace("Objects/Units/", "")
+                    )
+                );
             }
         }
     }
@@ -313,15 +292,9 @@ public class GameMenu : MonoBehaviour
             if (technologiesButtons.ContainsKey(i))
             {
                 technologiesButtons[i].style.display = DisplayStyle.Flex;
-
-                if (HUD.Instance.ActivePlayer.TechnologyTree.IsUnlocked(i))
-                {
-                    technologiesButtons[i].SetEnabled(false);
-                }
-                else
-                {
-                    technologiesButtons[i].SetEnabled(true);
-                }
+                technologiesButtons[i].SetEnabled(
+                    HUD.Instance.ActivePlayer.TechnologyTree.IsUnlocked(i)
+                );
             }
         }
     }
@@ -333,9 +306,6 @@ public class GameMenu : MonoBehaviour
     private VisualElement infoPanel;
 
     private Label log;
-    private Label order;
-    private Label prefab;
-    private Label selected;
     private Label info;
     private Button menu;
 
