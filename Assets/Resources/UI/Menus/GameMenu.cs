@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UIElements;
 
@@ -140,7 +139,7 @@ public class GameMenu : MonoBehaviour
             prefabsButtons[path] = button;
         }
 
-        foreach (MyGameObject myGameObject in structures)
+        foreach (MyGameObject myGameObject in units)
         {
             string path = "Objects/Units/" + myGameObject.name;
 
