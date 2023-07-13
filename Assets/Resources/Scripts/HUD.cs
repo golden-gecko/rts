@@ -528,7 +528,7 @@ public class HUD : MonoBehaviour
                 GameObject.Destroy(Cursor.gameObject);
             }
 
-            if (prefab.Equals(string.Empty) == false && PrefabConstructionType == PrefabConstructionType.Structure)
+            if (prefab.Equals(string.Empty) == false)
             {
                 MyGameObject resource = Resources.Load<MyGameObject>(Prefab);
                 MyGameObject myGameObject = Instantiate<MyGameObject>(resource, Vector3.zero, Quaternion.identity);

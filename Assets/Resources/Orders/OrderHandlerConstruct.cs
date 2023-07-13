@@ -17,6 +17,7 @@ public class OrderHandlerConstruct : IOrderHandler
             order.TargetGameObject = Object.Instantiate<MyGameObject>(resource, order.TargetPosition, Quaternion.identity);
             order.TargetGameObject.Player = myGameObject.Player;
             order.TargetGameObject.State = MyGameObjectState.UnderConstruction;
+            order.TargetGameObject.UpdateSelection(); // TODO: Remove.
         }
         else if (order.TargetGameObject.Constructed)
         {

@@ -15,7 +15,7 @@ public class OrderHandlerMove : IOrderHandler
         float distanceToTarget = (target - position).magnitude;
         float distanceToTravel = myGameObject.Speed * Time.deltaTime;
 
-        if (distanceToTarget > distanceToTravel)
+        if (distanceToTarget > distanceToTravel) // TODO: Add range to this order so units can stop when target is in their range.
         {
             myGameObject.transform.LookAt(new Vector3(target.x, myGameObject.Position.y, target.z));
             myGameObject.transform.Translate(Vector3.forward * distanceToTravel);
@@ -23,7 +23,7 @@ public class OrderHandlerMove : IOrderHandler
         }
         else
         {
-            myGameObject.transform.position = target; // TODO: Create setter.
+            myGameObject.Position = target;
             myGameObject.Stats.Add(Stats.DistanceDriven, distanceToTarget);
             myGameObject.Stats.Add(Stats.OrdersExecuted, 1);
             myGameObject.Orders.Pop();

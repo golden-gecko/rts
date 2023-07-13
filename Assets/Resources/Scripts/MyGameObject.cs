@@ -40,17 +40,7 @@ public class MyGameObject : MonoBehaviour
     {
         RallyPoint = Exit;
 
-        Transform visual = transform.Find("Visual");
-        
-        if (visual)
-        {
-            Transform selection = visual.Find("Selection");
-
-            if (selection)
-            {
-                selection.GetComponent<SpriteRenderer>().sprite = Player.Selection;
-            }
-        }
+        UpdateSelection();
     }
 
     protected virtual void Update()
@@ -321,6 +311,21 @@ public class MyGameObject : MonoBehaviour
         return radiusMin <= magnitude && magnitude <= radiusMax;
     }
 
+    public void UpdateSelection()
+    {
+        Transform visual = transform.Find("Visual");
+
+        if (visual)
+        {
+            Transform selection = visual.Find("Selection");
+
+            if (selection && Player) // TODO: Fix.
+            {
+                selection.GetComponent<SpriteRenderer>().sprite = Player.Selection;
+            }
+        }
+    }
+
     private void Reload()
     {
         if (ReloadTimer != null)
@@ -338,7 +343,7 @@ public class MyGameObject : MonoBehaviour
         {
             if (hitInfo.transform.tag == "Terrain")
             {
-                transform.position = new Vector3(transform.position.x, hitInfo.point.y, transform.position.z);
+                Position = new Vector3(transform.position.x, hitInfo.point.y, transform.position.z);
             }
         }
     }

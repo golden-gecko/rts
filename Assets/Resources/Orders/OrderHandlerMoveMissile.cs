@@ -29,7 +29,7 @@ public class OrderHandlerMoveMissile : IOrderHandler
         }
         else
         {
-            myGameObject.transform.position = target;
+            myGameObject.Position = target;
             myGameObject.Stats.Add(Stats.DistanceDriven, distanceToTarget);
             myGameObject.Stats.Add(Stats.OrdersExecuted, 1);
 

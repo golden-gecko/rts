@@ -38,7 +38,7 @@ public class Missile : MyGameObject
         {
             if (hitInfo.transform.tag == "Terrain")
             {
-                transform.position = new Vector3(transform.position.x, hitInfo.point.y + 0.1f, transform.position.z);
+                Position = new Vector3(transform.position.x, hitInfo.point.y + 0.1f, transform.position.z);
             }
         }
     }
