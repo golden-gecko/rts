@@ -25,7 +25,7 @@ public class Player : MonoBehaviour
     {
         if (Groups.ContainsKey(keyCode))
         {
-            if (HUD.Instance.IsMulti() == false)
+            if (HUD.Instance.IsShift() == false)
             {
                 foreach (MyGameObject myGameObject in Selected)
                 {
