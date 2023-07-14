@@ -154,15 +154,6 @@ public class Order
         };
     }
 
-    public static Order Repair(MyGameObject myGameObject)
-    {
-        return new Order
-        {
-            Type = OrderType.Repair,
-            TargetGameObject = myGameObject,
-        };
-    }
-
     public static Order Stop()
     {
         return new Order

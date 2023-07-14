@@ -11,7 +11,7 @@ public class OrderHandlerAssemble : IOrderHandler
         {
             MyGameObject resource = Resources.Load<MyGameObject>(order.Prefab);
 
-            order.TargetGameObject = Object.Instantiate<MyGameObject>(resource, myGameObject.Exit, Quaternion.identity);
+            order.TargetGameObject = Object.Instantiate(resource, myGameObject.Exit, Quaternion.identity);
             order.TargetGameObject.Player = myGameObject.Player;
             order.TargetGameObject.State = MyGameObjectState.UnderAssembly;
             order.TargetGameObject.UpdateSelection(); // TODO: Remove.

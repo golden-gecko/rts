@@ -170,7 +170,7 @@ public class HUD : MonoBehaviour
         boxVisual.sizeDelta = boxSize;
     }
 
-    private bool IsMulti()
+    public bool IsMulti()
     {
         return Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift);
     }
@@ -242,22 +242,37 @@ public class HUD : MonoBehaviour
         }
     }
 
+    private bool MouseToRaycast(out RaycastHit hitInfo)
+    {
+        return Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out hitInfo);
+    }
+
+    private bool MouseToRaycastTerrain(out RaycastHit hitInfo)
+    {
+        return Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out hitInfo, Config.MaxRaycastDistance, LayerMask.GetMask("Terrain"));
+    }
+
+    public bool GeTerrainPosition(Vector3 position, out RaycastHit hitInfo) // TODO: Create terrain class.
+    {
+        return Physics.Raycast(new Ray(position + Vector3.up * Config.MaxTerrainHeight, Vector3.down), out hitInfo, Config.MaxRaycastDistance, LayerMask.GetMask("Terrain"));
+    }
+
     private void ProcessOrder()
     {
         RaycastHit hitInfo;
 
-        if (Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out hitInfo))
+        if (MouseToRaycast(out hitInfo))
         {
             if (Order == OrderType.Construct)
             {
-                if (hitInfo.transform.tag == "Terrain")
+                if (hitInfo.transform.CompareTag("Terrain"))
                 {
                     Construct(hitInfo.point);
                 }
             }
             else
             {
-                if (hitInfo.transform.tag == "Terrain")
+                if (hitInfo.transform.CompareTag("Terrain"))
                 {
                     IssueOrder(hitInfo.point);
                 }
@@ -273,9 +288,9 @@ public class HUD : MonoBehaviour
     {
         RaycastHit hitInfo;
 
-        if (Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out hitInfo))
+        if (MouseToRaycast(out hitInfo))
         {
-            if (hitInfo.transform.tag == "Terrain")
+            if (hitInfo.transform.CompareTag("Terrain"))
             {
                 Select(null);
             }
@@ -349,11 +364,14 @@ public class HUD : MonoBehaviour
 
     private void UpdateKeyboard()
     {
+        // Close application.
         if (Input.GetKeyDown(KeyCode.Escape))
         {
             Application.Quit();
         }
-        else if (Input.GetKeyDown(KeyCode.F10))
+        
+        // Show menu.
+        if (Input.GetKeyDown(KeyCode.F10))
         {
             if (MainMenu.Instance.gameObject.activeInHierarchy || SceneMenu.Instance.gameObject.activeInHierarchy)
             {
@@ -366,14 +384,16 @@ public class HUD : MonoBehaviour
             }
         }
 
+        // Create selection groups.
         for (KeyCode i = KeyCode.Alpha0; i < KeyCode.Alpha9; i++)
         {
-            if ((Input.GetKey(KeyCode.LeftControl) || Input.GetKey(KeyCode.RightControl)) && Input.GetKeyDown(i))
+            if (IsControl() && Input.GetKeyDown(i))
             {
                 ActivePlayer.AssignGroup(i);
             }
         }
 
+        // Activate selection groups.
         for (KeyCode i = KeyCode.Alpha0; i < KeyCode.Alpha9; i++)
         {
             if (Input.GetKeyDown(i))
@@ -381,6 +401,11 @@ public class HUD : MonoBehaviour
                 ActivePlayer.SelectGroup(i);
             }
         }
+    }
+
+    private bool IsControl()
+    {
+        return Input.GetKey(KeyCode.LeftControl) || Input.GetKey(KeyCode.RightControl);
     }
 
     private void UpdateMouse()
@@ -477,9 +502,8 @@ public class HUD : MonoBehaviour
         if (Cursor != null)
         {
             RaycastHit hitInfo;
-            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 
-            if (Physics.Raycast(ray, out hitInfo, 2000, LayerMask.GetMask("Terrain")))
+            if (MouseToRaycastTerrain(out hitInfo))
             {
                 Cursor.transform.position = hitInfo.point;
             }
@@ -490,17 +514,15 @@ public class HUD : MonoBehaviour
 
     private void HoverOverObjects()
     {
-        Hovered = null;
         RaycastHit hitInfo;
 
-        if (Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out hitInfo))
+        if (MouseToRaycast(out hitInfo))
         {
-            MyGameObject myGameObject = hitInfo.transform.GetComponentInParent<MyGameObject>();
-
-            if (myGameObject != null)
-            {
-                Hovered = myGameObject;
-            }
+            Hovered = hitInfo.transform.GetComponentInParent<MyGameObject>();
+        }
+        else
+        {
+            Hovered = null;
         }
     }
 

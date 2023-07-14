@@ -5,6 +5,12 @@ public class MyGameObject : MonoBehaviour
 {
     protected virtual void Awake()
     {
+        Transform visual = transform.Find("Visual");
+
+        rangeMissile = visual.transform.Find("Range_Missile");
+        rangeVisibility = visual.transform.Find("Range_Visibility");
+        selection = visual.transform.Find("Selection");
+
         Orders.AllowOrder(OrderType.Destroy);
         Orders.AllowOrder(OrderType.Idle);
         Orders.AllowOrder(OrderType.Stop);
@@ -20,7 +26,6 @@ public class MyGameObject : MonoBehaviour
         OrderHandlers[OrderType.Patrol] = new OrderHandlerPatrol();
         OrderHandlers[OrderType.Produce] = new OrderHandlerProduce();
         OrderHandlers[OrderType.Rally] = new OrderHandlerRally();
-        OrderHandlers[OrderType.Repair] = new OrderHandlerRepair();
         OrderHandlers[OrderType.Research] = new OrderHandlerResearch();
         OrderHandlers[OrderType.Stop] = new OrderHandlerStop();
         OrderHandlers[OrderType.Transport] = new OrderHandlerTransport();
@@ -250,38 +255,17 @@ public class MyGameObject : MonoBehaviour
 
     public void Select(bool status)
     {
-        Transform visual = transform.Find("Visual");
+        Vector3 scale = transform.localScale;
+        Vector3 size = GetComponent<BoxCollider>().size;
 
-        if (visual)
-        {
-            Transform rangeMissile = visual.transform.Find("Range_Missile");
-            Transform rangeVisibility = visual.transform.Find("Range_Visibility");
-            Transform selection = visual.transform.Find("Selection");
+        rangeMissile.gameObject.SetActive(status);
+        rangeMissile.localScale = new Vector3(MissileRange * 2.0f / scale.x, MissileRange * 2.0f / scale.z, 1.0f);
 
-            if (rangeMissile)
-            {
-                Vector3 scale = transform.localScale;
+        rangeVisibility.gameObject.SetActive(status);
+        rangeVisibility.localScale = new Vector3(VisibilityRange * 2.0f / scale.x, VisibilityRange * 2.0f / scale.z, 1.0f);
 
-                rangeMissile.gameObject.SetActive(status);
-                rangeMissile.localScale = new Vector3(MissileRange * 2.0f / scale.x, MissileRange * 2.0f / scale.z, 1.0f); // TODO: Why y and z are replaced?
-            }
-
-            if (rangeVisibility)
-            {
-                Vector3 scale = transform.localScale;
-
-                rangeVisibility.gameObject.SetActive(status);
-                rangeVisibility.localScale = new Vector3(VisibilityRange * 2.0f / scale.x, VisibilityRange * 2.0f / scale.z, 1.0f); // TODO: Why y and z are replaced?
-            }
-
-            if (selection)
-            {
-                Vector3 size = GetComponent<BoxCollider>().size; // TODO: Add check.
-
-                selection.gameObject.SetActive(status);
-                selection.localScale = new Vector3(size.x * 1.1f, size.z * 1.1f, 1.0f); // TODO: Why y and z are replaced?
-            }
-        }
+        selection.gameObject.SetActive(status);
+        selection.localScale = new Vector3(size.x * 1.1f, size.z * 1.1f, 1.0f);
     }
 
     public void MoveResources(MyGameObject source, MyGameObject target, Dictionary<string, int> resources)
@@ -306,12 +290,22 @@ public class MyGameObject : MonoBehaviour
         return IsInRange(position, 0.0f, 1.0f);
     }
 
-    public bool IsInRange(Vector3 position, float radiusMax)
+    public bool IsInAttackRange(Vector3 position)
+    {
+        return IsInRange(position, MissileRange);
+    }
+
+    public bool IsInVisibilityRange(Vector3 position)
+    {
+        return IsInRange(position, VisibilityRange);
+    }
+
+    private bool IsInRange(Vector3 position, float radiusMax)
     {
         return IsInRange(position, 0.0f, radiusMax);
     }
 
-    public bool IsInRange(Vector3 position, float radiusMin, float radiusMax)
+    private bool IsInRange(Vector3 position, float radiusMin, float radiusMax)
     {
         Vector3 a = position;
         Vector3 b = Position;
@@ -326,16 +320,9 @@ public class MyGameObject : MonoBehaviour
 
     public void UpdateSelection()
     {
-        Transform visual = transform.Find("Visual");
-
-        if (visual)
+        if (Player) // TODO: Fix.
         {
-            Transform selection = visual.Find("Selection");
-
-            if (selection && Player) // TODO: Fix.
-            {
-                selection.GetComponent<SpriteRenderer>().sprite = Player.SelectionSprite;
-            }
+            selection.GetComponent<SpriteRenderer>().sprite = Player.SelectionSprite;
         }
     }
 
@@ -354,7 +341,7 @@ public class MyGameObject : MonoBehaviour
 
         if (Physics.Raycast(ray, out hitInfo, 2000, LayerMask.GetMask("Terrain")))
         {
-            if (hitInfo.transform.tag == "Terrain")
+            if (hitInfo.transform.CompareTag("Terrain"))
             {
                 Position = new Vector3(transform.position.x, hitInfo.point.y, transform.position.z);
             }
@@ -471,11 +458,13 @@ public class MyGameObject : MonoBehaviour
 
     public float MaxHealth { get; protected set; } = 10.0f;
 
-    public float LoadTime { get; protected set; } = 10.0f;
+    public float GatherTime { get; protected set; } = 2.0f;
 
-    public float ProduceTime { get; protected set; } = 10.0f;
+    public float LoadTime { get; protected set; } = 2.0f;
 
-    public float ResearchTime { get; protected set; } = 10.0f;
+    public float ProduceTime { get; protected set; } = 2.0f;
+
+    public float ResearchTime { get; protected set; } = 2.0f;
 
     public float Speed { get; protected set; } = 10.0f;
 
@@ -510,4 +499,8 @@ public class MyGameObject : MonoBehaviour
     public MyGameObject Parent { get; set; }
 
     protected Dictionary<OrderType, IOrderHandler> OrderHandlers { get; set; } = new Dictionary<OrderType, IOrderHandler>();
+
+    private Transform rangeMissile;
+    private Transform rangeVisibility;
+    private Transform selection;
 }

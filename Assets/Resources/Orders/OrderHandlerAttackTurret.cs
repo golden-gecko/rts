@@ -28,14 +28,14 @@ public class OrderHandlerAttackTurret : IOrderHandler
             position = order.TargetPosition;
         }
 
-        if (myGameObject.IsInRange(position, myGameObject.MissileRange))
+        if (myGameObject.IsInAttackRange(position))
         {
             myGameObject.transform.LookAt(new Vector3(position.x, myGameObject.Position.y, position.z));
 
             if (myGameObject.ReloadTimer.Finished)
             {
                 MyGameObject resource = Resources.Load<MyGameObject>(myGameObject.MissilePrefab);
-                MyGameObject missile = Object.Instantiate<MyGameObject>(resource, myGameObject.Position, Quaternion.identity);
+                MyGameObject missile = Object.Instantiate(resource, myGameObject.Position, Quaternion.identity);
 
                 missile.Parent = myGameObject;
                 missile.Player = myGameObject.Player;

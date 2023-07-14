@@ -56,25 +56,30 @@ public class GameMenu : Menu
 
             info.text = HUD.Instance.Hovered.GetInfo(ally);
 
-            bottomPanel.style.display = DisplayStyle.None;
+            if (ally)
+            {
+                bottomPanel.style.display = DisplayStyle.Flex;
+            }
+
             infoPanel.style.display = DisplayStyle.Flex;
 
             if (ally)
             {
-                UpdateOrders();
-                UpdatePrefabs();
-                UpdateTechnologies();
+                UpdateOrders(HUD.Instance.Hovered);
+                UpdatePrefabs(HUD.Instance.Hovered);
+                UpdateTechnologies(HUD.Instance.Hovered);
             }
         }
         else if (activePlayer.Selected.Count > 0 && activePlayer.Selected.First() != null)
         {
             info.text = activePlayer.Selected.First().GetInfo(true);
+
             bottomPanel.style.display = DisplayStyle.Flex;
             infoPanel.style.display = DisplayStyle.Flex;
 
-            UpdateOrders();
-            UpdatePrefabs();
-            UpdateTechnologies();
+            UpdateOrders(null);
+            UpdatePrefabs(null);
+            UpdateTechnologies(null);
         }
         else
         {
@@ -214,18 +219,28 @@ public class GameMenu : Menu
         HUD.Instance.Prefab = string.Empty;
     }
 
-    private void UpdateOrders()
+    private void UpdateOrders(MyGameObject hovered)
     {
         HashSet<OrderType> whitelist = new HashSet<OrderType>();
 
-        foreach (MyGameObject selected in HUD.Instance.ActivePlayer.Selected)
+        if (hovered != null)
         {
-            if (selected.State != MyGameObjectState.Operational)
+            if (hovered.State == MyGameObjectState.Operational)
             {
-                continue;
+                whitelist = new HashSet<OrderType>(hovered.Orders.OrderWhitelist);
             }
+        }
+        else
+        {
+            foreach (MyGameObject selected in HUD.Instance.ActivePlayer.Selected)
+            {
+                if (selected.State != MyGameObjectState.Operational)
+                {
+                    continue;
+                }
 
-            whitelist.UnionWith(selected.Orders.OrderWhitelist);
+                whitelist.UnionWith(selected.Orders.OrderWhitelist);
+            }
         }
 
         foreach (KeyValuePair<OrderType, Button> button in ordersButtons)
@@ -242,20 +257,30 @@ public class GameMenu : Menu
         }
     }
 
-    private void UpdatePrefabs()
+    private void UpdatePrefabs(MyGameObject hovered)
     {
         HashSet<string> whitelist = new HashSet<string>();
 
-        foreach (MyGameObject selected in HUD.Instance.ActivePlayer.Selected)
+        if (hovered != null)
         {
-            if (selected.State != MyGameObjectState.Operational)
+            if (hovered.State == MyGameObjectState.Operational)
             {
-                continue;
+                whitelist = new HashSet<string>(hovered.Orders.PrefabWhitelist);
             }
-
-            foreach (string prefab in selected.Orders.PrefabWhitelist)
+        }
+        else
+        {
+            foreach (MyGameObject selected in HUD.Instance.ActivePlayer.Selected)
             {
-                whitelist.Add(prefab);
+                if (selected.State != MyGameObjectState.Operational)
+                {
+                    continue;
+                }
+
+                foreach (string prefab in selected.Orders.PrefabWhitelist)
+                {
+                    whitelist.Add(prefab);
+                }
             }
         }
 
@@ -278,20 +303,30 @@ public class GameMenu : Menu
         }
     }
 
-    private void UpdateTechnologies()
+    private void UpdateTechnologies(MyGameObject hovered)
     {
         HashSet<string> whitelist = new HashSet<string>();
 
-        foreach (MyGameObject selected in HUD.Instance.ActivePlayer.Selected)
+        if (hovered != null)
         {
-            if (selected.State != MyGameObjectState.Operational)
+            if (hovered.State == MyGameObjectState.Operational)
             {
-                continue;
+                whitelist = new HashSet<string>(hovered.Orders.TechnologyWhitelist);
             }
-
-            foreach (string prefab in selected.Orders.TechnologyWhitelist)
+        }
+        else
+        {
+            foreach (MyGameObject selected in HUD.Instance.ActivePlayer.Selected)
             {
-                whitelist.Add(prefab);
+                if (selected.State != MyGameObjectState.Operational)
+                {
+                    continue;
+                }
+
+                foreach (string prefab in selected.Orders.TechnologyWhitelist)
+                {
+                    whitelist.Add(prefab);
+                }
             }
         }
 
@@ -306,7 +341,7 @@ public class GameMenu : Menu
             {
                 technologiesButtons[i].style.display = DisplayStyle.Flex;
                 technologiesButtons[i].SetEnabled(
-                    HUD.Instance.ActivePlayer.TechnologyTree.IsUnlocked(i)
+                    !HUD.Instance.ActivePlayer.TechnologyTree.IsUnlocked(i)
                 );
             }
         }
