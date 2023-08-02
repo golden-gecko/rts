@@ -46,7 +46,7 @@ public class Game : MonoBehaviour
 
     public Order CreataAttackJob(MyGameObject myGameObject)
     {
-        foreach (MyGameObject target in GameObject.FindObjectsByType<MyGameObject>(FindObjectsSortMode.None)) // TODO: Optimize.
+        foreach (MyGameObject target in GameObject.FindObjectsByType<MyGameObject>(FindObjectsSortMode.None)) // TODO: Return closest object.
         {
             if (myGameObject.IsInAttackRange(target.Position) && myGameObject.IsEnemy(target) && target.GetComponent<Missile>() == null) // TODO: Better way of checking object type?
             {
@@ -59,7 +59,7 @@ public class Game : MonoBehaviour
 
     public Order CreateOrderConstruction(MyGameObject myGameObject)
     {
-        foreach (MyGameObject underConstruction in GameObject.FindObjectsByType<MyGameObject>(FindObjectsSortMode.None)) // TODO: Optimize.
+        foreach (MyGameObject underConstruction in GameObject.FindObjectsByType<MyGameObject>(FindObjectsSortMode.None)) // TODO: Return closest object.
         {
             if (underConstruction.Player != this)
             {
@@ -79,7 +79,7 @@ public class Game : MonoBehaviour
 
     public Order CreateOrderTransport(MyGameObject myGameObject)
     {
-        foreach (ConsumerProducerRequest producer in Producers[myGameObject.Player].Items)
+        foreach (ConsumerProducerRequest producer in Producers[myGameObject.Player].Items) // TODO: Return closest object.
         {
             foreach (ConsumerProducerRequest consumer in Consumers[myGameObject.Player].Items)
             {
@@ -110,69 +110,60 @@ public class Game : MonoBehaviour
 
     public void RegisterConsumer(MyGameObject myGameObject, string name, int value)
     {
-        Player[] players = GameObject.Find("Players").GetComponentsInChildren<Player>();
-
-        if (myGameObject.Player.Gatherable)
-        {
-            foreach (Player player in players)
-            {
-                Consumers[player].Add(myGameObject, name, value);
-            }
-        }
-        else
-        {
-            Consumers[myGameObject.Player].Add(myGameObject, name, value);
-        }
+        Register(Consumers, myGameObject, name, value);
     }
 
     public void UnregisterConsumer(MyGameObject myGameObject, string name)
     {
-        Player[] players = GameObject.Find("Players").GetComponentsInChildren<Player>();
-
-        if (myGameObject.Player.Gatherable)
-        {
-            foreach (Player player in players)
-            {
-                Consumers[player].Remove(myGameObject, name);
-            }
-        }
-        else
-        {
-            Consumers[myGameObject.Player].Remove(myGameObject, name);
-        }
+        Unregister(Consumers, myGameObject, name);
     }
 
     public void RegisterProducer(MyGameObject myGameObject, string name, int value)
     {
-        Player[] players = GameObject.Find("Players").GetComponentsInChildren<Player>();
-
-        if (myGameObject.Player.Gatherable)
-        {
-            foreach (Player player in players)
-            {
-                Producers[player].Add(myGameObject, name, value);
-            }
-        }
-        else
-        {
-            Producers[myGameObject.Player].Add(myGameObject, name, value);
-        }
+        Register(Producers, myGameObject, name, value);
     }
 
     public void UnregisterProducer(MyGameObject myGameObject, string name)
     {
-        Player[] players = GameObject.Find("Players").GetComponentsInChildren<Player>();
+        Unregister(Producers, myGameObject, name);
+    }
+
+    private Player[] GetPlayers()
+    {
+        return GameObject.Find("Players").GetComponentsInChildren<Player>();
+    }
+
+    private void Register(Dictionary<Player, ConsumerProducerContainer> container, MyGameObject myGameObject, string name, int value)
+    {
+        Player[] players = GetPlayers();
 
         if (myGameObject.Player.Gatherable)
         {
             foreach (Player player in players)
             {
-                Producers[player].Remove(myGameObject, name);
+                container[player].Add(myGameObject, name, value);
             }
         }
         else
         {
-            Producers[myGameObject.Player].Remove(myGameObject, name);
+            container[myGameObject.Player].Add(myGameObject, name, value);
+        }
+    }
+
+    private void Unregister(Dictionary<Player, ConsumerProducerContainer> container, MyGameObject myGameObject, string name)
+    {
+        Player[] players = GetPlayers();
+
+        if (myGameObject.Player.Gatherable)
+        {
+            foreach (Player player in players)
+            {
+                container[player].Remove(myGameObject, name);
+            }
+        }
+        else
+        {
+            container[myGameObject.Player].Remove(myGameObject, name);
         }
     }
 
