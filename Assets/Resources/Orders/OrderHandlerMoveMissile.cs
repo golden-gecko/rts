@@ -18,10 +18,13 @@ public class OrderHandlerMoveMissile : IOrderHandler
             target = order.TargetPosition;
         }
 
+        target.y = 0;
+        position.y = 0;
+
         float distanceToTarget = (target - position).magnitude;
         float distanceToTravel = myGameObject.Speed * Time.deltaTime;
 
-        if (distanceToTarget > distanceToTravel)
+        if (distanceToTarget > distanceToTravel) // TODO: Add range to this order so units can stop when target is in their range.
         {
             myGameObject.transform.LookAt(new Vector3(target.x, myGameObject.transform.position.y, target.z));
             myGameObject.transform.Translate(Vector3.forward * distanceToTravel);

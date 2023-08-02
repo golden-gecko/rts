@@ -228,22 +228,22 @@ public class MyGameObject : MonoBehaviour
 
     public bool IsAlly(MyGameObject myGameObject)
     {
-        return Game.Instance.Diplomacy[this.Player][myGameObject.Player] == DiplomacyState.Ally;
-    }
-
-    public bool IsAlly(Player player)
-    {
-        return Game.Instance.Diplomacy[this.Player][player] == DiplomacyState.Ally;
+        return Player.IsAlly(myGameObject.Player);
     }
 
     public bool IsEnemy(MyGameObject myGameObject)
     {
-        return Game.Instance.Diplomacy[this.Player][myGameObject.Player] == DiplomacyState.Enemy;
+        return Player.IsEnemy(myGameObject.Player);
+    }
+
+    public bool IsAlly(Player player)
+    {
+        return Player.IsAlly(player);
     }
 
     public bool IsEnemy(Player player)
     {
-        return Game.Instance.Diplomacy[this.Player][player] == DiplomacyState.Enemy;
+        return Player.IsEnemy(player);
     }
 
     public void OnDamage(float damage)
