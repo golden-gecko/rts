@@ -148,9 +148,9 @@ public class MyGameObject : MonoBehaviour
         Orders.Add(Order.Patrol(position));
     }
 
-    public void Produce()
+    public void Produce(string recipe)
     {
-        Orders.Add(Order.Produce(ProduceTime));
+        Orders.Add(Order.Produce(recipe, ProduceTime));
     }
 
     public void Rally(Vector3 target, int priority = -1)

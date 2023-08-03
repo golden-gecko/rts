@@ -9,7 +9,6 @@ public class Missile : MyGameObject
         Orders.AllowOrder(OrderType.Move);
 
         OrderHandlers[OrderType.Destroy] = new OrderHandlerDestroyMissile();
-        OrderHandlers[OrderType.Move] = new OrderHandlerMoveMissile();
 
         Health = 1.0f;
         MaxHealth = 1.0f;

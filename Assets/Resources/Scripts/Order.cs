@@ -126,11 +126,12 @@ public class Order
         };
     }
 
-    public static Order Produce(float time) // TODO: Add recipe name.
+    public static Order Produce(string recipe, float time)
     {
         return new Order
         {
             Type = OrderType.Produce,
+            Recipe = recipe,
             Timer = new Timer(time),
         };
     }
@@ -245,4 +246,6 @@ public class Order
     public OrderType Type { get; private set; }
 
     public string Technology { get; private set; }
+
+    public string Recipe { get; private set; }
 }

@@ -244,12 +244,7 @@ public class HUD : MonoBehaviour
 
     private bool MouseToRaycastTerrain(out RaycastHit hitInfo)
     {
-        return Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out hitInfo, Config.MaxRaycastDistance, LayerMask.GetMask("Terrain"));
-    }
-
-    public bool GeTerrainPosition(Vector3 position, out RaycastHit hitInfo) // TODO: Create terrain class.
-    {
-        return Physics.Raycast(new Ray(position + Vector3.up * Config.MaxTerrainHeight, Vector3.down), out hitInfo, Config.MaxRaycastDistance, LayerMask.GetMask("Terrain"));
+        return Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out hitInfo, Config.RaycastMaxDistance, LayerMask.GetMask("Terrain"));
     }
 
     private void ProcessOrder()
