@@ -6,7 +6,7 @@ public class Hill_01 : Rock
 
         Resources.Add("Metal Ore", 100, 100);
 
-        Recipe r1 = new Recipe();
+        Recipe r1 = new Recipe("Metal Ore");
 
         r1.Produce("Metal Ore", 0);
 

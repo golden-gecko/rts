@@ -19,6 +19,7 @@ public class MyGameObject : MonoBehaviour
         OrderHandlers[OrderType.Assemble] = new OrderHandlerAssemble();
         OrderHandlers[OrderType.Construct] = new OrderHandlerConstruct();
         OrderHandlers[OrderType.Destroy] = new OrderHandlerDestroy();
+        OrderHandlers[OrderType.Explore] = new OrderHandlerExplore();
         OrderHandlers[OrderType.Follow] = new OrderHandlerFollow();
         OrderHandlers[OrderType.Guard] = new OrderHandlerGuard();
         OrderHandlers[OrderType.Load] = new OrderHandlerLoad();
@@ -34,7 +35,7 @@ public class MyGameObject : MonoBehaviour
 
         ConstructionResources.Add("Metal", 0, 30);
 
-        Recipe r1 = new Recipe();
+        Recipe r1 = new Recipe("Metal");
 
         r1.Consume("Metal", 0);
 
@@ -148,7 +149,7 @@ public class MyGameObject : MonoBehaviour
         Orders.Add(Order.Patrol(position));
     }
 
-    public void Produce(string recipe)
+    public void Produce(string recipe = "")
     {
         Orders.Add(Order.Produce(recipe, ProduceTime));
     }
@@ -399,9 +400,9 @@ public class MyGameObject : MonoBehaviour
 
     private void RaiseConstructionResourceFlags()
     {
-        foreach (Recipe recipe in ConstructionRecipies.Items)
+        foreach (KeyValuePair<string, Recipe> recipe in ConstructionRecipies.Items)
         {
-            foreach (RecipeComponent resource in recipe.ToConsume)
+            foreach (RecipeComponent resource in recipe.Value.ToConsume)
             {
                 int capacity = ConstructionResources.Capacity(resource.Name);
 
@@ -419,9 +420,9 @@ public class MyGameObject : MonoBehaviour
 
     private void RaiseResourceFlags()
     {
-        foreach (Recipe recipe in Recipes.Items)
+        foreach (KeyValuePair<string, Recipe> recipe in Recipes.Items)
         {
-            foreach (RecipeComponent resource in recipe.ToConsume)
+            foreach (RecipeComponent resource in recipe.Value.ToConsume)
             {
                 int capacity = Resources.Capacity(resource.Name);
 
@@ -435,7 +436,7 @@ public class MyGameObject : MonoBehaviour
                 }
             }
 
-            foreach (RecipeComponent resource in recipe.ToProduce)
+            foreach (RecipeComponent resource in recipe.Value.ToProduce)
             {
                 int storage = Resources.Storage(resource.Name);
 

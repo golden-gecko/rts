@@ -38,10 +38,12 @@ public class GameMenu : Menu
         orders = rootVisualElement.Q<VisualElement>("OrderList");
         prefabs = rootVisualElement.Q<VisualElement>("PrefabList");
         technologies = rootVisualElement.Q<VisualElement>("TechnologyList");
+        recipes = rootVisualElement.Q<VisualElement>("RecipeList");
 
         CreateOrders();
         CreatePrefabs();
         CreateTechnologies();
+        CreateRecipes();
 
         Log("");
     }
@@ -103,6 +105,7 @@ public class GameMenu : Menu
             OrderType.Construct,
             OrderType.Idle,
             OrderType.None,
+            OrderType.Produce,
         };
 
         orders.Clear();
@@ -170,6 +173,25 @@ public class GameMenu : Menu
     private void CreateTechnologies()
     {
         technologies.Clear();
+
+        foreach (KeyValuePair<string, Technology> i in HUD.Instance.ActivePlayer.TechnologyTree.Technologies)
+        {
+            TemplateContainer buttonContainer = templateButton.Instantiate();
+            Button button = buttonContainer.Q<Button>();
+
+            button.RegisterCallback<ClickEvent>(ev => OnResearch(i.Key));
+            button.style.display = DisplayStyle.None;
+            button.text = i.Key;
+            button.userData = i.Key;
+
+            technologies.Add(buttonContainer);
+            technologiesButtons[i.Key] = button;
+        }
+    }
+
+    private void CreateRecipes()
+    {
+        recipes.Clear();
 
         foreach (KeyValuePair<string, Technology> i in HUD.Instance.ActivePlayer.TechnologyTree.Technologies)
         {
@@ -360,8 +382,10 @@ public class GameMenu : Menu
     private VisualElement orders;
     private VisualElement prefabs;
     private VisualElement technologies;
+    private VisualElement recipes;
 
     private Dictionary<OrderType, Button> ordersButtons = new Dictionary<OrderType, Button>();
     private Dictionary<string, Button> prefabsButtons = new Dictionary<string, Button>();
     private Dictionary<string, Button> technologiesButtons = new Dictionary<string, Button>();
+    private Dictionary<string, Button> recipeButtons = new Dictionary<string, Button>();
 }

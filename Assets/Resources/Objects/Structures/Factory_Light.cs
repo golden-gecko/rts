@@ -14,7 +14,7 @@ public class Factory_Light : Structure
         
         Resources.Add("Metal", 0, 40);
 
-        Recipe r1 = new Recipe();
+        Recipe r1 = new Recipe("Metal");
 
         r1.Consume("Metal", 0);
 

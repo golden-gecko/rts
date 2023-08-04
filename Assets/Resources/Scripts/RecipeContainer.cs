@@ -4,8 +4,8 @@ public class RecipeContainer
 {
     public void Add(Recipe recipe)
     {
-        Items.Add(recipe);
+        Items[recipe.Name] = recipe;
     }
 
-    public List<Recipe> Items { get; } = new List<Recipe>();
+    public Dictionary<string, Recipe> Items { get; } = new Dictionary<string, Recipe>();
 }
