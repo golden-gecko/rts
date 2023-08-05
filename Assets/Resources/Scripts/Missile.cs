@@ -17,28 +17,15 @@ public class Missile : MyGameObject
     // TODO: Add collision with terrain.
     protected void OnTriggerEnter(Collider collider)
     {
-        MyGameObject gameObject = collider.GetComponent<MyGameObject>();
+        MyGameObject myGameObject = collider.GetComponent<MyGameObject>();
 
-        if (gameObject != null && gameObject.IsAlly(this) == false)
+        if (myGameObject != null && myGameObject.IsAlly(this) == false && myGameObject.GetComponent<Missile>() == false)
         {
-            gameObject.OnDamage(Damage);
+            myGameObject.OnDamage(Damage);
 
-            Destroy(0);
-        }
-    }
+            Orders.Clear();
 
-    // TODO: Disable this behaviour per object and fire missile from object center.
-    protected override void AlignPositionToTerrain()
-    {
-        RaycastHit hitInfo;
-        Ray ray = new Ray(transform.position + new Vector3(0, 1000, 0), Vector3.down);
-
-        if (Physics.Raycast(ray, out hitInfo, 2000, LayerMask.GetMask("Terrain")))
-        {
-            if (hitInfo.transform.CompareTag("Terrain"))
-            {
-                Position = new Vector3(transform.position.x, hitInfo.point.y + 0.1f, transform.position.z);
-            }
+            Destroy();
         }
     }
 }

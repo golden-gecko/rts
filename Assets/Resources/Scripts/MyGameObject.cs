@@ -473,6 +473,8 @@ public class MyGameObject : MonoBehaviour
         return (Position - myGameObject.Position).magnitude;
     }
 
+    public Vector3 Center { get => GetComponent<Collider>().bounds.center; }
+
     public Vector3 Entrance { get => new Vector3(transform.position.x, transform.position.y, transform.position.z + Size.z * 0.75f); }
 
     public Vector3 Exit { get => new Vector3(transform.position.x, transform.position.y, transform.position.z - Size.z * 0.75f); }

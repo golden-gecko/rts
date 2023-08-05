@@ -236,7 +236,6 @@ public class GameMenu : Menu
     private void OnResearch(string technology)
     {
         HUD.Instance.Technology = technology; // TODO: Order is important. Fix that.
-
         HUD.Instance.Order = OrderType.Research;
         HUD.Instance.Prefab = string.Empty;
     }
