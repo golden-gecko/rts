@@ -20,7 +20,7 @@ public class OrderHandlerAttackTurret : IOrderHandler
             }
             else
             {
-                position = order.TargetGameObject.Position;
+                position = order.TargetGameObject.Center;
             }
         }
         else
@@ -35,7 +35,7 @@ public class OrderHandlerAttackTurret : IOrderHandler
             if (myGameObject.ReloadTimer.Finished)
             {
                 MyGameObject resource = Resources.Load<MyGameObject>(myGameObject.MissilePrefab);
-                MyGameObject missile = Object.Instantiate(resource, myGameObject.Position, Quaternion.identity);
+                MyGameObject missile = Object.Instantiate(resource, myGameObject.Center, Quaternion.identity);
 
                 missile.Parent = myGameObject;
                 missile.Player = myGameObject.Player;

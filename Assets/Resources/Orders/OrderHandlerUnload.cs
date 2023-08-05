@@ -65,7 +65,7 @@ public class OrderHandlerUnload : IOrderHandler
                 myGameObject.Orders.Pop();
                 myGameObject.Stats.Add(Stats.OrdersFailed, 1);
 
-                GameObject.Find("Canvas").GetComponentInChildren<GameMenu>().Log("Failed to execute load order");
+                GameMenu.Instance.Log("Failed to execute unload order");
             }
         }
     }

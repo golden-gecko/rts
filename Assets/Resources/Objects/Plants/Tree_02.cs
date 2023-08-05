@@ -7,7 +7,7 @@ public class Tree_02 : Plant
 
         Resources.Add("Wood", 20, 20);
 
-        Recipe r1 = new Recipe();
+        Recipe r1 = new Recipe("Wood");
 
         r1.Produce("Wood", 0);
 

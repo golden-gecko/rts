@@ -4,13 +4,13 @@ public class OrderHandlerGuard : IOrderHandler
     {
         Order order = myGameObject.Orders.First();
 
-        if (order.TargetGameObject == null)
+        if (order.IsTargetGameObject)
         {
-            myGameObject.Move(order.TargetPosition);
+            myGameObject.Follow(order.TargetGameObject);
         }
         else
         {
-            myGameObject.Follow(order.TargetGameObject);
+            myGameObject.Move(order.TargetPosition);
         }
 
         myGameObject.Orders.MoveToEnd();

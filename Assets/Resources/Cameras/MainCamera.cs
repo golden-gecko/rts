@@ -86,15 +86,11 @@ public class MainCamera : MonoBehaviour
     {
         RaycastHit hitInfo;
 
-        if (HUD.Instance.GeTerrainPosition(transform.position, out hitInfo))
+        if (Map.Instance.GetTerrainPosition(transform.position, out hitInfo))
         {
-            transform.position = new Vector3(transform.position.x, Mathf.Clamp(transform.position.y, hitInfo.point.y + minHeight, hitInfo.point.y + maxHeight), transform.position.z);
+            transform.position = new Vector3(transform.position.x, Mathf.Clamp(transform.position.y, hitInfo.point.y + Config.CameraMinHeight, hitInfo.point.y + Config.CameraMaxHeight), transform.position.z);
         }
     }
-
-    private float maxHeight = 100.0f;
-    
-    private float minHeight = 2.0f;
 
     private Vector3 speed = new Vector3(10.0f, 10.0f, 10.0f);
 
