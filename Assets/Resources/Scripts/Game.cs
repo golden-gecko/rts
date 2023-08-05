@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using static UnityEngine.GraphicsBuffer;
 
 public class Game : MonoBehaviour
 {
@@ -46,12 +47,38 @@ public class Game : MonoBehaviour
 
     public Order CreataAttackJob(MyGameObject myGameObject)
     {
-        foreach (MyGameObject target in GameObject.FindObjectsByType<MyGameObject>(FindObjectsSortMode.None)) // TODO: Return closest object.
+        float minDistance = float.MaxValue;
+        MyGameObject closest = null;
+
+        foreach (MyGameObject target in GameObject.FindObjectsByType<MyGameObject>(FindObjectsSortMode.None))
         {
-            if (myGameObject.IsInAttackRange(target.Position) && myGameObject.IsEnemy(target) && target.GetComponent<Missile>() == null) // TODO: Better way of checking object type?
+            if (myGameObject.IsInAttackRange(target.Position) == false)
             {
-                return Order.Attack(target);
+                continue;
             }
+
+            if (myGameObject.IsEnemy(target) == false)
+            {
+                continue;
+            }
+
+            if (target.GetComponent<Missile>())
+            {
+                continue;
+            }
+
+            float distance = myGameObject.DistanceTo(target);
+
+            if (distance < minDistance)
+            {
+                minDistance = distance;
+                closest = target;
+            }
+        }
+
+        if (closest != null)
+        {
+            return Order.Attack(closest);
         }
 
         return null;
@@ -59,7 +86,10 @@ public class Game : MonoBehaviour
 
     public Order CreateOrderConstruction(MyGameObject myGameObject)
     {
-        foreach (MyGameObject underConstruction in GameObject.FindObjectsByType<MyGameObject>(FindObjectsSortMode.None)) // TODO: Return closest object.
+        float minDistance = float.MaxValue;
+        MyGameObject closest = null;
+
+        foreach (MyGameObject underConstruction in GameObject.FindObjectsByType<MyGameObject>(FindObjectsSortMode.None))
         {
             if (underConstruction.Player != this)
             {
@@ -71,7 +101,18 @@ public class Game : MonoBehaviour
                 continue;
             }
 
-            return Order.Construct(underConstruction, myGameObject.ConstructionTime);
+            float distance = myGameObject.DistanceTo(underConstruction);
+
+            if (distance < minDistance)
+            {
+                minDistance = distance;
+                closest = underConstruction;
+            }
+        }
+
+        if (closest != null)
+        {
+            return Order.Construct(closest, myGameObject.ConstructionTime);
         }
 
         return null;
