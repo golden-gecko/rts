@@ -9,12 +9,7 @@ public class OrderHandlerAssemble : IOrderHandler
 
         if (order.TargetGameObject == null)
         {
-            MyGameObject resource = Resources.Load<MyGameObject>(order.Prefab);
-
-            order.TargetGameObject = Object.Instantiate(resource, myGameObject.Exit, Quaternion.identity);
-            order.TargetGameObject.Player = myGameObject.Player;
-            order.TargetGameObject.State = MyGameObjectState.UnderAssembly;
-            order.TargetGameObject.UpdateSelection(); // TODO: Remove.
+            order.TargetGameObject = Game.Instance.CreateGameObject(order.Prefab, myGameObject.Exit, myGameObject.Player, MyGameObjectState.UnderAssembly);
         }
         else if (order.TargetGameObject.Constructed == false)
         {
@@ -27,7 +22,7 @@ public class OrderHandlerAssemble : IOrderHandler
             if (order.Timer.Finished)
             {
                 order.TargetGameObject.State = MyGameObjectState.Operational;
-                order.TargetGameObject.Move(myGameObject.RallyPoint);
+                order.TargetGameObject.Move(myGameObject.RallyPoint, 0);
                 order.Timer.Reset();
 
                 myGameObject.Orders.Pop();

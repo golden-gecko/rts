@@ -80,7 +80,7 @@ public class HUD : MonoBehaviour
         }
     }
 
-    public void Research()
+    public void Research(string technology)
     {
         foreach (MyGameObject selected in ActivePlayer.Selected)
         {
@@ -89,7 +89,7 @@ public class HUD : MonoBehaviour
                 selected.Orders.Clear();
             }
 
-            selected.Research(Technology);
+            selected.Research(technology);
         }
     }
 
@@ -121,14 +121,19 @@ public class HUD : MonoBehaviour
 
     private void Construct(Vector3 position)
     {
-        foreach (MyGameObject selected in ActivePlayer.Selected)
+        if (ActivePlayer.Selected.Count > 0)
         {
-            if (IsShift() == false)
-            {
-                selected.Orders.Clear();
-            }
+            MyGameObject myGameObject = Game.Instance.CreateGameObject(Prefab, position, ActivePlayer, MyGameObjectState.UnderConstruction);
 
-            selected.Construct(prefab, position);
+            foreach (MyGameObject selected in ActivePlayer.Selected)
+            {
+                if (IsShift() == false)
+                {
+                    selected.Orders.Clear();
+                }
+
+                selected.Construct(prefab, myGameObject);
+            }
         }
     }
 
@@ -545,48 +550,7 @@ public class HUD : MonoBehaviour
 
     private MyGameObject Cursor { get; set; }
 
-    public OrderType Order
-    {
-        get
-        {
-            return order;
-        }
-
-        set
-        {
-            switch (value)
-            {
-                case OrderType.Destroy:
-                    order = OrderType.None;
-                    Destroy();
-                    break;
-
-                case OrderType.Explore:
-                    order = OrderType.None;
-                    Explore();
-                    break;
-
-                case OrderType.Research:
-                    order = OrderType.None;
-                    Research();
-                    break;
-
-                case OrderType.Stop:
-                    order = OrderType.None;
-                    Stop();
-                    break;
-
-                case OrderType.Wait:
-                    order = OrderType.None;
-                    Wait();
-                    break;
-
-                default:
-                    order = value;
-                    break;
-            }
-        }
-    }
+    public OrderType Order { get; set; }
 
     public string Prefab
     {
@@ -633,8 +597,6 @@ public class HUD : MonoBehaviour
     public Player ActivePlayer;
 
     public RectTransform boxVisual;
-
-    public string Technology { get; set; }
 
     public PrefabConstructionType PrefabConstructionType { get; set; }
 

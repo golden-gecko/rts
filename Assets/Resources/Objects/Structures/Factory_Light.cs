@@ -12,7 +12,7 @@ public class Factory_Light : Structure
         Orders.AllowPrefab("Objects/Units/Quad");
         Orders.AllowPrefab("Objects/Units/Trike");
         
-        Resources.Add("Metal", 0, 40);
+        Resources.Add("Metal", 40, 40);
 
         Recipe r1 = new Recipe("Metal");
 

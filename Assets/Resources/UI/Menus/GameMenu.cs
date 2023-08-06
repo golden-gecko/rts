@@ -217,7 +217,6 @@ public class GameMenu : Menu
     {
         HUD.Instance.Order = OrderType.Construct;
         HUD.Instance.Prefab = prefab;
-        HUD.Instance.Technology = string.Empty;
     }
 
     private void OnMenu()
@@ -227,17 +226,33 @@ public class GameMenu : Menu
 
     private void OnOrder(OrderType orderType)
     {
-        HUD.Instance.Order = orderType;
-        HUD.Instance.Prefab = string.Empty;
-        HUD.Instance.Technology = string.Empty;
+        switch (orderType)
+        {
+            case OrderType.Destroy:
+                HUD.Instance.Destroy();
+                break;
 
+            case OrderType.Explore:
+                HUD.Instance.Explore();
+                break;
+
+            case OrderType.Stop:
+                HUD.Instance.Stop();
+                break;
+
+            case OrderType.Wait:
+                HUD.Instance.Wait();
+                break;
+
+            default:
+                HUD.Instance.Order = orderType;
+                break;
+        }
     }
 
     private void OnResearch(string technology)
     {
-        HUD.Instance.Technology = technology; // TODO: Order is important. Fix that.
-        HUD.Instance.Order = OrderType.Research;
-        HUD.Instance.Prefab = string.Empty;
+        HUD.Instance.Research(technology);
     }
 
     private void UpdateOrders(MyGameObject hovered)

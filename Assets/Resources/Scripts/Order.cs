@@ -32,13 +32,13 @@ public class Order
         };
     }
 
-    public static Order Construct(string prefab, Vector3 position, float time)
+    public static Order Construct(string prefab, MyGameObject myGameObject, float time)
     {
         return new Order
         {
             Type = OrderType.Construct,
             Prefab = prefab,
-            TargetPosition = position,
+            TargetGameObject = myGameObject,
             Timer = new Timer(time),
         };
     }
