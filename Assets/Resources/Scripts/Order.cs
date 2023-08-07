@@ -203,6 +203,21 @@ public class Order
     {
         string info = string.Format("{0}", Type.ToString());
 
+        if (Prefab != null)
+        {
+            info += string.Format(" ({0})", Prefab);
+        }
+
+        if (Technology != null)
+        {
+            info += string.Format(" ({0})", Technology);
+        }
+
+        if (Recipe != null)
+        {
+            info += string.Format(" ({0})", Recipe);
+        }
+
         if (Timer != null)
         {
             info += string.Format(" {0:0.}/{1}", Timer.Current, Timer.Max);

@@ -214,9 +214,8 @@ public class Game : MonoBehaviour
         MyGameObject resource = Resources.Load<MyGameObject>(prefab);
 
         MyGameObject myGameObject = Object.Instantiate<MyGameObject>(resource, position, Quaternion.identity);
-        myGameObject.Player = player;
+        myGameObject.SetPlayer(player);
         myGameObject.State = state;
-        myGameObject.UpdateSelection(); // TODO: Remove.
 
         return myGameObject;
     }
