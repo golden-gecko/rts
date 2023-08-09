@@ -452,7 +452,7 @@ public class GameMenu : Menu
                     continue;
                 }
 
-                foreach (string recipe in hovered.Recipes.Items.Keys)
+                foreach (string recipe in selected.Recipes.Items.Keys)
                 {
                     whitelist.Add(recipe);
                 }
@@ -493,7 +493,7 @@ public class GameMenu : Menu
                     continue;
                 }
 
-                foreach (string skill in hovered.Skills.Keys)
+                foreach (string skill in selected.Skills.Keys)
                 {
                     whitelist.Add(skill);
                 }

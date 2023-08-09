@@ -24,7 +24,7 @@ public class Damage : Skill
             target.OnDamage(Value);
         }
 
-        Object.Instantiate(Resources.Load("CFXR3 Hit Misc A"), myGameObject.Position, Quaternion.identity);
+        Object.Instantiate(Resources.Load("Effects/CFXR Flash"), myGameObject.Position, Quaternion.identity);
     }
 
     public float Value { get; } = 0.0f;

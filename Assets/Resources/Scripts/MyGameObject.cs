@@ -13,6 +13,7 @@ public class MyGameObject : MonoBehaviour
 
         Orders.AllowOrder(OrderType.Destroy);
         Orders.AllowOrder(OrderType.Idle);
+        Orders.AllowOrder(OrderType.Skill);
         Orders.AllowOrder(OrderType.Stop);
         Orders.AllowOrder(OrderType.Wait);
 

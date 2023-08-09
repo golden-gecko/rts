@@ -24,7 +24,7 @@ public class Repair : Skill
             target.OnRepair(Value);
         }
 
-        Object.Instantiate(Resources.Load("CFXR Water Ripples"), myGameObject.Position, Quaternion.identity);
+        Object.Instantiate(Resources.Load("Effects/CFXR3 Hit Misc A"), myGameObject.Position, Quaternion.identity);
     }
 
     public float Value { get; } = 0.0f;
