@@ -28,6 +28,7 @@ public class MyGameObject : MonoBehaviour
         OrderHandlers[OrderType.Produce] = new OrderHandlerProduce();
         OrderHandlers[OrderType.Rally] = new OrderHandlerRally();
         OrderHandlers[OrderType.Research] = new OrderHandlerResearch();
+        OrderHandlers[OrderType.Skill] = new OrderHandlerSkill();
         OrderHandlers[OrderType.Stop] = new OrderHandlerStop();
         OrderHandlers[OrderType.Transport] = new OrderHandlerTransport();
         OrderHandlers[OrderType.Unload] = new OrderHandlerUnload();
@@ -169,6 +170,11 @@ public class MyGameObject : MonoBehaviour
     public void Research(string technology)
     {
         Orders.Add(Order.Research(technology, ResearchTime));
+    }
+
+    public void Skill(string skill)
+    {
+        Orders.Add(Order.Skill(skill));
     }
 
     public void Stop()

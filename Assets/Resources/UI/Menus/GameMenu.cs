@@ -45,6 +45,7 @@ public class GameMenu : Menu
         CreatePrefabs();
         CreateTechnologies();
         CreateRecipes();
+        CreateSkills();
 
         Log("");
     }
@@ -71,6 +72,8 @@ public class GameMenu : Menu
                 UpdateOrders(HUD.Instance.Hovered);
                 UpdatePrefabs(HUD.Instance.Hovered);
                 UpdateTechnologies(HUD.Instance.Hovered);
+                UpdateRecipes(HUD.Instance.Hovered);
+                UpdateSkills(HUD.Instance.Hovered);
             }
         }
         else if (activePlayer.Selected.Count > 0 && activePlayer.Selected.First() != null)
@@ -83,6 +86,8 @@ public class GameMenu : Menu
             UpdateOrders(null);
             UpdatePrefabs(null);
             UpdateTechnologies(null);
+            UpdateRecipes(null);
+            UpdateSkills(null);
         }
         else
         {
@@ -175,37 +180,44 @@ public class GameMenu : Menu
     {
         technologies.Clear();
 
-        foreach (KeyValuePair<string, Technology> i in HUD.Instance.ActivePlayer.TechnologyTree.Technologies)
+        foreach (string i in HUD.Instance.ActivePlayer.TechnologyTree.Technologies.Keys)
         {
             TemplateContainer buttonContainer = templateButton.Instantiate();
             Button button = buttonContainer.Q<Button>();
 
-            button.RegisterCallback<ClickEvent>(ev => OnResearch(i.Key));
+            button.RegisterCallback<ClickEvent>(ev => OnResearch(i));
             button.style.display = DisplayStyle.None;
-            button.text = i.Key;
-            button.userData = i.Key;
+            button.text = i;
+            button.userData = i;
 
             technologies.Add(buttonContainer);
-            technologiesButtons[i.Key] = button;
+            technologiesButtons[i] = button;
         }
     }
 
     private void CreateRecipes()
     {
+        // TODO: Put this somewhere.
+        List<string> _recipies = new List<string>()
+        {
+            "Metal using coal",
+            "Metal using wood",
+        };
+
         recipes.Clear();
 
-        foreach (KeyValuePair<string, Technology> i in HUD.Instance.ActivePlayer.TechnologyTree.Technologies)
+        foreach (string i in _recipies)
         {
             TemplateContainer buttonContainer = templateButton.Instantiate();
             Button button = buttonContainer.Q<Button>();
 
-            button.RegisterCallback<ClickEvent>(ev => OnResearch(i.Key));
+            button.RegisterCallback<ClickEvent>(ev => OnRecipe(i));
             button.style.display = DisplayStyle.None;
-            button.text = i.Key;
-            button.userData = i.Key;
+            button.text = i;
+            button.userData = i;
 
-            technologies.Add(buttonContainer);
-            technologiesButtons[i.Key] = button;
+            recipes.Add(buttonContainer);
+            recipesButtons[i] = button;
         }
     }
 
@@ -225,7 +237,7 @@ public class GameMenu : Menu
             TemplateContainer buttonContainer = templateButton.Instantiate();
             Button button = buttonContainer.Q<Button>();
 
-            button.RegisterCallback<ClickEvent>(ev => OnResearch(i));
+            button.RegisterCallback<ClickEvent>(ev => OnSkill(i));
             button.style.display = DisplayStyle.None;
             button.text = i;
             button.userData = i;
@@ -280,6 +292,16 @@ public class GameMenu : Menu
     private void OnResearch(string technology)
     {
         HUD.Instance.Research(technology);
+    }
+
+    private void OnRecipe(string recipe)
+    {
+        HUD.Instance.Produce(recipe);
+    }
+
+    private void OnSkill(string skill)
+    {
+        HUD.Instance.Skill(skill);
     }
 
     private void UpdateOrders(MyGameObject hovered)
@@ -406,6 +428,88 @@ public class GameMenu : Menu
                 technologiesButtons[i].SetEnabled(
                     !HUD.Instance.ActivePlayer.TechnologyTree.IsUnlocked(i)
                 );
+            }
+        }
+    }
+
+    private void UpdateRecipes(MyGameObject hovered)
+    {
+        HashSet<string> whitelist = new HashSet<string>();
+
+        if (hovered != null)
+        {
+            if (hovered.State == MyGameObjectState.Operational)
+            {
+                whitelist = new HashSet<string>(hovered.Recipes.Items.Keys);
+            }
+        }
+        else
+        {
+            foreach (MyGameObject selected in HUD.Instance.ActivePlayer.Selected)
+            {
+                if (selected.State != MyGameObjectState.Operational)
+                {
+                    continue;
+                }
+
+                foreach (string recipe in hovered.Recipes.Items.Keys)
+                {
+                    whitelist.Add(recipe);
+                }
+            }
+        }
+
+        foreach (KeyValuePair<string, Button> button in recipesButtons)
+        {
+            button.Value.style.display = DisplayStyle.None;
+        }
+
+        foreach (string i in whitelist)
+        {
+            if (recipesButtons.ContainsKey(i))
+            {
+                recipesButtons[i].style.display = DisplayStyle.Flex;
+            }
+        }
+    }
+
+    private void UpdateSkills(MyGameObject hovered)
+    {
+        HashSet<string> whitelist = new HashSet<string>();
+
+        if (hovered != null)
+        {
+            if (hovered.State == MyGameObjectState.Operational)
+            {
+                whitelist = new HashSet<string>(hovered.Skills.Keys);
+            }
+        }
+        else
+        {
+            foreach (MyGameObject selected in HUD.Instance.ActivePlayer.Selected)
+            {
+                if (selected.State != MyGameObjectState.Operational)
+                {
+                    continue;
+                }
+
+                foreach (string skill in hovered.Skills.Keys)
+                {
+                    whitelist.Add(skill);
+                }
+            }
+        }
+
+        foreach (KeyValuePair<string, Button> button in skillsButtons)
+        {
+            button.Value.style.display = DisplayStyle.None;
+        }
+
+        foreach (string i in whitelist)
+        {
+            if (skillsButtons.ContainsKey(i))
+            {
+                skillsButtons[i].style.display = DisplayStyle.Flex;
             }
         }
     }

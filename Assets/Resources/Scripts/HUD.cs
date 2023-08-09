@@ -93,6 +93,32 @@ public class HUD : MonoBehaviour
         }
     }
 
+    public void Produce(string recipe)
+    {
+        foreach (MyGameObject selected in ActivePlayer.Selected)
+        {
+            if (IsShift() == false)
+            {
+                selected.Orders.Clear();
+            }
+
+            selected.Produce(recipe);
+        }
+    }
+
+    public void Skill(string skill)
+    {
+        foreach (MyGameObject selected in ActivePlayer.Selected)
+        {
+            if (IsShift() == false)
+            {
+                selected.Orders.Clear();
+            }
+
+            selected.Skill(skill);
+        }
+    }
+
     public void Stop()
     {
         foreach (MyGameObject selected in ActivePlayer.Selected)

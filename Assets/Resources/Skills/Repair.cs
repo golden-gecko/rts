@@ -2,9 +2,8 @@ using UnityEngine;
 
 public class Repair : Skill
 {
-    public Repair(string name, float range, float value) : base(name)
+    public Repair(string name, float cooldown, float range, float value) : base(name, cooldown, range)
     {
-        Range = range;
         Value = value;
     }
 
@@ -28,7 +27,5 @@ public class Repair : Skill
         Object.Instantiate(Resources.Load("CFXR Water Ripples"), myGameObject.Position, Quaternion.identity);
     }
 
-    public float Range { get; } = 0.0f;
- 
     public float Value { get; } = 0.0f;
 }

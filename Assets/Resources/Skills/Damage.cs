@@ -2,9 +2,8 @@ using UnityEngine;
 
 public class Damage : Skill
 {
-    public Damage(string name, float range, float value) : base(name)
+    public Damage(string name, float cooldown, float range, float value) : base(name, cooldown, range)
     {
-        Range = range;
         Value = value;
     }
 
@@ -27,8 +26,6 @@ public class Damage : Skill
 
         Object.Instantiate(Resources.Load("CFXR3 Hit Misc A"), myGameObject.Position, Quaternion.identity);
     }
-
-    public float Range { get; } = 0.0f;
 
     public float Value { get; } = 0.0f;
 }

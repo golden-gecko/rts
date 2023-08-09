@@ -155,6 +155,15 @@ public class Order
         };
     }
 
+    public static Order Skill(string skill)
+    {
+        return new Order
+        {
+            Type = OrderType.Skill,
+            Prefab = skill, // TODO: Add new property for skill.
+        };
+    }
+
     public static Order Stop()
     {
         return new Order
