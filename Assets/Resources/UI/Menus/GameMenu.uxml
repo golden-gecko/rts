@@ -17,6 +17,9 @@
         <ui:VisualElement name="RecipeList" style="flex-grow: 1; background-color: rgba(0, 0, 0, 0); flex-direction: row; align-items: flex-start;">
             <ui:Instance template="Button" name="Button" />
         </ui:VisualElement>
+        <ui:VisualElement name="Skills" style="flex-grow: 1; background-color: rgba(0, 0, 0, 0); flex-direction: row; align-items: flex-start;">
+            <ui:Instance template="Button" name="Button" />
+        </ui:VisualElement>
     </ui:VisualElement>
     <ui:VisualElement name="InfoPanel" class="panel-background" style="flex-grow: 1; left: 0; top: auto; right: 80%; position: absolute; bottom: 0;">
         <ui:Label tabindex="-1" name="Info" />

@@ -1,19 +1,17 @@
-using UnityEngine;
-
-public class Skill : MonoBehaviour
+public class Skill
 {
     public Skill(string name)
     {
         Name = name;
     }
 
-    public virtual void Execute()
+    public virtual void Execute(MyGameObject myGameObject)
     {
     }
 
     public string GetInfo()
     {
-        return name;
+        return Name;
     }
 
     public string Name { get; }

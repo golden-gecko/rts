@@ -106,7 +106,7 @@ public class MyGameObject : MonoBehaviour
             Orders.Add(Order.Destroy());
         }
     }
-    
+
     public void Explore()
     {
         Orders.Add(Order.Explore());
@@ -275,11 +275,18 @@ public class MyGameObject : MonoBehaviour
         return Player.IsEnemy(player);
     }
 
-    public void OnDamage(float damage)
+    public void OnDamage(float value)
     {
-        Health -= damage;
+        Health = Mathf.Clamp(Health - value, 0.0f, MaxHealth);
 
-        Stats.Add(Stats.DamageTaken, damage);
+        Stats.Add(Stats.DamageTaken, value);
+    }
+
+    public void OnRepair(float value)
+    {
+        Health = Mathf.Clamp(Health + value, 0.0f, MaxHealth);
+
+        Stats.Add(Stats.DamageRepaired, value);
     }
 
     public void Select(bool status)
@@ -329,12 +336,12 @@ public class MyGameObject : MonoBehaviour
         return IsInRange(position, VisibilityRange);
     }
 
-    private bool IsInRange(Vector3 position, float radiusMax)
+    public bool IsInRange(Vector3 position, float rangeMax)
     {
-        return IsInRange(position, 0.0f, radiusMax);
+        return IsInRange(position, 0.0f, rangeMax);
     }
 
-    private bool IsInRange(Vector3 position, float radiusMin, float radiusMax)
+    public bool IsInRange(Vector3 position, float rangeMin, float rangeMax)
     {
         Vector3 a = position;
         Vector3 b = Position;
@@ -344,7 +351,7 @@ public class MyGameObject : MonoBehaviour
 
         float magnitude = (b - a).magnitude;
 
-        return radiusMin <= magnitude && magnitude <= radiusMax;
+        return rangeMin <= magnitude && magnitude <= rangeMax;
     }
 
     public void UpdateSelection()
@@ -532,11 +539,13 @@ public class MyGameObject : MonoBehaviour
 
     public RecipeContainer ConstructionRecipies { get; private set; } = new RecipeContainer();
 
-    public Vector3 RallyPoint { get; set; }
-    
+    public Vector3 RallyPoint { get; set; } = Vector3.zero;
+
     public Timer ReloadTimer { get; protected set; }
 
     public MyGameObject Parent { get; set; }
+
+    public Dictionary<string, Skill> Skills { get; protected set; } = new Dictionary<string, Skill>();
 
     protected Dictionary<OrderType, IOrderHandler> OrderHandlers { get; set; } = new Dictionary<OrderType, IOrderHandler>();
 

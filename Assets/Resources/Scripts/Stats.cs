@@ -3,6 +3,7 @@ using System.Collections.Generic;
 public class Stats
 {
     public static string DamageDealt = "Damage Dealt";
+    public static string DamageRepaired = "Damage Repaired";
     public static string DamageTaken = "Damage Taken";
     public static string DistanceDriven = "Distance Driven";
     public static string MissilesFired = "Missiles Fired";
