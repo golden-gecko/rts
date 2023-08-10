@@ -32,18 +32,9 @@ public class OrderHandlerAttackTurret : IOrderHandler
         {
             myGameObject.transform.LookAt(new Vector3(position.x, myGameObject.Position.y, position.z));
 
-            if (myGameObject.ReloadTimer.Finished)
+            if (myGameObject.Gun.Reload.Finished)
             {
-                MyGameObject resource = Resources.Load<MyGameObject>(myGameObject.MissilePrefab);
-                MyGameObject missile = Object.Instantiate(resource, myGameObject.Center, Quaternion.identity);
-
-                missile.Parent = myGameObject;
-                missile.Player = myGameObject.Player;
-
-                missile.Move(position);
-                missile.Destroy();
-
-                myGameObject.ReloadTimer.Reset();
+                myGameObject.Gun.Fire(myGameObject, position);
                 myGameObject.Orders.MoveToEnd();
                 myGameObject.Stats.Add(Stats.MissilesFired, 1);
             }

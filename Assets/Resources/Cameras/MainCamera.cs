@@ -49,7 +49,7 @@ public class MainCamera : MonoBehaviour
         transform.Translate(direction * Time.deltaTime);
     }
 
-    private void Update()
+    protected void Update()
     {
         Translate();
         Rotate();

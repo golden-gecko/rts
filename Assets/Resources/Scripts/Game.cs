@@ -1,13 +1,11 @@
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UIElements;
-using static UnityEngine.GraphicsBuffer;
 
 public class Game : MonoBehaviour
 {
     public static Game Instance { get; private set; }
 
-    private void Awake()
+    protected void Awake()
     {
         if (Instance != null && Instance != this)
         {
@@ -19,7 +17,7 @@ public class Game : MonoBehaviour
         }
     }
 
-    private void Start()
+    protected void Start()
     {
         Player cpu = GameObject.Find("CPU").GetComponent<Player>();
         Player gaia = GameObject.Find("Gaia").GetComponent<Player>();
@@ -53,12 +51,12 @@ public class Game : MonoBehaviour
 
         foreach (MyGameObject target in GameObject.FindObjectsByType<MyGameObject>(FindObjectsSortMode.None))
         {
-            if (target.IsEnemy(myGameObject) == false)
+            if (myGameObject.IsEnemy(target) == false)
             {
                 continue;
             }
 
-            if (target.IsInAttackRange(myGameObject.Position) == false)
+            if (myGameObject.IsInAttackRange(target.Position) == false)
             {
                 continue;
             }
@@ -68,7 +66,7 @@ public class Game : MonoBehaviour
                 continue;
             }
 
-            float distance = target.DistanceTo(myGameObject);
+            float distance = myGameObject.DistanceTo(target);
 
             if (distance < minDistance)
             {
@@ -97,12 +95,12 @@ public class Game : MonoBehaviour
                 continue;
             }
 
-            if (underConstruction.IsAlly(myGameObject) == false)
+            if (myGameObject.IsAlly(underConstruction) == false)
             {
                 continue;
             }
 
-            float distance = underConstruction.DistanceTo(myGameObject);
+            float distance = myGameObject.DistanceTo(underConstruction);
 
             if (distance < minDistance)
             {

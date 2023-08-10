@@ -4,7 +4,7 @@ public class GameDebug : MonoBehaviour
 {
     public static GameDebug Instance { get; private set; }
 
-    private void Awake()
+    protected void Awake()
     {
         if (Instance != null && Instance != this)
         {

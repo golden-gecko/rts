@@ -6,8 +6,8 @@ public class Infantry_Light : Unit
 
         Orders.AllowOrder(OrderType.Attack);
 
-        MissilePrefab = "Objects/Missiles/Bullet";
-        ReloadTimer = new Timer(1.0f);
         Speed = 2.0f;
+        Gun = new Cannon("Cannon", 1.0f, 3.0f, 1.0f);
+        Gun.MissilePrefab = "Objects/Missiles/Bullet";
     }
 }

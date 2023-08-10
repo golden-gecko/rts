@@ -6,7 +6,7 @@ public class SceneMenu : Menu
 {
     public static SceneMenu Instance { get; private set; }
 
-    private void Awake()
+    protected void Awake()
     {
         if (Instance != null && Instance != this)
         {
@@ -18,7 +18,7 @@ public class SceneMenu : Menu
         }
     }
 
-    private void OnEnable()
+    protected void OnEnable()
     {
         UIDocument uiDocument = GetComponent<UIDocument>();
         VisualElement rootVisualElement = uiDocument.rootVisualElement;
