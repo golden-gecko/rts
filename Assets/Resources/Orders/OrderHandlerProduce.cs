@@ -15,8 +15,8 @@ public class OrderHandlerProduce : IOrderHandler
             }
             else
             {
-                myGameObject.Orders.Pop();
                 myGameObject.Stats.Add(Stats.OrdersFailed, 1);
+                myGameObject.Orders.Pop();
             }
         }
         else
@@ -81,11 +81,9 @@ public class OrderHandlerProduce : IOrderHandler
 
             order.Timer.Reset();
 
-            // myGameObject.Orders.MoveToEnd();
-            myGameObject.Orders.Pop();
-
             myGameObject.Stats.Add(Stats.OrdersExecuted, 1);
             myGameObject.Stats.Add(Stats.TimeProducing, order.Timer.Max);
+            myGameObject.Orders.Pop();
         }
 
         return true;

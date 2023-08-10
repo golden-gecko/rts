@@ -1,3 +1,5 @@
+using UnityEngine;
+
 public class Skill
 {
     public Skill(string name, float cooldown, float range)
@@ -11,9 +13,14 @@ public class Skill
     {
     }
 
+    public virtual void Update()
+    {
+        Cooldown.Update(Time.deltaTime);
+    }
+
     public string GetInfo()
     {
-        return Name;
+        return string.Format("Name: {0}, Cooldown: {1:0.}/{2:0.}, Range: {3}", Name, Cooldown.Current, Cooldown.Max, Range);
     }
 
     public string Name { get; }

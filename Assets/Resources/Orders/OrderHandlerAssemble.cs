@@ -25,10 +25,9 @@ public class OrderHandlerAssemble : IOrderHandler
                 order.TargetGameObject.Move(myGameObject.RallyPoint, 0);
                 order.Timer.Reset();
 
-                myGameObject.Orders.Pop();
-
                 myGameObject.Stats.Add(Stats.OrdersExecuted, 1);
                 myGameObject.Stats.Add(Stats.TimeConstructing, order.Timer.Max);
+                myGameObject.Orders.Pop();
             }
         }
         else

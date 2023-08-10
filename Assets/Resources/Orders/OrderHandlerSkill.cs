@@ -1,3 +1,5 @@
+using UnityEngine;
+
 public class OrderHandlerSkill : IOrderHandler
 {
     public void OnExecute(MyGameObject myGameObject)
@@ -8,20 +10,26 @@ public class OrderHandlerSkill : IOrderHandler
         {
             if (myGameObject.Skills.ContainsKey(order.Prefab))
             {
-                myGameObject.Skills[order.Prefab].Execute(myGameObject);
+                if (myGameObject.Skills[order.Prefab].Cooldown.Finished)
+                {
+                    myGameObject.Skills[order.Prefab].Execute(myGameObject);
+                    myGameObject.Skills[order.Prefab].Cooldown.Reset();
 
-                myGameObject.Stats.Add(Stats.OrdersExecuted, 1);
+                    myGameObject.Stats.Add(Stats.OrdersExecuted, 1);
+                    myGameObject.Stats.Add(Stats.SkillsUsed, 1);
+                    myGameObject.Orders.Pop();
+                }
             }
             else
             {
                 myGameObject.Stats.Add(Stats.OrdersFailed, 1);
+                myGameObject.Orders.Pop();
             }
         }
         else
         {
             myGameObject.Stats.Add(Stats.OrdersFailed, 1);
+            myGameObject.Orders.Pop();
         }
-
-        myGameObject.Orders.Pop();
     }
 }

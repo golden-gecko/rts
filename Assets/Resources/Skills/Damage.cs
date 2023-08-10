@@ -11,7 +11,7 @@ public class Damage : Skill
     {
         foreach (MyGameObject target in GameObject.FindObjectsByType<MyGameObject>(FindObjectsSortMode.None))
         {
-            if (target.IsEnemy(myGameObject) == false)
+            if (target.IsAlly(myGameObject))
             {
                 continue;
             }
@@ -24,7 +24,7 @@ public class Damage : Skill
             target.OnDamage(Value);
         }
 
-        Object.Instantiate(Resources.Load("Effects/CFXR Flash"), myGameObject.Position, Quaternion.identity);
+        Object.Instantiate(Resources.Load("Effects/CFXR Flash"), myGameObject.Position, Quaternion.identity); // TODO: Move effect name to configuration.
     }
 
     public float Value { get; } = 0.0f;

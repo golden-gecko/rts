@@ -75,6 +75,15 @@ public class MyGameObject : MonoBehaviour
 
         AlignPositionToTerrain();
         Reload();
+        UpdateSkills();
+    }
+
+    protected void UpdateSkills()
+    {
+        foreach (Skill i in Skills.Values)
+        {
+            i.Update();
+        }
     }
 
     public void Assemble(string prefab)
@@ -249,6 +258,16 @@ public class MyGameObject : MonoBehaviour
                     if (stats.Length > 0)
                     {
                         info += string.Format("\nStats: {0}", stats);
+                    }
+
+                    if (Skills.Count > 0)
+                    {
+                        info += "\nSkills:";
+
+                        foreach (Skill i in Skills.Values)
+                        {
+                            info += string.Format("\n  {0}", i.GetInfo());
+                        }
                     }
                 }
                 break;
