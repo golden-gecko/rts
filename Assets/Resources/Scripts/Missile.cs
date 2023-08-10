@@ -17,7 +17,7 @@ public class Missile : MyGameObject
     // TODO: Add collision with terrain.
     protected void OnTriggerEnter(Collider collider)
     {
-        MyGameObject myGameObject = collider.GetComponent<MyGameObject>();
+        MyGameObject myGameObject = collider.GetComponentInParent<MyGameObject>();
 
         if (myGameObject != null && myGameObject.IsAlly(this) == false && myGameObject.GetComponent<Missile>() == false)
         {

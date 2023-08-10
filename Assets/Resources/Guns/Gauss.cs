@@ -8,6 +8,30 @@ public class Gauss : Gun
 
     public override void Fire(MyGameObject myGameObject, Vector3 position)
     {
+        RaycastHit[] hits = Physics.RaycastAll(new Ray(myGameObject.Center, position - myGameObject.Center), Config.RaycastMaxDistance);
+
+        foreach (RaycastHit i in hits)
+        {
+            MyGameObject target = i.transform.GetComponentInParent<MyGameObject>();
+
+            if (target == null)
+            {
+                continue;
+            }
+
+            if (target.IsAlly(myGameObject))
+            {
+                continue;
+            }
+
+            if (target.GetComponent<Missile>())
+            {
+                continue;
+            }
+
+            target.OnDamage(Damage);
+        }
+
         Reload.Reset();
     }
 }
