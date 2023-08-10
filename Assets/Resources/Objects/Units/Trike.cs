@@ -8,6 +8,6 @@ public class Trike : Unit
 
         Speed = 12.0f;
         MissilePrefab = "Objects/Missiles/Bullet";
-        ReloadTimer = new Timer(2.0f);
+        Gun = new Laser("Laser", 2.0f, 4.0f, 2.0f);
     }
 }

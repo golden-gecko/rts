@@ -8,6 +8,6 @@ public class Tank_Missile : Unit
 
         Speed = 6.0f;
         MissilePrefab = "Objects/Missiles/Rocket";
-        ReloadTimer = new Timer(5.0f);
+        Gun = new Cannon("Cannon", 20.0f, 8.0f, 5.0f);
     }
 }

@@ -6,7 +6,7 @@ public class HUD : MonoBehaviour
 {
     public static HUD Instance { get; private set; }
 
-    private void Awake()
+    protected void Awake()
     {
         if (Instance != null && Instance != this)
         {
@@ -18,14 +18,14 @@ public class HUD : MonoBehaviour
         }
     }
 
-    private void Start()
+    protected void Start()
     {
         ResetVisual();
         DrawVisual();
         DrawSelection();
     }
 
-    private void Update()
+    protected void Update()
     {
         HashSet<MyGameObject> destroyed = new HashSet<MyGameObject>();
 

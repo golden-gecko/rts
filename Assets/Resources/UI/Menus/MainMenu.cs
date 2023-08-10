@@ -5,7 +5,7 @@ public class MainMenu : Menu
 {
     public static MainMenu Instance { get; private set; }
 
-    private void Awake()
+    protected void Awake()
     {
         if (Instance != null && Instance != this)
         {
@@ -17,7 +17,7 @@ public class MainMenu : Menu
         }
     }
 
-    private void OnEnable()
+    protected void OnEnable()
     {
         GetButton("Continue").RegisterCallback<ClickEvent>(ev => OnButtonContinue());
         GetButton("New").RegisterCallback<ClickEvent>(ev => OnButtonNew());

@@ -9,7 +9,7 @@ public class GameMenu : Menu
 {
     public static GameMenu Instance { get; private set; }
 
-    private void Awake()
+    protected void Awake()
     {
         if (Instance != null && Instance != this)
         {
@@ -21,7 +21,7 @@ public class GameMenu : Menu
         }
     }
 
-    private void OnEnable()
+    protected void OnEnable()
     {
         UIDocument uiDocument = GetComponent<UIDocument>();
         VisualElement rootVisualElement = uiDocument.rootVisualElement;
@@ -50,7 +50,7 @@ public class GameMenu : Menu
         Log("");
     }
 
-    private void Update()
+    protected void Update()
     {
         Player activePlayer = HUD.Instance.ActivePlayer;
 

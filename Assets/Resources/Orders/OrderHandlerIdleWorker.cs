@@ -4,16 +4,7 @@ public class OrderHandlerIdleWorker : IOrderHandler
     {
         Order order;
         
-        /*
-        order = Game.Instance.CreateOrderUnload(myGameObject);
-
-        if (order != null)
-        {
-            myGameObject.Orders.Add(order);
-
-            return;
-        }
-        */
+        // TODO: Find unload job.
 
         order = Game.Instance.CreateOrderTransport(myGameObject);
 

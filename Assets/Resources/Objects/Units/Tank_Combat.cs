@@ -11,6 +11,6 @@ public class Tank_Combat : Unit
 
         Speed = 6.0f;
         MissilePrefab = "Objects/Missiles/Rocket";
-        ReloadTimer = new Timer(5.0f);
+        Gun = new Laser("Laser", 3.0f, 30.0f, 5.0f);
     }
 }

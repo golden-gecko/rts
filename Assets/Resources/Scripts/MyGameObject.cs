@@ -74,8 +74,12 @@ public class MyGameObject : MonoBehaviour
         }
 
         AlignPositionToTerrain();
-        Reload();
         UpdateSkills();
+
+        if (Gun != null)
+        {
+            Gun.Update();
+        }
     }
 
     protected void UpdateSkills()
@@ -233,9 +237,9 @@ public class MyGameObject : MonoBehaviour
                     info += string.Format("\nSpeed: {0:0.}", Speed);
                 }
 
-                if (ReloadTimer != null)
+                if (Gun != null)
                 {
-                    info += string.Format("\nReload: {0:0.}/{1:0.}", ReloadTimer.Current, ReloadTimer.Max);
+                    info += string.Format("\n{0}", Gun.GetInfo());
                 }
 
                 string resources = Resources.GetInfo();
@@ -321,7 +325,7 @@ public class MyGameObject : MonoBehaviour
         Vector3 size = GetComponent<BoxCollider>().size;
 
         rangeMissile.gameObject.SetActive(status);
-        rangeMissile.localScale = new Vector3(MissileRange * 2.0f / scale.x, MissileRange * 2.0f / scale.z, 1.0f);
+        rangeMissile.localScale = new Vector3(Gun.Range * 2.0f / scale.x, Gun.Range * 2.0f / scale.z, 1.0f);
 
         rangeVisibility.gameObject.SetActive(status);
         rangeVisibility.localScale = new Vector3(VisibilityRange * 2.0f / scale.x, VisibilityRange * 2.0f / scale.z, 1.0f);
@@ -354,7 +358,7 @@ public class MyGameObject : MonoBehaviour
 
     public bool IsInAttackRange(Vector3 position)
     {
-        return IsInRange(position, MissileRange);
+        return IsInRange(position, Gun.Range);
     }
 
     public bool IsInVisibilityRange(Vector3 position)
@@ -383,14 +387,6 @@ public class MyGameObject : MonoBehaviour
     public void UpdateSelection()
     {
         selection.GetComponent<SpriteRenderer>().sprite = Player.SelectionSprite;
-    }
-
-    private void Reload()
-    {
-        if (ReloadTimer != null)
-        {
-            ReloadTimer.Update(Time.deltaTime);
-        }
     }
 
     protected virtual void AlignPositionToTerrain()
@@ -523,8 +519,6 @@ public class MyGameObject : MonoBehaviour
     [field: SerializeField]
     public Player Player;
 
-    public float Damage { get; protected set; } = 0.0f;
-
     public float ConstructionTime { get; protected set; } = 10.0f;
 
     public float Health { get; protected set; } = 10.0f;
@@ -539,13 +533,11 @@ public class MyGameObject : MonoBehaviour
 
     public float ResearchTime { get; protected set; } = 2.0f;
 
-    public float Speed { get; protected set; } = 10.0f;
+    public float Speed { get; protected set; } = 10.0f; // TODO: Move to engine component.
 
     public float WaitTime { get; protected set; } = 2.0f;
 
     public string MissilePrefab { get; protected set; } = string.Empty;
-
-    public float MissileRange { get; protected set; } = 0.0f;
 
     public float VisibilityRange { get; protected set; } = 10.0f;
 
@@ -567,11 +559,11 @@ public class MyGameObject : MonoBehaviour
 
     public Vector3 RallyPoint { get; set; } = Vector3.zero;
 
-    public Timer ReloadTimer { get; protected set; }
-
     public MyGameObject Parent { get; set; }
 
     public Dictionary<string, Skill> Skills { get; protected set; } = new Dictionary<string, Skill>();
+
+    public Gun Gun { get; set; } // TODO: Move to component list.
 
     protected Dictionary<OrderType, IOrderHandler> OrderHandlers { get; set; } = new Dictionary<OrderType, IOrderHandler>();
 

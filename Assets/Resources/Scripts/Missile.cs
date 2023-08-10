@@ -28,4 +28,6 @@ public class Missile : MyGameObject
             Destroy();
         }
     }
+
+    public float Damage { get; protected set; } = 0.0f;
 }

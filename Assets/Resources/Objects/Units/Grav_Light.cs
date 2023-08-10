@@ -7,7 +7,7 @@ public class Grav_Light : Unit
         Orders.AllowOrder(OrderType.Attack);
 
         MissilePrefab = "Objects/Missiles/Rocket";
-        ReloadTimer = new Timer(2.0f);
         Speed = 8.0f;
+        Gun = new Gauss("Gauss", 10.0f, 20.0f, 2.0f);
     }
 }

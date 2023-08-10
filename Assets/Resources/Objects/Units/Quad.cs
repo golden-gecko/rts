@@ -8,6 +8,6 @@ public class Quad : Unit
 
         Speed = 12.0f;
         MissilePrefab = "Objects/Missiles/Bullet";
-        ReloadTimer = new Timer(3.0f);
+        Gun = new Cannon("Cannon", 2.0f, 6.0f, 3.0f);
     }
 }
