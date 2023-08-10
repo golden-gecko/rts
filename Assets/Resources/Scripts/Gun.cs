@@ -31,4 +31,6 @@ public class Gun
     public float Range { get; }
 
     public Timer Reload { get; } = new Timer();
+
+    public string MissilePrefab { get; set; } = string.Empty; // TODO: Hide setter.
 }

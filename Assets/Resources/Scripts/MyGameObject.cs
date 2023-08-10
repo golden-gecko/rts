@@ -537,8 +537,6 @@ public class MyGameObject : MonoBehaviour
 
     public float WaitTime { get; protected set; } = 2.0f;
 
-    public string MissilePrefab { get; protected set; } = string.Empty;
-
     public float VisibilityRange { get; protected set; } = 10.0f;
 
     public Vector3 Position { get => transform.position; set => transform.position = value; }

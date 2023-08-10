@@ -8,7 +8,5 @@ public class Turret : Structure
 
         OrderHandlers[OrderType.Attack] = new OrderHandlerAttackTurret();
         OrderHandlers[OrderType.Idle] = new OrderHandlerIdleAttacker();
-
-        MissilePrefab = "Objects/Missiles/Rocket";
     }
 }
