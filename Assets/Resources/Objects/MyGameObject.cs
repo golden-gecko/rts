@@ -232,9 +232,9 @@ public class MyGameObject : MonoBehaviour
                     info += string.Format("\nHP: {0:0.}/{1:0.}", Health, MaxHealth);
                 }
 
-                if (Speed > 0.0f)
+                if (Engine != null)
                 {
-                    info += string.Format("\nSpeed: {0:0.}", Speed);
+                    info += string.Format("\n{0}", Engine.GetInfo());
                 }
 
                 if (Gun != null)
@@ -533,8 +533,6 @@ public class MyGameObject : MonoBehaviour
 
     public float ResearchTime { get; protected set; } = 2.0f;
 
-    public float Speed { get; protected set; } = 10.0f; // TODO: Move to engine component.
-
     public float WaitTime { get; protected set; } = 2.0f;
 
     public float VisibilityRange { get; protected set; } = 10.0f;
@@ -561,7 +559,9 @@ public class MyGameObject : MonoBehaviour
 
     public Dictionary<string, Skill> Skills { get; protected set; } = new Dictionary<string, Skill>();
 
-    public Gun Gun { get; set; } // TODO: Move to component list.
+    public Engine Engine { get; protected set; } // TODO: Move to component list.
+
+    public Gun Gun { get; protected set; } // TODO: Move to component list.
 
     protected Dictionary<OrderType, IOrderHandler> OrderHandlers { get; set; } = new Dictionary<OrderType, IOrderHandler>();
 

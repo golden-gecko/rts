@@ -6,7 +6,8 @@ public class Tank_Missile : Unit
 
         Orders.AllowOrder(OrderType.Attack);
 
-        Speed = 6.0f;
+        Engine = new Engine("Diesel", 6.0f);
+
         Gun = new Cannon("Cannon", 20.0f, 8.0f, 5.0f);
         Gun.MissilePrefab = "Objects/Missiles/Rocket";
     }
