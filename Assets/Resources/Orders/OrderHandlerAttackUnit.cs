@@ -48,8 +48,8 @@ public class OrderHandlerAttackUnit : IOrderHandler
                 missile.Destroy();
 
                 myGameObject.ReloadTimer.Reset();
-                myGameObject.Orders.MoveToEnd();
                 myGameObject.Stats.Add(Stats.MissilesFired, 1);
+                myGameObject.Orders.MoveToEnd();
             }
         }
     }

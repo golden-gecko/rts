@@ -32,8 +32,8 @@ public class OrderHandlerLoad : IOrderHandler
         if (resources.Count > 0)
         {
             myGameObject.MoveResources(order.SourceGameObject, myGameObject, resources);
-            myGameObject.Orders.Pop();
             myGameObject.Stats.Add(Stats.OrdersExecuted, 1);
+            myGameObject.Orders.Pop();
         }
         else
         {
@@ -46,8 +46,8 @@ public class OrderHandlerLoad : IOrderHandler
             }
             else
             {
-                myGameObject.Orders.Pop();
                 myGameObject.Stats.Add(Stats.OrdersFailed, 1);
+                myGameObject.Orders.Pop();
 
                 GameMenu.Instance.Log("Failed to execute load order");
             }

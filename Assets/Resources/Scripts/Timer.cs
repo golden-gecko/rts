@@ -1,6 +1,6 @@
 public class Timer
 {
-    public Timer(float max)
+    public Timer(float max = 0.0f)
     {
         Current = 0.0f;
         Max = max;
@@ -23,7 +23,7 @@ public class Timer
 
     public float Current { get; private set; }
 
-    public float Max { get; }
+    public float Max { get; set; }
 
     public bool Finished { get => Current >= Max; }
 }

@@ -22,6 +22,7 @@ public class OrderHandlerResearch : IOrderHandler
                     myGameObject.Stats.Add(Stats.OrdersExecuted, 1);
                     myGameObject.Stats.Add(Stats.ResourcesUsed, 1);
                     myGameObject.Stats.Add(Stats.TechnologiesDiscovered, 1);
+                    myGameObject.Stats.Add(Stats.TimeResearching, order.Timer.Max);
                 }
                 else
                 {
