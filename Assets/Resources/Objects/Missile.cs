@@ -10,7 +10,7 @@ public class Missile : MyGameObject
 
         OrderHandlers[OrderType.Destroy] = new OrderHandlerDestroyMissile();
 
-        Engine = new Engine(this, "Propulsion", 20.0f);
+        Engine = new Engine(this, "Propulsion", 1.0f, 20.0f);
 
         Health = 1.0f;
         MaxHealth = 1.0f;

@@ -1,6 +1,6 @@
 public class Armour : MyComponent
 {
-    public Armour(MyGameObject parent, string name, float value) : base(parent, name)
+    public Armour(MyGameObject parent, string name, float mass, float value) : base(parent, name, mass)
     {
         Value = value;
         ValueMax = value;

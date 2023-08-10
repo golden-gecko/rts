@@ -9,9 +9,9 @@ public class Tank_Combat : Unit
         Skills["Damage"] = new Damage("Damage", 3.0f, 10.0f, 4.0f);
         Skills["Repair"] = new Repair("Repair", 3.0f, 4.0f, 20.0f);
 
-        Engine = new Engine(this, "Diesel", 6.0f);
+        Engine = new Engine(this, "Diesel", 1.0f, 6.0f);
 
-        Gun = new Laser(this, "Laser", 3.0f, 10.0f, 5.0f);
+        Gun = new Laser(this, "Laser", 1.0f, 3.0f, 10.0f, 5.0f);
         Gun.MissilePrefab = "Objects/Missiles/Laser";
     }
 }
