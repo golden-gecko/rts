@@ -1,17 +1,14 @@
-using System.Collections.Generic;
-using UnityEditor.PackageManager;
 using UnityEngine;
-using static UnityEngine.GraphicsBuffer;
 
 public class Laser : Gun
 {
-    public Laser(string name, float damage, float range, float reload) : base(name, damage, range, reload)
+    public Laser(MyGameObject parent, string name, float damage, float range, float reload) : base(parent, name, damage, range, reload)
     {
     }
 
     public override void Fire(MyGameObject myGameObject, Vector3 position)
     {
-        RaycastHit[] hits = Physics.RaycastAll(new Ray(myGameObject.Center, position - myGameObject.Center), Config.RaycastMaxDistance);
+        RaycastHit[] hits = Physics.RaycastAll(new Ray(myGameObject.Center, position - myGameObject.Center), Config.RaycastMaxDistance); // TODO: Create missile prefab.
 
         MyGameObject closest = null;
         float distance = float.MaxValue;
@@ -44,7 +41,8 @@ public class Laser : Gun
 
         if (closest != null)
         {
-            closest.OnDamage(Damage);
+            float damageDealt = closest.OnDamage(Damage);
+            myGameObject.Stats.Add(Stats.DamageDealt, damageDealt);
 
             Object.Instantiate(Resources.Load("Effects/CFXR3 Hit Electric C (Air)"), closest.Position, Quaternion.identity); // TODO: Move effect name to configuration.
         }

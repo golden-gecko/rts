@@ -10,20 +10,20 @@ public class Missile : MyGameObject
 
         OrderHandlers[OrderType.Destroy] = new OrderHandlerDestroyMissile();
 
-        Engine = new Engine("Propulsion", 20.0f);
+        Engine = new Engine(this, "Propulsion", 20.0f);
 
         Health = 1.0f;
         MaxHealth = 1.0f;
     }
 
-    // TODO: Add collision with terrain.
     protected void OnTriggerEnter(Collider collider)
     {
-        MyGameObject myGameObject = collider.GetComponentInParent<MyGameObject>();
+        MyGameObject myGameObject = collider.GetComponentInParent<MyGameObject>(); // TODO: Add collision with terrain.
 
         if (myGameObject != null && myGameObject.IsAlly(this) == false && myGameObject.GetComponent<Missile>() == false)
         {
-            myGameObject.OnDamage(Damage);
+            float damageDealt = myGameObject.OnDamage(Damage);
+            Parent.Stats.Add(Stats.DamageDealt, damageDealt);
 
             Orders.Clear();
 

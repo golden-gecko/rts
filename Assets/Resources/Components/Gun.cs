@@ -1,10 +1,9 @@
 using UnityEngine;
 
-public class Gun
+public class Gun : MyComponent
 {
-    public Gun(string name, float damage, float range, float reload)
+    public Gun(MyGameObject parent, string name, float damage, float range, float reload) : base(parent, name)
     {
-        Name = name;
         Damage = damage;
         Range = range;
         Reload.Max = reload;
@@ -14,17 +13,15 @@ public class Gun
     {
     }
 
-    public virtual void Update()
+    public override void Update()
     {
         Reload.Update(Time.deltaTime);
     }
 
-    public virtual string GetInfo()
+    public override string GetInfo()
     {
-        return string.Format("Name: {0}, Reload: {0:0.}/{1:0.}", Name, Reload.Current, Reload.Max);
+        return string.Format("Name: {0}, Reload: {1:0.}/{2:0.}", Name, Reload.Current, Reload.Max);
     }
-
-    public string Name { get; }
 
     public float Damage { get; }
 
