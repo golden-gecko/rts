@@ -30,6 +30,8 @@ public class Gauss : Gun
             }
 
             target.OnDamage(Damage);
+
+            Object.Instantiate(Resources.Load("Effects/CFXR3 Hit Electric C (Air)"), target.Position, Quaternion.identity); // TODO: Move effect name to configuration.
         }
 
         Reload.Reset();

@@ -45,6 +45,8 @@ public class Laser : Gun
         if (closest != null)
         {
             closest.OnDamage(Damage);
+
+            Object.Instantiate(Resources.Load("Effects/CFXR3 Hit Electric C (Air)"), closest.Position, Quaternion.identity); // TODO: Move effect name to configuration.
         }
 
         Reload.Reset();
