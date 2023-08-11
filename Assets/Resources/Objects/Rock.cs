@@ -1,5 +1,3 @@
-using System.Collections.Generic;
-
 public class Rock : MyGameObject
 {
     protected override void Awake()
@@ -21,9 +19,9 @@ public class Rock : MyGameObject
 
     private bool IsDepleted()
     {
-        foreach (KeyValuePair<string, Resource> resource in Resources.Items)
+        foreach (Resource resource in Resources.Items.Values)
         {
-            if (resource.Value.Storage() > 0)
+            if (resource.Storage > 0)
             {
                 return false;
             }

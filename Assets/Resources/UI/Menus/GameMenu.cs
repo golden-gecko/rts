@@ -328,9 +328,9 @@ public class GameMenu : Menu
             }
         }
 
-        foreach (KeyValuePair<OrderType, Button> button in ordersButtons)
+        foreach (Button button in ordersButtons.Values)
         {
-            button.Value.style.display = DisplayStyle.None;
+            button.style.display = DisplayStyle.None;
         }
 
         foreach (OrderType i in whitelist)
@@ -369,9 +369,9 @@ public class GameMenu : Menu
             }
         }
 
-        foreach (KeyValuePair<string, Button> button in prefabsButtons)
+        foreach (Button button in prefabsButtons.Values)
         {
-            button.Value.style.display = DisplayStyle.None;
+            button.style.display = DisplayStyle.None;
         }
 
         foreach (string i in whitelist)
@@ -415,9 +415,9 @@ public class GameMenu : Menu
             }
         }
 
-        foreach (KeyValuePair<string, Button> button in technologiesButtons)
+        foreach (Button button in technologiesButtons.Values)
         {
-            button.Value.style.display = DisplayStyle.None;
+            button.style.display = DisplayStyle.None;
         }
 
         foreach (string i in whitelist)
@@ -459,9 +459,9 @@ public class GameMenu : Menu
             }
         }
 
-        foreach (KeyValuePair<string, Button> button in recipesButtons)
+        foreach (Button button in recipesButtons.Values)
         {
-            button.Value.style.display = DisplayStyle.None;
+            button.style.display = DisplayStyle.None;
         }
 
         foreach (string i in whitelist)
@@ -500,9 +500,9 @@ public class GameMenu : Menu
             }
         }
 
-        foreach (KeyValuePair<string, Button> button in skillsButtons)
+        foreach (Button button in skillsButtons.Values)
         {
-            button.Value.style.display = DisplayStyle.None;
+            button.style.display = DisplayStyle.None;
         }
 
         foreach (string i in whitelist)

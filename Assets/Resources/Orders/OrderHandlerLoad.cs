@@ -5,7 +5,7 @@ public class OrderHandlerLoad : IOrderHandler
 {
     public bool IsValid(Order order)
     {
-        return order.TargetGameObject != null;
+        return order.SourceGameObject != null;
     }
 
     public void OnExecute(MyGameObject myGameObject)

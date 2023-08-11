@@ -145,13 +145,14 @@ public class Order
         };
     }
 
-    public static Order Research(string technology, float time)
+    public static Order Research(string technology, int resourceUsage)
     {
         return new Order
         {
             Type = OrderType.Research,
             Technology = technology,
-            Timer = new Timer(time),
+            ResourceUsage = resourceUsage,
+            Timer = new Timer(1.0f),
         };
     }
 
@@ -274,4 +275,6 @@ public class Order
     public string Recipe { get; private set; }
 
     public string Skill_ { get; private set; } // TODO: Rename.
+
+    public int ResourceUsage { get; private set; }
 }

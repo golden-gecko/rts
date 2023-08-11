@@ -4,9 +4,9 @@ public class Researcher : MyComponent
 {
     public override string GetInfo()
     {
-        return string.Format("{0}, Research Time: {1:0.}", base.GetInfo(), ResearchTime);
+        return string.Format("{0}, Resource Usage: {1:0.}", base.GetInfo(), ResourceUsage);
     }
 
     [field: SerializeField]
-    public float ResearchTime { get; set; } = 2.0f; // TODO: Replace with rate (resource per second).
+    public int ResourceUsage { get; set; } = 1;
 }

@@ -26,9 +26,9 @@ public class OrderHandlerProduce : IOrderHandler
         }
         else
         {
-            foreach (KeyValuePair<string, Recipe> recipe in myGameObject.Recipes.Items)
+            foreach (Recipe recipe in myGameObject.Recipes.Items.Values)
             {
-                if (Produce(myGameObject, order, recipe.Value))
+                if (Produce(myGameObject, order, recipe))
                 {
                     break;
                 }

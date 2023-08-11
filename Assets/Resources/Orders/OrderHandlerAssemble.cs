@@ -45,9 +45,9 @@ public class OrderHandlerAssemble : IOrderHandler
     {
         foreach (KeyValuePair<string, Resource> i in order.TargetGameObject.ConstructionResources.Items)
         {
-            int capacity = i.Value.Capacity();
+            int capacity = i.Value.Capacity;
             int storage = myGameObject.Resources.Storage(i.Key);
-            int value = Mathf.Min(new int[] { capacity, storage });
+            int value = Mathf.Min(capacity, storage);
 
             if (value > 0)
             {

@@ -50,7 +50,7 @@ public class ResourceContainer
             Items.Add(name, new Resource(name, 0, 0));
         }
 
-        return Items[name].Capacity();
+        return Items[name].Capacity;
     }
 
     public string GetInfo()
@@ -85,7 +85,7 @@ public class ResourceContainer
             Items.Add(name, new Resource(name, 0, 0));
         }
 
-        return Items[name].Storage();
+        return Items[name].Storage;
     }
 
     public Dictionary<string, Resource> Items { get; } = new Dictionary<string, Resource>();
