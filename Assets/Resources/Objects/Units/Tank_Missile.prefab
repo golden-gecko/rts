@@ -211,11 +211,8 @@ MonoBehaviour:
   <Health>k__BackingField: 100
   <HealthMax>k__BackingField: 100
   <VisibilityRange>k__BackingField: 10
-  <ConstructionTime>k__BackingField: 10
   <GatherTime>k__BackingField: 2
   <LoadTime>k__BackingField: 2
-  <ProduceTime>k__BackingField: 2
-  <ResearchTime>k__BackingField: 2
   <WaitTime>k__BackingField: 2
 --- !u!114 &1445156918355217825
 MonoBehaviour:
@@ -245,7 +242,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   <Mass>k__BackingField: 10
-  <Power>k__BackingField: 10
+  <Power>k__BackingField: 50
 --- !u!114 &-202160912346554170
 MonoBehaviour:
   m_ObjectHideFlags: 0
