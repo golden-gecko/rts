@@ -2,7 +2,7 @@ public class OrderHandlerSkill : IOrderHandler
 {
     public bool IsValid(Order order)
     {
-        return order.Prefab.Length > 0;
+        return order.Skill_.Length > 0;
     }
 
     public void OnExecute(MyGameObject myGameObject)
@@ -17,12 +17,12 @@ public class OrderHandlerSkill : IOrderHandler
             return;
         }
 
-        if (myGameObject.Skills.ContainsKey(order.Prefab))
+        if (myGameObject.Skills.ContainsKey(order.Skill_))
         {
-            if (myGameObject.Skills[order.Prefab].Cooldown.Finished)
+            if (myGameObject.Skills[order.Skill_].Cooldown.Finished)
             {
-                myGameObject.Skills[order.Prefab].Execute(myGameObject);
-                myGameObject.Skills[order.Prefab].Cooldown.Reset();
+                myGameObject.Skills[order.Skill_].Execute(myGameObject);
+                myGameObject.Skills[order.Skill_].Cooldown.Reset();
 
                 myGameObject.Stats.Add(Stats.OrdersExecuted, 1);
                 myGameObject.Stats.Add(Stats.SkillsUsed, 1);

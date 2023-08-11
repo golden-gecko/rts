@@ -25,5 +25,8 @@ public class Gun : MyComponent
     [field: SerializeField]
     public string MissilePrefab { get; set; } = "Objects/Missiles/Rocket";
 
+    [field: SerializeField]
+    public string HitEffectPrefab { get; set; } = "Effects/CFXR3 Hit Electric C (Air)";
+
     public Timer Reload { get; } = new Timer(3.0f); // TODO: Create property.
 }

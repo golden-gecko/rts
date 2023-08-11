@@ -28,4 +28,6 @@ public class Skill
     public Timer Cooldown { get; } = new Timer();
 
     public float Range { get; } = 0.0f;
+
+    public string Effect { get; protected set; } = string.Empty;
 }

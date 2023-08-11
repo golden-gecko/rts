@@ -7,8 +7,6 @@ public class Missile : MyGameObject
         base.Awake();
 
         Orders.AllowOrder(OrderType.Move);
-
-        OrderHandlers[OrderType.Destroy] = new OrderHandlerDestroyMissile();
     }
 
     protected void OnTriggerEnter(Collider collider)
@@ -18,6 +16,12 @@ public class Missile : MyGameObject
         if (myGameObject != null && myGameObject.IsAlly(this) == false && myGameObject.GetComponent<Missile>() == false)
         {
             float damageDealt = myGameObject.OnDamage(Damage);
+
+            if (myGameObject.Alive == false)
+            {
+                Parent.Stats.Add(Stats.TargetsDestroyed, 1);
+            }
+
             Parent.Stats.Add(Stats.DamageDealt, damageDealt);
 
             Orders.Clear();
@@ -26,5 +30,6 @@ public class Missile : MyGameObject
         }
     }
 
-    public float Damage { get; protected set; } = 0.0f;
+    [field: SerializeField]
+    public float Damage { get; set; } = 10.0f;
 }

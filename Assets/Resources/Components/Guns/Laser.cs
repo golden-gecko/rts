@@ -1,4 +1,5 @@
 using UnityEngine;
+using static UnityEngine.GraphicsBuffer;
 
 public class Laser : Gun
 {
@@ -38,9 +39,17 @@ public class Laser : Gun
         if (closest != null)
         {
             float damageDealt = closest.OnDamage(Damage);
-            myGameObject.Stats.Add(Stats.DamageDealt, damageDealt);
 
-            Object.Instantiate(Resources.Load("Effects/CFXR3 Hit Electric C (Air)"), closest.Position, Quaternion.identity); // TODO: Move effect name to configuration.
+            if (closest.Alive)
+            {
+                Instantiate(Resources.Load(HitEffectPrefab), closest.Position, Quaternion.identity);
+            }
+            else
+            {
+                myGameObject.Stats.Add(Stats.TargetsDestroyed, 1); 
+            }
+
+            myGameObject.Stats.Add(Stats.DamageDealt, damageDealt);
         }
 
         Reload.Reset();

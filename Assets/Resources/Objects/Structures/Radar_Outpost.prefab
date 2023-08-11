@@ -96,6 +96,7 @@ GameObject:
   - component: {fileID: 5334768348210969601}
   - component: {fileID: -6243919976694139320}
   - component: {fileID: 1102883837138704583}
+  - component: {fileID: 6175888824097214427}
   m_Layer: 0
   m_Name: Radar_Outpost
   m_TagString: Untagged
@@ -204,8 +205,26 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   <Player>k__BackingField: {fileID: 0}
+  <Selectable>k__BackingField: 1
   <Health>k__BackingField: 50
   <HealthMax>k__BackingField: 50
+  <VisibilityRange>k__BackingField: 10
+  <LoadTime>k__BackingField: 2
+  <WaitTime>k__BackingField: 2
+--- !u!114 &6175888824097214427
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5838947687989452244}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0e14426d1d972e847bab0e3e66e78bcf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  <Mass>k__BackingField: 10
+  <Range>k__BackingField: 30
 --- !u!1001 &6324752657615176971
 PrefabInstance:
   m_ObjectHideFlags: 0
