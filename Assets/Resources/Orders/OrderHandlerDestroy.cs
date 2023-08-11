@@ -2,6 +2,11 @@ using UnityEngine;
 
 public class OrderHandlerDestroy : IOrderHandler
 {
+    public bool IsValid(Order order)
+    {
+        return true;
+    }
+
     public void OnExecute(MyGameObject myGameObject)
     {
         Object.Instantiate(Resources.Load("Effects/WFXMR_ExplosiveSmoke"), myGameObject.Position, Quaternion.identity); // TODO: Move effect name to configuration.

@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 8852757854655745743}
   - component: {fileID: -4730453693308864987}
   - component: {fileID: -610857997906868978}
+  - component: {fileID: -2682188205079004282}
   m_Layer: 0
   m_Name: Rocket
   m_TagString: Untagged
@@ -147,7 +148,30 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ea05d08f5969b634bba4bc266b62bb5a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Player: {fileID: 0}
+  <Player>k__BackingField: {fileID: 0}
+  <Health>k__BackingField: 1
+  <HealthMax>k__BackingField: 1
+  <VisibilityRange>k__BackingField: 10
+  <ConstructionTime>k__BackingField: 10
+  <GatherTime>k__BackingField: 2
+  <LoadTime>k__BackingField: 2
+  <ProduceTime>k__BackingField: 2
+  <ResearchTime>k__BackingField: 2
+  <WaitTime>k__BackingField: 2
+--- !u!114 &-2682188205079004282
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3841255586236475405}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 480f2643be9397244bac146d70b54f9f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  <Mass>k__BackingField: 1
+  <Power>k__BackingField: 10
 --- !u!1001 &3937727271344076588
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -2,6 +2,10 @@ using UnityEngine;
 
 public class OrderHandlerMove : IOrderHandler
 {
+    public bool IsValid(Order order)
+    {
+        return true;
+    }
     public void OnExecute(MyGameObject myGameObject)
     {
         Order order = myGameObject.Orders.First();
@@ -13,7 +17,7 @@ public class OrderHandlerMove : IOrderHandler
         position.y = 0;
 
         float distanceToTarget = (target - position).magnitude;
-        float distanceToTravel = myGameObject.Engine.Speed * Time.deltaTime;
+        float distanceToTravel = myGameObject.GetComponent<Engine>().Speed * Time.deltaTime;
 
         if (distanceToTarget > distanceToTravel)
         {

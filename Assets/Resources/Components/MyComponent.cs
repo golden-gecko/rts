@@ -1,24 +1,20 @@
-public class MyComponent
+using UnityEngine;
+
+public class MyComponent : MonoBehaviour
 {
-    public MyComponent(MyGameObject parent, string name, float mass)
+    protected virtual void Awake()
     {
-        Parent = parent;
-        Name = name;
-        Mass = mass;
     }
 
-    public virtual void Update()
+    protected virtual void Update()
     {
     }
 
     public virtual string GetInfo()
     {
-        return string.Format("Name: {0}", Name);
+        return string.Format("Mass: {0:0.}", Mass);
     }
 
-    public MyGameObject Parent { get; }
-
-    public string Name { get; }
-
-    public float Mass { get; }
+    [field: SerializeField]
+    public float Mass { get; set; } = 10.0f;
 }

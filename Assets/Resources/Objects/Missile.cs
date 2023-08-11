@@ -9,11 +9,6 @@ public class Missile : MyGameObject
         Orders.AllowOrder(OrderType.Move);
 
         OrderHandlers[OrderType.Destroy] = new OrderHandlerDestroyMissile();
-
-        Engine = new Engine(this, "Propulsion", 1.0f, 20.0f);
-
-        Health = 1.0f;
-        MaxHealth = 1.0f;
     }
 
     protected void OnTriggerEnter(Collider collider)

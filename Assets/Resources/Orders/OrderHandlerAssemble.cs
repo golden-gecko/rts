@@ -3,6 +3,11 @@ using UnityEngine;
 
 public class OrderHandlerAssemble : IOrderHandler
 {
+    public bool IsValid(Order order)
+    {
+        return true;
+    }
+
     public void OnExecute(MyGameObject myGameObject)
     {
         Order order = myGameObject.Orders.First();

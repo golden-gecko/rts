@@ -263,6 +263,9 @@ GameObject:
   - component: {fileID: 9149475107025261477}
   - component: {fileID: 3275813292886042858}
   - component: {fileID: -6048010201893483234}
+  - component: {fileID: 407880308323197961}
+  - component: {fileID: 3529955628967414671}
+  - component: {fileID: 5868722175879569043}
   m_Layer: 0
   m_Name: Trike
   m_TagString: Untagged
@@ -372,7 +375,61 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c4da4a705f2fcf04bb7359855b3e737c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Player: {fileID: 0}
+  <Player>k__BackingField: {fileID: 0}
+  <Health>k__BackingField: 30
+  <HealthMax>k__BackingField: 30
+  <VisibilityRange>k__BackingField: 10
+  <ConstructionTime>k__BackingField: 10
+  <GatherTime>k__BackingField: 2
+  <LoadTime>k__BackingField: 2
+  <ProduceTime>k__BackingField: 2
+  <ResearchTime>k__BackingField: 2
+  <WaitTime>k__BackingField: 2
+--- !u!114 &407880308323197961
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7348057453300986480}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4248ce16722b7444fac5deb395c690e8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  <Mass>k__BackingField: 10
+  <Value>k__BackingField: 10
+  <ValueMax>k__BackingField: 10
+--- !u!114 &3529955628967414671
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7348057453300986480}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 480f2643be9397244bac146d70b54f9f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  <Mass>k__BackingField: 10
+  <Power>k__BackingField: 10
+--- !u!114 &5868722175879569043
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7348057453300986480}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3a403fb22d2914049ac162610b2aebf2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  <Mass>k__BackingField: 10
+  <Damage>k__BackingField: 10
+  <Range>k__BackingField: 20
+  <MissilePrefab>k__BackingField: Objects/Missiles/Rocket
 --- !u!1 &7993281005162232544
 GameObject:
   m_ObjectHideFlags: 0

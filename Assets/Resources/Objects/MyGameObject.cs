@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -75,13 +76,18 @@ public class MyGameObject : MonoBehaviour
         }
 
         AlignPositionToTerrain();
-        UpdateSkills();
 
-        if (Gun != null)
-        {
-            Gun.Update();
-        }
+        // UpdateComponents();
+        UpdateSkills();
     }
+
+    /*protected void UpdateComponents()
+    {
+        foreach (MyComponent i in Components)
+        {
+            i.Update();
+        }
+    }*/
 
     protected void UpdateSkills()
     {
@@ -228,29 +234,21 @@ public class MyGameObject : MonoBehaviour
             case MyGameObjectState.Operational:
                 info += string.Format("ID: {0}\nName: {1}", GetInstanceID(), name);
 
-                if (MaxHealth > 0.0f)
+                if (HealthMax > 0.0f)
                 {
-                    info += string.Format("\nHP: {0:0.}/{1:0.}", Health, MaxHealth);
+                    info += string.Format("\nHP: {0:0.}/{1:0.}", Health, HealthMax);
                 }
 
-                if (Armour != null || Engine != null || Gun != null) // TODO: Create component list.
+                MyComponent[] myComponents = GetComponents<MyComponent>();
+
+                if (myComponents.Length > 0)
                 {
                     info += "\nComponents:";
-                }
 
-                if (Armour != null)
-                {
-                    info += string.Format("\n  {0}", Armour.GetInfo());
-                }
-
-                if (Engine != null)
-                {
-                    info += string.Format("\n  {0}", Engine.GetInfo());
-                }
-
-                if (Gun != null)
-                {
-                    info += string.Format("\n  {0}", Gun.GetInfo());
+                    foreach (MyComponent i in myComponents)
+                    {
+                        info += string.Format("\n  {0}", i.GetInfo());
+                    }
                 }
 
                 string resources = Resources.GetInfo();
@@ -322,19 +320,21 @@ public class MyGameObject : MonoBehaviour
         float damageDealt = 0.0f;
         float damageLeft = value;
 
-        if (Armour != null)
+        Armour armour = GetComponent<Armour>();
+
+        if (armour != null)
         {
-            damageToDeal = Mathf.Min(damageLeft, Armour.Value);
+            damageToDeal = Mathf.Min(damageLeft, armour.Value);
             damageDealt += damageToDeal;
             damageLeft -= damageToDeal;
 
-            Armour.Value = Mathf.Clamp(Armour.Value - damageToDeal, 0.0f, Armour.ValueMax);
+            armour.Value = Mathf.Clamp(armour.Value - damageToDeal, 0.0f, armour.ValueMax);
         }
 
         damageToDeal = Mathf.Min(damageLeft, Health);
         damageDealt += damageToDeal;
 
-        Health = Mathf.Clamp(Health - damageToDeal, 0.0f, MaxHealth);
+        Health = Mathf.Clamp(Health - damageToDeal, 0.0f, HealthMax);
 
         Stats.Add(Stats.DamageTaken, damageDealt);
 
@@ -343,7 +343,7 @@ public class MyGameObject : MonoBehaviour
 
     public void OnRepair(float value)
     {
-        Health = Mathf.Clamp(Health + value, 0.0f, MaxHealth);
+        Health = Mathf.Clamp(Health + value, 0.0f, HealthMax);
 
         Stats.Add(Stats.DamageRepaired, value);
     }
@@ -353,10 +353,12 @@ public class MyGameObject : MonoBehaviour
         Vector3 scale = transform.localScale;
         Vector3 size = GetComponent<BoxCollider>().size;
 
-        if (Gun != null)
+        Gun gun = GetComponent<Gun>();
+
+        if (gun != null)
         {
             rangeMissile.gameObject.SetActive(status);
-            rangeMissile.localScale = new Vector3(Gun.Range * 2.0f / scale.x, Gun.Range * 2.0f / scale.z, 1.0f);
+            rangeMissile.localScale = new Vector3(gun.Range * 2.0f / scale.x, gun.Range * 2.0f / scale.z, 1.0f);
         }
 
         rangeVisibility.gameObject.SetActive(status);
@@ -390,7 +392,7 @@ public class MyGameObject : MonoBehaviour
 
     public bool IsInAttackRange(Vector3 position)
     {
-        return IsInRange(position, Gun.Range);
+        return IsInRange(position, GetComponent<Gun>().Range); // TODO: Remove?
     }
 
     public bool IsInVisibilityRange(Vector3 position)
@@ -554,19 +556,9 @@ public class MyGameObject : MonoBehaviour
         {
             float mass = 0.0f;
 
-            if (Armour != null)
+            foreach (MyComponent i in GetComponents<MyComponent>())
             {
-                mass += Armour.Mass;
-            }
-
-            if (Engine != null)
-            {
-                mass += Engine.Mass;
-            }
-
-            if (Gun != null)
-            {
-                mass += Gun.Mass;
+                mass += i.Mass;
             }
 
             return mass;
@@ -574,25 +566,34 @@ public class MyGameObject : MonoBehaviour
     }
 
     [field: SerializeField]
-    public Player Player;
+    public Player Player { get; set; }
 
-    public float ConstructionTime { get; protected set; } = 10.0f;
+    [field: SerializeField]
+    public float Health { get; set; } = 100.0f;
 
-    public float Health { get; protected set; } = 10.0f;
+    [field: SerializeField]
+    public float HealthMax { get; set; } = 100.0f;
 
-    public float MaxHealth { get; protected set; } = 10.0f;
+    [field: SerializeField]
+    public float VisibilityRange { get; set; } = 10.0f;
 
-    public float GatherTime { get; protected set; } = 2.0f; // TODO: Implement as Gather order.
+    [field: SerializeField]
+    public float ConstructionTime { get; set; } = 10.0f;
 
-    public float LoadTime { get; protected set; } = 2.0f;
+    [field: SerializeField]
+    public float GatherTime { get; set; } = 2.0f; // TODO: Implement as Gather order.
 
-    public float ProduceTime { get; protected set; } = 2.0f;
+    [field: SerializeField]
+    public float LoadTime { get; set; } = 2.0f;
 
-    public float ResearchTime { get; protected set; } = 2.0f;
+    [field: SerializeField]
+    public float ProduceTime { get; set; } = 2.0f;
 
-    public float WaitTime { get; protected set; } = 2.0f;
+    [field: SerializeField]
+    public float ResearchTime { get; set; } = 2.0f;
 
-    public float VisibilityRange { get; protected set; } = 10.0f;
+    [field: SerializeField]
+    public float WaitTime { get; set; } = 2.0f;
 
     public Vector3 Position { get => transform.position; set => transform.position = value; }
 
@@ -616,11 +617,24 @@ public class MyGameObject : MonoBehaviour
 
     public Dictionary<string, Skill> Skills { get; protected set; } = new Dictionary<string, Skill>();
 
-    public Armour Armour { get; protected set; } // TODO: Move to component list.
+    /*public void AddComponent(MyComponent myComponent)
+    {
+        Components.Add(myComponent);
+    }
 
-    public Engine Engine { get; protected set; } // TODO: Move to component list.
+    public T GetComponent<T>() where T : class
+    {
+        IEnumerable<T> results = Components.OfType<T>();
 
-    public Gun Gun { get; protected set; } // TODO: Move to component list.
+        if (results.Count<T>() <= 0)
+        {
+            return null;
+        }
+
+        return results.First();
+    }
+
+    public List<MyComponent> Components { get; } = new List<MyComponent>();*/
 
     protected Dictionary<OrderType, IOrderHandler> OrderHandlers { get; set; } = new Dictionary<OrderType, IOrderHandler>();
 

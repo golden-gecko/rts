@@ -2,32 +2,28 @@ using UnityEngine;
 
 public class Gun : MyComponent
 {
-    public Gun(MyGameObject parent, string name, float mass, float damage, float range, float reload) : base(parent, name, mass)
-    {
-        Damage = damage;
-        Range = range;
-        Reload.Max = reload;
-    }
-
-    public virtual void Fire(MyGameObject myGameObject, Vector3 position)
-    {
-    }
-
-    public override void Update()
+    protected override void Update()
     {
         Reload.Update(Time.deltaTime);
     }
 
     public override string GetInfo()
     {
-        return string.Format("Name: {0}, Reload: {1:0.}/{2:0.}", Name, Reload.Current, Reload.Max);
+        return string.Format("{0}, Reload: {1:0.}/{2:0.}", base.GetInfo(), Reload.Current, Reload.Max);
     }
 
-    public float Damage { get; }
+    public virtual void Fire(MyGameObject myGameObject, Vector3 position)
+    {
+    }
 
-    public float Range { get; }
+    [field: SerializeField]
+    public float Damage { get; set; } = 10.0f;
 
-    public Timer Reload { get; } = new Timer();
+    [field: SerializeField]
+    public float Range { get; set; } = 20.0f;
 
-    public string MissilePrefab { get; set; } = string.Empty; // TODO: Hide setter.
+    [field: SerializeField]
+    public string MissilePrefab { get; set; } = "Objects/Missiles/Rocket";
+
+    public Timer Reload { get; } = new Timer(3.0f); // TODO: Create property.
 }

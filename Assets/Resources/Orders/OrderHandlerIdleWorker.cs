@@ -1,5 +1,10 @@
 public class OrderHandlerIdleWorker : IOrderHandler
 {
+    public bool IsValid(Order order)
+    {
+        return true;
+    }
+
     public void OnExecute(MyGameObject myGameObject)
     {
         Order order;

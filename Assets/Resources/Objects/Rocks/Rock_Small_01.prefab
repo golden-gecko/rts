@@ -119,7 +119,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b8b8bda3c3967094fac3b3ae241e2658, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Player: {fileID: 0}
+  <Player>k__BackingField: {fileID: 0}
+  <Health>k__BackingField: 10
+  <HealthMax>k__BackingField: 10
+  <VisibilityRange>k__BackingField: 10
+  <ConstructionTime>k__BackingField: 10
+  <GatherTime>k__BackingField: 2
+  <LoadTime>k__BackingField: 2
+  <ProduceTime>k__BackingField: 2
+  <ResearchTime>k__BackingField: 2
+  <WaitTime>k__BackingField: 2
 --- !u!1001 &5692449983818599645
 PrefabInstance:
   m_ObjectHideFlags: 0

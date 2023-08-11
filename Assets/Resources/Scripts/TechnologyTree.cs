@@ -24,7 +24,7 @@ public class TechnologyTree
         // Create technologies to research.
         Dictionary<string, int> cost = new Dictionary<string, int>
         {
-            { "Crystal", 50 },
+            { "Crystal", 50 }, // TODO: Add cost to technology.
         };
 
         Technologies["Colonization"] = new Technology("Colonization", cost, new HashSet<string> { "Factory_Light", "Grav_Light", "Harvester", "Headquarters", "Quad", "Refinery", "Research_Lab", "Trike" });

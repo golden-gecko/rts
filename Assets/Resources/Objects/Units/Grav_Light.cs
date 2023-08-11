@@ -5,10 +5,5 @@ public class Grav_Light : Unit
         base.Awake();
 
         Orders.AllowOrder(OrderType.Attack);
-
-        Engine = new Engine(this, "Diesel", 1.0f, 8.0f);
-
-        Gun = new Gauss(this, "Gauss", 1.0f, 10.0f, 10.0f, 2.0f);
-        Gun.MissilePrefab = "Objects/Missiles/Gauss";
     }
 }

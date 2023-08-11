@@ -2,6 +2,11 @@ using UnityEngine;
 
 public class OrderHandlerExplore : IOrderHandler
 {
+    public bool IsValid(Order order)
+    {
+        return true;
+    }
+
     public void OnExecute(MyGameObject myGameObject)
     {
         float x = Random.Range(myGameObject.Position.x - myGameObject.VisibilityRange, myGameObject.Position.x + myGameObject.VisibilityRange);
