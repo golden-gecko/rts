@@ -99,7 +99,7 @@ public class MyGameObject : MonoBehaviour
 
     public void Assemble(string prefab)
     {
-        Orders.Add(Order.Assemble(prefab, ConstructionTime));
+        Orders.Add(Order.Assemble(prefab, GetComponent<Constructor>().ConstructionTime));
     }
 
     public void Attack(Vector3 position)
@@ -114,7 +114,7 @@ public class MyGameObject : MonoBehaviour
 
     public void Construct(string prefab, MyGameObject myGameObject)
     {
-        Orders.Add(Order.Construct(prefab, myGameObject, ConstructionTime));
+        Orders.Add(Order.Construct(prefab, myGameObject, GetComponent<Constructor>().ConstructionTime));
     }
 
     public void Destroy(int priority = -1)
@@ -173,7 +173,7 @@ public class MyGameObject : MonoBehaviour
 
     public void Produce(string recipe = "")
     {
-        Orders.Add(Order.Produce(recipe, ProduceTime));
+        Orders.Add(Order.Produce(recipe, GetComponent<Producer>().ProduceTime));
     }
 
     public void Rally(Vector3 target, int priority = -1)
@@ -190,7 +190,7 @@ public class MyGameObject : MonoBehaviour
 
     public void Research(string technology)
     {
-        Orders.Add(Order.Research(technology, ResearchTime));
+        Orders.Add(Order.Research(technology, GetComponent<Researcher>().ResearchTime));
     }
 
     public void Skill(string skill)
@@ -578,19 +578,10 @@ public class MyGameObject : MonoBehaviour
     public float VisibilityRange { get; set; } = 10.0f;
 
     [field: SerializeField]
-    public float ConstructionTime { get; set; } = 10.0f;
-
-    [field: SerializeField]
     public float GatherTime { get; set; } = 2.0f; // TODO: Implement as Gather order.
 
     [field: SerializeField]
     public float LoadTime { get; set; } = 2.0f;
-
-    [field: SerializeField]
-    public float ProduceTime { get; set; } = 2.0f;
-
-    [field: SerializeField]
-    public float ResearchTime { get; set; } = 2.0f;
 
     [field: SerializeField]
     public float WaitTime { get; set; } = 2.0f;
@@ -616,25 +607,6 @@ public class MyGameObject : MonoBehaviour
     public MyGameObject Parent { get; set; }
 
     public Dictionary<string, Skill> Skills { get; protected set; } = new Dictionary<string, Skill>();
-
-    /*public void AddComponent(MyComponent myComponent)
-    {
-        Components.Add(myComponent);
-    }
-
-    public T GetComponent<T>() where T : class
-    {
-        IEnumerable<T> results = Components.OfType<T>();
-
-        if (results.Count<T>() <= 0)
-        {
-            return null;
-        }
-
-        return results.First();
-    }
-
-    public List<MyComponent> Components { get; } = new List<MyComponent>();*/
 
     protected Dictionary<OrderType, IOrderHandler> OrderHandlers { get; set; } = new Dictionary<OrderType, IOrderHandler>();
 

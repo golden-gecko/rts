@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 1074577127326329536}
   - component: {fileID: 3444934898535418200}
   - component: {fileID: -2182117504668185234}
+  - component: {fileID: -7296574799590733170}
   - component: {fileID: 4793784651987314840}
   m_Layer: 0
   m_Name: Harvester
@@ -132,12 +133,25 @@ MonoBehaviour:
   <Health>k__BackingField: 200
   <HealthMax>k__BackingField: 200
   <VisibilityRange>k__BackingField: 10
-  <ConstructionTime>k__BackingField: 10
   <GatherTime>k__BackingField: 2
   <LoadTime>k__BackingField: 2
   <ProduceTime>k__BackingField: 2
   <ResearchTime>k__BackingField: 2
   <WaitTime>k__BackingField: 2
+--- !u!114 &-7296574799590733170
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1578887994438585109}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b9a00f16555428d49958a19db20e17a2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  <Mass>k__BackingField: 10
+  <ConstructionTime>k__BackingField: 10
 --- !u!114 &4793784651987314840
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -151,7 +165,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   <Mass>k__BackingField: 10
-  <Power>k__BackingField: 10
+  <Power>k__BackingField: 4
 --- !u!1 &2488149496584009299
 GameObject:
   m_ObjectHideFlags: 0

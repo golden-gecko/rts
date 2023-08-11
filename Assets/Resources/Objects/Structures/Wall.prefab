@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 8002195080220181264}
   - component: {fileID: 1115958472789024437}
   - component: {fileID: 4925406556829064216}
+  - component: {fileID: -309273742846007426}
   m_Layer: 0
   m_Name: Wall
   m_TagString: Untagged
@@ -122,6 +123,26 @@ MonoBehaviour:
   <Player>k__BackingField: {fileID: 0}
   <Health>k__BackingField: 300
   <HealthMax>k__BackingField: 300
+  <VisibilityRange>k__BackingField: 10
+  <GatherTime>k__BackingField: 2
+  <LoadTime>k__BackingField: 2
+  <ProduceTime>k__BackingField: 2
+  <WaitTime>k__BackingField: 2
+--- !u!114 &-309273742846007426
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8362479133154386629}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4248ce16722b7444fac5deb395c690e8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  <Mass>k__BackingField: 10
+  <Value>k__BackingField: 100
+  <ValueMax>k__BackingField: 100
 --- !u!1001 &1819888346999492130
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -111,7 +111,7 @@ public class Game : MonoBehaviour
 
         if (closest != null)
         {
-            return Order.Construct(closest, myGameObject.ConstructionTime);
+            return Order.Construct(closest, myGameObject.GetComponent<Constructor>().ConstructionTime);
         }
 
         return null;

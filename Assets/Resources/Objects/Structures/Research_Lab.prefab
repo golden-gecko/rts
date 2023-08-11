@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 5733262586826808010}
   - component: {fileID: -4848634375500361410}
   - component: {fileID: -6134940170510068287}
+  - component: {fileID: 4576625105702019730}
   m_Layer: 0
   m_Name: Research_Lab
   m_TagString: Untagged
@@ -122,6 +123,25 @@ MonoBehaviour:
   <Player>k__BackingField: {fileID: 0}
   <Health>k__BackingField: 50
   <HealthMax>k__BackingField: 50
+  <VisibilityRange>k__BackingField: 10
+  <GatherTime>k__BackingField: 2
+  <LoadTime>k__BackingField: 2
+  <ProduceTime>k__BackingField: 2
+  <WaitTime>k__BackingField: 2
+--- !u!114 &4576625105702019730
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6093475309484964639}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4d4c46a200faaed4fa9a0dcf28640d4c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  <Mass>k__BackingField: 10
+  <ResearchTime>k__BackingField: 2
 --- !u!1001 &5585880272078454421
 PrefabInstance:
   m_ObjectHideFlags: 0
