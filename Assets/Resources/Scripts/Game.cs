@@ -51,7 +51,7 @@ public class Game : MonoBehaviour
 
         foreach (MyGameObject target in GameObject.FindObjectsByType<MyGameObject>(FindObjectsSortMode.None))
         {
-            if (myGameObject.IsEnemy(target) == false)
+            if (myGameObject.Is(target, DiplomacyState.Enemy) == false)
             {
                 continue;
             }
@@ -95,7 +95,7 @@ public class Game : MonoBehaviour
                 continue;
             }
 
-            if (myGameObject.IsAlly(underConstruction) == false)
+            if (myGameObject.Is(underConstruction, DiplomacyState.Ally) == false)
             {
                 continue;
             }

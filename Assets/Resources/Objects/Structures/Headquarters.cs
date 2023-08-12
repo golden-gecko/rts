@@ -12,17 +12,17 @@ public class Headquarters : Structure
 
         Recipe r1 = new Recipe("Storage");
 
-        r1.Consume("Coal", 0);
-        r1.Consume("Crystal", 0);
-        r1.Consume("Metal", 0);
-        r1.Consume("Metal Ore", 0);
-        r1.Consume("Wood", 0);
+        r1.Consumes("Coal", 0);
+        r1.Consumes("Crystal", 0);
+        r1.Consumes("Metal", 0);
+        r1.Consumes("Metal Ore", 0);
+        r1.Consumes("Wood", 0);
 
-        r1.Produce("Coal", 0);
-        r1.Produce("Crystal", 0);
-        r1.Produce("Metal", 0);
-        r1.Produce("Metal Ore", 0);
-        r1.Produce("Wood", 0);
+        r1.Produces("Coal", 0);
+        r1.Produces("Crystal", 0);
+        r1.Produces("Metal", 0);
+        r1.Produces("Metal Ore", 0);
+        r1.Produces("Wood", 0);
 
         Recipes.Add(r1);
     }

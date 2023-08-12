@@ -7,19 +7,52 @@ public class Recipe
         Name = name;
     }
 
-    public void Consume(string name, int count)
+    public void Consumes(string name, int count)
     {
-        ToConsume.Add(new RecipeComponent(name, count));
+        ToConsume.Add(name, 0, count);
     }
 
-    public void Produce(string name, int count)
+    public void Produces(string name, int count)
     {
-        ToProduce.Add(new RecipeComponent(name, count));
+        ToProduce.Add(name, 0, count);
+    }
+
+    public void Reset()
+    {
+        foreach (Resource i in ToConsume.Items.Values)
+        {
+            i.Remove(i.Storage);
+        }
+
+        foreach (Resource i in ToProduce.Items.Values)
+        {
+            i.Add(i.Capacity);
+        }
     }
 
     public string Name { get; }
 
-    public List<RecipeComponent> ToConsume { get; } = new List<RecipeComponent>();
+    public ResourceContainer ToConsume { get; } = new ResourceContainer();
 
-    public List<RecipeComponent> ToProduce { get; } = new List<RecipeComponent>();
+    public ResourceContainer ToProduce { get; } = new ResourceContainer();
+
+    public int Total
+    {
+        get
+        {
+            int sum = 0;
+
+            foreach (Resource i in ToConsume.Items.Values)
+            {
+                sum += i.Max;
+            }
+
+            foreach (Resource i in ToProduce.Items.Values)
+            {
+                sum += i.Max;
+            }
+
+            return sum;
+        }
+    }
 }

@@ -56,7 +56,7 @@ public class GameMenu : Menu
 
         if (HUD.Instance.Hovered != null)
         {
-            bool ally = HUD.Instance.Hovered.IsAlly(activePlayer);
+            bool ally = HUD.Instance.Hovered.Is(activePlayer, DiplomacyState.Ally);
 
             info.text = HUD.Instance.Hovered.GetInfo(ally);
 

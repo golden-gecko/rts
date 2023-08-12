@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class MyGameObject : MonoBehaviour
@@ -39,7 +40,7 @@ public class MyGameObject : MonoBehaviour
 
         Recipe r1 = new Recipe("Metal");
 
-        r1.Consume("Metal", 0);
+        r1.Consumes("Metal", 0);
 
         ConstructionRecipies.Add(r1);
     }
@@ -171,7 +172,7 @@ public class MyGameObject : MonoBehaviour
 
     public void Produce(string recipe = "")
     {
-        Orders.Add(Order.Produce(recipe, GetComponent<Producer>().ProduceTime));
+        Orders.Add(Order.Produce(recipe, GetComponent<Producer>().ResourceUsage));
     }
 
     public void Rally(Vector3 target, int priority = -1)
@@ -292,24 +293,14 @@ public class MyGameObject : MonoBehaviour
         return info;
     }
 
-    public bool IsAlly(MyGameObject myGameObject)
+    public bool Is(MyGameObject myGameObject, DiplomacyState state)
     {
-        return Player.IsAlly(myGameObject.Player);
+        return Player.Is(myGameObject.Player, state);
     }
 
-    public bool IsEnemy(MyGameObject myGameObject)
+    public bool Is(Player player, DiplomacyState state)
     {
-        return Player.IsEnemy(myGameObject.Player);
-    }
-
-    public bool IsAlly(Player player)
-    {
-        return Player.IsAlly(player);
-    }
-
-    public bool IsEnemy(Player player)
-    {
-        return Player.IsEnemy(player);
+        return Player.Is(player, state);
     }
 
     public float OnDamage(float value)
@@ -471,7 +462,7 @@ public class MyGameObject : MonoBehaviour
     {
         foreach (Recipe recipe in ConstructionRecipies.Items.Values)
         {
-            foreach (RecipeComponent resource in recipe.ToConsume)
+            foreach (Resource resource in recipe.ToConsume.Items.Values)
             {
                 int capacity = ConstructionResources.Capacity(resource.Name);
 
@@ -491,7 +482,7 @@ public class MyGameObject : MonoBehaviour
     {
         foreach (Recipe recipe in Recipes.Items.Values)
         {
-            foreach (RecipeComponent resource in recipe.ToConsume)
+            foreach (Resource resource in recipe.ToConsume.Items.Values)
             {
                 int capacity = Resources.Capacity(resource.Name);
 
@@ -505,7 +496,7 @@ public class MyGameObject : MonoBehaviour
                 }
             }
 
-            foreach (RecipeComponent resource in recipe.ToProduce)
+            foreach (Resource resource in recipe.ToProduce.Items.Values)
             {
                 int storage = Resources.Storage(resource.Name);
 

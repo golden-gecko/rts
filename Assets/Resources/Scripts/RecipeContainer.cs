@@ -7,5 +7,13 @@ public class RecipeContainer
         Items[recipe.Name] = recipe;
     }
 
+    public void Reset(string name)
+    {
+        if (Items.ContainsKey(name))
+        {
+            Items[name].Reset();
+        }
+    }
+
     public Dictionary<string, Recipe> Items { get; } = new Dictionary<string, Recipe>();
 }

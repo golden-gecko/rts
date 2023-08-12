@@ -19,7 +19,7 @@ public class Laser : Gun
                 continue;
             }
 
-            if (target.IsAlly(myGameObject))
+            if (target.Is(myGameObject, DiplomacyState.Ally))
             {
                 continue;
             }

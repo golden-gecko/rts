@@ -18,7 +18,7 @@ public class Research_Lab : Structure
 
         Recipe r1 = new Recipe("Crystal");
 
-        r1.Consume("Crystal", 0);
+        r1.Consumes("Crystal", 0);
 
         Recipes.Add(r1);
     }

@@ -88,5 +88,5 @@ public class ResourceContainer
         return Items[name].Storage;
     }
 
-    public Dictionary<string, Resource> Items { get; } = new Dictionary<string, Resource>();
+    public Dictionary<string, Resource> Items { get; private set; } = new Dictionary<string, Resource>();
 }

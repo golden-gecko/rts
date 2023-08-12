@@ -9,7 +9,7 @@ public class Tree_02 : Plant
 
         Recipe r1 = new Recipe("Wood");
 
-        r1.Produce("Wood", 0);
+        r1.Produces("Wood", 0);
 
         Recipes.Add(r1);
     }

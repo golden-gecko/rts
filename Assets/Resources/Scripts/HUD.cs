@@ -255,11 +255,11 @@ public class HUD : MonoBehaviour
                     break;
 
                 default:
-                    if (selected.IsAlly(myGameObject))
+                    if (selected.Is(myGameObject, DiplomacyState.Ally))
                     {
                         selected.Follow(myGameObject);
                     }
-                    else if (selected.IsEnemy(myGameObject))
+                    else if (selected.Is(myGameObject, DiplomacyState.Enemy))
                     {
                         selected.Attack(myGameObject);
                     }

@@ -13,7 +13,7 @@ public class Barracks : Structure
 
         Recipe r1 = new Recipe("Metal");
 
-        r1.Consume("Metal", 0);
+        r1.Consumes("Metal", 0);
 
         Recipes.Add(r1);
     }

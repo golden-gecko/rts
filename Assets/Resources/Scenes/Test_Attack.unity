@@ -67,9 +67,6 @@ LightmapSettings:
     m_LightmapParameters: {fileID: 0}
     m_LightmapsBakeMode: 1
     m_TextureCompression: 1
-    m_FinalGather: 0
-    m_FinalGatherFiltering: 1
-    m_FinalGatherRayCount: 256
     m_ReflectionCompression: 2
     m_MixedBakeMode: 2
     m_BakeBackend: 1
@@ -253,17 +250,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5bf7f9b2e8c29074fa120402c79687cd, type: 3}
---- !u!114 &772749523 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 7552484158215349312, guid: 838528c30748ad1409e28e3a543244c6, type: 3}
-  m_PrefabInstance: {fileID: 1489801453}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: baea9d914df95914dbf0c76ff885d270, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &1055936001 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 1874948758393139739, guid: 838528c30748ad1409e28e3a543244c6, type: 3}
@@ -286,15 +272,19 @@ PrefabInstance:
     - target: {fileID: 3389001138081196498, guid: 08ce1d492a8b66e429f719032407aaf8, type: 3}
       propertyPath: Player
       value: 
-      objectReference: {fileID: 772749523}
+      objectReference: {fileID: 0}
+    - target: {fileID: 3389001138081196498, guid: 08ce1d492a8b66e429f719032407aaf8, type: 3}
+      propertyPath: <Player>k__BackingField
+      value: 
+      objectReference: {fileID: 1055936001}
     - target: {fileID: 7730801625349624797, guid: 08ce1d492a8b66e429f719032407aaf8, type: 3}
       propertyPath: Player
       value: 
-      objectReference: {fileID: 772749523}
+      objectReference: {fileID: 0}
     - target: {fileID: 7730801625349624797, guid: 08ce1d492a8b66e429f719032407aaf8, type: 3}
       propertyPath: <Player>k__BackingField
       value: 
-      objectReference: {fileID: 772749523}
+      objectReference: {fileID: 0}
     - target: {fileID: 9069115365609054727, guid: 08ce1d492a8b66e429f719032407aaf8, type: 3}
       propertyPath: m_RootOrder
       value: 9
@@ -411,7 +401,7 @@ PrefabInstance:
     - target: {fileID: 5525477714977476513, guid: 8fb2190244191d24b85a422517186272, type: 3}
       propertyPath: <Player>k__BackingField
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 1489801456}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -428,11 +418,11 @@ PrefabInstance:
     - target: {fileID: -6419104339504249234, guid: 2611ed8fbff91a64aa42f06d5f9cdf23, type: 3}
       propertyPath: Player
       value: 
-      objectReference: {fileID: 772749523}
+      objectReference: {fileID: 0}
     - target: {fileID: -6419104339504249234, guid: 2611ed8fbff91a64aa42f06d5f9cdf23, type: 3}
       propertyPath: <Player>k__BackingField
       value: 
-      objectReference: {fileID: 772749523}
+      objectReference: {fileID: 0}
     - target: {fileID: 2222111361404534124, guid: 2611ed8fbff91a64aa42f06d5f9cdf23, type: 3}
       propertyPath: m_Name
       value: Tree_0001
@@ -484,7 +474,11 @@ PrefabInstance:
     - target: {fileID: 4171174803530865029, guid: 2611ed8fbff91a64aa42f06d5f9cdf23, type: 3}
       propertyPath: Player
       value: 
-      objectReference: {fileID: 772749523}
+      objectReference: {fileID: 0}
+    - target: {fileID: 4171174803530865029, guid: 2611ed8fbff91a64aa42f06d5f9cdf23, type: 3}
+      propertyPath: <Player>k__BackingField
+      value: 
+      objectReference: {fileID: 1055936001}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -720,7 +714,7 @@ PrefabInstance:
     - target: {fileID: 2969536516148908014, guid: eb168a83fa925ad449da007ada6a2c83, type: 3}
       propertyPath: <Player>k__BackingField
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 1489801456}
     - target: {fileID: 6301738263044792862, guid: eb168a83fa925ad449da007ada6a2c83, type: 3}
       propertyPath: m_RootOrder
       value: 2
@@ -785,15 +779,19 @@ PrefabInstance:
     - target: {fileID: 3389001138081196498, guid: 08ce1d492a8b66e429f719032407aaf8, type: 3}
       propertyPath: Player
       value: 
-      objectReference: {fileID: 772749523}
+      objectReference: {fileID: 0}
+    - target: {fileID: 3389001138081196498, guid: 08ce1d492a8b66e429f719032407aaf8, type: 3}
+      propertyPath: <Player>k__BackingField
+      value: 
+      objectReference: {fileID: 1055936001}
     - target: {fileID: 7730801625349624797, guid: 08ce1d492a8b66e429f719032407aaf8, type: 3}
       propertyPath: Player
       value: 
-      objectReference: {fileID: 772749523}
+      objectReference: {fileID: 0}
     - target: {fileID: 7730801625349624797, guid: 08ce1d492a8b66e429f719032407aaf8, type: 3}
       propertyPath: <Player>k__BackingField
       value: 
-      objectReference: {fileID: 772749523}
+      objectReference: {fileID: 0}
     - target: {fileID: 9069115365609054727, guid: 08ce1d492a8b66e429f719032407aaf8, type: 3}
       propertyPath: m_RootOrder
       value: 8
@@ -862,7 +860,7 @@ PrefabInstance:
     - target: {fileID: -6172006886202435701, guid: 101742dd777d60a4cb1fe9bb59224ef3, type: 3}
       propertyPath: <Player>k__BackingField
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 1489801456}
     - target: {fileID: 6328245779563230221, guid: 101742dd777d60a4cb1fe9bb59224ef3, type: 3}
       propertyPath: m_RootOrder
       value: 4
@@ -916,3 +914,18 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 101742dd777d60a4cb1fe9bb59224ef3, type: 3}
+--- !u!1660057539 &9223372036854775807
+SceneRoots:
+  m_ObjectHideFlags: 0
+  m_Roots:
+  - {fileID: 1489801453}
+  - {fileID: 526895090}
+  - {fileID: 1503899745}
+  - {fileID: 1461577377}
+  - {fileID: 1847477214}
+  - {fileID: 1366617173}
+  - {fileID: 15719807}
+  - {fileID: 1203380826}
+  - {fileID: 1847326935}
+  - {fileID: 1182637886}
+  - {fileID: 1218640346}

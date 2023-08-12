@@ -7,23 +7,36 @@ public class Technology
         Name = name;
     }
 
-    public Technology(string name, ResourceContainer cost, bool unlocked)
+    public Technology(string name, bool unlocked)
     {
         Name = name;
-        Cost = cost;
         Unlocked = unlocked;
     }
 
-    public Technology(string name, ResourceContainer cost, HashSet<string> unlocks)
+    public Technology(string name, HashSet<string> unlocks)
     {
         Name = name;
-        Cost = cost;
         Unlocks = unlocks;
     }
 
     public string Name { get; }
 
     public ResourceContainer Cost { get; } = new ResourceContainer();
+
+    public int Total
+    {
+        get
+        {
+            int sum = 0;
+
+            foreach (Resource i in Cost.Items.Values)
+            {
+                sum += i.Max;
+            }
+
+            return sum;
+        }
+    }
 
     public bool Researched
     {

@@ -126,13 +126,13 @@ public class Order
         };
     }
 
-    public static Order Produce(string recipe, float time)
+    public static Order Produce(string recipe, int resourceUsage)
     {
         return new Order
         {
             Type = OrderType.Produce,
             Recipe = recipe,
-            Timer = new Timer(time),
+            ResourceUsage = resourceUsage,
         };
     }
 
@@ -152,7 +152,6 @@ public class Order
             Type = OrderType.Research,
             Technology = technology,
             ResourceUsage = resourceUsage,
-            Timer = new Timer(1.0f),
         };
     }
 
@@ -266,13 +265,13 @@ public class Order
 
     public Vector3 TargetPosition { get; private set; }
 
-    public Timer Timer { get; private set; }
+    public Timer Timer { get; set; } // TODO: Hide setter.
 
     public OrderType Type { get; private set; }
 
     public string Technology { get; private set; }
 
-    public string Recipe { get; private set; }
+    public string Recipe { get; set; } // TODO: Rename.
 
     public string Skill_ { get; private set; } // TODO: Rename.
 
