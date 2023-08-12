@@ -57,14 +57,6 @@ public class OrderHandlerAssemble : IOrderHandler
             }
         }
 
-        foreach (Resource i in recipe.ToProduce.Items.Values)
-        {
-            if (myGameObject.Resources.CanAdd(i.Name, i.Max) == false)
-            {
-                return false;
-            }
-        }
-
         return true;
     }
 
@@ -74,12 +66,6 @@ public class OrderHandlerAssemble : IOrderHandler
         {
             myGameObject.Resources.Remove(i.Name, i.Max);
             myGameObject.Stats.Add(Stats.ResourcesUsed, i.Max);
-        }
-
-        foreach (Resource i in recipe.ToProduce.Items.Values)
-        {
-            myGameObject.Resources.Add(i.Name, i.Max);
-            myGameObject.Stats.Add(Stats.ResourcesProduced, i.Max);
         }
     }
 }
