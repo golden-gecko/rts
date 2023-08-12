@@ -4,11 +4,11 @@ public class Headquarters : Structure
     {
         base.Awake();
 
-        Resources.Add("Coal", 100, 200);
-        Resources.Add("Crystal", 100, 200);
-        Resources.Add("Metal", 100, 200);
-        Resources.Add("Metal Ore", 200, 200);
-        Resources.Add("Wood", 100, 200);
+        Resources.Add("Coal", 100, 100);
+        Resources.Add("Crystal", 100, 100);
+        Resources.Add("Metal", 100, 100);
+        Resources.Add("Metal Ore", 100, 100);
+        Resources.Add("Wood", 100, 100);
 
         Recipe r1 = new Recipe("Storage");
 

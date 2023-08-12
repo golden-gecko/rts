@@ -3,13 +3,13 @@ using UnityEngine;
 
 public class Order
 {
-    public static Order Assemble(string prefab, float time)
+    public static Order Assemble(string prefab, int resourceUsage)
     {
         return new Order
         {
             Type = OrderType.Assemble,
             Prefab = prefab,
-            Timer = new Timer(time),
+            ResourceUsage = resourceUsage,
         };
     }
 
@@ -32,24 +32,26 @@ public class Order
         };
     }
 
-    public static Order Construct(MyGameObject myGameObject, float time)
+    public static Order Construct(string prefab, Vector3 position, int resourceUsage)
     {
         return new Order
         {
             Type = OrderType.Construct,
-            TargetGameObject = myGameObject,
-            Timer = new Timer(time),
+            TargetPosition = position,
+            Prefab = prefab,
+            ResourceUsage = resourceUsage,
         };
     }
 
-    public static Order Construct(string prefab, MyGameObject myGameObject, float time)
+    public static Order Construct(MyGameObject myGameObject, int resourceUsage)
     {
         return new Order
         {
             Type = OrderType.Construct,
-            Prefab = prefab,
+            TargetPosition = myGameObject.Position,
             TargetGameObject = myGameObject,
-            Timer = new Timer(time),
+            Prefab = "", // TODO: Find prefab name.
+            ResourceUsage = resourceUsage,
         };
     }
 

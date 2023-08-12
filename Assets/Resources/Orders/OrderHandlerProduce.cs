@@ -12,9 +12,9 @@ public class OrderHandlerProduce : IOrderHandler
     {
         Order order = myGameObject.Orders.First();
 
-        if (order.Recipe.Length <= 0)
+        if (order.Recipe.Length <= 0 && myGameObject.Recipes.Items.Count > 0)
         {
-            order.Recipe = myGameObject.Recipes.Items.First().Key; // TODO: Check if game object contains recipes.
+            order.Recipe = myGameObject.Recipes.Items.First().Key; // TODO: Find recipe that can be produced.
         }
 
         if (myGameObject.Recipes.Items.ContainsKey(order.Recipe) == false)
@@ -44,8 +44,6 @@ public class OrderHandlerProduce : IOrderHandler
         {
             return false;
         }
-
-        order.Timer.Reset();
 
         MoveResources(myGameObject, recipe);
 
@@ -82,7 +80,7 @@ public class OrderHandlerProduce : IOrderHandler
         foreach (Resource i in recipe.ToConsume.Items.Values)
         {
             myGameObject.Resources.Remove(i.Name, i.Max);
-            myGameObject.Stats.Add(Stats.ResourcesProduced, i.Max);
+            myGameObject.Stats.Add(Stats.ResourcesUsed, i.Max);
         }
 
         foreach (Resource i in recipe.ToProduce.Items.Values)

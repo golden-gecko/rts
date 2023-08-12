@@ -149,8 +149,6 @@ public class HUD : MonoBehaviour
     {
         if (ActivePlayer.Selected.Count > 0)
         {
-            MyGameObject myGameObject = Game.Instance.CreateGameObject(Prefab, position, ActivePlayer, MyGameObjectState.UnderConstruction);
-
             foreach (MyGameObject selected in ActivePlayer.Selected)
             {
                 if (IsShift() == false)
@@ -158,7 +156,7 @@ public class HUD : MonoBehaviour
                     selected.Orders.Clear();
                 }
 
-                selected.Construct(prefab, myGameObject);
+                selected.Construct(prefab, position);
             }
         }
     }

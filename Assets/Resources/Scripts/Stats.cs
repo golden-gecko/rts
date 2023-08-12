@@ -7,6 +7,8 @@ public class Stats
     public static string DamageTaken = "Damage Taken";
     public static string DistanceDriven = "Distance Driven";
     public static string MissilesFired = "Missiles Fired";
+    public static string ObjectsAssembled = "Objects Assembled";
+    public static string ObjectsConstructed = "Objects Constructed";
     public static string OrdersCancelled = "Orders Cancelled"; // TODO: Increase when order queue is cleared.
     public static string OrdersExecuted = "Orders Executed";
     public static string OrdersFailed = "Orders Failed";
@@ -16,6 +18,7 @@ public class Stats
     public static string SkillsUsed = "Skills Used";
     public static string TargetsDestroyed = "Targets Destroyed";
     public static string TechnologiesDiscovered = "Technologies Discovered";
+    public static string TimeAssembling = "Time Assembling";
     public static string TimeConstructing = "Time Constructing";
     public static string TimeProducing = "Time Producing";
     public static string TimeResearching = "Time Researching";

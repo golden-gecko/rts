@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 6976692779867010275}
   - component: {fileID: 882763099132023331}
   - component: {fileID: 1908306568809740829}
+  - component: {fileID: 5308646868786525398}
   m_Layer: 0
   m_Name: Barracks
   m_TagString: Untagged
@@ -120,8 +121,27 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   <Player>k__BackingField: {fileID: 0}
+  <Selectable>k__BackingField: 1
   <Health>k__BackingField: 100
   <HealthMax>k__BackingField: 100
+  <VisibilityRange>k__BackingField: 10
+  <LoadTime>k__BackingField: 2
+  <WaitTime>k__BackingField: 2
+  <DestroyEffect>k__BackingField: Effects/WFXMR_Explosion StarSmoke
+--- !u!114 &5308646868786525398
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8922419687152604470}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b9a00f16555428d49958a19db20e17a2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  <Mass>k__BackingField: 10
+  <ResourceUsage>k__BackingField: 2
 --- !u!1001 &2305329144066996566
 PrefabInstance:
   m_ObjectHideFlags: 0

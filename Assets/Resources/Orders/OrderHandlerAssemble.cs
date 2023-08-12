@@ -1,4 +1,4 @@
-using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class OrderHandlerAssemble : IOrderHandler
@@ -16,44 +16,70 @@ public class OrderHandlerAssemble : IOrderHandler
         {
             order.TargetGameObject = Game.Instance.CreateGameObject(order.Prefab, myGameObject.Exit, myGameObject.Player, MyGameObjectState.UnderAssembly);
         }
-        else if (order.TargetGameObject.Constructed == false)
-        {
-            MoveResourcesToUnit(myGameObject, order);
-        }
-        else if (order.TargetGameObject.Constructed)
-        {
-            order.Timer.Update(Time.deltaTime);
 
-            if (order.Timer.Finished)
-            {
-                order.TargetGameObject.State = MyGameObjectState.Operational;
-                order.TargetGameObject.Move(myGameObject.RallyPoint, 0);
-                order.Timer.Reset();
+        Recipe recipe = order.TargetGameObject.ConstructionRecipies.Items.First().Value;
 
-                myGameObject.Stats.Add(Stats.OrdersExecuted, 1);
-                myGameObject.Stats.Add(Stats.TimeConstructing, order.Timer.Max);
-                myGameObject.Orders.Pop();
-            }
+        if (order.Timer == null)
+        {
+            order.Timer = new Timer(recipe.Total / order.ResourceUsage);
         }
-        else
+
+        if (HaveResources(myGameObject, recipe) == false)
         {
             myGameObject.Wait(0);
+
+            return;
         }
+
+        if (order.Timer.Update(Time.deltaTime) == false)
+        {
+            return;
+        }
+
+        MoveResources(myGameObject, recipe);
+
+        order.TargetGameObject.State = MyGameObjectState.Operational;
+        order.TargetGameObject.Move(myGameObject.RallyPoint, 0);
+
+        myGameObject.Stats.Add(Stats.OrdersExecuted, 1);
+        myGameObject.Stats.Add(Stats.ObjectsAssembled, 1);
+        myGameObject.Stats.Add(Stats.TimeAssembling, order.Timer.Max);
+        myGameObject.Orders.Pop();
     }
 
-    private void MoveResourcesToUnit(MyGameObject myGameObject, Order order)
+    private bool HaveResources(MyGameObject myGameObject, Recipe recipe)
     {
-        foreach (KeyValuePair<string, Resource> i in order.TargetGameObject.ConstructionResources.Items)
+        foreach (Resource i in recipe.ToConsume.Items.Values)
         {
-            int capacity = i.Value.Capacity;
-            int storage = myGameObject.Resources.Storage(i.Key);
-            int value = Mathf.Min(capacity, storage);
-
-            if (value > 0)
+            if (myGameObject.Resources.CanRemove(i.Name, i.Max) == false)
             {
-                myGameObject.Resources.Remove(i.Key, value);
-                i.Value.Add(value);
+                return false;
             }
+        }
+
+        foreach (Resource i in recipe.ToProduce.Items.Values)
+        {
+            if (myGameObject.Resources.CanAdd(i.Name, i.Max) == false)
+            {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    private void MoveResources(MyGameObject myGameObject, Recipe recipe)
+    {
+        foreach (Resource i in recipe.ToConsume.Items.Values)
+        {
+            myGameObject.Resources.Remove(i.Name, i.Max);
+            myGameObject.Stats.Add(Stats.ResourcesUsed, i.Max);
+        }
+
+        foreach (Resource i in recipe.ToProduce.Items.Values)
+        {
+            myGameObject.Resources.Add(i.Name, i.Max);
+            myGameObject.Stats.Add(Stats.ResourcesProduced, i.Max);
         }
     }
 }
