@@ -14,6 +14,7 @@ public class OrderHandlerConstruct : IOrderHandler
 
         if (order.TargetGameObject == null)
         {
+            order.TargetPosition = Map.Instance.StructurePositionHandler.GetPosition(order.TargetPosition);
             order.TargetGameObject = Game.Instance.CreateGameObject(order.Prefab, order.TargetPosition, myGameObject.Player, MyGameObjectState.UnderConstruction);
         }
 

@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class Game : MonoBehaviour
@@ -211,10 +210,28 @@ public class Game : MonoBehaviour
     public MyGameObject CreateGameObject(string prefab, Vector3 position, Player player, MyGameObjectState state)
     {
         MyGameObject resource = Resources.Load<MyGameObject>(prefab);
-
         MyGameObject myGameObject = Object.Instantiate<MyGameObject>(resource, position, Quaternion.identity);
+
         myGameObject.SetPlayer(player);
         myGameObject.State = state;
+
+        if (state == MyGameObjectState.Cursor)
+        {
+            foreach (Collider i in myGameObject.GetComponents<Collider>())
+            {
+                i.enabled = false;
+            }
+
+            foreach (MyComponent i in myGameObject.GetComponents<MyComponent>())
+            {
+                i.enabled = false;
+            }
+
+            foreach (MyGameObject i in myGameObject.GetComponents<MyGameObject>())
+            {
+                i.enabled = false;
+            }
+        }
 
         return myGameObject;
     }

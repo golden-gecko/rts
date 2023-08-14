@@ -16,13 +16,9 @@ public class Map : MonoBehaviour
         }
     }
 
-    public bool GetTerrainPosition(Vector3 position, out RaycastHit hitInfo)
-    {
-        return Physics.Raycast(new Ray(position + Vector3.up * Config.TerrainMaxHeight, Vector3.down), out hitInfo, Config.RaycastMaxDistance, LayerMask.GetMask("Terrain"));
-    }
+    public ITerrainPosition CameraPositionHandler { get; } = new TerrainPositionAnywhere();
 
-    public bool GetWaterPosition(Vector3 position, out RaycastHit hitInfo)
-    {
-        return Physics.Raycast(new Ray(position + Vector3.up * Config.WaterMaxHeight, Vector3.down), out hitInfo, Config.RaycastMaxDistance, LayerMask.GetMask("Water"));
-    }
+    public ITerrainPosition StructurePositionHandler { get; } = new TerrainPositionCenterGrid();
+
+    public ITerrainPosition UnitPositionHandler { get; } = new TerrainPositionAnywhere();
 }

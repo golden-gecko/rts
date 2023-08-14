@@ -36,6 +36,16 @@ public class Stats
         }
     }
 
+    public float Get(string name)
+    {
+        if (Items.ContainsKey(name) == false)
+        {
+            return 0.0f;
+        }
+
+        return Items[name];
+    }
+
     public string GetInfo()
     {
         string info = string.Empty;
@@ -47,6 +57,8 @@ public class Stats
 
         return info;
     }
+
+    public Player Player { get; set; } // TODO: Implement and copy stats from object to player. Otherwise stats will be lost when object is destroyed.
 
     public Dictionary<string, float> Items { get; } = new Dictionary<string, float>();
 }

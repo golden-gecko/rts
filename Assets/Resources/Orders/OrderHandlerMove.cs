@@ -32,5 +32,7 @@ public class OrderHandlerMove : IOrderHandler
             myGameObject.Stats.Add(Stats.OrdersExecuted, 1);
             myGameObject.Orders.Pop();
         }
+
+        myGameObject.Position = Map.Instance.UnitPositionHandler.GetPosition(myGameObject.Position);
     }
 }

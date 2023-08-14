@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class MyGameObject : MonoBehaviour
@@ -49,6 +48,7 @@ public class MyGameObject : MonoBehaviour
     {
         RallyPoint = Exit;
 
+        UpdatePosition();
         UpdateSelection();
     }
 
@@ -74,19 +74,8 @@ public class MyGameObject : MonoBehaviour
                 break;
         }
 
-        AlignPositionToTerrain();
-
-        // UpdateComponents();
         UpdateSkills();
     }
-
-    /*protected void UpdateComponents()
-    {
-        foreach (MyComponent i in Components)
-        {
-            i.Update();
-        }
-    }*/
 
     protected void UpdateSkills()
     {
@@ -412,29 +401,23 @@ public class MyGameObject : MonoBehaviour
         return rangeMin <= magnitude && magnitude <= rangeMax;
     }
 
+    protected virtual void UpdatePosition()
+    {
+        Position = Map.Instance.UnitPositionHandler.GetPosition(Position);
+    }
+
     public void UpdateSelection()
     {
-        selection.GetComponent<SpriteRenderer>().sprite = Player.SelectionSprite;
+        if (Player != null)
+        {
+            selection.GetComponent<SpriteRenderer>().sprite = Player.SelectionSprite;
+        }
     }
 
     public void OnDestroy_() // TODO: Rename.
     {
         Instantiate(UnityEngine.Resources.Load(DestroyEffect), Position, Quaternion.identity);
         Destroy(gameObject);
-    }
-
-    protected virtual void AlignPositionToTerrain()
-    {
-        RaycastHit hitInfo;
-        Ray ray = new Ray(transform.position + new Vector3(0, 1000, 0), Vector3.down);
-
-        if (Physics.Raycast(ray, out hitInfo, 2000, LayerMask.GetMask("Terrain")))
-        {
-            if (hitInfo.transform.CompareTag("Terrain"))
-            {
-                Position = new Vector3(transform.position.x, hitInfo.point.y, transform.position.z);
-            }
-        }
     }
 
     private void ProcessOrders()
@@ -591,27 +574,27 @@ public class MyGameObject : MonoBehaviour
 
     public Vector3 Position { get => transform.position; set => transform.position = value; }
 
-    public OrderContainer Orders { get; private set; } = new OrderContainer();
+    public OrderContainer Orders { get; } = new OrderContainer();
 
-    public ResourceContainer Resources { get; private set; } = new ResourceContainer();
+    public ResourceContainer Resources { get; } = new ResourceContainer();
 
-    public RecipeContainer Recipes { get; private set; } = new RecipeContainer();
+    public RecipeContainer Recipes { get; } = new RecipeContainer();
 
-    public Stats Stats { get; private set; } = new Stats();
+    public Stats Stats { get; } = new Stats();
 
     public MyGameObjectState State { get; set; } = MyGameObjectState.Operational;
 
-    public ResourceContainer ConstructionResources { get; private set; } = new ResourceContainer();
+    public ResourceContainer ConstructionResources { get; } = new ResourceContainer();
 
-    public RecipeContainer ConstructionRecipies { get; private set; } = new RecipeContainer();
+    public RecipeContainer ConstructionRecipies { get; } = new RecipeContainer();
 
     public Vector3 RallyPoint { get; set; } = Vector3.zero;
 
-    public MyGameObject Parent { get; set; }
+    public MyGameObject Parent { get; set; } // TODO: Hide setter.
 
-    public Dictionary<string, Skill> Skills { get; protected set; } = new Dictionary<string, Skill>();
+    public Dictionary<string, Skill> Skills { get; } = new Dictionary<string, Skill>();
 
-    protected Dictionary<OrderType, IOrderHandler> OrderHandlers { get; set; } = new Dictionary<OrderType, IOrderHandler>();
+    protected Dictionary<OrderType, IOrderHandler> OrderHandlers { get; } = new Dictionary<OrderType, IOrderHandler>();
 
     private Transform rangeMissile;
     private Transform rangeVisibility;
