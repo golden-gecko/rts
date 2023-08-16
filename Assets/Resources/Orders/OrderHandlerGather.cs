@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class OrderHandlerGather : IOrderHandler
@@ -29,36 +30,51 @@ public class OrderHandlerGather : IOrderHandler
                 return;
             }
 
-            GatherFromObject(order.TargetGameObject);
+            MyGameObject storage = GetStorage(myGameObject);
+
+            GatherFromObject(myGameObject, order.TargetGameObject, storage);
         }
         else
         {
-            MyResource closest = null;
-            float distance = float.MaxValue;
+            MyResource myResource = GetResource(myGameObject);
+            MyGameObject storage = GetStorage(myGameObject);
 
-            foreach (MyResource myResource in GameObject.FindObjectsByType<MyResource>(FindObjectsSortMode.None))
+            if (myResource != null && storage != null)
             {
-                float magnitude = (myGameObject.Position - myResource.Position).magnitude;
-
-                if (magnitude < distance)
-                {
-                    closest = myResource;
-                    distance = magnitude;
-                }
-            }
-
-            if (closest != null)
-            {
-                GatherFromObject(closest);
+                GatherFromObject(myGameObject, myResource, storage);
             }
         }
 
         myGameObject.Orders.MoveToEnd();
     }
 
-    private void GatherFromObject(MyGameObject myGameObject)
+    private MyResource GetResource(MyGameObject myGameObject)
     {
-        if (myGameObject == null)
+        return null;
+    }
+
+    private MyGameObject GetStorage(MyGameObject myGameObject)
+    {
+        MyResource closest = null;
+        float distance = float.MaxValue;
+
+        foreach (MyResource myResource in GameObject.FindObjectsByType<MyResource>(FindObjectsSortMode.None))
+        {
+            float magnitude = (myGameObject.Position - myResource.Position).magnitude;
+
+            if (magnitude < distance)
+            {
+                closest = myResource;
+                distance = magnitude;
+            }
+        }
+
+        return closest;
+    }
+
+    private void GatherFromObject(MyGameObject myGameObject, MyGameObject myResource, MyGameObject storage)
+    {
+        if (myResource == null || storage == null)
         {
             myGameObject.Stats.Inc(Stats.OrdersCompleted);
             myGameObject.Orders.Pop();
@@ -66,11 +82,8 @@ public class OrderHandlerGather : IOrderHandler
             return;
         }
 
-        if (myGameObject.IsCloseTo(myGameObject.Position) == false)
-        {
-            myGameObject.Move(myGameObject.Entrance, 0);
+        myGameObject.Transport(myResource, storage, myResource.Resources.GetCapacity());
 
-            return;
-        }
+        myGameObject.Orders.MoveToEnd();
     }
 }

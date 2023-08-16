@@ -53,6 +53,18 @@ public class ResourceContainer
         return Items[name].Capacity;
     }
 
+    public Dictionary<string, int> GetCapacity()
+    {
+        Dictionary<string, int> capacity = new Dictionary<string, int>();
+
+        foreach (Resource resource in Items.Values)
+        {
+            capacity[resource.Name] = resource.Capacity;
+        }
+
+        return capacity;
+    }
+
     public string GetInfo()
     {
         string info = string.Empty;

@@ -1,32 +1,28 @@
 public class MyResource : MyGameObject
 {
-    protected override void Awake()
-    {
-        base.Awake();
-
-        VisibilityRange = 0.0f;
-    }
-
     protected override void Update()
     {
         base.Update();
 
-        if (IsDepleted())
+        if (Depleted)
         {
             Destroy(0);
         }
     }
 
-    private bool IsDepleted()
+    private bool Depleted
     {
-        foreach (Resource resource in Resources.Items.Values)
+        get
         {
-            if (resource.Storage > 0)
+            foreach (Resource resource in Resources.Items.Values)
             {
-                return false;
+                if (resource.Storage > 0)
+                {
+                    return false;
+                }
             }
-        }
 
-        return true;
+            return true;
+        }
     }
 }

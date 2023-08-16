@@ -17,7 +17,7 @@ public class OrderHandlerFollow : IOrderHandler
             return;
         }
 
-        if (myGameObject.IsCloseTo(order.TargetGameObject.Position) == false)
+        if (myGameObject.IsCloseTo(order.TargetGameObject.Entrance) == false)
         {
             myGameObject.Move(order.TargetGameObject.Entrance);
         }
