@@ -14,7 +14,7 @@ public class OrderHandlerUnload : IOrderHandler
 
         if (IsValid(order) == false)
         {
-            myGameObject.Stats.Add(Stats.OrdersFailed, 1);
+            myGameObject.Stats.Inc(Stats.OrdersFailed);
             myGameObject.Orders.Pop();
 
             return;
@@ -58,7 +58,7 @@ public class OrderHandlerUnload : IOrderHandler
         if (resources.Count > 0)
         {
             myGameObject.MoveResources(myGameObject, order.TargetGameObject, resources);
-            myGameObject.Stats.Add(Stats.OrdersExecuted, 1);
+            myGameObject.Stats.Inc(Stats.OrdersCompleted);
             myGameObject.Orders.Pop();
         }
         else
@@ -72,7 +72,7 @@ public class OrderHandlerUnload : IOrderHandler
             }
             else
             {
-                myGameObject.Stats.Add(Stats.OrdersFailed, 1);
+                myGameObject.Stats.Inc(Stats.OrdersFailed);
                 myGameObject.Orders.Pop();
 
                 GameMenu.Instance.Log("Failed to execute unload order");

@@ -48,8 +48,8 @@ public class OrderHandlerConstruct : IOrderHandler
 
         order.TargetGameObject.State = MyGameObjectState.Operational;
 
-        myGameObject.Stats.Add(Stats.OrdersExecuted, 1);
-        myGameObject.Stats.Add(Stats.ObjectsConstructed, 1);
+        myGameObject.Stats.Inc(Stats.OrdersCompleted);
+        myGameObject.Stats.Inc(Stats.ObjectsConstructed);
         myGameObject.Stats.Add(Stats.TimeConstructing, order.Timer.Max);
         myGameObject.Orders.Pop();
     }

@@ -217,14 +217,14 @@ public class Game : MonoBehaviour
 
         if (state == MyGameObjectState.Cursor)
         {
-            foreach (Collider i in myGameObject.GetComponents<Collider>())
+            foreach (Collider collider in myGameObject.GetComponents<Collider>())
             {
-                i.enabled = false;
+                collider.enabled = false;
             }
 
-            foreach (MyComponent i in myGameObject.GetComponents<MyComponent>())
+            foreach (MyComponent myComponent in myGameObject.GetComponents<MyComponent>())
             {
-                i.enabled = false;
+                myComponent.enabled = false;
             }
 
             foreach (MyGameObject i in myGameObject.GetComponents<MyGameObject>())

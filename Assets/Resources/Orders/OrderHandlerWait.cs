@@ -13,18 +13,18 @@ public class OrderHandlerWait : IOrderHandler
 
         if (IsValid(order) == false)
         {
-            myGameObject.Stats.Add(Stats.OrdersFailed, 1);
+            myGameObject.Stats.Inc(Stats.OrdersFailed);
             myGameObject.Orders.Pop();
 
             return;
         }
 
-        if (order.Timer.Update(Time.deltaTime))
+        if (order.Timer.Update(Time.deltaTime) == false)
         {
-            order.Timer.Reset();
-
-            myGameObject.Stats.Add(Stats.TimeWaiting, order.Timer.Max);
-            myGameObject.Orders.Pop();
+            return;
         }
+
+        myGameObject.Stats.Add(Stats.TimeWaiting, order.Timer.Max);
+        myGameObject.Orders.Pop();
     }
 }

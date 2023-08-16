@@ -19,7 +19,7 @@ public class Missile : MyGameObject
 
             if (myGameObject.Alive == false)
             {
-                Parent.Stats.Add(Stats.TargetsDestroyed, 1);
+                Parent.Stats.Inc(Stats.TargetsDestroyed);
             }
 
             Parent.Stats.Add(Stats.DamageDealt, damageDealt);

@@ -13,7 +13,7 @@ public class OrderHandlerAttackUnit : IOrderHandler
 
         if (IsValid(order) == false)
         {
-            myGameObject.Stats.Add(Stats.OrdersFailed, 1);
+            myGameObject.Stats.Inc(Stats.OrdersFailed);
             myGameObject.Orders.Pop();
 
             return;
@@ -25,7 +25,7 @@ public class OrderHandlerAttackUnit : IOrderHandler
         {
             if (order.TargetGameObject == null)
             {
-                myGameObject.Stats.Add(Stats.OrdersExecuted, 1);
+                myGameObject.Stats.Inc(Stats.OrdersCompleted);
                 myGameObject.Orders.Pop();
 
                 return;
@@ -51,7 +51,7 @@ public class OrderHandlerAttackUnit : IOrderHandler
             if (myGameObject.GetComponent<Gun>().Reload.Finished)
             {
                 myGameObject.GetComponent<Gun>().Fire(myGameObject, position);
-                myGameObject.Stats.Add(Stats.MissilesFired, 1);
+                myGameObject.Stats.Inc(Stats.MissilesFired);
                 myGameObject.Orders.MoveToEnd();
             }
         }

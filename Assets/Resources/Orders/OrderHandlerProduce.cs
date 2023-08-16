@@ -19,7 +19,7 @@ public class OrderHandlerProduce : IOrderHandler
 
         if (myGameObject.Recipes.Items.ContainsKey(order.Recipe) == false)
         {
-            myGameObject.Stats.Add(Stats.OrdersFailed, 1);
+            myGameObject.Stats.Inc(Stats.OrdersFailed);
             myGameObject.Orders.Pop();
         }
 
@@ -47,7 +47,7 @@ public class OrderHandlerProduce : IOrderHandler
 
         MoveResources(myGameObject, recipe);
 
-        myGameObject.Stats.Add(Stats.OrdersExecuted, 1);
+        myGameObject.Stats.Inc(Stats.OrdersCompleted);
         myGameObject.Stats.Add(Stats.TimeProducing, order.Timer.Max);
         myGameObject.Orders.Pop();
 

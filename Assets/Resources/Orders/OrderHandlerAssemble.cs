@@ -41,8 +41,8 @@ public class OrderHandlerAssemble : IOrderHandler
         order.TargetGameObject.State = MyGameObjectState.Operational;
         order.TargetGameObject.Move(myGameObject.RallyPoint, 0);
 
-        myGameObject.Stats.Add(Stats.OrdersExecuted, 1);
-        myGameObject.Stats.Add(Stats.ObjectsAssembled, 1);
+        myGameObject.Stats.Inc(Stats.OrdersCompleted);
+        myGameObject.Stats.Inc(Stats.ObjectsAssembled);
         myGameObject.Stats.Add(Stats.TimeAssembling, order.Timer.Max);
         myGameObject.Orders.Pop();
     }

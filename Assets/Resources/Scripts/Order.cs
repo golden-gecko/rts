@@ -80,6 +80,24 @@ public class Order
             TargetGameObject = myGameObject,
         };
     }
+    public static Order Gather(MyGameObject myGameObject)
+    {
+        return new Order
+        {
+            Type = OrderType.Gather,
+            TargetGameObject = myGameObject,
+            IsTargetGameObject = true, // TODO: Get rid of this. Maybe add a new order type.
+        };
+    }
+
+    public static Order Gather(string resource)
+    {
+        return new Order
+        {
+            Type = OrderType.Gather,
+            Resource = resource,
+        };
+    }
 
     public static Order Guard(Vector3 position)
     {
@@ -157,12 +175,12 @@ public class Order
         };
     }
 
-    public static Order Skill(string skill)
+    public static Order UseSkill(string skill)
     {
         return new Order
         {
-            Type = OrderType.Skill,
-            Skill_ = skill,
+            Type = OrderType.UseSkill,
+            Skill = skill,
         };
     }
 
@@ -234,9 +252,9 @@ public class Order
             info += string.Format(" {0:0.}/{1}", Timer.Current, Timer.Max);
         }
 
-        if (MaxRetries > 0)
+        if (Retries.Max > 0)
         {
-            info += string.Format(" {0}/{1}", Retries, MaxRetries);
+            info += string.Format(" {0}/{1}", Retries, Retries.Max);
         }
 
         return info;
@@ -244,22 +262,18 @@ public class Order
 
     public void Retry()
     {
-        Retries += 1;
+        Retries.Inc();
     }
 
-    public bool CanRetry { get => Retries < MaxRetries; }
+    public bool CanRetry { get => Retries.Current < Retries.Max; }
 
     public bool IsTargetGameObject { get; private set; }
 
-    public int MaxRetries { get; private set; } = 0;
-
-    public string Prefab { get; private set; }
+    public Counter Retries { get; private set; } = new Counter();
 
     public PrefabConstructionType PrefabConstructionType { get; private set; }
 
     public Dictionary<string, int> Resources { get; private set; }
-
-    public int Retries { get; private set; } = 0;
 
     public MyGameObject SourceGameObject { get; private set; }
 
@@ -271,11 +285,15 @@ public class Order
 
     public OrderType Type { get; private set; }
 
-    public string Technology { get; private set; }
-
-    public string Recipe { get; set; } // TODO: Rename.
-
-    public string Skill_ { get; private set; } // TODO: Rename.
-
     public int ResourceUsage { get; private set; }
+
+    public string Prefab { get; private set; }
+
+    public string Recipe { get; set; }
+
+    public string Resource { get; set; }
+
+    public string Skill { get; private set; }
+
+    public string Technology { get; private set; }
 }

@@ -9,9 +9,9 @@ public class Laser : Gun
         MyGameObject closest = null;
         float distance = float.MaxValue;
 
-        foreach (RaycastHit i in hits)
+        foreach (RaycastHit hit in hits)
         {
-            MyGameObject target = i.transform.GetComponentInParent<MyGameObject>();
+            MyGameObject target = hit.transform.GetComponentInParent<MyGameObject>();
 
             if (target == null)
             {
@@ -28,10 +28,10 @@ public class Laser : Gun
                 continue;
             }
 
-            if (i.distance < distance)
+            if (hit.distance < distance)
             {
                 closest = target;
-                distance = i.distance;
+                distance = hit.distance;
             }
         }
 
@@ -45,7 +45,7 @@ public class Laser : Gun
             }
             else
             {
-                myGameObject.Stats.Add(Stats.TargetsDestroyed, 1); 
+                myGameObject.Stats.Inc(Stats.TargetsDestroyed); 
             }
 
             myGameObject.Stats.Add(Stats.DamageDealt, damageDealt);

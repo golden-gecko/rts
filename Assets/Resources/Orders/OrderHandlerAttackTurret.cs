@@ -13,7 +13,7 @@ public class OrderHandlerAttackTurret : IOrderHandler
 
         if (IsValid(order) == false)
         {
-            myGameObject.Stats.Add(Stats.OrdersFailed, 1);
+            myGameObject.Stats.Inc(Stats.OrdersFailed);
             myGameObject.Orders.Pop();
 
             return;
@@ -25,7 +25,7 @@ public class OrderHandlerAttackTurret : IOrderHandler
         {
             if (order.TargetGameObject == null)
             {
-                myGameObject.Stats.Add(Stats.OrdersExecuted, 1);
+                myGameObject.Stats.Inc(Stats.OrdersCompleted);
                 myGameObject.Orders.Pop();
 
                 return;
@@ -48,7 +48,7 @@ public class OrderHandlerAttackTurret : IOrderHandler
             {
                 myGameObject.GetComponent<Gun>().Fire(myGameObject, position);
                 myGameObject.Orders.MoveToEnd();
-                myGameObject.Stats.Add(Stats.MissilesFired, 1);
+                myGameObject.Stats.Inc(Stats.MissilesFired);
             }
         }
     }

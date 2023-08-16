@@ -13,7 +13,7 @@ public class MyGameObject : MonoBehaviour
 
         Orders.AllowOrder(OrderType.Destroy);
         Orders.AllowOrder(OrderType.Idle);
-        Orders.AllowOrder(OrderType.Skill);
+        Orders.AllowOrder(OrderType.UseSkill);
         Orders.AllowOrder(OrderType.Stop);
         Orders.AllowOrder(OrderType.Wait);
 
@@ -22,6 +22,7 @@ public class MyGameObject : MonoBehaviour
         OrderHandlers[OrderType.Destroy] = new OrderHandlerDestroy();
         OrderHandlers[OrderType.Explore] = new OrderHandlerExplore();
         OrderHandlers[OrderType.Follow] = new OrderHandlerFollow();
+        OrderHandlers[OrderType.Gather] = new OrderHandlerGather();
         OrderHandlers[OrderType.Guard] = new OrderHandlerGuard();
         OrderHandlers[OrderType.Load] = new OrderHandlerLoad();
         OrderHandlers[OrderType.Move] = new OrderHandlerMove();
@@ -29,10 +30,10 @@ public class MyGameObject : MonoBehaviour
         OrderHandlers[OrderType.Produce] = new OrderHandlerProduce();
         OrderHandlers[OrderType.Rally] = new OrderHandlerRally();
         OrderHandlers[OrderType.Research] = new OrderHandlerResearch();
-        OrderHandlers[OrderType.Skill] = new OrderHandlerSkill();
         OrderHandlers[OrderType.Stop] = new OrderHandlerStop();
         OrderHandlers[OrderType.Transport] = new OrderHandlerTransport();
         OrderHandlers[OrderType.Unload] = new OrderHandlerUnload();
+        OrderHandlers[OrderType.UseSkill] = new OrderHandlerUseSkill();
         OrderHandlers[OrderType.Wait] = new OrderHandlerWait();
 
         ConstructionResources.Add("Metal", 0, 30);
@@ -79,9 +80,9 @@ public class MyGameObject : MonoBehaviour
 
     protected void UpdateSkills()
     {
-        foreach (Skill i in Skills.Values)
+        foreach (Skill skill in Skills.Values)
         {
-            i.Update();
+            skill.Update();
         }
     }
 
@@ -125,6 +126,11 @@ public class MyGameObject : MonoBehaviour
     public void Follow(MyGameObject myGameObject)
     {
         Orders.Add(Order.Follow(myGameObject));
+    }
+
+    public void Gather(string resource = "")
+    {
+        Orders.Add(Order.Gather(resource));
     }
 
     public void Guard(Vector3 position)
@@ -181,11 +187,6 @@ public class MyGameObject : MonoBehaviour
         Orders.Add(Order.Research(technology, GetComponent<Researcher>().ResourceUsage));
     }
 
-    public void Skill(string skill)
-    {
-        Orders.Add(Order.Skill(skill));
-    }
-
     public void Stop()
     {
         Orders.Insert(0, Order.Stop());
@@ -199,6 +200,10 @@ public class MyGameObject : MonoBehaviour
     public void Unload(MyGameObject target, Dictionary<string, int> resources)
     {
         Orders.Add(Order.Unload(target, resources, LoadTime));
+    }
+    public void UseSkill(string skill)
+    {
+        Orders.Add(Order.UseSkill(skill));
     }
 
     public void Wait(int priority = -1)
@@ -233,9 +238,9 @@ public class MyGameObject : MonoBehaviour
                 {
                     info += "\nComponents:";
 
-                    foreach (MyComponent i in myComponents)
+                    foreach (MyComponent myComponent in myComponents)
                     {
-                        info += string.Format("\n  {0}", i.GetInfo());
+                        info += string.Format("\n  {0}", myComponent.GetInfo());
                     }
                 }
 
@@ -265,9 +270,9 @@ public class MyGameObject : MonoBehaviour
                     {
                         info += "\nSkills:";
 
-                        foreach (Skill i in Skills.Values)
+                        foreach (Skill skill in Skills.Values)
                         {
-                            info += string.Format("\n  {0}", i.GetInfo());
+                            info += string.Format("\n  {0}", skill.GetInfo());
                         }
                     }
                 }
@@ -317,6 +322,11 @@ public class MyGameObject : MonoBehaviour
         Stats.Add(Stats.DamageTaken, damageDealt);
 
         return damageDealt;
+    }
+    public void OnDestroy_() // TODO: Rename.
+    {
+        Instantiate(UnityEngine.Resources.Load(DestroyEffect), Position, Quaternion.identity);
+        Destroy(gameObject);
     }
 
     public void OnRepair(float value)
@@ -412,12 +422,6 @@ public class MyGameObject : MonoBehaviour
         {
             selection.GetComponent<SpriteRenderer>().sprite = Player.SelectionSprite;
         }
-    }
-
-    public void OnDestroy_() // TODO: Rename.
-    {
-        Instantiate(UnityEngine.Resources.Load(DestroyEffect), Position, Quaternion.identity);
-        Destroy(gameObject);
     }
 
     private void ProcessOrders()
@@ -550,6 +554,9 @@ public class MyGameObject : MonoBehaviour
 
     [field: SerializeField]
     public Player Player { get; set; }
+
+    [field: SerializeField]
+    public bool Gatherable { get; set; } = false;
 
     [field: SerializeField]
     public bool Selectable { get; set; } = true;
