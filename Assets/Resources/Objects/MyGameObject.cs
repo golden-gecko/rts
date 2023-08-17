@@ -143,9 +143,16 @@ public class MyGameObject : MonoBehaviour
         Orders.Add(Order.Guard(myGameObject));
     }
 
-    public void Load(MyGameObject target, Dictionary<string, int> resources)
+    public void Load(MyGameObject target, Dictionary<string, int> resources, int priority = -1)
     {
-        Orders.Add(Order.Load(target, resources, LoadTime));
+        if (0 <= priority && priority < Orders.Count)
+        {
+            Orders.Insert(priority, Order.Load(target, resources, LoadTime));
+        }
+        else
+        {
+            Orders.Add(Order.Load(target, resources, LoadTime));
+        }
     }
 
     public void Move(Vector3 position, int priority = -1)
@@ -204,9 +211,16 @@ public class MyGameObject : MonoBehaviour
         }
     }
 
-    public void Unload(MyGameObject target, Dictionary<string, int> resources)
+    public void Unload(MyGameObject target, Dictionary<string, int> resources, int priority = -1)
     {
-        Orders.Add(Order.Unload(target, resources, LoadTime));
+        if (0 <= priority && priority < Orders.Count)
+        {
+            Orders.Insert(priority, Order.Unload(target, resources, LoadTime));
+        }
+        else
+        {
+            Orders.Add(Order.Unload(target, resources, LoadTime));
+        }
     }
     public void UseSkill(string skill)
     {
