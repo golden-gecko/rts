@@ -82,8 +82,6 @@ public class OrderHandlerGather : IOrderHandler
             return;
         }
 
-        myGameObject.Transport(myResource, storage, myResource.Resources.GetCapacity());
-
-        myGameObject.Orders.MoveToEnd();
+        myGameObject.Transport(myResource, storage, myResource.Resources.GetCapacity(), 0);
     }
 }

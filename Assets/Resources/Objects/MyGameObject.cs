@@ -192,9 +192,16 @@ public class MyGameObject : MonoBehaviour
         Orders.Insert(0, Order.Stop());
     }
 
-    public void Transport(MyGameObject sourceGameObject, MyGameObject targetGameObject, Dictionary<string, int> resources)
+    public void Transport(MyGameObject sourceGameObject, MyGameObject targetGameObject, Dictionary<string, int> resources, int priority = -1)
     {
-        Orders.Add(Order.Transport(sourceGameObject, targetGameObject, resources, LoadTime));
+        if (0 <= priority && priority < Orders.Count)
+        {
+            Orders.Insert(priority, Order.Transport(sourceGameObject, targetGameObject, resources, LoadTime));
+        }
+        else
+        {
+            Orders.Add(Order.Transport(sourceGameObject, targetGameObject, resources, LoadTime));
+        }
     }
 
     public void Unload(MyGameObject target, Dictionary<string, int> resources)

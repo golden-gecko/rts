@@ -20,6 +20,15 @@ public class OrderHandlerIdleWorker : IOrderHandler
             return;
         }
 
+        order = Game.Instance.CreateOrderGather(myGameObject);
+
+        if (order != null)
+        {
+            myGameObject.Orders.Add(order);
+
+            return;
+        }
+
         order = Game.Instance.CreateOrderConstruction(myGameObject);
 
         if (order != null)

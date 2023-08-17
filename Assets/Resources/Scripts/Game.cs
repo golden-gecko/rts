@@ -117,11 +117,23 @@ public class Game : MonoBehaviour
         return null;
     }
 
+    public Order CreateOrderGather(MyGameObject myGameObject)
+    {
+        // TODO: Find storage for resource.
+        // TODO: Return closest object.
+        foreach (MyResource producer in GameObject.FindObjectsByType<MyResource>(FindObjectsSortMode.None))
+        {
+            return Order.Gather(producer);
+        }
+
+        return null;
+    }
+
     public Order CreateOrderTransport(MyGameObject myGameObject)
     {
-        foreach (ConsumerProducerRequest producer in Producers[myGameObject.Player].Items) // TODO: Return closest object.
+        foreach (ConsumerProducerRequest consumer in Consumers[myGameObject.Player].Items) // TODO: Return closest object.
         {
-            foreach (ConsumerProducerRequest consumer in Consumers[myGameObject.Player].Items) // TODO: Return closest object.
+            foreach (ConsumerProducerRequest producer in Producers[myGameObject.Player].Items) // TODO: Return closest object.
             {
                 if (producer.MyGameObject == consumer.MyGameObject)
                 {
@@ -175,36 +187,12 @@ public class Game : MonoBehaviour
 
     private void Register(Dictionary<Player, ConsumerProducerContainer> container, MyGameObject myGameObject, string name, int value)
     {
-        Player[] players = GetPlayers();
-
-        if (myGameObject.Player.Gatherable)
-        {
-            foreach (Player player in players)
-            {
-                container[player].Add(myGameObject, name, value);
-            }
-        }
-        else
-        {
-            container[myGameObject.Player].Add(myGameObject, name, value);
-        }
+        container[myGameObject.Player].Add(myGameObject, name, value);
     }
 
     private void Unregister(Dictionary<Player, ConsumerProducerContainer> container, MyGameObject myGameObject, string name)
     {
-        Player[] players = GetPlayers();
-
-        if (myGameObject.Player.Gatherable)
-        {
-            foreach (Player player in players)
-            {
-                container[player].Remove(myGameObject, name);
-            }
-        }
-        else
-        {
-            container[myGameObject.Player].Remove(myGameObject, name);
-        }
+        container[myGameObject.Player].Remove(myGameObject, name);
     }
 
     public MyGameObject CreateGameObject(string prefab, Vector3 position, Player player, MyGameObjectState state)
