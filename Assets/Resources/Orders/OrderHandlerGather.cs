@@ -75,7 +75,7 @@ public class OrderHandlerGather : IOrderHandler
             return;
         }
 
-        myGameObject.Transport(myResource, storage, myResource.Resources.GetCapacity());
+        myGameObject.Transport(myResource, storage, myResource.Resources.GetStorage());
     }
 
     private MyResource GetResource(MyGameObject myGameObject)
@@ -123,11 +123,11 @@ public class OrderHandlerGather : IOrderHandler
             {
                 if (capacity.Contains(storageKey) == false)
                 {
-
+                    continue;
                 }
-            }
 
-            return i;
+                return i;
+            }
         }
 
         return null;

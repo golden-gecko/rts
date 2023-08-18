@@ -289,7 +289,7 @@ MonoBehaviour:
   <VisibilityRange>k__BackingField: 10
   <LoadTime>k__BackingField: 2
   <WaitTime>k__BackingField: 2
-  <DestroyEffect>k__BackingField: Effects/WFXMR_Explosion StarSmoke
+  <DestroyEffect>k__BackingField: Effects/FX_CuttingSmallTree
 --- !u!1001 &7895923223207893161
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using UnityEditor.SceneManagement;
 
 public class ResourceContainer
 {
@@ -63,6 +64,18 @@ public class ResourceContainer
         }
 
         return capacity;
+    }
+
+    public Dictionary<string, int> GetStorage()
+    {
+        Dictionary<string, int> storage = new Dictionary<string, int>();
+
+        foreach (Resource resource in Items.Values)
+        {
+            storage[resource.Name] = resource.Storage;
+        }
+
+        return storage;
     }
 
     public string GetInfo()
