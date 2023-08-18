@@ -5,7 +5,7 @@ public class AchievementContainer
 {
     public AchievementContainer()
     {
-        Achievements.Add(new Achievement("Commander", "Execute 10 orders.", () => OrdersExecuted(10.0f)));
+        Achievements.Add(new Achievement("Commander", "Execute 10 orders.", () => OrdersCompleted(10.0f)));
         Achievements.Add(new Achievement("Builder", "Build 10 structures.", () => StructuresBuilt(10.0f)));
         Achievements.Add(new Achievement("Driver", "Drive 10 meters.", () => MetersDriven(10.0f)));
         Achievements.Add(new Achievement("Producer", "Produce 10 resources.", () => ResourcesProduced(10.0f)));
@@ -31,7 +31,7 @@ public class AchievementContainer
         }
     }
 
-    private bool OrdersExecuted(float value)
+    private bool OrdersCompleted(float value)
     {
         float sum = 0;
 
@@ -42,7 +42,7 @@ public class AchievementContainer
                 continue;
             }
 
-            sum += myGameObject.Stats.Get(Stats.OrdersExecuted);
+            sum += myGameObject.Stats.Get(Stats.OrdersCompleted);
         }
 
         return sum >= value;
@@ -52,9 +52,9 @@ public class AchievementContainer
     {
         float sum = 0;
 
-        foreach (Constructor i in GameObject.FindObjectsByType<Constructor>(FindObjectsSortMode.None))
+        foreach (Constructor constructor in GameObject.FindObjectsByType<Constructor>(FindObjectsSortMode.None))
         {
-            MyGameObject myGameObject = i.GetComponentInParent<MyGameObject>();
+            MyGameObject myGameObject = constructor.GetComponentInParent<MyGameObject>();
 
             if (myGameObject.Player != Player)
             {
@@ -71,9 +71,9 @@ public class AchievementContainer
     {
         float sum = 0;
 
-        foreach (Engine i in GameObject.FindObjectsByType<Engine>(FindObjectsSortMode.None))
+        foreach (Engine engine in GameObject.FindObjectsByType<Engine>(FindObjectsSortMode.None))
         {
-            MyGameObject myGameObject = i.GetComponentInParent<MyGameObject>();
+            MyGameObject myGameObject = engine.GetComponentInParent<MyGameObject>();
 
             if (myGameObject.Player != Player)
             {
@@ -90,9 +90,9 @@ public class AchievementContainer
     {
         float sum = 0;
 
-        foreach (Producer i in GameObject.FindObjectsByType<Producer>(FindObjectsSortMode.None))
+        foreach (Producer producer in GameObject.FindObjectsByType<Producer>(FindObjectsSortMode.None))
         {
-            MyGameObject myGameObject = i.GetComponentInParent<MyGameObject>();
+            MyGameObject myGameObject = producer.GetComponentInParent<MyGameObject>();
 
             if (myGameObject.Player != Player)
             {
@@ -109,9 +109,9 @@ public class AchievementContainer
     {
         float sum = 0;
 
-        foreach (Researcher i in GameObject.FindObjectsByType<Researcher>(FindObjectsSortMode.None))
+        foreach (Researcher researcher in GameObject.FindObjectsByType<Researcher>(FindObjectsSortMode.None))
         {
-            MyGameObject myGameObject = i.GetComponentInParent<MyGameObject>();
+            MyGameObject myGameObject = researcher.GetComponentInParent<MyGameObject>();
 
             if (myGameObject.Player != Player)
             {
@@ -128,9 +128,9 @@ public class AchievementContainer
     {
         float sum = 0;
 
-        foreach (Gun i in GameObject.FindObjectsByType<Gun>(FindObjectsSortMode.None))
+        foreach (Gun gun in GameObject.FindObjectsByType<Gun>(FindObjectsSortMode.None))
         {
-            MyGameObject myGameObject = i.GetComponentInParent<MyGameObject>();
+            MyGameObject myGameObject = gun.GetComponentInParent<MyGameObject>();
 
             if (myGameObject.Player != Player)
             {

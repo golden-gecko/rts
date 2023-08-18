@@ -237,7 +237,7 @@ public class GameMenu : Menu
             TemplateContainer buttonContainer = templateButton.Instantiate();
             Button button = buttonContainer.Q<Button>();
 
-            button.RegisterCallback<ClickEvent>(ev => OnSkill(i));
+            button.RegisterCallback<ClickEvent>(ev => OnUseSkill(i));
             button.style.display = DisplayStyle.None;
             button.text = i;
             button.userData = i;
@@ -299,9 +299,9 @@ public class GameMenu : Menu
         HUD.Instance.Produce(recipe);
     }
 
-    private void OnSkill(string skill)
+    private void OnUseSkill(string skill)
     {
-        HUD.Instance.Skill(skill);
+        HUD.Instance.UseSkill(skill);
     }
 
     private void UpdateOrders(MyGameObject hovered)

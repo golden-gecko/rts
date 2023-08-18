@@ -11,17 +11,17 @@ public class OrderHandlerTransport : IOrderHandler
 
         if (IsValid(order) == false)
         {
-            myGameObject.Stats.Add(Stats.OrdersFailed, 1);
+            myGameObject.Stats.Inc(Stats.OrdersFailed);
             myGameObject.Orders.Pop();
 
             return;
         }
 
-        myGameObject.Move(order.SourceGameObject.Entrance);
-        myGameObject.Load(order.SourceGameObject, order.Resources);
-        myGameObject.Move(order.TargetGameObject.Entrance);
-        myGameObject.Unload(order.TargetGameObject, order.Resources);
+        myGameObject.Orders.Pop(); // TODO: Order is reversed because of gather order.
 
-        myGameObject.Orders.Pop();
+        myGameObject.Unload(order.TargetGameObject, order.Resources, 0);
+        myGameObject.Move(order.TargetGameObject.Entrance, 0);
+        myGameObject.Load(order.SourceGameObject, order.Resources, 0);
+        myGameObject.Move(order.SourceGameObject.Entrance, 0);
     }
 }

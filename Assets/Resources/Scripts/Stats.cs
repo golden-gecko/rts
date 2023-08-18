@@ -10,7 +10,7 @@ public class Stats
     public static string ObjectsAssembled = "Objects Assembled";
     public static string ObjectsConstructed = "Objects Constructed";
     public static string OrdersCancelled = "Orders Cancelled"; // TODO: Increase when order queue is cleared.
-    public static string OrdersExecuted = "Orders Executed";
+    public static string OrdersCompleted = "Orders Completed";
     public static string OrdersFailed = "Orders Failed";
     public static string ResourcesProduced = "Resources Produced";
     public static string ResourcesTransported = "Resources Transported";
@@ -24,7 +24,7 @@ public class Stats
     public static string TimeResearching = "Time Researching";
     public static string TimeWaiting = "Time Waiting";
 
-    public void Add(string name, float value) // TODO: Some values are passed as integers.
+    public void Add(string name, float value)
     {
         if (Items.ContainsKey(name))
         {
@@ -34,6 +34,11 @@ public class Stats
         {
             Items[name] = value;
         }
+    }
+
+    public void Inc(string name)
+    {
+        Add(name, 1.0f);
     }
 
     public float Get(string name)

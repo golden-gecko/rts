@@ -29,7 +29,7 @@ public class OrderHandlerMove : IOrderHandler
         {
             myGameObject.Position = target;
             myGameObject.Stats.Add(Stats.DistanceDriven, distanceToTarget);
-            myGameObject.Stats.Add(Stats.OrdersExecuted, 1);
+            myGameObject.Stats.Inc(Stats.OrdersCompleted);
             myGameObject.Orders.Pop();
         }
 

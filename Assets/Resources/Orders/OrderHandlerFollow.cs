@@ -11,15 +11,15 @@ public class OrderHandlerFollow : IOrderHandler
 
         if (IsValid(order) == false)
         {
-            myGameObject.Stats.Add(Stats.OrdersFailed, 1);
+            myGameObject.Stats.Inc(Stats.OrdersFailed);
             myGameObject.Orders.Pop();
 
             return;
         }
 
-        if (myGameObject.IsCloseTo(order.TargetGameObject.Position) == false)
+        if (myGameObject.IsCloseTo(order.TargetGameObject.Entrance) == false)
         {
-            myGameObject.Move(order.TargetGameObject.Position);
+            myGameObject.Move(order.TargetGameObject.Entrance);
         }
 
         myGameObject.Orders.MoveToEnd();

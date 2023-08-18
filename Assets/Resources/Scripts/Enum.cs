@@ -21,7 +21,7 @@ public enum OrderType
     Destroy,
     Explore,
     Follow,
-    Gather, // TODO: Implement.
+    Gather,
     Guard,
     Idle,
     Load,
@@ -31,10 +31,10 @@ public enum OrderType
     Produce,
     Rally,
     Research,
-    Skill, // TODO: Rename to verb.
     Stop,
     Transport,
     Unload,
+    UseSkill,
     Wait,
 }
 

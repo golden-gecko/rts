@@ -6,9 +6,9 @@ public class Gauss : Gun
     {
         RaycastHit[] hits = Physics.RaycastAll(new Ray(myGameObject.Center, position - myGameObject.Center), Config.RaycastMaxDistance); // TODO: Create missile prefab.
 
-        foreach (RaycastHit i in hits)
+        foreach (RaycastHit hit in hits)
         {
-            MyGameObject target = i.transform.GetComponentInParent<MyGameObject>();
+            MyGameObject target = hit.transform.GetComponentInParent<MyGameObject>();
 
             if (target == null)
             {
@@ -33,7 +33,7 @@ public class Gauss : Gun
             }
             else
             {
-                myGameObject.Stats.Add(Stats.TargetsDestroyed, 1);
+                myGameObject.Stats.Inc(Stats.TargetsDestroyed);
             }
 
             myGameObject.Stats.Add(Stats.DamageDealt, damageDealt);

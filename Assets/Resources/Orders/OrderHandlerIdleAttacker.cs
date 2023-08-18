@@ -9,16 +9,18 @@ public class OrderHandlerIdleAttacker : IOrderHandler
     {
         Order order;
 
-        if (myGameObject.GetComponent<Gun>() != null)
+        if (myGameObject.GetComponent<Gun>() == null)
         {
-            order = Game.Instance.CreataAttackJob(myGameObject);
-
-            if (order != null)
-            {
-                myGameObject.Orders.Add(order);
-
-                return;
-            }
+            return;
         }
+
+        order = Game.Instance.CreataAttackJob(myGameObject);
+
+        if (order == null)
+        {
+            return;
+        }
+
+        myGameObject.Orders.Add(order);
     }
 }

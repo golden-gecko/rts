@@ -120,15 +120,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   <Player>k__BackingField: {fileID: 0}
+  <Gatherable>k__BackingField: 1
+  <Selectable>k__BackingField: 1
   <Health>k__BackingField: 10
   <HealthMax>k__BackingField: 10
   <VisibilityRange>k__BackingField: 10
-  <ConstructionTime>k__BackingField: 10
-  <GatherTime>k__BackingField: 2
   <LoadTime>k__BackingField: 2
-  <ProduceTime>k__BackingField: 2
-  <ResearchTime>k__BackingField: 2
   <WaitTime>k__BackingField: 2
+  <DestroyEffect>k__BackingField: Effects/FX_Dig
 --- !u!1001 &5692449983818599645
 PrefabInstance:
   m_ObjectHideFlags: 0

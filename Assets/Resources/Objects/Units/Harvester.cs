@@ -5,6 +5,7 @@ public class Harvester : Unit
         base.Awake();
 
         Orders.AllowOrder(OrderType.Construct);
+        Orders.AllowOrder(OrderType.Gather);
         Orders.AllowOrder(OrderType.Load);
         Orders.AllowOrder(OrderType.Unload);
         Orders.AllowOrder(OrderType.Transport);

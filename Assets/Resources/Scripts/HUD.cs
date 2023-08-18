@@ -80,7 +80,7 @@ public class HUD : MonoBehaviour
         }
     }
 
-    public void Research(string technology)
+    public void Gather()
     {
         foreach (MyGameObject selected in ActivePlayer.Selected)
         {
@@ -89,7 +89,7 @@ public class HUD : MonoBehaviour
                 selected.Orders.Clear();
             }
 
-            selected.Research(technology);
+            selected.Gather();
         }
     }
 
@@ -106,7 +106,7 @@ public class HUD : MonoBehaviour
         }
     }
 
-    public void Skill(string skill)
+    public void Research(string technology)
     {
         foreach (MyGameObject selected in ActivePlayer.Selected)
         {
@@ -115,7 +115,7 @@ public class HUD : MonoBehaviour
                 selected.Orders.Clear();
             }
 
-            selected.Skill(skill);
+            selected.Research(technology);
         }
     }
 
@@ -129,6 +129,19 @@ public class HUD : MonoBehaviour
             }
 
             selected.Stop();
+        }
+    }
+
+    public void UseSkill(string skill)
+    {
+        foreach (MyGameObject selected in ActivePlayer.Selected)
+        {
+            if (IsShift() == false)
+            {
+                selected.Orders.Clear();
+            }
+
+            selected.UseSkill(skill);
         }
     }
 
@@ -214,6 +227,10 @@ public class HUD : MonoBehaviour
                     selected.Attack(position);
                     break;
 
+                case OrderType.Guard:
+                    selected.Guard(position);
+                    break;
+
                 case OrderType.Patrol:
                     selected.Patrol(position);
                     break;
@@ -243,6 +260,9 @@ public class HUD : MonoBehaviour
                 case OrderType.Attack:
                     selected.Attack(myGameObject);
                     break;
+
+                // TODO: Add construct order (only ally).
+                // TODO: Add gather order.
 
                 case OrderType.Guard:
                     selected.Guard(myGameObject);

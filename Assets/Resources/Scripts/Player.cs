@@ -64,9 +64,6 @@ public class Player : MonoBehaviour
     [field: SerializeField]
     public Sprite SelectionSprite { get; set; }
 
-    [field: SerializeField]
-    public bool Gatherable { get; set; } = false;
-
     public HashSet<MyGameObject> Selected { get; } = new HashSet<MyGameObject>();
 
     public Dictionary<KeyCode, HashSet<MyGameObject>> Groups { get; } = new Dictionary<KeyCode, HashSet<MyGameObject>>();
