@@ -149,13 +149,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   <Player>k__BackingField: {fileID: 0}
+  <Gatherable>k__BackingField: 0
   <Selectable>k__BackingField: 0
   <Health>k__BackingField: 1
   <HealthMax>k__BackingField: 1
   <VisibilityRange>k__BackingField: 0
   <LoadTime>k__BackingField: 2
   <WaitTime>k__BackingField: 2
-  <DestroyEffect>k__BackingField: Effects/WFXMR_Explosion StarSmoke
+  <DestroyEffect>k__BackingField: Effects/Missiles/WFX_Explosion StarSmoke
   <Damage>k__BackingField: 1
 --- !u!114 &-467504021311989082
 MonoBehaviour:

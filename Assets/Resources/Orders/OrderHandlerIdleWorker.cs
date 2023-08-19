@@ -11,7 +11,7 @@ public class OrderHandlerIdleWorker : IOrderHandler
         
         // TODO: Find unload job.
 
-        order = Game.Instance.CreateOrderTransport(myGameObject);
+        order = myGameObject.Player.CreateOrderTransport(myGameObject);
 
         if (order != null)
         {
@@ -20,7 +20,7 @@ public class OrderHandlerIdleWorker : IOrderHandler
             return;
         }
 
-        order = Game.Instance.CreateOrderGather(myGameObject);
+        order = myGameObject.Player.CreateOrderGather(myGameObject);
 
         if (order != null)
         {
@@ -29,7 +29,7 @@ public class OrderHandlerIdleWorker : IOrderHandler
             return;
         }
 
-        order = Game.Instance.CreateOrderConstruction(myGameObject);
+        order = myGameObject.Player.CreateOrderConstruction(myGameObject);
 
         if (order != null)
         {
