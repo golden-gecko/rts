@@ -259,7 +259,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <Mass>k__BackingField: 10
   <Damage>k__BackingField: 10
-  <Range>k__BackingField: 10
+  <Range>k__BackingField: 8
   <MissilePrefab>k__BackingField: Objects/Missiles/Rocket
   <HitEffectPrefab>k__BackingField: 
 --- !u!1 &7101257106916123649

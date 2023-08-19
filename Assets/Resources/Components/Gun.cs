@@ -23,10 +23,10 @@ public class Gun : MyComponent
     public float Range { get; set; } = 20.0f;
 
     [field: SerializeField]
-    public string MissilePrefab { get; set; } = "Objects/Missiles/Rocket";
+    public string MissilePrefab { get; set; }
 
     [field: SerializeField]
-    public string HitEffectPrefab { get; set; } = "Effects/CFXR3 Hit Electric C (Air)";
+    public string HitEffectPrefab { get; set; }
 
     public Timer Reload { get; } = new Timer(3.0f); // TODO: Create property.
 }

@@ -1,4 +1,5 @@
 using UnityEngine;
+using static UnityEngine.GraphicsBuffer;
 
 public class Gauss : Gun
 {
@@ -27,17 +28,17 @@ public class Gauss : Gun
 
             float damageDealt = target.OnDamage(Damage);
 
-            if (target.Alive)
-            {
-                Instantiate(Resources.Load(HitEffectPrefab), target.Position, Quaternion.identity); 
-            }
-            else
+            if (target.Alive == false)
             {
                 myGameObject.Stats.Inc(Stats.TargetsDestroyed);
             }
 
+            Instantiate(Resources.Load(HitEffectPrefab), target.Position, Quaternion.identity); 
+
             myGameObject.Stats.Add(Stats.DamageDealt, damageDealt);
         }
+
+        Instantiate(Resources.Load(HitEffectPrefab), position, Quaternion.identity);
 
         Reload.Reset();
     }

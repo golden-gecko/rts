@@ -598,7 +598,7 @@ public class MyGameObject : MonoBehaviour
     public float WaitTime { get; set; } = 2.0f;
 
     [field: SerializeField]
-    public string DestroyEffect { get; set; } = "Effects/WFXMR_Explosion StarSmoke";
+    public string DestroyEffect { get; set; }
 
     public Vector3 Position { get => transform.position; set => transform.position = value; }
 

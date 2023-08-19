@@ -113,7 +113,7 @@ public class Game : MonoBehaviour
 
     private void CreateDisaster()
     {
-        if (DisasterTime.Update(Time.deltaTime))
+        /*if (DisasterTime.Update(Time.deltaTime))
         {
             DisasterTime.Reset();
 
@@ -128,7 +128,7 @@ public class Game : MonoBehaviour
             int index = Random.Range(0, _disasters.Count);
 
             CreateGameObject(_disasters[1], new Vector3(300.41f, 0.0f, 132.32f), GetGaiaPlayer(), MyGameObjectState.Operational);
-        }
+        }*/
     }
 
     private Player GetGaiaPlayer()

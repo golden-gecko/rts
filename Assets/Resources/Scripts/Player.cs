@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class Player : MonoBehaviour
@@ -87,24 +88,41 @@ public class Player : MonoBehaviour
             }
         }
 
-        if (closest != null)
+        if (closest == null)
         {
-            return Order.Construct(closest, myGameObject.GetComponent<Constructor>().ResourceUsage);
+            return null;
         }
 
-        return null;
+        return Order.Construct(closest, myGameObject.GetComponent<Constructor>().ResourceUsage);
     }
 
     public Order CreateOrderGather(MyGameObject myGameObject)
     {
-        // TODO: Find storage for resource.
-        // TODO: Return closest object.
-        foreach (MyResource producer in GameObject.FindObjectsByType<MyResource>(FindObjectsSortMode.None))
+        MyResource closest = null;
+        float distance = float.MaxValue;
+
+        foreach (MyResource myResource in GameObject.FindObjectsByType<MyResource>(FindObjectsSortMode.None)) // TODO: Find storage for resource.
         {
-            return Order.Gather(producer);
+            if (myGameObject == myResource) // TODO: Probably useless.
+            {
+                continue;
+            }
+
+            float magnitude = (myGameObject.Position - myResource.Position).magnitude;
+
+            if (magnitude < distance)
+            {
+                closest = myResource;
+                distance = magnitude;
+            }
         }
 
-        return null;
+        if (closest == null)
+        {
+            return null;
+        }
+
+        return Order.Gather(closest);
     }
 
     public Order CreateOrderTransport(MyGameObject myGameObject)
