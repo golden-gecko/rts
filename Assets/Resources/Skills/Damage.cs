@@ -5,7 +5,7 @@ public class Damage : Skill
     public Damage(string name, float cooldown, float range, float value) : base(name, cooldown, range)
     {
         Value = value;
-        Effect = "Effects/CFXR Flash";
+        Effect = "Effects/Skills/Green hit";
     }
 
     public override void Execute(MyGameObject myGameObject)

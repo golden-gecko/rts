@@ -5,7 +5,8 @@ public class Repair : Skill
     public Repair(string name, float cooldown, float range, float value) : base(name, cooldown, range)
     {
         Value = value;
-        Effect = "Effects/CFXR3 Hit Misc A";
+        Effect = "Effects/Skills/Healing";
+
     }
 
     public override void Execute(MyGameObject myGameObject)
