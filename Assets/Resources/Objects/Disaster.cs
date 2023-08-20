@@ -25,6 +25,11 @@ public class Disaster : MyGameObject
         {
             foreach (KeyValuePair<MyGameObject, Timer> i in DamageTimer)
             {
+                if (i.Key == null)
+                {
+                    continue;
+                }
+
                 if (i.Value.Update(Time.deltaTime))
                 {
                     i.Value.Reset();
