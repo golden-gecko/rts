@@ -2,6 +2,10 @@
 
 Simple RTS game.
 
+## Bugs
+
+* Fix gather order.
+
 ## TODO
 
 * Ammunition storage and factory.

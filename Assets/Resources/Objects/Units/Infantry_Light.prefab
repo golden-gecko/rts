@@ -383,6 +383,7 @@ MonoBehaviour:
   <LoadTime>k__BackingField: 2
   <WaitTime>k__BackingField: 2
   <DestroyEffect>k__BackingField: Effects/Units/WFX_ExplosiveSmokeGround Small
+  <Altitude>k__BackingField: 0
 --- !u!114 &-3274248660476900476
 MonoBehaviour:
   m_ObjectHideFlags: 0

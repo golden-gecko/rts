@@ -1,4 +1,4 @@
-public class Tree_001 : Plant
+public class Tree_001 : MyResource
 {
     protected override void Awake()
     {

@@ -20,7 +20,7 @@ public class Gun : MyComponent
     public float Damage { get; set; } = 10.0f;
 
     [field: SerializeField]
-    public float Range { get; set; } = 20.0f;
+    public float Range { get; set; } = 10.0f;
 
     [field: SerializeField]
     public string MissilePrefab { get; set; }

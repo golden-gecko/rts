@@ -1,4 +1,4 @@
-public class Tree_05 : Plant
+public class Tree_05 : MyResource
 {
     protected override void Awake()
     {
@@ -13,3 +13,4 @@ public class Tree_05 : Plant
         Recipes.Add(r1);
     }
 }
+ 
