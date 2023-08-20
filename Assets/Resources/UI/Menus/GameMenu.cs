@@ -140,12 +140,12 @@ public class GameMenu : Menu
     {
         prefabs.Clear();
 
-        MyGameObject[] structures = Resources.LoadAll<MyGameObject>("Objects/Structures");
-        MyGameObject[] units = Resources.LoadAll<MyGameObject>("Objects/Units");
+        Structure[] structures = Resources.LoadAll<Structure>(Config.DirectoryStructures);
+        Unit[] units = Resources.LoadAll<Unit>(Config.DirectoryUnits);
 
-        foreach (MyGameObject myGameObject in structures)
+        foreach (Structure myGameObject in structures)
         {
-            string path = "Objects/Structures/" + myGameObject.name;
+            string path = Path.Combine(Config.DirectoryStructures, myGameObject.name);
 
             TemplateContainer buttonContainer = templateButton.Instantiate();
             Button button = buttonContainer.Q<Button>();
@@ -159,9 +159,9 @@ public class GameMenu : Menu
             prefabsButtons[path] = button;
         }
 
-        foreach (MyGameObject myGameObject in units)
+        foreach (Unit myGameObject in units)
         {
-            string path = "Objects/Units/" + myGameObject.name;
+            string path = Path.Combine(Config.DirectoryUnits, myGameObject.name);
 
             TemplateContainer buttonContainer = templateButton.Instantiate();
             Button button = buttonContainer.Q<Button>();

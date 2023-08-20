@@ -9,9 +9,11 @@ public class Missile : MyGameObject
         Orders.AllowOrder(OrderType.Move);
     }
 
-    protected void OnTriggerEnter(Collider collider)
+    protected override void OnTriggerEnter(Collider other)
     {
-        MyGameObject myGameObject = collider.GetComponentInParent<MyGameObject>(); // TODO: Add collision with terrain.
+        base.OnTriggerEnter(other);
+
+        MyGameObject myGameObject = other.GetComponentInParent<MyGameObject>(); // TODO: Add collision with terrain.
 
         if (myGameObject != null && myGameObject.Is(this, DiplomacyState.Ally) == false && myGameObject.GetComponent<Missile>() == false)
         {
