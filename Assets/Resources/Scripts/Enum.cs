@@ -5,6 +5,13 @@ public enum DiplomacyState
     Neutral,
 }
 
+public enum MyGameObjectMapLayer
+{
+    Air,
+    Terrain,
+    Water,
+}
+
 public enum MyGameObjectState
 {
     Cursor,
@@ -38,8 +45,11 @@ public enum OrderType
     Wait,
 }
 
-public enum PrefabConstructionType
+public enum PositionHandlerType
 {
+    Camera,
+    Plane,
     Structure,
-    Unit,
+    Ship,
+    Vehicle,
 }

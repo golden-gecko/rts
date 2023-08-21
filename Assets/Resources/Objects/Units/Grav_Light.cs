@@ -1,4 +1,4 @@
-public class Grav_Light : Unit
+public class Grav_Light : Vehicle
 {
     protected override void Awake()
     {

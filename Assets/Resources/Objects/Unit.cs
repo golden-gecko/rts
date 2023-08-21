@@ -6,6 +6,7 @@ public class Unit : MyGameObject
 
         Orders.AllowOrder(OrderType.Explore);
         Orders.AllowOrder(OrderType.Follow);
+        Orders.AllowOrder(OrderType.Guard);
         Orders.AllowOrder(OrderType.Move);
         Orders.AllowOrder(OrderType.Patrol);
         

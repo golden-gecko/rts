@@ -1,4 +1,4 @@
-public class Quad : Unit
+public class Quad : Vehicle
 {
     protected override void Awake()
     {

@@ -638,8 +638,6 @@ public class HUD : MonoBehaviour
 
     public RectTransform boxVisual;
 
-    public PrefabConstructionType PrefabConstructionType { get; set; }
-
     public MyGameObject Hovered { get; private set; }
 
     private bool drag = false;

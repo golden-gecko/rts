@@ -450,7 +450,7 @@ public class MyGameObject : MonoBehaviour
 
     protected virtual void UpdatePosition()
     {
-        Vector3 newPosition = Map.Instance.UnitPositionHandler.GetPosition(Position);
+        Vector3 newPosition = Map.Instance.VehiclePositionHandler.GetPosition(Position);
 
         newPosition.y += Altitude;
 
@@ -654,6 +654,9 @@ public class MyGameObject : MonoBehaviour
 
     [field: SerializeField]
     public float Altitude { get; set; } = 0.0f;
+
+    [field: SerializeField]
+    public List<MyGameObjectMapLayer> MapLayers = new List<MyGameObjectMapLayer>();
 
     public Vector3 Position { get => transform.position; set => transform.position = value; }
 

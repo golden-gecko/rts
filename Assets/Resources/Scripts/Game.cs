@@ -144,7 +144,7 @@ public class Game : MonoBehaviour
         cameraPosition.x += Random.Range(-20.0f, 20.0f); // TODO: Hardcoded.
         cameraPosition.z += Random.Range(-20.0f, 20.0f);
 
-        return Map.Instance.UnitPositionHandler.GetPosition(cameraPosition);
+        return Map.Instance.VehiclePositionHandler.GetPosition(cameraPosition);
     }
 
     private Player GetGaiaPlayer()

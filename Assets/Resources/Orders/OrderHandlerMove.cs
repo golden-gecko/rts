@@ -33,6 +33,6 @@ public class OrderHandlerMove : IOrderHandler
             myGameObject.Orders.Pop();
         }
 
-        myGameObject.Position = Map.Instance.UnitPositionHandler.GetPosition(myGameObject.Position);
+        myGameObject.Position = Map.Instance.VehiclePositionHandler.GetPosition(myGameObject.Position);
     }
 }

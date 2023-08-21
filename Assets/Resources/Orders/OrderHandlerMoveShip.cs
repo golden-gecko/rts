@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class OrderHandlerMovePlane : IOrderHandler
+public class OrderHandlerMoveShip : IOrderHandler
 {
     public bool IsValid(Order order)
     {
