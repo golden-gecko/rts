@@ -43,22 +43,26 @@ public class Map : MonoBehaviour
             return Vector3.zero;
         }
 
-        if (myGameObject.MapLayers.Contains(MyGameObjectMapLayer.Air))
+        bool air = myGameObject.MapLayers.Contains(MyGameObjectMapLayer.Air);
+        bool terrain = myGameObject.MapLayers.Contains(MyGameObjectMapLayer.Terrain);
+        bool water = myGameObject.MapLayers.Contains(MyGameObjectMapLayer.Water);
+
+        if (air)
         {
             return new Vector3(hitInfo.point.x, hitInfo.point.y + myGameObject.Altitude, hitInfo.point.z);
         }
 
-        if (myGameObject.MapLayers.Contains(MyGameObjectMapLayer.Terrain) && myGameObject.MapLayers.Contains(MyGameObjectMapLayer.Water))
+        if (terrain && water)
         {
             return hitInfo.point;
         }
 
-        if (myGameObject.MapLayers.Contains(MyGameObjectMapLayer.Terrain) && hitInfo.transform.name == "Terrain") // TODO: Hardcoded.
+        if (terrain && hitInfo.transform.name == "Terrain") // TODO: Hardcoded.
         {
             return hitInfo.point;
         }
 
-        if (myGameObject.MapLayers.Contains(MyGameObjectMapLayer.Water) && hitInfo.transform.name == "Water") // TODO: Hardcoded.
+        if (water && hitInfo.transform.name == "Water") // TODO: Hardcoded.
         {
             return hitInfo.point;
         }
