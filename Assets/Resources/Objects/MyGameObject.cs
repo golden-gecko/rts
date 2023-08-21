@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class MyGameObject : MonoBehaviour
@@ -656,7 +657,7 @@ public class MyGameObject : MonoBehaviour
     public float Altitude { get; set; } = 0.0f;
 
     [field: SerializeField]
-    public List<MyGameObjectMapLayer> MapLayers = new List<MyGameObjectMapLayer>();
+    public List<MyGameObjectMapLayer> MapLayers { get; set; } = new List<MyGameObjectMapLayer>(); // TODO: Replace with HashSet.
 
     public Vector3 Position { get => transform.position; set => transform.position = value; }
 
