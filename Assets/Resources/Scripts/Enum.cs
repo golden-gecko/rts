@@ -9,6 +9,7 @@ public enum MyGameObjectMapLayer
 {
     Air,
     Terrain,
+    Underwater, // TODO: Implement.
     Water,
 }
 

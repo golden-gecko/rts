@@ -139,12 +139,12 @@ public class Game : MonoBehaviour
 
     private Vector3 GetDisasterPosition()
     {
-        Vector3 cameraPosition = Camera.main.transform.position;
+        Vector3 position = Camera.main.transform.position;
 
-        cameraPosition.x += Random.Range(-20.0f, 20.0f); // TODO: Hardcoded.
-        cameraPosition.z += Random.Range(-20.0f, 20.0f);
+        position.x += Random.Range(-20.0f, 20.0f); // TODO: Hardcoded.
+        position.z += Random.Range(-20.0f, 20.0f);
 
-        return Map.Instance.VehiclePositionHandler.GetPosition(cameraPosition);
+        return Map.Instance.ValidatePosition(position);
     }
 
     private Player GetGaiaPlayer()

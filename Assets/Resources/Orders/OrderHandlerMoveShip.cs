@@ -33,10 +33,6 @@ public class OrderHandlerMoveShip : IOrderHandler
             myGameObject.Orders.Pop();
         }
 
-        Vector3 newPosition = Map.Instance.VehiclePositionHandler.GetPosition(myGameObject.Position);
-
-        newPosition.y += myGameObject.Altitude;
-
-        myGameObject.Position = newPosition;
+        myGameObject.Position = Map.Instance.ValidatePosition(myGameObject); // TODO: Move up.
     }
 }

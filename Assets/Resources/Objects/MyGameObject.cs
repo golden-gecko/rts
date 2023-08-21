@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class MyGameObject : MonoBehaviour
@@ -451,11 +450,7 @@ public class MyGameObject : MonoBehaviour
 
     protected virtual void UpdatePosition()
     {
-        Vector3 newPosition = Map.Instance.VehiclePositionHandler.GetPosition(Position);
-
-        newPosition.y += Altitude;
-
-        Position = newPosition;
+        Position = Map.Instance.ValidatePosition(this);
     }
 
     public void UpdateSelection()
