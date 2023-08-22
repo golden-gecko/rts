@@ -1,11 +1,12 @@
 using UnityEngine;
-using static UnityEngine.GraphicsBuffer;
 
 public class Gauss : Gun
 {
     public override void Fire(MyGameObject myGameObject, Vector3 position)
     {
-        RaycastHit[] hits = Physics.RaycastAll(new Ray(myGameObject.Center, position - myGameObject.Center), Config.RaycastMaxDistance); // TODO: Create missile prefab.
+        // TODO: Create missile prefab.
+        // TODO: Pass range from gun.
+        RaycastHit[] hits = Physics.RaycastAll(new Ray(myGameObject.Center, position - myGameObject.Center), Config.RaycastMaxDistance);
 
         foreach (RaycastHit hit in hits)
         {
@@ -33,7 +34,7 @@ public class Gauss : Gun
                 myGameObject.Stats.Inc(Stats.TargetsDestroyed);
             }
 
-            Instantiate(Resources.Load(HitEffectPrefab), target.Position, Quaternion.identity); 
+            Instantiate(Resources.Load(HitEffectPrefab), hit.point, Quaternion.identity); 
 
             myGameObject.Stats.Add(Stats.DamageDealt, damageDealt);
         }

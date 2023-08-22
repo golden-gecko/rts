@@ -158,6 +158,7 @@ MonoBehaviour:
   <WaitTime>k__BackingField: 2
   <DestroyEffect>k__BackingField: Effects/Missiles/WFX_Explosion StarSmoke
   <Altitude>k__BackingField: 0
+  <MapLayers>k__BackingField: 00000000
   <Damage>k__BackingField: 10
 --- !u!114 &-2682188205079004282
 MonoBehaviour:

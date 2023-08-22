@@ -1,13 +1,15 @@
 using UnityEngine;
-using static UnityEngine.GraphicsBuffer;
 
 public class Laser : Gun
 {
     public override void Fire(MyGameObject myGameObject, Vector3 position)
     {
-        RaycastHit[] hits = Physics.RaycastAll(new Ray(myGameObject.Center, position - myGameObject.Center), Config.RaycastMaxDistance); // TODO: Create missile prefab.
+        // TODO: Create missile prefab.
+        // TODO: Pass range from gun.
+        RaycastHit[] hits = Physics.RaycastAll(new Ray(myGameObject.Center, position - myGameObject.Center), Config.RaycastMaxDistance);
 
         MyGameObject closest = null;
+        Vector3 hitPoint = Vector3.zero;
         float distance = float.MaxValue;
 
         foreach (RaycastHit hit in hits)
@@ -32,11 +34,16 @@ public class Laser : Gun
             if (hit.distance < distance)
             {
                 closest = target;
+                hitPoint = hit.point;
                 distance = hit.distance;
             }
         }
 
-        if (closest != null)
+        if (closest == null)
+        {
+            Instantiate(Resources.Load(HitEffectPrefab), position, Quaternion.identity);
+        }
+        else
         {
             float damageDealt = closest.OnDamage(Damage);
 
@@ -45,13 +52,9 @@ public class Laser : Gun
                 myGameObject.Stats.Inc(Stats.TargetsDestroyed);
             }
 
-            Instantiate(Resources.Load(HitEffectPrefab), closest.Position, Quaternion.identity);
+            Instantiate(Resources.Load(HitEffectPrefab), hitPoint, Quaternion.identity);
 
             myGameObject.Stats.Add(Stats.DamageDealt, damageDealt);
-        }
-        else
-        {
-            Instantiate(Resources.Load(HitEffectPrefab), closest.Position, Quaternion.identity);
         }
 
         Reload.Reset();

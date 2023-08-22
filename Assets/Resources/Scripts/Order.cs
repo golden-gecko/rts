@@ -271,8 +271,6 @@ public class Order
 
     public Counter Retries { get; private set; } = new Counter();
 
-    public PrefabConstructionType PrefabConstructionType { get; private set; }
-
     public Dictionary<string, int> Resources { get; private set; }
 
     public MyGameObject SourceGameObject { get; private set; }

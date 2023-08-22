@@ -1,4 +1,4 @@
-public class Harvester : Unit
+public class Harvester : Vehicle
 {
     protected override void Awake()
     {

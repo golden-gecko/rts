@@ -214,6 +214,7 @@ MonoBehaviour:
   <WaitTime>k__BackingField: 2
   <DestroyEffect>k__BackingField: Effects/Structures/WFX_ExplosiveSmokeGround Big
   <Altitude>k__BackingField: 0
+  <MapLayers>k__BackingField: 01000000
 --- !u!114 &6175888824097214427
 MonoBehaviour:
   m_ObjectHideFlags: 0
