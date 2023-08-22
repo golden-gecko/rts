@@ -110,8 +110,12 @@ public class GameMenu : Menu
             OrderType.Assemble,
             OrderType.Construct,
             OrderType.Idle,
+            OrderType.Load,
             OrderType.None,
             OrderType.Produce,
+            OrderType.Transport,
+            OrderType.Unload,
+            OrderType.UseSkill,
         };
 
         orders.Clear();

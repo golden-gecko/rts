@@ -1,3 +1,5 @@
+using System.IO;
+
 public class Factory_Light : Structure
 {
     protected override void Awake()
@@ -7,11 +9,11 @@ public class Factory_Light : Structure
         Orders.AllowOrder(OrderType.Assemble);
         Orders.AllowOrder(OrderType.Rally);
 
-        Orders.AllowPrefab("Objects/Units/Grav_Light");
-        Orders.AllowPrefab("Objects/Units/Harvester");
-        Orders.AllowPrefab("Objects/Units/Quad");
-        Orders.AllowPrefab("Objects/Units/Trike");
-        
+        Orders.AllowPrefab(Path.Combine(Config.DirectoryUnits, "Grav_Light"));
+        Orders.AllowPrefab(Path.Combine(Config.DirectoryUnits, "Harvester"));
+        Orders.AllowPrefab(Path.Combine(Config.DirectoryUnits, "Quad"));
+        Orders.AllowPrefab(Path.Combine(Config.DirectoryUnits, "Trike"));
+
         Resources.Add("Iron", 0, 40);
 
         Recipe r1 = new Recipe("Iron");

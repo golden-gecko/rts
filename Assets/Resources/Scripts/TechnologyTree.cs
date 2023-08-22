@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class TechnologyTree
@@ -23,14 +22,17 @@ public class TechnologyTree
         }
 
         // Create technologies to research.
-        Technologies["Colonization"] = new Technology("Colonization", new HashSet<string> { "Factory_Light", "Grav_Light", "Harvester", "Headquarters", "Quad", "Refinery", "Research_Lab", "Trike" });
+        Technologies["Colonization"] = new Technology("Colonization", new HashSet<string> { "Factory_Light", "Harvester", "Headquarters", "Quad", "Refinery", "Research_Lab", "Trike" });
         Technologies["Colonization"].Cost.Add("Crystal", 0, 20);
 
         Technologies["Infantry"] = new Technology("Infantry", new HashSet<string> { "Barracks", "Infantry_Light" });
         Technologies["Infantry"].Cost.Add("Crystal", 0, 20);
 
-        Technologies["Heavy_Industry"] = new Technology("Heavy_Industry", new HashSet<string> { "Factory_Heavy", "Tank_Combat", "Tank_Missile" });
+        Technologies["Heavy_Industry"] = new Technology("Heavy_Industry", new HashSet<string> { "Factory_Heavy", "Tank_Missile" });
         Technologies["Heavy_Industry"].Cost.Add("Crystal", 0, 20);
+
+        Technologies["Laser"] = new Technology("Laser", new HashSet<string> { "Grav_Light", "Tank_Combat" });
+        Technologies["Laser"].Cost.Add("Crystal", 0, 20);
 
         Technologies["Radar"] = new Technology("Radar", new HashSet<string> { "Radar_Outpost" });
         Technologies["Radar"].Cost.Add("Crystal", 0, 20);

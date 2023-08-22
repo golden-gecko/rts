@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 
 public class Stats
 {
@@ -9,7 +10,7 @@ public class Stats
     public static string MissilesFired = "Missiles Fired";
     public static string ObjectsAssembled = "Objects Assembled";
     public static string ObjectsConstructed = "Objects Constructed";
-    public static string OrdersCancelled = "Orders Cancelled"; // TODO: Increase when order queue is cleared.
+    public static string OrdersCancelled = "Orders Cancelled";
     public static string OrdersCompleted = "Orders Completed";
     public static string OrdersFailed = "Orders Failed";
     public static string ResourcesProduced = "Resources Produced";
@@ -55,7 +56,7 @@ public class Stats
     {
         string info = string.Empty;
 
-        foreach (KeyValuePair<string, float> i in Items)
+        foreach (KeyValuePair<string, float> i in Items.OrderBy(x => x.Key))
         {
             info += string.Format("\n  {0}: {1:0.}", i.Key, i.Value);
         }
