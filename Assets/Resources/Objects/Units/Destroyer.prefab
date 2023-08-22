@@ -467,6 +467,7 @@ MonoBehaviour:
   <WaitTime>k__BackingField: 2
   <DestroyEffect>k__BackingField: 
   <Altitude>k__BackingField: 0
+  <MapLayers>k__BackingField: 03000000
 --- !u!114 &5283008689776274222
 MonoBehaviour:
   m_ObjectHideFlags: 0

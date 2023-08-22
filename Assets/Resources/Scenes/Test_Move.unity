@@ -237,6 +237,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Caryall
       objectReference: {fileID: 0}
+    - target: {fileID: 3420214958373469289, guid: 797049024c95e2f4ca58838b4b979817, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -315,6 +319,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Patrol_0001
       objectReference: {fileID: 0}
+    - target: {fileID: 348367208220392007, guid: 52ead875ff6aac7449e15509dd920e29, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1125467308273082621, guid: 52ead875ff6aac7449e15509dd920e29, type: 3}
       propertyPath: m_LocalPosition.x
       value: 281.33554
@@ -375,6 +383,10 @@ PrefabInstance:
     - target: {fileID: 348367208220392007, guid: 52ead875ff6aac7449e15509dd920e29, type: 3}
       propertyPath: m_Name
       value: Patrol
+      objectReference: {fileID: 0}
+    - target: {fileID: 348367208220392007, guid: 52ead875ff6aac7449e15509dd920e29, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1125467308273082621, guid: 52ead875ff6aac7449e15509dd920e29, type: 3}
       propertyPath: m_LocalPosition.x
@@ -455,6 +467,10 @@ PrefabInstance:
     - target: {fileID: 2222111361404534124, guid: 2611ed8fbff91a64aa42f06d5f9cdf23, type: 3}
       propertyPath: m_Name
       value: Tree_0001
+      objectReference: {fileID: 0}
+    - target: {fileID: 2222111361404534124, guid: 2611ed8fbff91a64aa42f06d5f9cdf23, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2222111361405018444, guid: 2611ed8fbff91a64aa42f06d5f9cdf23, type: 3}
       propertyPath: m_RootOrder
@@ -670,6 +686,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Factory_Heavy
       objectReference: {fileID: 0}
+    - target: {fileID: 2221833450515023493, guid: 02e86a9710426ab45878cfedc265edb3, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3301308007979738254, guid: 02e86a9710426ab45878cfedc265edb3, type: 3}
       propertyPath: <Player>k__BackingField
       value: 
@@ -694,6 +714,10 @@ PrefabInstance:
     - target: {fileID: 6014288322611724604, guid: c6bff8f514d78c941a4b26fda1761e40, type: 3}
       propertyPath: m_Name
       value: Grav_Light
+      objectReference: {fileID: 0}
+    - target: {fileID: 6014288322611724604, guid: c6bff8f514d78c941a4b26fda1761e40, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6358198605777279878, guid: c6bff8f514d78c941a4b26fda1761e40, type: 3}
       propertyPath: m_LocalPosition.x

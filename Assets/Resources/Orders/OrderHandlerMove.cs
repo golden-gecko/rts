@@ -19,20 +19,39 @@ public class OrderHandlerMove : IOrderHandler
         float distanceToTarget = (target - position).magnitude;
         float distanceToTravel = myGameObject.GetComponent<Engine>().Speed * Time.deltaTime;
 
+        myGameObject.transform.LookAt(new Vector3(target.x, myGameObject.Position.y, target.z));
+
         if (distanceToTarget > distanceToTravel)
         {
-            myGameObject.transform.LookAt(new Vector3(target.x, myGameObject.Position.y, target.z));
-            myGameObject.transform.Translate(Vector3.forward * distanceToTravel);
+            Vector3 validated;
+
+            if (Map.Instance.ValidatePosition(myGameObject, myGameObject.Position + (target - position).normalized * distanceToTravel, out validated) == false)
+            {
+                myGameObject.Stats.Inc(Stats.OrdersFailed);
+                myGameObject.Orders.Pop();
+
+                return;
+            }
+
+            myGameObject.Position = validated;
             myGameObject.Stats.Add(Stats.DistanceDriven, distanceToTravel);
         }
         else
         {
-            myGameObject.Position = target;
+            Vector3 validated;
+
+            if (Map.Instance.ValidatePosition(myGameObject, target, out validated) == false)
+            {
+                myGameObject.Stats.Inc(Stats.OrdersFailed);
+                myGameObject.Orders.Pop();
+
+                return;
+            }
+
+            myGameObject.Position = validated;
             myGameObject.Stats.Add(Stats.DistanceDriven, distanceToTarget);
             myGameObject.Stats.Inc(Stats.OrdersCompleted);
             myGameObject.Orders.Pop();
         }
-
-        myGameObject.Position = Map.Instance.ValidatePosition(myGameObject); // TODO: Move up.
     }
 }

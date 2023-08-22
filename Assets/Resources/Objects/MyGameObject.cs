@@ -450,7 +450,12 @@ public class MyGameObject : MonoBehaviour
 
     protected virtual void UpdatePosition()
     {
-        Position = Map.Instance.ValidatePosition(this);
+        Vector3 validated;
+
+        if (Map.Instance.ValidatePosition(this, Position, out validated))
+        {
+            Position = validated;
+        }
     }
 
     public void UpdateSelection()

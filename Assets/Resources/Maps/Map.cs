@@ -31,16 +31,18 @@ public class Map : MonoBehaviour
         return Vector3.zero;
     }
 
-    public Vector3 ValidatePosition(MyGameObject myGameObject)
+    public bool ValidatePosition(MyGameObject myGameObject, Vector3 position, out Vector3 validated)
     {
-        Ray ray = new Ray(myGameObject.Position + Vector3.up * Config.TerrainMaxHeight, Vector3.down);
+        Ray ray = new Ray(position + Vector3.up * Config.TerrainMaxHeight, Vector3.down);
         int mask = LayerMask.GetMask("Terrain") | LayerMask.GetMask("Water");
 
         RaycastHit hitInfo;
 
         if (Physics.Raycast(ray, out hitInfo, Config.RaycastMaxDistance, mask) == false)
         {
-            return Vector3.zero;
+            validated = Vector3.zero;
+            
+            return false;
         }
 
         bool air = myGameObject.MapLayers.Contains(MyGameObjectMapLayer.Air);
@@ -49,25 +51,35 @@ public class Map : MonoBehaviour
 
         if (air)
         {
-            return new Vector3(hitInfo.point.x, hitInfo.point.y + myGameObject.Altitude, hitInfo.point.z);
+            validated = new Vector3(hitInfo.point.x, hitInfo.point.y + myGameObject.Altitude, hitInfo.point.z);
+         
+            return true;
         }
 
         if (terrain && water)
         {
-            return hitInfo.point;
+            validated = hitInfo.point;
+
+            return true;
         }
 
-        if (terrain && hitInfo.transform.name == "Terrain") // TODO: Hardcoded.
+        if (terrain && hitInfo.transform.CompareTag("Terrain")) // TODO: Hardcoded.
         {
-            return hitInfo.point;
+            validated = hitInfo.point;
+
+            return true;
         }
 
-        if (water && hitInfo.transform.name == "Water") // TODO: Hardcoded.
+        if (water && hitInfo.transform.CompareTag("Water")) // TODO: Hardcoded.
         {
-            return hitInfo.point;
+            validated = hitInfo.point;
+
+            return true;
         }
 
-        return Vector3.zero;
+        validated = Vector3.zero;
+
+        return false;
     }
 
     public ITerrainPosition CameraPositionHandler { get; } = new TerrainPositionAnywhere();
