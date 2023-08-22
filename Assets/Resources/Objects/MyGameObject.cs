@@ -1,12 +1,12 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.VFX;
 
 public class MyGameObject : MonoBehaviour
 {
     protected virtual void Awake()
     {
-        Transform visual = transform.Find("Visual");
-
+        visual = transform.Find("Visual");
         rangeMissile = visual.transform.Find("Range_Missile");
         rangeVisibility = visual.transform.Find("Range_Visibility");
         selection = visual.transform.Find("Selection");
@@ -76,6 +76,7 @@ public class MyGameObject : MonoBehaviour
         }
 
         UpdateSkills();
+        UpdateSelectionPosition();
     }
 
     protected virtual void OnTriggerEnter(Collider other)
@@ -96,6 +97,14 @@ public class MyGameObject : MonoBehaviour
         {
             skill.Update();
         }
+    }
+
+    protected void UpdateSelectionPosition()
+    {
+        Vector3 position = Map.Instance.CameraPositionHandler.GetPosition(Position);
+
+        rangeMissile.position = position;
+        rangeVisibility.position = position;
     }
 
     public void Assemble(string prefab)
@@ -683,6 +692,7 @@ public class MyGameObject : MonoBehaviour
 
     protected Dictionary<OrderType, IOrderHandler> OrderHandlers { get; } = new Dictionary<OrderType, IOrderHandler>();
 
+    private Transform visual;
     private Transform rangeMissile;
     private Transform rangeVisibility;
     private Transform selection;
