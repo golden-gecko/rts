@@ -5,7 +5,6 @@ public class Gauss : Gun
     public override void Fire(MyGameObject myGameObject, Vector3 position)
     {
         // TODO: Create missile prefab.
-        // TODO: Pass range from gun.
         RaycastHit[] hits = Physics.RaycastAll(new Ray(myGameObject.Center, position - myGameObject.Center), Config.RaycastMaxDistance);
 
         foreach (RaycastHit hit in hits)

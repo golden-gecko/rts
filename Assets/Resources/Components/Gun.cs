@@ -2,6 +2,13 @@ using UnityEngine;
 
 public class Gun : MyComponent
 {
+    protected override void Awake()
+    {
+        base.Awake();
+
+        Reload.Max = CooldownTime;
+    }
+
     protected override void Update()
     {
         Reload.Update(Time.deltaTime);
@@ -9,7 +16,7 @@ public class Gun : MyComponent
 
     public override string GetInfo()
     {
-        return string.Format("{0}, Reload: {1:0.}/{2:0.}", base.GetInfo(), Reload.Current, Reload.Max);
+        return string.Format("{0}, Reload: {1}", base.GetInfo(), Reload.GetInfo());
     }
 
     public virtual void Fire(MyGameObject myGameObject, Vector3 position)
@@ -23,10 +30,13 @@ public class Gun : MyComponent
     public float Range { get; set; } = 10.0f;
 
     [field: SerializeField]
-    public string MissilePrefab { get; set; }
+    public float CooldownTime { get; set; } = 10.0f;
+
+    [field: SerializeField]
+    public GameObject MissilePrefab { get; set; }
 
     [field: SerializeField]
     public string HitEffectPrefab { get; set; }
 
-    public Timer Reload { get; } = new Timer(3.0f); // TODO: Create property.
+    public Timer Reload { get; } = new Timer();
 }

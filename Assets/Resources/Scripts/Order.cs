@@ -249,12 +249,12 @@ public class Order
 
         if (Timer != null)
         {
-            info += string.Format(" {0:0.}/{1}", Timer.Current, Timer.Max);
+            info += string.Format(" {0}", Timer.GetInfo());
         }
 
         if (Retries.Max > 0)
         {
-            info += string.Format(" {0}/{1}", Retries, Retries.Max);
+            info += string.Format(" {0}", Retries.GetInfo());
         }
 
         return info;

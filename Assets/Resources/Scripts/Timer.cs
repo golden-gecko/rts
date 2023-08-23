@@ -23,6 +23,11 @@ public class Timer
         Current = 0.0f;
     }
 
+    public string GetInfo()
+    {
+        return string.Format("{0:0.}/{1:0.}", Current, Max);
+    }
+
     public float Current { get; private set; }
 
     public float Max { get; set; }

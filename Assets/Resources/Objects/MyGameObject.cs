@@ -556,7 +556,7 @@ public class MyGameObject : MonoBehaviour
         {
             foreach (Resource resource in ConstructionResources.Items.Values)
             {
-                if (resource.Current < resource.Max)
+                if (resource.Full == false)
                 {
                     return false;
                 }
