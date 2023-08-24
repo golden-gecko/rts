@@ -10,7 +10,7 @@ public class Damage : Skill
 
     public override void Execute(MyGameObject myGameObject)
     {
-        foreach (MyGameObject target in GameObject.FindObjectsByType<MyGameObject>(FindObjectsSortMode.None))
+        foreach (MyGameObject target in Object.FindObjectsByType<MyGameObject>(FindObjectsSortMode.None))
         {
             if (target.Is(myGameObject, DiplomacyState.Ally))
             {

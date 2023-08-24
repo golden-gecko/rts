@@ -80,6 +80,7 @@ public class MyGameObject : MonoBehaviour
 
         UpdateSkills();
         UpdateSelectionPosition();
+        UpdateVisibility();
     }
 
     protected virtual void OnTriggerEnter(Collider other)
@@ -109,6 +110,37 @@ public class MyGameObject : MonoBehaviour
         rangeGun.position = position;
         rangeRadar.position = position;
         rangeSight.position = position;
+    }
+
+    protected void UpdateVisibility()
+    {
+        if (Player == HUD.Instance.ActivePlayer || VisibleBySight.Count > 0)
+        {
+            foreach (Renderer renderer in GetComponentsInChildren<Renderer>())
+            {
+                renderer.enabled = true;
+            }
+
+            trace.gameObject.SetActive(false);
+        }
+        else if (VisibleByRadar.Count > 0)
+        {
+            foreach (Renderer renderer in GetComponentsInChildren<Renderer>())
+            {
+                renderer.enabled = false;
+            }
+
+            //trace.gameObject.SetActive(true);
+        }
+        else
+        {
+            foreach (Renderer renderer in GetComponentsInChildren<Renderer>())
+            {
+                renderer.enabled = false;
+            }
+
+            trace.gameObject.SetActive(false);
+        }
     }
 
     public void Assemble(string prefab)
@@ -452,7 +484,12 @@ public class MyGameObject : MonoBehaviour
         return IsInRange(position, GetComponent<Gun>().Range);
     }
 
-    public bool IsInVisibilityRange(Vector3 position) // TODO: Remove
+    public bool IsInRadarRange(Vector3 position) // TODO: Remove?
+    {
+        return IsInRange(position, GetComponent<Radar>().Range);
+    }
+
+    public bool IsInVisibilityRange(Vector3 position) // TODO: Remove?
     {
         return IsInRange(position, GetComponent<Sight>().Range);
     }
@@ -725,6 +762,10 @@ public class MyGameObject : MonoBehaviour
     public MyGameObject Parent { get; set; } // TODO: Hide setter.
 
     public Dictionary<string, Skill> Skills { get; } = new Dictionary<string, Skill>();
+
+    public HashSet<MyGameObject> VisibleByRadar { get; set; } = new HashSet<MyGameObject>();
+
+    public HashSet<MyGameObject> VisibleBySight { get; set; } = new HashSet<MyGameObject>();
 
     protected Dictionary<OrderType, IOrderHandler> OrderHandlers { get; } = new Dictionary<OrderType, IOrderHandler>();
 
