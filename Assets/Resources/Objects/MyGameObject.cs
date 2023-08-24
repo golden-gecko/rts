@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class MyGameObject : MonoBehaviour
 {
@@ -10,6 +11,7 @@ public class MyGameObject : MonoBehaviour
         rangeRadar = visual.transform.Find("Range_Radar");
         rangeSight = visual.transform.Find("Range_Sight");
         selection = visual.transform.Find("Selection");
+        trace = visual.transform.Find("Trace");
 
         Orders.AllowOrder(OrderType.Destroy);
         Orders.AllowOrder(OrderType.Idle);
@@ -51,6 +53,7 @@ public class MyGameObject : MonoBehaviour
 
         UpdatePosition();
         UpdateSelection();
+        UpdateTrace();
     }
 
     protected virtual void Update()
@@ -490,6 +493,14 @@ public class MyGameObject : MonoBehaviour
         }
     }
 
+    public void UpdateTrace()
+    {
+        Vector3 scale = transform.localScale;
+        float radius = Radius;
+
+        trace.localScale = new Vector3(radius * 2.0f / scale.x, radius * 2.0f / scale.y, radius * 2.0f / scale.z);
+    }
+
     private void ProcessOrders()
     {
         if (Orders.Count > 0)
@@ -619,6 +630,16 @@ public class MyGameObject : MonoBehaviour
 
     public Vector3 Exit { get => Position - new Vector3(0.0f, 0.0f, Size.z + 1.0f); }
 
+    public float Radius
+    {
+        get
+        {
+            Vector3 size = Size;
+
+            return (size.x + size.y + size.z) / 3.0f;
+        }
+    }
+
     public Vector3 Size
     {
         get 
@@ -712,4 +733,5 @@ public class MyGameObject : MonoBehaviour
     private Transform rangeRadar;
     private Transform rangeSight;
     private Transform selection;
+    private Transform trace;
 }
