@@ -1,3 +1,4 @@
+using System.IO;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UIElements;
@@ -24,14 +25,13 @@ public class SceneMenu : Menu
         VisualElement rootVisualElement = uiDocument.rootVisualElement;
         VisualElement menu = rootVisualElement.Q<VisualElement>("Menu");
 
-        string[] scenes = new string[]
+        int sceneCount = SceneManager.sceneCountInBuildSettings;
+        string[] scenes = new string[sceneCount];
+
+        for (int i = 0; i < sceneCount; i++)
         {
-            "Level_001",
-            "Test_Attack",
-            "Test_Construction_Structure",
-            "Test_Construction_Unit",
-            "Test_Transport",
-        };
+            scenes[i] = Path.GetFileNameWithoutExtension(SceneUtility.GetScenePathByBuildIndex(i));
+        }
 
         foreach (string scene in scenes)
         {

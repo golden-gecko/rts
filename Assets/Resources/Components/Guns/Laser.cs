@@ -40,7 +40,7 @@ public class Laser : Gun
 
         if (closest == null)
         {
-            Instantiate(Resources.Load(HitEffectPrefab), position, Quaternion.identity);
+            Instantiate(HitEffectPrefab, position, Quaternion.identity);
         }
         else
         {
@@ -51,7 +51,7 @@ public class Laser : Gun
                 myGameObject.Stats.Inc(Stats.TargetsDestroyed);
             }
 
-            Instantiate(Resources.Load(HitEffectPrefab), hitPoint, Quaternion.identity);
+            Instantiate(HitEffectPrefab, hitPoint, Quaternion.identity);
 
             myGameObject.Stats.Add(Stats.DamageDealt, damageDealt);
         }

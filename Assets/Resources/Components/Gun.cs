@@ -36,7 +36,7 @@ public class Gun : MyComponent
     public GameObject MissilePrefab { get; set; }
 
     [field: SerializeField]
-    public string HitEffectPrefab { get; set; }
+    public GameObject HitEffectPrefab { get; set; }
 
     public Timer Reload { get; } = new Timer();
 }

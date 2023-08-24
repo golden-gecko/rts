@@ -33,12 +33,12 @@ public class Gauss : Gun
                 myGameObject.Stats.Inc(Stats.TargetsDestroyed);
             }
 
-            Instantiate(Resources.Load(HitEffectPrefab), hit.point, Quaternion.identity); 
+            Instantiate(HitEffectPrefab, hit.point, Quaternion.identity); 
 
             myGameObject.Stats.Add(Stats.DamageDealt, damageDealt);
         }
 
-        Instantiate(Resources.Load(HitEffectPrefab), position, Quaternion.identity);
+        Instantiate(HitEffectPrefab, position, Quaternion.identity);
 
         Reload.Reset();
     }

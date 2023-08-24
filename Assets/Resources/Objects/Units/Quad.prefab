@@ -216,7 +216,7 @@ MonoBehaviour:
   <VisibilityRange>k__BackingField: 6
   <LoadTime>k__BackingField: 2
   <WaitTime>k__BackingField: 2
-  <DestroyEffect>k__BackingField: Effects/Units/WFX_ExplosiveSmokeGround Small
+  <DestroyEffect>k__BackingField: {fileID: 100006, guid: 7c442b9b6852b8a4f93306f3d154d471, type: 3}
   <Altitude>k__BackingField: 0
   <MapLayers>k__BackingField: 01000000
 --- !u!114 &-5060554700228019553
@@ -263,8 +263,9 @@ MonoBehaviour:
   <Mass>k__BackingField: 10
   <Damage>k__BackingField: 10
   <Range>k__BackingField: 4
-  <MissilePrefab>k__BackingField: Objects/Missiles/Rocket
-  <HitEffectPrefab>k__BackingField: 
+  <CooldownTime>k__BackingField: 10
+  <MissilePrefab>k__BackingField: {fileID: 0}
+  <HitEffectPrefab>k__BackingField: {fileID: 0}
 --- !u!1 &3808708150353009590
 GameObject:
   m_ObjectHideFlags: 0

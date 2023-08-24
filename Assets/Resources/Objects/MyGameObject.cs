@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.VFX;
 
 public class MyGameObject : MonoBehaviour
 {
@@ -367,9 +366,9 @@ public class MyGameObject : MonoBehaviour
     }
     public void OnDestroy_() // TODO: Rename.
     {
-        if (DestroyEffect != null && DestroyEffect.Length > 0)
+        if (DestroyEffect != null)
         {
-            Instantiate(UnityEngine.Resources.Load(DestroyEffect), Position, Quaternion.identity);
+            Instantiate(DestroyEffect, Position, Quaternion.identity);
         }
 
         Destroy(gameObject);
@@ -660,7 +659,7 @@ public class MyGameObject : MonoBehaviour
     public float WaitTime { get; set; } = 2.0f;
 
     [field: SerializeField]
-    public string DestroyEffect { get; set; }
+    public GameObject DestroyEffect { get; set; }
 
     [field: SerializeField]
     public float Altitude { get; set; } = 0.0f;
