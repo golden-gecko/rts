@@ -100,6 +100,7 @@ GameObject:
   - component: {fileID: 1445156918355217825}
   - component: {fileID: 2461289451513976625}
   - component: {fileID: -202160912346554170}
+  - component: {fileID: -1373288059243508088}
   m_Layer: 0
   m_Name: Tank_Missile
   m_TagString: Untagged
@@ -212,7 +213,6 @@ MonoBehaviour:
   <Selectable>k__BackingField: 1
   <Health>k__BackingField: 100
   <HealthMax>k__BackingField: 100
-  <VisibilityRange>k__BackingField: 10
   <LoadTime>k__BackingField: 2
   <WaitTime>k__BackingField: 2
   <DestroyEffect>k__BackingField: {fileID: 100006, guid: 7c442b9b6852b8a4f93306f3d154d471, type: 3}
@@ -265,6 +265,20 @@ MonoBehaviour:
   <CooldownTime>k__BackingField: 10
   <MissilePrefab>k__BackingField: {fileID: 3841255586236475405, guid: 86513724c5de2df4da484cb23191a7e5, type: 3}
   <HitEffectPrefab>k__BackingField: {fileID: 0}
+--- !u!114 &-1373288059243508088
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4170081986206172789}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 79a39b5131237dc428a9b67a3936e144, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  <Mass>k__BackingField: 10
+  <Range>k__BackingField: 10
 --- !u!1 &7101257106916123649
 GameObject:
   m_ObjectHideFlags: 0

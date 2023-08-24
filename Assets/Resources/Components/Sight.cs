@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class Radar : MyComponent
+public class Sight : MyComponent
 {
     public override string GetInfo()
     {
@@ -8,5 +8,5 @@ public class Radar : MyComponent
     }
 
     [field: SerializeField]
-    public float Range { get; set; } = 30.0f;
+    public float Range { get; set; } = 10.0f;
 }

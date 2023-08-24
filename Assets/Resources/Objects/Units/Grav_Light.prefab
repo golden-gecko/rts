@@ -265,6 +265,7 @@ GameObject:
   - component: {fileID: -6238200333199777406}
   - component: {fileID: 5874275229390842670}
   - component: {fileID: 5594974671478860173}
+  - component: {fileID: 1711648457831509688}
   m_Layer: 0
   m_Name: Grav_Light
   m_TagString: Untagged
@@ -381,7 +382,6 @@ MonoBehaviour:
   <Selectable>k__BackingField: 1
   <Health>k__BackingField: 80
   <HealthMax>k__BackingField: 80
-  <VisibilityRange>k__BackingField: 10
   <LoadTime>k__BackingField: 2
   <WaitTime>k__BackingField: 2
   <DestroyEffect>k__BackingField: {fileID: 100006, guid: 7c442b9b6852b8a4f93306f3d154d471, type: 3}
@@ -434,6 +434,20 @@ MonoBehaviour:
   <CooldownTime>k__BackingField: 10
   <MissilePrefab>k__BackingField: {fileID: 0}
   <HitEffectPrefab>k__BackingField: {fileID: 1141330259687333427, guid: f4732139be8d4054a825d2fb80594129, type: 3}
+--- !u!114 &1711648457831509688
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6014288322611724604}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 79a39b5131237dc428a9b67a3936e144, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  <Mass>k__BackingField: 10
+  <Range>k__BackingField: 10
 --- !u!1 &6251104923141368689
 GameObject:
   m_ObjectHideFlags: 0
