@@ -125,12 +125,14 @@ public class MyGameObject : MonoBehaviour
         }
         else if (VisibleByRadar.Count > 0)
         {
-            foreach (Renderer renderer in GetComponentsInChildren<Renderer>())
+            /*foreach (Renderer renderer in GetComponentsInChildren<Renderer>())
             {
                 renderer.enabled = false;
-            }
+            }*/
 
-            //trace.gameObject.SetActive(true);
+            GetComponent<Renderer>().enabled = false;
+
+            trace.gameObject.SetActive(true);
         }
         else
         {
@@ -535,7 +537,7 @@ public class MyGameObject : MonoBehaviour
         Vector3 scale = transform.localScale;
         float radius = Radius;
 
-        trace.localScale = new Vector3(radius * 2.0f / scale.x, radius * 2.0f / scale.y, radius * 2.0f / scale.z);
+        trace.localScale = new Vector3(radius / scale.x, radius / scale.y, radius / scale.z);
     }
 
     private void ProcessOrders()
