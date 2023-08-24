@@ -138,7 +138,7 @@ MonoBehaviour:
   <VisibilityRange>k__BackingField: 10
   <LoadTime>k__BackingField: 2
   <WaitTime>k__BackingField: 2
-  <DestroyEffect>k__BackingField: Effects/Units/WFX_ExplosiveSmokeGround Small
+  <DestroyEffect>k__BackingField: {fileID: 100006, guid: 7c442b9b6852b8a4f93306f3d154d471, type: 3}
   <Altitude>k__BackingField: 0
   <MapLayers>k__BackingField: 01000000
 --- !u!114 &-7296574799590733170

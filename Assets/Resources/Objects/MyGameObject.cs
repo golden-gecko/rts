@@ -1,6 +1,7 @@
 using System.Collections.Generic;
+using System.Drawing;
+using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.VFX;
 
 public class MyGameObject : MonoBehaviour
 {
@@ -365,11 +366,12 @@ public class MyGameObject : MonoBehaviour
 
         return damageDealt;
     }
+
     public void OnDestroy_() // TODO: Rename.
     {
-        if (DestroyEffect != null && DestroyEffect.Length > 0)
+        if (DestroyEffect != null)
         {
-            Instantiate(UnityEngine.Resources.Load(DestroyEffect), Position, Quaternion.identity);
+            Instantiate(DestroyEffect, Position, Quaternion.identity);
         }
 
         Destroy(gameObject);
@@ -556,7 +558,7 @@ public class MyGameObject : MonoBehaviour
         {
             foreach (Resource resource in ConstructionResources.Items.Values)
             {
-                if (resource.Current < resource.Max)
+                if (resource.Full == false)
                 {
                     return false;
                 }
@@ -582,17 +584,21 @@ public class MyGameObject : MonoBehaviour
     {
         get
         {
-            if (GetComponent<Collider>() != null)
+            Vector3 center = Vector3.zero;
+
+            Collider[] colliders = GetComponentsInChildren<Collider>();
+
+            foreach (Collider collider in colliders)
             {
-                return GetComponent<Collider>().bounds.center;
+                center += collider.bounds.center;
             }
 
-            if (GetComponentInChildren<Collider>() != null) // TODO: Check if there are more than one.
+            if (colliders.Length > 1)
             {
-                return GetComponentInChildren<Collider>().bounds.center;
+                center /= colliders.Length;
             }
 
-            return Vector3.zero;
+            return center;
         }
     }
 
@@ -604,17 +610,16 @@ public class MyGameObject : MonoBehaviour
     {
         get 
         {
-            if (GetComponent<Collider>() != null)
+            Vector3 size = Vector3.zero;
+
+            foreach (Collider collider in GetComponentsInChildren<Collider>())
             {
-                return GetComponent<Collider>().bounds.size;
+                size.x = Mathf.Max(size.x, collider.bounds.size.x);
+                size.y = Mathf.Max(size.y, collider.bounds.size.y);
+                size.z = Mathf.Max(size.z, collider.bounds.size.z);
             }
 
-            if (GetComponentInChildren<Collider>() != null) // TODO: Check if there are more than one.
-            {
-                return GetComponentInChildren<Collider>().bounds.size;
-            }
-
-            return Vector3.zero;
+            return size;
         } 
     }
 
@@ -660,7 +665,7 @@ public class MyGameObject : MonoBehaviour
     public float WaitTime { get; set; } = 2.0f;
 
     [field: SerializeField]
-    public string DestroyEffect { get; set; }
+    public GameObject DestroyEffect { get; set; }
 
     [field: SerializeField]
     public float Altitude { get; set; } = 0.0f;

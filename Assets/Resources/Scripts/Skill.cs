@@ -20,7 +20,7 @@ public class Skill
 
     public string GetInfo()
     {
-        return string.Format("Name: {0}, Cooldown: {1:0.}/{2:0.}, Range: {3}", Name, Cooldown.Current, Cooldown.Max, Range);
+        return string.Format("Name: {0}, Cooldown: {1}, Range: {2}", Name, Cooldown.GetInfo(), Range);
     }
 
     public string Name { get; }

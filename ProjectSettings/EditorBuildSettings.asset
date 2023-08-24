@@ -23,6 +23,24 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Resources/Scenes/Test_Produce.unity
     guid: 6e1da440d9c2bae489a3be977d8e3ddb
+  - enabled: 1
+    path: Assets/Resources/Scenes/Test_Attack_2.unity
+    guid: 68c57c60e3bd5324fa1278cc1786ed35
+  - enabled: 1
+    path: Assets/Resources/Scenes/Test_Attack_3.unity
+    guid: a21818c3b52e9ee43b9c91d95ba946b0
+  - enabled: 1
+    path: Assets/Resources/Scenes/Test_Disaster.unity
+    guid: 28f0c79af0fb2244eb8c918a4536d13a
+  - enabled: 1
+    path: Assets/Resources/Scenes/Test_Gather.unity
+    guid: f4abf558c7579b14dbf59845834dc595
+  - enabled: 1
+    path: Assets/Resources/Scenes/Test_Move.unity
+    guid: 5f09fbb7398581c4c93610c545b2bf17
+  - enabled: 1
+    path: Assets/Resources/Scenes/Test_Research.unity
+    guid: ae2e4a2bd0774f54386be67248d89a3a
   m_configObjects:
     com.unity.adaptiveperformance.loader_settings: {fileID: 11400000, guid: af719078a2cc7dc4fa80ef0c2d4e01bd, type: 2}
     com.unity.adaptiveperformance.simulator.provider_settings: {fileID: 11400000, guid: 8adf29826b1311a4dba25a4c9314bfc2, type: 2}

@@ -25,7 +25,7 @@ public class Damage : Skill
             target.OnDamage(Value);
         }
 
-        Object.Instantiate(Resources.Load(Effect), myGameObject.Position, Quaternion.identity);
+        Object.Instantiate(Resources.Load(Effect), myGameObject.Position, Quaternion.identity); // TODO: Get from property.
     }
 
     public float Value { get; } = 0.0f;

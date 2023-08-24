@@ -215,7 +215,7 @@ MonoBehaviour:
   <VisibilityRange>k__BackingField: 20
   <LoadTime>k__BackingField: 2
   <WaitTime>k__BackingField: 2
-  <DestroyEffect>k__BackingField: 
+  <DestroyEffect>k__BackingField: {fileID: 100006, guid: 7c442b9b6852b8a4f93306f3d154d471, type: 3}
   <Altitude>k__BackingField: 14
   <MapLayers>k__BackingField: 00000000
 --- !u!114 &1458086187911749725
