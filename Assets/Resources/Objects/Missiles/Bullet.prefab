@@ -156,7 +156,7 @@ MonoBehaviour:
   <VisibilityRange>k__BackingField: 0
   <LoadTime>k__BackingField: 2
   <WaitTime>k__BackingField: 2
-  <DestroyEffect>k__BackingField: Effects/Missiles/WFX_Explosion StarSmoke
+  <DestroyEffect>k__BackingField: {fileID: 100006, guid: 24295e2be01bda1438e5198083b282af, type: 3}
   <Altitude>k__BackingField: 0
   <MapLayers>k__BackingField: 00000000
   <Damage>k__BackingField: 2
