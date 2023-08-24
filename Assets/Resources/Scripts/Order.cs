@@ -237,14 +237,24 @@ public class Order
             info += string.Format(" ({0})", Prefab);
         }
 
-        if (Technology != null)
-        {
-            info += string.Format(" ({0})", Technology);
-        }
-
         if (Recipe != null)
         {
             info += string.Format(" ({0})", Recipe);
+        }
+
+        if (Resource != null)
+        {
+            info += string.Format(" ({0})", Resource);
+        }
+
+        if (Skill != null)
+        {
+            info += string.Format(" ({0})", Skill);
+        }
+
+        if (Technology != null)
+        {
+            info += string.Format(" ({0})", Technology);
         }
 
         if (Timer != null)

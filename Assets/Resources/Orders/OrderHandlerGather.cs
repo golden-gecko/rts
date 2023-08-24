@@ -85,11 +85,6 @@ public class OrderHandlerGather : IOrderHandler
 
         foreach (MyResource myResource in GameObject.FindObjectsByType<MyResource>(FindObjectsSortMode.None))
         {
-            if (myGameObject == myResource) // TODO: Probably useless.
-            {
-                continue;
-            }
-
             float magnitude = (myGameObject.Position - myResource.Position).magnitude;
 
             if (magnitude < distance)

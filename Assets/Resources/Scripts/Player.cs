@@ -102,11 +102,6 @@ public class Player : MonoBehaviour
 
         foreach (MyResource myResource in GameObject.FindObjectsByType<MyResource>(FindObjectsSortMode.None)) // TODO: Find storage for resource.
         {
-            if (myGameObject == myResource) // TODO: Probably useless.
-            {
-                continue;
-            }
-
             float magnitude = (myGameObject.Position - myResource.Position).magnitude;
 
             if (magnitude < distance)
