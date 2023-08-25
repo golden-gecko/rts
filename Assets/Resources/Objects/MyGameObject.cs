@@ -116,7 +116,7 @@ public class MyGameObject : MonoBehaviour
     {
         if (Player == HUD.Instance.ActivePlayer || VisibleBySight.Count > 0)
         {
-            foreach (Renderer renderer in GetComponentsInChildren<Renderer>())
+            foreach (Renderer renderer in GetComponentsInChildren<Renderer>(true))
             {
                 renderer.enabled = true;
             }
@@ -125,19 +125,27 @@ public class MyGameObject : MonoBehaviour
         }
         else if (VisibleByRadar.Count > 0)
         {
-            /*foreach (Renderer renderer in GetComponentsInChildren<Renderer>())
+            foreach (Renderer renderer in GetComponentsInChildren<Renderer>(true))
             {
-                renderer.enabled = false;
-            }*/
+                if (renderer.GetType() == typeof(SpriteRenderer) || renderer.name.Equals("Trace")) // TODO: Move meshes to child object to avoid this type check.
+                {
+                    continue;
+                }
 
-            GetComponent<Renderer>().enabled = false;
+                renderer.enabled = false;
+            }
 
             trace.gameObject.SetActive(true);
         }
         else
         {
-            foreach (Renderer renderer in GetComponentsInChildren<Renderer>())
+            foreach (Renderer renderer in GetComponentsInChildren<Renderer>(true))
             {
+                if (renderer.GetType() == typeof(SpriteRenderer) || renderer.name.Equals("Trace")) // TODO: Move meshes to child object to avoid this type check.
+                {
+                    continue;
+                }
+
                 renderer.enabled = false;
             }
 
