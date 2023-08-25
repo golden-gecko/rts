@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UIElements;
 
 public class MyGameObject : MonoBehaviour
 {
@@ -45,6 +44,12 @@ public class MyGameObject : MonoBehaviour
         r1.Consumes("Iron", 30);
 
         ConstructionRecipies.Add(r1);
+
+        foreach (Player player in GameObject.Find("Players").GetComponentsInChildren<Player>(true))
+        {
+            VisibleByRadar[player] = new HashSet<MyGameObject>();
+            VisibleBySight[player] = new HashSet<MyGameObject>();
+        }
     }
 
     protected virtual void Start()
@@ -114,7 +119,7 @@ public class MyGameObject : MonoBehaviour
 
     protected void UpdateVisibility()
     {
-        if (Player == HUD.Instance.ActivePlayer || VisibleBySight.Count > 0)
+        if (Player == HUD.Instance.ActivePlayer || VisibleBySight[HUD.Instance.ActivePlayer].Count > 0)
         {
             foreach (Renderer renderer in GetComponentsInChildren<Renderer>(true))
             {
@@ -123,7 +128,7 @@ public class MyGameObject : MonoBehaviour
 
             trace.gameObject.SetActive(false);
         }
-        else if (VisibleByRadar.Count > 0)
+        else if (VisibleByRadar[HUD.Instance.ActivePlayer].Count > 0)
         {
             foreach (Renderer renderer in GetComponentsInChildren<Renderer>(true))
             {
@@ -773,9 +778,9 @@ public class MyGameObject : MonoBehaviour
 
     public Dictionary<string, Skill> Skills { get; } = new Dictionary<string, Skill>();
 
-    public HashSet<MyGameObject> VisibleByRadar { get; set; } = new HashSet<MyGameObject>();
+    public Dictionary<Player, HashSet<MyGameObject>> VisibleByRadar { get; set; } = new Dictionary<Player, HashSet<MyGameObject>>();
 
-    public HashSet<MyGameObject> VisibleBySight { get; set; } = new HashSet<MyGameObject>();
+    public Dictionary<Player, HashSet<MyGameObject>> VisibleBySight { get; set; } = new Dictionary<Player, HashSet<MyGameObject>>();
 
     protected Dictionary<OrderType, IOrderHandler> OrderHandlers { get; } = new Dictionary<OrderType, IOrderHandler>();
 

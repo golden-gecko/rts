@@ -17,11 +17,11 @@ public class Sight : MyComponent
 
             if (parent.IsInVisibilityRange(myGameObject.Position))
             {
-                myGameObject.VisibleBySight.Add(parent);
+                myGameObject.VisibleBySight[parent.Player].Add(parent);
             }
             else
             {
-                myGameObject.VisibleBySight.Remove(parent);
+                myGameObject.VisibleBySight[parent.Player].Remove(parent);
             }
 
         }

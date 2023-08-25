@@ -17,11 +17,11 @@ public class Radar : MyComponent
 
             if (parent.IsInRadarRange(myGameObject.Position))
             {
-                myGameObject.VisibleByRadar.Add(parent);
+                myGameObject.VisibleByRadar[parent.Player].Add(parent);
             }
             else
             {
-                myGameObject.VisibleByRadar.Remove(parent);
+                myGameObject.VisibleByRadar[parent.Player].Remove(parent);
             }
 
         }
