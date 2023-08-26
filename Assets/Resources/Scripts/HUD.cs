@@ -394,7 +394,7 @@ public class HUD : MonoBehaviour
             ActivePlayer.Selected.Clear();
         }
 
-        foreach (MyGameObject myGameObject in GameObject.FindObjectsByType<MyGameObject>(FindObjectsSortMode.None)) // TODO: Not very efficient. Refactor into raycast.
+        foreach (MyGameObject myGameObject in FindObjectsByType<MyGameObject>(FindObjectsSortMode.None)) // TODO: Not very efficient. Refactor into raycast.
         {
             Vector3 screenPosition = Camera.main.WorldToScreenPoint(myGameObject.Position);
 

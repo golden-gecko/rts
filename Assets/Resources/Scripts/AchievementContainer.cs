@@ -35,7 +35,7 @@ public class AchievementContainer
     {
         float sum = 0;
 
-        foreach (MyGameObject myGameObject in GameObject.FindObjectsByType<MyGameObject>(FindObjectsSortMode.None))
+        foreach (MyGameObject myGameObject in Object.FindObjectsByType<MyGameObject>(FindObjectsSortMode.None))
         {
             if (myGameObject.Player != Player)
             {
@@ -52,7 +52,7 @@ public class AchievementContainer
     {
         float sum = 0;
 
-        foreach (Constructor constructor in GameObject.FindObjectsByType<Constructor>(FindObjectsSortMode.None))
+        foreach (Constructor constructor in Object.FindObjectsByType<Constructor>(FindObjectsSortMode.None))
         {
             MyGameObject myGameObject = constructor.GetComponentInParent<MyGameObject>();
 
@@ -71,7 +71,7 @@ public class AchievementContainer
     {
         float sum = 0;
 
-        foreach (Engine engine in GameObject.FindObjectsByType<Engine>(FindObjectsSortMode.None))
+        foreach (Engine engine in Object.FindObjectsByType<Engine>(FindObjectsSortMode.None))
         {
             MyGameObject myGameObject = engine.GetComponentInParent<MyGameObject>();
 
@@ -90,7 +90,7 @@ public class AchievementContainer
     {
         float sum = 0;
 
-        foreach (Producer producer in GameObject.FindObjectsByType<Producer>(FindObjectsSortMode.None))
+        foreach (Producer producer in Object.FindObjectsByType<Producer>(FindObjectsSortMode.None))
         {
             MyGameObject myGameObject = producer.GetComponentInParent<MyGameObject>();
 
@@ -109,7 +109,7 @@ public class AchievementContainer
     {
         float sum = 0;
 
-        foreach (Researcher researcher in GameObject.FindObjectsByType<Researcher>(FindObjectsSortMode.None))
+        foreach (Researcher researcher in Object.FindObjectsByType<Researcher>(FindObjectsSortMode.None))
         {
             MyGameObject myGameObject = researcher.GetComponentInParent<MyGameObject>();
 
@@ -128,7 +128,7 @@ public class AchievementContainer
     {
         float sum = 0;
 
-        foreach (Gun gun in GameObject.FindObjectsByType<Gun>(FindObjectsSortMode.None))
+        foreach (Gun gun in Object.FindObjectsByType<Gun>(FindObjectsSortMode.None))
         {
             MyGameObject myGameObject = gun.GetComponentInParent<MyGameObject>();
 

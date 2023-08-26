@@ -182,6 +182,7 @@ GameObject:
   - component: {fileID: 2969536516148908014}
   - component: {fileID: -1034757096108681396}
   - component: {fileID: 1663271716841619100}
+  - component: {fileID: 8291041007294955635}
   m_Layer: 0
   m_Name: Turret_Missile
   m_TagString: Untagged
@@ -294,7 +295,6 @@ MonoBehaviour:
   <Selectable>k__BackingField: 1
   <Health>k__BackingField: 100
   <HealthMax>k__BackingField: 100
-  <VisibilityRange>k__BackingField: 10
   <LoadTime>k__BackingField: 2
   <WaitTime>k__BackingField: 2
   <DestroyEffect>k__BackingField: {fileID: 100008, guid: 06736895ea0a4ff408d25e6684dce797, type: 3}
@@ -333,6 +333,20 @@ MonoBehaviour:
   <CooldownTime>k__BackingField: 10
   <MissilePrefab>k__BackingField: {fileID: 0}
   <HitEffectPrefab>k__BackingField: {fileID: 0}
+--- !u!114 &8291041007294955635
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6647195554574366884}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 79a39b5131237dc428a9b67a3936e144, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  <Mass>k__BackingField: 10
+  <Range>k__BackingField: 10
 --- !u!1001 &4586973340312065434
 PrefabInstance:
   m_ObjectHideFlags: 0

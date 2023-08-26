@@ -1,6 +1,4 @@
 using System.Collections.Generic;
-using System.Drawing;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class MyGameObject : MonoBehaviour
@@ -8,9 +6,11 @@ public class MyGameObject : MonoBehaviour
     protected virtual void Awake()
     {
         visual = transform.Find("Visual");
-        rangeMissile = visual.transform.Find("Range_Missile");
-        rangeVisibility = visual.transform.Find("Range_Visibility");
+        rangeGun = visual.transform.Find("Range_Gun");
+        rangeRadar = visual.transform.Find("Range_Radar");
+        rangeSight = visual.transform.Find("Range_Sight");
         selection = visual.transform.Find("Selection");
+        trace = visual.transform.Find("Trace");
 
         Orders.AllowOrder(OrderType.Destroy);
         Orders.AllowOrder(OrderType.Idle);
@@ -44,6 +44,12 @@ public class MyGameObject : MonoBehaviour
         r1.Consumes("Iron", 30);
 
         ConstructionRecipies.Add(r1);
+
+        foreach (Player player in GameObject.Find("Players").GetComponentsInChildren<Player>(true))
+        {
+            VisibleByRadar[player] = new HashSet<MyGameObject>();
+            VisibleBySight[player] = new HashSet<MyGameObject>();
+        }
     }
 
     protected virtual void Start()
@@ -52,6 +58,7 @@ public class MyGameObject : MonoBehaviour
 
         UpdatePosition();
         UpdateSelection();
+        UpdateTrace();
     }
 
     protected virtual void Update()
@@ -78,6 +85,7 @@ public class MyGameObject : MonoBehaviour
 
         UpdateSkills();
         UpdateSelectionPosition();
+        UpdateVisibility();
     }
 
     protected virtual void OnTriggerEnter(Collider other)
@@ -104,10 +112,53 @@ public class MyGameObject : MonoBehaviour
     {
         Vector3 position = Map.Instance.CameraPositionHandler.GetPosition(Position);
 
-        rangeMissile.position = position;
-        rangeVisibility.position = position;
+        rangeGun.position = position;
+        rangeRadar.position = position;
+        rangeSight.position = position;
     }
 
+    protected void UpdateVisibility()
+    {
+        Player active = HUD.Instance.ActivePlayer;
+
+        if (Player == active || Map.Instance.IsVisibleBySight(this, active))
+        {
+            foreach (Renderer renderer in GetComponentsInChildren<Renderer>(true))
+            {
+                renderer.enabled = true;
+            }
+
+            trace.gameObject.SetActive(false);
+        }
+        else if (Map.Instance.IsVisibleByRadar(this, active))
+        {
+            foreach (Renderer renderer in GetComponentsInChildren<Renderer>(true))
+            {
+                if (renderer.GetType() == typeof(SpriteRenderer) || renderer.name.Equals("Trace")) // TODO: Move meshes to child object to avoid this type check.
+                {
+                    continue;
+                }
+
+                renderer.enabled = false;
+            }
+
+            trace.gameObject.SetActive(true);
+        }
+        else
+        {
+            foreach (Renderer renderer in GetComponentsInChildren<Renderer>(true))
+            {
+                if (renderer.GetType() == typeof(SpriteRenderer) || renderer.name.Equals("Trace")) // TODO: Move meshes to child object to avoid this type check.
+                {
+                    continue;
+                }
+
+                renderer.enabled = false;
+            }
+
+            trace.gameObject.SetActive(false);
+        }
+    }
     public void Assemble(string prefab)
     {
         Orders.Add(Order.Assemble(prefab, GetComponent<Constructor>().ResourceUsage));
@@ -392,18 +443,31 @@ public class MyGameObject : MonoBehaviour
         }
 
         Vector3 scale = transform.localScale;
-        Vector3 size = GetComponent<BoxCollider>().size;
+        Vector3 size = Size;
 
         Gun gun = GetComponent<Gun>();
 
         if (gun != null)
         {
-            rangeMissile.gameObject.SetActive(status);
-            rangeMissile.localScale = new Vector3(gun.Range * 2.0f / scale.x, gun.Range * 2.0f / scale.z, 1.0f);
+            rangeGun.gameObject.SetActive(status);
+            rangeGun.localScale = new Vector3(gun.Range * 2.0f / scale.x, gun.Range * 2.0f / scale.z, 1.0f);
         }
 
-        rangeVisibility.gameObject.SetActive(status);
-        rangeVisibility.localScale = new Vector3(VisibilityRange * 2.0f / scale.x, VisibilityRange * 2.0f / scale.z, 1.0f);
+        Radar radar = GetComponent<Radar>();
+
+        if (radar != null)
+        {
+            rangeRadar.gameObject.SetActive(status);
+            rangeRadar.localScale = new Vector3(radar.Range * 2.0f / scale.x, radar.Range * 2.0f / scale.z, 1.0f);
+        }
+
+        Sight sight = GetComponent<Sight>();
+
+        if (sight != null)
+        {
+            rangeSight.gameObject.SetActive(status);
+            rangeSight.localScale = new Vector3(sight.Range * 2.0f / scale.x, sight.Range * 2.0f / scale.z, 1.0f);
+        }
 
         selection.gameObject.SetActive(status);
         selection.localScale = new Vector3(size.x * 1.1f, size.z * 1.1f, 1.0f);
@@ -436,9 +500,14 @@ public class MyGameObject : MonoBehaviour
         return IsInRange(position, GetComponent<Gun>().Range);
     }
 
-    public bool IsInVisibilityRange(Vector3 position)
+    public bool IsInRadarRange(Vector3 position) // TODO: Remove?
     {
-        return IsInRange(position, VisibilityRange);
+        return IsInRange(position, GetComponent<Radar>().Range);
+    }
+
+    public bool IsInVisibilityRange(Vector3 position) // TODO: Remove?
+    {
+        return IsInRange(position, GetComponent<Sight>().Range);
     }
 
     public bool IsInRange(Vector3 position, float rangeMax)
@@ -475,6 +544,14 @@ public class MyGameObject : MonoBehaviour
         {
             selection.GetComponent<SpriteRenderer>().sprite = Player.SelectionSprite;
         }
+    }
+
+    public void UpdateTrace()
+    {
+        Vector3 scale = transform.localScale;
+        float radius = Radius;
+
+        trace.localScale = new Vector3(radius / scale.x, radius / scale.y, radius / scale.z);
     }
 
     private void ProcessOrders()
@@ -606,6 +683,16 @@ public class MyGameObject : MonoBehaviour
 
     public Vector3 Exit { get => Position - new Vector3(0.0f, 0.0f, Size.z + 1.0f); }
 
+    public float Radius
+    {
+        get
+        {
+            Vector3 size = Size;
+
+            return (size.x + size.y + size.z) / 3.0f;
+        }
+    }
+
     public Vector3 Size
     {
         get 
@@ -656,9 +743,6 @@ public class MyGameObject : MonoBehaviour
     public float HealthMax { get; set; } = 100.0f;
 
     [field: SerializeField]
-    public float VisibilityRange { get; set; } = 10.0f;
-
-    [field: SerializeField]
     public float LoadTime { get; set; } = 2.0f;
 
     [field: SerializeField]
@@ -695,10 +779,16 @@ public class MyGameObject : MonoBehaviour
 
     public Dictionary<string, Skill> Skills { get; } = new Dictionary<string, Skill>();
 
+    public Dictionary<Player, HashSet<MyGameObject>> VisibleByRadar { get; set; } = new Dictionary<Player, HashSet<MyGameObject>>();
+
+    public Dictionary<Player, HashSet<MyGameObject>> VisibleBySight { get; set; } = new Dictionary<Player, HashSet<MyGameObject>>();
+
     protected Dictionary<OrderType, IOrderHandler> OrderHandlers { get; } = new Dictionary<OrderType, IOrderHandler>();
 
     private Transform visual;
-    private Transform rangeMissile;
-    private Transform rangeVisibility;
+    private Transform rangeGun;
+    private Transform rangeRadar;
+    private Transform rangeSight;
     private Transform selection;
+    private Transform trace;
 }

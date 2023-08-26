@@ -66,7 +66,7 @@ public class Player : MonoBehaviour
         float minDistance = float.MaxValue;
         MyGameObject closest = null;
 
-        foreach (MyGameObject underConstruction in GameObject.FindObjectsByType<MyGameObject>(FindObjectsSortMode.None))
+        foreach (MyGameObject underConstruction in FindObjectsByType<MyGameObject>(FindObjectsSortMode.None))
         {
             if (underConstruction.State != MyGameObjectState.UnderConstruction)
             {
@@ -100,7 +100,7 @@ public class Player : MonoBehaviour
         MyResource closest = null;
         float distance = float.MaxValue;
 
-        foreach (MyResource myResource in GameObject.FindObjectsByType<MyResource>(FindObjectsSortMode.None)) // TODO: Find storage for resource.
+        foreach (MyResource myResource in FindObjectsByType<MyResource>(FindObjectsSortMode.None)) // TODO: Find storage for resource.
         {
             float magnitude = (myGameObject.Position - myResource.Position).magnitude;
 
