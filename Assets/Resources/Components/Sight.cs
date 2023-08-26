@@ -6,25 +6,7 @@ public class Sight : MyComponent
     {
         base.Update();
 
-        foreach (MyGameObject myGameObject in FindObjectsByType<MyGameObject>(FindObjectsSortMode.None))
-        {
-            MyGameObject parent = GetComponent<MyGameObject>();
-
-            if (myGameObject == parent)
-            {
-                continue;
-            }
-
-            if (parent.IsInVisibilityRange(myGameObject.Position))
-            {
-                myGameObject.VisibleBySight[parent.Player].Add(parent);
-            }
-            else
-            {
-                myGameObject.VisibleBySight[parent.Player].Remove(parent);
-            }
-
-        }
+        Map.Instance.SetVisibleBySight(GetComponent<MyGameObject>(), Range);
     }
 
     public override string GetInfo()

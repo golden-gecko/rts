@@ -23,5 +23,5 @@ public class TerrainPositionCenterGrid : ITerrainPosition
         return GetPosition(new Ray(position + Vector3.up * Config.TerrainMaxHeight, Vector3.down));
     }
 
-    public float Scale { get; } = 2.0f;
+    public float Scale { get; } = 2.0f; // TODO: Hardcoded.
 }

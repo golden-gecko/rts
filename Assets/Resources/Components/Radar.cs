@@ -6,25 +6,7 @@ public class Radar : MyComponent
     {
         base.Update();
 
-        foreach (MyGameObject myGameObject in FindObjectsByType<MyGameObject>(FindObjectsSortMode.None))
-        {
-            MyGameObject parent = GetComponent<MyGameObject>();
-
-            if (myGameObject == parent)
-            {
-                continue;
-            }
-
-            if (parent.IsInRadarRange(myGameObject.Position))
-            {
-                myGameObject.VisibleByRadar[parent.Player].Add(parent);
-            }
-            else
-            {
-                myGameObject.VisibleByRadar[parent.Player].Remove(parent);
-            }
-
-        }
+        Map.Instance.SetVisibleByRadar(GetComponent<MyGameObject>(), Range);
     }
 
     public override string GetInfo()

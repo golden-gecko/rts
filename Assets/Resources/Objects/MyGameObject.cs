@@ -119,7 +119,9 @@ public class MyGameObject : MonoBehaviour
 
     protected void UpdateVisibility()
     {
-        if (Player == HUD.Instance.ActivePlayer || VisibleBySight[HUD.Instance.ActivePlayer].Count > 0)
+        Player active = HUD.Instance.ActivePlayer;
+
+        if (Player == active || Map.Instance.IsVisibleBySight(this, active))
         {
             foreach (Renderer renderer in GetComponentsInChildren<Renderer>(true))
             {
@@ -128,7 +130,7 @@ public class MyGameObject : MonoBehaviour
 
             trace.gameObject.SetActive(false);
         }
-        else if (VisibleByRadar[HUD.Instance.ActivePlayer].Count > 0)
+        else if (Map.Instance.IsVisibleByRadar(this, active))
         {
             foreach (Renderer renderer in GetComponentsInChildren<Renderer>(true))
             {
@@ -157,7 +159,6 @@ public class MyGameObject : MonoBehaviour
             trace.gameObject.SetActive(false);
         }
     }
-
     public void Assemble(string prefab)
     {
         Orders.Add(Order.Assemble(prefab, GetComponent<Constructor>().ResourceUsage));
