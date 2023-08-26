@@ -9,7 +9,7 @@ public class OrderHandlerAttackUnit : IOrderHandler
 
     public void OnExecute(MyGameObject myGameObject)
     {
-        Order order = myGameObject.Orders.First(); // TODO: Fix attacking air units.
+        Order order = myGameObject.Orders.First();
 
         if (IsValid(order) == false)
         {

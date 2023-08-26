@@ -377,10 +377,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   <Player>k__BackingField: {fileID: 0}
+  <Enabled>k__BackingField: 1
   <Gatherable>k__BackingField: 0
   <Selectable>k__BackingField: 1
   <Health>k__BackingField: 30
   <HealthMax>k__BackingField: 30
+  <EnableTime>k__BackingField: 2
   <LoadTime>k__BackingField: 2
   <WaitTime>k__BackingField: 2
   <DestroyEffect>k__BackingField: {fileID: 100006, guid: 7c442b9b6852b8a4f93306f3d154d471, type: 3}
@@ -430,7 +432,7 @@ MonoBehaviour:
   <Mass>k__BackingField: 10
   <Damage>k__BackingField: 10
   <Range>k__BackingField: 4
-  <CooldownTime>k__BackingField: 10
+  <CooldownTime>k__BackingField: 4
   <MissilePrefab>k__BackingField: {fileID: 3841255586236475405, guid: 0656c8096bd9d064a8c956906564f3d0, type: 3}
   <HitEffectPrefab>k__BackingField: {fileID: 0}
 --- !u!114 &-1838723375037300516
