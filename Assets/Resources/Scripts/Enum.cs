@@ -27,6 +27,8 @@ public enum OrderType
     Attack,
     Construct,
     Destroy,
+    Disable,
+    Enable,
     Explore,
     Follow,
     Gather,

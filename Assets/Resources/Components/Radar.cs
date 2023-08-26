@@ -6,6 +6,11 @@ public class Radar : MyComponent
     {
         base.Update();
 
+        if (GetComponent<MyGameObject>().Enabled == false)
+        {
+            return;
+        }
+
         if (Anti)
         {
             Map.Instance.SetVisibleByAntiRadar(GetComponent<MyGameObject>(), Range);

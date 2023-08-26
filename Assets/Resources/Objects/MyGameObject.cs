@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class MyGameObject : MonoBehaviour
@@ -13,6 +14,8 @@ public class MyGameObject : MonoBehaviour
         trace = visual.transform.Find("Trace");
 
         Orders.AllowOrder(OrderType.Destroy);
+        Orders.AllowOrder(OrderType.Disable);
+        Orders.AllowOrder(OrderType.Enable);
         Orders.AllowOrder(OrderType.Idle);
         Orders.AllowOrder(OrderType.UseSkill);
         Orders.AllowOrder(OrderType.Stop);
@@ -21,6 +24,8 @@ public class MyGameObject : MonoBehaviour
         OrderHandlers[OrderType.Assemble] = new OrderHandlerAssemble();
         OrderHandlers[OrderType.Construct] = new OrderHandlerConstruct();
         OrderHandlers[OrderType.Destroy] = new OrderHandlerDestroy();
+        OrderHandlers[OrderType.Disable] = new OrderHandlerDisable();
+        OrderHandlers[OrderType.Enable] = new OrderHandlerEnable();
         OrderHandlers[OrderType.Explore] = new OrderHandlerExplore();
         OrderHandlers[OrderType.Follow] = new OrderHandlerFollow();
         OrderHandlers[OrderType.Gather] = new OrderHandlerGather();
@@ -71,15 +76,21 @@ public class MyGameObject : MonoBehaviour
         switch (State)
         {
             case MyGameObjectState.Operational:
-                ProcessOrders();
-                RaiseResourceFlags();
+                if (Enabled)
+                {
+                    ProcessOrders();
+                    RaiseResourceFlags(); // TODO: Remove flags when disabled.
+                }
                 break;
 
             case MyGameObjectState.UnderAssembly:
                 break;
 
             case MyGameObjectState.UnderConstruction:
-                RaiseConstructionResourceFlags();
+                if (Enabled)
+                {
+                    RaiseConstructionResourceFlags(); // TODO: Remove flags when disabled.
+                }
                 break;
         }
 
@@ -188,6 +199,30 @@ public class MyGameObject : MonoBehaviour
         else
         {
             Orders.Add(Order.Destroy());
+        }
+    }
+
+    public void Disable(int priority = -1)
+    {
+        if (0 <= priority && priority < Orders.Count)
+        {
+            Orders.Insert(priority, Order.Disable(EnableTime));
+        }
+        else
+        {
+            Orders.Add(Order.Disable(EnableTime));
+        }
+    }
+
+    public void Enable(int priority = -1)
+    {
+        if (0 <= priority && priority < Orders.Count)
+        {
+            Orders.Insert(priority, Order.Enable(EnableTime));
+        }
+        else
+        {
+            Orders.Add(Order.Enable(EnableTime));
         }
     }
 
@@ -731,6 +766,9 @@ public class MyGameObject : MonoBehaviour
     public Player Player { get; set; }
 
     [field: SerializeField]
+    public bool Enabled { get; set; } = true;
+
+    [field: SerializeField]
     public bool Gatherable { get; set; } = false;
 
     [field: SerializeField]
@@ -743,6 +781,9 @@ public class MyGameObject : MonoBehaviour
     public float HealthMax { get; set; } = 100.0f;
 
     [field: SerializeField]
+    public float EnableTime { get; set; } = 2.0f;
+
+    [field: SerializeField]
     public float LoadTime { get; set; } = 2.0f;
 
     [field: SerializeField]
@@ -750,6 +791,7 @@ public class MyGameObject : MonoBehaviour
 
     [field: SerializeField]
     public GameObject DestroyEffect { get; set; }
+
 
     [field: SerializeField]
     public float Altitude { get; set; } = 0.0f;

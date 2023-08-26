@@ -11,6 +11,11 @@ public class Gun : MyComponent
 
     protected override void Update()
     {
+        if (GetComponent<MyGameObject>().Enabled == false)
+        {
+            return;
+        }
+
         Reload.Update(Time.deltaTime);
     }
 

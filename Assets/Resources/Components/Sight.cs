@@ -6,6 +6,11 @@ public class Sight : MyComponent
     {
         base.Update();
 
+        if (GetComponent<MyGameObject>().Enabled == false)
+        {
+            return;
+        }
+
         Map.Instance.SetVisibleBySight(GetComponent<MyGameObject>(), Range);
     }
 

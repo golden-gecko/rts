@@ -68,6 +68,34 @@ public class HUD : MonoBehaviour
         }
     }
 
+    public void Disable()
+    {
+        foreach (MyGameObject selected in ActivePlayer.Selected)
+        {
+            if (IsShift() == false)
+            {
+                selected.Stats.Add(Stats.OrdersCancelled, selected.Orders.Count);
+                selected.Orders.Clear();
+            }
+
+            selected.Disable();
+        }
+    }
+
+    public void Enable()
+    {
+        foreach (MyGameObject selected in ActivePlayer.Selected)
+        {
+            if (IsShift() == false)
+            {
+                selected.Stats.Add(Stats.OrdersCancelled, selected.Orders.Count);
+                selected.Orders.Clear();
+            }
+
+            selected.Enable();
+        }
+    }
+
     public void Explore()
     {
         foreach (MyGameObject selected in ActivePlayer.Selected)
