@@ -1,11 +1,12 @@
 using System.Collections.Generic;
 using System.Linq;
-using UnityEditor;
 using UnityEngine;
 
 public class Cell // TODO: Optimize.
 {
     public Dictionary<Player, int> VisibleByRadar = new Dictionary<Player, int>();
+
+    public Dictionary<Player, int> VisibleByAntiRadar = new Dictionary<Player, int>();
 
     public Dictionary<Player, int> VisibleBySight = new Dictionary<Player, int>();
 }
@@ -128,10 +129,43 @@ public class Map : MonoBehaviour
 
                 if (Cells[x, z].VisibleByRadar.ContainsKey(myGameObject.Player) == false)
                 {
-                    Cells[x, z].VisibleByRadar[myGameObject.Player] = 0;
+                    Cells[x, z].VisibleByRadar[myGameObject.Player] = 1;
+                }
+                else
+                {
+                    Cells[x, z].VisibleByRadar[myGameObject.Player] += 1;
+                }
+            }
+        }
+    }
+
+    public void SetVisibleByAntiRadar(MyGameObject myGameObject, float range)
+    {
+        Vector3Int start = new Vector3Int(Mathf.FloorToInt((myGameObject.Position.x - range) / Scale), 0, Mathf.FloorToInt((myGameObject.Position.z - range) / Scale));
+        Vector3Int end = new Vector3Int(Mathf.FloorToInt((myGameObject.Position.x + range) / Scale), 0, Mathf.FloorToInt((myGameObject.Position.z + range) / Scale));
+
+        for (int x = start.x; x < end.x; x++)
+        {
+            for (int z = start.z; z < end.z; z++)
+            {
+                if (x < 0 || x > Size - 1)
+                {
+                    continue;
                 }
 
-                Cells[x, z].VisibleByRadar[myGameObject.Player] += 1;
+                if (z < 0 || z > Size - 1)
+                {
+                    continue;
+                }
+
+                if (Cells[x, z].VisibleByAntiRadar.ContainsKey(myGameObject.Player) == false)
+                {
+                    Cells[x, z].VisibleByAntiRadar[myGameObject.Player] = 1;
+                }
+                else
+                {
+                    Cells[x, z].VisibleByAntiRadar[myGameObject.Player] += 1;
+                }
             }
         }
     }
@@ -157,10 +191,12 @@ public class Map : MonoBehaviour
 
                 if (Cells[x, z].VisibleBySight.ContainsKey(myGameObject.Player) == false)
                 {
-                    Cells[x, z].VisibleBySight[myGameObject.Player] = 0;
+                    Cells[x, z].VisibleBySight[myGameObject.Player] = 1;
                 }
-
-                Cells[x, z].VisibleBySight[myGameObject.Player] += 1;
+                else
+                {
+                    Cells[x, z].VisibleBySight[myGameObject.Player] += 1;
+                }
             }
         }
     }
@@ -169,8 +205,12 @@ public class Map : MonoBehaviour
     {
         Vector3Int position = new Vector3Int(Mathf.FloorToInt(myGameObject.Position.x / Scale), 0, Mathf.FloorToInt(myGameObject.Position.z / Scale));
 
-        return Cells[position.x, position.z].VisibleByRadar.ContainsKey(active) && Cells[position.x, position.z].VisibleByRadar[active] > 0;
+        int byRadar = Cells[position.x, position.z].VisibleByRadar.ContainsKey(active) ? Cells[position.x, position.z].VisibleByRadar[active] : 0;
+        int byAntiRadar = Cells[position.x, position.z].VisibleByAntiRadar.ContainsKey(myGameObject.Player) ? Cells[position.x, position.z].VisibleByAntiRadar[myGameObject.Player] : 0;
+
+        return byRadar > byAntiRadar;
     }
+
     public bool IsVisibleBySight(MyGameObject myGameObject, Player active)
     {
         Vector3Int position = new Vector3Int(Mathf.FloorToInt(myGameObject.Position.x / Scale), 0, Mathf.FloorToInt(myGameObject.Position.z / Scale));
@@ -184,16 +224,23 @@ public class Map : MonoBehaviour
         {
             for (int z = 0; z < Size; z++)
             {
-                var players1 = Cells[x, z].VisibleByRadar.Keys.ToArray();
+                Player[] players1 = Cells[x, z].VisibleByRadar.Keys.ToArray();
 
                 foreach (Player player in players1)
                 {
                     Cells[x, z].VisibleByRadar[player] = 0;
                 }
 
-                var players2 = Cells[x, z].VisibleBySight.Keys.ToArray();
+                Player[] players2 = Cells[x, z].VisibleByAntiRadar.Keys.ToArray();
 
                 foreach (Player player in players2)
+                {
+                    Cells[x, z].VisibleByAntiRadar[player] = 0;
+                }
+
+                Player[] players3 = Cells[x, z].VisibleBySight.Keys.ToArray();
+
+                foreach (Player player in players3)
                 {
                     Cells[x, z].VisibleBySight[player] = 0;
                 }
