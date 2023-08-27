@@ -26,7 +26,7 @@ public class Map : MonoBehaviour
             Instance = this;
         }
 
-        for (int x = 0; x < Size; x++) // TODO: Depends on script execution order.
+        for (int x = 0; x < Size; x++)
         {
             for (int z = 0; z < Size; z++)
             {
