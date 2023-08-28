@@ -437,6 +437,13 @@ public class MyGameObject : MonoBehaviour
         float damageDealt = 0.0f;
         float damageLeft = value;
 
+        Shield shield = GetComponent<Shield>();
+
+        if (shield != null)
+        {
+            damageLeft = damageLeft * shield.Power / 100.0f;
+        }
+
         Armour armour = GetComponent<Armour>();
 
         if (armour != null)
@@ -807,6 +814,8 @@ public class MyGameObject : MonoBehaviour
     public List<MyGameObjectMapLayer> MapLayers { get; set; } = new List<MyGameObjectMapLayer>(); // TODO: Replace with HashSet.
 
     public Vector3 Position { get => transform.position; set => transform.position = value; }
+
+    public Vector3 Scale { get => transform.localScale; }
 
     public OrderContainer Orders { get; } = new OrderContainer();
 

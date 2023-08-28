@@ -266,7 +266,7 @@ MonoBehaviour:
   <Mass>k__BackingField: 10
   <Damage>k__BackingField: 10
   <Range>k__BackingField: 4
-  <CooldownTime>k__BackingField: 10
+  <CooldownTime>k__BackingField: 4
   <MissilePrefab>k__BackingField: {fileID: 3841255586236475405, guid: 86513724c5de2df4da484cb23191a7e5, type: 3}
 --- !u!114 &-983595188522550754
 MonoBehaviour:

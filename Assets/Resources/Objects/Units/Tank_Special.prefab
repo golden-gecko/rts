@@ -183,6 +183,7 @@ GameObject:
   - component: {fileID: -7318105187754308936}
   - component: {fileID: -5010447674212785321}
   - component: {fileID: -5877654829243037068}
+  - component: {fileID: 7942026523019763108}
   m_Layer: 0
   m_Name: Tank_Special
   m_TagString: Untagged
@@ -334,7 +335,7 @@ MonoBehaviour:
   <Mass>k__BackingField: 30
   <Damage>k__BackingField: 4
   <Range>k__BackingField: 30
-  <CooldownTime>k__BackingField: 10
+  <CooldownTime>k__BackingField: 4
   <MissilePrefab>k__BackingField: {fileID: 3841255586236475405, guid: 86513724c5de2df4da484cb23191a7e5, type: 3}
 --- !u!114 &-5877654829243037068
 MonoBehaviour:
@@ -350,6 +351,22 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <Mass>k__BackingField: 10
   <Range>k__BackingField: 10
+--- !u!114 &7942026523019763108
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4916527176359590894}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5c0cca40e845ed043ae3103480c550a9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  <Mass>k__BackingField: 10
+  <Mesh>k__BackingField: {fileID: 5771986485392630128, guid: a62006f4c02da344bb4994bc0a33cff4, type: 3}
+  <Range>k__BackingField: 1
+  <Power>k__BackingField: 50
 --- !u!1 &7849862756731187484
 GameObject:
   m_ObjectHideFlags: 0
