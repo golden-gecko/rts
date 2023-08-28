@@ -808,6 +808,8 @@ public class MyGameObject : MonoBehaviour
 
     public Vector3 Position { get => transform.position; set => transform.position = value; }
 
+    public Vector3 Scale { get => transform.localScale; }
+
     public OrderContainer Orders { get; } = new OrderContainer();
 
     public ResourceContainer Resources { get; } = new ResourceContainer();

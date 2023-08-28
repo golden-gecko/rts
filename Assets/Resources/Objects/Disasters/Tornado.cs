@@ -11,9 +11,4 @@ public class Tornado : Disaster
 
         Move(new Vector3(x, 0.0f, z));
     }
-
-    protected override void Update()
-    {
-        base.Update();
-    }
 }
