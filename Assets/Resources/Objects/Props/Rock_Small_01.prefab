@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 893154438284381524}
   - component: {fileID: 3135042397681088926}
   - component: {fileID: -8352555693849921895}
+  - component: {fileID: 8542383250214271623}
   m_Layer: 0
   m_Name: Rock_Small_01
   m_TagString: Untagged
@@ -106,6 +107,30 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1.8666106, y: 1.5800337, z: 1.5806488}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &8542383250214271623
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3495096790598703179}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8c29fd8b7893b2b439b8894f6ff752cc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  <Player>k__BackingField: {fileID: 0}
+  <Enabled>k__BackingField: 1
+  <Gatherable>k__BackingField: 0
+  <Selectable>k__BackingField: 0
+  <Health>k__BackingField: 100
+  <HealthMax>k__BackingField: 100
+  <EnableTime>k__BackingField: 2
+  <LoadTime>k__BackingField: 2
+  <WaitTime>k__BackingField: 2
+  <DestroyEffect>k__BackingField: {fileID: 0}
+  <Altitude>k__BackingField: 0
+  <MapLayers>k__BackingField: 
 --- !u!1001 &5692449983818599645
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 7589385999041383671}
   - component: {fileID: 5671752747930597437}
   - component: {fileID: 1501829487494581079}
+  - component: {fileID: -4665957233964652146}
   m_Layer: 0
   m_Name: Hill_01
   m_TagString: Untagged
@@ -106,6 +107,30 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 12.07931, y: 5.00449, z: 16.301033}
   m_Center: {x: 0.21108055, y: 2.343491, z: -0.09167051}
+--- !u!114 &-4665957233964652146
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6176371753306036712}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8c29fd8b7893b2b439b8894f6ff752cc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  <Player>k__BackingField: {fileID: 0}
+  <Enabled>k__BackingField: 1
+  <Gatherable>k__BackingField: 0
+  <Selectable>k__BackingField: 1
+  <Health>k__BackingField: 100
+  <HealthMax>k__BackingField: 100
+  <EnableTime>k__BackingField: 2
+  <LoadTime>k__BackingField: 2
+  <WaitTime>k__BackingField: 2
+  <DestroyEffect>k__BackingField: {fileID: 0}
+  <Altitude>k__BackingField: 0
+  <MapLayers>k__BackingField: 
 --- !u!1001 &8668647212585523082
 PrefabInstance:
   m_ObjectHideFlags: 0
