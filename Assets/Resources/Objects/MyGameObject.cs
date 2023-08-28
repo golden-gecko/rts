@@ -437,6 +437,13 @@ public class MyGameObject : MonoBehaviour
         float damageDealt = 0.0f;
         float damageLeft = value;
 
+        Shield shield = GetComponent<Shield>();
+
+        if (shield != null)
+        {
+            damageLeft = damageLeft * shield.Power / 100.0f;
+        }
+
         Armour armour = GetComponent<Armour>();
 
         if (armour != null)

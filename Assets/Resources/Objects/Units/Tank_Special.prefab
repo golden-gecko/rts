@@ -366,7 +366,7 @@ MonoBehaviour:
   <Mass>k__BackingField: 10
   <Mesh>k__BackingField: {fileID: 5771986485392630128, guid: a62006f4c02da344bb4994bc0a33cff4, type: 3}
   <Range>k__BackingField: 1
-  <Power>k__BackingField: 0.5
+  <Power>k__BackingField: 50
 --- !u!1 &7849862756731187484
 GameObject:
   m_ObjectHideFlags: 0
