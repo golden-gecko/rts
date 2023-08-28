@@ -177,14 +177,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   <Player>k__BackingField: {fileID: 0}
+  <Enabled>k__BackingField: 1
   <Gatherable>k__BackingField: 1
   <Selectable>k__BackingField: 1
   <Health>k__BackingField: 10
   <HealthMax>k__BackingField: 10
-  <VisibilityRange>k__BackingField: 10
+  <EnableTime>k__BackingField: 2
   <LoadTime>k__BackingField: 2
   <WaitTime>k__BackingField: 2
-  <DestroyEffect>k__BackingField: Effects/Resources/FX_CuttingSmallTree
+  <DestroyEffect>k__BackingField: {fileID: 7447788123197329209, guid: 063c3ab67c1c6794ea2121d8d9b0116c, type: 3}
+  <TimeToLive>k__BackingField: -1
   <Altitude>k__BackingField: 0
   <MapLayers>k__BackingField: 01000000
 --- !u!1 &7155140798900432468

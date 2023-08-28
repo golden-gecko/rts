@@ -11,8 +11,10 @@ public class WaterPositionCenterGrid : ITerrainPosition
             return Vector3.zero;
         }
 
-        float x = Mathf.Floor(hitInfo.point.x / Scale) * Scale + Scale / 2.0f;
-        float z = Mathf.Floor(hitInfo.point.z / Scale) * Scale + Scale / 2.0f;
+        float scale = Config.TerrainConstructionScale;
+
+        float x = Mathf.Floor(hitInfo.point.x / scale) * scale + scale / 2.0f;
+        float z = Mathf.Floor(hitInfo.point.z / scale) * scale + scale / 2.0f;
 
         return new Vector3(x, hitInfo.point.y, z);
     }
@@ -21,6 +23,4 @@ public class WaterPositionCenterGrid : ITerrainPosition
     {
         return GetPosition(new Ray(position + Vector3.up * Config.TerrainMaxHeight, Vector3.down));
     }
-
-    public float Scale { get; } = 2.0f; // TODO: Hardcoded.
 }

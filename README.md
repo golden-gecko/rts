@@ -8,7 +8,10 @@ Simple RTS game.
 
 ## TODO
 
-* Ammunition storage and factory.
-* Fuel storage and factory.
+* Add rewards for achievement completion.
+* Ammunition storage.
+* Ammunition factory.
+* Fuel storage.
+* Fuel factory.
+* Skill - call bombers (use flare and explosion effects).
 * Unit editor.
-* Skill - call bombers (use flare effect).

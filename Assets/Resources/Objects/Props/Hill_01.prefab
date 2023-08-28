@@ -128,7 +128,8 @@ MonoBehaviour:
   <EnableTime>k__BackingField: 2
   <LoadTime>k__BackingField: 2
   <WaitTime>k__BackingField: 2
-  <DestroyEffect>k__BackingField: {fileID: 0}
+  <DestroyEffect>k__BackingField: {fileID: 8579966591951127539, guid: 64e9158e41e34f5418b979dd48171ccb, type: 3}
+  <TimeToLive>k__BackingField: -1
   <Altitude>k__BackingField: 0
   <MapLayers>k__BackingField: 
 --- !u!1001 &8668647212585523082

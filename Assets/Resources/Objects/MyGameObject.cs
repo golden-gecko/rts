@@ -55,6 +55,8 @@ public class MyGameObject : MonoBehaviour
             VisibleByRadar[player] = new HashSet<MyGameObject>();
             VisibleBySight[player] = new HashSet<MyGameObject>();
         }
+
+        LiveTimer.Max = TimeToLive;
     }
 
     protected virtual void Start()
@@ -66,6 +68,11 @@ public class MyGameObject : MonoBehaviour
 
     protected virtual void Update()
     {
+        if (TimeToLive > 0.0f)
+        {
+            LiveTimer.Update(Time.deltaTime);
+        }
+
         if (Alive == false)
         {
             Destroy(0);
@@ -342,18 +349,6 @@ public class MyGameObject : MonoBehaviour
         else
         {
             Orders.Add(Order.Wait(WaitTime));
-        }
-    }
-
-    public void Wait(float time, int priority = -1)
-    {
-        if (0 <= priority && priority < Orders.Count)
-        {
-            Orders.Insert(priority, Order.Wait(time));
-        }
-        else
-        {
-            Orders.Add(Order.Wait(time));
         }
     }
 
@@ -755,7 +750,7 @@ public class MyGameObject : MonoBehaviour
         } 
     }
 
-    public bool Alive { get => Health > 0.0f; }
+    public bool Alive { get => Health > 0.0f && (TimeToLive < 0.0f || LiveTimer.Finished == false); }
 
     public float Mass
     {
@@ -802,6 +797,8 @@ public class MyGameObject : MonoBehaviour
     [field: SerializeField]
     public GameObject DestroyEffect { get; set; }
 
+    [field: SerializeField]
+    public float TimeToLive { get; set; } = 0.0f;
 
     [field: SerializeField]
     public float Altitude { get; set; } = 0.0f;
@@ -841,4 +838,6 @@ public class MyGameObject : MonoBehaviour
     private Transform rangeSight;
     private Transform selection;
     private Transform trace;
+
+    private Timer LiveTimer = new Timer();
 }

@@ -173,20 +173,22 @@ MonoBehaviour:
   m_GameObject: {fileID: 2807449429036958551}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3f6e3f56f31f9974ba4e2e4790478425, type: 3}
+  m_Script: {fileID: 11500000, guid: 3ea7a276b6ae0904e89e87abeab0e4e8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   <Player>k__BackingField: {fileID: 0}
-  <Gatherable>k__BackingField: 1
+  <Enabled>k__BackingField: 1
+  <Gatherable>k__BackingField: 0
   <Selectable>k__BackingField: 1
-  <Health>k__BackingField: 10
-  <HealthMax>k__BackingField: 10
-  <VisibilityRange>k__BackingField: 10
+  <Health>k__BackingField: 100
+  <HealthMax>k__BackingField: 100
+  <EnableTime>k__BackingField: 2
   <LoadTime>k__BackingField: 2
   <WaitTime>k__BackingField: 2
-  <DestroyEffect>k__BackingField: Effects/Resources/FX_CuttingSmallTree
+  <DestroyEffect>k__BackingField: {fileID: 7447788123197329209, guid: 063c3ab67c1c6794ea2121d8d9b0116c, type: 3}
+  <TimeToLive>k__BackingField: -1
   <Altitude>k__BackingField: 0
-  <MapLayers>k__BackingField: 01000000
+  <MapLayers>k__BackingField: 
 --- !u!1 &7897144593525785336
 GameObject:
   m_ObjectHideFlags: 0

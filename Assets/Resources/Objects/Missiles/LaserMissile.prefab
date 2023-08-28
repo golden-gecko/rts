@@ -76,8 +76,9 @@ MonoBehaviour:
   <HealthMax>k__BackingField: 100
   <EnableTime>k__BackingField: 2
   <LoadTime>k__BackingField: 2
-  <WaitTime>k__BackingField: 2
+  <WaitTime>k__BackingField: 0.1
   <DestroyEffect>k__BackingField: {fileID: 0}
+  <TimeToLive>k__BackingField: -1
   <Altitude>k__BackingField: 0
   <MapLayers>k__BackingField: 
   <FireEffectPrefab>k__BackingField: {fileID: 0}

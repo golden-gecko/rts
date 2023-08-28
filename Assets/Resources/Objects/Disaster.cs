@@ -8,18 +8,11 @@ public class Disaster : MyGameObject
         base.Awake();
 
         Orders.AllowOrder(OrderType.Move);
-
-        LiveTimer.Max = TimeToLive;
     }
 
     protected override void Update()
     {
         base.Update();
-
-        if (LiveTimer.Update(Time.deltaTime))
-        {
-            Destroy(0);
-        }
 
         if (DamagePerSecond > 0.0f)
         {
@@ -80,7 +73,7 @@ public class Disaster : MyGameObject
 
     public override string GetInfo(bool ally)
     {
-        return base.GetInfo(ally) + string.Format("\nDamage: {0:0.}\nDamage Per Second: {1:0.}\nTime: {2}", Damage, DamagePerSecond, LiveTimer.GetInfo());
+        return base.GetInfo(ally) + string.Format("\nDamage: {0:0.}\nDamage Per Second: {1:0.}", Damage, DamagePerSecond);
     }
 
     [field: SerializeField]
@@ -95,12 +88,7 @@ public class Disaster : MyGameObject
     [field: SerializeField]
     public float DamagePerSecond { get; set; } = 10.0f;
 
-    [field: SerializeField]
-    public float TimeToLive = 10.0f; // TODO: Move to upper class.
-
     private List<MyGameObject> Damaged = new List<MyGameObject>();
 
     private Dictionary<MyGameObject, Timer> DamageTimer = new Dictionary<MyGameObject, Timer>();
-
-    private Timer LiveTimer = new Timer();
 }
