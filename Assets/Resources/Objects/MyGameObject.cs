@@ -8,6 +8,7 @@ public class MyGameObject : MonoBehaviour
         visual = transform.Find("Visual");
 
         rangeGun = visual.transform.Find("Range_Gun");
+        rangePower = visual.transform.Find("Range_Power");
         rangeRadar = visual.transform.Find("Range_Radar");
         rangeSight = visual.transform.Find("Range_Sight");
         selection = visual.transform.Find("Selection");
@@ -129,6 +130,7 @@ public class MyGameObject : MonoBehaviour
         Vector3 position = Map.Instance.CameraPositionHandler.GetPosition(Position);
 
         rangeGun.position = position;
+        rangePower.position = position;
         rangeRadar.position = position;
         rangeSight.position = position;
     }
@@ -493,6 +495,14 @@ public class MyGameObject : MonoBehaviour
             rangeGun.localScale = new Vector3(gun.Range * 2.0f / scale.x, gun.Range * 2.0f / scale.z, 1.0f);
         }
 
+        PowerPlant powerPlant = GetComponent<PowerPlant>();
+
+        if (powerPlant != null)
+        {
+            rangePower.gameObject.SetActive(status);
+            rangePower.localScale = new Vector3(powerPlant.Range * 2.0f / scale.x, powerPlant.Range * 2.0f / scale.z, 1.0f);
+        }
+
         Radar radar = GetComponent<Radar>();
 
         if (radar != null)
@@ -799,7 +809,7 @@ public class MyGameObject : MonoBehaviour
     public GameObject DestroyEffect { get; set; }
 
     [field: SerializeField]
-    public float TimeToLive { get; set; } = 0.0f;
+    public float TimeToLive { get; set; } = -1.0f;
 
     [field: SerializeField]
     public float Altitude { get; set; } = 0.0f;
@@ -833,6 +843,7 @@ public class MyGameObject : MonoBehaviour
 
     private Transform visual;
     private Transform rangeGun;
+    private Transform rangePower;
     private Transform rangeRadar;
     private Transform rangeSight;
     private Transform selection;

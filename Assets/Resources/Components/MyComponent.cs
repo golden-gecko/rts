@@ -5,6 +5,7 @@ public class MyComponent : MonoBehaviour
     protected virtual void Awake()
     {
     }
+
     protected virtual void Start()
     {
     }
@@ -15,9 +16,12 @@ public class MyComponent : MonoBehaviour
 
     public virtual string GetInfo()
     {
-        return string.Format("Mass: {0:0.}", Mass);
+        return string.Format("Mass: {0:0.}, PowerUsage {1:0.}", Mass, PowerUsage);
     }
 
     [field: SerializeField]
     public float Mass { get; set; } = 10.0f;
+
+    [field: SerializeField]
+    public float PowerUsage { get; set; } = 1.0f;
 }
