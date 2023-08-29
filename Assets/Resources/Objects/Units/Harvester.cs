@@ -6,11 +6,7 @@ public class Harvester : Vehicle
     {
         base.Awake();
 
-        Orders.AllowOrder(OrderType.Construct);
-        Orders.AllowOrder(OrderType.Gather);
-        Orders.AllowOrder(OrderType.Load);
-        Orders.AllowOrder(OrderType.Unload);
-        Orders.AllowOrder(OrderType.Transport);
+        Orders.AllowOrder(OrderType.Construct); // TODO: Move to component.
 
         Orders.AllowPrefab(Path.Combine(Config.DirectoryStructures, "Barracks"));
         Orders.AllowPrefab(Path.Combine(Config.DirectoryStructures, "Factory_Heavy"));

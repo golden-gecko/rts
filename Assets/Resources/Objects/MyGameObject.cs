@@ -13,7 +13,7 @@ public class MyGameObject : MonoBehaviour
         selection = visual.transform.Find("Selection");
         trace = visual.transform.Find("Trace");
 
-        Orders.AllowOrder(OrderType.Destroy);
+        Orders.AllowOrder(OrderType.Destroy); // TODO: Move to component.
         Orders.AllowOrder(OrderType.Disable);
         Orders.AllowOrder(OrderType.Enable);
         Orders.AllowOrder(OrderType.Idle);
