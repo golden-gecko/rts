@@ -31,7 +31,7 @@ public class OrderHandlerProduce : IOrderHandler
     {
         if (order.Timer == null)
         {
-            order.Timer = new Timer(recipe.Sum / order.ResourceUsage);
+            order.Timer = new Timer(recipe.Sum / myGameObject.GetComponent<Producer>().ResourceUsage);
         }
 
         if (HaveResources(myGameObject, recipe) == false)

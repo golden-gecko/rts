@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using UnityEngine;
 
 public class OrderHandlerUnload : IOrderHandler
@@ -14,69 +13,71 @@ public class OrderHandlerUnload : IOrderHandler
 
         if (IsValid(order) == false)
         {
+            myGameObject.Stats.Inc(Stats.OrdersFailed); // TODO: Create Fail method.
+            myGameObject.Orders.Pop();
+
+            return;
+        }
+
+        int valueStart = Mathf.Min(new int[]
+            {
+                order.Value,
+                order.TargetGameObject.GetComponent<Storage>().Resources.Capacity(order.Resource),
+                myGameObject.GetComponent<Storage>().Resources.Storage(order.Resource)
+            }
+        );
+
+        if (valueStart <= 0)
+        {
             myGameObject.Stats.Inc(Stats.OrdersFailed);
             myGameObject.Orders.Pop();
 
             return;
         }
 
-        if (order.Timer.Update(Time.deltaTime)  == false)
+        if (order.Timer == null)
+        {
+            order.Timer = new Timer(valueStart / myGameObject.GetComponent<Storage>().ResourceUsage);
+        }
+
+        if (order.Timer.Update(Time.deltaTime) == false)
         {
             return;
         }
 
-        // Check storage and capacity.
-        Dictionary<string, int> resources = new Dictionary<string, int>();
+        int valueEnd = Mathf.Min(new int[]
+            {
+                order.Value,
+                order.TargetGameObject.GetComponent<Storage>().Resources.Capacity(order.Resource),
+                myGameObject.GetComponent<Storage>().Resources.Storage(order.Resource)
+            }
+        );
 
-        foreach (KeyValuePair<string, int> i in order.Resources)
+        if (valueStart != valueEnd)
         {
-            if (order.TargetGameObject.State == MyGameObjectState.UnderConstruction)
-            {
-                int value = Mathf.Min(new int[] { i.Value, myGameObject.GetComponent<Storage>().Resources.Storage(i.Key), order.TargetGameObject.ConstructionResources.Capacity(i.Key) });
+            myGameObject.Stats.Inc(Stats.OrdersFailed);
+            myGameObject.Orders.Pop();
 
-                if (value > 0)
-                {
-                    resources[i.Key] = value;
-
-                    myGameObject.Stats.Add(Stats.ResourcesTransported, value);
-                }
-            }
-            else
-            {
-                int value = Mathf.Min(new int[] { i.Value, myGameObject.GetComponent<Storage>().Resources.Storage(i.Key), order.TargetGameObject.GetComponent<Storage>().Resources.Capacity(i.Key) });
-
-                if (value > 0)
-                {
-                    resources[i.Key] = value;
-
-                    myGameObject.Stats.Add(Stats.ResourcesTransported, value);
-                }
-            }
+            return;
         }
 
-        // Move resources or wait for them.
-        if (resources.Count > 0)
+        MoveResources(myGameObject, order.TargetGameObject, order.Resource, valueEnd);
+
+        myGameObject.Stats.Inc(Stats.OrdersCompleted);
+        myGameObject.Orders.Pop();
+    }
+
+    private void MoveResources(MyGameObject source, MyGameObject target, string resource, int value)
+    {
+        source.GetComponent<Storage>().Resources.Remove(resource, value);
+
+        if (target.State == MyGameObjectState.UnderConstruction)
         {
-            myGameObject.MoveResources(myGameObject, order.TargetGameObject, resources);
-            myGameObject.Stats.Inc(Stats.OrdersCompleted);
-            myGameObject.Orders.Pop();
+            target.ConstructionResources.Add(resource, value);
         }
         else
         {
-            order.Retry();
-            order.Timer.Reset();
-
-            if (order.CanRetry)
-            {
-                myGameObject.Wait(0);
-            }
-            else
-            {
-                myGameObject.Stats.Inc(Stats.OrdersFailed);
-                myGameObject.Orders.Pop();
-
-                GameMenu.Instance.Log("Failed to execute unload order");
-            }
+            target.GetComponent<Storage>().Resources.Add(resource, value);
         }
     }
 }

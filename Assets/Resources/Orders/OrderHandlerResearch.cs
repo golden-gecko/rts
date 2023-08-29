@@ -23,7 +23,7 @@ public class OrderHandlerResearch : IOrderHandler
 
         if (order.Timer == null)
         {
-            order.Timer = new Timer(technology.Total / order.ResourceUsage);
+            order.Timer = new Timer(technology.Total / myGameObject.GetComponent<Researcher>().ResourceUsage);
         }
 
         if (HaveResources(myGameObject, technology) == false)

@@ -92,7 +92,7 @@ public class Player : MonoBehaviour
             return null;
         }
 
-        return Order.Construct(closest, myGameObject.GetComponent<Constructor>().ResourceUsage);
+        return Order.Construct(closest);
     }
 
     public Order CreateOrderGather(MyGameObject myGameObject)
@@ -135,15 +135,10 @@ public class Player : MonoBehaviour
                     continue;
                 }
 
-                Dictionary<string, int> resources = new Dictionary<string, int>()
-                {
-                    { producer.Name, producer.Value },
-                };
-
                 Consumers.MoveToEnd();
                 Producers.MoveToEnd();
 
-                return Order.Transport(producer.MyGameObject, consumer.MyGameObject, resources, myGameObject.LoadTime);
+                return Order.Transport(producer.MyGameObject, consumer.MyGameObject, producer.Name, producer.Value);
             }
         }
 

@@ -22,7 +22,7 @@ public class OrderHandlerConstruct : IOrderHandler
 
         if (order.Timer == null)
         {
-            order.Timer = new Timer(recipe.Sum / order.ResourceUsage);
+            order.Timer = new Timer(recipe.Sum / myGameObject.GetComponent<Constructor>().ResourceUsage);
         }
 
         if (myGameObject.IsCloseTo(order.TargetGameObject.Entrance) == false)

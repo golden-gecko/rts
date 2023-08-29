@@ -66,18 +66,6 @@ public class ResourceContainer
         return Items.ContainsKey(name) ? Items[name].Storage : 0;
     }
 
-    public Dictionary<string, int> GetStorage() // TODO: Remove.
-    {
-        Dictionary<string, int> storage = new Dictionary<string, int>();
-
-        foreach (Resource resource in Items.Values)
-        {
-            storage[resource.Name] = resource.Storage;
-        }
-
-        return storage;
-    }
-
     public string GetInfo()
     {
         string info = string.Empty;

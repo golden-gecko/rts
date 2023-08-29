@@ -42,21 +42,6 @@ public class Map : MonoBehaviour
         Clear();
     }
 
-    public Vector3 ValidatePosition(Vector3 position) // TODO: Remove?
-    {
-        Ray ray = new Ray(position + Vector3.up * Config.TerrainMaxHeight, Vector3.down);
-        int mask = LayerMask.GetMask("Terrain") | LayerMask.GetMask("Water");
-
-        RaycastHit hitInfo;
-
-        if (Physics.Raycast(ray, out hitInfo, Config.RaycastMaxDistance, mask) == false)
-        {
-            return Vector3.zero;
-        }
-
-        return hitInfo.point;
-    }
-
     public bool ValidatePosition(MyGameObject myGameObject, Vector3 position, out Vector3 validated)
     {
         Ray ray = new Ray(position + Vector3.up * Config.TerrainMaxHeight, Vector3.down);

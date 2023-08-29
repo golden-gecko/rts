@@ -21,7 +21,7 @@ public class OrderHandlerAssemble : IOrderHandler
 
         if (order.Timer == null)
         {
-            order.Timer = new Timer(recipe.Sum / order.ResourceUsage);
+            order.Timer = new Timer(recipe.Sum / myGameObject.GetComponent<Constructor>().ResourceUsage);
         }
 
         if (HaveResources(myGameObject, recipe) == false)
@@ -39,7 +39,7 @@ public class OrderHandlerAssemble : IOrderHandler
         MoveResources(myGameObject, recipe);
 
         order.TargetGameObject.State = MyGameObjectState.Operational;
-        order.TargetGameObject.Move(myGameObject.GetComponent<Constructor>().RallyPoint, 0);
+        order.TargetGameObject.Move(myGameObject.GetComponent<Assembler>().RallyPoint, 0);
 
         myGameObject.Stats.Inc(Stats.OrdersCompleted);
         myGameObject.Stats.Inc(Stats.ObjectsAssembled);

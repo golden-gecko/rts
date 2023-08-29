@@ -1,3 +1,5 @@
+using System.Linq;
+
 public class Recipe
 {
     public Recipe(string name)
@@ -21,19 +23,7 @@ public class Recipe
     {
         get
         {
-            int sum = 0;
-
-            foreach (Resource i in ToConsume.Items.Values)
-            {
-                sum += i.Max;
-            }
-
-            foreach (Resource i in ToProduce.Items.Values)
-            {
-                sum += i.Max;
-            }
-
-            return sum;
+            return ToConsume.Items.Values.Sum(x => x.Max) + ToProduce.Items.Values.Sum(x => x.Max);
         }
     }
 

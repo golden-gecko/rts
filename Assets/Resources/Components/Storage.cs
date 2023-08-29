@@ -1,3 +1,5 @@
+using UnityEngine;
+
 public class Storage : MyComponent
 {
     protected override void Awake()
@@ -14,6 +16,9 @@ public class Storage : MyComponent
     {
         return string.Format("{0}\nResources: {1}", base.GetInfo(), Resources.GetInfo());
     }
+
+    [field: SerializeField]
+    public int ResourceUsage { get; set; } = 1;
 
     public ResourceContainer Resources { get; } = new ResourceContainer();
 }

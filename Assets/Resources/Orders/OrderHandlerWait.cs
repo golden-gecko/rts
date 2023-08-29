@@ -4,19 +4,16 @@ public class OrderHandlerWait : IOrderHandler
 {
     public bool IsValid(Order order)
     {
-        return order.Timer.Max > 0.0f;
+        return true;
     }
 
     public void OnExecute(MyGameObject myGameObject)
     {
         Order order = myGameObject.Orders.First();
 
-        if (IsValid(order) == false)
+        if (order.Timer == null)
         {
-            myGameObject.Stats.Inc(Stats.OrdersFailed);
-            myGameObject.Orders.Pop();
-
-            return;
+            order.Timer = new Timer(myGameObject.WaitTime);
         }
 
         if (order.Timer.Update(Time.deltaTime) == false)

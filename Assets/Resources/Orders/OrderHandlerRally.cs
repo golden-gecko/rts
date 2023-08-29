@@ -9,7 +9,7 @@ public class OrderHandlerRally : IOrderHandler
     {
         Order order = myGameObject.Orders.First();
 
-        myGameObject.GetComponent<Constructor>().RallyPoint = order.TargetPosition;
+        myGameObject.GetComponent<Assembler>().RallyPoint = order.TargetPosition;
         myGameObject.Orders.Pop();
     }
 }

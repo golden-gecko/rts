@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class MyGameObject : MonoBehaviour
@@ -45,17 +46,9 @@ public class MyGameObject : MonoBehaviour
 
         ConstructionResources.Add("Iron", 0, 30, ResourceDirection.In);
 
-        Recipe r1 = new Recipe("Iron");
-
+        Recipe r1 = new Recipe("Iron"); // TODO: Remove.
         r1.Consumes("Iron", 30);
-
         ConstructionRecipies.Add(r1);
-
-        foreach (Player player in GameObject.Find("Players").GetComponentsInChildren<Player>(true))
-        {
-            VisibleByRadar[player] = new HashSet<MyGameObject>();
-            VisibleBySight[player] = new HashSet<MyGameObject>();
-        }
 
         LiveTimer.Max = TimeToLive;
     }
@@ -79,25 +72,27 @@ public class MyGameObject : MonoBehaviour
             Destroy(0);
         }
 
-        switch (State)
+        if (Enabled)
         {
-            case MyGameObjectState.Operational:
-                if (Enabled)
-                {
+            switch (State)
+            {
+                case MyGameObjectState.Operational:
                     ProcessOrders();
-                    RaiseResourceFlags(); // TODO: Remove flags when disabled.
-                }
-                break;
+                    RaiseResourceFlags();
+                    break;
 
-            case MyGameObjectState.UnderAssembly:
-                break;
+                case MyGameObjectState.UnderAssembly:
+                    break;
 
-            case MyGameObjectState.UnderConstruction:
-                if (Enabled)
-                {
-                    RaiseConstructionResourceFlags(); // TODO: Remove flags when disabled.
-                }
-                break;
+                case MyGameObjectState.UnderConstruction:
+                    RaiseConstructionResourceFlags();
+                    break;
+            }
+        }
+        else
+        {
+            RemoveResourceFlags();
+            RemoveConstructionResourceFlags();
         }
 
         UpdateSkills();
@@ -179,7 +174,7 @@ public class MyGameObject : MonoBehaviour
     }
     public void Assemble(string prefab)
     {
-        Orders.Add(Order.Assemble(prefab, GetComponent<Constructor>().ResourceUsage));
+        Orders.Add(Order.Assemble(prefab));
     }
 
     public void Attack(Vector3 position)
@@ -194,7 +189,7 @@ public class MyGameObject : MonoBehaviour
 
     public void Construct(string prefab, Vector3 position)
     {
-        Orders.Add(Order.Construct(prefab, position, GetComponent<Constructor>().ResourceUsage));
+        Orders.Add(Order.Construct(prefab, position));
     }
 
     public void Destroy(int priority = -1)
@@ -258,15 +253,15 @@ public class MyGameObject : MonoBehaviour
         Orders.Add(Order.Guard(myGameObject));
     }
 
-    public void Load(MyGameObject target, Dictionary<string, int> resources, int priority = -1)
+    public void Load(MyGameObject target, string resource, int value, int priority = -1)
     {
         if (0 <= priority && priority < Orders.Count)
         {
-            Orders.Insert(priority, Order.Load(target, resources, LoadTime));
+            Orders.Insert(priority, Order.Load(target, resource, value));
         }
         else
         {
-            Orders.Add(Order.Load(target, resources, LoadTime));
+            Orders.Add(Order.Load(target, resource, value));
         }
     }
 
@@ -289,7 +284,7 @@ public class MyGameObject : MonoBehaviour
 
     public void Produce(string recipe = "")
     {
-        Orders.Add(Order.Produce(recipe, GetComponent<Producer>().ResourceUsage));
+        Orders.Add(Order.Produce(recipe));
     }
 
     public void Rally(Vector3 target, int priority = -1)
@@ -306,7 +301,7 @@ public class MyGameObject : MonoBehaviour
 
     public void Research(string technology)
     {
-        Orders.Add(Order.Research(technology, GetComponent<Researcher>().ResourceUsage));
+        Orders.Add(Order.Research(technology));
     }
 
     public void Stop()
@@ -314,27 +309,27 @@ public class MyGameObject : MonoBehaviour
         Orders.Insert(0, Order.Stop());
     }
 
-    public void Transport(MyGameObject sourceGameObject, MyGameObject targetGameObject, Dictionary<string, int> resources, int priority = -1)
+    public void Transport(MyGameObject sourceGameObject, MyGameObject targetGameObject, string resource, int value, int priority = -1)
     {
         if (0 <= priority && priority < Orders.Count)
         {
-            Orders.Insert(priority, Order.Transport(sourceGameObject, targetGameObject, resources, LoadTime));
+            Orders.Insert(priority, Order.Transport(sourceGameObject, targetGameObject, resource, value));
         }
         else
         {
-            Orders.Add(Order.Transport(sourceGameObject, targetGameObject, resources, LoadTime));
+            Orders.Add(Order.Transport(sourceGameObject, targetGameObject, resource, value));
         }
     }
 
-    public void Unload(MyGameObject target, Dictionary<string, int> resources, int priority = -1)
+    public void Unload(MyGameObject target, string resource, int value, int priority = -1)
     {
         if (0 <= priority && priority < Orders.Count)
         {
-            Orders.Insert(priority, Order.Unload(target, resources, LoadTime));
+            Orders.Insert(priority, Order.Unload(target, resource, value));
         }
         else
         {
-            Orders.Add(Order.Unload(target, resources, LoadTime));
+            Orders.Add(Order.Unload(target, resource, value));
         }
     }
     public void UseSkill(string skill)
@@ -346,11 +341,11 @@ public class MyGameObject : MonoBehaviour
     {
         if (0 <= priority && priority < Orders.Count)
         {
-            Orders.Insert(priority, Order.Wait(WaitTime));
+            Orders.Insert(priority, Order.Wait());
         }
         else
         {
-            Orders.Add(Order.Wait(WaitTime));
+            Orders.Add(Order.Wait());
         }
     }
 
@@ -523,23 +518,6 @@ public class MyGameObject : MonoBehaviour
         selection.localScale = new Vector3(size.x * 1.1f, size.z * 1.1f, 1.0f);
     }
 
-    public void MoveResources(MyGameObject source, MyGameObject target, Dictionary<string, int> resources)
-    {
-        foreach (KeyValuePair<string, int> i in resources)
-        {
-            source.GetComponent<Storage>().Resources.Remove(i.Key, i.Value);
-
-            if (target.State == MyGameObjectState.UnderConstruction)
-            {
-                target.ConstructionResources.Add(i.Key, i.Value);
-            }
-            else
-            {
-                target.GetComponent<Storage>().Resources.Add(i.Key, i.Value);
-            }
-        }
-    }
-
     public bool IsCloseTo(Vector3 position)
     {
         return IsInRange(position, 0.0f, 1.0f);
@@ -625,26 +603,6 @@ public class MyGameObject : MonoBehaviour
         }
     }
 
-    private void RaiseConstructionResourceFlags()
-    {
-        foreach (Recipe recipe in ConstructionRecipies.Items.Values)
-        {
-            foreach (Resource resource in recipe.ToConsume.Items.Values)
-            {
-                int capacity = ConstructionResources.Capacity(resource.Name);
-
-                if (capacity > 0)
-                {
-                    Player.RegisterConsumer(this, resource.Name, capacity);
-                }
-                else
-                {
-                    Player.UnregisterConsumer(this, resource.Name);
-                }
-            }
-        }
-    }
-
     private void RaiseResourceFlags()
     {
         if (GetComponent<Storage>() == null)
@@ -677,6 +635,56 @@ public class MyGameObject : MonoBehaviour
                     Player.RegisterProducer(this, resource.Name, resource.Storage);
                 }
             }
+        }
+    }
+
+    private void RemoveResourceFlags()
+    {
+        foreach (string name in GetComponent<Storage>().Resources.Items.Keys)
+        {
+            Player.UnregisterConsumer(this, name);
+            Player.UnregisterProducer(this, name);
+
+        }
+    }
+
+    private void RaiseConstructionResourceFlags()
+    {
+        foreach (Resource resource in ConstructionResources.Items.Values)
+        {
+            if (resource.Direction == ResourceDirection.Both || resource.Direction == ResourceDirection.In)
+            {
+                if (resource.Full)
+                {
+                    Player.UnregisterConsumer(this, resource.Name);
+                }
+                else
+                {
+                    Player.RegisterConsumer(this, resource.Name, resource.Capacity);
+                }
+            }
+
+            if (resource.Direction == ResourceDirection.Both || resource.Direction == ResourceDirection.Out)
+            {
+                if (resource.Empty)
+                {
+                    Player.UnregisterProducer(this, resource.Name);
+                }
+                else
+                {
+                    Player.RegisterProducer(this, resource.Name, resource.Storage);
+                }
+            }
+        }
+    }
+
+    private void RemoveConstructionResourceFlags()
+    {
+        foreach (string name in ConstructionResources.Items.Keys)
+        {
+            Player.UnregisterConsumer(this, name);
+            Player.UnregisterProducer(this, name);
+
         }
     }
 
@@ -730,9 +738,11 @@ public class MyGameObject : MonoBehaviour
         }
     }
 
-    public Vector3 Entrance { get => Position + new Vector3(0.0f, 0.0f, Size.z + 1.0f); }
+    public Vector3 Direction { get => transform.forward; }
 
-    public Vector3 Exit { get => Position - new Vector3(0.0f, 0.0f, Size.z + 1.0f); }
+    public Vector3 Entrance { get => Position + new Vector3(Direction.x * Size.x, Direction.y * Size.y, Direction.z * Size.z); }
+
+    public Vector3 Exit { get => Position - new Vector3(Direction.x * Size.x, Direction.y * Size.y, Direction.z * Size.z); }
 
     public float Radius
     {
@@ -758,7 +768,7 @@ public class MyGameObject : MonoBehaviour
             }
 
             return size;
-        } 
+        }
     }
 
     public bool Alive { get => Health > 0.0f && (TimeToLive < 0.0f || LiveTimer.Finished == false); }
@@ -767,14 +777,7 @@ public class MyGameObject : MonoBehaviour
     {
         get
         {
-            float mass = 0.0f;
-
-            foreach (MyComponent i in GetComponents<MyComponent>())
-            {
-                mass += i.Mass;
-            }
-
-            return mass;
+            return GetComponents<MyComponent>().Sum(x => x.Mass);
         }
     }
 
@@ -798,9 +801,6 @@ public class MyGameObject : MonoBehaviour
 
     [field: SerializeField]
     public float EnableTime { get; set; } = 2.0f;
-
-    [field: SerializeField]
-    public float LoadTime { get; set; } = 2.0f;
 
     [field: SerializeField]
     public float WaitTime { get; set; } = 2.0f;
@@ -829,15 +829,11 @@ public class MyGameObject : MonoBehaviour
 
     public ResourceContainer ConstructionResources { get; } = new ResourceContainer();
 
-    public RecipeContainer ConstructionRecipies { get; } = new RecipeContainer();
+    public RecipeContainer ConstructionRecipies { get; } = new RecipeContainer(); // TODO: Remove.
 
     public MyGameObject Parent { get; set; } // TODO: Hide setter.
 
     public Dictionary<string, Skill> Skills { get; } = new Dictionary<string, Skill>();
-
-    public Dictionary<Player, HashSet<MyGameObject>> VisibleByRadar { get; set; } = new Dictionary<Player, HashSet<MyGameObject>>();
-
-    public Dictionary<Player, HashSet<MyGameObject>> VisibleBySight { get; set; } = new Dictionary<Player, HashSet<MyGameObject>>();
 
     protected Dictionary<OrderType, IOrderHandler> OrderHandlers { get; } = new Dictionary<OrderType, IOrderHandler>();
 

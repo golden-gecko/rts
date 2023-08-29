@@ -264,7 +264,7 @@ GameObject:
   - component: {fileID: 8396227358010600749}
   - component: {fileID: -8970998810688312361}
   - component: {fileID: 855856442431241174}
-  - component: {fileID: 2875156255255120413}
+  - component: {fileID: 7764472481935986510}
   - component: {fileID: 418980675449498400}
   m_Layer: 0
   m_Name: Factory_Light
@@ -380,13 +380,13 @@ MonoBehaviour:
   <Health>k__BackingField: 100
   <HealthMax>k__BackingField: 100
   <EnableTime>k__BackingField: 2
-  <LoadTime>k__BackingField: 2
   <WaitTime>k__BackingField: 2
   <DestroyEffect>k__BackingField: {fileID: 100008, guid: 06736895ea0a4ff408d25e6684dce797, type: 3}
   <TimeToLive>k__BackingField: -1
   <Altitude>k__BackingField: 0
   <MapLayers>k__BackingField: 01000000
---- !u!114 &2875156255255120413
+  <PowerUsage>k__BackingField: 1
+--- !u!114 &7764472481935986510
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -395,7 +395,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 8035996494400900344}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b9a00f16555428d49958a19db20e17a2, type: 3}
+  m_Script: {fileID: 11500000, guid: c7a7a5b1061782f46a69d15414e90cec, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   <Mass>k__BackingField: 10
@@ -413,6 +413,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   <Mass>k__BackingField: 10
+  <ResourceUsage>k__BackingField: 1
 --- !u!1001 &2586609112111669602
 PrefabInstance:
   m_ObjectHideFlags: 0

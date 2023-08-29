@@ -1,12 +1,9 @@
-using UnityEngine;
-
 public class Gatherer : MyComponent
 {
-    public override string GetInfo()
+    protected override void Awake()
     {
-        return string.Format("{0}, Gather Time: {1:0.}", base.GetInfo(), GatherTime);
-    }
+        base.Awake();
 
-    [field: SerializeField]
-    public float GatherTime { get; set; } = 2.0f;
+        GetComponent<MyGameObject>().Orders.AllowOrder(OrderType.Gather);
+    }
 }

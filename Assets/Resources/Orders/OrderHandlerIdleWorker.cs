@@ -38,6 +38,6 @@ public class OrderHandlerIdleWorker : IOrderHandler
             return;
         }
 
-        myGameObject.Orders.Add(Order.Wait(myGameObject.WaitTime));
+        myGameObject.Orders.Add(Order.Wait());
     }
 }

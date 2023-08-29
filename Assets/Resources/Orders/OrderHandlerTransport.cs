@@ -19,9 +19,9 @@ public class OrderHandlerTransport : IOrderHandler
 
         myGameObject.Orders.Pop(); // TODO: Order is reversed because of gather order.
 
-        myGameObject.Unload(order.TargetGameObject, order.Resources, 0);
+        myGameObject.Unload(order.TargetGameObject, order.Resource, order.Value, 0);
         myGameObject.Move(order.TargetGameObject.Entrance, 0);
-        myGameObject.Load(order.SourceGameObject, order.Resources, 0);
+        myGameObject.Load(order.SourceGameObject, order.Resource, order.Value, 0);
         myGameObject.Move(order.SourceGameObject.Entrance, 0);
     }
 }

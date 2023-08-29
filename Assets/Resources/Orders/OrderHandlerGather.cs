@@ -75,7 +75,9 @@ public class OrderHandlerGather : IOrderHandler
             return;
         }
 
-        myGameObject.Transport(myResource, storage, myResource.GetComponent<Storage>().Resources.GetStorage()); // TODO: Refactor.
+        Resource resource = myResource.GetComponent<Storage>().Resources.Items.Values.First(); // TODO: Refactor.
+
+        myGameObject.Transport(myResource, storage, resource.Name, resource.Storage);
     }
 
     private MyResource GetResource(MyGameObject myGameObject)

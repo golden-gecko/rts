@@ -3,13 +3,12 @@ using UnityEngine;
 
 public class Order
 {
-    public static Order Assemble(string prefab, int resourceUsage)
+    public static Order Assemble(string prefab)
     {
         return new Order
         {
             Type = OrderType.Assemble,
             Prefab = prefab,
-            ResourceUsage = resourceUsage,
         };
     }
 
@@ -32,18 +31,17 @@ public class Order
         };
     }
 
-    public static Order Construct(string prefab, Vector3 position, int resourceUsage)
+    public static Order Construct(string prefab, Vector3 position)
     {
         return new Order
         {
             Type = OrderType.Construct,
             TargetPosition = position,
             Prefab = prefab,
-            ResourceUsage = resourceUsage,
         };
     }
 
-    public static Order Construct(MyGameObject myGameObject, int resourceUsage)
+    public static Order Construct(MyGameObject myGameObject)
     {
         return new Order
         {
@@ -51,7 +49,6 @@ public class Order
             TargetPosition = myGameObject.Position,
             TargetGameObject = myGameObject,
             Prefab = "", // TODO: Find prefab name.
-            ResourceUsage = resourceUsage,
         };
     }
 
@@ -135,14 +132,14 @@ public class Order
         };
     }
 
-    public static Order Load(MyGameObject myGameObject, Dictionary<string, int> resources, float time)
+    public static Order Load(MyGameObject myGameObject, string resource, int value)
     {
         return new Order
         {
             Type = OrderType.Load,
             SourceGameObject = myGameObject,
-            Resources = resources,
-            Timer = new Timer(time),
+            Resource = resource,
+            Value = value,
         };
     }
 
@@ -164,13 +161,12 @@ public class Order
         };
     }
 
-    public static Order Produce(string recipe, int resourceUsage)
+    public static Order Produce(string recipe)
     {
         return new Order
         {
             Type = OrderType.Produce,
             Recipe = recipe,
-            ResourceUsage = resourceUsage,
         };
     }
 
@@ -183,13 +179,12 @@ public class Order
         };
     }
 
-    public static Order Research(string technology, int resourceUsage)
+    public static Order Research(string technology)
     {
         return new Order
         {
             Type = OrderType.Research,
             Technology = technology,
-            ResourceUsage = resourceUsage,
         };
     }
 
@@ -210,35 +205,34 @@ public class Order
         };
     }
 
-    public static Order Transport(MyGameObject sourceGameObject, MyGameObject targetGameObject, Dictionary<string, int> resources, float time)
+    public static Order Transport(MyGameObject sourceGameObject, MyGameObject targetGameObject, string resource, int value)
     {
         return new Order
         {
             Type = OrderType.Transport,
             SourceGameObject = sourceGameObject,
             TargetGameObject = targetGameObject,
-            Resources = resources,
-            Timer = new Timer(time),
+            Resource = resource,
+            Value = value,
         };
     }
 
-    public static Order Unload(MyGameObject myGameObject, Dictionary<string, int> resources, float time)
+    public static Order Unload(MyGameObject myGameObject, string resource, int value)
     {
         return new Order
         {
             Type = OrderType.Unload,
             TargetGameObject = myGameObject,
-            Resources = resources,
-            Timer = new Timer(time),
+            Resource = resource,
+            Value = value,
         };
     }
 
-    public static Order Wait(float time)
+    public static Order Wait()
     {
         return new Order
         {
             Type = OrderType.Wait,
-            Timer = new Timer(time),
         };
     }
 
@@ -299,8 +293,6 @@ public class Order
 
     public Counter Retries { get; private set; } = new Counter();
 
-    public Dictionary<string, int> Resources { get; private set; }
-
     public MyGameObject SourceGameObject { get; private set; }
 
     public MyGameObject TargetGameObject { get; set; } // TODO: Hide setter.
@@ -311,13 +303,13 @@ public class Order
 
     public OrderType Type { get; private set; }
 
-    public int ResourceUsage { get; private set; }
-
     public string Prefab { get; private set; }
 
     public string Recipe { get; set; }
 
     public string Resource { get; set; }
+
+    public int Value { get; set; }
 
     public string Skill { get; private set; }
 
