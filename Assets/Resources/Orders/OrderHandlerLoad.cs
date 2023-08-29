@@ -1,20 +1,14 @@
 using UnityEngine;
 
-public class OrderHandlerLoad : IOrderHandler
+public class OrderHandlerLoad : OrderHandler
 {
-    public bool IsValid(Order order)
-    {
-        return order.SourceGameObject != null;
-    }
-
-    public void OnExecute(MyGameObject myGameObject)
+    public override void OnExecute(MyGameObject myGameObject)
     {
         Order order = myGameObject.Orders.First();
 
         if (IsValid(order) == false)
         {
-            myGameObject.Stats.Inc(Stats.OrdersFailed); // TODO: Create Fail method.
-            myGameObject.Orders.Pop();
+            Fail(myGameObject);
 
             return;
         }
@@ -29,8 +23,7 @@ public class OrderHandlerLoad : IOrderHandler
 
         if (valueStart <= 0)
         {
-            myGameObject.Stats.Inc(Stats.OrdersFailed);
-            myGameObject.Orders.Pop();
+            Fail(myGameObject);
 
             return;
         }
@@ -55,8 +48,7 @@ public class OrderHandlerLoad : IOrderHandler
 
         if (valueStart != valueEnd)
         {
-            myGameObject.Stats.Inc(Stats.OrdersFailed);
-            myGameObject.Orders.Pop();
+            Fail(myGameObject);
 
             return;
         }
@@ -65,6 +57,11 @@ public class OrderHandlerLoad : IOrderHandler
 
         myGameObject.Stats.Inc(Stats.OrdersCompleted);
         myGameObject.Orders.Pop();
+    }
+
+    protected override bool IsValid(Order order)
+    {
+        return order.SourceGameObject != null;
     }
 
     private void MoveResources(MyGameObject source, MyGameObject target, string resource, int value)

@@ -60,21 +60,19 @@ public class Order
         };
     }
 
-    public static Order Enable(float time)
-    {
-        return new Order
-        {
-            Type = OrderType.Enable,
-            Timer = new Timer(time),
-        };
-    }
-
-    public static Order Disable(float time)
+    public static Order Disable()
     {
         return new Order
         {
             Type = OrderType.Disable,
-            Timer = new Timer(time),
+        };
+    }
+
+    public static Order Enable()
+    {
+        return new Order
+        {
+            Type = OrderType.Enable,
         };
     }
 

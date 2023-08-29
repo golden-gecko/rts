@@ -1,18 +1,12 @@
-public class OrderHandlerFollow : IOrderHandler
+public class OrderHandlerFollow : OrderHandler
 {
-    public bool IsValid(Order order)
-    {
-        return order.TargetGameObject != null;
-    }
-
-    public void OnExecute(MyGameObject myGameObject)
+    public override void OnExecute(MyGameObject myGameObject)
     {
         Order order = myGameObject.Orders.First();
 
         if (IsValid(order) == false)
         {
-            myGameObject.Stats.Inc(Stats.OrdersFailed);
-            myGameObject.Orders.Pop();
+            Fail(myGameObject);
 
             return;
         }
@@ -23,5 +17,10 @@ public class OrderHandlerFollow : IOrderHandler
         }
 
         myGameObject.Orders.MoveToEnd();
+    }
+
+    protected override bool IsValid(Order order)
+    {
+        return order.TargetGameObject != null;
     }
 }

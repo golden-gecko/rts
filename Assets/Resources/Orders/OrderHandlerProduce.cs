@@ -1,14 +1,9 @@
 using System.Linq;
 using UnityEngine;
 
-public class OrderHandlerProduce : IOrderHandler
+public class OrderHandlerProduce : OrderHandler
 {
-    public bool IsValid(Order order)
-    {
-        return true;
-    }
-
-    public void OnExecute(MyGameObject myGameObject)
+    public override void OnExecute(MyGameObject myGameObject)
     {
         Order order = myGameObject.Orders.First();
 
@@ -18,8 +13,7 @@ public class OrderHandlerProduce : IOrderHandler
         }
         else if (myGameObject.GetComponent<Producer>().Recipes.Items.ContainsKey(order.Recipe) == false)
         {
-            myGameObject.Stats.Inc(Stats.OrdersFailed);
-            myGameObject.Orders.Pop();
+            Fail(myGameObject);
 
             return;
         }

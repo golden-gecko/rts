@@ -1,21 +1,15 @@
 using System.Linq;
 using UnityEngine;
 
-public class OrderHandlerGather : IOrderHandler
+public class OrderHandlerGather : OrderHandler
 {
-    public bool IsValid(Order order)
-    {
-        return order.IsTargetGameObject == true || order.Resource.Length > 0;
-    }
-
-    public void OnExecute(MyGameObject myGameObject)
+    public override void OnExecute(MyGameObject myGameObject)
     {
         Order order = myGameObject.Orders.First();
 
         if (IsValid(order) == false)
         {
-            myGameObject.Stats.Inc(Stats.OrdersFailed);
-            myGameObject.Orders.Pop();
+            Fail(myGameObject);
 
             return;
         }
@@ -24,8 +18,7 @@ public class OrderHandlerGather : IOrderHandler
         {
             if (order.TargetGameObject == null)
             {
-                myGameObject.Stats.Inc(Stats.OrdersCompleted);
-                myGameObject.Orders.Pop();
+                Fail(myGameObject);
 
                 return;
             }
@@ -40,8 +33,7 @@ public class OrderHandlerGather : IOrderHandler
 
             if (myResource == null)
             {
-                myGameObject.Stats.Inc(Stats.OrdersFailed);
-                myGameObject.Orders.Pop();
+                Fail(myGameObject);
 
                 return;
             }
@@ -52,8 +44,7 @@ public class OrderHandlerGather : IOrderHandler
             {
                 if (myResource == null)
                 {
-                    myGameObject.Stats.Inc(Stats.OrdersFailed);
-                    myGameObject.Orders.Pop();
+                    Fail(myGameObject);
 
                     return;
                 }
@@ -63,6 +54,11 @@ public class OrderHandlerGather : IOrderHandler
         }
 
         myGameObject.Orders.MoveToEnd();
+    }
+
+    protected override bool IsValid(Order order)
+    {
+        return order.IsTargetGameObject == true || order.Resource.Length > 0;
     }
 
     private void GatherFromObject(MyGameObject myGameObject, MyGameObject myResource, MyGameObject storage)

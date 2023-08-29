@@ -15,7 +15,7 @@ public class MyGameObject : MonoBehaviour
         selection = visual.transform.Find("Selection");
         trace = visual.transform.Find("Trace");
 
-        Orders.AllowOrder(OrderType.Destroy); // TODO: Move to component.
+        Orders.AllowOrder(OrderType.Destroy); // TODO: Move order whitelist to component.
         Orders.AllowOrder(OrderType.Disable);
         Orders.AllowOrder(OrderType.Enable);
         Orders.AllowOrder(OrderType.Idle);
@@ -208,11 +208,11 @@ public class MyGameObject : MonoBehaviour
     {
         if (0 <= priority && priority < Orders.Count)
         {
-            Orders.Insert(priority, Order.Disable(EnableTime));
+            Orders.Insert(priority, Order.Disable());
         }
         else
         {
-            Orders.Add(Order.Disable(EnableTime));
+            Orders.Add(Order.Disable());
         }
     }
 
@@ -220,11 +220,11 @@ public class MyGameObject : MonoBehaviour
     {
         if (0 <= priority && priority < Orders.Count)
         {
-            Orders.Insert(priority, Order.Enable(EnableTime));
+            Orders.Insert(priority, Order.Enable());
         }
         else
         {
-            Orders.Add(Order.Enable(EnableTime));
+            Orders.Add(Order.Enable());
         }
     }
 
@@ -688,22 +688,6 @@ public class MyGameObject : MonoBehaviour
         }
     }
 
-    public bool Constructed
-    {
-        get
-        {
-            foreach (Resource resource in ConstructionResources.Items.Values)
-            {
-                if (resource.Full == false)
-                {
-                    return false;
-                }
-            }
-
-            return true;
-        }
-    }
-
     public float DistanceTo(MyGameObject myGameObject)
     {
         return (Position - myGameObject.Position).magnitude;
@@ -835,7 +819,7 @@ public class MyGameObject : MonoBehaviour
 
     public Dictionary<string, Skill> Skills { get; } = new Dictionary<string, Skill>();
 
-    protected Dictionary<OrderType, IOrderHandler> OrderHandlers { get; } = new Dictionary<OrderType, IOrderHandler>();
+    protected Dictionary<OrderType, OrderHandler> OrderHandlers { get; } = new Dictionary<OrderType, OrderHandler>();
 
     private Transform visual;
     private Transform rangeGun;

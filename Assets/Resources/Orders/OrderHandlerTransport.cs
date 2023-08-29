@@ -1,18 +1,12 @@
-public class OrderHandlerTransport : IOrderHandler
+public class OrderHandlerTransport : OrderHandler
 {
-    public bool IsValid(Order order)
-    {
-        return order.SourceGameObject != null && order.TargetGameObject != null;
-    }
-
-    public void OnExecute(MyGameObject myGameObject)
+    public override void OnExecute(MyGameObject myGameObject)
     {
         Order order = myGameObject.Orders.First();
 
         if (IsValid(order) == false)
         {
-            myGameObject.Stats.Inc(Stats.OrdersFailed);
-            myGameObject.Orders.Pop();
+            Fail(myGameObject);
 
             return;
         }
@@ -23,5 +17,10 @@ public class OrderHandlerTransport : IOrderHandler
         myGameObject.Move(order.TargetGameObject.Entrance, 0);
         myGameObject.Load(order.SourceGameObject, order.Resource, order.Value, 0);
         myGameObject.Move(order.SourceGameObject.Entrance, 0);
+    }
+
+    protected override bool IsValid(Order order)
+    {
+        return order.SourceGameObject != null && order.TargetGameObject != null;
     }
 }

@@ -139,7 +139,6 @@ MonoBehaviour:
   <Health>k__BackingField: 200
   <HealthMax>k__BackingField: 200
   <EnableTime>k__BackingField: 2
-  <LoadTime>k__BackingField: 2
   <WaitTime>k__BackingField: 2
   <DestroyEffect>k__BackingField: {fileID: 100006, guid: 7c442b9b6852b8a4f93306f3d154d471, type: 3}
   <TimeToLive>k__BackingField: -1
@@ -186,7 +185,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   <Mass>k__BackingField: 10
-  <GatherTime>k__BackingField: 2
 --- !u!114 &-6714782243480238438
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -214,6 +212,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   <Mass>k__BackingField: 10
+  <ResourceUsage>k__BackingField: 4
 --- !u!1 &2488149496584009299
 GameObject:
   m_ObjectHideFlags: 0

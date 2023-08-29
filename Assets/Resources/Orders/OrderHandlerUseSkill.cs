@@ -1,26 +1,19 @@
-public class OrderHandlerUseSkill : IOrderHandler
+public class OrderHandlerUseSkill : OrderHandler
 {
-    public bool IsValid(Order order)
-    {
-        return order.Skill.Length > 0;
-    }
-
-    public void OnExecute(MyGameObject myGameObject)
+    public override void OnExecute(MyGameObject myGameObject)
     {
         Order order = myGameObject.Orders.First();
 
         if (IsValid(order) == false)
         {
-            myGameObject.Stats.Inc(Stats.OrdersFailed);
-            myGameObject.Orders.Pop();
+            Fail(myGameObject);
 
             return;
         }
 
         if (myGameObject.Skills.ContainsKey(order.Skill) == false)
         {
-            myGameObject.Stats.Inc(Stats.OrdersFailed);
-            myGameObject.Orders.Pop();
+            Fail(myGameObject);
 
             return;
         }
@@ -36,5 +29,10 @@ public class OrderHandlerUseSkill : IOrderHandler
         myGameObject.Stats.Inc(Stats.OrdersCompleted);
         myGameObject.Stats.Inc(Stats.SkillsUsed);
         myGameObject.Orders.Pop();
+    }
+
+    protected override bool IsValid(Order order)
+    {
+        return order.Skill.Length > 0;
     }
 }

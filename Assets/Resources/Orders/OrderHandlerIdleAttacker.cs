@@ -1,11 +1,6 @@
-public class OrderHandlerIdleAttacker : IOrderHandler
+public class OrderHandlerIdleAttacker : OrderHandler
 {
-    public bool IsValid(Order order)
-    {
-        return true;
-    }
-
-    public void OnExecute(MyGameObject myGameObject)
+    public override void OnExecute(MyGameObject myGameObject)
     {
         Order order;
 
