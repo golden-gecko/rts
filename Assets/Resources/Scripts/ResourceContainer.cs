@@ -1,72 +1,72 @@
 using System.Collections.Generic;
-using UnityEditor.SceneManagement;
 
 public class ResourceContainer
 {
     public void Add(string name, int value)
     {
-        if (Items.ContainsKey(name) == false)
+        if (Items.ContainsKey(name))
         {
-            Items.Add(name, new Resource(name, 0, 0));
+            Items[name].Add(value);
         }
-
-        Items[name].Add(value);
+        else
+        {
+            Items.Add(name, new Resource(name, value));
+        }
     }
 
-    public void Add(string name, int value, int max)
+    public void Add(string name, int value, int max) // TODO: Max is ignored on second call.
     {
-        if (Items.ContainsKey(name) == false)
+        if (Items.ContainsKey(name))
         {
-            Items.Add(name, new Resource(name, 0, 0));
+            Items[name].Add(value);
         }
+        else
+        {
+            Items.Add(name, new Resource(name, value, max));
+        }
+    }
 
-        Items[name].Max = max;
-        Items[name].Add(value);
+    public void Add(string name, int value, int max, ResourceDirection direction) // TODO: Max is ignored on second call.
+    {
+        if (Items.ContainsKey(name))
+        {
+            Items[name].Add(value);
+        }
+        else
+        {
+            Items.Add(name, new Resource(name, value, max, direction));
+        }
+    }
+
+    public void Remove(string name, int value)
+    {
+        if (Items.ContainsKey(name))
+        {
+            Items[name].Remove(value);
+        }
     }
 
     public bool CanAdd(string name, int value)
     {
-        if (Items.ContainsKey(name) == false)
-        {
-            Items.Add(name, new Resource(name, 0, 0));
-        }
-
-        return Items[name].CanAdd(value);
+        return Items.ContainsKey(name) && Items[name].CanAdd(value);
     }
 
     public bool CanRemove(string name, int value)
     {
-        if (Items.ContainsKey(name) == false)
-        {
-            Items.Add(name, new Resource(name, 0, 0));
-        }
-
-        return Items[name].CanRemove(value);
+        return Items.ContainsKey(name) && Items[name].CanRemove(value);
     }
 
     public int Capacity(string name)
     {
-        if (Items.ContainsKey(name) == false)
-        {
-            Items.Add(name, new Resource(name, 0, 0));
-        }
-
-        return Items[name].Capacity;
+        return Items.ContainsKey(name) ? Items[name].Capacity : 0;
     }
 
-    public Dictionary<string, int> GetCapacity()
+    public int Storage(string name)
     {
-        Dictionary<string, int> capacity = new Dictionary<string, int>();
-
-        foreach (Resource resource in Items.Values)
-        {
-            capacity[resource.Name] = resource.Capacity;
-        }
-
-        return capacity;
+        return Items.ContainsKey(name) ? Items[name].Storage : 0;
     }
 
-    public Dictionary<string, int> GetStorage()
+    public Dictionary<string, int> GetStorage() // TODO: Remove.
     {
         Dictionary<string, int> storage = new Dictionary<string, int>();
 
@@ -84,7 +84,7 @@ public class ResourceContainer
 
         foreach (KeyValuePair<string, Resource> i in Items)
         {
-            if (i.Value.Empty == false)
+            if (i.Value.Max > 0)
             {
                 info += string.Format("\n  {0} {1}", i.Key, i.Value.GetInfo());
             }
@@ -93,25 +93,5 @@ public class ResourceContainer
         return info;
     }
 
-    public void Remove(string name, int value)
-    {
-        if (Items.ContainsKey(name) == false)
-        {
-            Items.Add(name, new Resource(name, 0, 0));
-        }
-
-        Items[name].Remove(value);
-    }
-
-    public int Storage(string name)
-    {
-        if (Items.ContainsKey(name) == false)
-        {
-            Items.Add(name, new Resource(name, 0, 0));
-        }
-
-        return Items[name].Storage;
-    }
-
-    public Dictionary<string, Resource> Items { get; private set; } = new Dictionary<string, Resource>();
+    public Dictionary<string, Resource> Items { get; } = new Dictionary<string, Resource>();
 }

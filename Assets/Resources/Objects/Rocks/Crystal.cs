@@ -4,12 +4,6 @@ public class Crystal : MyResource
     {
         base.Awake();
 
-        Resources.Add("Crystal", 100, 100);
-
-        Recipe r1 = new Recipe("Crystal");
-
-        r1.Produces("Crystal", 0);
-
-        Recipes.Add(r1);
+        GetComponent<Storage>().Resources.Add("Crystal", 100, 100, ResourceDirection.Out);
     }
 }

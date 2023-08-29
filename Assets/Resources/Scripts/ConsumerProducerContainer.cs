@@ -12,13 +12,13 @@ public class ConsumerProducerContainer
         }
         else
         {
-            request.Set(value);
+            request.Value = value;
         }
     }
 
-    public void Clear()
+    public void Remove(MyGameObject myGameObject, string name)
     {
-        Items.Clear();
+        Items.RemoveAll(x => x.MyGameObject == myGameObject && x.Name == name);
     }
 
     public void MoveToEnd()
@@ -29,13 +29,6 @@ public class ConsumerProducerContainer
             Items.RemoveAt(0);
         }
     }
-
-    public void Remove(MyGameObject myGameObject, string name)
-    {
-        Items.RemoveAll(x => x.MyGameObject == myGameObject && x.Name == name);
-    }
-
-    public int Count { get => Items.Count; }
 
     public List<ConsumerProducerRequest> Items { get; } = new List<ConsumerProducerRequest>();
 }

@@ -14,7 +14,7 @@ public class MyResource : MyGameObject
     {
         get
         {
-            foreach (Resource resource in Resources.Items.Values)
+            foreach (Resource resource in GetComponent<Storage>().Resources.Items.Values)
             {
                 if (resource.Storage > 0)
                 {

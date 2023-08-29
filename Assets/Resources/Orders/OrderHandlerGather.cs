@@ -75,7 +75,7 @@ public class OrderHandlerGather : IOrderHandler
             return;
         }
 
-        myGameObject.Transport(myResource, storage, myResource.Resources.GetStorage());
+        myGameObject.Transport(myResource, storage, myResource.GetComponent<Storage>().Resources.GetStorage()); // TODO: Refactor.
     }
 
     private MyResource GetResource(MyGameObject myGameObject)
@@ -114,8 +114,13 @@ public class OrderHandlerGather : IOrderHandler
                 continue;
             }
 
-            string[] storage = myResource.Resources.Items.Keys.ToArray();
-            string[] capacity = i.Resources.Items.Keys.ToArray();
+            if (i.GetComponent<Storage>() == null)
+            {
+                continue;
+            }
+
+            string[] storage = myResource.GetComponent<Storage>().Resources.Items.Keys.ToArray();
+            string[] capacity = i.GetComponent<Storage>().Resources.Items.Keys.ToArray();
 
             foreach (string storageKey in storage)
             {

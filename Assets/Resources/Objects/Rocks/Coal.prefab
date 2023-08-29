@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 1649971028671782477}
   - component: {fileID: -6534996451650517390}
   - component: {fileID: -8015369115718869466}
+  - component: {fileID: -2746926710343751413}
   m_Layer: 0
   m_Name: Coal
   m_TagString: Untagged
@@ -121,6 +122,19 @@ MonoBehaviour:
   <TimeToLive>k__BackingField: -1
   <Altitude>k__BackingField: 0
   <MapLayers>k__BackingField: 010000000200000003000000
+--- !u!114 &-2746926710343751413
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1649971028671782476}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9f7fc2f43637b07428d9ff8d0e38edaa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  <Mass>k__BackingField: 10
 --- !u!1001 &253625457856833662
 PrefabInstance:
   m_ObjectHideFlags: 0

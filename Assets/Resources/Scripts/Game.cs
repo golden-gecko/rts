@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using System.IO;
 using UnityEngine;
 
 public class Game : MonoBehaviour
@@ -49,7 +48,7 @@ public class Game : MonoBehaviour
         CreateDisaster();
     }
 
-    public Order CreataAttackJob(MyGameObject myGameObject)
+    public Order CreateAttackJob(MyGameObject myGameObject)
     {
         float minDistance = float.MaxValue;
         MyGameObject closest = null;

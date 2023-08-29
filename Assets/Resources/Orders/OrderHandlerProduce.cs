@@ -12,25 +12,26 @@ public class OrderHandlerProduce : IOrderHandler
     {
         Order order = myGameObject.Orders.First();
 
-        if (order.Recipe.Length <= 0 && myGameObject.Recipes.Items.Count > 0)
+        if (order.Recipe.Length <= 0 && myGameObject.GetComponent<Producer>().Recipes.Items.Count > 0)
         {
-            order.Recipe = myGameObject.Recipes.Items.First().Key; // TODO: Find recipe that can be produced.
+            order.Recipe = myGameObject.GetComponent<Producer>().Recipes.Items.First().Key; // TODO: Find recipe that can be produced.
         }
-
-        if (myGameObject.Recipes.Items.ContainsKey(order.Recipe) == false)
+        else if (myGameObject.GetComponent<Producer>().Recipes.Items.ContainsKey(order.Recipe) == false)
         {
             myGameObject.Stats.Inc(Stats.OrdersFailed);
             myGameObject.Orders.Pop();
+
+            return;
         }
 
-        Produce(myGameObject, order, myGameObject.Recipes.Items[order.Recipe]);
+        Produce(myGameObject, order, myGameObject.GetComponent<Producer>().Recipes.Items[order.Recipe]);
     }
 
     private bool Produce(MyGameObject myGameObject, Order order, Recipe recipe)
     {
         if (order.Timer == null)
         {
-            order.Timer = new Timer(recipe.Total / order.ResourceUsage);
+            order.Timer = new Timer(recipe.Sum / order.ResourceUsage);
         }
 
         if (HaveResources(myGameObject, recipe) == false)
@@ -58,7 +59,7 @@ public class OrderHandlerProduce : IOrderHandler
     {
         foreach (Resource i in recipe.ToConsume.Items.Values)
         {
-            if (myGameObject.Resources.CanRemove(i.Name, i.Max) == false)
+            if (myGameObject.GetComponent<Storage>().Resources.CanRemove(i.Name, i.Max) == false)
             {
                 return false;
             }
@@ -66,7 +67,7 @@ public class OrderHandlerProduce : IOrderHandler
 
         foreach (Resource i in recipe.ToProduce.Items.Values)
         {
-            if (myGameObject.Resources.CanAdd(i.Name, i.Max) == false)
+            if (myGameObject.GetComponent<Storage>().Resources.CanAdd(i.Name, i.Max) == false)
             {
                 return false;
             }
@@ -79,13 +80,13 @@ public class OrderHandlerProduce : IOrderHandler
     {
         foreach (Resource i in recipe.ToConsume.Items.Values)
         {
-            myGameObject.Resources.Remove(i.Name, i.Max);
+            myGameObject.GetComponent<Storage>().Resources.Remove(i.Name, i.Max);
             myGameObject.Stats.Add(Stats.ResourcesUsed, i.Max);
         }
 
         foreach (Resource i in recipe.ToProduce.Items.Values)
         {
-            myGameObject.Resources.Add(i.Name, i.Max);
+            myGameObject.GetComponent<Storage>().Resources.Add(i.Name, i.Max);
             myGameObject.Stats.Add(Stats.ResourcesProduced, i.Max);
         }
     }

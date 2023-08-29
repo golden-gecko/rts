@@ -30,7 +30,7 @@ public class OrderHandlerLoad : IOrderHandler
 
         foreach (KeyValuePair<string, int> i in order.Resources)
         {
-            int value = Mathf.Min(new int[] { i.Value, order.SourceGameObject.Resources.Storage(i.Key), myGameObject.Resources.Capacity(i.Key) });
+            int value = Mathf.Min(new int[] { i.Value, order.SourceGameObject.GetComponent<Storage>().Resources.Storage(i.Key), myGameObject.GetComponent<Storage>().Resources.Capacity(i.Key) });
 
             if (value > 0)
             {

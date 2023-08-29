@@ -46,11 +46,6 @@ public class Counter
         return Current - current >= 0;
     }
 
-    public void Reset()
-    {
-        Current = 0;
-    }
-
     public string GetInfo()
     {
         return string.Format("{0}/{1}", Current, Max);

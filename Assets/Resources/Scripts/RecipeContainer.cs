@@ -7,12 +7,9 @@ public class RecipeContainer
         Items[recipe.Name] = recipe;
     }
 
-    public void Reset(string name)
+    public Recipe Get(string name)
     {
-        if (Items.ContainsKey(name))
-        {
-            Items[name].Reset();
-        }
+        return Items[name];
     }
 
     public Dictionary<string, Recipe> Items { get; } = new Dictionary<string, Recipe>();

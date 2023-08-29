@@ -1,5 +1,3 @@
-using System.Collections.Generic;
-
 public class Recipe
 {
     public Recipe(string name)
@@ -17,26 +15,9 @@ public class Recipe
         ToProduce.Add(name, 0, count);
     }
 
-    public void Reset()
-    {
-        foreach (Resource i in ToConsume.Items.Values)
-        {
-            i.Remove(i.Storage);
-        }
-
-        foreach (Resource i in ToProduce.Items.Values)
-        {
-            i.Add(i.Capacity);
-        }
-    }
-
     public string Name { get; }
 
-    public ResourceContainer ToConsume { get; } = new ResourceContainer();
-
-    public ResourceContainer ToProduce { get; } = new ResourceContainer();
-
-    public int Total
+    public int Sum
     {
         get
         {
@@ -55,4 +36,8 @@ public class Recipe
             return sum;
         }
     }
+
+    public ResourceContainer ToConsume { get; } = new ResourceContainer();
+
+    public ResourceContainer ToProduce { get; } = new ResourceContainer();
 }

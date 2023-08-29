@@ -201,6 +201,8 @@ public class GameMenu : Menu
 
     private void CreateRecipes()
     {
+        recipes.Clear();
+
         foreach (string i in Config.Recipies)
         {
             TemplateContainer buttonContainer = templateButton.Instantiate();
@@ -436,7 +438,10 @@ public class GameMenu : Menu
         {
             if (hovered.State == MyGameObjectState.Operational)
             {
-                whitelist = new HashSet<string>(hovered.Recipes.Items.Keys);
+                if (hovered.GetComponent<Producer>() != null)
+                {
+                    whitelist = new HashSet<string>(hovered.GetComponent<Producer>().Recipes.Items.Keys);
+                }
             }
         }
         else
@@ -448,7 +453,12 @@ public class GameMenu : Menu
                     continue;
                 }
 
-                foreach (string recipe in selected.Recipes.Items.Keys)
+                if (selected.GetComponent<Producer>() == null)
+                {
+                    continue;
+                }
+
+                foreach (string recipe in selected.GetComponent<Producer>().Recipes.Items.Keys)
                 {
                     whitelist.Add(recipe);
                 }

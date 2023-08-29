@@ -21,7 +21,7 @@ public class OrderHandlerAssemble : IOrderHandler
 
         if (order.Timer == null)
         {
-            order.Timer = new Timer(recipe.Total / order.ResourceUsage);
+            order.Timer = new Timer(recipe.Sum / order.ResourceUsage);
         }
 
         if (HaveResources(myGameObject, recipe) == false)
@@ -51,7 +51,7 @@ public class OrderHandlerAssemble : IOrderHandler
     {
         foreach (Resource i in recipe.ToConsume.Items.Values)
         {
-            if (myGameObject.Resources.CanRemove(i.Name, i.Max) == false)
+            if (myGameObject.GetComponent<Storage>().Resources.CanRemove(i.Name, i.Max) == false)
             {
                 return false;
             }
@@ -64,7 +64,7 @@ public class OrderHandlerAssemble : IOrderHandler
     {
         foreach (Resource i in recipe.ToConsume.Items.Values)
         {
-            myGameObject.Resources.Remove(i.Name, i.Max);
+            myGameObject.GetComponent<Storage>().Resources.Remove(i.Name, i.Max);
             myGameObject.Stats.Add(Stats.ResourcesUsed, i.Max);
         }
     }
