@@ -2,6 +2,11 @@ using UnityEngine;
 
 public class PowerPlant : MyComponent
 {
+    protected override void Update()
+    {
+        base.Update();
+    }
+
     public override string GetInfo()
     {
         return string.Format("{0}, Power: {1}, Range: {2}", base.GetInfo(), Power, Range);
