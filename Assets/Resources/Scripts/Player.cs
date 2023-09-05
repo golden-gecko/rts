@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class Player : MonoBehaviour
@@ -100,12 +101,22 @@ public class Player : MonoBehaviour
         MyResource closest = null;
         float distance = float.MaxValue;
 
-        foreach (MyResource myResource in FindObjectsByType<MyResource>(FindObjectsSortMode.None)) // TODO: Find storage for resource.
+        foreach (MyResource myResource in FindObjectsByType<MyResource>(FindObjectsSortMode.None))
         {
+            if (myResource == myGameObject)
+            {
+                continue;
+            }
+
             float magnitude = (myGameObject.Position - myResource.Position).magnitude;
 
             if (magnitude < distance)
             {
+                if (GetStorage(myGameObject, myResource) == null)
+                {
+                    continue;
+                }
+
                 closest = myResource;
                 distance = magnitude;
             }
@@ -123,8 +134,18 @@ public class Player : MonoBehaviour
     {
         foreach (ConsumerProducerRequest consumer in Consumers.Items) // TODO: Return closest object.
         {
+            if (consumer.MyGameObject == myGameObject)
+            {
+                continue;
+            }
+
             foreach (ConsumerProducerRequest producer in Producers.Items) // TODO: Return closest object.
             {
+                if (producer.MyGameObject == myGameObject)
+                {
+                    continue;
+                }
+
                 if (producer.MyGameObject == consumer.MyGameObject)
                 {
                     continue;
@@ -192,6 +213,51 @@ public class Player : MonoBehaviour
     private void Unregister(ConsumerProducerContainer container, MyGameObject myGameObject, string name)
     {
         container.Remove(myGameObject, name);
+    }
+
+    private MyGameObject GetStorage(MyGameObject myGameObject, MyResource myResource)
+    {
+        MyGameObject closest = null;
+        float distance = float.MaxValue;
+
+        foreach (Storage storage in Object.FindObjectsByType<Storage>(FindObjectsSortMode.None))
+        {
+            MyGameObject parent = storage.GetComponent<MyGameObject>();
+
+            if (parent == null)
+            {
+                continue;
+            }
+
+            if (parent == myGameObject)
+            {
+                continue;
+            }
+
+            if (parent == myResource)
+            {
+                continue;
+            }
+
+            string[] resourcesFromStorage = myResource.GetComponent<Storage>().Resources.Items.Values.Where(x => x.Out && x.Empty == false).Select(x => x.Name).ToArray();
+            string[] resourcesFromCapacity = storage.Resources.Items.Values.Where(x => x.In && x.Full == false).Select(x => x.Name).ToArray();
+            string[] match = resourcesFromStorage.Intersect(resourcesFromCapacity).ToArray();
+
+            if (match.Length <= 0)
+            {
+                continue;
+            }
+
+            float magnitude = (myGameObject.Position - parent.Position).magnitude;
+
+            if (magnitude < distance)
+            {
+                closest = parent;
+                distance = magnitude;
+            }
+        }
+
+        return closest;
     }
 
     [field: SerializeField]
