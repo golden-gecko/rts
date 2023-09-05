@@ -6,10 +6,13 @@ public class Storage : MyComponent
     {
         base.Awake();
 
-        GetComponent<MyGameObject>().Orders.AllowOrder(OrderType.Gather);
         GetComponent<MyGameObject>().Orders.AllowOrder(OrderType.Load);
-        GetComponent<MyGameObject>().Orders.AllowOrder(OrderType.Unload);
         GetComponent<MyGameObject>().Orders.AllowOrder(OrderType.Transport);
+        GetComponent<MyGameObject>().Orders.AllowOrder(OrderType.Unload);
+
+        GetComponent<MyGameObject>().OrderHandlers[OrderType.Load] = new OrderHandlerLoad();
+        GetComponent<MyGameObject>().OrderHandlers[OrderType.Transport] = new OrderHandlerTransport();
+        GetComponent<MyGameObject>().OrderHandlers[OrderType.Unload] = new OrderHandlerUnload();
     }
 
     public override string GetInfo()

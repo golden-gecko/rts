@@ -145,6 +145,25 @@ public class Player : MonoBehaviour
         return null;
     }
 
+    public Order CreateOrderUnload(MyGameObject myGameObject)
+    {
+        Storage storage = myGameObject.GetComponent<Storage>();
+
+        if (storage == null)
+        {
+            return null;
+        }
+
+        if (storage.Resources.Sum <= 0)
+        {
+            return null;
+        }
+
+        // TODO: Implement.
+
+        return null;
+    }
+
     public void RegisterConsumer(MyGameObject myGameObject, string name, int value)
     {
         Register(Consumers, myGameObject, name, value);

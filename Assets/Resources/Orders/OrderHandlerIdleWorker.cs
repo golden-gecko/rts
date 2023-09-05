@@ -2,9 +2,14 @@ public class OrderHandlerIdleWorker : OrderHandler
 {
     public override void OnExecute(MyGameObject myGameObject)
     {
-        Order order;
-        
-        // TODO: Find unload job.
+        Order order = myGameObject.Player.CreateOrderUnload(myGameObject);
+
+        if (order != null)
+        {
+            myGameObject.Orders.Add(order);
+
+            return;
+        }
 
         order = myGameObject.Player.CreateOrderTransport(myGameObject);
 

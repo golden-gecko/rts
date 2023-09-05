@@ -23,24 +23,10 @@ public class MyGameObject : MonoBehaviour
         Orders.AllowOrder(OrderType.Stop);
         Orders.AllowOrder(OrderType.Wait);
 
-        OrderHandlers[OrderType.Assemble] = new OrderHandlerAssemble();
-        OrderHandlers[OrderType.Construct] = new OrderHandlerConstruct();
         OrderHandlers[OrderType.Destroy] = new OrderHandlerDestroy();
         OrderHandlers[OrderType.Disable] = new OrderHandlerDisable();
         OrderHandlers[OrderType.Enable] = new OrderHandlerEnable();
-        OrderHandlers[OrderType.Explore] = new OrderHandlerExplore();
-        OrderHandlers[OrderType.Follow] = new OrderHandlerFollow();
-        OrderHandlers[OrderType.Gather] = new OrderHandlerGather();
-        OrderHandlers[OrderType.Guard] = new OrderHandlerGuard();
-        OrderHandlers[OrderType.Load] = new OrderHandlerLoad();
-        OrderHandlers[OrderType.Move] = new OrderHandlerMove();
-        OrderHandlers[OrderType.Patrol] = new OrderHandlerPatrol();
-        OrderHandlers[OrderType.Produce] = new OrderHandlerProduce();
-        OrderHandlers[OrderType.Rally] = new OrderHandlerRally();
-        OrderHandlers[OrderType.Research] = new OrderHandlerResearch();
         OrderHandlers[OrderType.Stop] = new OrderHandlerStop();
-        OrderHandlers[OrderType.Transport] = new OrderHandlerTransport();
-        OrderHandlers[OrderType.Unload] = new OrderHandlerUnload();
         OrderHandlers[OrderType.UseSkill] = new OrderHandlerUseSkill();
         OrderHandlers[OrderType.Wait] = new OrderHandlerWait();
 
@@ -51,6 +37,8 @@ public class MyGameObject : MonoBehaviour
         ConstructionRecipies.Add(r1);
 
         LiveTimer.Max = TimeToLive;
+
+        Stats.Player = Player;
     }
 
     protected virtual void Start()
@@ -696,6 +684,7 @@ public class MyGameObject : MonoBehaviour
     public void SetPlayer(Player player)
     {
         Player = player;
+        Stats.Player = player;
 
         UpdateSelection();
     }
@@ -799,7 +788,7 @@ public class MyGameObject : MonoBehaviour
     public float Altitude { get; set; } = 0.0f;
 
     [field: SerializeField]
-    public List<MyGameObjectMapLayer> MapLayers { get; set; } = new List<MyGameObjectMapLayer>(); // TODO: Replace with HashSet.
+    public List<MyGameObjectMapLayer> MapLayers { get; set; } = new List<MyGameObjectMapLayer>();
 
     public Vector3 Position { get => transform.position; set => transform.position = value; }
 
@@ -819,7 +808,7 @@ public class MyGameObject : MonoBehaviour
 
     public Dictionary<string, Skill> Skills { get; } = new Dictionary<string, Skill>();
 
-    protected Dictionary<OrderType, OrderHandler> OrderHandlers { get; } = new Dictionary<OrderType, OrderHandler>();
+    public Dictionary<OrderType, OrderHandler> OrderHandlers { get; } = new Dictionary<OrderType, OrderHandler>();
 
     private Transform visual;
     private Transform rangeGun;

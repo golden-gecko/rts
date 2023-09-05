@@ -5,5 +5,7 @@ public class Gatherer : MyComponent
         base.Awake();
 
         GetComponent<MyGameObject>().Orders.AllowOrder(OrderType.Gather);
+
+        GetComponent<MyGameObject>().OrderHandlers[OrderType.Gather] = new OrderHandlerGather();
     }
 }

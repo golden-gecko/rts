@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 
 public class ResourceContainer
 {
@@ -79,6 +80,14 @@ public class ResourceContainer
         }
 
         return info;
+    }
+
+    public int Sum
+    {
+        get
+        {
+            return Items.Values.Sum(x => x.Storage);
+        }
     }
 
     public Dictionary<string, Resource> Items { get; } = new Dictionary<string, Resource>();

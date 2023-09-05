@@ -7,6 +7,8 @@ public class Constructor : MyComponent
         base.Awake();
 
         GetComponent<MyGameObject>().Orders.AllowOrder(OrderType.Construct);
+
+        GetComponent<MyGameObject>().OrderHandlers[OrderType.Construct] = new OrderHandlerConstruct();
     }
 
     public override string GetInfo()

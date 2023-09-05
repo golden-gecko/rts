@@ -7,8 +7,12 @@ public class Assembler : MyComponent
         base.Start();
 
         GetComponent<MyGameObject>().Orders.AllowOrder(OrderType.Assemble);
+        GetComponent<MyGameObject>().Orders.AllowOrder(OrderType.Rally);
 
-        RallyPoint = GetComponent<MyGameObject>().Entrance;
+        GetComponent<MyGameObject>().OrderHandlers[OrderType.Assemble] = new OrderHandlerAssemble();
+        GetComponent<MyGameObject>().OrderHandlers[OrderType.Rally] = new OrderHandlerRally();
+
+        RallyPoint = GetComponent<MyGameObject>().Exit;
     }
 
     public override string GetInfo()
