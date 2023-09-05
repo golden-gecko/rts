@@ -11,12 +11,12 @@ public class OrderHandlerTransport : OrderHandler
             return;
         }
 
-        myGameObject.Orders.Pop(); // TODO: Order is reversed because of gather order.
+        myGameObject.Orders.Pop();
 
-        myGameObject.Unload(order.TargetGameObject, order.Resource, order.Value, 0);
-        myGameObject.Move(order.TargetGameObject.Entrance, 0);
-        myGameObject.Load(order.SourceGameObject, order.Resource, order.Value, 0);
-        myGameObject.Move(order.SourceGameObject.Entrance, 0);
+        myGameObject.Move(order.SourceGameObject.Entrance);
+        myGameObject.Load(order.SourceGameObject, order.Resource, order.Value);
+        myGameObject.Move(order.TargetGameObject.Entrance);
+        myGameObject.Unload(order.TargetGameObject, order.Resource, order.Value);
     }
 
     protected override bool IsValid(Order order)

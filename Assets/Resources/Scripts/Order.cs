@@ -93,6 +93,7 @@ public class Order
             TargetGameObject = myGameObject,
         };
     }
+
     public static Order Gather(MyGameObject myGameObject)
     {
         return new Order

@@ -170,9 +170,14 @@ public class MyGameObject : MonoBehaviour
         Orders.Add(Order.Attack(position));
     }
 
-    public void Attack(MyGameObject target)
+    public void Attack(MyGameObject myGameObject)
     {
-        Orders.Add(Order.Attack(target));
+        Orders.Add(Order.Attack(myGameObject));
+    }
+
+    public void Construct(MyGameObject myGameObject)
+    {
+        Orders.Add(Order.Construct(myGameObject));
     }
 
     public void Construct(string prefab, Vector3 position)
@@ -226,6 +231,11 @@ public class MyGameObject : MonoBehaviour
         Orders.Add(Order.Follow(myGameObject));
     }
 
+    public void Gather(MyGameObject myGameObject)
+    {
+        Orders.Add(Order.Gather(myGameObject));
+    }
+
     public void Gather(string resource = "")
     {
         Orders.Add(Order.Gather(resource));
@@ -241,15 +251,15 @@ public class MyGameObject : MonoBehaviour
         Orders.Add(Order.Guard(myGameObject));
     }
 
-    public void Load(MyGameObject target, string resource, int value, int priority = -1)
+    public void Load(MyGameObject myGameObject, string resource, int value, int priority = -1)
     {
         if (0 <= priority && priority < Orders.Count)
         {
-            Orders.Insert(priority, Order.Load(target, resource, value));
+            Orders.Insert(priority, Order.Load(myGameObject, resource, value));
         }
         else
         {
-            Orders.Add(Order.Load(target, resource, value));
+            Orders.Add(Order.Load(myGameObject, resource, value));
         }
     }
 
@@ -309,17 +319,18 @@ public class MyGameObject : MonoBehaviour
         }
     }
 
-    public void Unload(MyGameObject target, string resource, int value, int priority = -1)
+    public void Unload(MyGameObject myGameObject, string resource, int value, int priority = -1)
     {
         if (0 <= priority && priority < Orders.Count)
         {
-            Orders.Insert(priority, Order.Unload(target, resource, value));
+            Orders.Insert(priority, Order.Unload(myGameObject, resource, value));
         }
         else
         {
-            Orders.Add(Order.Unload(target, resource, value));
+            Orders.Add(Order.Unload(myGameObject, resource, value));
         }
     }
+
     public void UseSkill(string skill)
     {
         Orders.Add(Order.UseSkill(skill));

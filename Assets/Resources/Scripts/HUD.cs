@@ -300,8 +300,13 @@ public class HUD : MonoBehaviour
                     selected.Attack(myGameObject);
                     break;
 
-                // TODO: Add construct order (only ally).
-                // TODO: Add gather order.
+                case OrderType.Construct:
+                    selected.Construct(myGameObject);
+                    break;
+
+                case OrderType.Gather:
+                    selected.Gather(myGameObject);
+                    break;
 
                 case OrderType.Guard:
                     selected.Guard(myGameObject);
@@ -312,13 +317,17 @@ public class HUD : MonoBehaviour
                     break;
 
                 default:
-                    if (selected.Is(myGameObject, DiplomacyState.Ally))
+                    if (myGameObject.Is(selected, DiplomacyState.Ally))
                     {
                         selected.Follow(myGameObject);
                     }
-                    else if (selected.Is(myGameObject, DiplomacyState.Enemy))
+                    else if (myGameObject.Is(selected, DiplomacyState.Enemy))
                     {
                         selected.Attack(myGameObject);
+                    }
+                    else if (myGameObject.Gatherable)
+                    {
+                        selected.Gather(myGameObject);
                     }
                     break;
             }

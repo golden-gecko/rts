@@ -23,13 +23,7 @@ public class OrderHandlerGather : OrderHandler
                 return;
             }
 
-            MyGameObject storage = GetStorage(myGameObject, order.TargetGameObject as MyResource); // TODO: Check type.
-
-            GatherFromObject(myGameObject, order.TargetGameObject, storage);
-        }
-        else
-        {
-            MyResource myResource = GetResource(myGameObject);
+            MyResource myResource = order.TargetGameObject.GetComponent<MyResource>();
 
             if (myResource == null)
             {
@@ -42,18 +36,35 @@ public class OrderHandlerGather : OrderHandler
 
             if (storage == null)
             {
-                if (myResource == null)
-                {
-                    Fail(myGameObject);
+                Fail(myGameObject);
 
-                    return;
-                }
+                return;
+            }
+
+            GatherFromObject(myGameObject, order.TargetGameObject, storage);
+        }
+        else
+        {
+            MyResource myResource = GetResource(myGameObject, order.Resource);
+
+            if (myResource == null)
+            {
+                Fail(myGameObject);
+
+                return;
+            }
+
+            MyGameObject storage = GetStorage(myGameObject, myResource);
+
+            if (storage == null)
+            {
+                Fail(myGameObject);
+
+                return;
             }
 
             GatherFromObject(myGameObject, myResource, storage);
         }
-
-        myGameObject.Orders.MoveToEnd();
     }
 
     protected override bool IsValid(Order order)
@@ -73,16 +84,33 @@ public class OrderHandlerGather : OrderHandler
 
         Resource resource = myResource.GetComponent<Storage>().Resources.Items.Values.First(); // TODO: Refactor.
 
+        myGameObject.Orders.Pop();
+
         myGameObject.Transport(myResource, storage, resource.Name, resource.Storage);
     }
 
-    private MyResource GetResource(MyGameObject myGameObject)
+    private MyResource GetResource(MyGameObject myGameObject, string resource = "")
     {
         MyResource closest = null;
         float distance = float.MaxValue;
 
         foreach (MyResource myResource in Object.FindObjectsByType<MyResource>(FindObjectsSortMode.None))
         {
+            if (myResource == myGameObject)
+            {
+                continue;
+            }
+
+            if (myResource.Gatherable == false)
+            {
+                continue;
+            }
+
+            if (resource != "" && myResource.GetComponent<Storage>().Resources.Storage(resource) <= 0)
+            {
+                continue;
+            }
+
             float magnitude = (myGameObject.Position - myResource.Position).magnitude;
 
             if (magnitude < distance)
@@ -97,45 +125,43 @@ public class OrderHandlerGather : OrderHandler
 
     private MyGameObject GetStorage(MyGameObject myGameObject, MyResource myResource)
     {
-        MyResource closest = null;
+        MyGameObject closest = null;
         float distance = float.MaxValue;
 
-        foreach (MyGameObject i in Object.FindObjectsByType<MyGameObject>(FindObjectsSortMode.None)) // TODO: Replace with Storage component.
+        foreach (Storage storage in Object.FindObjectsByType<Storage>(FindObjectsSortMode.None))
         {
-            if (i == myGameObject)
+            MyGameObject parent = storage.GetComponent<MyGameObject>();
+
+            if (parent == null)
             {
                 continue;
             }
 
-            if (i == myResource)
+            if (parent == myGameObject)
             {
                 continue;
             }
 
-            if (i.GetComponent<Storage>() == null)
+            if (parent == myResource)
             {
                 continue;
             }
 
-            string[] storage = myResource.GetComponent<Storage>().Resources.Items.Keys.ToArray();
-            string[] capacity = i.GetComponent<Storage>().Resources.Items.Keys.ToArray();
+            string[] resourcesFromStorage = myResource.GetComponent<Storage>().Resources.Items.Values.Where(x => x.Out && x.Empty == false).Select(x => x.Name).ToArray();
+            string[] resourcesFromCapacity = storage.Resources.Items.Values.Where(x => x.In && x.Full == false).Select(x => x.Name).ToArray();
+            string[] match = resourcesFromStorage.Intersect(resourcesFromCapacity).ToArray();
 
-            foreach (string storageKey in storage)
+            if (match.Length <= 0)
             {
-                if (capacity.Contains(storageKey) == false)
-                {
-                    continue;
-                }
+                continue;
+            }
 
-                float magnitude = (myGameObject.Position - myResource.Position).magnitude;
+            float magnitude = (myGameObject.Position - parent.Position).magnitude;
 
-                if (magnitude < distance)
-                {
-                    closest = myResource;
-                    distance = magnitude;
-                }
-
-                break;
+            if (magnitude < distance)
+            {
+                closest = parent;
+                distance = magnitude;
             }
         }
 
