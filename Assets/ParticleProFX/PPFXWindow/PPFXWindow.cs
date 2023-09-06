@@ -81,10 +81,12 @@ public class PPFXWindow : EditorWindow {
 	}
 	
 	void OnEnable(){
-	#if UNITY_EDITOR
-	    EditorApplication.playmodeStateChanged += StateChange;
-	#endif
-	}
+#if UNITY_EDITOR
+#pragma warning disable CS0618 // Typ lub składowa jest przestarzała
+        EditorApplication.playmodeStateChanged += StateChange;
+#pragma warning restore CS0618 // Typ lub składowa jest przestarzała
+#endif
+    }
 	 
 	#if UNITY_EDITOR
 	void StateChange(){

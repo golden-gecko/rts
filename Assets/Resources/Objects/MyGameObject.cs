@@ -60,7 +60,7 @@ public class MyGameObject : MonoBehaviour
             Destroy(0);
         }
 
-        if (Enabled)
+        if (Working)
         {
             switch (State)
             {
@@ -639,7 +639,14 @@ public class MyGameObject : MonoBehaviour
 
     private void RemoveResourceFlags()
     {
-        foreach (string name in GetComponent<Storage>().Resources.Items.Keys)
+        Storage storage = GetComponent<Storage>();
+
+        if (storage == null)
+        {
+            return;
+        }
+
+        foreach (string name in storage.Resources.Items.Keys)
         {
             Player.UnregisterConsumer(this, name);
             Player.UnregisterProducer(this, name);
@@ -765,11 +772,18 @@ public class MyGameObject : MonoBehaviour
         }
     }
 
+    public bool Powered { get => Map.Instance.IsVisibleByPower(this, HUD.Instance.ActivePlayer); }
+
+    public bool Working { get => Enabled && (Powerable == false || Powered); }
+
     [field: SerializeField]
     public Player Player { get; set; }
 
     [field: SerializeField]
     public bool Enabled { get; set; } = true;
+
+    [field: SerializeField]
+    public bool Powerable { get; set; } = false;
 
     [field: SerializeField]
     public bool Gatherable { get; set; } = false;

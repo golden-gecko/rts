@@ -5,6 +5,22 @@ public class PowerPlant : MyComponent
     protected override void Update()
     {
         base.Update();
+
+        MyGameObject parent = GetComponent<MyGameObject>();
+
+        if (parent.Working == false)
+        {
+            return;
+        }
+
+        if (Power > 0.0f || parent.Powered)
+        {
+            // Map.Instance.SetVisibleByPower(parent, Range);
+        }
+        else
+        {
+            // Map.Instance.UnsetVisibleByPower(parent, Range);
+        }
     }
 
     public override string GetInfo()

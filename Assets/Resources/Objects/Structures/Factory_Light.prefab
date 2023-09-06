@@ -375,6 +375,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <Player>k__BackingField: {fileID: 0}
   <Enabled>k__BackingField: 1
+  <Powerable>k__BackingField: 1
   <Gatherable>k__BackingField: 0
   <Selectable>k__BackingField: 1
   <Health>k__BackingField: 100
@@ -400,6 +401,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <Mass>k__BackingField: 10
   <ResourceUsage>k__BackingField: 2
+  <RallyPoint>k__BackingField: {x: 0, y: 0, z: 0}
 --- !u!114 &418980675449498400
 MonoBehaviour:
   m_ObjectHideFlags: 0
