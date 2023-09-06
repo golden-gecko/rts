@@ -2,24 +2,62 @@ using UnityEngine;
 
 public class PowerPlant : MyComponent
 {
-    protected override void Update()
+    protected override void Start()
     {
-        base.Update();
+        base.Start();
 
         MyGameObject parent = GetComponent<MyGameObject>();
+
+        PreviousEnabled = parent.Enabled;
+        PreviousPosition = parent.Position;
+        PreviousPositionInt = new Vector3Int(
+            Mathf.FloorToInt(parent.Position.x / Config.TerrainVisibilityScale),
+            0,
+            Mathf.FloorToInt(parent.Position.z / Config.TerrainVisibilityScale)
+        );
 
         if (parent.Working == false)
         {
             return;
         }
 
-        if (Power > 0.0f || parent.Powered)
+        Map.Instance.SetVisibleByPower(parent, parent.Position, Range, 1); // TODO: Use Power instead of 1.
+    }
+
+    protected override void Update()
+    {
+        base.Update();
+
+        MyGameObject parent = GetComponent<MyGameObject>();
+
+        Vector3Int CurrentPositionInt = new Vector3Int(
+            Mathf.FloorToInt(parent.Position.x / Config.TerrainVisibilityScale),
+            0,
+            Mathf.FloorToInt(parent.Position.z / Config.TerrainVisibilityScale)
+        );
+
+        if (PreviousEnabled != parent.Enabled)
         {
-            // Map.Instance.SetVisibleByPower(parent, Range);
+            if (parent.Enabled)
+            {
+                Map.Instance.SetVisibleByPower(parent, parent.Position, Range, 1);
+            }
+            else
+            {
+                Map.Instance.SetVisibleByPower(parent, parent.Position, Range, -1);
+            }
+
+
+            PreviousEnabled = parent.Enabled;
         }
-        else
+
+        if (PreviousPositionInt != CurrentPositionInt)
         {
-            // Map.Instance.UnsetVisibleByPower(parent, Range);
+            Map.Instance.SetVisibleByPower(parent, PreviousPosition, Range, -1);
+            Map.Instance.SetVisibleByPower(parent, parent.Position, Range, 1);
+
+            PreviousPosition = parent.Position;
+            PreviousPositionInt = CurrentPositionInt;
         }
     }
 
@@ -33,4 +71,8 @@ public class PowerPlant : MyComponent
 
     [field: SerializeField]
     public float Range { get; set; } = 10.0f;
+
+    private bool PreviousEnabled = true;
+    private Vector3 PreviousPosition = new Vector3();
+    private Vector3Int PreviousPositionInt = new Vector3Int();
 }
