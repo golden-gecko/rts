@@ -7,6 +7,8 @@ public class Researcher : MyComponent
         base.Awake();
 
         GetComponent<MyGameObject>().Orders.AllowOrder(OrderType.Research);
+
+        GetComponent<MyGameObject>().OrderHandlers[OrderType.Research] = new OrderHandlerResearch();
     }
 
     public override string GetInfo()

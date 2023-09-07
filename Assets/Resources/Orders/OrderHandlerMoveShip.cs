@@ -1,13 +1,8 @@
 using UnityEngine;
 
-public class OrderHandlerMoveShip : IOrderHandler
+public class OrderHandlerMoveShip : OrderHandler
 {
-    public bool IsValid(Order order)
-    {
-        return true;
-    }
-
-    public void OnExecute(MyGameObject myGameObject)
+    public override void OnExecute(MyGameObject myGameObject)
     {
         Order order = myGameObject.Orders.First();
 
@@ -28,8 +23,7 @@ public class OrderHandlerMoveShip : IOrderHandler
 
             if (Map.Instance.ValidatePosition(myGameObject, myGameObject.Position + (target - position).normalized * distanceToTravel, out validated) == false)
             {
-                myGameObject.Stats.Inc(Stats.OrdersFailed);
-                myGameObject.Orders.Pop();
+                Fail(myGameObject);
 
                 return;
             }
@@ -43,8 +37,7 @@ public class OrderHandlerMoveShip : IOrderHandler
 
             if (Map.Instance.ValidatePosition(myGameObject, target, out validated) == false)
             {
-                myGameObject.Stats.Inc(Stats.OrdersFailed);
-                myGameObject.Orders.Pop();
+                Fail(myGameObject);
 
                 return;
             }

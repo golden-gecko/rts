@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 
 public class ResourceContainer
 {
@@ -66,18 +67,6 @@ public class ResourceContainer
         return Items.ContainsKey(name) ? Items[name].Storage : 0;
     }
 
-    public Dictionary<string, int> GetStorage() // TODO: Remove.
-    {
-        Dictionary<string, int> storage = new Dictionary<string, int>();
-
-        foreach (Resource resource in Items.Values)
-        {
-            storage[resource.Name] = resource.Storage;
-        }
-
-        return storage;
-    }
-
     public string GetInfo()
     {
         string info = string.Empty;
@@ -91,6 +80,14 @@ public class ResourceContainer
         }
 
         return info;
+    }
+
+    public int Sum
+    {
+        get
+        {
+            return Items.Values.Sum(x => x.Storage);
+        }
     }
 
     public Dictionary<string, Resource> Items { get; } = new Dictionary<string, Resource>();

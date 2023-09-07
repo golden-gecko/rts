@@ -5,7 +5,7 @@ public class Repair : Skill
     public Repair(string name, float cooldown, float range, float value) : base(name, cooldown, range)
     {
         Value = value;
-        Effect = "Effects/Skills/Healing";
+        Effect = "Effects/Skills/Healing"; // TODO: Get from property.
 
     }
 
@@ -26,7 +26,7 @@ public class Repair : Skill
             target.OnRepair(Value);
         }
 
-        Object.Instantiate(Resources.Load(Effect), myGameObject.Position, Quaternion.identity); // TODO: Get from property.
+        Object.Instantiate(Resources.Load(Effect), myGameObject.Position, Quaternion.identity);
     }
 
     public float Value { get; } = 0.0f;

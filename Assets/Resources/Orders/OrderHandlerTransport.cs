@@ -1,27 +1,26 @@
-public class OrderHandlerTransport : IOrderHandler
+public class OrderHandlerTransport : OrderHandler
 {
-    public bool IsValid(Order order)
-    {
-        return order.SourceGameObject != null && order.TargetGameObject != null;
-    }
-
-    public void OnExecute(MyGameObject myGameObject)
+    public override void OnExecute(MyGameObject myGameObject)
     {
         Order order = myGameObject.Orders.First();
 
         if (IsValid(order) == false)
         {
-            myGameObject.Stats.Inc(Stats.OrdersFailed);
-            myGameObject.Orders.Pop();
+            Fail(myGameObject);
 
             return;
         }
 
-        myGameObject.Orders.Pop(); // TODO: Order is reversed because of gather order.
+        myGameObject.Orders.Pop();
 
-        myGameObject.Unload(order.TargetGameObject, order.Resources, 0);
-        myGameObject.Move(order.TargetGameObject.Entrance, 0);
-        myGameObject.Load(order.SourceGameObject, order.Resources, 0);
-        myGameObject.Move(order.SourceGameObject.Entrance, 0);
+        myGameObject.Move(order.SourceGameObject.Entrance);
+        myGameObject.Load(order.SourceGameObject, order.Resource, order.Value);
+        myGameObject.Move(order.TargetGameObject.Entrance);
+        myGameObject.Unload(order.TargetGameObject, order.Resource, order.Value);
+    }
+
+    protected override bool IsValid(Order order)
+    {
+        return order.SourceGameObject != null && order.TargetGameObject != null;
     }
 }

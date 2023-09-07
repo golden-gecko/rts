@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 6976692779867010275}
   - component: {fileID: 882763099132023331}
   - component: {fileID: 1908306568809740829}
-  - component: {fileID: 5308646868786525398}
+  - component: {fileID: -3398923562818593755}
   - component: {fileID: -8899617089933281433}
   m_Layer: 0
   m_Name: Barracks
@@ -123,18 +123,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <Player>k__BackingField: {fileID: 0}
   <Enabled>k__BackingField: 1
+  <Powerable>k__BackingField: 1
   <Gatherable>k__BackingField: 0
   <Selectable>k__BackingField: 1
   <Health>k__BackingField: 100
   <HealthMax>k__BackingField: 100
   <EnableTime>k__BackingField: 2
-  <LoadTime>k__BackingField: 2
   <WaitTime>k__BackingField: 2
   <DestroyEffect>k__BackingField: {fileID: 100008, guid: 06736895ea0a4ff408d25e6684dce797, type: 3}
   <TimeToLive>k__BackingField: -1
   <Altitude>k__BackingField: 0
   <MapLayers>k__BackingField: 01000000
---- !u!114 &5308646868786525398
+  <PowerUsage>k__BackingField: 1
+--- !u!114 &-3398923562818593755
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -143,11 +144,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 8922419687152604470}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b9a00f16555428d49958a19db20e17a2, type: 3}
+  m_Script: {fileID: 11500000, guid: c7a7a5b1061782f46a69d15414e90cec, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   <Mass>k__BackingField: 10
   <ResourceUsage>k__BackingField: 2
+  <RallyPoint>k__BackingField: {x: 0, y: 0, z: 0}
 --- !u!114 &-8899617089933281433
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -161,6 +163,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   <Mass>k__BackingField: 10
+  <ResourceUsage>k__BackingField: 1
 --- !u!1001 &2305329144066996566
 PrefabInstance:
   m_ObjectHideFlags: 0

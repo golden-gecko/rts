@@ -1,13 +1,8 @@
 using UnityEngine;
 
-public class OrderHandlerExplore : IOrderHandler
+public class OrderHandlerExplore : OrderHandler
 {
-    public bool IsValid(Order order)
-    {
-        return true;
-    }
-
-    public void OnExecute(MyGameObject myGameObject)
+    public override void OnExecute(MyGameObject myGameObject)
     {
         float range = myGameObject.GetComponent<Sight>().Range;
 

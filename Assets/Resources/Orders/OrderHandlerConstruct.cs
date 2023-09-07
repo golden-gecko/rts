@@ -1,14 +1,9 @@
 using System.Linq;
 using UnityEngine;
 
-public class OrderHandlerConstruct : IOrderHandler
+public class OrderHandlerConstruct : OrderHandler
 {
-    public bool IsValid(Order order)
-    {
-        return true;
-    }
-
-    public void OnExecute(MyGameObject myGameObject)
+    public override void OnExecute(MyGameObject myGameObject)
     {
         Order order = myGameObject.Orders.First();
 
@@ -22,7 +17,7 @@ public class OrderHandlerConstruct : IOrderHandler
 
         if (order.Timer == null)
         {
-            order.Timer = new Timer(recipe.Sum / order.ResourceUsage);
+            order.Timer = new Timer(recipe.Sum / myGameObject.GetComponent<Constructor>().ResourceUsage);
         }
 
         if (myGameObject.IsCloseTo(order.TargetGameObject.Entrance) == false)

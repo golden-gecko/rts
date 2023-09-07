@@ -1,6 +1,6 @@
 public class Resource : Counter
 {
-    public Resource(string name, int value, int max = 0, ResourceDirection direction = ResourceDirection.None) : base(value, max)
+    public Resource(string name, int current = 0, int max = 0, ResourceDirection direction = ResourceDirection.None) : base(current, max)
     {
         Name = name;
         Direction = direction;
@@ -17,4 +17,8 @@ public class Resource : Counter
     public bool Empty { get => Current <= 0; }
 
     public bool Full { get => Current >= Max; }
+
+    public bool In { get => Direction == ResourceDirection.Both || Direction == ResourceDirection.In; }
+
+    public bool Out{ get => Direction == ResourceDirection.Both || Direction == ResourceDirection.Out; }
 }

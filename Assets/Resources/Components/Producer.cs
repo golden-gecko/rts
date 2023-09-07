@@ -7,6 +7,8 @@ public class Producer : MyComponent
         base.Awake();
 
         GetComponent<MyGameObject>().Orders.AllowOrder(OrderType.Produce);
+
+        GetComponent<MyGameObject>().OrderHandlers[OrderType.Produce] = new OrderHandlerProduce();
     }
 
     public override string GetInfo()

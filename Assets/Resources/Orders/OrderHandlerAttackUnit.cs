@@ -1,20 +1,14 @@
 using UnityEngine;
 
-public class OrderHandlerAttackUnit : IOrderHandler
+public class OrderHandlerAttackUnit : OrderHandler
 {
-    public bool IsValid(Order order)
-    {
-        return order.IsTargetGameObject == false || (order.IsTargetGameObject == true && order.TargetGameObject != null);
-    }
-
-    public void OnExecute(MyGameObject myGameObject)
+    public override void OnExecute(MyGameObject myGameObject)
     {
         Order order = myGameObject.Orders.First();
 
         if (IsValid(order) == false)
         {
-            myGameObject.Stats.Inc(Stats.OrdersFailed);
-            myGameObject.Orders.Pop();
+            Fail(myGameObject);
 
             return;
         }
@@ -55,6 +49,10 @@ public class OrderHandlerAttackUnit : IOrderHandler
                 myGameObject.Orders.MoveToEnd();
             }
         }
+    }
+    protected override bool IsValid(Order order)
+    {
+        return order.IsTargetGameObject == false || (order.IsTargetGameObject == true && order.TargetGameObject != null);
     }
 
     private Vector3 GetPositionToAttack(Vector3 position, Vector3 target, float missileRangeMax)

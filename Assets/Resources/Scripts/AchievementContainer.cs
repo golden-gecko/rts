@@ -1,13 +1,13 @@
 using System.Collections.Generic;
-using UnityEngine;
 
 public class AchievementContainer
 {
     public AchievementContainer()
     {
-        Achievements.Add(new Achievement("Commander", "Execute 10 orders.", () => OrdersCompleted(10.0f)));
         Achievements.Add(new Achievement("Builder", "Build 10 structures.", () => StructuresBuilt(10.0f)));
-        Achievements.Add(new Achievement("Driver", "Drive 10 meters.", () => MetersDriven(10.0f)));
+        Achievements.Add(new Achievement("Commander", "Execute 10 orders.", () => OrdersCompleted(10.0f)));
+        Achievements.Add(new Achievement("Destroyer", "Destroy 20 targets.", () => TargetsDestroyed(10.0f)));
+        Achievements.Add(new Achievement("Driver", "Drive 30 meters.", () => DistanceDriven(10.0f)));
         Achievements.Add(new Achievement("Producer", "Produce 10 resources.", () => ResourcesProduced(10.0f)));
         Achievements.Add(new Achievement("Researcher", "Spend 10 seconds on researching.", () => TimeResearching(10.0f)));
         Achievements.Add(new Achievement("Soldier", "Fire 20 missiles.", () => MissilesFired(20.0f)));
@@ -31,116 +31,39 @@ public class AchievementContainer
         }
     }
 
-    private bool OrdersCompleted(float value)
+    private bool DistanceDriven(float value)
     {
-        float sum = 0;
-
-        foreach (MyGameObject myGameObject in Object.FindObjectsByType<MyGameObject>(FindObjectsSortMode.None))
-        {
-            if (myGameObject.Player != Player)
-            {
-                continue;
-            }
-
-            sum += myGameObject.Stats.Get(Stats.OrdersCompleted);
-        }
-
-        return sum >= value;
-    }
-
-    private bool StructuresBuilt(float value)
-    {
-        float sum = 0;
-
-        foreach (Constructor constructor in Object.FindObjectsByType<Constructor>(FindObjectsSortMode.None))
-        {
-            MyGameObject myGameObject = constructor.GetComponentInParent<MyGameObject>();
-
-            if (myGameObject.Player != Player)
-            {
-                continue;
-            }
-
-            sum += myGameObject.Stats.Get(Stats.ObjectsConstructed);
-        }
-
-        return sum >= value;
-    }
-
-    private bool MetersDriven(float value)
-    {
-        float sum = 0;
-
-        foreach (Engine engine in Object.FindObjectsByType<Engine>(FindObjectsSortMode.None))
-        {
-            MyGameObject myGameObject = engine.GetComponentInParent<MyGameObject>();
-
-            if (myGameObject.Player != Player)
-            {
-                continue;
-            }
-
-            sum += myGameObject.Stats.Get(Stats.DistanceDriven);
-        }
-
-        return sum >= value;
-    }
-
-    private bool ResourcesProduced(float value)
-    {
-        float sum = 0;
-
-        foreach (Producer producer in Object.FindObjectsByType<Producer>(FindObjectsSortMode.None))
-        {
-            MyGameObject myGameObject = producer.GetComponentInParent<MyGameObject>();
-
-            if (myGameObject.Player != Player)
-            {
-                continue;
-            }
-
-            sum += myGameObject.Stats.Get(Stats.ResourcesProduced);
-        }
-
-        return sum >= value;
-    }
-
-    private bool TimeResearching(float value)
-    {
-        float sum = 0;
-
-        foreach (Researcher researcher in Object.FindObjectsByType<Researcher>(FindObjectsSortMode.None))
-        {
-            MyGameObject myGameObject = researcher.GetComponentInParent<MyGameObject>();
-
-            if (myGameObject.Player != Player)
-            {
-                continue;
-            }
-
-            sum += myGameObject.Stats.Get(Stats.TimeResearching);
-        }
-
-        return sum >= value;
+        return Player.Stats.Get(Stats.DistanceDriven) >= value;
     }
 
     private bool MissilesFired(float value)
     {
-        float sum = 0;
+        return Player.Stats.Get(Stats.MissilesFired) >= value;
+    }
 
-        foreach (Gun gun in Object.FindObjectsByType<Gun>(FindObjectsSortMode.None))
-        {
-            MyGameObject myGameObject = gun.GetComponentInParent<MyGameObject>();
+    private bool OrdersCompleted(float value)
+    {
+        return Player.Stats.Get(Stats.OrdersCompleted) >= value;
+    }
 
-            if (myGameObject.Player != Player)
-            {
-                continue;
-            }
+    private bool ResourcesProduced(float value)
+    {
+        return Player.Stats.Get(Stats.ResourcesProduced) >= value;
+    }
 
-            sum += myGameObject.Stats.Get(Stats.MissilesFired);
-        }
+    private bool StructuresBuilt(float value)
+    {
+        return Player.Stats.Get(Stats.ObjectsConstructed) >= value;
+    }
 
-        return sum >= value;
+    private bool TargetsDestroyed(float value)
+    {
+        return Player.Stats.Get(Stats.TargetsDestroyed) >= value;
+    }
+    
+    private bool TimeResearching(float value)
+    {
+        return Player.Stats.Get(Stats.TimeResearching) >= value;
     }
 
     public Player Player { get; set; }

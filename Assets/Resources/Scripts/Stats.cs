@@ -35,6 +35,11 @@ public class Stats
         {
             Items[name] = value;
         }
+
+        if (Player != null)
+        {
+            Player.Stats.Add(name, value);
+        }
     }
 
     public void Inc(string name)
@@ -64,7 +69,7 @@ public class Stats
         return info;
     }
 
-    public Player Player { get; set; } // TODO: Implement and copy stats from object to player. Otherwise stats will be lost when object is destroyed.
+    public Player Player { get; set; }
 
     public Dictionary<string, float> Items { get; } = new Dictionary<string, float>();
 }
