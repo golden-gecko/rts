@@ -148,7 +148,7 @@ public class Game : MonoBehaviour
 
     private Player GetGaiaPlayer()
     {
-        return GameObject.Find("Gaia").GetComponent<Player>(); // TODO: Hardcoded.
+        return GameObject.Find(Config.PlayerWorld).GetComponent<Player>();
     }
 
     private Dictionary<Disaster, Timer> DisasterTimer = new Dictionary<Disaster, Timer>();

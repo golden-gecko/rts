@@ -19,8 +19,6 @@ public class OrderHandlerGuard : OrderHandler
         {
             myGameObject.Move(order.TargetPosition);
         }
-
-        myGameObject.Orders.MoveToEnd();
     }
 
     protected override bool IsValid(Order order)
