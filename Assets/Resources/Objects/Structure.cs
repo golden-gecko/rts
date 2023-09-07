@@ -8,5 +8,5 @@ public class Structure : MyGameObject
     }
 
     [field: SerializeField]
-    public float PowerUsage { get; set; } = 1.0f;
+    public float PowerUsage { get; set; } = 1.0f; // TODO: Implement.
 }

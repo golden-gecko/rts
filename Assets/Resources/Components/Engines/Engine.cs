@@ -19,13 +19,37 @@ public class Engine : MyComponent
         GetComponent<MyGameObject>().OrderHandlers[OrderType.Patrol] = new OrderHandlerPatrol();
     }
 
+    public bool CanDrive(float distance)
+    {
+        return Fuel >= distance * FuelUsage;
+    }
+
+    public void Drive(float distance)
+    {
+        if (CanDrive(distance) == false)
+        {
+            return;
+        }
+
+        Fuel = Mathf.Clamp(Fuel - distance * FuelUsage, 0.0f, FuelMax);
+    }
+
     public override string GetInfo()
     {
-        return string.Format("{0}, Power: {1:0.}, Speed: {2:0.}", base.GetInfo(), Power, Speed);
+        return string.Format("{0}, Power: {1:0.}, Fuel: {2:0.}/{3:0.}/{4:0.} Speed: {5:0.}", base.GetInfo(), Power, Fuel, FuelMax, FuelUsage, Speed);
     }
 
     [field: SerializeField]
     public float Power { get; set; } = 50.0f;
+
+    [field: SerializeField]
+    public float Fuel { get; set; } = 100.0f;
+
+    [field: SerializeField]
+    public float FuelMax { get; set; } = 100.0f;
+
+    [field: SerializeField]
+    public float FuelUsage { get; set; } = 1.0f;
 
     public float Speed { get => Power / GetComponent<MyGameObject>().Mass; }
 }

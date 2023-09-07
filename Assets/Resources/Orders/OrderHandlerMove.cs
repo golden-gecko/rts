@@ -28,6 +28,14 @@ public class OrderHandlerMove : OrderHandler
                 return;
             }
 
+            if (myGameObject.GetComponent<Engine>().CanDrive(distanceToTravel) == false)
+            {
+                myGameObject.Wait(0);
+
+                return;
+            }
+
+            myGameObject.GetComponent<Engine>().Drive(distanceToTravel);
             myGameObject.Position = validated;
             myGameObject.Stats.Add(Stats.DistanceDriven, distanceToTravel);
         }
@@ -42,6 +50,14 @@ public class OrderHandlerMove : OrderHandler
                 return;
             }
 
+            if (myGameObject.GetComponent<Engine>().CanDrive(distanceToTarget) == false)
+            {
+                myGameObject.Wait(0);
+
+                return;
+            }
+
+            myGameObject.GetComponent<Engine>().Drive(distanceToTarget);
             myGameObject.Position = validated;
             myGameObject.Stats.Add(Stats.DistanceDriven, distanceToTarget);
             myGameObject.Stats.Inc(Stats.OrdersCompleted);
