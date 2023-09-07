@@ -453,7 +453,7 @@ public class MyGameObject : MonoBehaviour
         return damageDealt;
     }
 
-    public virtual void OnDestroy_() // TODO: Rename.
+    public virtual void OnDestroy_() // TODO: Name collision with GameObject.OnDestroy.
     {
         if (DestroyEffect != null)
         {
@@ -514,44 +514,6 @@ public class MyGameObject : MonoBehaviour
 
         selection.gameObject.SetActive(status);
         selection.localScale = new Vector3(size.x * 1.1f, size.z * 1.1f, 1.0f);
-    }
-
-    public bool IsCloseTo(Vector3 position)
-    {
-        return IsInRange(position, 0.0f, 1.0f);
-    }
-
-    public bool IsInAttackRange(Vector3 position) // TODO: Remove?
-    {
-        return IsInRange(position, GetComponent<Gun>().Range);
-    }
-
-    public bool IsInRadarRange(Vector3 position) // TODO: Remove?
-    {
-        return IsInRange(position, GetComponent<Radar>().Range);
-    }
-
-    public bool IsInVisibilityRange(Vector3 position) // TODO: Remove?
-    {
-        return IsInRange(position, GetComponent<Sight>().Range);
-    }
-
-    public bool IsInRange(Vector3 position, float rangeMax)
-    {
-        return IsInRange(position, 0.0f, rangeMax);
-    }
-
-    public bool IsInRange(Vector3 position, float rangeMin, float rangeMax)
-    {
-        Vector3 a = position;
-        Vector3 b = Position;
-
-        a.y = 0.0f;
-        b.y = 0.0f;
-
-        float magnitude = (b - a).magnitude;
-
-        return rangeMin <= magnitude && magnitude <= rangeMax;
     }
 
     protected virtual void UpdatePosition()

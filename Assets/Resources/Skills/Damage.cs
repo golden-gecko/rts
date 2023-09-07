@@ -17,7 +17,7 @@ public class Damage : Skill
                 continue;
             }
 
-            if (target.IsInRange(myGameObject.Position, Range) == false)
+            if (Utils.IsInRange(target.Position, myGameObject.Position, Range) == false)
             {
                 continue;
             }

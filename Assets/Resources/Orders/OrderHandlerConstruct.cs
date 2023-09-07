@@ -20,7 +20,7 @@ public class OrderHandlerConstruct : OrderHandler
             order.Timer = new Timer(recipe.Sum / myGameObject.GetComponent<Constructor>().ResourceUsage);
         }
 
-        if (myGameObject.IsCloseTo(order.TargetGameObject.Entrance) == false)
+        if (Utils.IsCloseTo(myGameObject.Position, order.TargetGameObject.Entrance) == false)
         {
             myGameObject.Move(order.TargetGameObject.Entrance, 0);
 

@@ -94,6 +94,11 @@ public class Radar : MyComponent
         return string.Format("{0}, Range: {1:0.}, Anti: {2}", base.GetInfo(), Range, Anti);
     }
 
+    public bool IsInRange(Vector3 position)
+    {
+        return Utils.IsInRange(GetComponent<MyGameObject>().Position, position, Range);
+    }
+
     [field: SerializeField]
     public float Range { get; set; } = 30.0f;
 

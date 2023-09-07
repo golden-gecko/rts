@@ -30,9 +30,14 @@ public class Gun : MyComponent
         return string.Format("{0}, Reload: {1} Ammunition: {2}/{3}", base.GetInfo(), Reload.GetInfo(), Ammunition, AmmunitionMax);
     }
 
+    public bool IsInRange(Vector3 position)
+    {
+        return Utils.IsInRange(GetComponent<MyGameObject>().Position, position, Range);
+    }
+
     public virtual bool CanFire()
     {
-        return Ammunition > 0; // TODO: Add cooldown timer here.
+        return Ammunition > 0 && Reload.Finished;
     }
 
     public virtual void Fire(MyGameObject myGameObject, Vector3 position)

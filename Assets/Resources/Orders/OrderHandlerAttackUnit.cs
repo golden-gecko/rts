@@ -34,7 +34,7 @@ public class OrderHandlerAttackUnit : OrderHandler
             position = order.TargetPosition;
         }
 
-        if (myGameObject.IsInAttackRange(position) == false)
+        if (myGameObject.GetComponent<Gun>().IsInRange(position) == false)
         {
             myGameObject.Move(GetPositionToAttack(myGameObject.Position, position, myGameObject.GetComponent<Gun>().Range), 0);
         }
@@ -42,7 +42,7 @@ public class OrderHandlerAttackUnit : OrderHandler
         {
             myGameObject.transform.LookAt(new Vector3(position.x, myGameObject.Position.y, position.z));
 
-            if (myGameObject.GetComponent<Gun>().Reload.Finished)
+            if (myGameObject.GetComponent<Gun>().Reload.Finished) // TODO: Use CanFire method.
             {
                 myGameObject.GetComponent<Gun>().Fire(myGameObject, position);
             }
