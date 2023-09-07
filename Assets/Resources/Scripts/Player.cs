@@ -103,6 +103,11 @@ public class Player : MonoBehaviour
 
         foreach (MyResource myResource in FindObjectsByType<MyResource>(FindObjectsSortMode.None))
         {
+            if (myResource.Working == false)
+            {
+                continue;
+            }
+
             if (myResource == myGameObject)
             {
                 continue;
@@ -134,6 +139,11 @@ public class Player : MonoBehaviour
     {
         foreach (ConsumerProducerRequest consumer in Consumers.Items) // TODO: Return closest object.
         {
+            if (consumer.MyGameObject == false)
+            {
+                continue;
+            }
+
             if (consumer.MyGameObject == myGameObject)
             {
                 continue;
@@ -141,6 +151,11 @@ public class Player : MonoBehaviour
 
             foreach (ConsumerProducerRequest producer in Producers.Items) // TODO: Return closest object.
             {
+                if (producer.MyGameObject == false)
+                {
+                    continue;
+                }
+
                 if (producer.MyGameObject == myGameObject)
                 {
                     continue;

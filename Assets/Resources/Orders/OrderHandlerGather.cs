@@ -96,6 +96,11 @@ public class OrderHandlerGather : OrderHandler
 
         foreach (MyResource myResource in Object.FindObjectsByType<MyResource>(FindObjectsSortMode.None))
         {
+            if (myResource.Working == false)
+            {
+                continue;
+            }
+
             if (myResource == myGameObject)
             {
                 continue;
@@ -133,6 +138,11 @@ public class OrderHandlerGather : OrderHandler
             MyGameObject parent = storage.GetComponent<MyGameObject>();
 
             if (parent == null)
+            {
+                continue;
+            }
+
+            if (parent.Working == false)
             {
                 continue;
             }

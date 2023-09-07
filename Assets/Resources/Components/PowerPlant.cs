@@ -9,6 +9,7 @@ public class PowerPlant : MyComponent
         MyGameObject parent = GetComponent<MyGameObject>();
 
         PreviousEnabled = parent.Enabled;
+        PreviousPowered = parent.Powered;
         PreviousPosition = parent.Position;
         PreviousPositionInt = new Vector3Int(
             Mathf.FloorToInt(parent.Position.x / Config.TerrainVisibilityScale),
@@ -21,7 +22,10 @@ public class PowerPlant : MyComponent
             return;
         }
 
-        Map.Instance.SetVisibleByPower(parent, parent.Position, Range, 1); // TODO: Use Power instead of 1.
+        if (Power > 0.0f || parent.Powered)
+        {
+            Map.Instance.SetVisibleByPower(parent, parent.Position, Range, 1); // TODO: Use Power instead of 1.
+        }
     }
 
     protected override void Update()
@@ -51,6 +55,20 @@ public class PowerPlant : MyComponent
             PreviousEnabled = parent.Enabled;
         }
 
+        if (PreviousPowered != parent.Powered)
+        {
+            if (parent.Powered)
+            {
+                Map.Instance.SetVisibleByPower(parent, parent.Position, Range, 1);
+            }
+            else
+            {
+                Map.Instance.SetVisibleByPower(parent, parent.Position, Range, -1);
+            }
+
+            PreviousPowered = parent.Powered;
+        }
+
         if (PreviousPositionInt != CurrentPositionInt)
         {
             Map.Instance.SetVisibleByPower(parent, PreviousPosition, Range, -1);
@@ -73,6 +91,7 @@ public class PowerPlant : MyComponent
     public float Range { get; set; } = 10.0f;
 
     private bool PreviousEnabled = true;
+    private bool PreviousPowered = false;
     private Vector3 PreviousPosition = new Vector3();
     private Vector3Int PreviousPositionInt = new Vector3Int();
 }

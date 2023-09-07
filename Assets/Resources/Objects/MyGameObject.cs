@@ -76,6 +76,8 @@ public class MyGameObject : MonoBehaviour
                     RaiseConstructionResourceFlags();
                     break;
             }
+
+            UpdateSkills();
         }
         else
         {
@@ -83,7 +85,6 @@ public class MyGameObject : MonoBehaviour
             RemoveConstructionResourceFlags();
         }
 
-        UpdateSkills();
         UpdateSelectionPosition();
         UpdateVisibility();
     }
@@ -398,6 +399,13 @@ public class MyGameObject : MonoBehaviour
                             info += string.Format("\n  {0}", skill.GetInfo());
                         }
                     }
+
+                    info += string.Format("\nEnabled: {0}", Enabled);
+                    info += string.Format("\nGatherable: {0}", Gatherable);
+                    info += string.Format("\nPowerable: {0}", Powerable);
+                    info += string.Format("\nSelectable: {0}", Selectable);
+                    info += string.Format("\nPowered: {0}", Powered);
+                    info += string.Format("\nWorking: {0}", Working);
                 }
                 break;
 
