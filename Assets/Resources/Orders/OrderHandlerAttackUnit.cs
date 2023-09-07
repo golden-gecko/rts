@@ -45,11 +45,10 @@ public class OrderHandlerAttackUnit : OrderHandler
             if (myGameObject.GetComponent<Gun>().Reload.Finished)
             {
                 myGameObject.GetComponent<Gun>().Fire(myGameObject, position);
-                myGameObject.Stats.Inc(Stats.MissilesFired);
-                myGameObject.Orders.MoveToEnd();
             }
         }
     }
+
     protected override bool IsValid(Order order)
     {
         return order.IsTargetGameObject == false || (order.IsTargetGameObject == true && order.TargetGameObject != null);
