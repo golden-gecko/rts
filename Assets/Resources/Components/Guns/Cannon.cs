@@ -20,7 +20,7 @@ public class Cannon : Gun
         missile.Move(position);
         missile.Destroy();
 
-        Ammunition -= 1;
+        Ammunition.Dec();
 
         myGameObject.Stats.Inc(Stats.MissilesFired);
 

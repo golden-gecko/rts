@@ -349,9 +349,9 @@ public class MyGameObject : MonoBehaviour
             case MyGameObjectState.Operational:
                 info += string.Format("ID: {0}\nName: {1}", GetInstanceID(), name);
 
-                if (HealthMax > 0.0f)
+                if (Health.Max > 0.0f)
                 {
-                    info += string.Format("\nHP: {0:0.}/{1:0.}", Health, HealthMax);
+                    info += string.Format("\nHP: {0}", Health.GetInfo());
                 }
 
                 MyComponent[] myComponents = GetComponents<MyComponent>();
@@ -436,17 +436,17 @@ public class MyGameObject : MonoBehaviour
 
         if (armour != null)
         {
-            damageToDeal = Mathf.Min(damageLeft, armour.Value);
+            damageToDeal = Mathf.Min(damageLeft, armour.Value.Current);
             damageDealt += damageToDeal;
             damageLeft -= damageToDeal;
 
-            armour.Value = Mathf.Clamp(armour.Value - damageToDeal, 0.0f, armour.ValueMax);
+            armour.Value.Remove(damageToDeal);
         }
 
-        damageToDeal = Mathf.Min(damageLeft, Health);
+        damageToDeal = Mathf.Min(damageLeft, Health.Current);
         damageDealt += damageToDeal;
 
-        Health = Mathf.Clamp(Health - damageToDeal, 0.0f, HealthMax);
+        Health.Remove(damageToDeal);
 
         Stats.Add(Stats.DamageTaken, damageDealt);
 
@@ -465,9 +465,9 @@ public class MyGameObject : MonoBehaviour
 
     public void OnRepair(float value)
     {
-        Health = Mathf.Clamp(Health + value, 0.0f, HealthMax);
+        Health.Add(value);
 
-        Stats.Add(Stats.DamageRepaired, value);
+        Stats.Add(Stats.DamageRepaired, value); // TODO: Check how much HP was added.
     }
 
     public void Select(bool status)
@@ -723,7 +723,7 @@ public class MyGameObject : MonoBehaviour
         }
     }
 
-    public bool Alive { get => Health > 0.0f && (TimeToLive < 0.0f || LiveTimer.Finished == false); }
+    public bool Alive { get => Health.Current > 0.0f && (TimeToLive < 0.0f || LiveTimer.Finished == false); }
 
     public float Mass
     {
@@ -753,10 +753,7 @@ public class MyGameObject : MonoBehaviour
     public bool Selectable { get; set; } = true;
 
     [field: SerializeField]
-    public float Health { get; set; } = 100.0f;
-
-    [field: SerializeField]
-    public float HealthMax { get; set; } = 100.0f;
+    public Progress Health { get; set; } = new Progress(100.0f, 100.0f);
 
     [field: SerializeField]
     public float EnableTime { get; set; } = 2.0f;

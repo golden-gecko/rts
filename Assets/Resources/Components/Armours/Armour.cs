@@ -4,12 +4,9 @@ public class Armour : MyComponent
 {
     public override string GetInfo()
     {
-        return string.Format("{0}, Value: {1:0.}/{2:0.}", base.GetInfo(), Value, ValueMax);
+        return string.Format("{0}, Value: {1}", base.GetInfo(), Value.GetInfo());
     }
 
     [field: SerializeField]
-    public float Value { get; set; } = 10.0f;
-
-    [field: SerializeField]
-    public float ValueMax { get; set; } = 10.0f;
+    public Progress Value { get; set; } = new Progress(10.0f, 10.0f);
 }

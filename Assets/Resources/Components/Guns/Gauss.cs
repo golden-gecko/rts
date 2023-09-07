@@ -23,7 +23,7 @@ public class Gauss : Gun
         missile.Wait();
         missile.Destroy();
 
-        Ammunition -= 1;
+        Ammunition.Dec();
 
         myGameObject.Stats.Inc(Stats.MissilesFired);
 

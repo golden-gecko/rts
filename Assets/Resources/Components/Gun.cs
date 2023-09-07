@@ -27,7 +27,7 @@ public class Gun : MyComponent
 
     public override string GetInfo()
     {
-        return string.Format("{0}, Reload: {1} Ammunition: {2}/{3}", base.GetInfo(), Reload.GetInfo(), Ammunition, AmmunitionMax);
+        return string.Format("{0}, Reload: {1} Ammunition: {2}", base.GetInfo(), Reload.GetInfo(), Ammunition.GetInfo());
     }
 
     public bool IsInRange(Vector3 position)
@@ -37,7 +37,7 @@ public class Gun : MyComponent
 
     public virtual bool CanFire()
     {
-        return Ammunition > 0 && Reload.Finished;
+        return Ammunition.CanDec() && Reload.Finished;
     }
 
     public virtual void Fire(MyGameObject myGameObject, Vector3 position)
@@ -57,10 +57,7 @@ public class Gun : MyComponent
     public GameObject MissilePrefab { get; set; }
 
     [field: SerializeField]
-    public int Ammunition { get; set; } = 100;
+    public Counter Ammunition { get; set; } = new Counter(100, 100);
     
-    [field: SerializeField]
-    public int AmmunitionMax { get; set; } = 100;
-
     public Timer Reload { get; } = new Timer();
 }

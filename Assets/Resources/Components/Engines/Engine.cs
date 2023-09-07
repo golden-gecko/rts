@@ -21,7 +21,7 @@ public class Engine : MyComponent
 
     public bool CanDrive(float distance)
     {
-        return Fuel >= distance * FuelUsage;
+        return Fuel.CanRemove(distance * FuelUsage);
     }
 
     public void Drive(float distance)
@@ -31,22 +31,19 @@ public class Engine : MyComponent
             return;
         }
 
-        Fuel = Mathf.Clamp(Fuel - distance * FuelUsage, 0.0f, FuelMax);
+        Fuel.Remove(distance * FuelUsage);
     }
 
     public override string GetInfo()
     {
-        return string.Format("{0}, Power: {1:0.}, Fuel: {2:0.}/{3:0.}/{4:0.} Speed: {5:0.}", base.GetInfo(), Power, Fuel, FuelMax, FuelUsage, Speed);
+        return string.Format("{0}, Power: {1:0.}, Fuel: {2:0.}/{3:0.} Speed: {4:0.}", base.GetInfo(), Power, Fuel, FuelUsage, Speed);
     }
 
     [field: SerializeField]
     public float Power { get; set; } = 50.0f;
 
     [field: SerializeField]
-    public float Fuel { get; set; } = 100.0f;
-
-    [field: SerializeField]
-    public float FuelMax { get; set; } = 100.0f;
+    public Progress Fuel { get; set; } = new Progress(100.0f, 100.0f);
 
     [field: SerializeField]
     public float FuelUsage { get; set; } = 1.0f;

@@ -1,4 +1,3 @@
-using System.Linq;
 using UnityEngine;
 
 public class OrderHandlerProduce : OrderHandler
@@ -9,11 +8,24 @@ public class OrderHandlerProduce : OrderHandler
 
         if (order.Recipe.Length <= 0 && myGameObject.GetComponent<Producer>().Recipes.Items.Count > 0)
         {
-            order.Recipe = myGameObject.GetComponent<Producer>().Recipes.Items.First().Key; // TODO: Find recipe that can be produced.
+            foreach (Recipe recipe in myGameObject.GetComponent<Producer>().Recipes.Items.Values)
+            {
+                if (HaveResources(myGameObject, recipe))
+                {
+                    order.Recipe = recipe.Name;
+                }
+            }
         }
         else if (myGameObject.GetComponent<Producer>().Recipes.Items.ContainsKey(order.Recipe) == false)
         {
             Fail(myGameObject);
+
+            return;
+        }
+
+        if (order.Recipe.Length <= 0)
+        {
+            myGameObject.Wait(0);
 
             return;
         }
