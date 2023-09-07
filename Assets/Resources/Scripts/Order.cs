@@ -27,7 +27,7 @@ public class Order
         {
             Type = OrderType.Attack,
             TargetGameObject = myGameObject,
-            IsTargetGameObject = true, // TODO: Get rid of this. Maybe add a new order type.
+            IsTargetGameObject = true,
         };
     }
 
@@ -100,7 +100,7 @@ public class Order
         {
             Type = OrderType.Gather,
             TargetGameObject = myGameObject,
-            IsTargetGameObject = true, // TODO: Get rid of this. Maybe add a new order type.
+            IsTargetGameObject = true,
         };
     }
 
@@ -288,7 +288,7 @@ public class Order
 
     public bool CanRetry { get => Retries.Current < Retries.Max; }
 
-    public bool IsTargetGameObject { get; private set; }
+    public bool IsTargetGameObject { get; private set; } // TODO: Get rid of this. Maybe add a new order type.
 
     public Counter Retries { get; private set; } = new Counter();
 
