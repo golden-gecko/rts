@@ -17,7 +17,7 @@ public class Harvester : Vehicle
         Orders.AllowPrefab(Path.Combine(Config.DirectoryStructures, "Turret_Missile"));
         Orders.AllowPrefab(Path.Combine(Config.DirectoryStructures, "Wall"));
 
-        OrderHandlers[OrderType.Idle] = new OrderHandlerIdleWorker();
+        OrderHandlers[OrderType.Idle] = new OrderHandlerIdleWorker(); // TODO: Move to component.
 
         Skills["Repair"] = new Repair("Repair", 3.0f, 4.0f, 20.0f);
     }

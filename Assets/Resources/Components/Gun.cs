@@ -7,6 +7,9 @@ public class Gun : MyComponent
         base.Awake();
 
         GetComponent<MyGameObject>().Orders.AllowOrder(OrderType.Attack);
+
+        GetComponent<MyGameObject>().OrderHandlers[OrderType.Attack] = new OrderHandlerAttack();
+        GetComponent<MyGameObject>().OrderHandlers[OrderType.Idle] = new OrderHandlerIdleAttacker();
     }
 
     protected override void Update()
