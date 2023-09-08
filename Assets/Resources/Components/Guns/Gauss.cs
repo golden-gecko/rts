@@ -6,10 +6,10 @@ public class Gauss : Gun
     {
         if (CanFire() == false)
         {
-            myGameObject.Wait(0);
-
             return;
         }
+
+        Reload.Reset();
 
         GameObject gameObject = Instantiate(MissilePrefab, myGameObject.Center, Quaternion.identity);
         Missile missile = gameObject.GetComponent<Missile>();
@@ -26,7 +26,5 @@ public class Gauss : Gun
         Ammunition.Dec();
 
         myGameObject.Stats.Inc(Stats.MissilesFired);
-
-        Reload.Reset();
     }
 }

@@ -39,7 +39,7 @@ public class OrderHandlerAttackTurret : OrderHandler
         {
             myGameObject.transform.LookAt(new Vector3(position.x, myGameObject.Position.y, position.z));
 
-            if (myGameObject.GetComponent<Gun>().Reload.Finished) // TODO: Use CanFire method.
+            if (myGameObject.GetComponent<Gun>().CanFire())
             {
                 myGameObject.GetComponent<Gun>().Fire(myGameObject, position);
             }

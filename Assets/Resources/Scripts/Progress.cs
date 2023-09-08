@@ -10,24 +10,22 @@ public class Progress
         Max = max;
     }
 
-    public void Add(float current)
+    public float Add(float value)
     {
-        Current += current;
+        float valueToAdd = Mathf.Min(Max - Current, value);
 
-        if (Current > Max)
-        {
-            Current = Max;
-        }
+        Current = Mathf.Clamp(Current + value, 0.0f, Max);
+
+        return valueToAdd;
     }
 
-    public void Remove(float current)
+    public float Remove(float value)
     {
-        Current -= current;
+        float valueToRemove = Mathf.Min(Current, value);
 
-        if (Current < 0.0f)
-        {
-            Current = 0.0f;
-        }
+        Current = Mathf.Clamp(Current - value, 0.0f, Max);
+
+        return valueToRemove;
     }
 
     public void Inc()

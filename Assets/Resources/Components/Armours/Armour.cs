@@ -7,6 +7,11 @@ public class Armour : MyComponent
         return string.Format("{0}, Value: {1}", base.GetInfo(), Value.GetInfo());
     }
 
+    public float Absorb(float damage)
+    {
+        return Value.Remove(damage);
+    }
+
     [field: SerializeField]
     public Progress Value { get; set; } = new Progress(10.0f, 10.0f);
 }

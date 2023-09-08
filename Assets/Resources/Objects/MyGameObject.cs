@@ -419,38 +419,25 @@ public class MyGameObject : MonoBehaviour
         return Player.Is(player, state);
     }
 
-    public float OnDamage(float value)
+    public float OnDamage(float damage)
     {
-        float damageToDeal;
-        float damageDealt = 0.0f;
-        float damageLeft = value;
+        float damageLeft = damage;
 
-        Shield shield = GetComponent<Shield>();
-
-        if (shield != null)
+        foreach (Shield shield in GetComponents<Shield>())
         {
-            damageLeft = damageLeft * shield.Power / 100.0f;
+            damageLeft -= shield.Absorb(damageLeft);
         }
 
-        Armour armour = GetComponent<Armour>();
-
-        if (armour != null)
+        foreach (Armour armour in GetComponents<Armour>())
         {
-            damageToDeal = Mathf.Min(damageLeft, armour.Value.Current);
-            damageDealt += damageToDeal;
-            damageLeft -= damageToDeal;
-
-            armour.Value.Remove(damageToDeal);
+            damageLeft -= armour.Absorb(damageLeft);
         }
 
-        damageToDeal = Mathf.Min(damageLeft, Health.Current);
-        damageDealt += damageToDeal;
+        damageLeft -= Health.Remove(damageLeft);
 
-        Health.Remove(damageToDeal);
+        Stats.Add(Stats.DamageTaken, damage - damageLeft);
 
-        Stats.Add(Stats.DamageTaken, damageDealt);
-
-        return damageDealt;
+        return damage - damageLeft;
     }
 
     public virtual void OnDestroy_() // TODO: Name collision with GameObject.OnDestroy.
@@ -465,9 +452,7 @@ public class MyGameObject : MonoBehaviour
 
     public void OnRepair(float value)
     {
-        Health.Add(value);
-
-        Stats.Add(Stats.DamageRepaired, value); // TODO: Check how much HP was added.
+        Stats.Add(Stats.DamageRepaired, Health.Add(value));
     }
 
     public void Select(bool status)
