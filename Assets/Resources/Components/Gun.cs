@@ -7,8 +7,6 @@ public class Gun : MyComponent
         base.Awake();
 
         GetComponent<MyGameObject>().Orders.AllowOrder(OrderType.Attack);
-
-        Reload.Max = CooldownTime;
     }
 
     protected override void Update()
@@ -45,19 +43,17 @@ public class Gun : MyComponent
     }
 
     [field: SerializeField]
+    public GameObject MissilePrefab { get; set; }
+
+    [field: SerializeField]
     public float Damage { get; set; } = 10.0f;
 
     [field: SerializeField]
     public float Range { get; set; } = 10.0f;
 
     [field: SerializeField]
-    public float CooldownTime { get; set; } = 10.0f;
-
-    [field: SerializeField]
-    public GameObject MissilePrefab { get; set; }
-
-    [field: SerializeField]
     public Counter Ammunition { get; set; } = new Counter(100, 100);
-    
-    public Timer Reload { get; } = new Timer();
+
+    [field: SerializeField]
+    public Timer Reload { get; set; } = new Timer(10.0f);
 }

@@ -51,7 +51,7 @@ public class OrderHandlerConstruct : OrderHandler
 
     private bool HaveResources(MyGameObject myGameObject, Order order, Recipe recipe)
     {
-        foreach (Resource i in recipe.ToConsume.Items.Values)
+        foreach (Resource i in recipe.ToConsume.Items)
         {
             if (order.TargetGameObject.ConstructionResources.CanRemove(i.Name, i.Max) == false)
             {
@@ -64,7 +64,7 @@ public class OrderHandlerConstruct : OrderHandler
 
     private void MoveResources(MyGameObject myGameObject, Order order, Recipe recipe)
     {
-        foreach (Resource i in recipe.ToConsume.Items.Values)
+        foreach (Resource i in recipe.ToConsume.Items)
         {
             order.TargetGameObject.ConstructionResources.Remove(i.Name, i.Max);
             myGameObject.Stats.Add(Stats.ResourcesUsed, i.Max);

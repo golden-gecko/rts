@@ -52,8 +52,9 @@ MonoBehaviour:
   <Powerable>k__BackingField: 0
   <Gatherable>k__BackingField: 1
   <Selectable>k__BackingField: 1
-  <Health>k__BackingField: 40
-  <HealthMax>k__BackingField: 40
+  <Health>k__BackingField:
+    <Current>k__BackingField: 100
+    <Max>k__BackingField: 100
   <EnableTime>k__BackingField: 2
   <WaitTime>k__BackingField: 2
   <DestroyEffect>k__BackingField: {fileID: 8579966591951127539, guid: 64e9158e41e34f5418b979dd48171ccb, type: 3}
@@ -74,6 +75,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <Mass>k__BackingField: 10
   <ResourceUsage>k__BackingField: 1
+  <Resources>k__BackingField:
+    <Items>k__BackingField:
+    - <Current>k__BackingField: 100
+      <Max>k__BackingField: 100
+      <Name>k__BackingField: Iron Ore
+      <Direction>k__BackingField: 3
 --- !u!1 &7246156254199402963
 GameObject:
   m_ObjectHideFlags: 0

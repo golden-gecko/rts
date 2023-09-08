@@ -570,7 +570,7 @@ public class MyGameObject : MonoBehaviour
             return;
         }
 
-        foreach (Resource resource in GetComponent<Storage>().Resources.Items.Values)
+        foreach (Resource resource in GetComponent<Storage>().Resources.Items)
         {
             if (resource.Direction == ResourceDirection.Both || resource.Direction == ResourceDirection.In)
             {
@@ -607,7 +607,7 @@ public class MyGameObject : MonoBehaviour
             return;
         }
 
-        foreach (string name in storage.Resources.Items.Keys)
+        foreach (string name in storage.Resources.Items.Select(x => x.Name))
         {
             Player.UnregisterConsumer(this, name);
             Player.UnregisterProducer(this, name);
@@ -617,7 +617,7 @@ public class MyGameObject : MonoBehaviour
 
     private void RaiseConstructionResourceFlags()
     {
-        foreach (Resource resource in ConstructionResources.Items.Values)
+        foreach (Resource resource in ConstructionResources.Items)
         {
             if (resource.Direction == ResourceDirection.Both || resource.Direction == ResourceDirection.In)
             {
@@ -647,7 +647,7 @@ public class MyGameObject : MonoBehaviour
 
     private void RemoveConstructionResourceFlags()
     {
-        foreach (string name in ConstructionResources.Items.Keys)
+        foreach (string name in ConstructionResources.Items.Select(x => x.Name))
         {
             Player.UnregisterConsumer(this, name);
             Player.UnregisterProducer(this, name);

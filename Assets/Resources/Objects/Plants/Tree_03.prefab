@@ -319,8 +319,9 @@ MonoBehaviour:
   <Powerable>k__BackingField: 0
   <Gatherable>k__BackingField: 1
   <Selectable>k__BackingField: 1
-  <Health>k__BackingField: 20
-  <HealthMax>k__BackingField: 20
+  <Health>k__BackingField:
+    <Current>k__BackingField: 100
+    <Max>k__BackingField: 100
   <EnableTime>k__BackingField: 2
   <WaitTime>k__BackingField: 2
   <DestroyEffect>k__BackingField: {fileID: 7447788123197329209, guid: 063c3ab67c1c6794ea2121d8d9b0116c, type: 3}
@@ -341,6 +342,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <Mass>k__BackingField: 10
   <ResourceUsage>k__BackingField: 1
+  <Resources>k__BackingField:
+    <Items>k__BackingField:
+    - <Current>k__BackingField: 30
+      <Max>k__BackingField: 30
+      <Name>k__BackingField: Wood
+      <Direction>k__BackingField: 3
 --- !u!1001 &8042095479320321300
 PrefabInstance:
   m_ObjectHideFlags: 0

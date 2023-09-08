@@ -5,10 +5,6 @@ public class Refinery : Structure
         base.Awake();
 
         OrderHandlers[OrderType.Idle] = new OrderHandlerIdleProducer();
-
-        GetComponent<Storage>().Resources.Add("Coal", 0, 60, ResourceDirection.In);
-        GetComponent<Storage>().Resources.Add("Iron", 0, 60, ResourceDirection.Out);
-        GetComponent<Storage>().Resources.Add("Iron Ore", 0, 60, ResourceDirection.In);
     }
 
     protected override void Start()

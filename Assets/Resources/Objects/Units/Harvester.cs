@@ -19,12 +19,6 @@ public class Harvester : Vehicle
 
         OrderHandlers[OrderType.Idle] = new OrderHandlerIdleWorker();
 
-        GetComponent<Storage>().Resources.Add("Coal", 0, 10);
-        GetComponent<Storage>().Resources.Add("Crystal", 0, 10);
-        GetComponent<Storage>().Resources.Add("Iron", 0, 10);
-        GetComponent<Storage>().Resources.Add("Iron Ore", 0, 10);
-        GetComponent<Storage>().Resources.Add("Wood", 0, 10);
-
         Skills["Repair"] = new Repair("Repair", 3.0f, 4.0f, 20.0f);
     }
 }
