@@ -11,6 +11,8 @@ public enum MyGameObjectMapLayer
     Terrain,
     Underwater, // TODO: Implement.
     Water,
+
+    Missile, // TODO: Remove.
 }
 
 public enum MyGameObjectState

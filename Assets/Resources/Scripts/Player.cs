@@ -195,8 +195,6 @@ public class Player : MonoBehaviour
             return null;
         }
 
-        // TODO: Implement.
-
         return null;
     }
 
@@ -254,8 +252,8 @@ public class Player : MonoBehaviour
                 continue;
             }
 
-            string[] resourcesFromStorage = myResource.GetComponent<Storage>().Resources.Items.Values.Where(x => x.Out && x.Empty == false).Select(x => x.Name).ToArray();
-            string[] resourcesFromCapacity = storage.Resources.Items.Values.Where(x => x.In && x.Full == false).Select(x => x.Name).ToArray();
+            string[] resourcesFromStorage = myResource.GetComponent<Storage>().Resources.Items.Where(x => x.Out && x.Empty == false).Select(x => x.Name).ToArray();
+            string[] resourcesFromCapacity = storage.Resources.Items.Where(x => x.In && x.Full == false).Select(x => x.Name).ToArray();
             string[] match = resourcesFromStorage.Intersect(resourcesFromCapacity).ToArray();
 
             if (match.Length <= 0)

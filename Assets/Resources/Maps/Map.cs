@@ -27,13 +27,15 @@ public class Map : MonoBehaviour
         Clear();
     }
 
-    protected void Update()
-    {
-        // Clear();
-    }
-
     public bool ValidatePosition(MyGameObject myGameObject, Vector3 position, out Vector3 validated)
     {
+        if (myGameObject.MapLayers.Contains(MyGameObjectMapLayer.Missile))
+        {
+            validated = position;
+
+            return true;
+        }
+
         Ray ray = new Ray(position + Vector3.up * Config.TerrainMaxHeight, Vector3.down);
         int mask = LayerMask.GetMask("Terrain") | LayerMask.GetMask("Water");
 

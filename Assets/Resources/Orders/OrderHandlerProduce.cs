@@ -1,4 +1,3 @@
-using System.Linq;
 using UnityEngine;
 
 public class OrderHandlerProduce : OrderHandler
@@ -9,11 +8,24 @@ public class OrderHandlerProduce : OrderHandler
 
         if (order.Recipe.Length <= 0 && myGameObject.GetComponent<Producer>().Recipes.Items.Count > 0)
         {
-            order.Recipe = myGameObject.GetComponent<Producer>().Recipes.Items.First().Key; // TODO: Find recipe that can be produced.
+            foreach (Recipe recipe in myGameObject.GetComponent<Producer>().Recipes.Items.Values)
+            {
+                if (HaveResources(myGameObject, recipe))
+                {
+                    order.Recipe = recipe.Name;
+                }
+            }
         }
         else if (myGameObject.GetComponent<Producer>().Recipes.Items.ContainsKey(order.Recipe) == false)
         {
             Fail(myGameObject);
+
+            return;
+        }
+
+        if (order.Recipe.Length <= 0)
+        {
+            myGameObject.Wait(0);
 
             return;
         }
@@ -51,7 +63,7 @@ public class OrderHandlerProduce : OrderHandler
 
     private bool HaveResources(MyGameObject myGameObject, Recipe recipe)
     {
-        foreach (Resource i in recipe.ToConsume.Items.Values)
+        foreach (Resource i in recipe.ToConsume.Items)
         {
             if (myGameObject.GetComponent<Storage>().Resources.CanRemove(i.Name, i.Max) == false)
             {
@@ -59,7 +71,7 @@ public class OrderHandlerProduce : OrderHandler
             }
         }
 
-        foreach (Resource i in recipe.ToProduce.Items.Values)
+        foreach (Resource i in recipe.ToProduce.Items)
         {
             if (myGameObject.GetComponent<Storage>().Resources.CanAdd(i.Name, i.Max) == false)
             {
@@ -72,13 +84,13 @@ public class OrderHandlerProduce : OrderHandler
 
     private void MoveResources(MyGameObject myGameObject, Recipe recipe)
     {
-        foreach (Resource i in recipe.ToConsume.Items.Values)
+        foreach (Resource i in recipe.ToConsume.Items)
         {
             myGameObject.GetComponent<Storage>().Resources.Remove(i.Name, i.Max);
             myGameObject.Stats.Add(Stats.ResourcesUsed, i.Max);
         }
 
-        foreach (Resource i in recipe.ToProduce.Items.Values)
+        foreach (Resource i in recipe.ToProduce.Items)
         {
             myGameObject.GetComponent<Storage>().Resources.Add(i.Name, i.Max);
             myGameObject.Stats.Add(Stats.ResourcesProduced, i.Max);

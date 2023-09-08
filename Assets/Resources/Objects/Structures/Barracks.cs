@@ -7,7 +7,5 @@ public class Barracks : Structure
         base.Awake();
 
         Orders.AllowPrefab(Path.Combine(Config.DirectoryUnits, "Infantry_Light"));
-
-        GetComponent<Storage>().Resources.Add("Iron", 0, 40, ResourceDirection.In);
     }
 }

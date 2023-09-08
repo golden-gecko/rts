@@ -11,7 +11,5 @@ public class Research_Lab : Structure
         Orders.AllowTechnology("Space_Travels");
         Orders.AllowTechnology("Static_Defences");
         Orders.AllowTechnology("Stationary_Defences");
-
-        GetComponent<Storage>().Resources.Add("Crystal", 0, 100, ResourceDirection.In);
     }
 }

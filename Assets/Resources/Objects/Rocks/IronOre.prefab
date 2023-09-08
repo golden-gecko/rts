@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2040145519782903275}
-  - component: {fileID: -756073528101837539}
+  - component: {fileID: -1134350671883856829}
   - component: {fileID: 4732557405102183231}
   m_Layer: 0
   m_Name: IronOre
@@ -35,7 +35,7 @@ Transform:
   - {fileID: 4689471328382871186}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &-756073528101837539
+--- !u!114 &-1134350671883856829
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -44,7 +44,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 2040145519782903273}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: df08e7365669ef3459cc64e6e33727a5, type: 3}
+  m_Script: {fileID: 11500000, guid: 6decc591119130e4d847c5005505a7ae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   <Player>k__BackingField: {fileID: 0}
@@ -52,14 +52,15 @@ MonoBehaviour:
   <Powerable>k__BackingField: 0
   <Gatherable>k__BackingField: 1
   <Selectable>k__BackingField: 1
-  <Health>k__BackingField: 40
-  <HealthMax>k__BackingField: 40
+  <Health>k__BackingField:
+    <Current>k__BackingField: 100
+    <Max>k__BackingField: 100
   <EnableTime>k__BackingField: 2
   <WaitTime>k__BackingField: 2
-  <DestroyEffect>k__BackingField: {fileID: 8579966591951127539, guid: 64e9158e41e34f5418b979dd48171ccb, type: 3}
+  <DestroyEffect>k__BackingField: {fileID: 0}
   <TimeToLive>k__BackingField: -1
   <Altitude>k__BackingField: 0
-  <MapLayers>k__BackingField: 010000000200000003000000
+  <MapLayers>k__BackingField: 
 --- !u!114 &4732557405102183231
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -74,6 +75,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <Mass>k__BackingField: 10
   <ResourceUsage>k__BackingField: 1
+  <Resources>k__BackingField:
+    <Items>k__BackingField:
+    - <Current>k__BackingField: 100
+      <Max>k__BackingField: 100
+      <Name>k__BackingField: Iron Ore
+      <Direction>k__BackingField: 3
 --- !u!1 &7246156254199402963
 GameObject:
   m_ObjectHideFlags: 0

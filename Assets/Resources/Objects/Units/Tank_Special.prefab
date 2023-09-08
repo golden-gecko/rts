@@ -177,6 +177,7 @@ GameObject:
   - component: {fileID: 5724307980619866452}
   - component: {fileID: -3623363844613638352}
   - component: {fileID: -7318105187754308936}
+  - component: {fileID: 5524956404379026895}
   - component: {fileID: -5010447674212785321}
   - component: {fileID: -5877654829243037068}
   - component: {fileID: 7942026523019763108}
@@ -221,8 +222,9 @@ MonoBehaviour:
   <Powerable>k__BackingField: 0
   <Gatherable>k__BackingField: 0
   <Selectable>k__BackingField: 1
-  <Health>k__BackingField: 100
-  <HealthMax>k__BackingField: 100
+  <Health>k__BackingField:
+    <Current>k__BackingField: 100
+    <Max>k__BackingField: 100
   <EnableTime>k__BackingField: 2
   <WaitTime>k__BackingField: 2
   <DestroyEffect>k__BackingField: {fileID: 100006, guid: 7c442b9b6852b8a4f93306f3d154d471, type: 3}
@@ -243,9 +245,26 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <Mass>k__BackingField: 10
   <Power>k__BackingField: 50
-  <Fuel>k__BackingField: 100
-  <FuelMax>k__BackingField: 100
+  <Fuel>k__BackingField:
+    <Current>k__BackingField: 100
+    <Max>k__BackingField: 100
   <FuelUsage>k__BackingField: 1
+--- !u!114 &5524956404379026895
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4916527176359590894}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4248ce16722b7444fac5deb395c690e8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  <Mass>k__BackingField: 10
+  <Value>k__BackingField:
+    <Current>k__BackingField: 10
+    <Max>k__BackingField: 10
 --- !u!114 &-5010447674212785321
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -259,12 +278,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   <Mass>k__BackingField: 30
+  <MissilePrefab>k__BackingField: {fileID: 3841255586236475405, guid: 86513724c5de2df4da484cb23191a7e5, type: 3}
   <Damage>k__BackingField: 4
   <Range>k__BackingField: 30
-  <CooldownTime>k__BackingField: 4
-  <MissilePrefab>k__BackingField: {fileID: 3841255586236475405, guid: 86513724c5de2df4da484cb23191a7e5, type: 3}
-  <Ammunition>k__BackingField: 100
-  <AmmunitionMax>k__BackingField: 100
+  <Ammunition>k__BackingField:
+    <Current>k__BackingField: 100
+    <Max>k__BackingField: 100
+  <Reload>k__BackingField:
+    <Current>k__BackingField: 0
+    <Max>k__BackingField: 4
 --- !u!114 &-5877654829243037068
 MonoBehaviour:
   m_ObjectHideFlags: 0

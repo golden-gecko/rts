@@ -82,7 +82,7 @@ public class OrderHandlerGather : OrderHandler
             return;
         }
 
-        Resource resource = myResource.GetComponent<Storage>().Resources.Items.Values.First(); // TODO: Refactor.
+        Resource resource = myResource.GetComponent<Storage>().Resources.Items.First(); // TODO: Refactor.
 
         myGameObject.Orders.Pop();
 
@@ -157,8 +157,8 @@ public class OrderHandlerGather : OrderHandler
                 continue;
             }
 
-            string[] resourcesFromStorage = myResource.GetComponent<Storage>().Resources.Items.Values.Where(x => x.Out && x.Empty == false).Select(x => x.Name).ToArray();
-            string[] resourcesFromCapacity = storage.Resources.Items.Values.Where(x => x.In && x.Full == false).Select(x => x.Name).ToArray();
+            string[] resourcesFromStorage = myResource.GetComponent<Storage>().Resources.Items.Where(x => x.Out && x.Empty == false).Select(x => x.Name).ToArray();
+            string[] resourcesFromCapacity = storage.Resources.Items.Where(x => x.In && x.Full == false).Select(x => x.Name).ToArray();
             string[] match = resourcesFromStorage.Intersect(resourcesFromCapacity).ToArray();
 
             if (match.Length <= 0)

@@ -23,5 +23,6 @@ public class Storage : MyComponent
     [field: SerializeField]
     public int ResourceUsage { get; set; } = 1;
 
-    public ResourceContainer Resources { get; } = new ResourceContainer();
+    [field: SerializeField]
+    public ResourceContainer Resources { get; set; } = new ResourceContainer();
 }

@@ -1,3 +1,7 @@
+using System;
+using UnityEngine;
+
+[Serializable]
 public class Timer
 {
     public Timer(float max = 0.0f)
@@ -28,8 +32,10 @@ public class Timer
         return string.Format("{0:0.}/{1:0.}", Current, Max);
     }
 
+    [field: SerializeField]
     public float Current { get; private set; }
 
+    [field: SerializeField]
     public float Max { get; set; }
 
     public bool Finished { get => Current >= Max; }

@@ -123,7 +123,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 2807449429036958551}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3ea7a276b6ae0904e89e87abeab0e4e8, type: 3}
+  m_Script: {fileID: 11500000, guid: 6decc591119130e4d847c5005505a7ae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   <Player>k__BackingField: {fileID: 0}
@@ -131,14 +131,15 @@ MonoBehaviour:
   <Powerable>k__BackingField: 0
   <Gatherable>k__BackingField: 1
   <Selectable>k__BackingField: 1
-  <Health>k__BackingField: 20
-  <HealthMax>k__BackingField: 20
+  <Health>k__BackingField:
+    <Current>k__BackingField: 100
+    <Max>k__BackingField: 100
   <EnableTime>k__BackingField: 2
   <WaitTime>k__BackingField: 2
-  <DestroyEffect>k__BackingField: {fileID: 7447788123197329209, guid: 063c3ab67c1c6794ea2121d8d9b0116c, type: 3}
+  <DestroyEffect>k__BackingField: {fileID: 0}
   <TimeToLive>k__BackingField: -1
   <Altitude>k__BackingField: 0
-  <MapLayers>k__BackingField: 01000000
+  <MapLayers>k__BackingField: 
 --- !u!114 &-2905457588045225651
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -153,6 +154,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <Mass>k__BackingField: 10
   <ResourceUsage>k__BackingField: 1
+  <Resources>k__BackingField:
+    <Items>k__BackingField:
+    - <Current>k__BackingField: 40
+      <Max>k__BackingField: 40
+      <Name>k__BackingField: Wood
+      <Direction>k__BackingField: 3
 --- !u!1 &3780405923354106176
 GameObject:
   m_ObjectHideFlags: 0

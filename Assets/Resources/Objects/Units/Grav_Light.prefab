@@ -414,8 +414,9 @@ MonoBehaviour:
   <Powerable>k__BackingField: 0
   <Gatherable>k__BackingField: 0
   <Selectable>k__BackingField: 1
-  <Health>k__BackingField: 80
-  <HealthMax>k__BackingField: 80
+  <Health>k__BackingField:
+    <Current>k__BackingField: 100
+    <Max>k__BackingField: 100
   <EnableTime>k__BackingField: 2
   <WaitTime>k__BackingField: 2
   <DestroyEffect>k__BackingField: {fileID: 100006, guid: 7c442b9b6852b8a4f93306f3d154d471, type: 3}
@@ -435,8 +436,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   <Mass>k__BackingField: 10
-  <Value>k__BackingField: 50
-  <ValueMax>k__BackingField: 50
+  <Value>k__BackingField:
+    <Current>k__BackingField: 10
+    <Max>k__BackingField: 10
 --- !u!114 &5874275229390842670
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -451,8 +453,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <Mass>k__BackingField: 10
   <Power>k__BackingField: 50
-  <Fuel>k__BackingField: 100
-  <FuelMax>k__BackingField: 100
+  <Fuel>k__BackingField:
+    <Current>k__BackingField: 100
+    <Max>k__BackingField: 100
   <FuelUsage>k__BackingField: 1
 --- !u!114 &5594974671478860173
 MonoBehaviour:
@@ -467,12 +470,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   <Mass>k__BackingField: 10
+  <MissilePrefab>k__BackingField: {fileID: 4056876892418310127, guid: 7f568bd701d6ff041ab960a7dd3bc284, type: 3}
   <Damage>k__BackingField: 10
   <Range>k__BackingField: 8
-  <CooldownTime>k__BackingField: 4
-  <MissilePrefab>k__BackingField: {fileID: 4056876892418310127, guid: 7f568bd701d6ff041ab960a7dd3bc284, type: 3}
-  <Ammunition>k__BackingField: 100
-  <AmmunitionMax>k__BackingField: 100
+  <Ammunition>k__BackingField:
+    <Current>k__BackingField: 100
+    <Max>k__BackingField: 100
+  <Reload>k__BackingField:
+    <Current>k__BackingField: 0
+    <Max>k__BackingField: 4
 --- !u!114 &1711648457831509688
 MonoBehaviour:
   m_ObjectHideFlags: 0

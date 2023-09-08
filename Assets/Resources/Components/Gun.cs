@@ -7,8 +7,6 @@ public class Gun : MyComponent
         base.Awake();
 
         GetComponent<MyGameObject>().Orders.AllowOrder(OrderType.Attack);
-
-        Reload.Max = CooldownTime;
     }
 
     protected override void Update()
@@ -27,7 +25,7 @@ public class Gun : MyComponent
 
     public override string GetInfo()
     {
-        return string.Format("{0}, Reload: {1} Ammunition: {2}/{3}", base.GetInfo(), Reload.GetInfo(), Ammunition, AmmunitionMax);
+        return string.Format("{0}, Reload: {1} Ammunition: {2}", base.GetInfo(), Reload.GetInfo(), Ammunition.GetInfo());
     }
 
     public bool IsInRange(Vector3 position)
@@ -37,12 +35,15 @@ public class Gun : MyComponent
 
     public virtual bool CanFire()
     {
-        return Ammunition > 0 && Reload.Finished;
+        return Ammunition.CanDec() && Reload.Finished;
     }
 
     public virtual void Fire(MyGameObject myGameObject, Vector3 position)
     {
     }
+
+    [field: SerializeField]
+    public GameObject MissilePrefab { get; set; }
 
     [field: SerializeField]
     public float Damage { get; set; } = 10.0f;
@@ -51,16 +52,8 @@ public class Gun : MyComponent
     public float Range { get; set; } = 10.0f;
 
     [field: SerializeField]
-    public float CooldownTime { get; set; } = 10.0f;
+    public Counter Ammunition { get; set; } = new Counter(100, 100);
 
     [field: SerializeField]
-    public GameObject MissilePrefab { get; set; }
-
-    [field: SerializeField]
-    public int Ammunition { get; set; } = 100;
-    
-    [field: SerializeField]
-    public int AmmunitionMax { get; set; } = 100;
-
-    public Timer Reload { get; } = new Timer();
+    public Timer Reload { get; set; } = new Timer(10.0f);
 }
