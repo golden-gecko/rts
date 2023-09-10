@@ -16,6 +16,13 @@ public class Shield : MyComponent // TODO: Shield puts health bar in wrong posit
         }
     }
 
+    protected override void Update()
+    {
+        base.Update();
+
+        Capacity.Add(ChargeRate * Time.deltaTime);
+    }
+
     public override string GetInfo()
     {
         return string.Format("{0}, Range: {1:0.}, Power: {2:0.}", base.GetInfo(), Range, Power);
@@ -23,7 +30,7 @@ public class Shield : MyComponent // TODO: Shield puts health bar in wrong posit
 
     public float Absorb(float damage)
     {
-        return damage * Power / 100.0f;
+        return Capacity.Remove(damage * Power);
     }
 
     [field: SerializeField]
@@ -33,5 +40,11 @@ public class Shield : MyComponent // TODO: Shield puts health bar in wrong posit
     public float Range { get; set; } = 4.0f;
 
     [field: SerializeField]
-    public float Power { get; set; } = 50.0f; // From 0 to 100 (0 - no damage is absorbed, 100 - all damage is absorbed).
+    public Progress Capacity { get; set; } = new Progress(100.0f, 100.0f);
+
+    [field: SerializeField]
+    public float Power { get; set; } = 0.2f; // From 0.0 to 1.0 (0.0 - no damage is absorbed, 1.0 - all damage is absorbed).
+
+    [field: SerializeField]
+    public float ChargeRate { get; set; } = 0.1f;
 }

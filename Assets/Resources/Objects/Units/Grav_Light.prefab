@@ -478,8 +478,8 @@ MonoBehaviour:
     <Current>k__BackingField: 100
     <Max>k__BackingField: 100
   <Reload>k__BackingField:
-    <Current>k__BackingField: 0
-    <Max>k__BackingField: 4
+    <Current>k__BackingField: 8
+    <Max>k__BackingField: 8
 --- !u!114 &1711648457831509688
 MonoBehaviour:
   m_ObjectHideFlags: 0

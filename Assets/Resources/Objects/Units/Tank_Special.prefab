@@ -264,8 +264,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <Mass>k__BackingField: 10
   <Value>k__BackingField:
-    <Current>k__BackingField: 10
-    <Max>k__BackingField: 10
+    <Current>k__BackingField: 100
+    <Max>k__BackingField: 100
 --- !u!114 &-5010447674212785321
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -286,7 +286,7 @@ MonoBehaviour:
     <Current>k__BackingField: 100
     <Max>k__BackingField: 100
   <Reload>k__BackingField:
-    <Current>k__BackingField: 0
+    <Current>k__BackingField: 4
     <Max>k__BackingField: 4
 --- !u!114 &-5877654829243037068
 MonoBehaviour:
@@ -317,7 +317,11 @@ MonoBehaviour:
   <Mass>k__BackingField: 10
   <Mesh>k__BackingField: {fileID: 5771986485392630128, guid: a62006f4c02da344bb4994bc0a33cff4, type: 3}
   <Range>k__BackingField: 1
-  <Power>k__BackingField: 50
+  <Capacity>k__BackingField:
+    <Current>k__BackingField: 100
+    <Max>k__BackingField: 100
+  <Power>k__BackingField: 0.2
+  <ChargeRate>k__BackingField: 0.1
 --- !u!1 &5938523042102776864
 GameObject:
   m_ObjectHideFlags: 0

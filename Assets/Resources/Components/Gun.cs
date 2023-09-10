@@ -58,5 +58,5 @@ public class Gun : MyComponent
     public Counter Ammunition { get; set; } = new Counter(100, 100);
 
     [field: SerializeField]
-    public Timer Reload { get; set; } = new Timer(10.0f);
+    public Timer Reload { get; set; } = new Timer(10.0f, 10.0f);
 }

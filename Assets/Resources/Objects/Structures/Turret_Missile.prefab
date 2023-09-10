@@ -163,8 +163,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <Mass>k__BackingField: 10
   <Value>k__BackingField:
-    <Current>k__BackingField: 10
-    <Max>k__BackingField: 10
+    <Current>k__BackingField: 100
+    <Max>k__BackingField: 100
 --- !u!114 &1663271716841619100
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -185,7 +185,7 @@ MonoBehaviour:
     <Current>k__BackingField: 100
     <Max>k__BackingField: 100
   <Reload>k__BackingField:
-    <Current>k__BackingField: 0
+    <Current>k__BackingField: 4
     <Max>k__BackingField: 4
 --- !u!114 &8291041007294955635
 MonoBehaviour:

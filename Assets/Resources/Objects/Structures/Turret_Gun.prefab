@@ -180,6 +180,7 @@ GameObject:
   - component: {fileID: 7435805196623170354}
   - component: {fileID: 6061490095772530966}
   - component: {fileID: 7198170055507870707}
+  - component: {fileID: 1451842189104751394}
   m_Layer: 0
   m_Name: Turret_Gun
   m_TagString: Untagged
@@ -246,8 +247,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <Mass>k__BackingField: 10
   <Value>k__BackingField:
-    <Current>k__BackingField: 10
-    <Max>k__BackingField: 10
+    <Current>k__BackingField: 100
+    <Max>k__BackingField: 100
 --- !u!114 &6061490095772530966
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -268,7 +269,7 @@ MonoBehaviour:
     <Current>k__BackingField: 100
     <Max>k__BackingField: 100
   <Reload>k__BackingField:
-    <Current>k__BackingField: 0
+    <Current>k__BackingField: 4
     <Max>k__BackingField: 4
 --- !u!114 &7198170055507870707
 MonoBehaviour:
@@ -284,6 +285,26 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <Mass>k__BackingField: 10
   <Range>k__BackingField: 10
+--- !u!114 &1451842189104751394
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6239037674919067970}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5c0cca40e845ed043ae3103480c550a9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  <Mass>k__BackingField: 10
+  <Mesh>k__BackingField: {fileID: 5771986485392630128, guid: a62006f4c02da344bb4994bc0a33cff4, type: 3}
+  <Range>k__BackingField: 4
+  <Capacity>k__BackingField:
+    <Current>k__BackingField: 100
+    <Max>k__BackingField: 100
+  <Power>k__BackingField: 0.2
+  <ChargeRate>k__BackingField: 0.1
 --- !u!1 &7684841566980852796
 GameObject:
   m_ObjectHideFlags: 0

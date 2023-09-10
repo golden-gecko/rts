@@ -504,6 +504,7 @@ MonoBehaviour:
   <TimeToLive>k__BackingField: -1
   <Altitude>k__BackingField: 0
   <MapLayers>k__BackingField: 03000000
+  ShowIndicators: 1
 --- !u!114 &5283008689776274222
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -542,7 +543,7 @@ MonoBehaviour:
     <Current>k__BackingField: 100
     <Max>k__BackingField: 100
   <Reload>k__BackingField:
-    <Current>k__BackingField: 0
+    <Current>k__BackingField: 4
     <Max>k__BackingField: 4
 --- !u!114 &8070766554597973210
 MonoBehaviour:

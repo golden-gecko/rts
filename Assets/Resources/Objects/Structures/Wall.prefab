@@ -166,6 +166,7 @@ MonoBehaviour:
   <TimeToLive>k__BackingField: -1
   <Altitude>k__BackingField: 0
   <MapLayers>k__BackingField: 01000000
+  ShowIndicators: 1
   <PowerUsage>k__BackingField: 1
 --- !u!114 &-309273742846007426
 MonoBehaviour:
@@ -181,8 +182,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <Mass>k__BackingField: 10
   <Value>k__BackingField:
-    <Current>k__BackingField: 10
-    <Max>k__BackingField: 10
+    <Current>k__BackingField: 100
+    <Max>k__BackingField: 100
 --- !u!1001 &1819888346999492130
 PrefabInstance:
   m_ObjectHideFlags: 0

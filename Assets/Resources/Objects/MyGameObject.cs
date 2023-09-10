@@ -11,9 +11,11 @@ public class MyGameObject : MonoBehaviour
         visual = transform.Find("Visual");
 
         bar = visual.transform.Find("Bar");
-        barHealth = bar.Find("Health").GetComponent<Image>();
         barAmmunition = bar.Find("Ammunition").GetComponent<Image>();
+        barArmour = bar.Find("Armour").GetComponent<Image>();
+        barHealth = bar.Find("Health").GetComponent<Image>();
         barFuel = bar.Find("Fuel").GetComponent<Image>();
+        barShield = bar.Find("Shield").GetComponent<Image>();
 
         range = visual.transform.Find("Range");
         rangeGun = range.Find("Gun");
@@ -132,15 +134,25 @@ public class MyGameObject : MonoBehaviour
         bar.transform.LookAt(Camera.main.transform.position);
         bar.transform.Rotate(0.0f, 180.0f, 0.0f);
 
-        // Update health.
-        barHealth.fillAmount = Health.Percent;
+        Storage storage = GetComponent<Storage>(); // TODO: Add support for multiple components.
+
+        // Update armour.
+        Armour armour = GetComponent<Armour>();
+
+        if (armour != null)
+        {
+            barArmour.fillAmount = armour.Value.Percent;
+            barArmour.gameObject.SetActive(true);
+        }
+        else
+        {
+            barArmour.gameObject.SetActive(false);
+        }
 
         // Update ammunition.
-        Gun gun = GetComponent<Gun>(); // TODO: Add support for multiple components.
-
-        if (gun != null)
+        if (storage != null)
         {
-            barAmmunition.fillAmount = gun.Ammunition.Percent;
+            barAmmunition.fillAmount = storage.Resources.Percent("Ammunition");
             barAmmunition.gameObject.SetActive(true);
         }
         else
@@ -149,16 +161,30 @@ public class MyGameObject : MonoBehaviour
         }
 
         // Update fuel.
-        Engine engine = GetComponent<Engine>(); // TODO: Add support for multiple components.
-
-        if (engine != null)
+        if (storage != null)
         {
-            barFuel.fillAmount = engine.Fuel.Percent;
+            barFuel.fillAmount = storage.Resources.Percent("Fuel");
             barFuel.gameObject.SetActive(true);
         }
         else
         {
             barFuel.gameObject.SetActive(false);
+        }
+
+        // Update health.
+        barHealth.fillAmount = Health.Percent;
+
+        // Update shield.
+        Shield shield = GetComponent<Shield>();
+
+        if (shield != null)
+        {
+            barShield.fillAmount = shield.Capacity.Percent;
+            barShield.gameObject.SetActive(true);
+        }
+        else
+        {
+            barShield.gameObject.SetActive(false);
         }
     }
 
@@ -843,9 +869,11 @@ public class MyGameObject : MonoBehaviour
     private Transform visual;
 
     private Transform bar;
-    private Image barHealth;
     private Image barAmmunition;
+    private Image barArmour;
     private Image barFuel;
+    private Image barHealth;
+    private Image barShield;
 
     private Transform range;
     private Transform rangeGun;

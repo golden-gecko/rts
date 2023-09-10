@@ -86,6 +86,13 @@ public class ResourceContainer
         return resource != null ? resource.Storage : 0;
     }
 
+    public float Percent(string name)
+    {
+        Resource resource = Items.Find(x => x.Name == name);
+
+        return resource != null ? resource.Percent : 0.0f;
+    }
+
     public string GetInfo()
     {
         string info = string.Empty;
