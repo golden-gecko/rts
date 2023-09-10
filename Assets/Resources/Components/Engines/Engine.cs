@@ -1,5 +1,7 @@
+using UnityEditor.SceneManagement;
 using UnityEngine;
 
+[RequireComponent(typeof(Storage))]
 public class Engine : MyComponent
 {
     protected override void Awake()
@@ -19,34 +21,50 @@ public class Engine : MyComponent
         GetComponent<MyGameObject>().OrderHandlers[OrderType.Patrol] = new OrderHandlerPatrol();
     }
 
-    public bool CanDrive(float distance)
+    public override string GetInfo()
     {
-        return Fuel.CanRemove(distance * FuelUsage);
+        Storage storage = GetComponent<Storage>();
+
+        return string.Format("{0}, Power: {1:0.}, Fuel: {2}/{3}/{4} Speed: {5:0.}", base.GetInfo(), Power, storage.Resources.Current("Fuel"), storage.Resources.Max("Fuel"), FuelUsage, Speed);
     }
 
-    public void Drive(float distance)
+    public bool CanDrive(float distance) // TODO: This will make unit move a bit when fuel is depleted. Remove fuel first and then move.
+    {
+        if (distanceDriven + distance < DistancePerUnit)
+        {
+            return true;
+        }
+
+        return GetComponent<Storage>().Resources.CanRemove("Fuel", 1);
+    }
+
+    public void Drive(float distance) // TODO: This will make unit move a bit when fuel is depleted. Remove fuel first and then move.
     {
         if (CanDrive(distance) == false)
         {
             return;
         }
 
-        Fuel.Remove(distance * FuelUsage);
-    }
+        distanceDriven += distance;
 
-    public override string GetInfo()
-    {
-        return string.Format("{0}, Power: {1:0.}, Fuel: {2:0.}/{3:0.} Speed: {4:0.}", base.GetInfo(), Power, Fuel, FuelUsage, Speed);
+        if (distanceDriven > DistancePerUnit)
+        {
+            int unitsUsed = Mathf.FloorToInt(distanceDriven / DistancePerUnit);
+
+            GetComponent<Storage>().Resources.Remove("Fuel", unitsUsed);
+
+            distanceDriven -= unitsUsed * DistancePerUnit;
+        }
     }
 
     [field: SerializeField]
     public float Power { get; set; } = 50.0f;
-
-    [field: SerializeField]
-    public Progress Fuel { get; set; } = new Progress(100.0f, 100.0f);
-
     [field: SerializeField]
     public float FuelUsage { get; set; } = 1.0f;
 
     public float Speed { get => Power / GetComponent<MyGameObject>().Mass; }
+
+    private float DistancePerUnit { get => 1.0f / FuelUsage; }
+
+    private float distanceDriven = 0.0f;
 }

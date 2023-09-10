@@ -264,6 +264,7 @@ GameObject:
   - component: {fileID: 3529955628967414671}
   - component: {fileID: 5868722175879569043}
   - component: {fileID: -1838723375037300516}
+  - component: {fileID: 6933238500706561874}
   m_Layer: 0
   m_Name: Trike
   m_TagString: Untagged
@@ -345,10 +346,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <Mass>k__BackingField: 10
   <Power>k__BackingField: 40
-  <Fuel>k__BackingField:
-    <Current>k__BackingField: 100
-    <Max>k__BackingField: 100
-  <FuelUsage>k__BackingField: 1
+  <FuelUsage>k__BackingField: 0.1
 --- !u!114 &5868722175879569043
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -365,9 +363,6 @@ MonoBehaviour:
   <MissilePrefab>k__BackingField: {fileID: 3841255586236475405, guid: 86513724c5de2df4da484cb23191a7e5, type: 3}
   <Damage>k__BackingField: 10
   <Range>k__BackingField: 4
-  <Ammunition>k__BackingField:
-    <Current>k__BackingField: 100
-    <Max>k__BackingField: 100
   <Reload>k__BackingField:
     <Current>k__BackingField: 2
     <Max>k__BackingField: 2
@@ -385,6 +380,31 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <Mass>k__BackingField: 10
   <Range>k__BackingField: 6
+--- !u!114 &6933238500706561874
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7348057453300986480}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9f7fc2f43637b07428d9ff8d0e38edaa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  <Mass>k__BackingField: 10
+  RaiseResourceFlags: 0
+  <ResourceUsage>k__BackingField: 1
+  <Resources>k__BackingField:
+    <Items>k__BackingField:
+    - <Current>k__BackingField: 100
+      <Max>k__BackingField: 100
+      <Name>k__BackingField: Ammunition
+      <Direction>k__BackingField: 1
+    - <Current>k__BackingField: 100
+      <Max>k__BackingField: 100
+      <Name>k__BackingField: Fuel
+      <Direction>k__BackingField: 1
 --- !u!1 &7699920138671276123
 GameObject:
   m_ObjectHideFlags: 0

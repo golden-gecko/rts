@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 5835790162013295089}
   - component: {fileID: -610857997906868978}
   - component: {fileID: -5262691146204725381}
+  - component: {fileID: 9050757254007650475}
   m_Layer: 0
   m_Name: Rocket
   m_TagString: Untagged
@@ -106,11 +107,28 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   <Mass>k__BackingField: 1
-  <Power>k__BackingField: 10
+  <Power>k__BackingField: 80
   <Fuel>k__BackingField:
     <Current>k__BackingField: 100
     <Max>k__BackingField: 100
   <FuelUsage>k__BackingField: 1
+--- !u!114 &9050757254007650475
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3841255586236475405}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9f7fc2f43637b07428d9ff8d0e38edaa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  <Mass>k__BackingField: 10
+  RaiseResourceFlags: 0
+  <ResourceUsage>k__BackingField: 1
+  <Resources>k__BackingField:
+    <Items>k__BackingField: []
 --- !u!1 &8178223464893241826
 GameObject:
   m_ObjectHideFlags: 0

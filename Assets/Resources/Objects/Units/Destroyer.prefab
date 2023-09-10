@@ -454,6 +454,7 @@ GameObject:
   - component: {fileID: 5283008689776274222}
   - component: {fileID: -7243817506053643692}
   - component: {fileID: 8070766554597973210}
+  - component: {fileID: 4069589352623169453}
   m_Layer: 0
   m_Name: Destroyer
   m_TagString: Untagged
@@ -519,10 +520,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <Mass>k__BackingField: 10
   <Power>k__BackingField: 50
-  <Fuel>k__BackingField:
-    <Current>k__BackingField: 100
-    <Max>k__BackingField: 100
-  <FuelUsage>k__BackingField: 1
+  <FuelUsage>k__BackingField: 0.1
 --- !u!114 &-7243817506053643692
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -539,9 +537,6 @@ MonoBehaviour:
   <MissilePrefab>k__BackingField: {fileID: 3841255586236475405, guid: 86513724c5de2df4da484cb23191a7e5, type: 3}
   <Damage>k__BackingField: 10
   <Range>k__BackingField: 8
-  <Ammunition>k__BackingField:
-    <Current>k__BackingField: 100
-    <Max>k__BackingField: 100
   <Reload>k__BackingField:
     <Current>k__BackingField: 4
     <Max>k__BackingField: 4
@@ -559,6 +554,31 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <Mass>k__BackingField: 10
   <Range>k__BackingField: 10
+--- !u!114 &4069589352623169453
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9059119356659640769}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9f7fc2f43637b07428d9ff8d0e38edaa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  <Mass>k__BackingField: 10
+  RaiseResourceFlags: 0
+  <ResourceUsage>k__BackingField: 1
+  <Resources>k__BackingField:
+    <Items>k__BackingField:
+    - <Current>k__BackingField: 100
+      <Max>k__BackingField: 100
+      <Name>k__BackingField: Ammunition
+      <Direction>k__BackingField: 1
+    - <Current>k__BackingField: 100
+      <Max>k__BackingField: 100
+      <Name>k__BackingField: Fuel
+      <Direction>k__BackingField: 1
 --- !u!1001 &9089804586289366234
 PrefabInstance:
   m_ObjectHideFlags: 0
