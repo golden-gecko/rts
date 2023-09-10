@@ -646,7 +646,7 @@ public class HUD : MonoBehaviour
     {
         RaycastHit hitInfo;
 
-        if (MouseToRaycast(out hitInfo))
+        if (Cursor == null && MouseToRaycast(out hitInfo))
         {
             Hovered = hitInfo.transform.GetComponentInParent<MyGameObject>();
         }

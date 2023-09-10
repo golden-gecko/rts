@@ -6,56 +6,28 @@ using UnityEngine;
 [Serializable]
 public class ResourceContainer
 {
-    public void Add(string name, int value)
+    public void Init(string name, int value = 0, int max = 0, ResourceDirection direction = ResourceDirection.Both)
     {
         Resource resource = Items.Find(x => x.Name == name);
 
-        if (resource != null)
-        {
-            resource.Add(value);
-        }
-        else
-        {
-            Items.Add(new Resource(name, value));
-        }
-    }
-
-    public void Add(string name, int value, int max) // TODO: Max is ignored on second call.
-    {
-        Resource resource = Items.Find(x => x.Name == name);
-
-        if (resource != null)
-        {
-            resource.Add(value);
-        }
-        else
-        {
-            Items.Add(new Resource(name, value, max));
-        }
-    }
-
-    public void Add(string name, int value, int max, ResourceDirection direction) // TODO: Max is ignored on second call.
-    {
-        Resource resource = Items.Find(x => x.Name == name);
-
-        if (resource != null)
-        {
-            resource.Add(value);
-        }
-        else
+        if (resource == null)
         {
             Items.Add(new Resource(name, value, max, direction));
         }
     }
 
-    public void Remove(string name, int value) // TODO: Return removed value.
+    public int Add(string name, int value)
     {
         Resource resource = Items.Find(x => x.Name == name);
 
-        if (resource != null)
-        {
-            resource.Remove(value);
-        }
+        return resource != null ? resource.Add(value) : 0;
+    }
+
+    public int Remove(string name, int value)
+    {
+        Resource resource = Items.Find(x => x.Name == name);
+
+        return resource != null ? resource.Remove(value) : 0;
     }
 
     public void Inc(string name)

@@ -1,31 +1,13 @@
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class MyGameObject : MonoBehaviour
 {
     protected virtual void Awake()
     {
         body = transform.Find("Body");
-        visual = transform.Find("Visual");
-
-        bar = visual.transform.Find("Bar");
-        barAmmunition = bar.Find("Ammunition").GetComponent<Image>();
-        barArmour = bar.Find("Armour").GetComponent<Image>();
-        barHealth = bar.Find("Health").GetComponent<Image>();
-        barFuel = bar.Find("Fuel").GetComponent<Image>();
-        barShield = bar.Find("Shield").GetComponent<Image>();
-
-        range = visual.transform.Find("Range");
-        rangeGun = range.Find("Gun");
-        rangePower = range.Find("Power");
-        rangeRadar = range.Find("Radar");
-        rangeSight = range.Find("Sight");
-
-        debris = visual.transform.Find("Debris");
-        selection = visual.transform.Find("Selection");
-        trace = visual.transform.Find("Trace");
+        indicators = transform.Find("Indicators");
 
         Orders.AllowOrder(OrderType.Destroy); // TODO: Move to component.
         Orders.AllowOrder(OrderType.Disable);
@@ -55,11 +37,8 @@ public class MyGameObject : MonoBehaviour
 
     protected virtual void Start()
     {
-        visual.gameObject.SetActive(ShowIndicators);
-
         UpdatePosition();
         UpdateSelection();
-        UpdateTrace();
     }
 
     protected virtual void Update()
@@ -94,7 +73,6 @@ public class MyGameObject : MonoBehaviour
             RemoveConstructionResourceFlags();
         }
 
-        UpdateVisual();
         UpdateVisibility();
     }
 
@@ -118,74 +96,6 @@ public class MyGameObject : MonoBehaviour
         }
     }
 
-    protected void UpdateVisual()
-    {
-        if (bar.gameObject.activeInHierarchy == false)
-        {
-            return;
-        }
-
-        Vector3 size = Size;
-
-        bar.transform.localPosition = new Vector3(0.0f, size.y, 0.0f);
-        bar.transform.localScale = new Vector3(Mathf.Max(size.x, 1.0f), 1.0f, 1.0f);
-        bar.transform.LookAt(Camera.main.transform.position);
-        bar.transform.Rotate(0.0f, 180.0f, 0.0f);
-
-        Storage storage = GetComponent<Storage>(); // TODO: Add support for multiple components.
-
-        // Update armour.
-        Armour armour = GetComponent<Armour>();
-
-        if (armour != null)
-        {
-            barArmour.fillAmount = armour.Value.Percent;
-            barArmour.gameObject.SetActive(true);
-        }
-        else
-        {
-            barArmour.gameObject.SetActive(false);
-        }
-
-        // Update ammunition.
-        if (storage != null)
-        {
-            barAmmunition.fillAmount = storage.Resources.Percent("Ammunition");
-            barAmmunition.gameObject.SetActive(true);
-        }
-        else
-        {
-            barAmmunition.gameObject.SetActive(false);
-        }
-
-        // Update fuel.
-        if (storage != null)
-        {
-            barFuel.fillAmount = storage.Resources.Percent("Fuel");
-            barFuel.gameObject.SetActive(true);
-        }
-        else
-        {
-            barFuel.gameObject.SetActive(false);
-        }
-
-        // Update health.
-        barHealth.fillAmount = Health.Percent;
-
-        // Update shield.
-        Shield shield = GetComponent<Shield>();
-
-        if (shield != null)
-        {
-            barShield.fillAmount = shield.Capacity.Percent;
-            barShield.gameObject.SetActive(true);
-        }
-        else
-        {
-            barShield.gameObject.SetActive(false);
-        }
-    }
-
     protected void UpdateVisibility()
     {
         Player active = HUD.Instance.ActivePlayer;
@@ -197,9 +107,7 @@ public class MyGameObject : MonoBehaviour
                 renderer.enabled = true;
             }
 
-            bar.gameObject.SetActive(true);
-            range.gameObject.SetActive(true);
-            trace.gameObject.SetActive(false);
+            GetComponentInChildren<Indicators>().OnShow();
         }
         else if (Map.Instance.IsVisibleByRadar(this, active))
         {
@@ -208,9 +116,7 @@ public class MyGameObject : MonoBehaviour
                 renderer.enabled = false;
             }
 
-            bar.gameObject.SetActive(false);
-            range.gameObject.SetActive(false);
-            trace.gameObject.SetActive(true);
+            GetComponentInChildren<Indicators>().OnRadar();
         }
         else
         {
@@ -219,11 +125,10 @@ public class MyGameObject : MonoBehaviour
                 renderer.enabled = false;
             }
 
-            bar.gameObject.SetActive(false);
-            range.gameObject.SetActive(false);
-            trace.gameObject.SetActive(false);
+            GetComponentInChildren<Indicators>().OnHide();
         }
     }
+
     public void Assemble(string prefab)
     {
         Orders.Add(Order.Assemble(prefab));
@@ -522,9 +427,8 @@ public class MyGameObject : MonoBehaviour
         }
 
         body.gameObject.SetActive(false);
-        bar.gameObject.SetActive(false);
-        debris.gameObject.SetActive(true); // TODO: Move destroyed object to ground level.
-        range.gameObject.SetActive(false);
+
+        GetComponentInChildren<Indicators>().OnDestroy_();
     }
 
     public void OnRepair(float value)
@@ -539,43 +443,7 @@ public class MyGameObject : MonoBehaviour
             return;
         }
 
-        Vector3 scale = transform.localScale;
-        Vector3 size = Size;
-
-        Gun gun = GetComponent<Gun>();
-
-        if (gun != null)
-        {
-            rangeGun.gameObject.SetActive(status);
-            rangeGun.localScale = new Vector3(gun.Range * 2.0f / scale.x, gun.Range * 2.0f / scale.z, 1.0f);
-        }
-
-        PowerPlant powerPlant = GetComponent<PowerPlant>();
-
-        if (powerPlant != null)
-        {
-            rangePower.gameObject.SetActive(status);
-            rangePower.localScale = new Vector3(powerPlant.Range * 2.0f / scale.x, powerPlant.Range * 2.0f / scale.z, 1.0f);
-        }
-
-        Radar radar = GetComponent<Radar>();
-
-        if (radar != null)
-        {
-            rangeRadar.gameObject.SetActive(status);
-            rangeRadar.localScale = new Vector3(radar.Range * 2.0f / scale.x, radar.Range * 2.0f / scale.z, 1.0f);
-        }
-
-        Sight sight = GetComponent<Sight>();
-
-        if (sight != null)
-        {
-            rangeSight.gameObject.SetActive(status);
-            rangeSight.localScale = new Vector3(sight.Range * 2.0f / scale.x, sight.Range * 2.0f / scale.z, 1.0f);
-        }
-
-        selection.gameObject.SetActive(status);
-        selection.localScale = new Vector3(size.x * 1.1f, size.z * 1.1f, 1.0f);
+        GetComponentInChildren<Indicators>().OnSelect(status);
     }
 
     protected virtual void UpdatePosition()
@@ -592,16 +460,8 @@ public class MyGameObject : MonoBehaviour
     {
         if (Player != null)
         {
-            selection.GetComponent<SpriteRenderer>().sprite = Player.SelectionSprite;
+            GetComponentInChildren<Indicators>().OnPlayerChange(Player);
         }
-    }
-
-    public void UpdateTrace()
-    {
-        Vector3 scale = transform.localScale;
-        float radius = Radius;
-
-        trace.localScale = new Vector3(radius / scale.x, radius / scale.y, radius / scale.z);
     }
 
     private void ProcessOrders()
@@ -811,25 +671,8 @@ public class MyGameObject : MonoBehaviour
 
     public Dictionary<OrderType, OrderHandler> OrderHandlers { get; } = new Dictionary<OrderType, OrderHandler>();
 
-    private Transform body;
-    private Transform visual;
-
-    private Transform bar;
-    private Image barAmmunition;
-    private Image barArmour;
-    private Image barFuel;
-    private Image barHealth;
-    private Image barShield;
-
-    private Transform range;
-    private Transform rangeGun;
-    private Transform rangePower;
-    private Transform rangeRadar;
-    private Transform rangeSight;
-
-    private Transform debris;
-    private Transform selection;
-    private Transform trace;
-
     private Timer LiveTimer = new Timer();
+
+    private Transform body;
+    private Transform indicators;
 }

@@ -10,24 +10,22 @@ public class Counter
         Max = max;
     }
 
-    public void Add(int current)
+    public int Add(int value)
     {
-        Current += current;
+        int valueToAdd = Mathf.Min(Max - Current, value);
 
-        if (Current > Max)
-        {
-            Current = Max;
-        }
+        Current = Mathf.Clamp(Current + value, 0, Max);
+
+        return valueToAdd;
     }
 
-    public void Remove(int current)
+    public int Remove(int value)
     {
-        Current -= current;
+        int valueToRemove = Mathf.Min(Current, value);
 
-        if (Current < 0)
-        {
-            Current = 0;
-        }
+        Current = Mathf.Clamp(Current - value, 0, Max);
+
+        return valueToRemove;
     }
 
     public void Inc()

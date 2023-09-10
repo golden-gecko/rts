@@ -108,9 +108,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <Mass>k__BackingField: 1
   <Power>k__BackingField: 80
-  <Fuel>k__BackingField:
-    <Current>k__BackingField: 100
-    <Max>k__BackingField: 100
   <FuelUsage>k__BackingField: 1
 --- !u!114 &9050757254007650475
 MonoBehaviour:
@@ -288,7 +285,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4051881364568090456, guid: 8da4a421bde8f734593a8c934f793019, type: 3}
       propertyPath: m_Name
-      value: Visual
+      value: Indicators
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
