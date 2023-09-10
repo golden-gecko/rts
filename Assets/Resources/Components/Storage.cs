@@ -94,7 +94,7 @@ public class Storage : MyComponent
     public bool RaiseResourceFlags = true;
 
     [field: SerializeField]
-    public int ResourceUsage { get; set; } = 1;
+    public int ResourceUsage { get; set; } = 1; // Number of resources loaded or unloaded per second.
 
     [field: SerializeField]
     public ResourceContainer Resources { get; set; } = new ResourceContainer();
