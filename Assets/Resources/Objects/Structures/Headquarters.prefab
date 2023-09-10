@@ -93,11 +93,11 @@ MonoBehaviour:
       <Direction>k__BackingField: 0
     - <Current>k__BackingField: 100
       <Max>k__BackingField: 100
-      <Name>k__BackingField: Iron
+      <Name>k__BackingField: Fuel
       <Direction>k__BackingField: 0
     - <Current>k__BackingField: 100
       <Max>k__BackingField: 100
-      <Name>k__BackingField: Fuel
+      <Name>k__BackingField: Iron
       <Direction>k__BackingField: 0
     - <Current>k__BackingField: 100
       <Max>k__BackingField: 100
