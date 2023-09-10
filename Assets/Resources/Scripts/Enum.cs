@@ -18,6 +18,7 @@ public enum MyGameObjectMapLayer
 public enum MyGameObjectState
 {
     Cursor,
+    Destroyed,
     Operational,
     UnderAssembly,
     UnderConstruction,

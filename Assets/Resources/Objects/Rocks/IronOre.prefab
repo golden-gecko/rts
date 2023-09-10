@@ -61,6 +61,7 @@ MonoBehaviour:
   <TimeToLive>k__BackingField: -1
   <Altitude>k__BackingField: 0
   <MapLayers>k__BackingField: 
+  ShowIndicators: 1
 --- !u!114 &4732557405102183231
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -173,8 +174,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Size: {x: 2.106546, y: 1.6746428, z: 1.8475685}
+  m_Center: {x: -0.06991202, y: -0.02286923, z: -0.039595723}
 --- !u!1001 &2887922435260759
 PrefabInstance:
   m_ObjectHideFlags: 0

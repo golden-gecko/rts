@@ -7,7 +7,7 @@ public class OrderHandlerGather : OrderHandler
     {
         Order order = myGameObject.Orders.First();
 
-        if (IsValid(order) == false)
+        if (IsValid(myGameObject, order) == false)
         {
             Fail(myGameObject);
 
@@ -67,9 +67,9 @@ public class OrderHandlerGather : OrderHandler
         }
     }
 
-    protected override bool IsValid(Order order)
+    protected override bool IsValid(MyGameObject myGameObject, Order order)
     {
-        return order.IsTargetGameObject == true || order.Resource.Length > 0;
+        return (order.IsTargetGameObject == true && order.TargetGameObject != myGameObject) || order.Resource.Length > 0;
     }
 
     private void GatherFromObject(MyGameObject myGameObject, MyGameObject myResource, MyGameObject storage)

@@ -111,14 +111,16 @@ MonoBehaviour:
   <Powerable>k__BackingField: 0
   <Gatherable>k__BackingField: 0
   <Selectable>k__BackingField: 0
-  <Health>k__BackingField: 1
-  <HealthMax>k__BackingField: 1
+  <Health>k__BackingField:
+    <Current>k__BackingField: 100
+    <Max>k__BackingField: 100
   <EnableTime>k__BackingField: 2
   <WaitTime>k__BackingField: 0
   <DestroyEffect>k__BackingField: {fileID: 0}
   <TimeToLive>k__BackingField: -1
   <Altitude>k__BackingField: 0
   <MapLayers>k__BackingField: 0100000003000000
+  ShowIndicators: 0
   FrequencyInSecondsMin: 120
   FrequencyInSecondsMax: 180
   <Damage>k__BackingField: 20

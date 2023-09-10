@@ -4,7 +4,7 @@ public class OrderHandlerUseSkill : OrderHandler
     {
         Order order = myGameObject.Orders.First();
 
-        if (IsValid(order) == false)
+        if (IsValid(myGameObject, order) == false)
         {
             Fail(myGameObject);
 
@@ -31,7 +31,7 @@ public class OrderHandlerUseSkill : OrderHandler
         myGameObject.Orders.Pop();
     }
 
-    protected override bool IsValid(Order order)
+    protected override bool IsValid(MyGameObject myGameObject, Order order)
     {
         return order.Skill.Length > 0;
     }

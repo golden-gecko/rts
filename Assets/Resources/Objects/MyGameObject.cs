@@ -21,6 +21,7 @@ public class MyGameObject : MonoBehaviour
         rangeRadar = range.Find("Radar");
         rangeSight = range.Find("Sight");
 
+        debris = visual.transform.Find("Debris");
         selection = visual.transform.Find("Selection");
         trace = visual.transform.Find("Trace");
 
@@ -52,6 +53,8 @@ public class MyGameObject : MonoBehaviour
 
     protected virtual void Start()
     {
+        visual.gameObject.SetActive(ShowIndicators);
+
         UpdatePosition();
         UpdateSelection();
         UpdateTrace();
@@ -76,9 +79,6 @@ public class MyGameObject : MonoBehaviour
                 case MyGameObjectState.Operational:
                     ProcessOrders();
                     RaiseResourceFlags();
-                    break;
-
-                case MyGameObjectState.UnderAssembly:
                     break;
 
                 case MyGameObjectState.UnderConstruction:
@@ -120,8 +120,15 @@ public class MyGameObject : MonoBehaviour
 
     protected void UpdateVisual()
     {
-        bar.transform.localPosition = new Vector3(0.0f, 3.0f, 0.0f);
-        bar.transform.localScale = new Vector3(1.0f, 1.0f, 1.0f);
+        if (bar.gameObject.activeInHierarchy == false)
+        {
+            return;
+        }
+
+        Vector3 size = Size;
+
+        bar.transform.localPosition = new Vector3(0.0f, size.y, 0.0f);
+        bar.transform.localScale = new Vector3(Mathf.Max(size.x, 1.0f), 1.0f, 1.0f);
         bar.transform.LookAt(Camera.main.transform.position);
         bar.transform.Rotate(0.0f, 180.0f, 0.0f);
 
@@ -166,6 +173,8 @@ public class MyGameObject : MonoBehaviour
                 renderer.enabled = true;
             }
 
+            bar.gameObject.SetActive(true);
+            range.gameObject.SetActive(true);
             trace.gameObject.SetActive(false);
         }
         else if (Map.Instance.IsVisibleByRadar(this, active))
@@ -175,6 +184,8 @@ public class MyGameObject : MonoBehaviour
                 renderer.enabled = false;
             }
 
+            bar.gameObject.SetActive(false);
+            range.gameObject.SetActive(false);
             trace.gameObject.SetActive(true);
         }
         else
@@ -184,6 +195,8 @@ public class MyGameObject : MonoBehaviour
                 renderer.enabled = false;
             }
 
+            bar.gameObject.SetActive(false);
+            range.gameObject.SetActive(false);
             trace.gameObject.SetActive(false);
         }
     }
@@ -484,7 +497,10 @@ public class MyGameObject : MonoBehaviour
             Instantiate(DestroyEffect, Position, Quaternion.identity);
         }
 
-        Destroy(gameObject);
+        body.gameObject.SetActive(false);
+        bar.gameObject.SetActive(false);
+        debris.gameObject.SetActive(true); // TODO: Move destroyed object to ground level.
+        range.gameObject.SetActive(false);
     }
 
     public void OnRepair(float value)
@@ -732,16 +748,21 @@ public class MyGameObject : MonoBehaviour
     {
         get 
         {
-            Vector3 size = Vector3.zero;
+            Vector3 min = new Vector3(float.MaxValue, float.MaxValue, float.MaxValue);
+            Vector3 max = new Vector3(float.MinValue, float.MinValue, float.MinValue);
 
             foreach (Collider collider in GetComponentsInChildren<Collider>())
             {
-                size.x = Mathf.Max(size.x, collider.bounds.size.x);
-                size.y = Mathf.Max(size.y, collider.bounds.size.y);
-                size.z = Mathf.Max(size.z, collider.bounds.size.z);
+                min.x = Mathf.Min(min.x, collider.bounds.min.x);
+                min.y = Mathf.Min(min.y, collider.bounds.min.y);
+                min.z = Mathf.Min(min.z, collider.bounds.min.z);
+
+                max.x = Mathf.Max(max.x, collider.bounds.max.x);
+                max.y = Mathf.Max(max.y, collider.bounds.max.y);
+                max.z = Mathf.Max(max.z, collider.bounds.max.z);
             }
 
-            return size;
+            return max - min;
         }
     }
 
@@ -832,6 +853,7 @@ public class MyGameObject : MonoBehaviour
     private Transform rangeRadar;
     private Transform rangeSight;
 
+    private Transform debris;
     private Transform selection;
     private Transform trace;
 

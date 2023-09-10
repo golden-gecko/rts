@@ -244,6 +244,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: -1134350671883856829, guid: 0724eebae05d77a4f9efb0701d38dc78, type: 3}
+      propertyPath: <Player>k__BackingField
+      value: 
+      objectReference: {fileID: 1422761130}
     - target: {fileID: -756073528101837539, guid: 0724eebae05d77a4f9efb0701d38dc78, type: 3}
       propertyPath: <Player>k__BackingField
       value: 
@@ -886,10 +890,10 @@ SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
   - {fileID: 450540953}
+  - {fileID: 505519082}
   - {fileID: 1590965328}
   - {fileID: 1047477825}
   - {fileID: 473583603}
-  - {fileID: 505519082}
   - {fileID: 2103616241}
   - {fileID: 1089419853}
   - {fileID: 1635110302}

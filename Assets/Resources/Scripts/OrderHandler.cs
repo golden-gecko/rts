@@ -4,7 +4,7 @@ public class OrderHandler
     {
     }
 
-    protected virtual bool IsValid(Order order)
+    protected virtual bool IsValid(MyGameObject myGameObject, Order order)
     {
         return true;
     }

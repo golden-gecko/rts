@@ -60,6 +60,7 @@ MonoBehaviour:
   <TimeToLive>k__BackingField: -1
   <Altitude>k__BackingField: 0
   <MapLayers>k__BackingField: 04000000
+  ShowIndicators: 0
   <FireEffectPrefab>k__BackingField: {fileID: 0}
   <HitEffectPrefab>k__BackingField: {fileID: 1141330259687333427, guid: f4732139be8d4054a825d2fb80594129, type: 3}
   <Damage>k__BackingField: 10

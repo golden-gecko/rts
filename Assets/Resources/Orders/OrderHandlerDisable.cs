@@ -6,7 +6,7 @@ public class OrderHandlerDisable : OrderHandler
     {
         Order order = myGameObject.Orders.First();
 
-        if (IsValid(order) == false)
+        if (IsValid(myGameObject, order) == false)
         {
             Fail(myGameObject);
 
