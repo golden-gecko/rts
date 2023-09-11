@@ -16,6 +16,8 @@ public class Storage : MyComponent
         parent.OrderHandlers[OrderType.Load] = new OrderHandlerLoad();
         parent.OrderHandlers[OrderType.Transport] = new OrderHandlerTransport();
         parent.OrderHandlers[OrderType.Unload] = new OrderHandlerUnload();
+
+        // TODO: Move ammunition and fuel to seperate containers (maybe Gun and Engine) to prevent workers from emptying all the fuel.
     }
 
     protected override void Update()

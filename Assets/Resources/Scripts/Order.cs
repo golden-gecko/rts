@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Order
@@ -294,7 +293,7 @@ public class Order
 
     public MyGameObject SourceGameObject { get; private set; }
 
-    public MyGameObject TargetGameObject { get; set; } // TODO: Hide setter.
+    public MyGameObject TargetGameObject { get; set; } // TODO: Hide setter. Destroy when order is cancelled (add Cancel method).
 
     public Vector3 TargetPosition { get; set; } // TODO: Hide setter.
 
