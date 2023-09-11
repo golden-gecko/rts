@@ -434,9 +434,7 @@ public class MyGameObject : MonoBehaviour
             Instantiate(DestroyEffect, Position, Quaternion.identity);
         }
 
-        body.gameObject.SetActive(false);
-
-        GetComponentInChildren<Indicators>().OnDestroy_();
+        Destroy(gameObject);
     }
 
     public void OnRepair(float value)

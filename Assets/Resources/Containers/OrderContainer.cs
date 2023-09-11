@@ -27,6 +27,11 @@ public class OrderContainer
 
     public void Clear()
     {
+        foreach (Order item in Items)
+        {
+            item.Cancel();
+        }
+
         Items.Clear();
     }
 

@@ -4,6 +4,10 @@ public class Refinery : Structure
     {
         base.Start();
 
-        GetComponent<Producer>().Recipes.Add(RecipeManager.Instance.Get("Iron"));
+        Producer producer = GetComponent<Producer>();
+
+        producer.Recipes.Add(RecipeManager.Instance.Get("Charcoal"));
+        producer.Recipes.Add(RecipeManager.Instance.Get("Fuel"));
+        producer.Recipes.Add(RecipeManager.Instance.Get("Iron"));
     }
 }

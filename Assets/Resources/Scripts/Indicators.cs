@@ -192,12 +192,6 @@ public class Indicators : MonoBehaviour
         selection.localScale = new Vector3(size.x * 1.1f, size.z * 1.1f, 1.0f);
     }
 
-    public void OnDestroy_()
-    {
-        bar.gameObject.SetActive(false);
-        range.gameObject.SetActive(false);
-    }
-
     public void OnPlayerChange(Player player)
     {
         if (player != null)

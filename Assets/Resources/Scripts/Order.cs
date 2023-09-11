@@ -280,6 +280,20 @@ public class Order
         return info;
     }
 
+    public void Cancel()
+    {
+        switch (Type)
+        {
+            case OrderType.Assemble:
+            case OrderType.Construct:
+                if (TargetGameObject != null)
+                {
+                    TargetGameObject.OnDestroy_();
+                }
+                break;
+        }
+    }
+
     public void Retry()
     {
         Retries.Inc();
