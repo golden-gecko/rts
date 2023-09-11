@@ -16,9 +16,9 @@ public class Resource : Counter
     [field: SerializeField]
     public ResourceDirection Direction { get; private set; }
 
-    public int Capacity { get => Max - Current; }
+    public int Capacity { get => Max - Current; } // How much empty storage left.
 
-    public int Storage { get => Current; }
+    public int Storage { get => Current; } // How much storage is used.
 
     public bool Empty { get => Current <= 0; }
 

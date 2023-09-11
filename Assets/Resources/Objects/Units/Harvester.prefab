@@ -224,14 +224,34 @@ MonoBehaviour:
   <ResourceUsage>k__BackingField: 4
   <Resources>k__BackingField:
     <Items>k__BackingField:
-    - <Current>k__BackingField: 100
-      <Max>k__BackingField: 100
+    - <Current>k__BackingField: 0
+      <Max>k__BackingField: 10
       <Name>k__BackingField: Ammunition
-      <Direction>k__BackingField: 1
+      <Direction>k__BackingField: 0
+    - <Current>k__BackingField: 0
+      <Max>k__BackingField: 10
+      <Name>k__BackingField: Coal
+      <Direction>k__BackingField: 0
+    - <Current>k__BackingField: 0
+      <Max>k__BackingField: 10
+      <Name>k__BackingField: Crystal
+      <Direction>k__BackingField: 0
     - <Current>k__BackingField: 100
       <Max>k__BackingField: 100
       <Name>k__BackingField: Fuel
-      <Direction>k__BackingField: 1
+      <Direction>k__BackingField: 0
+    - <Current>k__BackingField: 0
+      <Max>k__BackingField: 10
+      <Name>k__BackingField: Iron
+      <Direction>k__BackingField: 0
+    - <Current>k__BackingField: 0
+      <Max>k__BackingField: 10
+      <Name>k__BackingField: Iron Ore
+      <Direction>k__BackingField: 0
+    - <Current>k__BackingField: 0
+      <Max>k__BackingField: 10
+      <Name>k__BackingField: Wood
+      <Direction>k__BackingField: 0
 --- !u!1 &1825437508637459598
 GameObject:
   m_ObjectHideFlags: 0
@@ -1706,7 +1726,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4051881364568090456, guid: 8da4a421bde8f734593a8c934f793019, type: 3}
       propertyPath: m_Name
-      value: Visual
+      value: Indicators
       objectReference: {fileID: 0}
     - target: {fileID: 9138663778288361040, guid: 8da4a421bde8f734593a8c934f793019, type: 3}
       propertyPath: m_IsActive

@@ -2,6 +2,8 @@ public class OrderHandlerIdleWorker : OrderHandler
 {
     public override void OnExecute(MyGameObject myGameObject)
     {
+        myGameObject.Orders.Add(Order.Wait());
+
         Order order = myGameObject.Player.CreateOrderUnload(myGameObject);
 
         if (order != null)
@@ -37,7 +39,5 @@ public class OrderHandlerIdleWorker : OrderHandler
 
             return;
         }
-
-        myGameObject.Orders.Add(Order.Wait());
     }
 }

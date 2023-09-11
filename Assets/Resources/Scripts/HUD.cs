@@ -334,25 +334,25 @@ public class HUD : MonoBehaviour
         }
     }
 
-    private bool MouseToRaycast(out RaycastHit hitInfo)
+    private bool MouseToRaycast(out RaycastHit hitInfo, int layerMask = Physics.DefaultRaycastLayers)
     {
-        return Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out hitInfo);
+        return Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out hitInfo, Config.RaycastMaxDistance, layerMask);
     }
 
     private void ProcessOrder()
     {
         RaycastHit hitInfo;
 
-        if (MouseToRaycast(out hitInfo))
+        if (Order == OrderType.Construct)
         {
-            if (Order == OrderType.Construct)
+            if (MouseToRaycast(out hitInfo, LayerMask.GetMask("Terrain") | LayerMask.GetMask("Water")))
             {
-                if (Map.Instance.IsTerrain(hitInfo) || Map.Instance.IsWater(hitInfo))
-                {
-                    Construct(hitInfo.point); // TODO: Check if objects is allowed to build on selected layer.
-                }
+                Construct(hitInfo.point); // TODO: Check if objects is allowed to build on selected layer.
             }
-            else
+        }
+        else
+        {
+            if (MouseToRaycast(out hitInfo))
             {
                 if (Map.Instance.IsTerrain(hitInfo) || Map.Instance.IsWater(hitInfo))
                 {
@@ -646,7 +646,7 @@ public class HUD : MonoBehaviour
     {
         RaycastHit hitInfo;
 
-        if (MouseToRaycast(out hitInfo))
+        if (Cursor == null && MouseToRaycast(out hitInfo))
         {
             Hovered = hitInfo.transform.GetComponentInParent<MyGameObject>();
         }
@@ -679,19 +679,7 @@ public class HUD : MonoBehaviour
             if (prefab.Equals(string.Empty) == false)
             {
                 Cursor = Game.Instance.CreateGameObject(Prefab, Vector3.zero, null, MyGameObjectState.Cursor);
-
-                foreach (Renderer renderer in Cursor.GetComponentsInChildren<Renderer>())
-                {
-                    Color color;
-
-                    foreach (Material material in renderer.materials)
-                    {
-                        color = material.color;
-                        color.a = 0.5f;
-
-                        material.color = color;
-                    }
-                }
+                Cursor.GetComponentInChildren<Indicators>().OnUnderConstruction();
             }
         }
     }

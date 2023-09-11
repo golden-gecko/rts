@@ -7,13 +7,15 @@ public class Assembler : MyComponent
     {
         base.Start();
 
-        GetComponent<MyGameObject>().Orders.AllowOrder(OrderType.Assemble);
-        GetComponent<MyGameObject>().Orders.AllowOrder(OrderType.Rally);
+        MyGameObject parent = GetComponent<MyGameObject>();
 
-        GetComponent<MyGameObject>().OrderHandlers[OrderType.Assemble] = new OrderHandlerAssemble();
-        GetComponent<MyGameObject>().OrderHandlers[OrderType.Rally] = new OrderHandlerRally();
+        parent.Orders.AllowOrder(OrderType.Assemble);
+        parent.Orders.AllowOrder(OrderType.Rally);
 
-        RallyPoint = GetComponent<MyGameObject>().Exit;
+        parent.OrderHandlers[OrderType.Assemble] = new OrderHandlerAssemble();
+        parent.OrderHandlers[OrderType.Rally] = new OrderHandlerRally();
+
+        RallyPoint = parent.Exit;
     }
 
     public override string GetInfo()
@@ -22,7 +24,7 @@ public class Assembler : MyComponent
     }
 
     [field: SerializeField]
-    public int ResourceUsage { get; set; } = 1;
+    public int ResourceUsage { get; set; } = 1; // Number of resources used per second.
 
     [field: SerializeField]
     public Vector3 RallyPoint { get; set; }

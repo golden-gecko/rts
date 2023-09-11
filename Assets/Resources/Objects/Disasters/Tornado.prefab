@@ -93,6 +93,7 @@ GameObject:
   - component: {fileID: 1872759360864091932}
   - component: {fileID: -8196451946765936241}
   - component: {fileID: -6922015923480559394}
+  - component: {fileID: 6804494509860765126}
   m_Layer: 0
   m_Name: Tornado
   m_TagString: Untagged
@@ -162,10 +163,24 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <Mass>k__BackingField: 10
   <Power>k__BackingField: 1
-  <Fuel>k__BackingField:
-    <Current>k__BackingField: 100
-    <Max>k__BackingField: 100
   <FuelUsage>k__BackingField: 1
+--- !u!114 &6804494509860765126
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7181744628251240676}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9f7fc2f43637b07428d9ff8d0e38edaa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  <Mass>k__BackingField: 10
+  RaiseResourceFlags: 1
+  <ResourceUsage>k__BackingField: 1
+  <Resources>k__BackingField:
+    <Items>k__BackingField: []
 --- !u!1001 &5657514235957791238
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -220,7 +235,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4051881364568090456, guid: 8da4a421bde8f734593a8c934f793019, type: 3}
       propertyPath: m_Name
-      value: Visual
+      value: Indicators
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
