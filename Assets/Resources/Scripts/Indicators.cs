@@ -1,10 +1,9 @@
-using System.Drawing;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class Indicators : MonoBehaviour
 {
-    void Start()
+    void Awake()
     {
         bar = transform.Find("Bar");
         barAmmunition = bar.Find("Ammunition").GetComponent<Image>();
@@ -20,7 +19,6 @@ public class Indicators : MonoBehaviour
         rangeSight = range.Find("Sight");
 
         construction = transform.Find("Construction");
-        debris = transform.Find("Debris");
         selection = transform.Find("Selection");
         trace = transform.Find("Trace");
     }
@@ -96,16 +94,49 @@ public class Indicators : MonoBehaviour
         trace.localScale = new Vector3(radius / scale.x, radius / scale.y, radius / scale.z);
     }
 
+    public void OnConstruction()
+    {
+        MyGameObject myGameObject = GetComponentInParent<MyGameObject>();
+
+        Vector3 size = myGameObject.Size;
+
+        construction.gameObject.SetActive(true);
+        construction.transform.localPosition = new Vector3(0.0f, size.y * 0.5f, 0.0f);
+        construction.transform.localScale = size;
+    }
+
+    public void OnConstructionCompleted()
+    {
+        construction.gameObject.SetActive(false);
+    }
+
     public void OnShow()
     {
-        bar.gameObject.SetActive(true);
-        range.gameObject.SetActive(true);
-        trace.gameObject.SetActive(false);
+        MyGameObject myGameObject = GetComponentInParent<MyGameObject>();
+
+        switch (myGameObject.State)
+        {
+            case MyGameObjectState.UnderAssembly:
+            case MyGameObjectState.UnderConstruction:
+                bar.gameObject.SetActive(false);
+                construction.gameObject.SetActive(true);
+                range.gameObject.SetActive(false);
+                trace.gameObject.SetActive(false);
+                break;
+
+            case MyGameObjectState.Operational:
+                bar.gameObject.SetActive(true);
+                construction.gameObject.SetActive(false);
+                range.gameObject.SetActive(true);
+                trace.gameObject.SetActive(false);
+                break;
+        }
     }
 
     public void OnRadar()
     {
         bar.gameObject.SetActive(false);
+        construction.gameObject.SetActive(false);
         range.gameObject.SetActive(false);
         trace.gameObject.SetActive(true);
     }
@@ -113,6 +144,7 @@ public class Indicators : MonoBehaviour
     public void OnHide()
     {
         bar.gameObject.SetActive(false);
+        construction.gameObject.SetActive(false);
         range.gameObject.SetActive(false);
         trace.gameObject.SetActive(false);
     }
@@ -163,7 +195,6 @@ public class Indicators : MonoBehaviour
     public void OnDestroy_()
     {
         bar.gameObject.SetActive(false);
-        debris.gameObject.SetActive(true); // TODO: Move destroyed object to ground level.
         range.gameObject.SetActive(false);
     }
 
@@ -189,7 +220,6 @@ public class Indicators : MonoBehaviour
     private Transform rangeSight;
 
     private Transform construction;
-    private Transform debris;
     private Transform selection;
     private Transform trace;
 }

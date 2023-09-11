@@ -24,7 +24,7 @@ public class MyGameObject : MonoBehaviour
         OrderHandlers[OrderType.UseSkill] = new OrderHandlerUseSkill();
         OrderHandlers[OrderType.Wait] = new OrderHandlerWait();
 
-        ConstructionResources.Add("Iron", 0, 30, ResourceDirection.In);
+        ConstructionResources.Init("Iron", 0, 30, ResourceDirection.In);
 
         Recipe r1 = new Recipe("Iron"); // TODO: Remove.
         r1.Consumes("Iron", 30);
@@ -57,20 +57,34 @@ public class MyGameObject : MonoBehaviour
         {
             switch (State)
             {
+                case MyGameObjectState.Cursor:
+                    GetComponentInChildren<Indicators>().OnConstruction(); // TODO: Move to correct event.
+                    break;
+
                 case MyGameObjectState.Operational:
+                    GetComponentInChildren<Indicators>().OnConstructionCompleted(); // TODO: Move to correct event.
                     ProcessOrders();
+                    UpdateSkills();
                     break;
 
                 case MyGameObjectState.UnderConstruction:
+                    GetComponentInChildren<Indicators>().OnConstruction(); // TODO: Move to correct event.
                     RaiseConstructionResourceFlags();
                     break;
             }
-
-            UpdateSkills();
         }
         else
         {
-            RemoveConstructionResourceFlags();
+            switch (State)
+            {
+                case MyGameObjectState.Cursor:
+                    GetComponentInChildren<Indicators>().OnConstruction(); // TODO: Move to correct event.
+                    break;
+
+                case MyGameObjectState.Operational:
+                    RemoveConstructionResourceFlags();
+                    break;
+            }
         }
 
         UpdateVisibility();

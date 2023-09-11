@@ -679,7 +679,9 @@ public class HUD : MonoBehaviour
             if (prefab.Equals(string.Empty) == false)
             {
                 Cursor = Game.Instance.CreateGameObject(Prefab, Vector3.zero, null, MyGameObjectState.Cursor);
+                Cursor.GetComponentInChildren<Indicators>().OnConstruction();
 
+                /*
                 foreach (Renderer renderer in Cursor.GetComponentsInChildren<Renderer>())
                 {
                     Color color;
@@ -692,6 +694,7 @@ public class HUD : MonoBehaviour
                         material.color = color;
                     }
                 }
+                */
             }
         }
     }
