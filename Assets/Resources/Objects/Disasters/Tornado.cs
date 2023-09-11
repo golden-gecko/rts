@@ -6,8 +6,8 @@ public class Tornado : Disaster
     {
         base.Awake();
 
-        float x = Position.x + Random.Range(-Config.DisasterDirection, Config.DisasterDirection);
-        float z = Position.z + Random.Range(-Config.DisasterDirection, Config.DisasterDirection);
+        float x = Position.x + Random.Range(-100.0f, 100.0f);
+        float z = Position.z + Random.Range(-100.0f, 100.0f);
 
         Move(new Vector3(x, 0.0f, z));
     }

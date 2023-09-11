@@ -38,14 +38,14 @@ public class Counter
         Remove(1);
     }
 
-    public bool CanAdd(int current)
+    public bool CanAdd(int value)
     {
-        return Current + current <= Max;
+        return Current + value <= Max;
     }
 
-    public bool CanRemove(int current)
+    public bool CanRemove(int value)
     {
-        return Current - current >= 0;
+        return Current - value >= 0;
     }
 
     public bool CanInc()

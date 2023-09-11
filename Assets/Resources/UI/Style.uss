@@ -1,7 +1,3 @@
-.panel-background {
-    background-color: rgba(0, 128, 0, 0.75);
-}
-
 .button-construct {
     margin-right: 5px;
     padding-left: 5px;
@@ -11,17 +7,6 @@
     margin-left: 0;
     margin-top: 0;
     margin-bottom: 0;
-}
-
-.button-order {
-    padding-left: 5px;
-    padding-right: 5px;
-    padding-top: 5px;
-    padding-bottom: 5px;
-    margin-right: 5px;
-    margin-left: 0;
-    margin-top: 0;
-    margin-bottom: 5px;
 }
 
 .button-main-menu {
@@ -40,6 +25,21 @@
     height: 80%;
 }
 
+.button-order {
+    padding-left: 5px;
+    padding-right: 5px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    margin-right: 5px;
+    margin-left: 0;
+    margin-top: 0;
+    margin-bottom: 5px;
+}
+
 .menu-background {
     background-color: rgba(0, 0, 0, 0.5);
+}
+
+.panel-background {
+    background-color: rgba(0, 128, 0, 0.75);
 }

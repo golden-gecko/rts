@@ -1,18 +1,19 @@
 using System.Collections.Generic;
 
-public class ConsumerProducerContainer
+public class ResourceRequestContainer
 {
-    public void Add(MyGameObject myGameObject, string name, int value)
+    public void Add(MyGameObject myGameObject, string name, int value, ResourceDirection direction)
     {
-        ConsumerProducerRequest request = Items.Find(x => x.MyGameObject == myGameObject && x.Name == name);
+        ResourceRequest request = Items.Find(x => x.MyGameObject == myGameObject && x.Name == name);
 
         if (request == null)
         {
-            Items.Add(new ConsumerProducerRequest(myGameObject, name, value));
+            Items.Add(new ResourceRequest(myGameObject, name, value, direction));
         }
         else
         {
             request.Value = value;
+            request.Direction = direction;
         }
     }
 
@@ -30,5 +31,5 @@ public class ConsumerProducerContainer
         }
     }
 
-    public List<ConsumerProducerRequest> Items { get; } = new List<ConsumerProducerRequest>();
+    public List<ResourceRequest> Items { get; } = new List<ResourceRequest>();
 }

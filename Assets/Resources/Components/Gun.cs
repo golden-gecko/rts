@@ -26,14 +26,20 @@ public class Gun : MyComponent
             return;
         }
 
+        // Reload gun.
         Reload.Update(Time.deltaTime);
+
+        // Grab ammunition.
+        Storage storage = GetComponent<Storage>();
+
+        ammunition.Add(storage.Resources.Remove("Ammunition", ammunition.Max - ammunition.Current));
     }
 
     public override string GetInfo()
     {
-        Storage storage = GetComponent<Storage>();
-
-        return string.Format("{0}, Reload: {1} Ammunition: {2}/{3}", base.GetInfo(), Reload.GetInfo(), storage.Resources.Current("Ammunition"), storage.Resources.Max("Ammunition"));
+        // Storage storage = GetComponent<Storage>();
+        // return string.Format("{0}, Reload: {1} Ammunition: {2}/{3}", base.GetInfo(), Reload.GetInfo(), storage.Resources.Current("Ammunition"), storage.Resources.Max("Ammunition"));
+        return string.Format("{0}, Reload: {1} Ammunition: {2}", base.GetInfo(), Reload.GetInfo(), ammunition.GetInfo());
     }
 
     public bool IsInRange(Vector3 position)
@@ -43,7 +49,8 @@ public class Gun : MyComponent
 
     public virtual bool CanFire()
     {
-        return GetComponent<Storage>().Resources.CanDec("Ammunition") && Reload.Finished;
+        // return GetComponent<Storage>().Resources.CanDec("Ammunition") && Reload.Finished;
+        return ammunition.CanDec() && Reload.Finished;
     }
 
     public virtual void Fire(MyGameObject myGameObject, Vector3 position)
@@ -61,4 +68,6 @@ public class Gun : MyComponent
 
     [field: SerializeField]
     public Timer Reload { get; set; } = new Timer(10.0f, 10.0f);
+
+    private Counter ammunition = new Counter(100, 100);
 }

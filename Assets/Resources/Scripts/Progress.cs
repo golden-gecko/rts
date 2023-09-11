@@ -38,14 +38,14 @@ public class Progress
         Remove(1.0f);
     }
 
-    public bool CanAdd(float current)
+    public bool CanAdd(float value)
     {
-        return Current + current <= Max;
+        return Current + value <= Max;
     }
 
-    public bool CanRemove(float current)
+    public bool CanRemove(float value)
     {
-        return Current - current >= 0.0f;
+        return Current - value >= 0.0f;
     }
 
     public string GetInfo()

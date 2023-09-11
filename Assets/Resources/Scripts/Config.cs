@@ -10,11 +10,6 @@ public class Config
     public static string DirectoryStructures = Path.Join("Objects", "Structures");
     public static string DirectoryUnits = Path.Join("Objects", "Units");
 
-    public static float DisasterDirection = 200.0f;
-    public static float DisasterRange = 20.0f;
-
-    public static string PlayerWorld = "Gaia";
-
     public static float RaycastMaxDistance = 5000.0f;
 
     public static List<string> Recipies = new List<string>() { "Metal using coal", "Metal using wood" };

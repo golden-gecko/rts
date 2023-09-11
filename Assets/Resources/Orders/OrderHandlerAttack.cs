@@ -54,7 +54,7 @@ public class OrderHandlerAttack : OrderHandler
         {
             if (myGameObject.GetComponent<Gun>().IsInRange(position) == false)
             {
-                // TODO: Maybe try to target to different object.
+                // TODO: Try to target to different object.
             }
             else
             {

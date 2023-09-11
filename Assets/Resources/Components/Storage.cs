@@ -16,8 +16,6 @@ public class Storage : MyComponent
         parent.OrderHandlers[OrderType.Load] = new OrderHandlerLoad();
         parent.OrderHandlers[OrderType.Transport] = new OrderHandlerTransport();
         parent.OrderHandlers[OrderType.Unload] = new OrderHandlerUnload();
-
-        // TODO: Move ammunition and fuel to seperate containers (maybe Gun and Engine) to prevent workers from emptying all the fuel.
     }
 
     protected override void Update()
@@ -58,7 +56,7 @@ public class Storage : MyComponent
                 }
                 else
                 {
-                    parent.Player.RegisterConsumer(parent, resource.Name, resource.Capacity);
+                    parent.Player.RegisterConsumer(parent, resource.Name, resource.Capacity, resource.Direction);
                 }
             }
 
@@ -70,7 +68,7 @@ public class Storage : MyComponent
                 }
                 else
                 {
-                    parent.Player.RegisterProducer(parent, resource.Name, resource.Storage);
+                    parent.Player.RegisterProducer(parent, resource.Name, resource.Storage, resource.Direction);
                 }
             }
         }

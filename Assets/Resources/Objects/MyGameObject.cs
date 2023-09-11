@@ -7,7 +7,6 @@ public class MyGameObject : MonoBehaviour
     protected virtual void Awake()
     {
         body = transform.Find("Body");
-        indicators = transform.Find("Indicators");
 
         Orders.AllowOrder(OrderType.Destroy); // TODO: Move to component.
         Orders.AllowOrder(OrderType.Disable);
@@ -30,8 +29,6 @@ public class MyGameObject : MonoBehaviour
         r1.Consumes("Iron", 30);
         ConstructionRecipies.Add(r1);
 
-        LiveTimer.Max = TimeToLive;
-
         Stats.Player = Player;
     }
 
@@ -43,10 +40,7 @@ public class MyGameObject : MonoBehaviour
 
     protected virtual void Update()
     {
-        if (TimeToLive > 0.0f)
-        {
-            LiveTimer.Update(Time.deltaTime);
-        }
+        ExpirationTimer.Update(Time.deltaTime);
 
         switch (State)
         {
@@ -503,7 +497,7 @@ public class MyGameObject : MonoBehaviour
                 }
                 else
                 {
-                    Player.RegisterConsumer(this, resource.Name, resource.Capacity);
+                    Player.RegisterConsumer(this, resource.Name, resource.Capacity, resource.Direction);
                 }
             }
 
@@ -515,7 +509,7 @@ public class MyGameObject : MonoBehaviour
                 }
                 else
                 {
-                    Player.RegisterProducer(this, resource.Name, resource.Storage);
+                    Player.RegisterProducer(this, resource.Name, resource.Storage, resource.Direction);
                 }
             }
         }
@@ -604,7 +598,7 @@ public class MyGameObject : MonoBehaviour
         }
     }
 
-    public bool Alive { get => Health.Current > 0.0f && (TimeToLive < 0.0f || LiveTimer.Finished == false); }
+    public bool Alive { get => Health.Current > 0.0f && (ExpirationTimer.Active == false || ExpirationTimer.Finished == false); }
 
     public float Mass
     {
@@ -646,9 +640,6 @@ public class MyGameObject : MonoBehaviour
     public GameObject DestroyEffect { get; set; }
 
     [field: SerializeField]
-    public float TimeToLive { get; set; } = -1.0f;
-
-    [field: SerializeField]
     public float Altitude { get; set; } = 0.0f;
 
     [field: SerializeField]
@@ -656,6 +647,9 @@ public class MyGameObject : MonoBehaviour
 
     [field: SerializeField]
     public bool ShowIndicators = true;
+
+    [field: SerializeField]
+    public Timer ExpirationTimer { get; set; } = new Timer(-1.0f, -1.0f);
 
     public Vector3 Position { get => transform.position; set => transform.position = value; }
 
@@ -677,8 +671,5 @@ public class MyGameObject : MonoBehaviour
 
     public Dictionary<OrderType, OrderHandler> OrderHandlers { get; } = new Dictionary<OrderType, OrderHandler>();
 
-    private Timer LiveTimer = new Timer();
-
     private Transform body;
-    private Transform indicators;
 }

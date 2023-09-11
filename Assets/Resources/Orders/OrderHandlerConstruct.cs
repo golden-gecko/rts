@@ -10,7 +10,7 @@ public class OrderHandlerConstruct : OrderHandler
         if (order.TargetGameObject == null)
         {
             order.TargetPosition = Map.Instance.StructurePositionHandler.GetPosition(order.TargetPosition);
-            order.TargetGameObject = Game.Instance.CreateGameObject(order.Prefab, order.TargetPosition, myGameObject.Player, MyGameObjectState.UnderConstruction);
+            order.TargetGameObject = Utils.CreateGameObject(order.Prefab, order.TargetPosition, myGameObject.Player, MyGameObjectState.UnderConstruction);
             order.TargetGameObject.GetComponentInChildren<Indicators>().OnUnderConstruction();
             order.TargetGameObject.RaiseConstructionResourceFlags();
         }
