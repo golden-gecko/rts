@@ -7,13 +7,15 @@ public class Storage : MyComponent
     {
         base.Awake();
 
-        GetComponent<MyGameObject>().Orders.AllowOrder(OrderType.Load);
-        GetComponent<MyGameObject>().Orders.AllowOrder(OrderType.Transport);
-        GetComponent<MyGameObject>().Orders.AllowOrder(OrderType.Unload);
+        MyGameObject parent = GetComponent<MyGameObject>();
 
-        GetComponent<MyGameObject>().OrderHandlers[OrderType.Load] = new OrderHandlerLoad();
-        GetComponent<MyGameObject>().OrderHandlers[OrderType.Transport] = new OrderHandlerTransport();
-        GetComponent<MyGameObject>().OrderHandlers[OrderType.Unload] = new OrderHandlerUnload();
+        parent.Orders.AllowOrder(OrderType.Load);
+        parent.Orders.AllowOrder(OrderType.Transport);
+        parent.Orders.AllowOrder(OrderType.Unload);
+
+        parent.OrderHandlers[OrderType.Load] = new OrderHandlerLoad();
+        parent.OrderHandlers[OrderType.Transport] = new OrderHandlerTransport();
+        parent.OrderHandlers[OrderType.Unload] = new OrderHandlerUnload();
     }
 
     protected override void Update()
@@ -22,13 +24,18 @@ public class Storage : MyComponent
 
         MyGameObject parent = GetComponent<MyGameObject>();
 
-        if (parent.Working && RaiseResourceFlags)
+        switch (parent.State) // TODO: Refactor.
         {
-            CreateResourceFlags(parent);
-        }
-        else
-        {
-            RemoveResourceFlags(parent);
+            case MyGameObjectState.Operational:
+                if (parent.Working && RaiseResourceFlags)
+                {
+                    CreateResourceFlags(parent);
+                }
+                else
+                {
+                    RemoveResourceFlags(parent);
+                }
+                break;
         }
     }
 
@@ -39,14 +46,9 @@ public class Storage : MyComponent
 
     private void CreateResourceFlags(MyGameObject parent)
     {
-        if (GetComponent<Storage>() == null)
+        foreach (Resource resource in Resources.Items)
         {
-            return;
-        }
-
-        foreach (Resource resource in GetComponent<Storage>().Resources.Items)
-        {
-            if (resource.Direction == ResourceDirection.Both || resource.Direction == ResourceDirection.In)
+            if (resource.In)
             {
                 if (resource.Full)
                 {
@@ -58,7 +60,7 @@ public class Storage : MyComponent
                 }
             }
 
-            if (resource.Direction == ResourceDirection.Both || resource.Direction == ResourceDirection.Out)
+            if (resource.Out)
             {
                 if (resource.Empty)
                 {
@@ -74,21 +76,13 @@ public class Storage : MyComponent
 
     private void RemoveResourceFlags(MyGameObject parent)
     {
-        Storage storage = GetComponent<Storage>();
-
-        if (storage == null)
-        {
-            return;
-        }
-
-        foreach (string name in storage.Resources.Items.Select(x => x.Name))
+        foreach (string name in Resources.Items.Select(x => x.Name))
         {
             parent.Player.UnregisterConsumer(parent, name);
             parent.Player.UnregisterProducer(parent, name);
 
         }
     }
-
 
     [field: SerializeField]
     public bool RaiseResourceFlags = true;

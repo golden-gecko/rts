@@ -6,7 +6,7 @@ using UnityEngine;
 [Serializable]
 public class ResourceContainer
 {
-    public void Init(string name, int value = 0, int max = 0, ResourceDirection direction = ResourceDirection.Both)
+    public void Init(string name, int value = 0, int max = 0, ResourceDirection direction = ResourceDirection.None)
     {
         Resource resource = Items.Find(x => x.Name == name);
 

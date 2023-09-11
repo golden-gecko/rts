@@ -7,9 +7,11 @@ public class Researcher : MyComponent
     {
         base.Awake();
 
-        GetComponent<MyGameObject>().Orders.AllowOrder(OrderType.Research);
+        MyGameObject parent = GetComponent<MyGameObject>();
 
-        GetComponent<MyGameObject>().OrderHandlers[OrderType.Research] = new OrderHandlerResearch();
+        parent.Orders.AllowOrder(OrderType.Research);
+
+        parent.OrderHandlers[OrderType.Research] = new OrderHandlerResearch();
     }
 
     public override string GetInfo()
@@ -18,5 +20,5 @@ public class Researcher : MyComponent
     }
 
     [field: SerializeField]
-    public int ResourceUsage { get; set; } = 1;
+    public int ResourceUsage { get; set; } = 1; // Number of resources used per second.
 }

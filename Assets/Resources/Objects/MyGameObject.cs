@@ -48,43 +48,37 @@ public class MyGameObject : MonoBehaviour
             LiveTimer.Update(Time.deltaTime);
         }
 
-        if (Alive == false)
+        switch (State)
         {
-            OnDestroy_();
-        }
+            case MyGameObjectState.Cursor:
+                // GetComponentInChildren<Indicators>().OnUnderConstruction();
+                break;
 
-        if (Working)
-        {
-            switch (State)
-            {
-                case MyGameObjectState.Cursor:
-                    GetComponentInChildren<Indicators>().OnConstruction(); // TODO: Move to correct event.
-                    break;
+            case MyGameObjectState.Operational:
+                if (Alive == false)
+                {
+                    OnDestroy_();
+                }
 
-                case MyGameObjectState.Operational:
-                    GetComponentInChildren<Indicators>().OnConstructionCompleted(); // TODO: Move to correct event.
+                if (Working)
+                {
+                    // GetComponentInChildren<Indicators>().OnConstructionCompleted();
+
                     ProcessOrders();
                     UpdateSkills();
-                    break;
+                }
+                break;
 
-                case MyGameObjectState.UnderConstruction:
-                    GetComponentInChildren<Indicators>().OnConstruction(); // TODO: Move to correct event.
-                    RaiseConstructionResourceFlags();
-                    break;
-            }
-        }
-        else
-        {
-            switch (State)
-            {
-                case MyGameObjectState.Cursor:
-                    GetComponentInChildren<Indicators>().OnConstruction(); // TODO: Move to correct event.
-                    break;
+            case MyGameObjectState.UnderConstruction:
+                if (Alive == false)
+                {
+                    OnDestroy_();
+                }
 
-                case MyGameObjectState.Operational:
-                    RemoveConstructionResourceFlags();
-                    break;
-            }
+                // GetComponentInChildren<Indicators>().OnUnderConstruction();
+
+                RaiseConstructionResourceFlags();
+                break;
         }
 
         UpdateVisibility();
@@ -499,11 +493,11 @@ public class MyGameObject : MonoBehaviour
         }
     }
 
-    private void RaiseConstructionResourceFlags()
+    public void RaiseConstructionResourceFlags()
     {
         foreach (Resource resource in ConstructionResources.Items)
         {
-            if (resource.Direction == ResourceDirection.Both || resource.Direction == ResourceDirection.In)
+            if (resource.In)
             {
                 if (resource.Full)
                 {
@@ -515,7 +509,7 @@ public class MyGameObject : MonoBehaviour
                 }
             }
 
-            if (resource.Direction == ResourceDirection.Both || resource.Direction == ResourceDirection.Out)
+            if (resource.Out)
             {
                 if (resource.Empty)
                 {
@@ -529,7 +523,7 @@ public class MyGameObject : MonoBehaviour
         }
     }
 
-    private void RemoveConstructionResourceFlags()
+    public void RemoveConstructionResourceFlags()
     {
         foreach (string name in ConstructionResources.Items.Select(x => x.Name))
         {

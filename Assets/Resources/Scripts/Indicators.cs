@@ -94,7 +94,7 @@ public class Indicators : MonoBehaviour
         trace.localScale = new Vector3(radius / scale.x, radius / scale.y, radius / scale.z);
     }
 
-    public void OnConstruction()
+    public void OnUnderConstruction()
     {
         MyGameObject myGameObject = GetComponentInParent<MyGameObject>();
 

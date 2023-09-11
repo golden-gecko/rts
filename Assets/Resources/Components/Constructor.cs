@@ -7,9 +7,11 @@ public class Constructor : MyComponent
     {
         base.Awake();
 
-        GetComponent<MyGameObject>().Orders.AllowOrder(OrderType.Construct);
+        MyGameObject parent = GetComponent<MyGameObject>();
 
-        GetComponent<MyGameObject>().OrderHandlers[OrderType.Construct] = new OrderHandlerConstruct();
+        parent.Orders.AllowOrder(OrderType.Construct);
+
+        parent.OrderHandlers[OrderType.Construct] = new OrderHandlerConstruct();
     }
 
     public override string GetInfo()
@@ -18,5 +20,5 @@ public class Constructor : MyComponent
     }
 
     [field: SerializeField]
-    public int ResourceUsage { get; set; } = 1;
+    public int ResourceUsage { get; set; } = 1; // Number of resources used per second.
 }
