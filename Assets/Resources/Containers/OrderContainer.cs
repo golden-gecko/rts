@@ -10,19 +10,24 @@ public class OrderContainer
         }
     }
 
-    public void AllowOrder(OrderType item)
+    public void AllowOrder(OrderType orderType)
     {
-        OrderWhitelist.Add(item);
+        OrderWhitelist.Add(orderType);
     }
 
-    public void AllowPrefab(string item)
+    public void AllowPrefab(string prefab)
     {
-        PrefabWhitelist.Add(item);
+        PrefabWhitelist.Add(prefab);
     }
 
-    public void AllowTechnology(string item)
+    public void AllowRecipe(Recipe recipe)
     {
-        TechnologyWhitelist.Add(item);
+        RecipeWhitelist.Add(recipe);
+    }
+
+    public void AllowTechnology(string technology)
+    {
+        TechnologyWhitelist.Add(technology);
     }
 
     public void Clear()
@@ -83,6 +88,8 @@ public class OrderContainer
     public HashSet<OrderType> OrderWhitelist { get; } = new HashSet<OrderType>();
 
     public HashSet<string> PrefabWhitelist { get; } = new HashSet<string>();
+
+    public RecipeContainer RecipeWhitelist { get; } = new RecipeContainer();
 
     public HashSet<string> TechnologyWhitelist { get; } = new HashSet<string>();
 }

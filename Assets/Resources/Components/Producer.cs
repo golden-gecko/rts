@@ -16,22 +16,20 @@ public class Producer : MyComponent
         parent.OrderHandlers[OrderType.Idle] = new OrderHandlerIdleProducer();
         parent.OrderHandlers[OrderType.Produce] = new OrderHandlerProduce();
 
-        foreach (string recipe in RecipesNames)
+        foreach (string recipe in Recipes)
         {
-            Recipes.Add(recipeManager.Get(recipe));
+            parent.Orders.AllowRecipe(recipeManager.Get(recipe));
         }
     }
 
     public override string GetInfo()
     {
-        return string.Format("{0}, Resource Usage: {1}", base.GetInfo(), ResourceUsage);
+        return string.Format("Producer: {0}, Resource Usage: {1}", base.GetInfo(), ResourceUsage);
     }
 
     [field: SerializeField]
-    public List<string> RecipesNames { get; set; } = new List<string>();
+    public List<string> Recipes { get; set; } = new List<string>();
 
     [field: SerializeField]
     public int ResourceUsage { get; set; } = 1; // Number of resources used per second.
-
-    public RecipeContainer Recipes { get; } = new RecipeContainer(); // TODO: Move to Orders.
 }

@@ -2,24 +2,29 @@ using System.Collections.Generic;
 
 public class Technology
 {
-    public Technology(string name)
+    public Technology(string name, string description)
     {
         Name = name;
+        Description = description;
     }
 
-    public Technology(string name, bool unlocked)
+    public Technology(string name, string description, bool unlocked)
     {
         Name = name;
+        Description = description;
         Unlocked = unlocked;
     }
 
-    public Technology(string name, HashSet<string> unlocks)
+    public Technology(string name, string description, HashSet<string> unlocks)
     {
         Name = name;
+        Description = description;
         Unlocks = unlocks;
     }
 
     public string Name { get; }
+
+    public string Description { get; }
 
     public ResourceContainer Cost { get; } = new ResourceContainer();
 

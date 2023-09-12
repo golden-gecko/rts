@@ -23,7 +23,7 @@ public class Constructor : MyComponent
 
     public override string GetInfo()
     {
-        return string.Format("{0}, Resource Usage: {1}", base.GetInfo(), ResourceUsage);
+        return string.Format("Constructor: {0}, Resource Usage: {1}", base.GetInfo(), ResourceUsage);
     }
 
     [field: SerializeField]

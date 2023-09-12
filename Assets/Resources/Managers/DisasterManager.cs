@@ -33,7 +33,7 @@ public class DisasterManager : MonoBehaviour
             i.Value.Reset();
             i.Value.Max = Random.Range(i.Key.FrequencyInSecondsMin, i.Key.FrequencyInSecondsMax);
 
-            Utils.CreateGameObject(i.Key, GetDisasterPosition(), Player, MyGameObjectState.Operational);
+            Utils.CreateGameObject(i.Key, GetDisasterPosition(), Quaternion.identity, Player, MyGameObjectState.Operational);
         }
     }
 

@@ -81,7 +81,14 @@ public class PowerPlant : MyComponent
 
     public override string GetInfo()
     {
-        return string.Format("{0}, Power: {1}, Range: {2}", base.GetInfo(), Power, Range);
+        string info = string.Format("PowerPlant: {0}, Range: {1}", base.GetInfo(), Range);
+
+        if (Power > 0.0f)
+        {
+            info += string.Format(" Power: {0}", Power);
+        }
+
+        return info;
     }
 
     [field: SerializeField]

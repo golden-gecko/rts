@@ -50,7 +50,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <Player>k__BackingField: {fileID: 0}
   <Enabled>k__BackingField: 1
-  <Powerable>k__BackingField: 0
+  <Powerable>k__BackingField: 1
   <Gatherable>k__BackingField: 0
   <Selectable>k__BackingField: 1
   <Health>k__BackingField:
@@ -65,6 +65,7 @@ MonoBehaviour:
   <ExpirationTimer>k__BackingField:
     <Current>k__BackingField: -1
     <Max>k__BackingField: -1
+  <SkillsNames>k__BackingField: []
 --- !u!114 &-4551247160317035928
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -78,10 +79,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   <Mass>k__BackingField: 10
-  <RecipesNames>k__BackingField:
-  - Charcoal
-  - Fuel
+  <Recipes>k__BackingField:
   - Iron
+  - Plastic
+  - Fuel
+  - Charcoal
   <ResourceUsage>k__BackingField: 1
 --- !u!114 &-8543086153947244168
 MonoBehaviour:

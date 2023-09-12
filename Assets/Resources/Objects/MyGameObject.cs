@@ -44,10 +44,6 @@ public class MyGameObject : MonoBehaviour
 
         switch (State)
         {
-            case MyGameObjectState.Cursor:
-                // GetComponentInChildren<Indicators>().OnUnderConstruction();
-                break;
-
             case MyGameObjectState.Operational:
                 if (Alive == false)
                 {
@@ -56,10 +52,12 @@ public class MyGameObject : MonoBehaviour
 
                 if (Working)
                 {
-                    // GetComponentInChildren<Indicators>().OnConstructionCompleted();
-
                     ProcessOrders();
                     UpdateSkills();
+                }
+                else
+                {
+                    ProcessOrdersWhenInactive();
                 }
                 break;
 
@@ -68,8 +66,6 @@ public class MyGameObject : MonoBehaviour
                 {
                     OnDestroy_();
                 }
-
-                // GetComponentInChildren<Indicators>().OnUnderConstruction();
 
                 RaiseConstructionResourceFlags();
                 break;
@@ -151,9 +147,9 @@ public class MyGameObject : MonoBehaviour
         Orders.Add(Order.Construct(myGameObject));
     }
 
-    public void Construct(string prefab, Vector3 position)
+    public void Construct(string prefab, Vector3 position, Quaternion rotation)
     {
-        Orders.Add(Order.Construct(prefab, position));
+        Orders.Add(Order.Construct(prefab, position, rotation));
     }
 
     public void Destroy(int priority = -1)
@@ -321,8 +317,6 @@ public class MyGameObject : MonoBehaviour
 
     public virtual string GetInfo(bool ally)
     {
-        ally = true; // TODO: Remove.
-
         string info = string.Empty;
 
         switch (State)
@@ -372,10 +366,11 @@ public class MyGameObject : MonoBehaviour
                         }
                     }
 
-                    info += string.Format("\nEnabled: {0}", Enabled);
-                    info += string.Format("\nGatherable: {0}", Gatherable);
-                    info += string.Format("\nPowerable: {0}", Powerable);
-                    info += string.Format("\nSelectable: {0}", Selectable);
+                    // TODO: Remove or uncomment.
+                    // info += string.Format("\nEnabled: {0}", Enabled);
+                    // info += string.Format("\nGatherable: {0}", Gatherable);
+                    // info += string.Format("\nPowerable: {0}", Powerable);
+                    // info += string.Format("\nSelectable: {0}", Selectable);
                     info += string.Format("\nPowered: {0}", Powered);
                     info += string.Format("\nWorking: {0}", Working);
                 }
@@ -485,6 +480,23 @@ public class MyGameObject : MonoBehaviour
         }
     }
 
+    private void ProcessOrdersWhenInactive() // TODO: Refactor.
+    {
+        if (Orders.Count > 0)
+        {
+            Order order = Orders.First();
+
+            if (order.Type == OrderType.Enable && Orders.IsAllowed(order.Type) && OrderHandlers.ContainsKey(order.Type))
+            {
+                OrderHandlers[order.Type].OnExecute(this);
+            }
+            else
+            {
+                Orders.Pop();
+            }
+        }
+    }
+
     public void RaiseConstructionResourceFlags()
     {
         foreach (Resource resource in ConstructionResources.Items)
@@ -536,6 +548,22 @@ public class MyGameObject : MonoBehaviour
         Stats.Player = player;
 
         UpdateSelection();
+    }
+
+    public bool HasCorrectPosition()
+    {
+        Ray ray = new Ray(Position + Vector3.up * Config.TerrainMaxHeight, Vector3.down);
+        int layerMask = LayerMask.GetMask("Terrain") | LayerMask.GetMask("Water");
+
+        RaycastHit hitInfo;
+
+        if (Physics.Raycast(ray, out hitInfo, Config.RaycastMaxDistance, layerMask) == false)
+        {
+            return false;
+        }
+
+        return Map.Instance.IsTerrain(hitInfo) == MapLayers.Contains(MyGameObjectMapLayer.Terrain)
+            || Map.Instance.IsWater(hitInfo) == MapLayers.Contains(MyGameObjectMapLayer.Water);
     }
 
     public Vector3 Center
@@ -651,7 +679,12 @@ public class MyGameObject : MonoBehaviour
     [field: SerializeField]
     public Timer ExpirationTimer { get; set; } = new Timer(-1.0f, -1.0f);
 
+    [field: SerializeField]
+    public List<string> SkillsNames { get; set; } = new List<string>(); // TODO: Implement.
+
     public Vector3 Position { get => transform.position; set => transform.position = value; }
+
+    public Quaternion Rotation { get => transform.rotation; }
 
     public Vector3 Scale { get => transform.localScale; }
 

@@ -12,7 +12,7 @@ EditorBuildSettings:
     path: Assets/Resources/Scenes/Level_001.unity
     guid: db4be39f1acb1ac4fbdf88d874ea1810
   - enabled: 1
-    path: Assets/Resources/Scenes/Test_Attack_1.unity
+    path: Assets/Resources/Scenes/Test_Attack.unity
     guid: e28bd0b6b57f88244b98ea0c2eafcf0a
   - enabled: 1
     path: Assets/Resources/Scenes/Test_Construct.unity
@@ -24,10 +24,10 @@ EditorBuildSettings:
     path: Assets/Resources/Scenes/Test_Produce.unity
     guid: 6e1da440d9c2bae489a3be977d8e3ddb
   - enabled: 1
-    path: Assets/Resources/Scenes/Test_Attack_2.unity
+    path: Assets/Resources/Scenes/Test_Attack_Gauss.unity
     guid: 68c57c60e3bd5324fa1278cc1786ed35
   - enabled: 1
-    path: Assets/Resources/Scenes/Test_Attack_3.unity
+    path: Assets/Resources/Scenes/Test_Attack_Plane.unity
     guid: a21818c3b52e9ee43b9c91d95ba946b0
   - enabled: 1
     path: Assets/Resources/Scenes/Test_Disaster.unity

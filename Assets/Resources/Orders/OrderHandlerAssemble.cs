@@ -9,8 +9,8 @@ public class OrderHandlerAssemble : OrderHandler
 
         if (order.TargetGameObject == null)
         {
-            order.TargetGameObject = Utils.CreateGameObject(order.Prefab, myGameObject.Exit, myGameObject.Player, MyGameObjectState.UnderAssembly);
-            order.TargetGameObject.GetComponentInChildren<Indicators>().OnUnderConstruction();
+            order.TargetGameObject = Utils.CreateGameObject(order.Prefab, myGameObject.Exit, Quaternion.identity, myGameObject.Player, MyGameObjectState.UnderAssembly);
+            order.TargetGameObject.GetComponentInChildren<Indicators>().OnConstruction();
             order.TargetGameObject.RaiseConstructionResourceFlags();
         }
 
@@ -37,7 +37,7 @@ public class OrderHandlerAssemble : OrderHandler
 
         order.TargetGameObject.State = MyGameObjectState.Operational;
         order.TargetGameObject.Move(myGameObject.GetComponent<Assembler>().RallyPoint, 0);
-        order.TargetGameObject.GetComponentInChildren<Indicators>().OnConstructionCompleted();
+        order.TargetGameObject.GetComponentInChildren<Indicators>().OnConstructionEnd();
         order.TargetGameObject.RemoveConstructionResourceFlags();
 
         myGameObject.Stats.Inc(Stats.OrdersCompleted);

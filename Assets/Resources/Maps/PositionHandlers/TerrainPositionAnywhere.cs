@@ -2,12 +2,11 @@ using UnityEngine;
 
 public class TerrainPositionAnywhere : ITerrainPosition
 {
-    public Vector3 GetPosition(Ray ray)
+    public Vector3 GetPosition(Ray ray, int layerMask = Physics.DefaultRaycastLayers)
     {
         RaycastHit hitInfo;
-        int mask = LayerMask.GetMask("Terrain") | LayerMask.GetMask("Water");
 
-        if (Physics.Raycast(ray, out hitInfo, Config.RaycastMaxDistance, mask) == false)
+        if (Physics.Raycast(ray, out hitInfo, Config.RaycastMaxDistance, layerMask) == false)
         {
             return Vector3.zero;
         }
@@ -15,8 +14,8 @@ public class TerrainPositionAnywhere : ITerrainPosition
         return hitInfo.point;
     }
 
-    public Vector3 GetPosition(Vector3 position)
+    public Vector3 GetPosition(Vector3 position, int layerMask = Physics.DefaultRaycastLayers)
     {
-        return GetPosition(new Ray(position + Vector3.up * Config.TerrainMaxHeight, Vector3.down));
+        return GetPosition(new Ray(position + Vector3.up * Config.TerrainMaxHeight, Vector3.down), layerMask);
     }
 }

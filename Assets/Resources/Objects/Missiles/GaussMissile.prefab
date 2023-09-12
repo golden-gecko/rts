@@ -57,10 +57,13 @@ MonoBehaviour:
   <EnableTime>k__BackingField: 2
   <WaitTime>k__BackingField: 0.1
   <DestroyEffect>k__BackingField: {fileID: 0}
-  <TimeToLive>k__BackingField: -1
   <Altitude>k__BackingField: 0
   <MapLayers>k__BackingField: 04000000
   ShowIndicators: 0
+  <ExpirationTimer>k__BackingField:
+    <Current>k__BackingField: -1
+    <Max>k__BackingField: -1
+  <SkillsNames>k__BackingField: []
   <FireEffectPrefab>k__BackingField: {fileID: 0}
   <HitEffectPrefab>k__BackingField: {fileID: 1141330259687333427, guid: f4732139be8d4054a825d2fb80594129, type: 3}
   <Damage>k__BackingField: 10
