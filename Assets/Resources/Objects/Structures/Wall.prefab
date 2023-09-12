@@ -114,7 +114,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 9171209949088905343}
-  - component: {fileID: 4925406556829064216}
+  - component: {fileID: -9066744942867092417}
   - component: {fileID: -309273742846007426}
   m_Layer: 0
   m_Name: Wall
@@ -140,7 +140,7 @@ Transform:
   - {fileID: 1119644378655400336}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &4925406556829064216
+--- !u!114 &-9066744942867092417
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -149,7 +149,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 8362479133154386629}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 870b5e4ff5c6591449e52d3b4e9856e3, type: 3}
+  m_Script: {fileID: 11500000, guid: 28d73f8fbe8af464f8ccdeabaf462443, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   <Player>k__BackingField: {fileID: 0}
@@ -163,11 +163,12 @@ MonoBehaviour:
   <EnableTime>k__BackingField: 2
   <WaitTime>k__BackingField: 2
   <DestroyEffect>k__BackingField: {fileID: 100008, guid: 06736895ea0a4ff408d25e6684dce797, type: 3}
-  <TimeToLive>k__BackingField: -1
   <Altitude>k__BackingField: 0
   <MapLayers>k__BackingField: 01000000
   ShowIndicators: 1
-  <PowerUsage>k__BackingField: 1
+  <ExpirationTimer>k__BackingField:
+    <Current>k__BackingField: -1
+    <Max>k__BackingField: -1
 --- !u!114 &-309273742846007426
 MonoBehaviour:
   m_ObjectHideFlags: 0

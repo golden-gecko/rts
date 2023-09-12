@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class DisasterManager : MonoBehaviour
 {
-    protected void Awake()
+    void Awake()
     {
         foreach (Disaster disaster in Resources.LoadAll<Disaster>(Config.DirectoryDisasters))
         {
@@ -11,7 +11,7 @@ public class DisasterManager : MonoBehaviour
         }
     }
 
-    protected void Update()
+    void Update()
     {
         CreateDisaster();
     }

@@ -259,12 +259,11 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7976539040526297290}
-  - component: {fileID: -6048010201893483234}
+  - component: {fileID: 4975261063442072807}
   - component: {fileID: 407880308323197961}
-  - component: {fileID: 3529955628967414671}
   - component: {fileID: 5868722175879569043}
+  - component: {fileID: 3529955628967414671}
   - component: {fileID: -1838723375037300516}
-  - component: {fileID: 6933238500706561874}
   m_Layer: 0
   m_Name: Trike
   m_TagString: Untagged
@@ -289,7 +288,7 @@ Transform:
   - {fileID: 2897228398941136959}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &-6048010201893483234
+--- !u!114 &4975261063442072807
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -298,7 +297,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 7348057453300986480}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c4da4a705f2fcf04bb7359855b3e737c, type: 3}
+  m_Script: {fileID: 11500000, guid: 28d73f8fbe8af464f8ccdeabaf462443, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   <Player>k__BackingField: {fileID: 0}
@@ -311,7 +310,7 @@ MonoBehaviour:
     <Max>k__BackingField: 100
   <EnableTime>k__BackingField: 2
   <WaitTime>k__BackingField: 2
-  <DestroyEffect>k__BackingField: {fileID: 100006, guid: 7c442b9b6852b8a4f93306f3d154d471, type: 3}
+  <DestroyEffect>k__BackingField: {fileID: 100006, guid: bf98fad54e73fb8448b7b1b9ba4fd0b6, type: 3}
   <Altitude>k__BackingField: 0
   <MapLayers>k__BackingField: 01000000
   ShowIndicators: 1
@@ -334,21 +333,6 @@ MonoBehaviour:
   <Value>k__BackingField:
     <Current>k__BackingField: 10
     <Max>k__BackingField: 10
---- !u!114 &3529955628967414671
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7348057453300986480}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 480f2643be9397244bac146d70b54f9f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  <Mass>k__BackingField: 10
-  <Power>k__BackingField: 40
-  <FuelUsage>k__BackingField: 10
 --- !u!114 &5868722175879569043
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -368,6 +352,21 @@ MonoBehaviour:
   <Reload>k__BackingField:
     <Current>k__BackingField: 2
     <Max>k__BackingField: 2
+--- !u!114 &3529955628967414671
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7348057453300986480}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 480f2643be9397244bac146d70b54f9f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  <Mass>k__BackingField: 10
+  <Power>k__BackingField: 40
+  <FuelUsage>k__BackingField: 10
 --- !u!114 &-1838723375037300516
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -382,31 +381,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <Mass>k__BackingField: 10
   <Range>k__BackingField: 6
---- !u!114 &6933238500706561874
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7348057453300986480}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9f7fc2f43637b07428d9ff8d0e38edaa, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  <Mass>k__BackingField: 10
-  RaiseResourceFlags: 0
-  <ResourceUsage>k__BackingField: 1
-  <Resources>k__BackingField:
-    <Items>k__BackingField:
-    - <Current>k__BackingField: 0
-      <Max>k__BackingField: 100
-      <Name>k__BackingField: Ammunition
-      <Direction>k__BackingField: 1
-    - <Current>k__BackingField: 0
-      <Max>k__BackingField: 100
-      <Name>k__BackingField: Fuel
-      <Direction>k__BackingField: 1
 --- !u!1 &7699920138671276123
 GameObject:
   m_ObjectHideFlags: 0

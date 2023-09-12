@@ -13,6 +13,8 @@ public class OrderHandlerProduce : OrderHandler
                 if (HaveResources(myGameObject, recipe))
                 {
                     order.Recipe = recipe.Name;
+
+                    break;
                 }
             }
         }
@@ -37,7 +39,7 @@ public class OrderHandlerProduce : OrderHandler
     {
         if (order.Timer == null)
         {
-            order.Timer = new Timer(recipe.Sum / myGameObject.GetComponent<Producer>().ResourceUsage);
+            order.Timer = new Timer(recipe.MaxSum / myGameObject.GetComponent<Producer>().ResourceUsage);
         }
 
         if (HaveResources(myGameObject, recipe) == false)

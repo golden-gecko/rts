@@ -19,7 +19,7 @@ public class OrderHandlerConstruct : OrderHandler
 
         if (order.Timer == null)
         {
-            order.Timer = new Timer(recipe.Sum / myGameObject.GetComponent<Constructor>().ResourceUsage);
+            order.Timer = new Timer(recipe.MaxSum / myGameObject.GetComponent<Constructor>().ResourceUsage);
         }
 
         if (Utils.IsCloseTo(myGameObject.Position, order.TargetGameObject.Entrance) == false)

@@ -539,11 +539,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 85251ca15e5c69c49b6d707d6e616399, type: 3}
---- !u!224 &969514257 stripped
-RectTransform:
-  m_CorrespondingSourceObject: {fileID: 105550648329484035, guid: 838528c30748ad1409e28e3a543244c6, type: 3}
-  m_PrefabInstance: {fileID: 261081117239525525}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1016478341
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -552,10 +547,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: -2182117504668185234, guid: 7bf9b4588e172054c9a42a043a553419, type: 3}
-      propertyPath: <Player>k__BackingField
-      value: 
-      objectReference: {fileID: 261081117239525528}
     - target: {fileID: 1578887994438585109, guid: 7bf9b4588e172054c9a42a043a553419, type: 3}
       propertyPath: m_Name
       value: Harvester
@@ -600,6 +591,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3849041754090864768, guid: 7bf9b4588e172054c9a42a043a553419, type: 3}
+      propertyPath: <Player>k__BackingField
+      value: 
+      objectReference: {fileID: 261081117239525528}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -674,6 +669,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: -6591473423801908206, guid: 61a7c4fca0a2a36409924024a26dbdde, type: 3}
+      propertyPath: <Player>k__BackingField
+      value: 
+      objectReference: {fileID: 261081117239525528}
     - target: {fileID: 1702014145004635914, guid: 61a7c4fca0a2a36409924024a26dbdde, type: 3}
       propertyPath: m_LocalPosition.x
       value: 299.8879
@@ -1295,14 +1294,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 529670637529471827, guid: 838528c30748ad1409e28e3a543244c6, type: 3}
-      propertyPath: boxVisual
-      value: 
-      objectReference: {fileID: 969514257}
-    - target: {fileID: 529670637529471827, guid: 838528c30748ad1409e28e3a543244c6, type: 3}
-      propertyPath: ActivePlayer
-      value: 
-      objectReference: {fileID: 261081117239525528}
     - target: {fileID: 1016367653328774682, guid: 838528c30748ad1409e28e3a543244c6, type: 3}
       propertyPath: m_RootOrder
       value: 0

@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class RecipeManager : MonoBehaviour
 {
-    protected void Awake()
+    void Awake()
     {
         CreateRecipes();
     }
@@ -29,9 +29,9 @@ public class RecipeManager : MonoBehaviour
 
         Recipe r3 = new Recipe("Fuel");
         // <=
-        r1.Consumes("Crude Oil", 1);
+        r3.Consumes("Crude Oil", 1);
         // =>
-        r1.Produces("Fuel", 1);
+        r3.Produces("Fuel", 1);
 
         Recipes.Add(r1);
         Recipes.Add(r2);

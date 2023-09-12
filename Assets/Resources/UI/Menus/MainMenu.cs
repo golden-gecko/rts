@@ -1,11 +1,11 @@
 using UnityEngine;
 using UnityEngine.UIElements;
 
-public class MainMenu : Menu
+public class MainMenu : MonoBehaviour
 {
     public static MainMenu Instance { get; private set; }
 
-    protected void Awake()
+    void Awake()
     {
         if (Instance != null && Instance != this)
         {
@@ -17,7 +17,7 @@ public class MainMenu : Menu
         }
     }
 
-    protected void OnEnable()
+    void OnEnable()
     {
         GetButton("Continue").RegisterCallback<ClickEvent>(ev => OnButtonContinue());
         GetButton("New").RegisterCallback<ClickEvent>(ev => OnButtonNew());

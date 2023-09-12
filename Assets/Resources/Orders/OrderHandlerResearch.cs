@@ -15,9 +15,16 @@ public class OrderHandlerResearch : OrderHandler
 
         Technology technology = myGameObject.Player.TechnologyTree.Technologies[order.Technology];
 
+        if (technology.Unlocked)
+        {
+            Fail(myGameObject);
+
+            return;
+        }
+
         if (order.Timer == null)
         {
-            order.Timer = new Timer(technology.Total / myGameObject.GetComponent<Researcher>().ResourceUsage);
+            order.Timer = new Timer(technology.MaxSum / myGameObject.GetComponent<Researcher>().ResourceUsage);
         }
 
         if (HaveResources(myGameObject, technology) == false)

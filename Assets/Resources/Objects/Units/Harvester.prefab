@@ -94,8 +94,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2207475100940521903}
-  - component: {fileID: -2182117504668185234}
+  - component: {fileID: 3849041754090864768}
   - component: {fileID: -7296574799590733170}
+  - component: {fileID: -2805528376880930231}
   - component: {fileID: 4793784651987314840}
   - component: {fileID: 2949164819816468667}
   - component: {fileID: -6714782243480238438}
@@ -124,7 +125,7 @@ Transform:
   - {fileID: 6526777159359421998}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &-2182117504668185234
+--- !u!114 &3849041754090864768
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -133,7 +134,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1578887994438585109}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4bafe07d2462ea046a814c94a0a55879, type: 3}
+  m_Script: {fileID: 11500000, guid: 28d73f8fbe8af464f8ccdeabaf462443, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   <Player>k__BackingField: {fileID: 0}
@@ -146,7 +147,7 @@ MonoBehaviour:
     <Max>k__BackingField: 100
   <EnableTime>k__BackingField: 2
   <WaitTime>k__BackingField: 2
-  <DestroyEffect>k__BackingField: {fileID: 100006, guid: 7c442b9b6852b8a4f93306f3d154d471, type: 3}
+  <DestroyEffect>k__BackingField: {fileID: 100006, guid: bf98fad54e73fb8448b7b1b9ba4fd0b6, type: 3}
   <Altitude>k__BackingField: 0
   <MapLayers>k__BackingField: 01000000
   ShowIndicators: 1
@@ -166,7 +167,30 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   <Mass>k__BackingField: 10
+  <Prefabs>k__BackingField:
+  - Barracks
+  - Factory_Heavy
+  - Factory_Light
+  - Radar_Outpost
+  - Refinery
+  - Research_Lab
+  - Spaceport
+  - Turret_Gun
+  - Turret_Missile
+  - Wall
   <ResourceUsage>k__BackingField: 2
+--- !u!114 &-2805528376880930231
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1578887994438585109}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 64456d16d88606c42a7ae4d8baa56c6e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &4793784651987314840
 MonoBehaviour:
   m_ObjectHideFlags: 0

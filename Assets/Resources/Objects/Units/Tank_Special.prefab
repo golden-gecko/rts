@@ -175,13 +175,12 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5724307980619866452}
-  - component: {fileID: -3623363844613638352}
-  - component: {fileID: -7318105187754308936}
+  - component: {fileID: 5899876830341912235}
   - component: {fileID: 5524956404379026895}
   - component: {fileID: -5010447674212785321}
-  - component: {fileID: -5877654829243037068}
+  - component: {fileID: -7318105187754308936}
   - component: {fileID: 7942026523019763108}
-  - component: {fileID: 536579730208658852}
+  - component: {fileID: -5877654829243037068}
   m_Layer: 0
   m_Name: Tank_Special
   m_TagString: Untagged
@@ -206,7 +205,7 @@ Transform:
   - {fileID: 4680769485450468212}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &-3623363844613638352
+--- !u!114 &5899876830341912235
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -215,7 +214,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 4916527176359590894}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e903c3d9456c3894a8b993fa48f1099a, type: 3}
+  m_Script: {fileID: 11500000, guid: 28d73f8fbe8af464f8ccdeabaf462443, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   <Player>k__BackingField: {fileID: 0}
@@ -228,28 +227,13 @@ MonoBehaviour:
     <Max>k__BackingField: 100
   <EnableTime>k__BackingField: 2
   <WaitTime>k__BackingField: 2
-  <DestroyEffect>k__BackingField: {fileID: 100006, guid: 7c442b9b6852b8a4f93306f3d154d471, type: 3}
+  <DestroyEffect>k__BackingField: {fileID: 100006, guid: bf98fad54e73fb8448b7b1b9ba4fd0b6, type: 3}
   <Altitude>k__BackingField: 0
   <MapLayers>k__BackingField: 01000000
   ShowIndicators: 1
   <ExpirationTimer>k__BackingField:
     <Current>k__BackingField: -1
     <Max>k__BackingField: -1
---- !u!114 &-7318105187754308936
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4916527176359590894}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 480f2643be9397244bac146d70b54f9f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  <Mass>k__BackingField: 10
-  <Power>k__BackingField: 50
-  <FuelUsage>k__BackingField: 10
 --- !u!114 &5524956404379026895
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -285,7 +269,7 @@ MonoBehaviour:
   <Reload>k__BackingField:
     <Current>k__BackingField: 4
     <Max>k__BackingField: 4
---- !u!114 &-5877654829243037068
+--- !u!114 &-7318105187754308936
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -294,11 +278,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 4916527176359590894}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 79a39b5131237dc428a9b67a3936e144, type: 3}
+  m_Script: {fileID: 11500000, guid: 480f2643be9397244bac146d70b54f9f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   <Mass>k__BackingField: 10
-  <Range>k__BackingField: 10
+  <Power>k__BackingField: 50
+  <FuelUsage>k__BackingField: 10
 --- !u!114 &7942026523019763108
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -319,7 +304,7 @@ MonoBehaviour:
     <Max>k__BackingField: 100
   <Power>k__BackingField: 0.2
   <ChargeRate>k__BackingField: 0.1
---- !u!114 &536579730208658852
+--- !u!114 &-5877654829243037068
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -328,22 +313,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 4916527176359590894}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9f7fc2f43637b07428d9ff8d0e38edaa, type: 3}
+  m_Script: {fileID: 11500000, guid: 79a39b5131237dc428a9b67a3936e144, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   <Mass>k__BackingField: 10
-  RaiseResourceFlags: 0
-  <ResourceUsage>k__BackingField: 1
-  <Resources>k__BackingField:
-    <Items>k__BackingField:
-    - <Current>k__BackingField: 0
-      <Max>k__BackingField: 100
-      <Name>k__BackingField: Ammunition
-      <Direction>k__BackingField: 1
-    - <Current>k__BackingField: 0
-      <Max>k__BackingField: 100
-      <Name>k__BackingField: Fuel
-      <Direction>k__BackingField: 1
+  <Range>k__BackingField: 10
 --- !u!1 &5938523042102776864
 GameObject:
   m_ObjectHideFlags: 0

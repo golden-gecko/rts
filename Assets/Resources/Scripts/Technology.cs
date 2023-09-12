@@ -23,7 +23,7 @@ public class Technology
 
     public ResourceContainer Cost { get; } = new ResourceContainer();
 
-    public int Total { get => Cost.Sum; }
+    public int MaxSum { get => Cost.MaxSum; }
 
     public bool Researched
     {

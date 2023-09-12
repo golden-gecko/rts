@@ -5,11 +5,11 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.UIElements;
 
-public class GameMenu : Menu
+public class GameMenu : MonoBehaviour
 {
     public static GameMenu Instance { get; private set; }
 
-    protected void Awake()
+    void Awake()
     {
         if (Instance != null && Instance != this)
         {
@@ -21,7 +21,7 @@ public class GameMenu : Menu
         }
     }
 
-    protected void OnEnable()
+    void OnEnable()
     {
         UIDocument uiDocument = GetComponent<UIDocument>();
         VisualElement rootVisualElement = uiDocument.rootVisualElement;
@@ -50,7 +50,7 @@ public class GameMenu : Menu
         Log("");
     }
 
-    protected void Update()
+    void Update()
     {
         Player activePlayer = HUD.Instance.ActivePlayer;
 
@@ -144,10 +144,10 @@ public class GameMenu : Menu
     {
         prefabs.Clear();
 
-        Structure[] structures = Resources.LoadAll<Structure>(Config.DirectoryStructures);
-        Unit[] units = Resources.LoadAll<Unit>(Config.DirectoryUnits);
+        MyGameObject[] structures = Resources.LoadAll<MyGameObject>(Config.DirectoryStructures);
+        MyGameObject[] units = Resources.LoadAll<MyGameObject>(Config.DirectoryUnits);
 
-        foreach (Structure myGameObject in structures)
+        foreach (MyGameObject myGameObject in structures)
         {
             string path = Path.Combine(Config.DirectoryStructures, myGameObject.name);
 
@@ -163,7 +163,7 @@ public class GameMenu : Menu
             prefabsButtons[path] = button;
         }
 
-        foreach (Unit myGameObject in units)
+        foreach (MyGameObject myGameObject in units)
         {
             string path = Path.Combine(Config.DirectoryUnits, myGameObject.name);
 
