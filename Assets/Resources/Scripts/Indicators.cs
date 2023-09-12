@@ -1,4 +1,3 @@
-using System.Drawing;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -32,6 +31,14 @@ public class Indicators : MonoBehaviour
     void Update()
     {
         MyGameObject myGameObject = GetComponentInParent<MyGameObject>();
+
+        if (myGameObject.ShowIndicators == false)
+        {
+            bar.gameObject.SetActive(false);
+            range.gameObject.SetActive(false);
+
+            return;
+        }
 
         Vector3 scale = myGameObject.Scale;
         Vector3 size = myGameObject.Size;
@@ -110,9 +117,18 @@ public class Indicators : MonoBehaviour
         }
 
         // Update trace.
-        float radius = myGameObject.Radius;
+        if (HUD.Instance.ActivePlayer.TechnologyTree.IsUnlocked("Radar 2")) // TODO: Is ActivePlayer correct here?
+        {
+            float radius = myGameObject.Radius;
 
-        trace.localScale = new Vector3(radius / scale.x, radius / scale.y, radius / scale.z);
+            trace.localScale = new Vector3(radius / scale.x, radius / scale.y, radius / scale.z);
+        }
+        else
+        {
+            float radius = 1.0f;
+
+            trace.localScale = new Vector3(radius / scale.x, radius / scale.y, radius / scale.z);
+        }
     }
 
     public void OnConstruction()
@@ -126,7 +142,7 @@ public class Indicators : MonoBehaviour
 
         construction.gameObject.SetActive(true);
         construction.transform.localPosition = new Vector3(0.0f, size.y * 0.5f, 0.0f);
-        construction.transform.localScale = size;
+        construction.transform.localScale = size * Config.IndicatorMargin;
     }
 
     public void OnConstructionEnd()
@@ -145,7 +161,7 @@ public class Indicators : MonoBehaviour
 
         error.gameObject.SetActive(true);
         error.transform.localPosition = new Vector3(0.0f, size.y * 0.5f, 0.0f);
-        error.transform.localScale = size;
+        error.transform.localScale = size * Config.IndicatorMargin;
     }
 
     public void OnErrorEnd()
@@ -181,43 +197,10 @@ public class Indicators : MonoBehaviour
     {
         MyGameObject myGameObject = GetComponentInParent<MyGameObject>();
 
-        Vector3 scale = myGameObject.Scale;
         Vector3 size = myGameObject.Size;
 
-        Gun gun = myGameObject.GetComponent<Gun>();
-
-        if (gun != null)
-        {
-            rangeGun.gameObject.SetActive(status);
-            rangeGun.localScale = new Vector3(gun.Range * 2.0f / scale.x, gun.Range * 2.0f / scale.z, 1.0f);
-        }
-
-        PowerPlant powerPlant = myGameObject.GetComponent<PowerPlant>();
-
-        if (powerPlant != null)
-        {
-            rangePower.gameObject.SetActive(status);
-            rangePower.localScale = new Vector3(powerPlant.Range * 2.0f / scale.x, powerPlant.Range * 2.0f / scale.z, 1.0f);
-        }
-
-        Radar radar = myGameObject.GetComponent<Radar>();
-
-        if (radar != null)
-        {
-            rangeRadar.gameObject.SetActive(status);
-            rangeRadar.localScale = new Vector3(radar.Range * 2.0f / scale.x, radar.Range * 2.0f / scale.z, 1.0f);
-        }
-
-        Sight sight = myGameObject.GetComponent<Sight>();
-
-        if (sight != null)
-        {
-            rangeSight.gameObject.SetActive(status);
-            rangeSight.localScale = new Vector3(sight.Range * 2.0f / scale.x, sight.Range * 2.0f / scale.z, 1.0f);
-        }
-
         selection.gameObject.SetActive(status);
-        selection.localScale = new Vector3(size.x * 1.1f, size.z * 1.1f, 1.0f);
+        selection.localScale = new Vector3(size.x * Config.IndicatorMargin, size.z * Config.IndicatorMargin, 1.0f);
     }
 
     public void OnShow()

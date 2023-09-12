@@ -10,7 +10,7 @@ public class TechnologyTree
 
         foreach (MyGameObject myGameObject in structures)
         {
-            Technologies[myGameObject.name] = new Technology(myGameObject.name);
+            Technologies[myGameObject.name] = new Technology(myGameObject.name, "");
         }
 
         // Load units.
@@ -18,35 +18,38 @@ public class TechnologyTree
 
         foreach (MyGameObject myGameObject in units)
         {
-            Technologies[myGameObject.name] = new Technology(myGameObject.name);
+            Technologies[myGameObject.name] = new Technology(myGameObject.name, "");
         }
 
         // Create technologies to research.
-        Technologies["Colonization"] = new Technology("Colonization", new HashSet<string> { "Factory_Light", "Harvester", "Headquarters", "Gas_Station", "Quad", "Refinery", "Research_Lab", "Trike" });
+        Technologies["Colonization"] = new Technology("Colonization", "", new HashSet<string> { "Factory_Light", "Harvester", "Headquarters", "Gas_Station", "Quad", "Refinery", "Research_Lab", "Trike" });
         Technologies["Colonization"].Cost.Init("Crystal", 0, 20, ResourceDirection.In);
 
-        Technologies["Electricity"] = new Technology("Electricity", new HashSet<string> { "Power_Pole", "Windtrap" });
+        Technologies["Electricity"] = new Technology("Electricity", "", new HashSet<string> { "Power_Pole", "Windtrap" });
         Technologies["Electricity"].Cost.Init("Crystal", 0, 20, ResourceDirection.In);
 
-        Technologies["Infantry"] = new Technology("Infantry", new HashSet<string> { "Barracks", "Infantry_Light" });
+        Technologies["Infantry"] = new Technology("Infantry", "", new HashSet<string> { "Barracks", "Infantry_Light" });
         Technologies["Infantry"].Cost.Init("Crystal", 0, 20, ResourceDirection.In);
 
-        Technologies["Heavy_Industry"] = new Technology("Heavy_Industry", new HashSet<string> { "Factory_Heavy", "Tank_Missile" });
+        Technologies["Heavy_Industry"] = new Technology("Heavy_Industry", "", new HashSet<string> { "Factory_Heavy", "Tank_Missile" });
         Technologies["Heavy_Industry"].Cost.Init("Crystal", 0, 20, ResourceDirection.In);
 
-        Technologies["Laser"] = new Technology("Laser", new HashSet<string> { "Grav_Light", "Tank_Combat" });
+        Technologies["Laser"] = new Technology("Laser", "", new HashSet<string> { "Grav_Light", "Tank_Combat" });
         Technologies["Laser"].Cost.Init("Crystal", 0, 20, ResourceDirection.In);
 
-        Technologies["Radar"] = new Technology("Radar", new HashSet<string> { "Radar_Outpost" });
-        Technologies["Radar"].Cost.Init("Crystal", 0, 20, ResourceDirection.In);
+        Technologies["Radar 1"] = new Technology("Radar 1", "", new HashSet<string> { "Radar_Outpost" }); // TODO: Add dependencies between technologies. "Radar 1" should allow "Radar 2" to be discovered.
+        Technologies["Radar 1"].Cost.Init("Crystal", 0, 20, ResourceDirection.In);
 
-        Technologies["Space_Travels"] = new Technology("Space_Travels", new HashSet<string> { "Spaceport" });
+        Technologies["Radar 2"] = new Technology("Radar 2", "Radar is able to detect object size."); // TODO: This tech is already available to research. Should be locked until "Radar 1" is discovered.
+        Technologies["Radar 2"].Cost.Init("Crystal", 0, 40, ResourceDirection.In);
+
+        Technologies["Space_Travels"] = new Technology("Space_Travels", "", new HashSet<string> { "Spaceport" });
         Technologies["Space_Travels"].Cost.Init("Crystal", 0, 20, ResourceDirection.In);
 
-        Technologies["Static_Defences"] = new Technology("Static_Defences", new HashSet<string> { "Wall" });
+        Technologies["Static_Defences"] = new Technology("Static_Defences", "", new HashSet<string> { "Wall" });
         Technologies["Static_Defences"].Cost.Init("Crystal", 0, 20, ResourceDirection.In);
 
-        Technologies["Stationary_Defences"] = new Technology("Stationary_Defences", new HashSet<string> { "Turret_Gun", "Turret_Missile" });
+        Technologies["Stationary_Defences"] = new Technology("Stationary_Defences", "", new HashSet<string> { "Turret_Gun", "Turret_Missile" });
         Technologies["Stationary_Defences"].Cost.Init("Crystal", 0, 20, ResourceDirection.In);
 
         // Unlock starting technologies.

@@ -317,8 +317,6 @@ public class MyGameObject : MonoBehaviour
 
     public virtual string GetInfo(bool ally)
     {
-        ally = true; // TODO: Remove.
-
         string info = string.Empty;
 
         switch (State)
