@@ -30,12 +30,13 @@ public class Order
         };
     }
 
-    public static Order Construct(string prefab, Vector3 position)
+    public static Order Construct(string prefab, Vector3 position, Quaternion rotation)
     {
         return new Order
         {
             Type = OrderType.Construct,
             TargetPosition = position,
+            TargetRotation = rotation,
             Prefab = prefab,
         };
     }
@@ -310,6 +311,8 @@ public class Order
     public MyGameObject TargetGameObject { get; set; } // TODO: Hide setter. Destroy when order is cancelled (add Cancel method).
 
     public Vector3 TargetPosition { get; set; } // TODO: Hide setter.
+
+    public Quaternion TargetRotation { get; private set; }
 
     public Timer Timer { get; set; } // TODO: Hide setter.
 

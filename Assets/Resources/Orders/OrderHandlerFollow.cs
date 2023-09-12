@@ -13,7 +13,7 @@ public class OrderHandlerFollow : OrderHandler
 
         if (Utils.IsCloseTo(myGameObject.Position, order.TargetGameObject.Entrance) == false)
         {
-            myGameObject.Move(order.TargetGameObject.Entrance);
+            myGameObject.Move(order.TargetGameObject.Entrance, 0);
         }
     }
 

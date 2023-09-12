@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using UnityEditor.PackageManager;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
@@ -207,7 +206,7 @@ public class HUD : MonoBehaviour
                     selected.Orders.Clear();
                 }
 
-                selected.Construct(prefab, position);
+                selected.Construct(prefab, position, Cursor.Rotation);
             }
         }
     }
@@ -699,7 +698,7 @@ public class HUD : MonoBehaviour
 
             if (prefab.Equals(string.Empty) == false)
             {
-                Cursor = Utils.CreateGameObject(Prefab, Vector3.zero, null, MyGameObjectState.Cursor);
+                Cursor = Utils.CreateGameObject(Prefab, Vector3.zero, Quaternion.identity, null, MyGameObjectState.Cursor);
                 Cursor.GetComponentInChildren<Indicators>().OnConstruction();
             }
         }

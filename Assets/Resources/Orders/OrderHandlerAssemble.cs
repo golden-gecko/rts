@@ -9,7 +9,7 @@ public class OrderHandlerAssemble : OrderHandler
 
         if (order.TargetGameObject == null)
         {
-            order.TargetGameObject = Utils.CreateGameObject(order.Prefab, myGameObject.Exit, myGameObject.Player, MyGameObjectState.UnderAssembly);
+            order.TargetGameObject = Utils.CreateGameObject(order.Prefab, myGameObject.Exit, Quaternion.identity, myGameObject.Player, MyGameObjectState.UnderAssembly);
             order.TargetGameObject.GetComponentInChildren<Indicators>().OnConstruction();
             order.TargetGameObject.RaiseConstructionResourceFlags();
         }

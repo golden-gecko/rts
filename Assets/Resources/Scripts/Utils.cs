@@ -2,14 +2,14 @@ using UnityEngine;
 
 public class Utils
 {
-    public static MyGameObject CreateGameObject(string prefab, Vector3 position, Player player, MyGameObjectState state)
+    public static MyGameObject CreateGameObject(string prefab, Vector3 position, Quaternion rotation, Player player, MyGameObjectState state)
     {
-        return CreateGameObject(Resources.Load<MyGameObject>(prefab), position, player, state);
+        return CreateGameObject(Resources.Load<MyGameObject>(prefab), position, rotation, player, state);
     }
 
-    public static MyGameObject CreateGameObject(MyGameObject resource, Vector3 position, Player player, MyGameObjectState state)
+    public static MyGameObject CreateGameObject(MyGameObject resource, Vector3 position, Quaternion rotation, Player player, MyGameObjectState state)
     {
-        MyGameObject myGameObject = Object.Instantiate(resource, position, resource.transform.rotation);
+        MyGameObject myGameObject = Object.Instantiate(resource, position, rotation);
 
         myGameObject.SetPlayer(player);
         myGameObject.State = state;

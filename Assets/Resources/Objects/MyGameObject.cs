@@ -1,7 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
-using UnityEngine.UIElements;
 
 public class MyGameObject : MonoBehaviour
 {
@@ -55,6 +54,10 @@ public class MyGameObject : MonoBehaviour
                 {
                     ProcessOrders();
                     UpdateSkills();
+                }
+                else
+                {
+                    ProcessOrdersWhenInactive();
                 }
                 break;
 
@@ -144,9 +147,9 @@ public class MyGameObject : MonoBehaviour
         Orders.Add(Order.Construct(myGameObject));
     }
 
-    public void Construct(string prefab, Vector3 position)
+    public void Construct(string prefab, Vector3 position, Quaternion rotation)
     {
-        Orders.Add(Order.Construct(prefab, position));
+        Orders.Add(Order.Construct(prefab, position, rotation));
     }
 
     public void Destroy(int priority = -1)
@@ -479,6 +482,23 @@ public class MyGameObject : MonoBehaviour
         }
     }
 
+    private void ProcessOrdersWhenInactive() // TODO: Refactor.
+    {
+        if (Orders.Count > 0)
+        {
+            Order order = Orders.First();
+
+            if (order.Type == OrderType.Enable && Orders.IsAllowed(order.Type) && OrderHandlers.ContainsKey(order.Type))
+            {
+                OrderHandlers[order.Type].OnExecute(this);
+            }
+            else
+            {
+                Orders.Pop();
+            }
+        }
+    }
+
     public void RaiseConstructionResourceFlags()
     {
         foreach (Resource resource in ConstructionResources.Items)
@@ -665,6 +685,8 @@ public class MyGameObject : MonoBehaviour
     public List<string> SkillsNames { get; set; } = new List<string>(); // TODO: Implement.
 
     public Vector3 Position { get => transform.position; set => transform.position = value; }
+
+    public Quaternion Rotation { get => transform.rotation; }
 
     public Vector3 Scale { get => transform.localScale; }
 
