@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class MyGameObject : MonoBehaviour
 {
@@ -44,10 +45,6 @@ public class MyGameObject : MonoBehaviour
 
         switch (State)
         {
-            case MyGameObjectState.Cursor:
-                // GetComponentInChildren<Indicators>().OnUnderConstruction();
-                break;
-
             case MyGameObjectState.Operational:
                 if (Alive == false)
                 {
@@ -56,8 +53,6 @@ public class MyGameObject : MonoBehaviour
 
                 if (Working)
                 {
-                    // GetComponentInChildren<Indicators>().OnConstructionCompleted();
-
                     ProcessOrders();
                     UpdateSkills();
                 }
@@ -68,8 +63,6 @@ public class MyGameObject : MonoBehaviour
                 {
                     OnDestroy_();
                 }
-
-                // GetComponentInChildren<Indicators>().OnUnderConstruction();
 
                 RaiseConstructionResourceFlags();
                 break;
@@ -537,6 +530,22 @@ public class MyGameObject : MonoBehaviour
         Stats.Player = player;
 
         UpdateSelection();
+    }
+
+    public bool HasCorrectPosition()
+    {
+        Ray ray = new Ray(Position + Vector3.up * Config.TerrainMaxHeight, Vector3.down);
+        int layerMask = LayerMask.GetMask("Terrain") | LayerMask.GetMask("Water");
+
+        RaycastHit hitInfo;
+
+        if (Physics.Raycast(ray, out hitInfo, Config.RaycastMaxDistance, layerMask) == false)
+        {
+            return false;
+        }
+
+        return Map.Instance.IsTerrain(hitInfo) == MapLayers.Contains(MyGameObjectMapLayer.Terrain)
+            || Map.Instance.IsWater(hitInfo) == MapLayers.Contains(MyGameObjectMapLayer.Water);
     }
 
     public Vector3 Center

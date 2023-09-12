@@ -11,7 +11,7 @@ public class OrderHandlerConstruct : OrderHandler
         {
             order.TargetPosition = Map.Instance.StructurePositionHandler.GetPosition(order.TargetPosition);
             order.TargetGameObject = Utils.CreateGameObject(order.Prefab, order.TargetPosition, myGameObject.Player, MyGameObjectState.UnderConstruction);
-            order.TargetGameObject.GetComponentInChildren<Indicators>().OnUnderConstruction();
+            order.TargetGameObject.GetComponentInChildren<Indicators>().OnConstruction();
             order.TargetGameObject.RaiseConstructionResourceFlags();
         }
 
@@ -43,8 +43,8 @@ public class OrderHandlerConstruct : OrderHandler
 
         MoveResources(myGameObject, order, recipe);
 
-        order.TargetGameObject.State = MyGameObjectState.Operational; // TODO: Create function for states change.
-        order.TargetGameObject.GetComponentInChildren<Indicators>().OnConstructionCompleted();
+        order.TargetGameObject.State = MyGameObjectState.Operational; // TODO: Create function for state change.
+        order.TargetGameObject.GetComponentInChildren<Indicators>().OnConstructionEnd();
         order.TargetGameObject.RemoveConstructionResourceFlags();
 
         myGameObject.Stats.Inc(Stats.OrdersCompleted);

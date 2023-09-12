@@ -1,3 +1,4 @@
+using System.Drawing;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -6,6 +7,8 @@ public class Indicators : MonoBehaviour
     void Awake()
     {
         bar = transform.Find("Bar");
+        bar.gameObject.SetActive(true);
+
         barAmmunition = bar.Find("Ammunition").GetComponent<Image>();
         barArmour = bar.Find("Armour").GetComponent<Image>();
         barHealth = bar.Find("Health").GetComponent<Image>();
@@ -13,6 +16,8 @@ public class Indicators : MonoBehaviour
         barShield = bar.Find("Shield").GetComponent<Image>();
 
         range = transform.Find("Range");
+        range.gameObject.SetActive(true);
+
         rangeGun = range.Find("Gun");
         rangePower = range.Find("Power");
         rangeRadar = range.Find("Radar");
@@ -36,19 +41,6 @@ public class Indicators : MonoBehaviour
         bar.transform.LookAt(Camera.main.transform.position);
         bar.transform.Rotate(0.0f, 180.0f, 0.0f);
 
-        // Update armour.
-        Armour armour = myGameObject.GetComponent<Armour>();
-
-        if (armour != null)
-        {
-            barArmour.fillAmount = armour.Value.Percent;
-            barArmour.gameObject.SetActive(true);
-        }
-        else
-        {
-            barArmour.gameObject.SetActive(false);
-        }
-
         // Update ammunition.
         float gunPercent = 0.0f;
 
@@ -66,6 +58,19 @@ public class Indicators : MonoBehaviour
         else
         {
             barAmmunition.gameObject.SetActive(false);
+        }
+
+        // Update armour.
+        Armour armour = myGameObject.GetComponent<Armour>();
+
+        if (armour != null)
+        {
+            barArmour.fillAmount = armour.Value.Percent;
+            barArmour.gameObject.SetActive(true);
+        }
+        else
+        {
+            barArmour.gameObject.SetActive(false);
         }
 
         // Update fuel.
@@ -89,6 +94,7 @@ public class Indicators : MonoBehaviour
 
         // Update health.
         barHealth.fillAmount = myGameObject.Health.Percent;
+        barHealth.gameObject.SetActive(true);
 
         // Update shield.
         Shield shield = myGameObject.GetComponent<Shield>();
@@ -109,42 +115,57 @@ public class Indicators : MonoBehaviour
         trace.localScale = new Vector3(radius / scale.x, radius / scale.y, radius / scale.z);
     }
 
-    public void OnUnderConstruction()
+    public void OnConstruction()
     {
         MyGameObject myGameObject = GetComponentInParent<MyGameObject>();
 
         Vector3 size = myGameObject.Size;
+
+        bar.gameObject.SetActive(false);
+        range.gameObject.SetActive(false);
 
         construction.gameObject.SetActive(true);
         construction.transform.localPosition = new Vector3(0.0f, size.y * 0.5f, 0.0f);
         construction.transform.localScale = size;
     }
 
-    public void OnConstructionCompleted()
+    public void OnConstructionEnd()
     {
+        bar.gameObject.SetActive(true);
+        range.gameObject.SetActive(true);
+
         construction.gameObject.SetActive(false);
     }
 
-    public void OnShow()
+    public void OnError()
     {
         MyGameObject myGameObject = GetComponentInParent<MyGameObject>();
 
-        switch (myGameObject.State)
-        {
-            case MyGameObjectState.UnderAssembly:
-            case MyGameObjectState.UnderConstruction:
-                bar.gameObject.SetActive(false);
-                construction.gameObject.SetActive(true);
-                range.gameObject.SetActive(false);
-                trace.gameObject.SetActive(false);
-                break;
+        Vector3 size = myGameObject.Size;
 
-            case MyGameObjectState.Operational:
-                bar.gameObject.SetActive(true);
-                construction.gameObject.SetActive(false);
-                range.gameObject.SetActive(true);
-                trace.gameObject.SetActive(false);
-                break;
+        error.gameObject.SetActive(true);
+        error.transform.localPosition = new Vector3(0.0f, size.y * 0.5f, 0.0f);
+        error.transform.localScale = size;
+    }
+
+    public void OnErrorEnd()
+    {
+        error.gameObject.SetActive(false);
+    }
+
+    public void OnHide()
+    {
+        bar.gameObject.SetActive(false);
+        construction.gameObject.SetActive(false);
+        range.gameObject.SetActive(false);
+        trace.gameObject.SetActive(false);
+    }
+
+    public void OnPlayerChange(Player player)
+    {
+        if (player != null)
+        {
+            selection.GetComponent<SpriteRenderer>().sprite = player.SelectionSprite;
         }
     }
 
@@ -154,14 +175,6 @@ public class Indicators : MonoBehaviour
         construction.gameObject.SetActive(false);
         range.gameObject.SetActive(false);
         trace.gameObject.SetActive(true);
-    }
-
-    public void OnHide()
-    {
-        bar.gameObject.SetActive(false);
-        construction.gameObject.SetActive(false);
-        range.gameObject.SetActive(false);
-        trace.gameObject.SetActive(false);
     }
 
     public void OnSelect(bool status)
@@ -207,22 +220,27 @@ public class Indicators : MonoBehaviour
         selection.localScale = new Vector3(size.x * 1.1f, size.z * 1.1f, 1.0f);
     }
 
-    public void OnPlayerChange(Player player)
+    public void OnShow()
     {
-        if (player != null)
+        MyGameObject myGameObject = GetComponentInParent<MyGameObject>();
+
+        switch (myGameObject.State)
         {
-            selection.GetComponent<SpriteRenderer>().sprite = player.SelectionSprite;
+            case MyGameObjectState.UnderAssembly:
+            case MyGameObjectState.UnderConstruction:
+                bar.gameObject.SetActive(false);
+                construction.gameObject.SetActive(true);
+                range.gameObject.SetActive(false);
+                trace.gameObject.SetActive(false);
+                break;
+
+            case MyGameObjectState.Operational:
+                bar.gameObject.SetActive(true);
+                construction.gameObject.SetActive(false);
+                range.gameObject.SetActive(true);
+                trace.gameObject.SetActive(false);
+                break;
         }
-    }
-
-    public void OnError()
-    {
-        error.gameObject.SetActive(true);
-    }
-
-    public void OnErrorEnd()
-    {
-        error.gameObject.SetActive(false);
     }
 
     private Transform bar;

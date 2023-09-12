@@ -340,7 +340,7 @@ public class HUD : MonoBehaviour
         return Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out hitInfo, Config.RaycastMaxDistance, layerMask);
     }
 
-    private void ProcessOrder()
+    private bool ProcessOrder()
     {
         RaycastHit hitInfo;
 
@@ -348,10 +348,12 @@ public class HUD : MonoBehaviour
         {
             if (MouseToRaycast(out hitInfo, LayerMask.GetMask("Terrain") | LayerMask.GetMask("Water")))
             {
-                bool terrain = Map.Instance.IsTerrain(hitInfo);
-                bool water = Map.Instance.IsWater(hitInfo);
+                if (Cursor.HasCorrectPosition())
+                {
+                    Construct(hitInfo.point);
 
-                Construct(hitInfo.point);
+                    return true;
+                }
             }
         }
         else
@@ -366,8 +368,12 @@ public class HUD : MonoBehaviour
                 {
                     IssueOrder(hitInfo.transform.GetComponentInParent<MyGameObject>());
                 }
+
+                return true;
             }
         }
+
+        return false;
     }
 
     private void ProcessSelection()
@@ -586,12 +592,13 @@ public class HUD : MonoBehaviour
                 }
                 else
                 {
-                    ProcessOrder();
-
-                    if (IsShift() == false)
+                    if (ProcessOrder())
                     {
-                        Order = OrderType.None;
-                        Prefab = string.Empty;
+                        if (IsShift() == false)
+                        {
+                            Order = OrderType.None;
+                            Prefab = string.Empty;
+                        }
                     }
                 }
             }
@@ -640,15 +647,17 @@ public class HUD : MonoBehaviour
 
         if (Cursor != null)
         {
-            if (MouseToRaycast(out hitInfo, LayerMask.GetMask("Terrain") | LayerMask.GetMask("Water")))
+            Cursor.transform.position
+                = Map.Instance.StructurePositionHandler.GetPosition(Camera.main.ScreenPointToRay(Input.mousePosition), LayerMask.GetMask("Terrain") | LayerMask.GetMask("Water"));
+
+            if (Cursor.HasCorrectPosition())
             {
-                bool terrain = Map.Instance.IsTerrain(hitInfo);
-                bool water = Map.Instance.IsWater(hitInfo);
-
-                Construct(hitInfo.point);
+                Cursor.GetComponentInChildren<Indicators>().OnErrorEnd();
             }
-
-            Cursor.transform.position = Map.Instance.StructurePositionHandler.GetPosition(Camera.main.ScreenPointToRay(Input.mousePosition));
+            else
+            {
+                Cursor.GetComponentInChildren<Indicators>().OnError();
+            }
         }
 
         HoverOverObjects();
@@ -691,7 +700,7 @@ public class HUD : MonoBehaviour
             if (prefab.Equals(string.Empty) == false)
             {
                 Cursor = Utils.CreateGameObject(Prefab, Vector3.zero, null, MyGameObjectState.Cursor);
-                Cursor.GetComponentInChildren<Indicators>().OnUnderConstruction();
+                Cursor.GetComponentInChildren<Indicators>().OnConstruction();
             }
         }
     }

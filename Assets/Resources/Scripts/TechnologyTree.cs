@@ -22,8 +22,11 @@ public class TechnologyTree
         }
 
         // Create technologies to research.
-        Technologies["Colonization"] = new Technology("Colonization", new HashSet<string> { "Factory_Light", "Harvester", "Headquarters", "Quad", "Refinery", "Research_Lab", "Trike" });
+        Technologies["Colonization"] = new Technology("Colonization", new HashSet<string> { "Factory_Light", "Harvester", "Headquarters", "Gas_Station", "Quad", "Refinery", "Research_Lab", "Trike" });
         Technologies["Colonization"].Cost.Init("Crystal", 0, 20, ResourceDirection.In);
+
+        Technologies["Electricity"] = new Technology("Electricity", new HashSet<string> { "Power_Pole", "Windtrap" });
+        Technologies["Electricity"].Cost.Init("Crystal", 0, 20, ResourceDirection.In);
 
         Technologies["Infantry"] = new Technology("Infantry", new HashSet<string> { "Barracks", "Infantry_Light" });
         Technologies["Infantry"].Cost.Init("Crystal", 0, 20, ResourceDirection.In);
@@ -48,6 +51,7 @@ public class TechnologyTree
 
         // Unlock starting technologies.
         Unlock("Colonization");
+        Unlock("Electricity");
         Unlock("Infantry");
     }
 
