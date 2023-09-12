@@ -372,10 +372,11 @@ public class MyGameObject : MonoBehaviour
                         }
                     }
 
-                    info += string.Format("\nEnabled: {0}", Enabled);
-                    info += string.Format("\nGatherable: {0}", Gatherable);
-                    info += string.Format("\nPowerable: {0}", Powerable);
-                    info += string.Format("\nSelectable: {0}", Selectable);
+                    // TODO: Remove or uncomment.
+                    // info += string.Format("\nEnabled: {0}", Enabled);
+                    // info += string.Format("\nGatherable: {0}", Gatherable);
+                    // info += string.Format("\nPowerable: {0}", Powerable);
+                    // info += string.Format("\nSelectable: {0}", Selectable);
                     info += string.Format("\nPowered: {0}", Powered);
                     info += string.Format("\nWorking: {0}", Working);
                 }
@@ -650,6 +651,9 @@ public class MyGameObject : MonoBehaviour
 
     [field: SerializeField]
     public Timer ExpirationTimer { get; set; } = new Timer(-1.0f, -1.0f);
+
+    [field: SerializeField]
+    public List<string> SkillsNames { get; set; } = new List<string>(); // TODO: Implement.
 
     public Vector3 Position { get => transform.position; set => transform.position = value; }
 

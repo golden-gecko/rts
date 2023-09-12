@@ -4,7 +4,7 @@ public class Armour : MyComponent
 {
     public override string GetInfo()
     {
-        return string.Format("{0}, Value: {1}", base.GetInfo(), Value.GetInfo());
+        return string.Format("Armour: {0}, Value: {1}", base.GetInfo(), Value.GetInfo());
     }
 
     public float Absorb(float damage)

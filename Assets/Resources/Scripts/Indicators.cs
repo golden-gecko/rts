@@ -19,6 +19,7 @@ public class Indicators : MonoBehaviour
         rangeSight = range.Find("Sight");
 
         construction = transform.Find("Construction");
+        error = transform.Find("Error");
         selection = transform.Find("Selection");
         trace = transform.Find("Trace");
     }
@@ -35,7 +36,6 @@ public class Indicators : MonoBehaviour
         bar.transform.LookAt(Camera.main.transform.position);
         bar.transform.Rotate(0.0f, 180.0f, 0.0f);
 
-
         // Update armour.
         Armour armour = myGameObject.GetComponent<Armour>();
 
@@ -50,11 +50,17 @@ public class Indicators : MonoBehaviour
         }
 
         // Update ammunition.
-        Gun gun = myGameObject.GetComponent<Gun>(); // TODO: Add support for multiple components.
+        float gunPercent = 0.0f;
 
-        if (gun != null)
+        foreach (Gun gun in GetComponents<Gun>())
         {
-            barAmmunition.fillAmount = gun.Ammunition.Percent;
+            gunPercent += gun.Ammunition.Percent;
+            gunPercent *= 0.5f;
+        }
+
+        if (GetComponents<Gun>().Length > 0)
+        {
+            barAmmunition.fillAmount = gunPercent;
             barAmmunition.gameObject.SetActive(true);
         }
         else
@@ -63,11 +69,17 @@ public class Indicators : MonoBehaviour
         }
 
         // Update fuel.
-        Engine engine = myGameObject.GetComponent<Engine>(); // TODO: Add support for multiple components.
+        float enginePercent = 0.0f;
 
-        if (engine != null)
+        foreach (Engine engine in GetComponents<Engine>())
         {
-            barFuel.fillAmount = engine.Fuel.Percent;
+            enginePercent += engine.Fuel.Percent;
+            enginePercent *= 0.5f;
+        }
+
+        if (GetComponents<Engine>().Length > 0)
+        {
+            barFuel.fillAmount = enginePercent;
             barFuel.gameObject.SetActive(true);
         }
         else
@@ -203,6 +215,16 @@ public class Indicators : MonoBehaviour
         }
     }
 
+    public void OnError()
+    {
+        error.gameObject.SetActive(true);
+    }
+
+    public void OnErrorEnd()
+    {
+        error.gameObject.SetActive(false);
+    }
+
     private Transform bar;
     private Image barAmmunition;
     private Image barArmour;
@@ -217,6 +239,7 @@ public class Indicators : MonoBehaviour
     private Transform rangeSight;
 
     private Transform construction;
+    private Transform error;
     private Transform selection;
     private Transform trace;
 }

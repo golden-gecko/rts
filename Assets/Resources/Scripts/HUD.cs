@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using UnityEditor.PackageManager;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
@@ -347,7 +348,10 @@ public class HUD : MonoBehaviour
         {
             if (MouseToRaycast(out hitInfo, LayerMask.GetMask("Terrain") | LayerMask.GetMask("Water")))
             {
-                Construct(hitInfo.point); // TODO: Check if objects is allowed to build on selected layer.
+                bool terrain = Map.Instance.IsTerrain(hitInfo);
+                bool water = Map.Instance.IsWater(hitInfo);
+
+                Construct(hitInfo.point);
             }
         }
         else
@@ -636,6 +640,14 @@ public class HUD : MonoBehaviour
 
         if (Cursor != null)
         {
+            if (MouseToRaycast(out hitInfo, LayerMask.GetMask("Terrain") | LayerMask.GetMask("Water")))
+            {
+                bool terrain = Map.Instance.IsTerrain(hitInfo);
+                bool water = Map.Instance.IsWater(hitInfo);
+
+                Construct(hitInfo.point);
+            }
+
             Cursor.transform.position = Map.Instance.StructurePositionHandler.GetPosition(Camera.main.ScreenPointToRay(Input.mousePosition));
         }
 

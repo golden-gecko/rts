@@ -13,4 +13,9 @@ public class Gatherer : MyComponent
 
         parent.OrderHandlers[OrderType.Gather] = new OrderHandlerGather();
     }
+
+    public override string GetInfo()
+    {
+        return string.Format("Gatherer");
+    }
 }

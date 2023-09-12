@@ -22,7 +22,7 @@ public class Researcher : MyComponent
 
     public override string GetInfo()
     {
-        return string.Format("{0}, Resource Usage: {1}", base.GetInfo(), ResourceUsage);
+        return string.Format("Researcher: {0}, Resource Usage: {1}", base.GetInfo(), ResourceUsage);
     }
 
     [field: SerializeField]

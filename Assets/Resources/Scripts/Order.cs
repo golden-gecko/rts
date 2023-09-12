@@ -242,27 +242,27 @@ public class Order
     {
         string info = string.Format("{0}", Type.ToString());
 
-        if (Prefab != null)
+        if (Prefab != null && Prefab.Length > 0)
         {
             info += string.Format(" ({0})", Prefab);
         }
 
-        if (Recipe != null)
+        if (Recipe != null && Recipe.Length > 0)
         {
             info += string.Format(" ({0})", Recipe);
         }
 
-        if (Resource != null)
+        if (Resource != null && Resource.Length > 0)
         {
             info += string.Format(" ({0})", Resource);
         }
 
-        if (Skill != null)
+        if (Skill != null && Skill.Length > 0)
         {
             info += string.Format(" ({0})", Skill);
         }
 
-        if (Technology != null)
+        if (Technology != null && Technology.Length > 0)
         {
             info += string.Format(" ({0})", Technology);
         }

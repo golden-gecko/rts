@@ -6,9 +6,11 @@ public class OrderHandlerProduce : OrderHandler
     {
         Order order = myGameObject.Orders.First();
 
-        if (order.Recipe.Length <= 0 && myGameObject.GetComponent<Producer>().Recipes.Items.Count > 0)
+        RecipeManager recipeManager = Game.Instance.GetComponent<RecipeManager>();
+
+        if (order.Recipe.Length <= 0 && myGameObject.Orders.RecipeWhitelist.Items.Count > 0)
         {
-            foreach (Recipe recipe in myGameObject.GetComponent<Producer>().Recipes.Items.Values)
+            foreach (Recipe recipe in myGameObject.Orders.RecipeWhitelist.Items.Values)
             {
                 if (HaveResources(myGameObject, recipe))
                 {
@@ -18,7 +20,7 @@ public class OrderHandlerProduce : OrderHandler
                 }
             }
         }
-        else if (myGameObject.GetComponent<Producer>().Recipes.Items.ContainsKey(order.Recipe) == false)
+        else if (myGameObject.Orders.RecipeWhitelist.Items.ContainsKey(order.Recipe) == false)
         {
             Fail(myGameObject);
 
@@ -32,7 +34,7 @@ public class OrderHandlerProduce : OrderHandler
             return;
         }
 
-        Produce(myGameObject, order, myGameObject.GetComponent<Producer>().Recipes.Items[order.Recipe]);
+        Produce(myGameObject, order, myGameObject.Orders.RecipeWhitelist.Items[order.Recipe]);
     }
 
     private bool Produce(MyGameObject myGameObject, Order order, Recipe recipe)
