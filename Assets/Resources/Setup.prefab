@@ -366,6 +366,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1016367653328774682}
   - component: {fileID: 117974251609430779}
+  - component: {fileID: 4887735223889457049}
   m_Layer: 0
   m_Name: Setup
   m_TagString: Untagged
@@ -407,6 +408,40 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 234ea24eefe46b8418a6564aeda77fe9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &4887735223889457049
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4885079203805521602}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4e121c539f4128489e95ec04a84469b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  <Assemble>k__BackingField: {fileID: 2800000, guid: a51b5507f808ef741b4b8d931446dcf2, type: 3}
+  <Attack>k__BackingField: {fileID: 2800000, guid: 85ddc6d7dd5b2df44ba6a61e4303c346, type: 3}
+  <Construct>k__BackingField: {fileID: 2800000, guid: a51b5507f808ef741b4b8d931446dcf2, type: 3}
+  <Destroy>k__BackingField: {fileID: 2800000, guid: 155fec741e1ae1541a8b15815708f22f, type: 3}
+  <Disable>k__BackingField: {fileID: 2800000, guid: 0e1ef189d1b346442a12611aa5449450, type: 3}
+  <Enable>k__BackingField: {fileID: 2800000, guid: 0e1ef189d1b346442a12611aa5449450, type: 3}
+  <Explore>k__BackingField: {fileID: 2800000, guid: fdbb36ea126a16842b213b3fb12b03fd, type: 3}
+  <Follow>k__BackingField: {fileID: 2800000, guid: 610d5380cf7d0b040b7b1dfd5d90b93a, type: 3}
+  <Gather>k__BackingField: {fileID: 2800000, guid: 78a83adafab618348abe30d8dafb4df8, type: 3}
+  <Guard>k__BackingField: {fileID: 2800000, guid: 1a97569ba4a3732488f439acf53bf176, type: 3}
+  <Load>k__BackingField: {fileID: 2800000, guid: a577fdb2cadffe046a9507f06299760b, type: 3}
+  <Move>k__BackingField: {fileID: 2800000, guid: e3ef9f2923945cc478ca579788b600e8, type: 3}
+  <None>k__BackingField: {fileID: 2800000, guid: 1dd8503434121a74cb6940256bad447e, type: 3}
+  <Patrol>k__BackingField: {fileID: 2800000, guid: 610d5380cf7d0b040b7b1dfd5d90b93a, type: 3}
+  <Produce>k__BackingField: {fileID: 2800000, guid: 830bd5e270cb3fd45bfdccdf5a5ebc9a, type: 3}
+  <Rally>k__BackingField: {fileID: 2800000, guid: 610d5380cf7d0b040b7b1dfd5d90b93a, type: 3}
+  <Research>k__BackingField: {fileID: 2800000, guid: 830bd5e270cb3fd45bfdccdf5a5ebc9a, type: 3}
+  <Stop>k__BackingField: {fileID: 2800000, guid: b1beb0307dd779b43ba7acd113f564aa, type: 3}
+  <Transport>k__BackingField: {fileID: 2800000, guid: a577fdb2cadffe046a9507f06299760b, type: 3}
+  <Unload>k__BackingField: {fileID: 2800000, guid: a577fdb2cadffe046a9507f06299760b, type: 3}
+  <UseSkill>k__BackingField: {fileID: 0}
+  <Wait>k__BackingField: {fileID: 2800000, guid: 232f0227ce7b864468d8ff397392e8cc, type: 3}
 --- !u!1 &7161532106419710255
 GameObject:
   m_ObjectHideFlags: 0

@@ -552,18 +552,15 @@ public class MyGameObject : MonoBehaviour
 
     public bool HasCorrectPosition()
     {
-        Ray ray = new Ray(Position + Vector3.up * Config.TerrainMaxHeight, Vector3.down);
-        int layerMask = LayerMask.GetMask("Terrain") | LayerMask.GetMask("Water");
+        MyGameObjectMapLayer mapLayer;
 
-        RaycastHit hitInfo;
-
-        if (Physics.Raycast(ray, out hitInfo, Config.RaycastMaxDistance, layerMask) == false)
+        if (Map.Instance.GetPosition(Position, out _, out mapLayer) == false)
         {
             return false;
         }
 
-        return Map.Instance.IsTerrain(hitInfo) == MapLayers.Contains(MyGameObjectMapLayer.Terrain)
-            || Map.Instance.IsWater(hitInfo) == MapLayers.Contains(MyGameObjectMapLayer.Water);
+        return mapLayer == MyGameObjectMapLayer.Terrain == MapLayers.Contains(MyGameObjectMapLayer.Terrain)
+            || mapLayer == MyGameObjectMapLayer.Water == MapLayers.Contains(MyGameObjectMapLayer.Water);
     }
 
     public Vector3 Center

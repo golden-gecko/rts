@@ -66,14 +66,14 @@ public class Map : MonoBehaviour
             return true;
         }
 
-        if (terrain && IsTerrain(hitInfo))
+        if (terrain && Utils.IsTerrain(hitInfo))
         {
             validated = hitInfo.point;
 
             return true;
         }
 
-        if (water && IsWater(hitInfo))
+        if (water && Utils.IsWater(hitInfo))
         {
             validated = hitInfo.point;
 
@@ -233,15 +233,64 @@ public class Map : MonoBehaviour
         return Cells[position.x, position.z].VisibleByPower.ContainsKey(active) && Cells[position.x, position.z].VisibleByPower[active] > 0;
     }
 
-    public bool IsTerrain(RaycastHit hit)
+    public bool GetPosition(Vector3 origin, out Vector3 position, out MyGameObjectMapLayer mapLayer)
     {
-        return hit.transform.CompareTag("Terrain");
+        RaycastHit hitInfo;
+
+        if (Physics.Raycast(new Ray(new Vector3(origin.x, Config.TerrainMaxHeight, origin.z), Vector3.down), out hitInfo, float.MaxValue, LayerMask.GetMask("Terrain") | LayerMask.GetMask("Water")))
+        {
+            if (Utils.IsTerrain(hitInfo))
+            {
+                position = hitInfo.point;
+                mapLayer = MyGameObjectMapLayer.Terrain;
+
+                return true;
+            }
+
+            if (Utils.IsWater(hitInfo))
+            {
+                position = hitInfo.point;
+                mapLayer = MyGameObjectMapLayer.Water;
+
+                return true;
+            }
+        }
+
+        position = Vector3.zero;
+        mapLayer = MyGameObjectMapLayer.None;
+
+        return false;
     }
 
-    public bool IsWater(RaycastHit hit)
+    public bool MouseToPosition(out Vector3 position, out MyGameObjectMapLayer mapLayer)
     {
-        return hit.transform.CompareTag("Water");
+        RaycastHit hitInfo;
+
+        if (Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out hitInfo, float.MaxValue, LayerMask.GetMask("Terrain") | LayerMask.GetMask("Water")))
+        {
+            if (Utils.IsTerrain(hitInfo))
+            {
+                position = hitInfo.point;
+                mapLayer = MyGameObjectMapLayer.Terrain;
+
+                return true;
+            }
+
+            if (Utils.IsWater(hitInfo))
+            {
+                position = hitInfo.point;
+                mapLayer = MyGameObjectMapLayer.Water;
+
+                return true;
+            }
+        }
+
+        position = Vector3.zero;
+        mapLayer = MyGameObjectMapLayer.None;
+
+        return false;
     }
+
     protected void Clear()
     {
         for (int x = 0; x < Config.TerrainVisibilitySize; x++)
@@ -278,10 +327,6 @@ public class Map : MonoBehaviour
             }
         }
     }
-
-    public ITerrainPosition CameraPositionHandler { get; } = new TerrainPositionAnywhere();
-
-    public ITerrainPosition StructurePositionHandler { get; } = new TerrainPositionCenterGrid();
 
     private Cell[,] Cells = new Cell[Config.TerrainVisibilitySize, Config.TerrainVisibilitySize];
 }
