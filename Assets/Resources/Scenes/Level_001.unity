@@ -1391,6 +1391,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Setup
       objectReference: {fileID: 0}
+    - target: {fileID: 4887735223889457049, guid: 838528c30748ad1409e28e3a543244c6, type: 3}
+      propertyPath: <CursorAssemble>k__BackingField
+      value: 
+      objectReference: {fileID: 2800000, guid: a51b5507f808ef741b4b8d931446dcf2, type: 3}
     - target: {fileID: 7443654836005963256, guid: 838528c30748ad1409e28e3a543244c6, type: 3}
       propertyPath: m_IsActive
       value: 1
