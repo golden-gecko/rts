@@ -29,7 +29,7 @@ public class OrderHandlerConstruct : OrderHandler
             return;
         }
 
-        if (HaveResources(myGameObject, order, recipe) == false)
+        if (HaveResources(order, recipe) == false)
         {
             myGameObject.Wait(0);
 
@@ -53,7 +53,7 @@ public class OrderHandlerConstruct : OrderHandler
         myGameObject.Orders.Pop();
     }
 
-    private bool HaveResources(MyGameObject myGameObject, Order order, Recipe recipe)
+    private bool HaveResources(Order order, Recipe recipe)
     {
         foreach (Resource i in recipe.ToConsume.Items)
         {
