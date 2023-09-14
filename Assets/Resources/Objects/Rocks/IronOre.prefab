@@ -64,6 +64,7 @@ MonoBehaviour:
   <ExpirationTimer>k__BackingField:
     <Current>k__BackingField: -1
     <Max>k__BackingField: -1
+  <SkillsNames>k__BackingField: []
 --- !u!114 &4732557405102183231
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -84,7 +85,7 @@ MonoBehaviour:
     - <Current>k__BackingField: 100
       <Max>k__BackingField: 100
       <Name>k__BackingField: Iron Ore
-      <Direction>k__BackingField: 1
+      <Direction>k__BackingField: 2
 --- !u!1 &7246156254199402963
 GameObject:
   m_ObjectHideFlags: 0

@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class MyGameObject : MonoBehaviour
 {
@@ -193,9 +194,16 @@ public class MyGameObject : MonoBehaviour
         Orders.Add(Order.Explore());
     }
 
-    public void Follow(MyGameObject myGameObject)
+    public void Follow(MyGameObject myGameObject, int priority = -1)
     {
-        Orders.Add(Order.Follow(myGameObject));
+        if (0 <= priority && priority < Orders.Count)
+        {
+            Orders.Insert(priority, Order.Follow(myGameObject));
+        }
+        else
+        {
+            Orders.Add(Order.Follow(myGameObject));
+        }
     }
 
     public void Gather(MyGameObject myGameObject)

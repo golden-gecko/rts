@@ -1,6 +1,6 @@
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.UIElements;
 
 public class HUD : MonoBehaviour
 {
@@ -254,16 +254,16 @@ public class HUD : MonoBehaviour
                     selected.Guard(position);
                     break;
 
+                case OrderType.Move:
+                    selected.Move(position);
+                    break;
+
                 case OrderType.Patrol:
                     selected.Patrol(position);
                     break;
 
                 case OrderType.Rally:
-                    selected.Rally(position, 0);
-                    break;
-
-                default:
-                    selected.Move(position);
+                    selected.Rally(position);
                     break;
             }
         }
@@ -281,6 +281,8 @@ public class HUD : MonoBehaviour
 
             switch (Order)
             {
+                // case OrderType.Assemble: // TODO: Implement.
+
                 case OrderType.Attack:
                     selected.Attack(myGameObject);
                     break;
@@ -300,21 +302,6 @@ public class HUD : MonoBehaviour
                 case OrderType.Follow:
                     selected.Follow(myGameObject);
                     break;
-
-                default:
-                    if (myGameObject.Is(selected, DiplomacyState.Ally))
-                    {
-                        selected.Follow(myGameObject);
-                    }
-                    else if (myGameObject.Is(selected, DiplomacyState.Enemy))
-                    {
-                        selected.Attack(myGameObject);
-                    }
-                    else if (myGameObject.Gatherable)
-                    {
-                        selected.Gather(myGameObject);
-                    }
-                    break;
             }
         }
     }
@@ -326,8 +313,6 @@ public class HUD : MonoBehaviour
 
     private bool ProcessOrder()
     {
-        RaycastHit hitInfo;
-
         if (Order == OrderType.Construct)
         {
             if (Cursor.HasCorrectPosition())
@@ -339,15 +324,31 @@ public class HUD : MonoBehaviour
         }
         else
         {
+            RaycastHit hitInfo;
+
             if (MouseToRaycast(out hitInfo))
             {
                 if (Utils.IsTerrain(hitInfo) || Utils.IsWater(hitInfo))
                 {
-                    IssueOrder(hitInfo.point);
+                    if (Order == OrderType.None)
+                    {
+                        IssueOrderDefault(hitInfo.point);
+                    }
+                    else
+                    {
+                        IssueOrder(hitInfo.point);
+                    }
                 }
                 else
                 {
-                    IssueOrder(hitInfo.transform.GetComponentInParent<MyGameObject>());
+                    if (Order == OrderType.None)
+                    {
+                        IssueOrderDefault(hitInfo.transform.GetComponentInParent<MyGameObject>());
+                    }
+                    else
+                    {
+                        IssueOrder(hitInfo.transform.GetComponentInParent<MyGameObject>());
+                    }
                 }
 
                 return true;
@@ -355,6 +356,45 @@ public class HUD : MonoBehaviour
         }
 
         return false;
+    }
+
+    private void IssueOrderDefault(Vector3 position)
+    {
+        foreach (MyGameObject selected in ActivePlayer.Selected)
+        {
+            if (IsShift() == false)
+            {
+                selected.Stats.Add(Stats.OrdersCancelled, selected.Orders.Count);
+                selected.Orders.Clear();
+            }
+
+            selected.Move(position);
+        }
+    }
+
+    private void IssueOrderDefault(MyGameObject myGameObject)
+    {
+        foreach (MyGameObject selected in ActivePlayer.Selected)
+        {
+            if (IsShift() == false)
+            {
+                selected.Stats.Add(Stats.OrdersCancelled, selected.Orders.Count);
+                selected.Orders.Clear();
+            }
+
+            if (myGameObject.Is(selected, DiplomacyState.Ally))
+            {
+                selected.Follow(myGameObject);
+            }
+            else if (myGameObject.Is(selected, DiplomacyState.Enemy))
+            {
+                selected.Attack(myGameObject);
+            }
+            else if (myGameObject.Gatherable)
+            {
+                selected.Gather(myGameObject);
+            }
+        }
     }
 
     private void ProcessSelection()
