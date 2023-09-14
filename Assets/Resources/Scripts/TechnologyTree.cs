@@ -8,14 +8,16 @@ public class TechnologyTree
         foreach (MyGameObject myGameObject in Resources.LoadAll<MyGameObject>(Config.DirectoryStructures))
         {
             Technologies[myGameObject.name] = new Technology(myGameObject.name);
+            Technologies[myGameObject.name].Discovered = true;
         }
 
         foreach (MyGameObject myGameObject in Resources.LoadAll<MyGameObject>(Config.DirectoryUnits))
         {
             Technologies[myGameObject.name] = new Technology(myGameObject.name);
+            Technologies[myGameObject.name].Discovered = true;
         }
 
-        Technologies["Colonization"] = new Technology("Colonization", new HashSet<string> { "Factory_Light", "Harvester", "Headquarters", "Gas_Station", "Quad", "Refinery", "Research_Lab", "Trike" });
+        Technologies["Colonization"] = new Technology("Colonization", new HashSet<string> { "Electricity", "Factory_Light", "Harvester", "Headquarters", "Heavy_Industry", "Gas_Station", "Infantry", "Laser",  "Quad", "Radar 1", "Refinery", "Research_Lab", "Space_Travels", "Static_Defences", "Stationary_Defences", "Trike" });
         Technologies["Colonization"].Cost.Init("Crystal", 0, 20, ResourceDirection.In);
 
         Technologies["Electricity"] = new Technology("Electricity", new HashSet<string> { "Power_Pole", "Windtrap" });
@@ -45,14 +47,14 @@ public class TechnologyTree
         Technologies["Stationary_Defences"] = new Technology("Stationary_Defences", new HashSet<string> { "Turret_Gun", "Turret_Missile" });
         Technologies["Stationary_Defences"].Cost.Init("Crystal", 0, 20, ResourceDirection.In);
 
-        Unlock("Colonization");
-        Unlock("Electricity");
-        Unlock("Infantry");
+        Discover("Colonization");
+        Discover("Electricity");
+        Discover("Infantry");
     }
 
-    public ResourceContainer GetCost(string name)
+    public bool IsDiscovered(string name)
     {
-        return Technologies[name].Cost;
+        return Technologies.ContainsKey(name) && Technologies[name].Discovered;
     }
 
     public bool IsUnlocked(string name)
@@ -60,43 +62,20 @@ public class TechnologyTree
         return Technologies.ContainsKey(name) && Technologies[name].Unlocked;
     }
 
-    public void Unlock(string name)
+    public void Discover(string name)
     {
         if (Technologies.ContainsKey(name))
         {
+            Technologies[name].Discovered = true;
             Technologies[name].Unlocked = true;
-        }
 
-        UpdateTechnologies();
-    }
-
-    private void UpdateTechnologies()
-    {
-        List<string> queue = new List<string>(Technologies.Keys);
-
-        while (queue.Count > 0)
-        {
-            if (Technologies.ContainsKey(queue[0]) == false)
-            {
-                continue;
-            }
-
-            if (Technologies[queue[0]].Unlocked == false)
-            {
-                continue;
-            }
-
-            foreach (string technology in Technologies[queue[0]].Unlocks)
+            foreach (string technology in Technologies[name].Unlocks)
             {
                 if (Technologies.ContainsKey(technology))
                 {
                     Technologies[technology].Unlocked = true;
-
-                    queue.Add(technology);
                 }
             }
-
-            queue.RemoveAt(0);
         }
     }
 

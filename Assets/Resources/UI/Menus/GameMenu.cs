@@ -42,9 +42,9 @@ public class GameMenu : MonoBehaviour
 
         CreateOrders();
         CreatePrefabs();
-        CreateTechnologies();
         CreateRecipes();
         CreateSkills();
+        CreateTechnologies();
 
         Log("");
     }
@@ -176,25 +176,6 @@ public class GameMenu : MonoBehaviour
         }
     }
 
-    private void CreateTechnologies()
-    {
-        technologies.Clear();
-
-        foreach (string i in HUD.Instance.ActivePlayer.TechnologyTree.Technologies.Keys)
-        {
-            TemplateContainer buttonContainer = templateButton.Instantiate();
-            Button button = buttonContainer.Q<Button>();
-
-            button.RegisterCallback<ClickEvent>(ev => OnResearch(i));
-            button.style.display = DisplayStyle.None;
-            button.text = i;
-            button.userData = i;
-
-            technologies.Add(buttonContainer);
-            technologiesButtons[i] = button;
-        }
-    }
-
     private void CreateRecipes()
     {
         recipes.Clear();
@@ -230,6 +211,25 @@ public class GameMenu : MonoBehaviour
 
             skills.Add(buttonContainer);
             skillsButtons[i] = button;
+        }
+    }
+
+    private void CreateTechnologies()
+    {
+        technologies.Clear();
+
+        foreach (string i in HUD.Instance.ActivePlayer.TechnologyTree.Technologies.Keys)
+        {
+            TemplateContainer buttonContainer = templateButton.Instantiate();
+            Button button = buttonContainer.Q<Button>();
+
+            button.RegisterCallback<ClickEvent>(ev => OnResearch(i));
+            button.style.display = DisplayStyle.None;
+            button.text = i;
+            button.userData = i;
+
+            technologies.Add(buttonContainer);
+            technologiesButtons[i] = button;
         }
     }
 
@@ -370,60 +370,16 @@ public class GameMenu : MonoBehaviour
             button.style.display = DisplayStyle.None;
         }
 
+        TechnologyTree technologyTree = HUD.Instance.ActivePlayer.TechnologyTree;
+
         foreach (string i in whitelist)
         {
             if (prefabsButtons.ContainsKey(i))
             {
+                bool enabled = technologyTree.IsUnlocked(Path.GetFileName(i)) && technologyTree.IsDiscovered(Path.GetFileName(i));
+
                 prefabsButtons[i].style.display = DisplayStyle.Flex;
-                prefabsButtons[i].SetEnabled(
-                    HUD.Instance.ActivePlayer.TechnologyTree.IsUnlocked(
-                        Path.GetFileName(i)
-                    )
-                );
-            }
-        }
-    }
-
-    private void UpdateTechnologies(MyGameObject hovered)
-    {
-        HashSet<string> whitelist = new HashSet<string>();
-
-        if (hovered != null)
-        {
-            if (hovered.State == MyGameObjectState.Operational)
-            {
-                whitelist = new HashSet<string>(hovered.Orders.TechnologyWhitelist);
-            }
-        }
-        else
-        {
-            foreach (MyGameObject selected in HUD.Instance.ActivePlayer.Selection.Items)
-            {
-                if (selected.State != MyGameObjectState.Operational)
-                {
-                    continue;
-                }
-
-                foreach (string prefab in selected.Orders.TechnologyWhitelist)
-                {
-                    whitelist.Add(prefab);
-                }
-            }
-        }
-
-        foreach (Button button in technologiesButtons.Values)
-        {
-            button.style.display = DisplayStyle.None;
-        }
-
-        foreach (string i in whitelist)
-        {
-            if (technologiesButtons.ContainsKey(i))
-            {
-                technologiesButtons[i].style.display = DisplayStyle.Flex;
-                technologiesButtons[i].SetEnabled(
-                    !HUD.Instance.ActivePlayer.TechnologyTree.IsUnlocked(i)
-                );
+                prefabsButtons[i].SetEnabled(enabled);
             }
         }
     }
@@ -515,6 +471,54 @@ public class GameMenu : MonoBehaviour
         }
     }
 
+    private void UpdateTechnologies(MyGameObject hovered)
+    {
+        HashSet<string> whitelist = new HashSet<string>();
+
+        if (hovered != null)
+        {
+            if (hovered.State == MyGameObjectState.Operational)
+            {
+                whitelist = new HashSet<string>(hovered.Orders.TechnologyWhitelist);
+            }
+        }
+        else
+        {
+            foreach (MyGameObject selected in HUD.Instance.ActivePlayer.Selection.Items)
+            {
+                if (selected.State != MyGameObjectState.Operational)
+                {
+                    continue;
+                }
+
+                foreach (string prefab in selected.Orders.TechnologyWhitelist)
+                {
+                    whitelist.Add(prefab);
+                }
+            }
+        }
+
+        foreach (Button button in technologiesButtons.Values)
+        {
+            button.style.display = DisplayStyle.None;
+        }
+
+        TechnologyTree technologyTree = HUD.Instance.ActivePlayer.TechnologyTree;
+
+        foreach (string i in whitelist)
+        {
+            if (technologiesButtons.ContainsKey(i))
+            {
+                bool enabled = technologyTree.IsUnlocked(i) && technologyTree.IsDiscovered(i) == false;
+
+                technologiesButtons[i].style.display = DisplayStyle.Flex;
+                technologiesButtons[i].SetEnabled(enabled);
+            }
+        }
+    }
+
+    
+
     [SerializeField]
     private VisualTreeAsset templateButton;
 
@@ -527,13 +531,13 @@ public class GameMenu : MonoBehaviour
 
     private VisualElement orders;
     private VisualElement prefabs;
-    private VisualElement technologies;
     private VisualElement recipes;
     private VisualElement skills;
-    
+    private VisualElement technologies;
+
     private Dictionary<OrderType, Button> ordersButtons = new Dictionary<OrderType, Button>();
     private Dictionary<string, Button> prefabsButtons = new Dictionary<string, Button>();
-    private Dictionary<string, Button> technologiesButtons = new Dictionary<string, Button>();
     private Dictionary<string, Button> recipesButtons = new Dictionary<string, Button>();
     private Dictionary<string, Button> skillsButtons = new Dictionary<string, Button>();
+    private Dictionary<string, Button> technologiesButtons = new Dictionary<string, Button>();
 }

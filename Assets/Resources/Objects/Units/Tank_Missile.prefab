@@ -234,6 +234,7 @@ MonoBehaviour:
   <ExpirationTimer>k__BackingField:
     <Current>k__BackingField: -1
     <Max>k__BackingField: -1
+  <SkillsNames>k__BackingField: []
 --- !u!114 &1445156918355217825
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -248,8 +249,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <Mass>k__BackingField: 10
   <Value>k__BackingField:
-    <Current>k__BackingField: 10
-    <Max>k__BackingField: 10
+    <Current>k__BackingField: 100
+    <Max>k__BackingField: 100
 --- !u!114 &-202160912346554170
 MonoBehaviour:
   m_ObjectHideFlags: 0

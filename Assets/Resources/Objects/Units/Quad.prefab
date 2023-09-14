@@ -10,7 +10,6 @@ GameObject:
   m_Component:
   - component: {fileID: 4036648820349360246}
   - component: {fileID: 3955217894934674591}
-  - component: {fileID: -5060554700228019553}
   - component: {fileID: 6294112693154751892}
   - component: {fileID: -5526787300716293082}
   - component: {fileID: -983595188522550754}
@@ -67,22 +66,7 @@ MonoBehaviour:
   <ExpirationTimer>k__BackingField:
     <Current>k__BackingField: -1
     <Max>k__BackingField: -1
---- !u!114 &-5060554700228019553
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3697136554101965516}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4248ce16722b7444fac5deb395c690e8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  <Mass>k__BackingField: 10
-  <Value>k__BackingField:
-    <Current>k__BackingField: 10
-    <Max>k__BackingField: 10
+  <SkillsNames>k__BackingField: []
 --- !u!114 &6294112693154751892
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -15,7 +15,7 @@ public class OrderHandlerResearch : OrderHandler
 
         Technology technology = myGameObject.Player.TechnologyTree.Technologies[order.Technology];
 
-        if (technology.Unlocked)
+        if (technology.Discovered)
         {
             Fail(myGameObject);
 
@@ -41,7 +41,7 @@ public class OrderHandlerResearch : OrderHandler
 
         MoveResources(myGameObject, technology);
 
-        myGameObject.Player.TechnologyTree.Unlock(order.Technology);
+        myGameObject.Player.TechnologyTree.Discover(order.Technology);
         myGameObject.Stats.Add(Stats.TimeResearching, order.Timer.Max);
         myGameObject.Orders.Pop();
     }

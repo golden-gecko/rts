@@ -7,12 +7,6 @@ public class Technology
         Name = name;
     }
 
-    public Technology(string name, bool unlocked)
-    {
-        Name = name;
-        Unlocked = unlocked;
-    }
-
     public Technology(string name, HashSet<string> unlocks)
     {
         Name = name;
@@ -28,4 +22,6 @@ public class Technology
     public bool Unlocked { get; set; } = false;
 
     public HashSet<string> Unlocks { get; } = new HashSet<string>();
+
+    public bool Discovered { get; set; } = false;
 }
