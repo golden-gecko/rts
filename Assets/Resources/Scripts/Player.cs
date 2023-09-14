@@ -5,12 +5,12 @@ public class Player : MonoBehaviour
 {
     protected virtual void Awake()
     {
-        TechnologyTree.Load();
-
-        for (KeyCode i = KeyCode.Alpha0; i < KeyCode.Alpha9; i++)
+        for (KeyCode i = KeyCode.Alpha0; i <= KeyCode.Alpha9; i++)
         {
-            Groups[i] = new HashSet<MyGameObject>();
+            SelectionGroups[i] = new SelectionGroup();
         }
+
+        TechnologyTree.Load();
 
         Achievements.Player = this;
 
@@ -29,9 +29,9 @@ public class Player : MonoBehaviour
 
     public void AssignGroup(KeyCode keyCode)
     {
-        if (Groups.ContainsKey(keyCode))
+        if (SelectionGroups.ContainsKey(keyCode))
         {
-            Groups[keyCode] = new HashSet<MyGameObject>(Selected);
+            SelectionGroups[keyCode].Items = new HashSet<MyGameObject>(Selection.Items);
         }
     }
 
@@ -40,19 +40,16 @@ public class Player : MonoBehaviour
         return Diplomacy[player] == state;
     }
 
-    public void SelectGroup(KeyCode keyCode)
+    public void SelectGroup(KeyCode keyCode, bool append)
     {
-        if (Groups.ContainsKey(keyCode))
+        if (append == false)
         {
-            if (HUD.Instance.IsShift() == false)
-            {
-                HUD.Instance.SelectionClear();
-            }
+            Selection.Clear();
+        }
 
-            foreach (MyGameObject myGameObject in Groups[keyCode])
-            {
-                HUD.Instance.Select(myGameObject);
-            }
+        if (SelectionGroups.ContainsKey(keyCode))
+        {
+            Selection.Add(SelectionGroups[keyCode].Items);
         }
     }
 
@@ -98,11 +95,11 @@ public class Player : MonoBehaviour
 
     private void RemoveEmptyObjectsFromSelection()
     {
-        Selected.RemoveWhere(x => x == null);
+        Selection.RemoveEmpty();
 
-        foreach (HashSet<MyGameObject> group in Groups.Values)
+        foreach (SelectionGroup group in SelectionGroups.Values)
         {
-            group.RemoveWhere(x => x == null);
+            group.RemoveEmpty();
         }
     }
 
@@ -112,9 +109,9 @@ public class Player : MonoBehaviour
     [field: SerializeField]
     public string Name { get; set; }
 
-    public HashSet<MyGameObject> Selected { get; } = new HashSet<MyGameObject>();
+    public SelectionGroup Selection { get; } = new SelectionGroup();
 
-    public Dictionary<KeyCode, HashSet<MyGameObject>> Groups { get; } = new Dictionary<KeyCode, HashSet<MyGameObject>>();
+    public Dictionary<KeyCode, SelectionGroup> SelectionGroups { get; } = new Dictionary<KeyCode, SelectionGroup>();
 
     public TechnologyTree TechnologyTree { get; } = new TechnologyTree();
 

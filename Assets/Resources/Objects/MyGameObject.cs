@@ -1,7 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
-using UnityEngine.UIElements;
 
 public class MyGameObject : MonoBehaviour
 {
@@ -569,6 +568,12 @@ public class MyGameObject : MonoBehaviour
 
         return mapLayer == MyGameObjectMapLayer.Terrain == MapLayers.Contains(MyGameObjectMapLayer.Terrain)
             || mapLayer == MyGameObjectMapLayer.Water == MapLayers.Contains(MyGameObjectMapLayer.Water);
+    }
+
+    public void ClearOrders()
+    {
+        Stats.Add(Stats.OrdersCancelled, Orders.Count);
+        Orders.Clear();
     }
 
     public Vector3 Center

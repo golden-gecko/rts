@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using UnityEngine;
 using UnityEngine.UIElements;
 
@@ -76,9 +75,9 @@ public class GameMenu : MonoBehaviour
                 UpdateSkills(HUD.Instance.Hovered);
             }
         }
-        else if (activePlayer.Selected.Count > 0 && activePlayer.Selected.First() != null)
+        else if (activePlayer.Selection.Count > 0 && activePlayer.Selection.First() != null)
         {
-            info.text = activePlayer.Selected.First().GetInfo(true);
+            info.text = activePlayer.Selection.First().GetInfo(true);
 
             bottomPanel.style.display = DisplayStyle.Flex;
             infoPanel.style.display = DisplayStyle.Flex;
@@ -144,10 +143,7 @@ public class GameMenu : MonoBehaviour
     {
         prefabs.Clear();
 
-        MyGameObject[] structures = Resources.LoadAll<MyGameObject>(Config.DirectoryStructures);
-        MyGameObject[] units = Resources.LoadAll<MyGameObject>(Config.DirectoryUnits);
-
-        foreach (MyGameObject myGameObject in structures)
+        foreach (MyGameObject myGameObject in Resources.LoadAll<MyGameObject>(Config.DirectoryStructures))
         {
             string path = Path.Combine(Config.DirectoryStructures, myGameObject.name);
 
@@ -163,7 +159,7 @@ public class GameMenu : MonoBehaviour
             prefabsButtons[path] = button;
         }
 
-        foreach (MyGameObject myGameObject in units)
+        foreach (MyGameObject myGameObject in Resources.LoadAll<MyGameObject>(Config.DirectoryUnits))
         {
             string path = Path.Combine(Config.DirectoryUnits, myGameObject.name);
 
@@ -239,7 +235,7 @@ public class GameMenu : MonoBehaviour
 
     private void OnAssemble(string prefab)
     {
-        HUD.Instance.Assemble(prefab);
+        HUD.Instance.ActivePlayer.Selection.Assemble(prefab, MyInput.IsShift());
     }
 
     private void OnConstruct(string prefab)
@@ -255,30 +251,32 @@ public class GameMenu : MonoBehaviour
 
     private void OnOrder(OrderType orderType)
     {
+        Player activePlayer = HUD.Instance.ActivePlayer;
+
         switch (orderType)
         {
             case OrderType.Destroy:
-                HUD.Instance.Destroy();
+                activePlayer.Selection.Destroy(MyInput.IsShift());
                 break;
 
             case OrderType.Disable:
-                HUD.Instance.Disable();
+                activePlayer.Selection.Disable(MyInput.IsShift());
                 break;
 
             case OrderType.Enable:
-                HUD.Instance.Enable();
+                activePlayer.Selection.Enable(MyInput.IsShift());
                 break;
 
             case OrderType.Explore:
-                HUD.Instance.Explore();
+                activePlayer.Selection.Explore(MyInput.IsShift());
                 break;
 
             case OrderType.Stop:
-                HUD.Instance.Stop();
+                activePlayer.Selection.Stop(MyInput.IsShift());
                 break;
 
             case OrderType.Wait:
-                HUD.Instance.Wait();
+                activePlayer.Selection.Wait(MyInput.IsShift());
                 break;
 
             default:
@@ -289,17 +287,17 @@ public class GameMenu : MonoBehaviour
 
     private void OnResearch(string technology)
     {
-        HUD.Instance.Research(technology);
+        HUD.Instance.ActivePlayer.Selection.Research(technology, MyInput.IsShift());
     }
 
     private void OnRecipe(string recipe)
     {
-        HUD.Instance.Produce(recipe);
+        HUD.Instance.ActivePlayer.Selection.Produce(recipe, MyInput.IsShift());
     }
 
     private void OnUseSkill(string skill)
     {
-        HUD.Instance.UseSkill(skill);
+        HUD.Instance.ActivePlayer.Selection.UseSkill(skill, MyInput.IsShift());
     }
 
     private void UpdateOrders(MyGameObject hovered)
@@ -315,7 +313,7 @@ public class GameMenu : MonoBehaviour
         }
         else
         {
-            foreach (MyGameObject selected in HUD.Instance.ActivePlayer.Selected)
+            foreach (MyGameObject selected in HUD.Instance.ActivePlayer.Selection.Items)
             {
                 if (selected.State != MyGameObjectState.Operational)
                 {
@@ -353,7 +351,7 @@ public class GameMenu : MonoBehaviour
         }
         else
         {
-            foreach (MyGameObject selected in HUD.Instance.ActivePlayer.Selected)
+            foreach (MyGameObject selected in HUD.Instance.ActivePlayer.Selection.Items)
             {
                 if (selected.State != MyGameObjectState.Operational)
                 {
@@ -399,7 +397,7 @@ public class GameMenu : MonoBehaviour
         }
         else
         {
-            foreach (MyGameObject selected in HUD.Instance.ActivePlayer.Selected)
+            foreach (MyGameObject selected in HUD.Instance.ActivePlayer.Selection.Items)
             {
                 if (selected.State != MyGameObjectState.Operational)
                 {
@@ -443,7 +441,7 @@ public class GameMenu : MonoBehaviour
         }
         else
         {
-            foreach (MyGameObject selected in HUD.Instance.ActivePlayer.Selected)
+            foreach (MyGameObject selected in HUD.Instance.ActivePlayer.Selection.Items)
             {
                 if (selected.State != MyGameObjectState.Operational)
                 {
@@ -489,7 +487,7 @@ public class GameMenu : MonoBehaviour
         }
         else
         {
-            foreach (MyGameObject selected in HUD.Instance.ActivePlayer.Selected)
+            foreach (MyGameObject selected in HUD.Instance.ActivePlayer.Selection.Items)
             {
                 if (selected.State != MyGameObjectState.Operational)
                 {
