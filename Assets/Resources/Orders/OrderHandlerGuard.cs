@@ -13,11 +13,11 @@ public class OrderHandlerGuard : OrderHandler
 
         if (order.IsTargetGameObject)
         {
-            myGameObject.Follow(order.TargetGameObject);
+            myGameObject.Follow(order.TargetGameObject, 0);
         }
-        else
+        else if (Utils.IsCloseTo(myGameObject.Position, order.TargetPosition) == false)
         {
-            myGameObject.Move(order.TargetPosition);
+            myGameObject.Move(order.TargetPosition, 0);
         }
     }
 

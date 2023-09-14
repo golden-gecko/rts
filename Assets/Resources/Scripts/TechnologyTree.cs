@@ -37,10 +37,10 @@ public class TechnologyTree
         Technologies["Laser"] = new Technology("Laser", "", new HashSet<string> { "Grav_Light", "Tank_Combat" });
         Technologies["Laser"].Cost.Init("Crystal", 0, 20, ResourceDirection.In);
 
-        Technologies["Radar 1"] = new Technology("Radar 1", "", new HashSet<string> { "Radar_Outpost" }); // TODO: Add dependencies between technologies. "Radar 1" should allow "Radar 2" to be discovered.
+        Technologies["Radar 1"] = new Technology("Radar 1", "", new HashSet<string> { "Radar_Outpost" });
         Technologies["Radar 1"].Cost.Init("Crystal", 0, 20, ResourceDirection.In);
 
-        Technologies["Radar 2"] = new Technology("Radar 2", "Radar is able to detect object size."); // TODO: This tech is already available to research. Should be locked until "Radar 1" is discovered.
+        Technologies["Radar 2"] = new Technology("Radar 2", "Radar is able to detect object size."); // TODO: This tech should be locked until "Radar 1" is discovered.
         Technologies["Radar 2"].Cost.Init("Crystal", 0, 40, ResourceDirection.In);
 
         Technologies["Space_Travels"] = new Technology("Space_Travels", "", new HashSet<string> { "Spaceport" });

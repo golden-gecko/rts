@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class MyGameObject : MonoBehaviour
 {
@@ -193,9 +194,16 @@ public class MyGameObject : MonoBehaviour
         Orders.Add(Order.Explore());
     }
 
-    public void Follow(MyGameObject myGameObject)
+    public void Follow(MyGameObject myGameObject, int priority = -1)
     {
-        Orders.Add(Order.Follow(myGameObject));
+        if (0 <= priority && priority < Orders.Count)
+        {
+            Orders.Insert(priority, Order.Follow(myGameObject));
+        }
+        else
+        {
+            Orders.Add(Order.Follow(myGameObject));
+        }
     }
 
     public void Gather(MyGameObject myGameObject)
@@ -552,18 +560,15 @@ public class MyGameObject : MonoBehaviour
 
     public bool HasCorrectPosition()
     {
-        Ray ray = new Ray(Position + Vector3.up * Config.TerrainMaxHeight, Vector3.down);
-        int layerMask = LayerMask.GetMask("Terrain") | LayerMask.GetMask("Water");
+        MyGameObjectMapLayer mapLayer;
 
-        RaycastHit hitInfo;
-
-        if (Physics.Raycast(ray, out hitInfo, Config.RaycastMaxDistance, layerMask) == false)
+        if (Map.Instance.GetPosition(Position, out _, out mapLayer) == false)
         {
             return false;
         }
 
-        return Map.Instance.IsTerrain(hitInfo) == MapLayers.Contains(MyGameObjectMapLayer.Terrain)
-            || Map.Instance.IsWater(hitInfo) == MapLayers.Contains(MyGameObjectMapLayer.Water);
+        return mapLayer == MyGameObjectMapLayer.Terrain == MapLayers.Contains(MyGameObjectMapLayer.Terrain)
+            || mapLayer == MyGameObjectMapLayer.Water == MapLayers.Contains(MyGameObjectMapLayer.Water);
     }
 
     public Vector3 Center

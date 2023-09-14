@@ -22,6 +22,8 @@ public class Player : MonoBehaviour
 
     protected virtual void Update()
     {
+        RemoveEmptyObjectsFromSelection();
+
         Achievements.Update();
     }
 
@@ -44,19 +46,12 @@ public class Player : MonoBehaviour
         {
             if (HUD.Instance.IsShift() == false)
             {
-                foreach (MyGameObject myGameObject in Selected)
-                {
-                    myGameObject.Select(false);
-                }
-
-                Selected.Clear();
+                HUD.Instance.SelectionClear();
             }
 
             foreach (MyGameObject myGameObject in Groups[keyCode])
             {
-                myGameObject.Select(true);
-
-                Selected.Add(myGameObject);
+                HUD.Instance.Select(myGameObject);
             }
         }
     }
@@ -99,6 +94,16 @@ public class Player : MonoBehaviour
     private void Unregister(ResourceRequestContainer container, MyGameObject myGameObject, string name)
     {
         container.Remove(myGameObject, name);
+    }
+
+    private void RemoveEmptyObjectsFromSelection()
+    {
+        Selected.RemoveWhere(x => x == null);
+
+        foreach (HashSet<MyGameObject> group in Groups.Values)
+        {
+            group.RemoveWhere(x => x == null);
+        }
     }
 
     [field: SerializeField]

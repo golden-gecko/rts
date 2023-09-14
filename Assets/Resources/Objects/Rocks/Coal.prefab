@@ -158,6 +158,7 @@ MonoBehaviour:
   <ExpirationTimer>k__BackingField:
     <Current>k__BackingField: -1
     <Max>k__BackingField: -1
+  <SkillsNames>k__BackingField: []
 --- !u!114 &-2746926710343751413
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -178,7 +179,7 @@ MonoBehaviour:
     - <Current>k__BackingField: 200
       <Max>k__BackingField: 200
       <Name>k__BackingField: Coal
-      <Direction>k__BackingField: 1
+      <Direction>k__BackingField: 2
 --- !u!1001 &253625457856833662
 PrefabInstance:
   m_ObjectHideFlags: 0

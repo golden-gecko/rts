@@ -5,4 +5,5 @@ Simple RTS game.
 
 ## TODO
 
-* Shield tower.
+* Shield tower
+* Repair tower

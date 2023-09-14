@@ -20,7 +20,8 @@ public class Cannon : Gun
         missile.Move(position);
         missile.Destroy();
 
-        GetComponent<Storage>().Resources.Dec("Ammunition");
+        // GetComponent<Storage>().Resources.Dec("Ammunition");
+        Ammunition.Dec();
 
         myGameObject.Stats.Inc(Stats.MissilesFired);
     }
