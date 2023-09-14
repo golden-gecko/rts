@@ -29,7 +29,7 @@ public class Map : MonoBehaviour
 
     public bool ValidatePosition(MyGameObject myGameObject, Vector3 position, out Vector3 validated)
     {
-        if (myGameObject.MapLayers.Contains(MyGameObjectMapLayer.Missile))
+        if (myGameObject.MapLayers.Contains(MyGameObjectMapLayer.Air) && myGameObject.Altitude < 0)
         {
             validated = position;
 

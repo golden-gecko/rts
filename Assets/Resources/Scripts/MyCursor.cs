@@ -16,28 +16,28 @@ public class MyCursor : MonoBehaviour
             Instance = this;
         }
 
-        cursors[OrderType.Assemble] = Assemble;
-        cursors[OrderType.Attack] = Attack;
-        cursors[OrderType.Construct] = Construct;
-        cursors[OrderType.Destroy] = Destroy;
-        cursors[OrderType.Disable] = Disable;
-        cursors[OrderType.Enable] = Enable;
-        cursors[OrderType.Explore] = Explore;
-        cursors[OrderType.Follow] = Follow;
-        cursors[OrderType.Gather] = Gather;
-        cursors[OrderType.Guard] = Guard;
-        cursors[OrderType.Load] = Load;
-        cursors[OrderType.Move] = Move;
-        cursors[OrderType.None] = None;
-        cursors[OrderType.Patrol] = Patrol;
-        cursors[OrderType.Produce] = Produce;
-        cursors[OrderType.Rally] = Rally;
-        cursors[OrderType.Research] = Research;
-        cursors[OrderType.Stop] = Stop;
-        cursors[OrderType.Transport] = Transport;
-        cursors[OrderType.Unload] = Unload;
-        cursors[OrderType.UseSkill] = UseSkill;
-        cursors[OrderType.Wait] = Wait;
+        cursors[OrderType.Assemble] = CursorAssemble;
+        cursors[OrderType.Attack] = CursorAttack;
+        cursors[OrderType.Construct] = CursorConstruct;
+        cursors[OrderType.Destroy] = CursorDestroy;
+        cursors[OrderType.Disable] = CursorDisable;
+        cursors[OrderType.Enable] = CursorEnable;
+        cursors[OrderType.Explore] = CursorExplore;
+        cursors[OrderType.Follow] = CursorFollow;
+        cursors[OrderType.Gather] = CursorGather;
+        cursors[OrderType.Guard] = CursorGuard;
+        cursors[OrderType.Load] = CursorLoad;
+        cursors[OrderType.Move] = CursorMove;
+        cursors[OrderType.None] = CursorNone;
+        cursors[OrderType.Patrol] = CursorPatrol;
+        cursors[OrderType.Produce] = CursorProduce;
+        cursors[OrderType.Rally] = CursorRally;
+        cursors[OrderType.Research] = CursorResearch;
+        cursors[OrderType.Stop] = CursorStop;
+        cursors[OrderType.Transport] = CursorTransport;
+        cursors[OrderType.Unload] = CursorUnload;
+        cursors[OrderType.UseSkill] = CursorUseSkill;
+        cursors[OrderType.Wait] = CursorWait;
 
         Set(OrderType.None);
     }
@@ -51,70 +51,70 @@ public class MyCursor : MonoBehaviour
     }
 
     [field: SerializeField]
-    private Texture2D Assemble { get; set; }
+    private Texture2D CursorAssemble { get; set; }
 
     [field: SerializeField]
-    private Texture2D Attack { get; set; }
+    private Texture2D CursorAttack { get; set; }
 
     [field: SerializeField]
-    private Texture2D Construct { get; set; }
+    private Texture2D CursorConstruct { get; set; }
 
     [field: SerializeField]
-    private Texture2D Destroy { get; set; } // TODO: Rename properties to avoid name collision.
+    private Texture2D CursorDestroy { get; set; }
 
     [field: SerializeField]
-    private Texture2D Disable { get; set; }
+    private Texture2D CursorDisable { get; set; }
 
     [field: SerializeField]
-    private Texture2D Enable { get; set; }
+    private Texture2D CursorEnable { get; set; }
 
     [field: SerializeField]
-    private Texture2D Explore { get; set; }
+    private Texture2D CursorExplore { get; set; }
 
     [field: SerializeField]
-    private Texture2D Follow { get; set; }
+    private Texture2D CursorFollow { get; set; }
 
     [field: SerializeField]
-    private Texture2D Gather { get; set; }
+    private Texture2D CursorGather { get; set; }
 
     [field: SerializeField]
-    private Texture2D Guard { get; set; }
+    private Texture2D CursorGuard { get; set; }
 
     [field: SerializeField]
-    private Texture2D Load { get; set; }
+    private Texture2D CursorLoad { get; set; }
 
     [field: SerializeField]
-    private Texture2D Move { get; set; }
+    private Texture2D CursorMove { get; set; }
 
     [field: SerializeField]
-    private Texture2D None { get; set; }
+    private Texture2D CursorNone { get; set; }
 
     [field: SerializeField]
-    private Texture2D Patrol { get; set; }
+    private Texture2D CursorPatrol { get; set; }
 
     [field: SerializeField]
-    private Texture2D Produce { get; set; }
+    private Texture2D CursorProduce { get; set; }
 
     [field: SerializeField]
-    private Texture2D Rally { get; set; }
+    private Texture2D CursorRally { get; set; }
 
     [field: SerializeField]
-    private Texture2D Research { get; set; }
+    private Texture2D CursorResearch { get; set; }
 
     [field: SerializeField]
-    private Texture2D Stop { get; set; }
+    private Texture2D CursorStop { get; set; }
 
     [field: SerializeField]
-    private Texture2D Transport { get; set; }
+    private Texture2D CursorTransport { get; set; }
 
     [field: SerializeField]
-    private Texture2D Unload { get; set; }
+    private Texture2D CursorUnload { get; set; }
 
     [field: SerializeField]
-    private Texture2D UseSkill { get; set; }
+    private Texture2D CursorUseSkill { get; set; }
 
     [field: SerializeField]
-    private Texture2D Wait { get; set; }
+    private Texture2D CursorWait { get; set; }
 
     private Dictionary<OrderType, Texture2D> cursors = new Dictionary<OrderType, Texture2D>();
 }

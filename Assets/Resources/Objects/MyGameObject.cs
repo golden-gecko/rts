@@ -6,7 +6,7 @@ public class MyGameObject : MonoBehaviour
 {
     protected virtual void Awake()
     {
-        body = transform.Find("Body");
+        Body = transform.Find("Body");
 
         Orders.AllowOrder(OrderType.Destroy); // TODO: Move to component.
         Orders.AllowOrder(OrderType.Disable);
@@ -100,7 +100,7 @@ public class MyGameObject : MonoBehaviour
 
         if (Player == active || Map.Instance.IsVisibleBySight(this, active))
         {
-            foreach (Renderer renderer in body.GetComponentsInChildren<Renderer>(true))
+            foreach (Renderer renderer in Body.GetComponentsInChildren<Renderer>(true))
             {
                 renderer.enabled = true;
             }
@@ -109,7 +109,7 @@ public class MyGameObject : MonoBehaviour
         }
         else if (Map.Instance.IsVisibleByRadar(this, active))
         {
-            foreach (Renderer renderer in body.GetComponentsInChildren<Renderer>(true))
+            foreach (Renderer renderer in Body.GetComponentsInChildren<Renderer>(true))
             {
                 renderer.enabled = false;
             }
@@ -118,7 +118,7 @@ public class MyGameObject : MonoBehaviour
         }
         else
         {
-            foreach (Renderer renderer in body.GetComponentsInChildren<Renderer>(true))
+            foreach (Renderer renderer in Body.GetComponentsInChildren<Renderer>(true))
             {
                 renderer.enabled = false;
             }
@@ -373,11 +373,6 @@ public class MyGameObject : MonoBehaviour
                         }
                     }
 
-                    // TODO: Remove or uncomment.
-                    // info += string.Format("\nEnabled: {0}", Enabled);
-                    // info += string.Format("\nGatherable: {0}", Gatherable);
-                    // info += string.Format("\nPowerable: {0}", Powerable);
-                    // info += string.Format("\nSelectable: {0}", Selectable);
                     info += string.Format("\nPowered: {0}", Powered);
                     info += string.Format("\nWorking: {0}", Working);
                 }
@@ -685,13 +680,13 @@ public class MyGameObject : MonoBehaviour
     public GameObject DestroyEffect { get; set; }
 
     [field: SerializeField]
-    public float Altitude { get; set; } = 0.0f;
+    public float Altitude { get; set; } = -1.0f;
 
     [field: SerializeField]
     public List<MyGameObjectMapLayer> MapLayers { get; set; } = new List<MyGameObjectMapLayer>();
 
     [field: SerializeField]
-    public bool ShowIndicators = true;
+    public bool ShowIndicators { get; set; } = true;
 
     [field: SerializeField]
     public Timer ExpirationTimer { get; set; } = new Timer(-1.0f, -1.0f);
@@ -721,5 +716,5 @@ public class MyGameObject : MonoBehaviour
 
     public Dictionary<OrderType, OrderHandler> OrderHandlers { get; } = new Dictionary<OrderType, OrderHandler>();
 
-    private Transform body;
+    public Transform Body { get; private set; }
 }

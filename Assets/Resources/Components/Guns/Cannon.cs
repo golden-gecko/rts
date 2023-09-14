@@ -16,11 +16,12 @@ public class Cannon : Gun
 
         missile.Parent = myGameObject;
         missile.Player = myGameObject.Player;
+        missile.Damage = Damage;
+        missile.Range = Range;
 
         missile.Move(position);
         missile.Destroy();
 
-        // GetComponent<Storage>().Resources.Dec("Ammunition");
         Ammunition.Dec();
 
         myGameObject.Stats.Inc(Stats.MissilesFired);

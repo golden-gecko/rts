@@ -16,14 +16,11 @@ public class Gauss : Gun
 
         missile.Parent = myGameObject;
         missile.Player = myGameObject.Player;
-
-        missile.Target = position; // TODO: Replace with order.
+        missile.Damage = Damage;
         missile.Range = Range;
 
-        missile.Wait();
-        missile.Destroy();
+        missile.Attack(position);
 
-        // GetComponent<Storage>().Resources.Dec("Ammunition");
         Ammunition.Dec();
 
         myGameObject.Stats.Inc(Stats.MissilesFired);
