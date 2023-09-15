@@ -7,10 +7,9 @@ public class Damage : Skill
         return new Damage(Name, Range, Cooldown.Max, Value);
     }
 
-    public Damage(string name, float range, float cooldown, float value) : base(name, range, cooldown)
+    public Damage(string name, float range, float cooldown, float value) : base(name, range, cooldown, "Effects/Skills/Green hit")
     {
         Value = value;
-        Effect = "Effects/Skills/Green hit"; // TODO: Get from property.
     }
 
     public override void Execute(MyGameObject myGameObject)

@@ -21,7 +21,7 @@ public class JobHandlerUnload : JobHandler
         {
             if (resource.Current > 0)
             {
-                MyGameObject placeToStoreResources = GetStorage(myGameObject, resource);
+                MyGameObject placeToStoreResources = myGameObject.Player.GetStorage(myGameObject, resource);
 
                 if (placeToStoreResources)
                 {
@@ -31,50 +31,5 @@ public class JobHandlerUnload : JobHandler
         }
 
         return null;
-    }
-
-    private MyGameObject GetStorage(MyGameObject myGameObject, Resource resource)
-    {
-        MyGameObject closest = null;
-        float distance = float.MaxValue;
-
-        foreach (Storage storage in Object.FindObjectsByType<Storage>(FindObjectsSortMode.None))
-        {
-            MyGameObject parent = storage.GetComponent<MyGameObject>();
-
-            if (parent == null)
-            {
-                continue;
-            }
-
-            if (parent.Working == false)
-            {
-                continue;
-            }
-
-            if (parent == myGameObject)
-            {
-                continue;
-            }
-
-            string[] resourcesFromStorage = new string[] { resource.Name };
-            string[] resourcesFromCapacity = storage.Resources.Items.Where(x => x.In && x.Full == false).Select(x => x.Name).ToArray();
-            string[] match = resourcesFromStorage.Intersect(resourcesFromCapacity).ToArray();
-
-            if (match.Length <= 0)
-            {
-                continue;
-            }
-
-            float magnitude = (myGameObject.Position - parent.Position).magnitude;
-
-            if (magnitude < distance)
-            {
-                closest = parent;
-                distance = magnitude;
-            }
-        }
-
-        return closest;
     }
 }

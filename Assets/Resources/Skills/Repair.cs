@@ -7,10 +7,9 @@ public class Repair : Skill
         return new Repair(Name, Range, Cooldown.Max, Value);
     }
 
-    public Repair(string name, float range, float cooldown, float value) : base(name, range, cooldown)
+    public Repair(string name, float range, float cooldown, float value) : base(name, range, cooldown, "Effects/Skills/Healing")
     {
         Value = value;
-        Effect = "Effects/Skills/Healing"; // TODO: Get from property.
     }
 
     public override void Execute(MyGameObject myGameObject)

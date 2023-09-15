@@ -5,14 +5,15 @@ public class Skill : ICloneable
 {
     public virtual object Clone()
     {
-        return new Skill(Name, Range, Cooldown.Max);
+        return new Skill(Name, Range, Cooldown.Max, Effect);
     }
 
-    public Skill(string name, float range, float cooldown)
+    public Skill(string name, float range, float cooldown, string effect)
     {
         Name = name;
         Range = range;
         Cooldown = new Timer(cooldown, cooldown);
+        Effect = effect;
     }
 
     public virtual void Execute(MyGameObject myGameObject)
@@ -34,7 +35,6 @@ public class Skill : ICloneable
     public float Range { get; } = 0.0f;
 
     public Timer Cooldown { get; }
-
 
     public string Effect { get; protected set; } = string.Empty;
 }
