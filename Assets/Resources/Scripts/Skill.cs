@@ -1,12 +1,18 @@
+using System;
 using UnityEngine;
 
-public class Skill
+public class Skill : ICloneable
 {
-    public Skill(string name, float cooldown, float range)
+    public virtual object Clone()
+    {
+        return new Skill(Name, Range, Cooldown.Max);
+    }
+
+    public Skill(string name, float range, float cooldown)
     {
         Name = name;
-        Cooldown.Max = cooldown;
         Range = range;
+        Cooldown = new Timer(cooldown, cooldown);
     }
 
     public virtual void Execute(MyGameObject myGameObject)
@@ -25,9 +31,10 @@ public class Skill
 
     public string Name { get; }
 
-    public Timer Cooldown { get; } = new Timer();
-
     public float Range { get; } = 0.0f;
+
+    public Timer Cooldown { get; }
+
 
     public string Effect { get; protected set; } = string.Empty;
 }

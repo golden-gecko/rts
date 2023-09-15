@@ -432,13 +432,19 @@ public class GameMenu : MonoBehaviour
 
     private void UpdateSkills(MyGameObject hovered)
     {
-        HashSet<string> whitelist = new HashSet<string>();
+        Dictionary<string, bool> whitelist = new Dictionary<string, bool>();
 
         if (hovered != null)
         {
             if (hovered.State == MyGameObjectState.Operational)
             {
-                whitelist = new HashSet<string>(hovered.Skills.Keys);
+                foreach (Skill skill in hovered.Skills.Values)
+                {
+                    if (whitelist.ContainsKey(skill.Name) == false || whitelist[skill.Name] == false)
+                    {
+                        whitelist[skill.Name] = skill.Cooldown.Finished;
+                    }
+                }
             }
         }
         else
@@ -450,9 +456,12 @@ public class GameMenu : MonoBehaviour
                     continue;
                 }
 
-                foreach (string skill in selected.Skills.Keys)
+                foreach (Skill skill in selected.Skills.Values)
                 {
-                    whitelist.Add(skill);
+                    if (whitelist.ContainsKey(skill.Name) == false || whitelist[skill.Name] == false)
+                    {
+                        whitelist[skill.Name] = skill.Cooldown.Finished;
+                    }
                 }
             }
         }
@@ -462,11 +471,12 @@ public class GameMenu : MonoBehaviour
             button.style.display = DisplayStyle.None;
         }
 
-        foreach (string i in whitelist)
+        foreach (KeyValuePair<string, bool> i in whitelist)
         {
-            if (skillsButtons.ContainsKey(i))
+            if (skillsButtons.ContainsKey(i.Key))
             {
-                skillsButtons[i].style.display = DisplayStyle.Flex;
+                skillsButtons[i.Key].style.display = DisplayStyle.Flex;
+                skillsButtons[i.Key].SetEnabled(i.Value);
             }
         }
     }

@@ -2,7 +2,12 @@ using UnityEngine;
 
 public class Damage : Skill
 {
-    public Damage(string name, float cooldown, float range, float value) : base(name, cooldown, range)
+    public override object Clone()
+    {
+        return new Damage(Name, Range, Cooldown.Max, Value);
+    }
+
+    public Damage(string name, float range, float cooldown, float value) : base(name, range, cooldown)
     {
         Value = value;
         Effect = "Effects/Skills/Green hit"; // TODO: Get from property.

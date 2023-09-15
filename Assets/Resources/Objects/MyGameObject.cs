@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class MyGameObject : MonoBehaviour
@@ -30,6 +31,13 @@ public class MyGameObject : MonoBehaviour
         ConstructionRecipies.Add(r1);
 
         Stats.Player = Player;
+
+        SkillManager skillManager = Game.Instance.GetComponent<SkillManager>();
+
+        foreach (string skillName in SkillsNames)
+        {
+            Skills[skillName] = skillManager.Get(skillName).Clone() as Skill;
+        }
     }
 
     protected virtual void Start()
@@ -692,7 +700,7 @@ public class MyGameObject : MonoBehaviour
     public Timer ExpirationTimer { get; set; } = new Timer(-1.0f, -1.0f);
 
     [field: SerializeField]
-    public List<string> SkillsNames { get; set; } = new List<string>(); // TODO: Implement.
+    public List<string> SkillsNames { get; set; } = new List<string>();
 
     public Vector3 Position { get => transform.position; set => transform.position = value; }
 

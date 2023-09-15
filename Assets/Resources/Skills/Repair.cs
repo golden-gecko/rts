@@ -2,11 +2,15 @@ using UnityEngine;
 
 public class Repair : Skill
 {
-    public Repair(string name, float cooldown, float range, float value) : base(name, cooldown, range)
+    public override object Clone()
+    {
+        return new Repair(Name, Range, Cooldown.Max, Value);
+    }
+
+    public Repair(string name, float range, float cooldown, float value) : base(name, range, cooldown)
     {
         Value = value;
         Effect = "Effects/Skills/Healing"; // TODO: Get from property.
-
     }
 
     public override void Execute(MyGameObject myGameObject)
