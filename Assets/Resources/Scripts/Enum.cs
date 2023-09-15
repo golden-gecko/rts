@@ -8,12 +8,10 @@ public enum DiplomacyState
 public enum MyGameObjectMapLayer
 {
     Air,
+    None,
     Terrain,
     Underwater, // TODO: Implement.
     Water,
-
-    Missile, // TODO: Remove.
-    None, // TODO: Sort.
 }
 
 public enum MyGameObjectState

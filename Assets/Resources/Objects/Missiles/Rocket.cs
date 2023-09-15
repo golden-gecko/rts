@@ -6,25 +6,38 @@ public class Rocket : Missile
     {
         base.OnTriggerEnter(other);
 
-        MyGameObject myGameObject = other.GetComponentInParent<MyGameObject>(); // TODO: Add collision with terrain.
+        MyGameObject myGameObject = other.GetComponentInParent<MyGameObject>();
 
-        if (myGameObject != null && myGameObject.Is(this, DiplomacyState.Ally) == false && myGameObject.GetComponent<Missile>() == false)
+        if (myGameObject == null)
+        {
+            return;
+        }
+            
+        if (myGameObject.Is(this, DiplomacyState.Ally))
+        {
+            return;
+        }
+
+        if (myGameObject.GetComponent<Missile>())
+        {
+            return;
+        }
+
+        if (Map.Instance.IsVisibleBySight(myGameObject, HUD.Instance.ActivePlayer))
         {
             Instantiate(HitEffectPrefab, Position, Quaternion.identity);
-
-            float damageDealt = myGameObject.OnDamage(Damage);
-
-            if (myGameObject.Alive == false)
-            {
-                Parent.Stats.Inc(Stats.TargetsDestroyed);
-            }
-
-            Parent.Stats.Add(Stats.DamageDealt, damageDealt);
-
-            Orders.Clear();
-
-            Destroy();
         }
+
+        float damageDealt = myGameObject.OnDamage(Damage);
+
+        if (myGameObject.Alive == false)
+        {
+            Parent.Stats.Inc(Stats.TargetsDestroyed);
+        }
+
+        Parent.Stats.Add(Stats.DamageDealt, damageDealt);
+
+        Destroy(0);
     }
 
     // TODO: Add hit effect when missile does not hit anything.

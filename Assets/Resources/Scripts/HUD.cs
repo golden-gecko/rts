@@ -1,6 +1,5 @@
 using UnityEngine;
 using UnityEngine.EventSystems;
-using UnityEngine.UIElements;
 
 public class HUD : MonoBehaviour
 {
@@ -27,173 +26,9 @@ public class HUD : MonoBehaviour
 
     void Update()
     {
-        UpdateMouse();
+        UpdateCursor();
         UpdateKeyboard();
-    }
-
-    public void Assemble(string prefab)
-    {
-        foreach (MyGameObject selected in ActivePlayer.Selected)
-        {
-            selected.Assemble(prefab);
-        }
-    }
-
-    public void Destroy()
-    {
-        foreach (MyGameObject selected in ActivePlayer.Selected)
-        {
-            if (IsShift() == false)
-            {
-                selected.Stats.Add(Stats.OrdersCancelled, selected.Orders.Count);
-                selected.Orders.Clear();
-            }
-
-            selected.Destroy();
-        }
-    }
-
-    public void Disable()
-    {
-        foreach (MyGameObject selected in ActivePlayer.Selected)
-        {
-            if (IsShift() == false)
-            {
-                selected.Stats.Add(Stats.OrdersCancelled, selected.Orders.Count);
-                selected.Orders.Clear();
-            }
-
-            selected.Disable();
-        }
-    }
-
-    public void Enable()
-    {
-        foreach (MyGameObject selected in ActivePlayer.Selected)
-        {
-            if (IsShift() == false)
-            {
-                selected.Stats.Add(Stats.OrdersCancelled, selected.Orders.Count);
-                selected.Orders.Clear();
-            }
-
-            selected.Enable();
-        }
-    }
-
-    public void Explore()
-    {
-        foreach (MyGameObject selected in ActivePlayer.Selected)
-        {
-            if (IsShift() == false)
-            {
-                selected.Stats.Add(Stats.OrdersCancelled, selected.Orders.Count);
-                selected.Orders.Clear();
-            }
-
-            selected.Explore();
-        }
-    }
-
-    public void Gather()
-    {
-        foreach (MyGameObject selected in ActivePlayer.Selected)
-        {
-            if (IsShift() == false)
-            {
-                selected.Stats.Add(Stats.OrdersCancelled, selected.Orders.Count);
-                selected.Orders.Clear();
-            }
-
-            selected.Gather();
-        }
-    }
-
-    public void Produce(string recipe)
-    {
-        foreach (MyGameObject selected in ActivePlayer.Selected)
-        {
-            if (IsShift() == false)
-            {
-                selected.Stats.Add(Stats.OrdersCancelled, selected.Orders.Count);
-                selected.Orders.Clear();
-            }
-
-            selected.Produce(recipe);
-        }
-    }
-
-    public void Research(string technology)
-    {
-        foreach (MyGameObject selected in ActivePlayer.Selected)
-        {
-            if (IsShift() == false)
-            {
-                selected.Stats.Add(Stats.OrdersCancelled, selected.Orders.Count);
-                selected.Orders.Clear();
-            }
-
-            selected.Research(technology);
-        }
-    }
-
-    public void Stop()
-    {
-        foreach (MyGameObject selected in ActivePlayer.Selected)
-        {
-            if (IsShift() == false)
-            {
-                selected.Stats.Add(Stats.OrdersCancelled, selected.Orders.Count);
-                selected.Orders.Clear();
-            }
-
-            selected.Stop();
-        }
-    }
-
-    public void UseSkill(string skill)
-    {
-        foreach (MyGameObject selected in ActivePlayer.Selected)
-        {
-            if (IsShift() == false)
-            {
-                selected.Stats.Add(Stats.OrdersCancelled, selected.Orders.Count);
-                selected.Orders.Clear();
-            }
-
-            selected.UseSkill(skill);
-        }
-    }
-
-    public void Wait()
-    {
-        foreach (MyGameObject selected in ActivePlayer.Selected)
-        {
-            if (IsShift() == false)
-            {
-                selected.Stats.Add(Stats.OrdersCancelled, selected.Orders.Count);
-                selected.Orders.Clear();
-            }
-
-            selected.Wait();
-        }
-    }
-
-    private void Construct()
-    {
-        if (ActivePlayer.Selected.Count > 0)
-        {
-            foreach (MyGameObject selected in ActivePlayer.Selected)
-            {
-                if (IsShift() == false)
-                {
-                    selected.Stats.Add(Stats.OrdersCancelled, selected.Orders.Count);
-                    selected.Orders.Clear();
-                }
-
-                selected.Construct(Prefab, Cursor.Position, Cursor.Rotation);
-            }
-        }
+        UpdateMouse();
     }
 
     private void DrawSelection()
@@ -236,44 +71,35 @@ public class HUD : MonoBehaviour
 
     private void IssueOrder(Vector3 position)
     {
-        foreach (MyGameObject selected in ActivePlayer.Selected)
+        switch (Order)
         {
-            if (IsShift() == false)
-            {
-                selected.Stats.Add(Stats.OrdersCancelled, selected.Orders.Count);
-                selected.Orders.Clear();
-            }
+            case OrderType.Attack:
+                ActivePlayer.Selection.Attack(position, MyInput.IsShift());
+                break;
 
-            switch (Order)
-            {
-                case OrderType.Attack:
-                    selected.Attack(position);
-                    break;
+            case OrderType.Guard:
+                ActivePlayer.Selection.Guard(position, MyInput.IsShift());
+                break;
 
-                case OrderType.Guard:
-                    selected.Guard(position);
-                    break;
+            case OrderType.Move:
+                ActivePlayer.Selection.Move(position, MyInput.IsShift());
+                break;
 
-                case OrderType.Move:
-                    selected.Move(position);
-                    break;
+            case OrderType.Patrol:
+                ActivePlayer.Selection.Patrol(position, MyInput.IsShift());
+                break;
 
-                case OrderType.Patrol:
-                    selected.Patrol(position);
-                    break;
-
-                case OrderType.Rally:
-                    selected.Rally(position);
-                    break;
-            }
+            case OrderType.Rally:
+                ActivePlayer.Selection.Rally(position, MyInput.IsShift());
+                break;
         }
     }
 
     private void IssueOrder(MyGameObject myGameObject)
     {
-        foreach (MyGameObject selected in ActivePlayer.Selected)
+        foreach (MyGameObject selected in ActivePlayer.Selection.Items)
         {
-            if (IsShift() == false)
+            if (MyInput.IsShift() == false)
             {
                 selected.Stats.Add(Stats.OrdersCancelled, selected.Orders.Count);
                 selected.Orders.Clear();
@@ -317,7 +143,7 @@ public class HUD : MonoBehaviour
         {
             if (Cursor.HasCorrectPosition())
             {
-                Construct();
+                ActivePlayer.Selection.Construct(Prefab, Cursor.Position, Cursor.Rotation, MyInput.IsShift());
 
                 return true;
             }
@@ -360,9 +186,9 @@ public class HUD : MonoBehaviour
 
     private void IssueOrderDefault(Vector3 position)
     {
-        foreach (MyGameObject selected in ActivePlayer.Selected)
+        foreach (MyGameObject selected in ActivePlayer.Selection.Items)
         {
-            if (IsShift() == false)
+            if (MyInput.IsShift() == false)
             {
                 selected.Stats.Add(Stats.OrdersCancelled, selected.Orders.Count);
                 selected.Orders.Clear();
@@ -374,9 +200,9 @@ public class HUD : MonoBehaviour
 
     private void IssueOrderDefault(MyGameObject myGameObject)
     {
-        foreach (MyGameObject selected in ActivePlayer.Selected)
+        foreach (MyGameObject selected in ActivePlayer.Selection.Items)
         {
-            if (IsShift() == false)
+            if (MyInput.IsShift() == false)
             {
                 selected.Stats.Add(Stats.OrdersCancelled, selected.Orders.Count);
                 selected.Orders.Clear();
@@ -403,9 +229,9 @@ public class HUD : MonoBehaviour
 
         if (MouseToRaycast(out hitInfo))
         {
-            if (IsShift() == false)
+            if (MyInput.IsShift() == false)
             {
-                SelectionClear();
+                ActivePlayer.Selection.Clear();
             }
 
             if (Utils.IsTerrain(hitInfo) == false && Utils.IsWater(hitInfo) == false)
@@ -438,33 +264,23 @@ public class HUD : MonoBehaviour
             return;
         }
 
-        if (IsShift() && ActivePlayer.Selected.Contains(myGameObject))
+        if (MyInput.IsShift() && ActivePlayer.Selection.Contains(myGameObject))
         {
             myGameObject.Select(false);
-            ActivePlayer.Selected.Remove(myGameObject);
+            ActivePlayer.Selection.Remove(myGameObject);
         }
         else
         {
             myGameObject.Select(true);
-            ActivePlayer.Selected.Add(myGameObject);
+            ActivePlayer.Selection.Add(myGameObject);
         }
-    }
-
-    public void SelectionClear()
-    {
-        foreach (MyGameObject selected in ActivePlayer.Selected)
-        {
-            selected.Select(false);
-        }
-
-        ActivePlayer.Selected.Clear();
     }
 
     private void SelectUnitInBox()
     {
-        if (IsShift() == false)
+        if (MyInput.IsShift() == false)
         {
-            SelectionClear();
+            ActivePlayer.Selection.Clear();
         }
 
         foreach (MyGameObject myGameObject in FindObjectsByType<MyGameObject>(FindObjectsSortMode.None)) // TODO: Not very efficient. Refactor into raycast.
@@ -514,9 +330,9 @@ public class HUD : MonoBehaviour
 
     private void CheckGroupCreate()
     {
-        for (KeyCode i = KeyCode.Alpha0; i < KeyCode.Alpha9; i++)
+        for (KeyCode i = KeyCode.Alpha0; i <= KeyCode.Alpha9; i++)
         {
-            if (IsControl() && Input.GetKeyDown(i))
+            if (MyInput.IsControl() && Input.GetKeyDown(i))
             {
                 ActivePlayer.AssignGroup(i);
             }
@@ -525,23 +341,13 @@ public class HUD : MonoBehaviour
 
     private void CheckGroupActivate()
     {
-        for (KeyCode i = KeyCode.Alpha0; i < KeyCode.Alpha9; i++)
+        for (KeyCode i = KeyCode.Alpha0; i <= KeyCode.Alpha9; i++)
         {
-            if (Input.GetKeyDown(i))
+            if (MyInput.IsControl() == false && Input.GetKeyDown(i))
             {
-                ActivePlayer.SelectGroup(i);
+                ActivePlayer.SelectGroup(i, MyInput.IsShift());
             }
         }
-    }
-
-    public bool IsControl()
-    {
-        return Input.GetKey(KeyCode.LeftControl) || Input.GetKey(KeyCode.RightControl);
-    }
-
-    public bool IsShift()
-    {
-        return Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift);
     }
 
     private void UpdateMouse()
@@ -600,7 +406,7 @@ public class HUD : MonoBehaviour
                 {
                     if (ProcessOrder())
                     {
-                        if (IsShift() == false)
+                        if (MyInput.IsShift() == false)
                         {
                             Order = OrderType.None;
                             Prefab = string.Empty;
@@ -628,7 +434,7 @@ public class HUD : MonoBehaviour
             }
             else
             {
-                if (IsShift() == false)
+                if (MyInput.IsShift() == false)
                 {
                     Order = OrderType.None;
                     Prefab = string.Empty;
@@ -636,48 +442,47 @@ public class HUD : MonoBehaviour
             }
         }
 
-        if (Input.GetAxis("Mouse ScrollWheel") > 0.0f)
+        HoverOverObjects();
+    }
+
+    private void UpdateCursor()
+    {
+        if (Cursor == null)
         {
-            if (Order == OrderType.Construct)
-            {
-                Cursor.transform.Rotate(Vector3.up, 45.0f);
-            }
-        }
-        else if (Input.GetAxis("Mouse ScrollWheel") < 0.0f)
-        {
-            if (Order == OrderType.Construct)
-            {
-                Cursor.transform.Rotate(Vector3.down, 45.0f);
-            }
+            return;
         }
 
-        if (Cursor != null)
+        Vector3 position;
+
+        if (Map.Instance.MouseToPosition(out position, out _))
         {
-            Vector3 position;
-
-            if (Map.Instance.MouseToPosition(out position, out _))
+            if (Config.SnapToGrid)
             {
-                if (Config.SnapToGrid)
-                {
-                    Cursor.transform.position = Utils.SnapToGrid(position);
-                }
-                else
-                {
-                    Cursor.transform.position = position;
-                }
-            }
-
-            if (Cursor.HasCorrectPosition())
-            {
-                Cursor.GetComponentInChildren<Indicators>().OnErrorEnd();
+                Cursor.transform.position = Utils.SnapToGrid(position);
             }
             else
             {
-                Cursor.GetComponentInChildren<Indicators>().OnError();
+                Cursor.transform.position = position;
             }
         }
 
-        HoverOverObjects();
+        if (Input.GetAxis("Mouse ScrollWheel") > 0.0f)
+        {
+            Cursor.transform.Rotate(Vector3.up, Config.CursorRotateStep);
+        }
+        else if (Input.GetAxis("Mouse ScrollWheel") < 0.0f)
+        {
+            Cursor.transform.Rotate(Vector3.down, Config.CursorRotateStep);
+        }
+
+        if (Cursor.HasCorrectPosition())
+        {
+            Cursor.GetComponentInChildren<Indicators>().OnErrorEnd();
+        }
+        else
+        {
+            Cursor.GetComponentInChildren<Indicators>().OnError();
+        }
     }
 
     private void HoverOverObjects()

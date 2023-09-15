@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class Missile : MyGameObject
+public class Missile : MyGameObject // TODO: Add collision with terrain to missiles.
 {
     protected override void Start()
     {
@@ -21,7 +21,6 @@ public class Missile : MyGameObject
     [field: SerializeField]
     public float Damage { get; set; } = 10.0f;
 
-    public Vector3 Target { get; set; }
-
-    public float Range { get; set; }
+    [field: SerializeField]
+    public float Range { get; set; } = 10.0f;
 }

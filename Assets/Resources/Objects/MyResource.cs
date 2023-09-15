@@ -1,3 +1,4 @@
+using System.Linq;
 using UnityEngine;
 
 [RequireComponent(typeof(Storage))]
@@ -13,19 +14,5 @@ public class MyResource : MyGameObject
         }
     }
 
-    private bool Depleted
-    {
-        get
-        {
-            foreach (Resource resource in GetComponent<Storage>().Resources.Items)
-            {
-                if (resource.Storage > 0)
-                {
-                    return false;
-                }
-            }
-
-            return true;
-        }
-    }
+    private bool Depleted { get => GetComponents<Storage>().All(x => x.Resources.Items.All(x => x.Empty)); }
 }

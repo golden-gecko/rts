@@ -228,12 +228,14 @@ MonoBehaviour:
   <EnableTime>k__BackingField: 2
   <WaitTime>k__BackingField: 2
   <DestroyEffect>k__BackingField: {fileID: 100006, guid: bf98fad54e73fb8448b7b1b9ba4fd0b6, type: 3}
-  <Altitude>k__BackingField: 0
-  <MapLayers>k__BackingField: 01000000
-  ShowIndicators: 1
+  <Altitude>k__BackingField: -1
+  <MapLayers>k__BackingField: 02000000
+  <ShowIndicators>k__BackingField: 1
   <ExpirationTimer>k__BackingField:
     <Current>k__BackingField: -1
     <Max>k__BackingField: -1
+  <SkillsNames>k__BackingField:
+  - Damage
 --- !u!114 &5524956404379026895
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -297,7 +299,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   <Mass>k__BackingField: 10
-  <Mesh>k__BackingField: {fileID: 5771986485392630128, guid: a62006f4c02da344bb4994bc0a33cff4, type: 3}
+  <Mesh>k__BackingField: {fileID: 5771986485392630128, guid: b94669363ef5204408e8b921ce0e4006, type: 3}
   <Range>k__BackingField: 1
   <Capacity>k__BackingField:
     <Current>k__BackingField: 100

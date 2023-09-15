@@ -16,13 +16,13 @@ public class OrderHandlerMoveMissile: OrderHandler // TODO: Merge into one move 
 
         if (distanceToTarget > distanceToTravel)
         {
-            myGameObject.Position = myGameObject.Position + (target - position).normalized * distanceToTravel; // TODO: Check if missile is inside terrain.
+            myGameObject.Position = myGameObject.Position + (target - position).normalized * distanceToTravel;
             myGameObject.Stats.Add(Stats.DistanceDriven, distanceToTravel);
         }
         else
         {
             myGameObject.Position = target;
-            myGameObject.Stats.Add(Stats.DistanceDriven, distanceToTarget); // TODO: Check if missile is inside terrain.
+            myGameObject.Stats.Add(Stats.DistanceDriven, distanceToTarget);
             myGameObject.Stats.Inc(Stats.OrdersCompleted);
             myGameObject.Orders.Pop();
         }

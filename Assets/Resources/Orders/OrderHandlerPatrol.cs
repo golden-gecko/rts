@@ -4,7 +4,7 @@ public class OrderHandlerPatrol : OrderHandler
     {
         Order order = myGameObject.Orders.First();
 
-        myGameObject.Move(order.TargetPosition);
-        myGameObject.Move(myGameObject.Position);
+        myGameObject.Move(order.TargetPosition, 0);
+        myGameObject.Move(myGameObject.Position, 1);
     }
 }

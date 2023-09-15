@@ -30,7 +30,7 @@ public class Disaster : MyGameObject
     {
         base.OnTriggerEnter(other);
 
-        MyGameObject myGameObject = other.GetComponentInParent<MyGameObject>(); // TODO: Add collision with terrain.
+        MyGameObject myGameObject = other.GetComponentInParent<MyGameObject>();
 
         if (myGameObject == null)
         {
@@ -54,7 +54,7 @@ public class Disaster : MyGameObject
     {
         base.OnTriggerStay(other);
 
-        MyGameObject myGameObject = other.GetComponentInParent<MyGameObject>(); // TODO: Add collision with terrain.
+        MyGameObject myGameObject = other.GetComponentInParent<MyGameObject>();
 
         if (myGameObject == null)
         {
