@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using System.Linq;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class MyGameObject : MonoBehaviour
@@ -13,8 +12,8 @@ public class MyGameObject : MonoBehaviour
         Orders.AllowOrder(OrderType.Disable);
         Orders.AllowOrder(OrderType.Enable);
         Orders.AllowOrder(OrderType.Idle);
-        Orders.AllowOrder(OrderType.UseSkill);
         Orders.AllowOrder(OrderType.Stop);
+        Orders.AllowOrder(OrderType.UseSkill);
         Orders.AllowOrder(OrderType.Wait);
 
         OrderHandlers[OrderType.Destroy] = new OrderHandlerDestroy(); // TODO: Move to component.
