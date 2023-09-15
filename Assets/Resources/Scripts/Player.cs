@@ -183,6 +183,11 @@ public class Player : MonoBehaviour
                 continue;
             }
 
+            if (parent.Working == false)
+            {
+                continue;
+            }
+
             if (parent == myGameObject)
             {
                 continue;
