@@ -92,18 +92,11 @@ public class ResourceContainer
         return resource != null ? resource.Max : 0;
     }
 
-    public int Capacity(string name)
+    public int Available(string name)
     {
         Resource resource = Items.Find(x => x.Name == name);
 
-        return resource != null ? resource.Capacity : 0;
-    }
-
-    public int Storage(string name)
-    {
-        Resource resource = Items.Find(x => x.Name == name);
-
-        return resource != null ? resource.Storage : 0;
+        return resource != null ? resource.Available : 0;
     }
 
     public float Percent(string name)
@@ -128,11 +121,11 @@ public class ResourceContainer
         return info;
     }
 
-    public int StorageSum
+    public int CurrentSum
     {
         get
         {
-            return Items.Sum(x => x.Storage);
+            return Items.Sum(x => x.Current);
         }
     }
 
@@ -150,7 +143,4 @@ public class ResourceContainer
 
     [field: SerializeField]
     public List<Resource> Items { get; set; } = new List<Resource>();
-
-    [field: SerializeField] // TODO: Implement.
-    public int MaxStorage { get; set; } = -1; // -1 for unlimited storage.
 }

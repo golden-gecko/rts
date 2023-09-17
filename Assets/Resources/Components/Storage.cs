@@ -59,7 +59,7 @@ public class Storage : MyComponent
                 }
                 else
                 {
-                    parent.Player.RegisterConsumer(parent, resource.Name, resource.Capacity, resource.Direction);
+                    parent.Player.RegisterConsumer(parent, resource.Name, resource.Available, resource.Direction);
                 }
             }
 
@@ -71,7 +71,7 @@ public class Storage : MyComponent
                 }
                 else
                 {
-                    parent.Player.RegisterProducer(parent, resource.Name, resource.Storage, resource.Direction);
+                    parent.Player.RegisterProducer(parent, resource.Name, resource.Current, resource.Direction);
                 }
             }
         }

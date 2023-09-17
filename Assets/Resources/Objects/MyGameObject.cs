@@ -519,7 +519,7 @@ public class MyGameObject : MonoBehaviour
                 }
                 else
                 {
-                    Player.RegisterConsumer(this, resource.Name, resource.Capacity, resource.Direction);
+                    Player.RegisterConsumer(this, resource.Name, resource.Available, resource.Direction);
                 }
             }
 
@@ -531,7 +531,7 @@ public class MyGameObject : MonoBehaviour
                 }
                 else
                 {
-                    Player.RegisterProducer(this, resource.Name, resource.Storage, resource.Direction);
+                    Player.RegisterProducer(this, resource.Name, resource.Current, resource.Direction);
                 }
             }
         }

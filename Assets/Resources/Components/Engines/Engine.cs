@@ -6,45 +6,28 @@ public class Engine : MyComponent
     {
         base.Awake();
 
-        GetComponent<MyGameObject>().Orders.AllowOrder(OrderType.Explore);
-        GetComponent<MyGameObject>().Orders.AllowOrder(OrderType.Follow);
-        GetComponent<MyGameObject>().Orders.AllowOrder(OrderType.Guard);
-        GetComponent<MyGameObject>().Orders.AllowOrder(OrderType.Move);
-        GetComponent<MyGameObject>().Orders.AllowOrder(OrderType.Patrol);
-
-        GetComponent<MyGameObject>().OrderHandlers[OrderType.Explore] = new OrderHandlerExplore();
-        GetComponent<MyGameObject>().OrderHandlers[OrderType.Follow] = new OrderHandlerFollow();
-        GetComponent<MyGameObject>().OrderHandlers[OrderType.Guard] = new OrderHandlerGuard();
-        GetComponent<MyGameObject>().OrderHandlers[OrderType.Move] = new OrderHandlerMove();
-        GetComponent<MyGameObject>().OrderHandlers[OrderType.Patrol] = new OrderHandlerPatrol();
-    }
-
-    protected override void Update()
-    {
-        base.Update();
-
         MyGameObject parent = GetComponent<MyGameObject>();
 
-        if (parent.Working == false)
-        {
-            return;
-        }
+        parent.Orders.AllowOrder(OrderType.Explore);
+        parent.Orders.AllowOrder(OrderType.Follow);
+        parent.Orders.AllowOrder(OrderType.Guard);
+        parent.Orders.AllowOrder(OrderType.Move);
+        parent.Orders.AllowOrder(OrderType.Patrol);
 
-        // Grab fuel.
-        // Storage storage = GetComponent<Storage>();
-        // Fuel.Add(storage.Resources.Remove("Fuel", Fuel.Max - Fuel.Current));
+        parent.OrderHandlers[OrderType.Explore] = new OrderHandlerExplore();
+        parent.OrderHandlers[OrderType.Follow] = new OrderHandlerFollow();
+        parent.OrderHandlers[OrderType.Guard] = new OrderHandlerGuard();
+        parent.OrderHandlers[OrderType.Move] = new OrderHandlerMove();
+        parent.OrderHandlers[OrderType.Patrol] = new OrderHandlerPatrol();
     }
 
     public override string GetInfo()
     {
-        // Storage storage = GetComponent<Storage>();
-        // return string.Format("{0}, Power: {1:0.}, Fuel: {2}/{3}/{4} Speed: {5:0.}", base.GetInfo(), Power, storage.Resources.Current("Fuel"), storage.Resources.Max("Fuel"), FuelUsage, Speed);
         return string.Format("{0}, Power: {1:0.}, Fuel: {2}/{3} Speed: {4:0.}", base.GetInfo(), Power, Fuel.GetInfo(), FuelUsage, Speed);
     }
 
     public bool CanDrive(float distance)
     {
-        // return distanceToDrive > distance || GetComponent<Storage>().Resources.CanDec("Fuel");
         return distanceToDrive > distance || Fuel.CanDec();
     }
 
@@ -57,7 +40,6 @@ public class Engine : MyComponent
 
         if (distance > distanceToDrive)
         {
-            // GetComponent<Storage>().Resources.Dec("Fuel");
             Fuel.CanDec();
 
             distanceToDrive += FuelUsage;

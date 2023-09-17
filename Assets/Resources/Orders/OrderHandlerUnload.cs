@@ -23,8 +23,8 @@ public class OrderHandlerUnload : OrderHandler
         int valueStart = Mathf.Min(new int[]
             {
                 order.Value,
-                order.TargetGameObject.GetComponent<Storage>().Resources.Capacity(order.Resource),
-                myGameObject.GetComponent<Storage>().Resources.Storage(order.Resource)
+                order.TargetGameObject.GetComponent<Storage>().Resources.Available(order.Resource),
+                myGameObject.GetComponent<Storage>().Resources.Current(order.Resource)
             }
         );
 
@@ -48,8 +48,8 @@ public class OrderHandlerUnload : OrderHandler
         int valueEnd = Mathf.Min(new int[]
             {
                 order.Value,
-                order.TargetGameObject.GetComponent<Storage>().Resources.Capacity(order.Resource),
-                myGameObject.GetComponent<Storage>().Resources.Storage(order.Resource)
+                order.TargetGameObject.GetComponent<Storage>().Resources.Available(order.Resource),
+                myGameObject.GetComponent<Storage>().Resources.Current(order.Resource)
             }
         );
 

@@ -25,18 +25,11 @@ public class Gun : MyComponent
             return;
         }
 
-        // Reload gun.
         Reload.Update(Time.deltaTime);
-
-        // Grab ammunition.
-        // Storage storage = GetComponent<Storage>();
-        // Ammunition.Add(storage.Resources.Remove("Ammunition", Ammunition.Max - Ammunition.Current));
     }
 
     public override string GetInfo()
     {
-        // Storage storage = GetComponent<Storage>();
-        // return string.Format("{0}, Reload: {1} Ammunition: {2}/{3}", base.GetInfo(), Reload.GetInfo(), storage.Resources.Current("Ammunition"), storage.Resources.Max("Ammunition"));
         return string.Format("Gun: {0}, Reload: {1} Ammunition: {2}", base.GetInfo(), Reload.GetInfo(), Ammunition.GetInfo());
     }
 
@@ -47,7 +40,6 @@ public class Gun : MyComponent
 
     public virtual bool CanFire()
     {
-        // return GetComponent<Storage>().Resources.CanDec("Ammunition") && Reload.Finished;
         return Ammunition.CanDec() && Reload.Finished;
     }
 

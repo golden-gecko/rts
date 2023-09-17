@@ -107,7 +107,7 @@ public class Player : MonoBehaviour
                 continue;
             }
 
-            if (resource != "" && myResource.GetComponent<Storage>().Resources.Storage(resource) <= 0)
+            if (resource != "" && myResource.GetComponent<Storage>().Resources.Current(resource) <= 0)
             {
                 continue;
             }

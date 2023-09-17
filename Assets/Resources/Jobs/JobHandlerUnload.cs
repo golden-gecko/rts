@@ -12,7 +12,7 @@ public class JobHandlerUnload : JobHandler
             return null;
         }
 
-        if (storage.Resources.StorageSum <= 0)
+        if (storage.Resources.CurrentSum <= 0)
         {
             return null;
         }

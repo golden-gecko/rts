@@ -86,6 +86,6 @@ public class OrderHandlerGather : OrderHandler
 
         myGameObject.Orders.Pop();
 
-        myGameObject.Transport(myResource, storage, resource.Name, resource.Storage);
+        myGameObject.Transport(myResource, storage, resource.Name, resource.Current);
     }
 }
