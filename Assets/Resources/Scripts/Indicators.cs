@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+using System.Linq;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -314,7 +316,7 @@ public class Indicators : MonoBehaviour
         orderTextValue.transform.LookAt(Camera.main.transform.position);
         orderTextValue.transform.Rotate(0.0f, 180.0f, 0.0f);
 
-        Order order = GetFirstOrder(myGameObject.Orders);
+        Order order = myGameObject.Orders.Items.Where(x => x.Type != OrderType.Wait).FirstOrDefault();
 
         if (order == null)
         {
@@ -355,20 +357,14 @@ public class Indicators : MonoBehaviour
 
             case OrderType.Produce:
                 orderText.gameObject.SetActive(true);
-                orderText.transform.localPosition = new Vector3(orderText.transform.localPosition.x, size.y, orderText.transform.localPosition.z);
+                orderText.transform.localPosition = new Vector3(orderText.transform.localPosition.x, size.y * Config.IndicatorTextOffset, orderText.transform.localPosition.z);
                 orderTextValueMesh.SetText(string.Format("Producing\n{0}", order.Recipe));
                 break;
 
             case OrderType.Research:
                 orderText.gameObject.SetActive(true);
-                orderText.transform.localPosition = new Vector3(orderText.transform.localPosition.x, size.y, orderText.transform.localPosition.z);
+                orderText.transform.localPosition = new Vector3(orderText.transform.localPosition.x, size.y * Config.IndicatorTextOffset, orderText.transform.localPosition.z);
                 orderTextValueMesh.SetText(string.Format("Researching\n{0}", order.Technology));
-                break;
-
-            case OrderType.UseSkill:
-                orderText.gameObject.SetActive(true);
-                orderText.transform.localPosition = new Vector3(orderText.transform.localPosition.x, size.y, orderText.transform.localPosition.z);
-                orderTextValueMesh.SetText(string.Format("Using skill\n{0}", order.Skill));
                 break;
 
             case OrderType.Transport:
@@ -387,6 +383,12 @@ public class Indicators : MonoBehaviour
 
                 orderSphere.gameObject.SetActive(true);
                 orderSphere.transform.position = order.TargetGameObject.Position;
+                break;
+
+            case OrderType.UseSkill:
+                orderText.gameObject.SetActive(true);
+                orderText.transform.localPosition = new Vector3(orderText.transform.localPosition.x, size.y * Config.IndicatorTextOffset, orderText.transform.localPosition.z);
+                orderTextValueMesh.SetText(string.Format("Using skill\n{0}", order.Skill));
                 break;
         }
     }
@@ -439,26 +441,6 @@ public class Indicators : MonoBehaviour
 
             trace.localScale = new Vector3(radius / scale.x, radius / scale.y, radius / scale.z);
         }
-    }
-
-    private Order GetFirstOrder(OrderContainer orders)
-    {
-        if (orders.Count <= 0)
-        {
-            return null;
-        }
-
-        if (orders.Count == 1 && orders.First().Type == OrderType.Wait)
-        {
-            return null;
-        }
-
-        if (orders.First().Type == OrderType.Wait)
-        {
-            return orders.Items[1];
-        }
-
-        return orders.Items[0];
     }
 
     private Transform bar;

@@ -13,11 +13,9 @@ public class Config
     public static string DirectoryUnits = Path.Join("Objects", "Units");
 
     public static float IndicatorMargin = 1.1f;
+    public static float IndicatorTextOffset = 2.0f;
 
     public static float RaycastMaxDistance = 5000.0f;
-
-    public static List<string> Recipies = new List<string>() { "Metal using coal", "Metal using wood" };
-    public static List<string> Skills = new List<string>() { "Damage", "Repair" };
 
     public static bool SnapToGrid = true;
 

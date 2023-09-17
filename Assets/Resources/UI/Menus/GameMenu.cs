@@ -199,7 +199,7 @@ public class GameMenu : MonoBehaviour
     {
         skills.Clear();
 
-        foreach (string i in Config.Skills)
+        foreach (string i in Game.Instance.GetComponent<SkillManager>().Skills.Keys)
         {
             TemplateContainer buttonContainer = templateButton.Instantiate();
             Button button = buttonContainer.Q<Button>();
