@@ -144,6 +144,13 @@ public class ResourceContainer
         }
     }
 
+    public bool In { get => Items.Any(x => x.In); }
+
+    public bool Out { get => Items.Any(x => x.Out); }
+
     [field: SerializeField]
     public List<Resource> Items { get; set; } = new List<Resource>();
+
+    [field: SerializeField] // TODO: Implement.
+    public int MaxStorage { get; set; } = -1; // -1 for unlimited storage.
 }

@@ -97,6 +97,9 @@ public class PowerPlant : MyComponent
     [field: SerializeField]
     public float Range { get; set; } = 10.0f;
 
+    [field: SerializeField]
+    public float PowerUsage { get; set; } = 1.0f; // TODO: Implement.
+
     private bool PreviousEnabled = true;
     private bool PreviousPowered = false;
     private Vector3 PreviousPosition = new Vector3();

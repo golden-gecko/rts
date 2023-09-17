@@ -7,6 +7,7 @@ public class MyGameObject : MonoBehaviour
     protected virtual void Awake()
     {
         Body = transform.Find("Body");
+        Indicators = transform.Find("Indicators");
 
         Orders.AllowOrder(OrderType.Destroy); // TODO: Move to component.
         Orders.AllowOrder(OrderType.Disable);
@@ -112,7 +113,7 @@ public class MyGameObject : MonoBehaviour
                 renderer.enabled = true;
             }
 
-            GetComponentInChildren<Indicators>().OnShow();
+            Indicators.GetComponent<Indicators>().OnShow();
         }
         else if (Map.Instance.IsVisibleByRadar(this, active))
         {
@@ -121,7 +122,7 @@ public class MyGameObject : MonoBehaviour
                 renderer.enabled = false;
             }
 
-            GetComponentInChildren<Indicators>().OnRadar();
+            Indicators.GetComponent<Indicators>().OnRadar();
         }
         else
         {
@@ -130,7 +131,7 @@ public class MyGameObject : MonoBehaviour
                 renderer.enabled = false;
             }
 
-            GetComponentInChildren<Indicators>().OnHide();
+            Indicators.GetComponent<Indicators>().OnHide();
         }
     }
 
@@ -447,7 +448,7 @@ public class MyGameObject : MonoBehaviour
             return;
         }
 
-        GetComponentInChildren<Indicators>().OnSelect(status);
+        Indicators.GetComponent<Indicators>().OnSelect(status);
     }
 
     protected virtual void UpdatePosition()
@@ -464,7 +465,7 @@ public class MyGameObject : MonoBehaviour
     {
         if (Player != null)
         {
-            GetComponentInChildren<Indicators>().OnPlayerChange(Player);
+            Indicators.GetComponent<Indicators>().OnPlayerChange(Player);
         }
     }
 
@@ -606,28 +607,18 @@ public class MyGameObject : MonoBehaviour
 
     public Vector3 Exit { get => Position - new Vector3(Direction.x * Size.x, Direction.y * Size.y, Direction.z * Size.z); }
 
-    public float Radius
-    {
-        get
-        {
-            Vector3 size = Size;
-
-            return (size.x + size.y + size.z) / 3.0f;
-        }
-    }
+    public float Radius { get => (Size.x + Size.y + Size.z) / 3.0f; }
 
     public Vector3 Size
     {
         get
         {
-            Quaternion rotation = Rotation;
-            Rotation = Quaternion.identity;
-            Physics.SyncTransforms();
+            Quaternion rotation = Utils.ResetRotation(this);
 
             Vector3 min = new Vector3(float.MaxValue, float.MaxValue, float.MaxValue);
             Vector3 max = new Vector3(float.MinValue, float.MinValue, float.MinValue);
 
-            foreach (Collider collider in GetComponentsInChildren<Collider>())
+            foreach (Collider collider in Body.GetComponentsInChildren<Collider>())
             {
                 min.x = Mathf.Min(min.x, collider.bounds.min.x);
                 min.y = Mathf.Min(min.y, collider.bounds.min.y);
@@ -638,8 +629,7 @@ public class MyGameObject : MonoBehaviour
                 max.z = Mathf.Max(max.z, collider.bounds.max.z);
             }
 
-            Rotation = rotation;
-            Physics.SyncTransforms();
+            Utils.RestoreRotation(this, rotation);
 
             return max - min;
         }
@@ -696,6 +686,15 @@ public class MyGameObject : MonoBehaviour
     public bool ShowIndicators { get; set; } = true;
 
     [field: SerializeField]
+    public bool ShowOrders { get; set; } = true;
+
+    [field: SerializeField]
+    public bool ShowEntrance { get; set; } = true;
+
+    [field: SerializeField]
+    public bool ShowExit { get; set; } = true;
+
+    [field: SerializeField]
     public Timer ExpirationTimer { get; set; } = new Timer(-1.0f, -1.0f);
 
     [field: SerializeField]
@@ -724,4 +723,6 @@ public class MyGameObject : MonoBehaviour
     public Dictionary<OrderType, OrderHandler> OrderHandlers { get; } = new Dictionary<OrderType, OrderHandler>();
 
     public Transform Body { get; private set; }
+
+    public Transform Indicators { get; private set; }
 }

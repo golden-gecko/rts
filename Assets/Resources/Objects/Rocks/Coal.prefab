@@ -154,7 +154,11 @@ MonoBehaviour:
   <DestroyEffect>k__BackingField: {fileID: 0}
   <Altitude>k__BackingField: 0
   <MapLayers>k__BackingField: 0100000002000000
-  ShowIndicators: 1
+  <ShowIndicators>k__BackingField: 1
+  <ShowOrders>k__BackingField: 0
+  <ShowSigns>k__BackingField: 0
+  <ShowEntrance>k__BackingField: 0
+  <ShowExit>k__BackingField: 0
   <ExpirationTimer>k__BackingField:
     <Current>k__BackingField: -1
     <Max>k__BackingField: -1
@@ -180,6 +184,7 @@ MonoBehaviour:
       <Max>k__BackingField: 200
       <Name>k__BackingField: Coal
       <Direction>k__BackingField: 2
+    <MaxStorage>k__BackingField: -1
 --- !u!1001 &253625457856833662
 PrefabInstance:
   m_ObjectHideFlags: 0

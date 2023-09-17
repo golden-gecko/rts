@@ -85,12 +85,12 @@ public class Player : MonoBehaviour
         Unregister(Producers, myGameObject, name);
     }
 
-    public MyResource GetResource(MyGameObject myGameObject, string resource = "")
+    public MyResource GetResource(MyGameObject myGameObject, string resource = "") // TODO: Refactor. Use producer list.
     {
         MyResource closest = null;
         float distance = float.MaxValue;
 
-        foreach (MyResource myResource in Object.FindObjectsByType<MyResource>(FindObjectsSortMode.None))
+        foreach (MyResource myResource in FindObjectsByType<MyResource>(FindObjectsSortMode.None))
         {
             if (myResource.Working == false)
             {
@@ -124,12 +124,12 @@ public class Player : MonoBehaviour
         return closest;
     }
 
-    public MyGameObject GetStorage(MyGameObject myGameObject, Resource resource)
+    public MyGameObject GetStorage(MyGameObject myGameObject, Resource resource) // TODO: Refactor. Use consumer list.
     {
         MyGameObject closest = null;
         float distance = float.MaxValue;
 
-        foreach (Storage storage in Object.FindObjectsByType<Storage>(FindObjectsSortMode.None))
+        foreach (Storage storage in FindObjectsByType<Storage>(FindObjectsSortMode.None))
         {
             MyGameObject parent = storage.GetComponent<MyGameObject>();
 
@@ -169,12 +169,12 @@ public class Player : MonoBehaviour
         return closest;
     }
 
-    public MyGameObject GetStorage(MyGameObject myGameObject, MyResource myResource)
+    public MyGameObject GetStorage(MyGameObject myGameObject, MyResource myResource) // TODO: Refactor. Use consumer list.
     {
         MyGameObject closest = null;
         float distance = float.MaxValue;
 
-        foreach (Storage storage in Object.FindObjectsByType<Storage>(FindObjectsSortMode.None))
+        foreach (Storage storage in FindObjectsByType<Storage>(FindObjectsSortMode.None))
         {
             MyGameObject parent = storage.GetComponent<MyGameObject>();
 

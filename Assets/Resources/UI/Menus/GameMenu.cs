@@ -235,7 +235,7 @@ public class GameMenu : MonoBehaviour
 
     private void OnAssemble(string prefab)
     {
-        HUD.Instance.ActivePlayer.Selection.Assemble(prefab, MyInput.IsShift());
+        HUD.Instance.ActivePlayer.Selection.Assemble(prefab, MyInput.GetShift());
     }
 
     private void OnConstruct(string prefab)
@@ -256,27 +256,27 @@ public class GameMenu : MonoBehaviour
         switch (orderType)
         {
             case OrderType.Destroy:
-                activePlayer.Selection.Destroy(MyInput.IsShift());
+                activePlayer.Selection.Destroy(MyInput.GetShift());
                 break;
 
             case OrderType.Disable:
-                activePlayer.Selection.Disable(MyInput.IsShift());
+                activePlayer.Selection.Disable(MyInput.GetShift());
                 break;
 
             case OrderType.Enable:
-                activePlayer.Selection.Enable(MyInput.IsShift());
+                activePlayer.Selection.Enable(MyInput.GetShift());
                 break;
 
             case OrderType.Explore:
-                activePlayer.Selection.Explore(MyInput.IsShift());
+                activePlayer.Selection.Explore(MyInput.GetShift());
                 break;
 
             case OrderType.Stop:
-                activePlayer.Selection.Stop(MyInput.IsShift());
+                activePlayer.Selection.Stop(MyInput.GetShift());
                 break;
 
             case OrderType.Wait:
-                activePlayer.Selection.Wait(MyInput.IsShift());
+                activePlayer.Selection.Wait(MyInput.GetShift());
                 break;
 
             default:
@@ -287,17 +287,17 @@ public class GameMenu : MonoBehaviour
 
     private void OnResearch(string technology)
     {
-        HUD.Instance.ActivePlayer.Selection.Research(technology, MyInput.IsShift());
+        HUD.Instance.ActivePlayer.Selection.Research(technology, MyInput.GetShift());
     }
 
     private void OnRecipe(string recipe)
     {
-        HUD.Instance.ActivePlayer.Selection.Produce(recipe, MyInput.IsShift());
+        HUD.Instance.ActivePlayer.Selection.Produce(recipe, MyInput.GetShift());
     }
 
     private void OnUseSkill(string skill)
     {
-        HUD.Instance.ActivePlayer.Selection.UseSkill(skill, MyInput.IsShift());
+        HUD.Instance.ActivePlayer.Selection.UseSkill(skill, MyInput.GetShift());
     }
 
     private void UpdateOrders(MyGameObject hovered)

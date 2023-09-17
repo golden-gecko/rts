@@ -16,6 +16,9 @@ public class Storage : MyComponent
         parent.OrderHandlers[OrderType.Load] = new OrderHandlerLoad();
         parent.OrderHandlers[OrderType.Transport] = new OrderHandlerTransport();
         parent.OrderHandlers[OrderType.Unload] = new OrderHandlerUnload();
+
+        parent.ShowEntrance = Resources.In;
+        parent.ShowExit = Resources.Out;
     }
 
     protected override void Update()

@@ -141,10 +141,17 @@ MonoBehaviour:
   <EnableTime>k__BackingField: 2
   <WaitTime>k__BackingField: 0
   <DestroyEffect>k__BackingField: {fileID: 0}
-  <TimeToLive>k__BackingField: -1
   <Altitude>k__BackingField: 0
   <MapLayers>k__BackingField: 0100000003000000
-  ShowIndicators: 0
+  <ShowIndicators>k__BackingField: 0
+  <ShowOrders>k__BackingField: 0
+  <ShowSigns>k__BackingField: 0
+  <ShowEntrance>k__BackingField: 0
+  <ShowExit>k__BackingField: 0
+  <ExpirationTimer>k__BackingField:
+    <Current>k__BackingField: -1
+    <Max>k__BackingField: -1
+  <SkillsNames>k__BackingField: []
   FrequencyInSecondsMin: 120
   FrequencyInSecondsMax: 180
   <Damage>k__BackingField: 0
@@ -181,6 +188,7 @@ MonoBehaviour:
   <ResourceUsage>k__BackingField: 1
   <Resources>k__BackingField:
     <Items>k__BackingField: []
+    <MaxStorage>k__BackingField: -1
 --- !u!1001 &5657514235957791238
 PrefabInstance:
   m_ObjectHideFlags: 0

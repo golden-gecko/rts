@@ -74,23 +74,23 @@ public class HUD : MonoBehaviour
         switch (Order)
         {
             case OrderType.Attack:
-                ActivePlayer.Selection.Attack(position, MyInput.IsShift());
+                ActivePlayer.Selection.Attack(position, MyInput.GetShift());
                 break;
 
             case OrderType.Guard:
-                ActivePlayer.Selection.Guard(position, MyInput.IsShift());
+                ActivePlayer.Selection.Guard(position, MyInput.GetShift());
                 break;
 
             case OrderType.Move:
-                ActivePlayer.Selection.Move(position, MyInput.IsShift());
+                ActivePlayer.Selection.Move(position, MyInput.GetShift());
                 break;
 
             case OrderType.Patrol:
-                ActivePlayer.Selection.Patrol(position, MyInput.IsShift());
+                ActivePlayer.Selection.Patrol(position, MyInput.GetShift());
                 break;
 
             case OrderType.Rally:
-                ActivePlayer.Selection.Rally(position, MyInput.IsShift());
+                ActivePlayer.Selection.Rally(position, MyInput.GetShift());
                 break;
         }
     }
@@ -99,7 +99,7 @@ public class HUD : MonoBehaviour
     {
         foreach (MyGameObject selected in ActivePlayer.Selection.Items)
         {
-            if (MyInput.IsShift() == false)
+            if (MyInput.GetShift() == false)
             {
                 selected.Stats.Add(Stats.OrdersCancelled, selected.Orders.Count);
                 selected.Orders.Clear();
@@ -143,7 +143,7 @@ public class HUD : MonoBehaviour
         {
             if (Cursor.HasCorrectPosition())
             {
-                ActivePlayer.Selection.Construct(Prefab, Cursor.Position, Cursor.Rotation, MyInput.IsShift());
+                ActivePlayer.Selection.Construct(Prefab, Cursor.Position, Cursor.Rotation, MyInput.GetShift());
 
                 return true;
             }
@@ -188,7 +188,7 @@ public class HUD : MonoBehaviour
     {
         foreach (MyGameObject selected in ActivePlayer.Selection.Items)
         {
-            if (MyInput.IsShift() == false)
+            if (MyInput.GetShift() == false)
             {
                 selected.Stats.Add(Stats.OrdersCancelled, selected.Orders.Count);
                 selected.Orders.Clear();
@@ -202,7 +202,7 @@ public class HUD : MonoBehaviour
     {
         foreach (MyGameObject selected in ActivePlayer.Selection.Items)
         {
-            if (MyInput.IsShift() == false)
+            if (MyInput.GetShift() == false)
             {
                 selected.Stats.Add(Stats.OrdersCancelled, selected.Orders.Count);
                 selected.Orders.Clear();
@@ -229,7 +229,7 @@ public class HUD : MonoBehaviour
 
         if (MouseToRaycast(out hitInfo))
         {
-            if (MyInput.IsShift() == false)
+            if (MyInput.GetShift() == false)
             {
                 ActivePlayer.Selection.Clear();
             }
@@ -264,7 +264,7 @@ public class HUD : MonoBehaviour
             return;
         }
 
-        if (MyInput.IsShift() && ActivePlayer.Selection.Contains(myGameObject))
+        if (MyInput.GetShift() && ActivePlayer.Selection.Contains(myGameObject))
         {
             myGameObject.Select(false);
             ActivePlayer.Selection.Remove(myGameObject);
@@ -278,7 +278,7 @@ public class HUD : MonoBehaviour
 
     private void SelectUnitInBox()
     {
-        if (MyInput.IsShift() == false)
+        if (MyInput.GetShift() == false)
         {
             ActivePlayer.Selection.Clear();
         }
@@ -332,7 +332,7 @@ public class HUD : MonoBehaviour
     {
         for (KeyCode i = KeyCode.Alpha0; i <= KeyCode.Alpha9; i++)
         {
-            if (MyInput.IsControl() && Input.GetKeyDown(i))
+            if (MyInput.GetControl() && Input.GetKeyDown(i))
             {
                 ActivePlayer.AssignGroup(i);
             }
@@ -343,9 +343,9 @@ public class HUD : MonoBehaviour
     {
         for (KeyCode i = KeyCode.Alpha0; i <= KeyCode.Alpha9; i++)
         {
-            if (MyInput.IsControl() == false && Input.GetKeyDown(i))
+            if (MyInput.GetControl() == false && Input.GetKeyDown(i))
             {
-                ActivePlayer.SelectGroup(i, MyInput.IsShift());
+                ActivePlayer.SelectGroup(i, MyInput.GetShift());
             }
         }
     }
@@ -406,7 +406,7 @@ public class HUD : MonoBehaviour
                 {
                     if (ProcessOrder())
                     {
-                        if (MyInput.IsShift() == false)
+                        if (MyInput.GetShift() == false)
                         {
                             Order = OrderType.None;
                             Prefab = string.Empty;
@@ -434,7 +434,7 @@ public class HUD : MonoBehaviour
             }
             else
             {
-                if (MyInput.IsShift() == false)
+                if (MyInput.GetShift() == false)
                 {
                     Order = OrderType.None;
                     Prefab = string.Empty;

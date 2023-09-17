@@ -13,9 +13,9 @@ public class OrderHandlerLoad : OrderHandler
             return;
         }
 
-        if (Utils.IsCloseTo(myGameObject.Position, order.SourceGameObject.Entrance) == false)
+        if (Utils.IsCloseTo(myGameObject.Position, order.SourceGameObject.Exit) == false)
         {
-            myGameObject.Move(order.SourceGameObject.Entrance, 0);
+            myGameObject.Move(order.SourceGameObject.Exit, 0);
 
             return;
         }

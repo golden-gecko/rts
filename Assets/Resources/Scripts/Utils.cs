@@ -68,6 +68,21 @@ public class Utils
         return hit.transform.CompareTag("Water");
     }
 
+    public static Quaternion ResetRotation(MyGameObject myGameObject)
+    {
+        Quaternion rotation = myGameObject.Rotation;
+        myGameObject.Rotation = Quaternion.identity;
+        Physics.SyncTransforms();
+
+        return rotation;
+    }
+
+    public static void RestoreRotation(MyGameObject myGameObject, Quaternion rotation)
+    {
+        myGameObject.Rotation = rotation;
+        Physics.SyncTransforms();
+    }
+
     public static Vector3 SnapToGrid(Vector3 position)
     {
         float scale = Config.TerrainConstructionScale;

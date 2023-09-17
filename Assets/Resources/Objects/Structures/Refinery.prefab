@@ -61,7 +61,10 @@ MonoBehaviour:
   <DestroyEffect>k__BackingField: {fileID: 100008, guid: 06736895ea0a4ff408d25e6684dce797, type: 3}
   <Altitude>k__BackingField: -1
   <MapLayers>k__BackingField: 02000000
-  ShowIndicators: 1
+  <ShowIndicators>k__BackingField: 1
+  <ShowOrders>k__BackingField: 1
+  <ShowEntrance>k__BackingField: 0
+  <ShowExit>k__BackingField: 0
   <ExpirationTimer>k__BackingField:
     <Current>k__BackingField: -1
     <Max>k__BackingField: -1
@@ -131,6 +134,7 @@ MonoBehaviour:
       <Max>k__BackingField: 100
       <Name>k__BackingField: Wood
       <Direction>k__BackingField: 0
+    <MaxStorage>k__BackingField: -1
 --- !u!1 &6584118895394831751
 GameObject:
   m_ObjectHideFlags: 0

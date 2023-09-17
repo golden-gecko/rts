@@ -164,10 +164,15 @@ MonoBehaviour:
   <DestroyEffect>k__BackingField: {fileID: 0}
   <Altitude>k__BackingField: 0
   <MapLayers>k__BackingField: 01000000
-  ShowIndicators: 1
+  <ShowIndicators>k__BackingField: 1
+  <ShowOrders>k__BackingField: 0
+  <ShowSigns>k__BackingField: 0
+  <ShowEntrance>k__BackingField: 0
+  <ShowExit>k__BackingField: 0
   <ExpirationTimer>k__BackingField:
     <Current>k__BackingField: -1
     <Max>k__BackingField: -1
+  <SkillsNames>k__BackingField: []
 --- !u!1001 &4747281436893749279
 PrefabInstance:
   m_ObjectHideFlags: 0
