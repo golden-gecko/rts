@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using UnityEditor.SceneManagement;
 using UnityEngine;
 
 public class Player : MonoBehaviour
@@ -85,10 +86,15 @@ public class Player : MonoBehaviour
         Unregister(Producers, myGameObject, name);
     }
 
-    public MyGameObject GetProducer(string resource, int value) // TODO: Implement second argument.
+    public MyGameObject GetProducer(MyGameObject myGameObject, string resource, int value) // TODO: Implement second argument.
     {
         foreach (ResourceRequest i in Producers.Items)
         {
+            if (i.MyGameObject == myGameObject)
+            {
+                continue;
+            }
+
             if (i.Name != resource)
             {
                 continue;
@@ -139,94 +145,33 @@ public class Player : MonoBehaviour
         return closest;
     }
 
-    public MyGameObject GetStorage(MyGameObject myGameObject, Resource resource) // TODO: Refactor. Use consumer list.
+    public MyGameObject GetStorage(MyGameObject myGameObject, string resource, int value)
     {
         MyGameObject closest = null;
         float distance = float.MaxValue;
 
-        foreach (Storage storage in FindObjectsByType<Storage>(FindObjectsSortMode.None))
+        foreach (ResourceRequest i in Consumers.Items)
         {
-            MyGameObject parent = storage.GetComponent<MyGameObject>();
-
-            if (parent == null)
+            if (i.MyGameObject == myGameObject)
             {
                 continue;
             }
 
-            if (parent.Working == false)
+            if (i.Name != resource)
             {
                 continue;
             }
 
-            if (parent == myGameObject)
+            if (i.Value < value)
             {
                 continue;
             }
 
-            string[] resourcesFromStorage = new string[] { resource.Name };
-            string[] resourcesFromCapacity = storage.Resources.Items.Where(x => x.In && x.Full == false).Select(x => x.Name).ToArray();
-            string[] match = resourcesFromStorage.Intersect(resourcesFromCapacity).ToArray();
-
-            if (match.Length <= 0)
-            {
-                continue;
-            }
-
-            float magnitude = (myGameObject.Position - parent.Position).magnitude;
+            float magnitude = (myGameObject.Position - i.MyGameObject.Position).magnitude;
 
             if (magnitude < distance)
             {
-                closest = parent;
-                distance = magnitude;
-            }
-        }
-
-        return closest;
-    }
-
-    public MyGameObject GetStorage(MyGameObject myGameObject, MyResource myResource) // TODO: Refactor. Use consumer list.
-    {
-        MyGameObject closest = null;
-        float distance = float.MaxValue;
-
-        foreach (Storage storage in FindObjectsByType<Storage>(FindObjectsSortMode.None))
-        {
-            MyGameObject parent = storage.GetComponent<MyGameObject>();
-
-            if (parent == null)
-            {
-                continue;
-            }
-
-            if (parent.Working == false)
-            {
-                continue;
-            }
-
-            if (parent == myGameObject)
-            {
-                continue;
-            }
-
-            if (parent == myResource)
-            {
-                continue;
-            }
-
-            string[] resourcesFromStorage = myResource.GetComponent<Storage>().Resources.Items.Where(x => x.Out && x.Empty == false).Select(x => x.Name).ToArray();
-            string[] resourcesFromCapacity = storage.Resources.Items.Where(x => x.In && x.Full == false).Select(x => x.Name).ToArray();
-            string[] match = resourcesFromStorage.Intersect(resourcesFromCapacity).ToArray();
-
-            if (match.Length <= 0)
-            {
-                continue;
-            }
-
-            float magnitude = (myGameObject.Position - parent.Position).magnitude;
-
-            if (magnitude < distance)
-            {
-                closest = parent;
+                closest = i.MyGameObject;
                 distance = magnitude;
             }
         }

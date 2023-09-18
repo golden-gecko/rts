@@ -31,7 +31,17 @@ public class OrderHandlerGather : OrderHandler
                 return;
             }
 
-            MyGameObject storage = myGameObject.Player.GetStorage(myGameObject, myResource);
+            MyGameObject storage = null;
+
+            foreach (Resource i in myResource.GetComponent<Storage>().Resources.Items)
+            {
+                storage = myGameObject.Player.GetStorage(myGameObject, i.Name, i.Current);
+
+                if (storage != null)
+                {
+                    break;
+                }
+            }
 
             if (storage == null)
             {
@@ -53,7 +63,17 @@ public class OrderHandlerGather : OrderHandler
                 return;
             }
 
-            MyGameObject storage = myGameObject.Player.GetStorage(myGameObject, myResource);
+            MyGameObject storage = null;
+
+            foreach (Resource i in myResource.GetComponent<Storage>().Resources.Items)
+            {
+                storage = myGameObject.Player.GetStorage(myGameObject, i.Name, i.Current);
+
+                if (storage != null)
+                {
+                    break;
+                }
+            }
 
             if (storage == null)
             {

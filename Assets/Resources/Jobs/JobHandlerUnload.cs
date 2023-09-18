@@ -1,6 +1,3 @@
-using System.Linq;
-using UnityEngine;
-
 public class JobHandlerUnload : JobHandler
 {
     public override Order OnExecute(MyGameObject myGameObject)
@@ -21,7 +18,7 @@ public class JobHandlerUnload : JobHandler
         {
             if (resource.Current > 0)
             {
-                MyGameObject placeToStoreResources = myGameObject.Player.GetStorage(myGameObject, resource);
+                MyGameObject placeToStoreResources = myGameObject.Player.GetStorage(myGameObject, resource.Name, resource.Current);
 
                 if (placeToStoreResources)
                 {

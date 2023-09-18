@@ -1,4 +1,3 @@
-using System.Linq;
 using UnityEngine;
 
 public class JobHandlerGather : JobHandler
@@ -24,7 +23,19 @@ public class JobHandlerGather : JobHandler
 
             if (magnitude < distance)
             {
-                if (myGameObject.Player.GetStorage(myGameObject, myResource) == null)
+                MyGameObject storage = null;
+
+                foreach (Resource i in myResource.GetComponent<Storage>().Resources.Items)
+                {
+                    storage = myGameObject.Player.GetStorage(myGameObject, i.Name, i.Current);
+
+                    if (storage != null)
+                    {
+                        break;
+                    }
+                }
+
+                if (storage == null)
                 {
                     continue;
                 }

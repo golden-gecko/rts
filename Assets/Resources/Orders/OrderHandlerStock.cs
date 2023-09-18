@@ -11,7 +11,7 @@ public class OrderHandlerStock : OrderHandler
             return;
         }
 
-        MyGameObject producer = myGameObject.Player.GetProducer(order.Resource, order.Value);
+        MyGameObject producer = myGameObject.Player.GetProducer(myGameObject, order.Resource, order.Value);
 
         if (producer == null)
         {
