@@ -341,6 +341,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Tree_0002
       objectReference: {fileID: 0}
+    - target: {fileID: 4661435515762455780, guid: 85251ca15e5c69c49b6d707d6e616399, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4661435515762813124, guid: 85251ca15e5c69c49b6d707d6e616399, type: 3}
       propertyPath: m_LocalPosition.x
       value: 294.05
@@ -470,6 +474,10 @@ PrefabInstance:
     - target: {fileID: 2040145519782903273, guid: 0724eebae05d77a4f9efb0701d38dc78, type: 3}
       propertyPath: m_Name
       value: IronOre
+      objectReference: {fileID: 0}
+    - target: {fileID: 2040145519782903273, guid: 0724eebae05d77a4f9efb0701d38dc78, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2040145519782903275, guid: 0724eebae05d77a4f9efb0701d38dc78, type: 3}
       propertyPath: m_LocalPosition.x
