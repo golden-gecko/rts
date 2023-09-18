@@ -42,9 +42,7 @@ public class OrderHandlerConstruct : OrderHandler
 
         MoveResources(myGameObject, order, recipe);
 
-        order.TargetGameObject.State = MyGameObjectState.Operational; // TODO: Create function for state change.
-        order.TargetGameObject.GetComponentInChildren<Indicators>().OnConstructionEnd();
-        order.TargetGameObject.RemoveConstructionResourceFlags();
+        order.TargetGameObject.SetState(MyGameObjectState.Operational);
 
         myGameObject.Stats.Inc(Stats.OrdersCompleted);
         myGameObject.Stats.Inc(Stats.ObjectsConstructed);

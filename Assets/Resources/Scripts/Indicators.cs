@@ -328,8 +328,12 @@ public class Indicators : MonoBehaviour
         switch (order.Type)
         {
             case OrderType.Assemble:
+                orderText.gameObject.SetActive(true);
+                orderText.transform.localPosition = new Vector3(orderText.transform.localPosition.x, size.y * Config.IndicatorTextOffset, orderText.transform.localPosition.z);
+                orderTextValueMesh.SetText(string.Format("Assembling\n{0}", order.Prefab));
+                break;
+
             case OrderType.Attack:
-            case OrderType.Construct:
             case OrderType.Follow:
             case OrderType.Gather:
             case OrderType.Guard:
@@ -344,6 +348,12 @@ public class Indicators : MonoBehaviour
 
                 orderSphere.gameObject.SetActive(true);
                 orderSphere.transform.position = position;
+                break;
+
+            case OrderType.Construct:
+                orderText.gameObject.SetActive(true);
+                orderText.transform.localPosition = new Vector3(orderText.transform.localPosition.x, size.y * Config.IndicatorTextOffset, orderText.transform.localPosition.z);
+                orderTextValueMesh.SetText(string.Format("Constructing\n{0}", order.Prefab));
                 break;
 
             case OrderType.Load:

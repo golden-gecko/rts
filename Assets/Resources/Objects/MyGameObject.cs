@@ -7,7 +7,7 @@ public class MyGameObject : MonoBehaviour
     protected virtual void Awake()
     {
         Body = transform.Find("Body");
-        Indicators = transform.Find("Indicators");
+        Indicators = transform.Find("Indicators").GetComponent<Indicators>();
 
         Orders.AllowOrder(OrderType.Destroy); // TODO: Move to component.
         Orders.AllowOrder(OrderType.Disable);
@@ -560,6 +560,32 @@ public class MyGameObject : MonoBehaviour
         UpdateSelection();
     }
 
+    public void SetParent(MyGameObject myGameObject)
+    {
+        Parent = myGameObject;
+    }
+
+    public void SetState(MyGameObjectState state)
+    {
+        State = state;
+
+        switch (state)
+        {
+            case MyGameObjectState.UnderAssembly:
+            case MyGameObjectState.UnderConstruction:
+                RaiseConstructionResourceFlags();
+
+                Indicators.OnConstruction();
+                break;
+
+            case MyGameObjectState.Operational:
+                RemoveConstructionResourceFlags();
+
+                Indicators.OnConstructionEnd();
+                break;
+        }
+    }
+
     public bool HasCorrectPosition()
     {
         MyGameObjectMapLayer mapLayer;
@@ -650,7 +676,7 @@ public class MyGameObject : MonoBehaviour
     public bool Working { get => Enabled && (Powerable == false || Powered); }
 
     [field: SerializeField]
-    public Player Player { get; set; }
+    public Player Player { get; private set; }
 
     [field: SerializeField]
     public bool Enabled { get; set; } = true;
@@ -710,13 +736,13 @@ public class MyGameObject : MonoBehaviour
 
     public Stats Stats { get; } = new Stats();
 
-    public MyGameObjectState State { get; set; } = MyGameObjectState.Operational;
+    public MyGameObjectState State { get; private set; } = MyGameObjectState.Operational;
 
     public ResourceContainer ConstructionResources { get; } = new ResourceContainer();
 
     public RecipeContainer ConstructionRecipies { get; } = new RecipeContainer(); // TODO: Remove.
 
-    public MyGameObject Parent { get; set; } // TODO: Hide setter.
+    public MyGameObject Parent { get; private set; }
 
     public Dictionary<string, Skill> Skills { get; } = new Dictionary<string, Skill>();
 
@@ -724,5 +750,5 @@ public class MyGameObject : MonoBehaviour
 
     public Transform Body { get; private set; }
 
-    public Transform Indicators { get; private set; }
+    public Indicators Indicators { get; private set; }
 }

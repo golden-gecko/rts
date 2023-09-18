@@ -35,10 +35,8 @@ public class OrderHandlerAssemble : OrderHandler
 
         MoveResources(myGameObject, recipe);
 
-        order.TargetGameObject.State = MyGameObjectState.Operational;
+        order.TargetGameObject.SetState(MyGameObjectState.Operational);
         order.TargetGameObject.Move(myGameObject.GetComponent<Assembler>().RallyPoint, 0);
-        order.TargetGameObject.GetComponentInChildren<Indicators>().OnConstructionEnd();
-        order.TargetGameObject.RemoveConstructionResourceFlags();
 
         myGameObject.Stats.Inc(Stats.OrdersCompleted);
         myGameObject.Stats.Inc(Stats.ObjectsAssembled);

@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 5913490181949494746}
   - component: {fileID: 5835790162013295089}
   - component: {fileID: -610857997906868978}
-  - component: {fileID: -5262691146204725381}
+  - component: {fileID: 2314022501189633522}
   - component: {fileID: 9050757254007650475}
   m_Layer: 0
   m_Name: Rocket
@@ -91,7 +91,6 @@ MonoBehaviour:
   <MapLayers>k__BackingField: 00000000
   <ShowIndicators>k__BackingField: 0
   <ShowOrders>k__BackingField: 0
-  <ShowSigns>k__BackingField: 0
   <ShowEntrance>k__BackingField: 0
   <ShowExit>k__BackingField: 0
   <ExpirationTimer>k__BackingField:
@@ -102,7 +101,7 @@ MonoBehaviour:
   <HitEffectPrefab>k__BackingField: {fileID: 100006, guid: 24295e2be01bda1438e5198083b282af, type: 3}
   <Damage>k__BackingField: 10
   <Range>k__BackingField: 10
---- !u!114 &-5262691146204725381
+--- !u!114 &2314022501189633522
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -111,11 +110,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 3841255586236475405}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1ba12e86b2dcd884e915cbfba500a894, type: 3}
+  m_Script: {fileID: 11500000, guid: 480f2643be9397244bac146d70b54f9f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   <Mass>k__BackingField: 1
-  <Power>k__BackingField: 80
+  <Power>k__BackingField: 200
   <FuelUsage>k__BackingField: 1
 --- !u!114 &9050757254007650475
 MonoBehaviour:
@@ -134,7 +133,6 @@ MonoBehaviour:
   <ResourceUsage>k__BackingField: 1
   <Resources>k__BackingField:
     <Items>k__BackingField: []
-    <MaxStorage>k__BackingField: -1
 --- !u!1 &8178223464893241826
 GameObject:
   m_ObjectHideFlags: 0

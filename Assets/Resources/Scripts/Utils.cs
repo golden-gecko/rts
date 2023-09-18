@@ -12,7 +12,7 @@ public class Utils
         MyGameObject myGameObject = Object.Instantiate(resource, position, rotation);
 
         myGameObject.SetPlayer(player);
-        myGameObject.State = state;
+        myGameObject.SetState(state);
 
         if (state == MyGameObjectState.Cursor)
         {

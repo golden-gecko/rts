@@ -9,8 +9,16 @@ public class OrderHandlerMove : OrderHandler
         Vector3 target = order.TargetPosition;
         Vector3 position = myGameObject.Position;
 
-        target.y = 0;
-        position.y = 0;
+        if (myGameObject.MapLayers.Contains(MyGameObjectMapLayer.Air) && myGameObject.Altitude > 0)
+        {
+            target.y = myGameObject.Altitude;
+            position.y = myGameObject.Altitude;
+        }
+        else
+        {
+            target.y = 0;
+            position.y = 0;
+        }
 
         float distanceToTarget = (target - position).magnitude;
         float distanceToTravel = myGameObject.GetComponent<Engine>().Speed * Time.deltaTime;
