@@ -101,8 +101,7 @@ public class HUD : MonoBehaviour
         {
             if (MyInput.GetShift() == false)
             {
-                selected.Stats.Add(Stats.OrdersCancelled, selected.Orders.Count);
-                selected.Orders.Clear();
+                selected.ClearOrders();
             }
 
             switch (Order)
@@ -143,7 +142,9 @@ public class HUD : MonoBehaviour
         {
             if (Cursor.HasCorrectPosition())
             {
-                ActivePlayer.Selection.Construct(Prefab, Cursor.Position, Cursor.Rotation, MyInput.GetShift());
+                MyGameObject myGameObject = Utils.CreateGameObject(Prefab, Cursor.Position, Cursor.Rotation, ActivePlayer, MyGameObjectState.UnderConstruction);
+
+                ActivePlayer.Selection.Construct(myGameObject, MyInput.GetShift());
 
                 return true;
             }
@@ -190,8 +191,7 @@ public class HUD : MonoBehaviour
         {
             if (MyInput.GetShift() == false)
             {
-                selected.Stats.Add(Stats.OrdersCancelled, selected.Orders.Count);
-                selected.Orders.Clear();
+                selected.ClearOrders();
             }
 
             selected.Move(position);
@@ -204,11 +204,18 @@ public class HUD : MonoBehaviour
         {
             if (MyInput.GetShift() == false)
             {
-                selected.Stats.Add(Stats.OrdersCancelled, selected.Orders.Count);
-                selected.Orders.Clear();
+                selected.ClearOrders();
             }
 
-            if (myGameObject.Is(selected, DiplomacyState.Ally))
+            if (myGameObject.Is(selected, DiplomacyState.Ally) && myGameObject.State == MyGameObjectState.UnderAssembly)
+            {
+                // TODO: Implement.
+            }
+            else if (myGameObject.Is(selected, DiplomacyState.Ally) && myGameObject.State == MyGameObjectState.UnderConstruction)
+            {
+                selected.Construct(myGameObject);
+            }
+            else if (myGameObject.Is(selected, DiplomacyState.Ally))
             {
                 selected.Follow(myGameObject);
             }

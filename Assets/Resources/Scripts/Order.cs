@@ -30,25 +30,13 @@ public class Order
         };
     }
 
-    public static Order Construct(string prefab, Vector3 position, Quaternion rotation)
-    {
-        return new Order
-        {
-            Type = OrderType.Construct,
-            TargetPosition = position,
-            TargetRotation = rotation,
-            Prefab = prefab,
-        };
-    }
-
     public static Order Construct(MyGameObject myGameObject)
     {
         return new Order
         {
             Type = OrderType.Construct,
-            TargetPosition = myGameObject.Position,
             TargetGameObject = myGameObject,
-            Prefab = "", // TODO: Find prefab name.
+            IsTargetGameObject = true,
         };
     }
 
@@ -91,6 +79,7 @@ public class Order
         {
             Type = OrderType.Follow,
             TargetGameObject = myGameObject,
+            IsTargetGameObject = true,
         };
     }
 
@@ -128,6 +117,7 @@ public class Order
         {
             Type = OrderType.Guard,
             TargetGameObject = myGameObject,
+            IsTargetGameObject = true,
         };
     }
 
@@ -193,6 +183,17 @@ public class Order
         {
             Type = OrderType.UseSkill,
             Skill = skill,
+        };
+    }
+
+    public static Order Stock(MyGameObject myGameObject, string resource, int value)
+    {
+        return new Order
+        {
+            Type = OrderType.Stock,
+            TargetGameObject = myGameObject,
+            Resource = resource,
+            Value = value,
         };
     }
 
@@ -281,7 +282,6 @@ public class Order
         switch (Type)
         {
             case OrderType.Assemble:
-            case OrderType.Construct:
                 if (TargetGameObject != null)
                 {
                     TargetGameObject.OnDestroy_();

@@ -10,10 +10,12 @@ public class Storage : MyComponent
         MyGameObject parent = GetComponent<MyGameObject>();
 
         parent.Orders.AllowOrder(OrderType.Load);
+        parent.Orders.AllowOrder(OrderType.Stock);
         parent.Orders.AllowOrder(OrderType.Transport);
         parent.Orders.AllowOrder(OrderType.Unload);
 
         parent.OrderHandlers[OrderType.Load] = new OrderHandlerLoad();
+        parent.OrderHandlers[OrderType.Stock] = new OrderHandlerStock();
         parent.OrderHandlers[OrderType.Transport] = new OrderHandlerTransport();
         parent.OrderHandlers[OrderType.Unload] = new OrderHandlerUnload();
 

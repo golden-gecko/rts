@@ -9,9 +9,9 @@ public class OrderHandlerConstruct : OrderHandler
 
         if (order.TargetGameObject == null)
         {
-            order.TargetGameObject = Utils.CreateGameObject(order.Prefab, order.TargetPosition, order.TargetRotation, myGameObject.Player, MyGameObjectState.UnderConstruction);
-            order.TargetGameObject.GetComponentInChildren<Indicators>().OnConstruction();
-            order.TargetGameObject.RaiseConstructionResourceFlags();
+            Fail(myGameObject);
+
+            return;
         }
 
         Recipe recipe = order.TargetGameObject.ConstructionRecipies.Items.First().Value;
@@ -21,16 +21,19 @@ public class OrderHandlerConstruct : OrderHandler
             order.Timer = new Timer(recipe.MaxSum / myGameObject.GetComponent<Constructor>().ResourceUsage);
         }
 
-        if (Utils.IsCloseTo(myGameObject.Position, order.TargetGameObject.Entrance) == false)
+        if (HaveResources(order, recipe) == false)
         {
-            myGameObject.Move(order.TargetGameObject.Entrance, 0);
+            foreach (Resource resource in order.TargetGameObject.ConstructionResources.Items)
+            {
+                myGameObject.Stock(order.TargetGameObject, resource.Name, resource.Available, 0);
+            }
 
             return;
         }
 
-        if (HaveResources(order, recipe) == false)
+        if (Utils.IsCloseTo(myGameObject.Position, order.TargetGameObject.Entrance) == false)
         {
-            myGameObject.Wait(0);
+            myGameObject.Move(order.TargetGameObject.Entrance, 0);
 
             return;
         }

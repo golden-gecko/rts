@@ -85,6 +85,21 @@ public class Player : MonoBehaviour
         Unregister(Producers, myGameObject, name);
     }
 
+    public MyGameObject GetProducer(string resource, int value) // TODO: Implement second argument.
+    {
+        foreach (ResourceRequest i in Producers.Items)
+        {
+            if (i.Name != resource)
+            {
+                continue;
+            }
+
+            return i.MyGameObject;
+        }
+
+        return null;
+    }
+
     public MyResource GetResource(MyGameObject myGameObject, string resource = "") // TODO: Refactor. Use producer list.
     {
         MyResource closest = null;

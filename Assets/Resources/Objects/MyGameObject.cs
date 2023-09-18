@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using static UnityEngine.GraphicsBuffer;
 
 public class MyGameObject : MonoBehaviour
 {
@@ -155,11 +156,6 @@ public class MyGameObject : MonoBehaviour
         Orders.Add(Order.Construct(myGameObject));
     }
 
-    public void Construct(string prefab, Vector3 position, Quaternion rotation)
-    {
-        Orders.Add(Order.Construct(prefab, position, rotation));
-    }
-
     public void Destroy(int priority = -1)
     {
         if (0 <= priority && priority < Orders.Count)
@@ -282,6 +278,18 @@ public class MyGameObject : MonoBehaviour
     public void Research(string technology)
     {
         Orders.Add(Order.Research(technology));
+    }
+
+    public void Stock(MyGameObject myGameObject, string resource, int value, int priority = -1)
+    {
+        if (0 <= priority && priority < Orders.Count)
+        {
+            Orders.Insert(priority, Order.Stock(myGameObject, resource, value));
+        }
+        else
+        {
+            Orders.Add(Order.Stock(myGameObject, resource, value));
+        }
     }
 
     public void Stop()

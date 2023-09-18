@@ -11,6 +11,15 @@ public class OrderHandlerIdleWorker : OrderHandler
             return;
         }
 
+        order = myGameObject.Player.GetJob(myGameObject, OrderType.Construct);
+
+        if (order != null)
+        {
+            myGameObject.Orders.Add(order);
+
+            return;
+        }
+
         order = myGameObject.Player.GetJob(myGameObject, OrderType.Transport);
 
         if (order != null)
@@ -21,15 +30,6 @@ public class OrderHandlerIdleWorker : OrderHandler
         }
 
         order = myGameObject.Player.GetJob(myGameObject, OrderType.Gather);
-
-        if (order != null)
-        {
-            myGameObject.Orders.Add(order);
-
-            return;
-        }
-
-        order = myGameObject.Player.GetJob(myGameObject, OrderType.Construct);
 
         if (order != null)
         {
