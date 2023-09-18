@@ -33,6 +33,6 @@ public class OrderHandlerUseSkill : OrderHandler
 
     protected override bool IsValid(MyGameObject myGameObject, Order order)
     {
-        return order.Skill.Length > 0;
+        return order.Skill != null && order.Skill.Length > 0;
     }
 }

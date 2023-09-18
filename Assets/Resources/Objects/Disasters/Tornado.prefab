@@ -93,7 +93,6 @@ GameObject:
   - component: {fileID: 1872759360864091932}
   - component: {fileID: -8196451946765936241}
   - component: {fileID: -6922015923480559394}
-  - component: {fileID: 6804494509860765126}
   m_Layer: 0
   m_Name: Tornado
   m_TagString: Untagged
@@ -142,10 +141,9 @@ MonoBehaviour:
   <WaitTime>k__BackingField: 0
   <DestroyEffect>k__BackingField: {fileID: 0}
   <Altitude>k__BackingField: 0
-  <MapLayers>k__BackingField: 0100000003000000
+  <MapLayers>k__BackingField: 0200000004000000
   <ShowIndicators>k__BackingField: 0
   <ShowOrders>k__BackingField: 0
-  <ShowSigns>k__BackingField: 0
   <ShowEntrance>k__BackingField: 0
   <ShowExit>k__BackingField: 0
   <ExpirationTimer>k__BackingField:
@@ -171,24 +169,6 @@ MonoBehaviour:
   <Mass>k__BackingField: 10
   <Power>k__BackingField: 1
   <FuelUsage>k__BackingField: 1
---- !u!114 &6804494509860765126
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7181744628251240676}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9f7fc2f43637b07428d9ff8d0e38edaa, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  <Mass>k__BackingField: 10
-  RaiseResourceFlags: 1
-  <ResourceUsage>k__BackingField: 1
-  <Resources>k__BackingField:
-    <Items>k__BackingField: []
-    <MaxStorage>k__BackingField: -1
 --- !u!1001 &5657514235957791238
 PrefabInstance:
   m_ObjectHideFlags: 0

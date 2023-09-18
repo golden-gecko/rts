@@ -6,9 +6,7 @@ public class OrderHandlerProduce : OrderHandler
     {
         Order order = myGameObject.Orders.First();
 
-        RecipeManager recipeManager = Game.Instance.GetComponent<RecipeManager>();
-
-        if (order.Recipe.Length <= 0 && myGameObject.Orders.RecipeWhitelist.Items.Count > 0)
+        if (order.Recipe != null && order.Recipe.Length <= 0 && myGameObject.Orders.RecipeWhitelist.Items.Count > 0)
         {
             foreach (Recipe recipe in myGameObject.Orders.RecipeWhitelist.Items.Values)
             {
@@ -27,7 +25,7 @@ public class OrderHandlerProduce : OrderHandler
             return;
         }
 
-        if (order.Recipe.Length <= 0)
+        if (order.Recipe != null && order.Recipe.Length <= 0)
         {
             myGameObject.Wait(0);
 

@@ -106,7 +106,7 @@ public class Player : MonoBehaviour
         return null;
     }
 
-    public MyResource GetResource(MyGameObject myGameObject, string resource = "") // TODO: Refactor. Use producer list.
+    public MyResource GetResource(MyGameObject myGameObject, string resource = "")
     {
         MyResource closest = null;
         float distance = float.MaxValue;

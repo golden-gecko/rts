@@ -102,6 +102,14 @@ public class Order
         };
     }
 
+    public static Order Gather()
+    {
+        return new Order
+        {
+            Type = OrderType.Gather,
+        };
+    }
+
     public static Order Guard(Vector3 position)
     {
         return new Order

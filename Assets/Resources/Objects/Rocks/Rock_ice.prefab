@@ -153,10 +153,9 @@ MonoBehaviour:
   <WaitTime>k__BackingField: 2
   <DestroyEffect>k__BackingField: {fileID: 0}
   <Altitude>k__BackingField: 0
-  <MapLayers>k__BackingField: 0100000002000000
+  <MapLayers>k__BackingField: 0200000003000000
   <ShowIndicators>k__BackingField: 1
   <ShowOrders>k__BackingField: 0
-  <ShowSigns>k__BackingField: 0
   <ShowEntrance>k__BackingField: 0
   <ShowExit>k__BackingField: 0
   <ExpirationTimer>k__BackingField:
@@ -184,7 +183,6 @@ MonoBehaviour:
       <Max>k__BackingField: 100
       <Name>k__BackingField: Water
       <Direction>k__BackingField: 2
-    <MaxStorage>k__BackingField: -1
 --- !u!1001 &2569548985317003227
 PrefabInstance:
   m_ObjectHideFlags: 0

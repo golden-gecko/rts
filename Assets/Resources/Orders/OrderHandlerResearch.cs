@@ -48,7 +48,7 @@ public class OrderHandlerResearch : OrderHandler
 
     protected override bool IsValid(MyGameObject myGameObject, Order order)
     {
-        return order.Technology.Length > 0;
+        return order.Technology != null && order.Technology.Length > 0;
     }
 
     private bool HaveResources(MyGameObject myGameObject, Technology technology)

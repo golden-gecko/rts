@@ -4,7 +4,7 @@ public class JobHandlerGather : JobHandler
 {
     public override Order OnExecute(MyGameObject myGameObject)
     {
-        MyResource closest = null;
+        MyResource closest = null; // TODO: Refactor.
         float distance = float.MaxValue;
 
         foreach (MyResource myResource in Object.FindObjectsByType<MyResource>(FindObjectsSortMode.None))
