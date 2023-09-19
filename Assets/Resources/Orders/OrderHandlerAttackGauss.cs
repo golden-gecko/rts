@@ -14,7 +14,7 @@ public class OrderHandlerAttackGauss : OrderHandler
         }
 
         Vector3 direction = order.TargetPosition - myGameObject.Center;
-        RaycastHit[] hits = Physics.RaycastAll(new Ray(myGameObject.Center, direction), Config.RaycastMaxDistance);
+        RaycastHit[] hits = Physics.RaycastAll(new Ray(myGameObject.Center, direction), float.MaxValue);
 
         foreach (RaycastHit hit in hits)
         {

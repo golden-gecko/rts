@@ -63,10 +63,10 @@ public class HUD : MonoBehaviour
     private void DrawVisual()
     {
         Vector2 boxCenter = (startPosition + endPosition) / 2;
-        boxVisual.position = boxCenter;
+        BoxVisual.position = boxCenter;
 
         Vector2 boxSize = new Vector2(Mathf.Abs(startPosition.x - endPosition.x), Mathf.Abs(startPosition.y - endPosition.y));
-        boxVisual.sizeDelta = boxSize;
+        BoxVisual.sizeDelta = boxSize;
     }
 
     private void IssueOrder(Vector3 position)
@@ -133,7 +133,7 @@ public class HUD : MonoBehaviour
 
     private bool MouseToRaycast(out RaycastHit hitInfo, int layerMask = Physics.DefaultRaycastLayers)
     {
-        return Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out hitInfo, Config.RaycastMaxDistance, layerMask);
+        return Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out hitInfo, float.MaxValue, layerMask);
     }
 
     private bool ProcessOrder()
@@ -474,23 +474,16 @@ public class HUD : MonoBehaviour
 
         if (Map.Instance.MouseToPosition(out position, out _))
         {
-            if (Config.SnapToGrid)
-            {
-                Cursor.transform.position = Utils.SnapToGrid(position);
-            }
-            else
-            {
-                Cursor.transform.position = position;
-            }
+            Cursor.transform.position = Config.SnapToGrid ? Utils.SnapToGrid(position) : position;
         }
 
         if (Cursor.HasCorrectPosition())
         {
-            Cursor.GetComponentInChildren<Indicators>().OnErrorEnd();
+            Cursor.Indicators.OnErrorEnd();
         }
         else
         {
-            Cursor.GetComponentInChildren<Indicators>().OnError();
+            Cursor.Indicators.OnError();
         }
     }
 
@@ -549,9 +542,11 @@ public class HUD : MonoBehaviour
         }
     }
 
-    public Player ActivePlayer;
+    [field: SerializeField]
+    public Player ActivePlayer { get; private set; }
 
-    public RectTransform boxVisual;
+    [field: SerializeField]
+    public RectTransform BoxVisual { get; private set; }
 
     public MyGameObject Hovered { get; private set; }
 

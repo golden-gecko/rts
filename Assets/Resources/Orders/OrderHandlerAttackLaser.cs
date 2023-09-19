@@ -14,7 +14,7 @@ public class OrderHandlerAttackLaser : OrderHandler
         }
 
         Vector3 direction = order.TargetPosition - myGameObject.Center;
-        RaycastHit[] hits = Physics.RaycastAll(new Ray(myGameObject.Center, direction), Config.RaycastMaxDistance);
+        RaycastHit[] hits = Physics.RaycastAll(new Ray(myGameObject.Center, direction), float.MaxValue);
 
         MyGameObject closest = null;
         Vector3 hitPoint = Vector3.zero;

@@ -1,4 +1,6 @@
 using System.Linq;
+using Unity.VisualScripting;
+using UnityEditor.PackageManager;
 using UnityEngine;
 
 public class Map : MonoBehaviour
@@ -30,42 +32,6 @@ public class Map : MonoBehaviour
         Clear();
     }
 
-    public void ShowLayersUp()
-    {
-        CurrentLayerIndex = Mathf.Clamp(CurrentLayerIndex + 1, 0, 1); // TODO: Refactor.
-
-        switch (CurrentLayerIndex)
-        {
-            case 0:
-                Terrain.GetComponent<Terrain>().enabled = false;
-                Water.GetComponent<Renderer>().enabled = true;
-                break;
-
-            case 1:
-                Terrain.GetComponent<Renderer>().enabled = true;
-                Water.GetComponent<Renderer>().enabled = true;
-                break;
-        }
-    }
-
-    public void ShowLayersDown()
-    {
-        CurrentLayerIndex = Mathf.Clamp(CurrentLayerIndex - 1, 0, 1); // TODO: Refactor.
-
-        switch (CurrentLayerIndex)
-        {
-            case 0:
-                Terrain.GetComponent<Terrain>().enabled = false;
-                Water.GetComponent<Renderer>().enabled = true;
-                break;
-
-            case 1:
-                Terrain.GetComponent<Renderer>().enabled = true;
-                Water.GetComponent<Renderer>().enabled = true;
-                break;
-        }
-    }
-
     public bool ValidatePosition(MyGameObject myGameObject, Vector3 position, out Vector3 validated)
     {
         if (myGameObject.MapLayers.Contains(MyGameObjectMapLayer.Air) && myGameObject.Altitude < 0)
@@ -78,45 +44,93 @@ public class Map : MonoBehaviour
         Ray ray = new Ray(position + Vector3.up * Config.TerrainMaxHeight, Vector3.down);
         int mask = LayerMask.GetMask("Terrain") | LayerMask.GetMask("Water");
 
-        RaycastHit hitInfo;
+        RaycastHit[] hits = Physics.RaycastAll(ray, float.MaxValue, mask);
 
-        if (Physics.Raycast(ray, out hitInfo, Config.RaycastMaxDistance, mask) == false)
+        if (hits.Length <= 0)
         {
             validated = Vector3.zero;
-            
+
             return false;
+        }
+
+        Vector3 terrainPosition = Vector3.zero;
+        Vector3 waterPosition = Vector3.zero;
+
+        foreach (RaycastHit hitInfo in hits)
+        {
+            if (Utils.IsTerrain(hitInfo))
+            {
+                terrainPosition = hitInfo.point;
+            }
+            else if (Utils.IsWater(hitInfo))
+            {
+                waterPosition = hitInfo.point;
+            }
         }
 
         bool air = myGameObject.MapLayers.Contains(MyGameObjectMapLayer.Air);
         bool terrain = myGameObject.MapLayers.Contains(MyGameObjectMapLayer.Terrain);
+        bool underwater = myGameObject.MapLayers.Contains(MyGameObjectMapLayer.Underwater);
         bool water = myGameObject.MapLayers.Contains(MyGameObjectMapLayer.Water);
 
         if (air)
         {
-            validated = new Vector3(hitInfo.point.x, hitInfo.point.y + myGameObject.Altitude, hitInfo.point.z);
-         
+            if (terrainPosition.y > waterPosition.y)
+            {
+                validated = new Vector3(terrainPosition.x, terrainPosition.y + myGameObject.Altitude, terrainPosition.z);
+            }
+            else
+            {
+                validated = new Vector3(waterPosition.x, waterPosition.y + myGameObject.Altitude, waterPosition.z);
+            }
+
             return true;
         }
 
         if (terrain && water)
         {
-            validated = hitInfo.point;
+            if (terrainPosition.y > waterPosition.y)
+            {
+                validated = new Vector3(terrainPosition.x, terrainPosition.y, terrainPosition.z);
+            }
+            else
+            {
+                validated = new Vector3(waterPosition.x, waterPosition.y, waterPosition.z);
+            }
 
             return true;
         }
 
-        if (terrain && Utils.IsTerrain(hitInfo))
+        if (terrain)
         {
-            validated = hitInfo.point;
+            if (terrainPosition.y > waterPosition.y)
+            {
+                validated = new Vector3(terrainPosition.x, terrainPosition.y, terrainPosition.z);
 
-            return true;
+                return true;
+            }
+            else
+            {
+                validated = Vector3.zero;
+
+                return false;
+            }
         }
 
-        if (water && Utils.IsWater(hitInfo))
+        if (water)
         {
-            validated = hitInfo.point;
+            if (waterPosition.y > terrainPosition.y)
+            {
+                validated = new Vector3(waterPosition.x, waterPosition.y, waterPosition.z);
 
-            return true;
+                return true;
+            }
+            else
+            {
+                validated = Vector3.zero;
+
+                return false;
+            }
         }
 
         validated = Vector3.zero;
@@ -369,8 +383,6 @@ public class Map : MonoBehaviour
 
     private Transform Terrain;
     private Transform Water;
-
-    private int CurrentLayerIndex = 1;
 
     private Cell[,] Cells = new Cell[Config.TerrainVisibilitySize, Config.TerrainVisibilitySize];
 }

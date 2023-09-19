@@ -15,8 +15,6 @@ public class Config
     public static float IndicatorMargin = 1.1f;
     public static float IndicatorTextOffset = 2.0f;
 
-    public static float RaycastMaxDistance = 5000.0f;
-
     public static bool SnapToGrid = true;
 
     public static float TerrainConstructionScale = 2.0f;
