@@ -1,7 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
-using static UnityEngine.GraphicsBuffer;
 
 public class MyGameObject : MonoBehaviour
 {
@@ -27,18 +26,9 @@ public class MyGameObject : MonoBehaviour
 
         ConstructionResources.Init("Iron", 0, 30, ResourceDirection.In);
 
-        Recipe r1 = new Recipe("Iron"); // TODO: Remove.
-        r1.Consumes("Iron", 30);
-        ConstructionRecipies.Add(r1);
-
         Stats.Player = Player;
 
-        SkillManager skillManager = Game.Instance.GetComponent<SkillManager>();
-
-        foreach (string skillName in SkillsNames)
-        {
-            Skills[skillName] = skillManager.Get(skillName).Clone() as Skill;
-        }
+        CreateSkills();
     }
 
     protected virtual void Start()
@@ -613,6 +603,16 @@ public class MyGameObject : MonoBehaviour
         Orders.Clear();
     }
 
+    private void CreateSkills()
+    {
+        SkillManager skillManager = Game.Instance.GetComponent<SkillManager>();
+
+        foreach (string skillName in SkillsNames)
+        {
+            Skills[skillName] = skillManager.Get(skillName).Clone() as Skill;
+        }
+    }
+
     public Vector3 Center
     {
         get
@@ -678,6 +678,8 @@ public class MyGameObject : MonoBehaviour
             return GetComponents<MyComponent>().Sum(x => x.Mass);
         }
     }
+
+    public bool Constructed { get => ConstructionResources.CurrentSum == ConstructionResources.MaxSum; }
 
     public bool Powered { get => Map.Instance.IsVisibleByPower(this, HUD.Instance.ActivePlayer); }
 
@@ -747,8 +749,6 @@ public class MyGameObject : MonoBehaviour
     public MyGameObjectState State { get; private set; } = MyGameObjectState.Operational;
 
     public ResourceContainer ConstructionResources { get; } = new ResourceContainer();
-
-    public RecipeContainer ConstructionRecipies { get; } = new RecipeContainer(); // TODO: Remove.
 
     public MyGameObject Parent { get; private set; }
 

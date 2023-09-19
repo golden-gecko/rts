@@ -40,7 +40,7 @@ public class Engine : MyComponent
 
         if (distance > distanceToDrive)
         {
-            Fuel.CanDec();
+            Fuel.Dec();
 
             distanceToDrive += FuelUsage;
         }

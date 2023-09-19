@@ -20,13 +20,30 @@ public class OrderHandlerUnload : OrderHandler
             return;
         }
 
-        int valueStart = Mathf.Min(new int[]
+        int valueStart;
+
+        if (order.TargetGameObject.State == MyGameObjectState.UnderConstruction)
+        {
+            int[] values = new int[]
+            {
+                order.Value,
+                order.TargetGameObject.ConstructionResources.Available(order.Resource),
+                myGameObject.GetComponent<Storage>().Resources.Current(order.Resource),
+            };
+
+            valueStart = Mathf.Min(values);
+        }
+        else
+        {
+            int[] values = new int[]
             {
                 order.Value,
                 order.TargetGameObject.GetComponent<Storage>().Resources.Available(order.Resource),
                 myGameObject.GetComponent<Storage>().Resources.Current(order.Resource)
-            }
-        );
+            };
+
+            valueStart = Mathf.Min(values);
+        }
 
         if (valueStart <= 0)
         {
@@ -45,13 +62,30 @@ public class OrderHandlerUnload : OrderHandler
             return;
         }
 
-        int valueEnd = Mathf.Min(new int[]
+        int valueEnd;
+
+        if (order.TargetGameObject.State == MyGameObjectState.UnderConstruction)
+        {
+            int[] values = new int[]
+            {
+                order.Value,
+                order.TargetGameObject.ConstructionResources.Available(order.Resource),
+                myGameObject.GetComponent<Storage>().Resources.Current(order.Resource),
+            };
+
+            valueEnd = Mathf.Min(values);
+        }
+        else
+        {
+            int[] values = new int[]
             {
                 order.Value,
                 order.TargetGameObject.GetComponent<Storage>().Resources.Available(order.Resource),
                 myGameObject.GetComponent<Storage>().Resources.Current(order.Resource)
-            }
-        );
+            };
+
+            valueEnd = Mathf.Min(values);
+        }
 
         if (valueStart != valueEnd)
         {

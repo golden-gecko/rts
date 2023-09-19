@@ -459,6 +459,17 @@ public class HUD : MonoBehaviour
             return;
         }
 
+        // Rotate.
+        if (Input.GetAxis("Mouse ScrollWheel") > 0.0f)
+        {
+            Cursor.transform.Rotate(Vector3.up, Config.CursorRotateStep);
+        }
+        else if (Input.GetAxis("Mouse ScrollWheel") < 0.0f)
+        {
+            Cursor.transform.Rotate(Vector3.down, Config.CursorRotateStep);
+        }
+
+        // Follow mouse.
         Vector3 position;
 
         if (Map.Instance.MouseToPosition(out position, out _))
@@ -471,15 +482,6 @@ public class HUD : MonoBehaviour
             {
                 Cursor.transform.position = position;
             }
-        }
-
-        if (Input.GetAxis("Mouse ScrollWheel") > 0.0f)
-        {
-            Cursor.transform.Rotate(Vector3.up, Config.CursorRotateStep);
-        }
-        else if (Input.GetAxis("Mouse ScrollWheel") < 0.0f)
-        {
-            Cursor.transform.Rotate(Vector3.down, Config.CursorRotateStep);
         }
 
         if (Cursor.HasCorrectPosition())

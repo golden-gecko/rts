@@ -73,13 +73,11 @@ public class Indicators : MonoBehaviour
         range.gameObject.SetActive(false);
 
         construction.gameObject.SetActive(true);
-
     }
 
     public void OnConstructionEnd()
     {
         bar.gameObject.SetActive(true);
-        range.gameObject.SetActive(true);
 
         construction.gameObject.SetActive(false);
     }
@@ -304,7 +302,7 @@ public class Indicators : MonoBehaviour
         }
         else
         {
-            rangeSight.gameObject.SetActive(true);
+            rangeSight.gameObject.SetActive(false);
         }
     }
 

@@ -1,4 +1,3 @@
-using System.Linq;
 using UnityEngine;
 
 public class OrderHandlerConstruct : OrderHandler
@@ -14,14 +13,21 @@ public class OrderHandlerConstruct : OrderHandler
             return;
         }
 
-        Recipe recipe = order.TargetGameObject.ConstructionRecipies.Items.First().Value;
+        if (order.TargetGameObject.State != MyGameObjectState.UnderConstruction)
+        {
+            Fail(myGameObject);
+
+            return;
+        }
+
+        ResourceContainer resourceContainer = order.TargetGameObject.ConstructionResources;
 
         if (order.Timer == null)
         {
-            order.Timer = new Timer(recipe.MaxSum / myGameObject.GetComponent<Constructor>().ResourceUsage);
+            order.Timer = new Timer(resourceContainer.MaxSum / myGameObject.GetComponent<Constructor>().ResourceUsage);
         }
 
-        if (HaveResources(order, recipe) == false)
+        if (HaveResources(order, resourceContainer) == false)
         {
             foreach (Resource resource in order.TargetGameObject.ConstructionResources.Items)
             {
@@ -43,7 +49,7 @@ public class OrderHandlerConstruct : OrderHandler
             return;
         }
 
-        MoveResources(myGameObject, order, recipe);
+        MoveResources(myGameObject, order, resourceContainer);
 
         order.TargetGameObject.SetState(MyGameObjectState.Operational);
 
@@ -53,9 +59,9 @@ public class OrderHandlerConstruct : OrderHandler
         myGameObject.Orders.Pop();
     }
 
-    private bool HaveResources(Order order, Recipe recipe)
+    private bool HaveResources(Order order, ResourceContainer resourceContainer)
     {
-        foreach (Resource i in recipe.ToConsume.Items)
+        foreach (Resource i in resourceContainer.Items)
         {
             if (order.TargetGameObject.ConstructionResources.CanRemove(i.Name, i.Max) == false)
             {
@@ -66,9 +72,9 @@ public class OrderHandlerConstruct : OrderHandler
         return true;
     }
 
-    private void MoveResources(MyGameObject myGameObject, Order order, Recipe recipe)
+    private void MoveResources(MyGameObject myGameObject, Order order, ResourceContainer resourceContainer)
     {
-        foreach (Resource i in recipe.ToConsume.Items)
+        foreach (Resource i in resourceContainer.Items)
         {
             order.TargetGameObject.ConstructionResources.Remove(i.Name, i.Max);
             myGameObject.Stats.Add(Stats.ResourcesUsed, i.Max);

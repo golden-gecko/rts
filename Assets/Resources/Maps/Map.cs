@@ -24,7 +24,46 @@ public class Map : MonoBehaviour
             }
         }
 
+        Terrain = transform.Find("Terrain");
+        Water = transform.Find("Water");
+
         Clear();
+    }
+
+    public void ShowLayersUp()
+    {
+        CurrentLayerIndex = Mathf.Clamp(CurrentLayerIndex + 1, 0, 1); // TODO: Refactor.
+
+        switch (CurrentLayerIndex)
+        {
+            case 0:
+                Terrain.GetComponent<Terrain>().enabled = false;
+                Water.GetComponent<Renderer>().enabled = true;
+                break;
+
+            case 1:
+                Terrain.GetComponent<Renderer>().enabled = true;
+                Water.GetComponent<Renderer>().enabled = true;
+                break;
+        }
+    }
+
+    public void ShowLayersDown()
+    {
+        CurrentLayerIndex = Mathf.Clamp(CurrentLayerIndex - 1, 0, 1); // TODO: Refactor.
+
+        switch (CurrentLayerIndex)
+        {
+            case 0:
+                Terrain.GetComponent<Terrain>().enabled = false;
+                Water.GetComponent<Renderer>().enabled = true;
+                break;
+
+            case 1:
+                Terrain.GetComponent<Renderer>().enabled = true;
+                Water.GetComponent<Renderer>().enabled = true;
+                break;
+        }
     }
 
     public bool ValidatePosition(MyGameObject myGameObject, Vector3 position, out Vector3 validated)
@@ -327,6 +366,11 @@ public class Map : MonoBehaviour
             }
         }
     }
+
+    private Transform Terrain;
+    private Transform Water;
+
+    private int CurrentLayerIndex = 1;
 
     private Cell[,] Cells = new Cell[Config.TerrainVisibilitySize, Config.TerrainVisibilitySize];
 }
