@@ -131,11 +131,6 @@ public class HUD : MonoBehaviour
         }
     }
 
-    private bool MouseToRaycast(out RaycastHit hitInfo, int layerMask = Physics.DefaultRaycastLayers)
-    {
-        return Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out hitInfo, float.MaxValue, layerMask);
-    }
-
     private bool ProcessOrder()
     {
         if (Order == OrderType.Construct)
@@ -153,7 +148,7 @@ public class HUD : MonoBehaviour
         {
             RaycastHit hitInfo;
 
-            if (MouseToRaycast(out hitInfo))
+            if (Utils.RaycastFromMouse(out hitInfo))
             {
                 if (Utils.IsTerrain(hitInfo) || Utils.IsWater(hitInfo))
                 {
@@ -234,17 +229,19 @@ public class HUD : MonoBehaviour
     {
         RaycastHit hitInfo;
 
-        if (MouseToRaycast(out hitInfo))
+        if (Utils.RaycastFromMouse(out hitInfo) == false)
         {
-            if (MyInput.GetShift() == false)
-            {
-                ActivePlayer.Selection.Clear();
-            }
+            return;
+        }
 
-            if (Utils.IsTerrain(hitInfo) == false && Utils.IsWater(hitInfo) == false)
-            {
-                Select(hitInfo.transform.GetComponentInParent<MyGameObject>());
-            }
+        if (MyInput.GetShift() == false)
+        {
+            ActivePlayer.Selection.Clear();
+        }
+
+        if (Utils.IsTerrain(hitInfo) == false && Utils.IsWater(hitInfo) == false)
+        {
+            Select(hitInfo.transform.GetComponentInParent<MyGameObject>());
         }
     }
 
@@ -472,7 +469,7 @@ public class HUD : MonoBehaviour
         // Follow mouse.
         Vector3 position;
 
-        if (Map.Instance.MouseToPosition(out position, out _))
+        if (Map.Instance.MouseToPosition(Cursor, out position, out _))
         {
             Cursor.transform.position = Config.SnapToGrid ? Utils.SnapToGrid(position) : position;
         }
@@ -491,7 +488,7 @@ public class HUD : MonoBehaviour
     {
         RaycastHit hitInfo;
 
-        if (Cursor == null && MouseToRaycast(out hitInfo))
+        if (Cursor == null && Utils.RaycastFromMouse(out hitInfo))
         {
             Hovered = hitInfo.transform.GetComponentInParent<MyGameObject>();
         }
@@ -536,7 +533,7 @@ public class HUD : MonoBehaviour
 
             if (prefab.Equals(string.Empty) == false)
             {
-                Cursor = Utils.CreateGameObject(Prefab, Vector3.zero, Quaternion.identity, null, MyGameObjectState.Cursor);
+                Cursor = Utils.CreateGameObject(Prefab, Vector3.zero, Quaternion.identity, ActivePlayer, MyGameObjectState.Cursor);
                 Cursor.GetComponentInChildren<Indicators>().OnConstruction();
             }
         }

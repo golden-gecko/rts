@@ -1,6 +1,4 @@
 using System.Linq;
-using Unity.VisualScripting;
-using UnityEditor.PackageManager;
 using UnityEngine;
 
 public class Map : MonoBehaviour
@@ -41,10 +39,7 @@ public class Map : MonoBehaviour
             return true;
         }
 
-        Ray ray = new Ray(position + Vector3.up * Config.TerrainMaxHeight, Vector3.down);
-        int mask = LayerMask.GetMask("Terrain") | LayerMask.GetMask("Water");
-
-        RaycastHit[] hits = Physics.RaycastAll(ray, float.MaxValue, mask);
+        RaycastHit[] hits = Utils.RaycastAllFromTop(position, LayerMask.GetMask("Terrain") | LayerMask.GetMask("Water"));
 
         if (hits.Length <= 0)
         {
@@ -89,16 +84,18 @@ public class Map : MonoBehaviour
 
         if (terrain && water)
         {
-            if (terrainPosition.y > waterPosition.y)
+            if (waterPosition.y > terrainPosition.y)
             {
                 validated = new Vector3(terrainPosition.x, terrainPosition.y, terrainPosition.z);
+
+                return true;
             }
             else
             {
-                validated = new Vector3(waterPosition.x, waterPosition.y, waterPosition.z);
-            }
+                validated = Vector3.zero;
 
-            return true;
+                return false;
+            }
         }
 
         if (terrain)
@@ -286,62 +283,153 @@ public class Map : MonoBehaviour
         return Cells[position.x, position.z].VisibleByPower.ContainsKey(active) && Cells[position.x, position.z].VisibleByPower[active] > 0;
     }
 
-    public bool GetPosition(Vector3 origin, out Vector3 position, out MyGameObjectMapLayer mapLayer)
+    public bool GetPositionForCamera(Vector3 origin, out Vector3 position, out MyGameObjectMapLayer mapLayer)
     {
-        RaycastHit hitInfo;
+        RaycastHit[] hits = Utils.RaycastAllFromTop(origin, LayerMask.GetMask("Terrain") | LayerMask.GetMask("Water"));
 
-        if (Physics.Raycast(new Ray(new Vector3(origin.x, Config.TerrainMaxHeight, origin.z), Vector3.down), out hitInfo, float.MaxValue, LayerMask.GetMask("Terrain") | LayerMask.GetMask("Water")))
+        if (hits.Length <= 0)
+        {
+            position = Vector3.zero;
+            mapLayer = MyGameObjectMapLayer.None;
+
+            return false;
+        }
+
+        Vector3 terrainPosition = Vector3.zero;
+        Vector3 waterPosition = Vector3.zero;
+
+        foreach (RaycastHit hitInfo in hits)
         {
             if (Utils.IsTerrain(hitInfo))
             {
-                position = hitInfo.point;
-                mapLayer = MyGameObjectMapLayer.Terrain;
-
-                return true;
+                terrainPosition = hitInfo.point;
             }
-
-            if (Utils.IsWater(hitInfo))
+            else if (Utils.IsWater(hitInfo))
             {
-                position = hitInfo.point;
-                mapLayer = MyGameObjectMapLayer.Water;
-
-                return true;
+                waterPosition = hitInfo.point;
             }
         }
 
-        position = Vector3.zero;
-        mapLayer = MyGameObjectMapLayer.None;
+        if (terrainPosition.y > waterPosition.y)
+        {
+            position = terrainPosition;
+            mapLayer = MyGameObjectMapLayer.Terrain;
 
-        return false;
+            return true;
+        }
+
+        position = waterPosition;
+        mapLayer = MyGameObjectMapLayer.Water;
+
+        return true;
     }
 
-    public bool MouseToPosition(out Vector3 position, out MyGameObjectMapLayer mapLayer)
+    public bool GetPosition(MyGameObject myGameObject, Vector3 origin, out Vector3 position, out MyGameObjectMapLayer mapLayer)
     {
-        RaycastHit hitInfo;
+        RaycastHit[] hits = Utils.RaycastAllFromTop(origin, LayerMask.GetMask("Terrain") | LayerMask.GetMask("Water"));
 
-        if (Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out hitInfo, float.MaxValue, LayerMask.GetMask("Terrain") | LayerMask.GetMask("Water")))
+        if (hits.Length <= 0)
+        {
+            position = Vector3.zero;
+            mapLayer = MyGameObjectMapLayer.None;
+
+            return false;
+        }
+
+        Vector3 terrainPosition = Vector3.zero;
+        Vector3 waterPosition = Vector3.zero;
+
+        foreach (RaycastHit hitInfo in hits)
         {
             if (Utils.IsTerrain(hitInfo))
             {
-                position = hitInfo.point;
-                mapLayer = MyGameObjectMapLayer.Terrain;
-
-                return true;
+                terrainPosition = hitInfo.point;
             }
-
-            if (Utils.IsWater(hitInfo))
+            else if (Utils.IsWater(hitInfo))
             {
-                position = hitInfo.point;
-                mapLayer = MyGameObjectMapLayer.Water;
-
-                return true;
+                waterPosition = hitInfo.point;
             }
         }
 
-        position = Vector3.zero;
-        mapLayer = MyGameObjectMapLayer.None;
+        bool air = myGameObject.MapLayers.Contains(MyGameObjectMapLayer.Air);
+        bool terrain = myGameObject.MapLayers.Contains(MyGameObjectMapLayer.Terrain);
+        bool underwater = myGameObject.MapLayers.Contains(MyGameObjectMapLayer.Underwater);
+        bool water = myGameObject.MapLayers.Contains(MyGameObjectMapLayer.Water);
 
-        return false;
+        if (terrainPosition.y > waterPosition.y)
+        {
+            position = terrainPosition;
+            mapLayer = MyGameObjectMapLayer.Terrain;
+
+            return true;
+        }
+
+        if (underwater)
+        {
+            position = terrainPosition;
+            mapLayer = MyGameObjectMapLayer.Underwater;
+
+            return true;
+        }
+
+        position = waterPosition;
+        mapLayer = MyGameObjectMapLayer.Water;
+
+        return true;
+    }
+
+    public bool MouseToPosition(MyGameObject myGameObject, out Vector3 position, out MyGameObjectMapLayer mapLayer)
+    {
+        RaycastHit[] hits = Utils.RaycastAllFromMouse(LayerMask.GetMask("Terrain") | LayerMask.GetMask("Water"));
+
+        if (hits.Length <= 0)
+        {
+            position = Vector3.zero;
+            mapLayer = MyGameObjectMapLayer.None;
+
+            return false;
+        }
+
+        Vector3 terrainPosition = Vector3.zero;
+        Vector3 waterPosition = Vector3.zero;
+
+        foreach (RaycastHit hitInfo in hits)
+        {
+            if (Utils.IsTerrain(hitInfo))
+            {
+                terrainPosition = hitInfo.point;
+            }
+            else if (Utils.IsWater(hitInfo))
+            {
+                waterPosition = hitInfo.point;
+            }
+        }
+
+        bool air = myGameObject.MapLayers.Contains(MyGameObjectMapLayer.Air);
+        bool terrain = myGameObject.MapLayers.Contains(MyGameObjectMapLayer.Terrain);
+        bool underwater = myGameObject.MapLayers.Contains(MyGameObjectMapLayer.Underwater);
+        bool water = myGameObject.MapLayers.Contains(MyGameObjectMapLayer.Water);
+
+        if (terrainPosition.y > waterPosition.y)
+        {
+            position = terrainPosition;
+            mapLayer = MyGameObjectMapLayer.Terrain;
+
+            return true;
+        }
+
+        if (underwater)
+        {
+            position = terrainPosition;
+            mapLayer = MyGameObjectMapLayer.Underwater;
+
+            return true;
+        }
+
+        position = waterPosition;
+        mapLayer = MyGameObjectMapLayer.Water;
+
+        return true;
     }
 
     protected void Clear()

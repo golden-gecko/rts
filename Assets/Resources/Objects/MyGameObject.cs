@@ -588,7 +588,7 @@ public class MyGameObject : MonoBehaviour
     {
         MyGameObjectMapLayer mapLayer;
 
-        if (Map.Instance.GetPosition(Position, out _, out mapLayer) == false)
+        if (Map.Instance.GetPosition(this, Position, out _, out mapLayer) == false)
         {
             return false;
         }

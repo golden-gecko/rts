@@ -1,4 +1,5 @@
 using UnityEngine;
+using static UnityEngine.UI.Image;
 
 public class Utils
 {
@@ -91,5 +92,35 @@ public class Utils
         float z = Mathf.Floor(position.z / scale) * scale + scale / 2.0f;
 
         return new Vector3(x, position.y, z);
+    }
+
+    public static bool RaycastFromMouse(out RaycastHit hitInfo, int layerMask = Physics.DefaultRaycastLayers)
+    {
+        return Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out hitInfo, layerMask);
+    }
+
+    public static RaycastHit[] RaycastAllFromMouse(int layerMask = Physics.DefaultRaycastLayers)
+    {
+        return RaycastAll(Camera.main.ScreenPointToRay(Input.mousePosition), layerMask);
+    }
+
+    public static bool RaycastFromTop(Vector3 position, out RaycastHit hitInfo, int layerMask = Physics.DefaultRaycastLayers)
+    {
+        return Raycast(new Ray(new Vector3(position.x, Config.TerrainMaxHeight, position.z), Vector3.down), out hitInfo, layerMask);
+    }
+
+    public static RaycastHit[] RaycastAllFromTop(Vector3 position, int layerMask = Physics.DefaultRaycastLayers)
+    {
+        return RaycastAll(new Ray(new Vector3(position.x, Config.TerrainMaxHeight, position.z), Vector3.down), layerMask);
+    }
+
+    public static bool Raycast(Ray ray, out RaycastHit hitInfo, int layerMask = Physics.DefaultRaycastLayers)
+    {
+        return Physics.Raycast(ray, out hitInfo, float.MaxValue, layerMask);
+    }
+
+    public static RaycastHit[] RaycastAll(Ray ray, int layerMask = Physics.DefaultRaycastLayers)
+    {
+        return Physics.RaycastAll(ray, float.MaxValue, layerMask);
     }
 }
