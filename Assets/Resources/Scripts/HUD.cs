@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.UIElements;
 
 public class HUD : MonoBehaviour
 {
@@ -19,9 +20,8 @@ public class HUD : MonoBehaviour
 
     void Start()
     {
-        ResetVisual();
-        DrawVisual();
-        DrawSelection();
+        DragReset();
+        DragDraw();
     }
 
     void Update()
@@ -93,8 +93,7 @@ public class HUD : MonoBehaviour
                 return;
             }
 
-            startPosition = Input.mousePosition;
-            drag = true;
+            DragStart();
         }
 
         if (Input.GetMouseButton(0))
@@ -106,24 +105,14 @@ public class HUD : MonoBehaviour
 
             if (drag)
             {
-                endPosition = Input.mousePosition;
-
-                DrawVisual();
-                DrawSelection();
+                DragUpdate();
+                DragDraw();
             }
         }
 
         if (Input.GetMouseButtonUp(0))
         {
-            if ((startPosition - endPosition).magnitude <= 10)
-            {
-                drag = false;
-            }
-
-            if (drag)
-            {
-                SelectUnitInBox();
-            }
+            DragEnd();
 
             if (EventSystem.current.IsPointerOverGameObject())
             {
@@ -151,9 +140,8 @@ public class HUD : MonoBehaviour
 
             drag = false;
 
-            ResetVisual();
-            DrawVisual();
-            DrawSelection();
+            DragReset();
+            DragDraw();
         }
         else if (Input.GetMouseButtonUp(1))
         {
@@ -166,13 +154,10 @@ public class HUD : MonoBehaviour
             {
                 ProcessOrder();
             }
-            else
+            else if (MyInput.GetShift() == false)
             {
-                if (MyInput.GetShift() == false)
-                {
-                    Order = OrderType.None;
-                    Prefab = string.Empty;
-                }
+                Order = OrderType.None;
+                Prefab = string.Empty;
             }
         }
 
@@ -227,42 +212,44 @@ public class HUD : MonoBehaviour
         }
     }
 
-    private MyGameObject GetGameObjectUnderMouse()
+    private void DragStart()
     {
-        RaycastHit hitInfo;
-
-        if (Utils.RaycastFromMouse(out hitInfo, LayerMask.GetMask("GameObject")))
-        {
-            return hitInfo.transform.GetComponentInParent<MyGameObject>();
-        }
-
-        return null;
+        startPosition = Input.mousePosition;
+        drag = true;
     }
 
-    private void SelectUnitInBox()
+    private void DragUpdate()
     {
-        if (MyInput.GetShift() == false)
+        endPosition = Input.mousePosition;
+    }
+
+    private void DragEnd()
+    {
+        if ((startPosition - endPosition).magnitude <= 10)
         {
-            ActivePlayer.Selection.Clear();
+            drag = false;
         }
 
-        foreach (MyGameObject myGameObject in FindObjectsByType<MyGameObject>(FindObjectsSortMode.None)) // TODO: Not very efficient. Refactor into raycast.
+        if (drag)
         {
-            Vector3 screenPosition = Camera.main.WorldToScreenPoint(myGameObject.Position);
-
-            if (selectionBox.Contains(screenPosition) == false)
-            {
-                continue;
-            }
-
-            Select(myGameObject);
+            SelectUnitInBox();
         }
     }
 
-
-
-    private void DrawSelection()
+    private void DragReset()
     {
+        startPosition = Vector2.zero;
+        endPosition = Vector2.zero;
+    }
+
+    private void DragDraw()
+    {
+        Vector2 boxCenter = (startPosition + endPosition) / 2;
+        BoxVisual.position = boxCenter;
+
+        Vector2 boxSize = new Vector2(Mathf.Abs(startPosition.x - endPosition.x), Mathf.Abs(startPosition.y - endPosition.y));
+        BoxVisual.sizeDelta = boxSize;
+
         if (Input.mousePosition.x < startPosition.x)
         {
             // Drag left.
@@ -290,13 +277,32 @@ public class HUD : MonoBehaviour
         }
     }
 
-    private void DrawVisual()
+    private MyGameObject GetGameObjectUnderMouse()
     {
-        Vector2 boxCenter = (startPosition + endPosition) / 2;
-        BoxVisual.position = boxCenter;
+        RaycastHit hitInfo;
 
-        Vector2 boxSize = new Vector2(Mathf.Abs(startPosition.x - endPosition.x), Mathf.Abs(startPosition.y - endPosition.y));
-        BoxVisual.sizeDelta = boxSize;
+        if (Utils.RaycastFromMouse(out hitInfo, LayerMask.GetMask("GameObject")))
+        {
+            return hitInfo.transform.GetComponentInParent<MyGameObject>();
+        }
+
+        return null;
+    }
+
+    private void SelectUnitInBox()
+    {
+        if (MyInput.GetShift() == false)
+        {
+            ActivePlayer.Selection.Clear();
+        }
+
+        foreach (MyGameObject myGameObject in FindObjectsByType<MyGameObject>(FindObjectsSortMode.None)) // TODO: Not very efficient. Refactor into raycast.
+        {
+            if (selectionBox.Contains(Camera.main.WorldToScreenPoint(myGameObject.Position)))
+            {
+                Select(myGameObject);
+            }
+        }
     }
 
     private void IssueOrder(Vector3 position)
@@ -475,12 +481,6 @@ public class HUD : MonoBehaviour
         }
     }
 
-    private void ResetVisual()
-    {
-        startPosition = Vector2.zero;
-        endPosition = Vector2.zero;
-    }
-
     public void Select(MyGameObject myGameObject)
     {
         if (myGameObject == null)
@@ -559,15 +559,15 @@ public class HUD : MonoBehaviour
 
     public MyGameObject Hovered { get; private set; }
 
-    private bool drag = false;
-
-    private Vector2 endPosition = Vector2.zero;
-
     private OrderType order = OrderType.None;
 
     private string prefab = string.Empty;
 
     private Rect selectionBox;
 
+    private bool drag = false;
+
     private Vector2 startPosition = Vector2.zero;
+
+    private Vector2 endPosition = Vector2.zero;
 }
