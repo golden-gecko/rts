@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 5993964032730141298}
   - component: {fileID: 2661966824581646539}
   - component: {fileID: 193435156754362597}
-  m_Layer: 0
+  m_Layer: 20
   m_Name: Body
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -115,7 +115,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3793402985773567474}
   - component: {fileID: 2887738243623664993}
-  m_Layer: 0
+  m_Layer: 20
   m_Name: Spaceport
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -136,7 +136,6 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 7899838580853385846}
-  - {fileID: 2403918080830501667}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &2887738243623664993
@@ -166,52 +165,9 @@ MonoBehaviour:
   <MapLayers>k__BackingField: 02000000
   <ShowIndicators>k__BackingField: 1
   <ShowOrders>k__BackingField: 1
-  <ShowSigns>k__BackingField: 0
   <ShowEntrance>k__BackingField: 0
   <ShowExit>k__BackingField: 0
   <ExpirationTimer>k__BackingField:
     <Current>k__BackingField: -1
     <Max>k__BackingField: -1
   <SkillsNames>k__BackingField: []
---- !u!1001 &4004864092384386193
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 3793402985773567474}
-    m_Modifications:
-    - target: {fileID: 1641646101339811762, guid: 8da4a421bde8f734593a8c934f793019, type: 3}
-      propertyPath: m_RootOrder
-      value: -1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1641646101339811762, guid: 8da4a421bde8f734593a8c934f793019, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1641646101339811762, guid: 8da4a421bde8f734593a8c934f793019, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1641646101339811762, guid: 8da4a421bde8f734593a8c934f793019, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4051881364568090456, guid: 8da4a421bde8f734593a8c934f793019, type: 3}
-      propertyPath: m_Name
-      value: Indicators
-      objectReference: {fileID: 0}
-    - target: {fileID: 9138663778288361040, guid: 8da4a421bde8f734593a8c934f793019, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 8da4a421bde8f734593a8c934f793019, type: 3}
---- !u!4 &2403918080830501667 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 1641646101339811762, guid: 8da4a421bde8f734593a8c934f793019, type: 3}
-  m_PrefabInstance: {fileID: 4004864092384386193}
-  m_PrefabAsset: {fileID: 0}

@@ -7,7 +7,7 @@ public class MyGameObject : MonoBehaviour
     protected virtual void Awake()
     {
         Body = transform.Find("Body");
-        Indicators = transform.Find("Indicators").GetComponent<Indicators>();
+        Indicators = Instantiate( Resources.Load<Indicators>("Indicators"), transform, false);
 
         Orders.AllowOrder(OrderType.Destroy); // TODO: Move to component.
         Orders.AllowOrder(OrderType.Disable);
@@ -569,7 +569,14 @@ public class MyGameObject : MonoBehaviour
 
         switch (state)
         {
+            case MyGameObjectState.Cursor:
+                Indicators.OnConstruction();
+                break;
+
             case MyGameObjectState.UnderAssembly:
+                Indicators.OnConstruction();
+                break;
+
             case MyGameObjectState.UnderConstruction:
                 RaiseConstructionResourceFlags();
 
@@ -593,8 +600,9 @@ public class MyGameObject : MonoBehaviour
             return false;
         }
 
-        return mapLayer == MyGameObjectMapLayer.Terrain == MapLayers.Contains(MyGameObjectMapLayer.Terrain)
-            || mapLayer == MyGameObjectMapLayer.Water == MapLayers.Contains(MyGameObjectMapLayer.Water);
+        return (mapLayer == MyGameObjectMapLayer.Terrain && MapLayers.Contains(MyGameObjectMapLayer.Terrain))
+            || (mapLayer == MyGameObjectMapLayer.Underwater && MapLayers.Contains(MyGameObjectMapLayer.Underwater))
+            || (mapLayer == MyGameObjectMapLayer.Water && MapLayers.Contains(MyGameObjectMapLayer.Water));
     }
 
     public void ClearOrders()

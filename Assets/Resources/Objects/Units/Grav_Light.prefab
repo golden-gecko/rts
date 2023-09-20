@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 6319444155190962887}
   - component: {fileID: 271880498409293936}
   - component: {fileID: 4544394081798647328}
-  m_Layer: 0
+  m_Layer: 20
   m_Name: unit_Grav_Light_A_RR_yup
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -95,7 +95,7 @@ GameObject:
   - component: {fileID: 7096478118878921596}
   - component: {fileID: 1149253250113955710}
   - component: {fileID: 5642106256248370345}
-  m_Layer: 0
+  m_Layer: 20
   m_Name: Body
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -204,7 +204,7 @@ GameObject:
   - component: {fileID: 2261146058214769371}
   - component: {fileID: 7426585819022152718}
   - component: {fileID: 8255607321981925325}
-  m_Layer: 0
+  m_Layer: 20
   m_Name: unit_Grav_Light_A_Gun_yup
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -287,7 +287,7 @@ GameObject:
   - component: {fileID: 8130590354302190429}
   - component: {fileID: 8033688066752622202}
   - component: {fileID: 2475662725790798236}
-  m_Layer: 0
+  m_Layer: 20
   m_Name: unit_Grav_Light_A_FR_yup
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -373,7 +373,7 @@ GameObject:
   - component: {fileID: 5874275229390842670}
   - component: {fileID: 5594974671478860173}
   - component: {fileID: 1711648457831509688}
-  m_Layer: 0
+  m_Layer: 20
   m_Name: Grav_Light
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -394,7 +394,6 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 6487908108012592946}
-  - {fileID: 5267905540470058037}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1355083128508716010
@@ -424,7 +423,6 @@ MonoBehaviour:
   <MapLayers>k__BackingField: 02000000
   <ShowIndicators>k__BackingField: 1
   <ShowOrders>k__BackingField: 1
-  <ShowSigns>k__BackingField: 0
   <ShowEntrance>k__BackingField: 0
   <ShowExit>k__BackingField: 0
   <ExpirationTimer>k__BackingField:
@@ -506,7 +504,7 @@ GameObject:
   - component: {fileID: 2750460340579146707}
   - component: {fileID: 371088008310733211}
   - component: {fileID: 2980540426510879938}
-  m_Layer: 0
+  m_Layer: 20
   m_Name: unit_Grav_Light_A_FL_yup
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -589,7 +587,7 @@ GameObject:
   - component: {fileID: 6511011702778061052}
   - component: {fileID: 4239844474220238842}
   - component: {fileID: 7531828564423707456}
-  m_Layer: 0
+  m_Layer: 20
   m_Name: unit_Grav_Light_A_RL_yup
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -672,7 +670,7 @@ GameObject:
   - component: {fileID: 4951139339875676292}
   - component: {fileID: 2864385923010326899}
   - component: {fileID: 5449801517495519291}
-  m_Layer: 0
+  m_Layer: 20
   m_Name: unit_Grav_Light_A_Gun_Turret_yup
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -745,41 +743,3 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!1001 &6904880537383732103
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 6358198605777279878}
-    m_Modifications:
-    - target: {fileID: 1641646101339811762, guid: 8da4a421bde8f734593a8c934f793019, type: 3}
-      propertyPath: m_RootOrder
-      value: -1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1641646101339811762, guid: 8da4a421bde8f734593a8c934f793019, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1641646101339811762, guid: 8da4a421bde8f734593a8c934f793019, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1641646101339811762, guid: 8da4a421bde8f734593a8c934f793019, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4051881364568090456, guid: 8da4a421bde8f734593a8c934f793019, type: 3}
-      propertyPath: m_Name
-      value: Indicators
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 8da4a421bde8f734593a8c934f793019, type: 3}
---- !u!4 &5267905540470058037 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 1641646101339811762, guid: 8da4a421bde8f734593a8c934f793019, type: 3}
-  m_PrefabInstance: {fileID: 6904880537383732103}
-  m_PrefabAsset: {fileID: 0}

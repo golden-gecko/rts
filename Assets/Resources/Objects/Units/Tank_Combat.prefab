@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 7660513812453009979}
   - component: {fileID: 2751595967259843200}
   - component: {fileID: 3987761893828196723}
-  m_Layer: 0
+  m_Layer: 20
   m_Name: Body
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -117,7 +117,7 @@ GameObject:
   - component: {fileID: 8550217303103984122}
   - component: {fileID: 5184645614687965321}
   - component: {fileID: 2311729443979594455}
-  m_Layer: 0
+  m_Layer: 20
   m_Name: unit_Tank_Combat_A_Gun_yup
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -203,7 +203,7 @@ GameObject:
   - component: {fileID: 6222768192300622298}
   - component: {fileID: -5111363604509204377}
   - component: {fileID: -8831807782933982170}
-  m_Layer: 0
+  m_Layer: 20
   m_Name: Tank_Combat
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -224,7 +224,6 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 3884354471029212381}
-  - {fileID: 4311078307765965658}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &7233162644028904747
@@ -254,7 +253,6 @@ MonoBehaviour:
   <MapLayers>k__BackingField: 02000000
   <ShowIndicators>k__BackingField: 1
   <ShowOrders>k__BackingField: 1
-  <ShowSigns>k__BackingField: 0
   <ShowEntrance>k__BackingField: 0
   <ShowExit>k__BackingField: 0
   <ExpirationTimer>k__BackingField:
@@ -336,7 +334,7 @@ GameObject:
   - component: {fileID: 5717626243753897088}
   - component: {fileID: 4080820706346205590}
   - component: {fileID: 3943990318840362743}
-  m_Layer: 0
+  m_Layer: 20
   m_Name: unit_Tank_Combat_A_Turret_yup
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -409,45 +407,3 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!1001 &3250555010438397160
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 6328245779563230221}
-    m_Modifications:
-    - target: {fileID: 1641646101339811762, guid: 8da4a421bde8f734593a8c934f793019, type: 3}
-      propertyPath: m_RootOrder
-      value: -1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1641646101339811762, guid: 8da4a421bde8f734593a8c934f793019, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1641646101339811762, guid: 8da4a421bde8f734593a8c934f793019, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1641646101339811762, guid: 8da4a421bde8f734593a8c934f793019, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4051881364568090456, guid: 8da4a421bde8f734593a8c934f793019, type: 3}
-      propertyPath: m_Name
-      value: Indicators
-      objectReference: {fileID: 0}
-    - target: {fileID: 9138663778288361040, guid: 8da4a421bde8f734593a8c934f793019, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 8da4a421bde8f734593a8c934f793019, type: 3}
---- !u!4 &4311078307765965658 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 1641646101339811762, guid: 8da4a421bde8f734593a8c934f793019, type: 3}
-  m_PrefabInstance: {fileID: 3250555010438397160}
-  m_PrefabAsset: {fileID: 0}

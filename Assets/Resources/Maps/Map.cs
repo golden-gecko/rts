@@ -24,115 +24,7 @@ public class Map : MonoBehaviour
             }
         }
 
-        Terrain = transform.Find("Terrain");
-        Water = transform.Find("Water");
-
         Clear();
-    }
-
-    public bool ValidatePosition(MyGameObject myGameObject, Vector3 position, out Vector3 validated)
-    {
-        if (myGameObject.MapLayers.Contains(MyGameObjectMapLayer.Air) && myGameObject.Altitude < 0)
-        {
-            validated = position;
-
-            return true;
-        }
-
-        RaycastHit[] hits = Utils.RaycastAllFromTop(position, LayerMask.GetMask("Terrain") | LayerMask.GetMask("Water"));
-
-        if (hits.Length <= 0)
-        {
-            validated = Vector3.zero;
-
-            return false;
-        }
-
-        Vector3 terrainPosition = Vector3.zero;
-        Vector3 waterPosition = Vector3.zero;
-
-        foreach (RaycastHit hitInfo in hits)
-        {
-            if (Utils.IsTerrain(hitInfo))
-            {
-                terrainPosition = hitInfo.point;
-            }
-            else if (Utils.IsWater(hitInfo))
-            {
-                waterPosition = hitInfo.point;
-            }
-        }
-
-        bool air = myGameObject.MapLayers.Contains(MyGameObjectMapLayer.Air);
-        bool terrain = myGameObject.MapLayers.Contains(MyGameObjectMapLayer.Terrain);
-        bool underwater = myGameObject.MapLayers.Contains(MyGameObjectMapLayer.Underwater);
-        bool water = myGameObject.MapLayers.Contains(MyGameObjectMapLayer.Water);
-
-        if (air)
-        {
-            if (terrainPosition.y > waterPosition.y)
-            {
-                validated = new Vector3(terrainPosition.x, terrainPosition.y + myGameObject.Altitude, terrainPosition.z);
-            }
-            else
-            {
-                validated = new Vector3(waterPosition.x, waterPosition.y + myGameObject.Altitude, waterPosition.z);
-            }
-
-            return true;
-        }
-
-        if (terrain && water)
-        {
-            if (waterPosition.y > terrainPosition.y)
-            {
-                validated = new Vector3(terrainPosition.x, terrainPosition.y, terrainPosition.z);
-
-                return true;
-            }
-            else
-            {
-                validated = Vector3.zero;
-
-                return false;
-            }
-        }
-
-        if (terrain)
-        {
-            if (terrainPosition.y > waterPosition.y)
-            {
-                validated = new Vector3(terrainPosition.x, terrainPosition.y, terrainPosition.z);
-
-                return true;
-            }
-            else
-            {
-                validated = Vector3.zero;
-
-                return false;
-            }
-        }
-
-        if (water)
-        {
-            if (waterPosition.y > terrainPosition.y)
-            {
-                validated = new Vector3(waterPosition.x, waterPosition.y, waterPosition.z);
-
-                return true;
-            }
-            else
-            {
-                validated = Vector3.zero;
-
-                return false;
-            }
-        }
-
-        validated = Vector3.zero;
-
-        return false;
     }
 
     public void SetVisibleByRadar(MyGameObject myGameObject, Vector3 position, float range, int value)
@@ -283,47 +175,6 @@ public class Map : MonoBehaviour
         return Cells[position.x, position.z].VisibleByPower.ContainsKey(active) && Cells[position.x, position.z].VisibleByPower[active] > 0;
     }
 
-    public bool GetPositionForCamera(Vector3 origin, out Vector3 position, out MyGameObjectMapLayer mapLayer)
-    {
-        RaycastHit[] hits = Utils.RaycastAllFromTop(origin, LayerMask.GetMask("Terrain") | LayerMask.GetMask("Water"));
-
-        if (hits.Length <= 0)
-        {
-            position = Vector3.zero;
-            mapLayer = MyGameObjectMapLayer.None;
-
-            return false;
-        }
-
-        Vector3 terrainPosition = Vector3.zero;
-        Vector3 waterPosition = Vector3.zero;
-
-        foreach (RaycastHit hitInfo in hits)
-        {
-            if (Utils.IsTerrain(hitInfo))
-            {
-                terrainPosition = hitInfo.point;
-            }
-            else if (Utils.IsWater(hitInfo))
-            {
-                waterPosition = hitInfo.point;
-            }
-        }
-
-        if (terrainPosition.y > waterPosition.y)
-        {
-            position = terrainPosition;
-            mapLayer = MyGameObjectMapLayer.Terrain;
-
-            return true;
-        }
-
-        position = waterPosition;
-        mapLayer = MyGameObjectMapLayer.Water;
-
-        return true;
-    }
-
     public bool GetPosition(MyGameObject myGameObject, Vector3 origin, out Vector3 position, out MyGameObjectMapLayer mapLayer)
     {
         RaycastHit[] hits = Utils.RaycastAllFromTop(origin, LayerMask.GetMask("Terrain") | LayerMask.GetMask("Water"));
@@ -368,6 +219,47 @@ public class Map : MonoBehaviour
         {
             position = terrainPosition;
             mapLayer = MyGameObjectMapLayer.Underwater;
+
+            return true;
+        }
+
+        position = waterPosition;
+        mapLayer = MyGameObjectMapLayer.Water;
+
+        return true;
+    }
+
+    public bool GetPositionForCamera(Vector3 origin, out Vector3 position, out MyGameObjectMapLayer mapLayer)
+    {
+        RaycastHit[] hits = Utils.RaycastAllFromTop(origin, LayerMask.GetMask("Terrain") | LayerMask.GetMask("Water"));
+
+        if (hits.Length <= 0)
+        {
+            position = Vector3.zero;
+            mapLayer = MyGameObjectMapLayer.None;
+
+            return false;
+        }
+
+        Vector3 terrainPosition = Vector3.zero;
+        Vector3 waterPosition = Vector3.zero;
+
+        foreach (RaycastHit hitInfo in hits)
+        {
+            if (Utils.IsTerrain(hitInfo))
+            {
+                terrainPosition = hitInfo.point;
+            }
+            else if (Utils.IsWater(hitInfo))
+            {
+                waterPosition = hitInfo.point;
+            }
+        }
+
+        if (terrainPosition.y > waterPosition.y)
+        {
+            position = terrainPosition;
+            mapLayer = MyGameObjectMapLayer.Terrain;
 
             return true;
         }
@@ -432,7 +324,125 @@ public class Map : MonoBehaviour
         return true;
     }
 
-    protected void Clear()
+    public bool ValidatePosition(MyGameObject myGameObject, Vector3 position, out Vector3 validated)
+    {
+        RaycastHit[] hits = Utils.RaycastAllFromTop(position, LayerMask.GetMask("Terrain") | LayerMask.GetMask("Water"));
+
+        if (hits.Length <= 0)
+        {
+            validated = Vector3.zero;
+
+            return false;
+        }
+
+        Vector3 terrainPosition = Vector3.zero;
+        Vector3 waterPosition = Vector3.zero;
+
+        foreach (RaycastHit hitInfo in hits)
+        {
+            if (Utils.IsTerrain(hitInfo))
+            {
+                terrainPosition = hitInfo.point;
+            }
+            else if (Utils.IsWater(hitInfo))
+            {
+                waterPosition = hitInfo.point;
+            }
+        }
+
+        bool air = myGameObject.MapLayers.Contains(MyGameObjectMapLayer.Air);
+        bool terrain = myGameObject.MapLayers.Contains(MyGameObjectMapLayer.Terrain);
+        bool underwater = myGameObject.MapLayers.Contains(MyGameObjectMapLayer.Underwater);
+        bool water = myGameObject.MapLayers.Contains(MyGameObjectMapLayer.Water);
+
+        // Any position in air (missiles).
+        if (air && myGameObject.Altitude < 0)
+        {
+            validated = position;
+
+            return true;
+        }
+
+        // Position in air above terrain or water (planes).
+        if (air)
+        {
+            if (terrainPosition.y > waterPosition.y)
+            {
+                validated = new Vector3(terrainPosition.x, terrainPosition.y + myGameObject.Altitude, terrainPosition.z);
+            }
+            else
+            {
+                validated = new Vector3(waterPosition.x, waterPosition.y + myGameObject.Altitude, waterPosition.z);
+            }
+
+            return true;
+        }
+
+        // Position on terrain or underwater (workers).
+        if (terrain && underwater)
+        {
+            validated = new Vector3(terrainPosition.x, terrainPosition.y, terrainPosition.z);
+
+            return true;
+        }
+
+        // Position on terrain or water (amphibian).
+        if (terrain && water)
+        {
+            if (terrainPosition.y > waterPosition.y)
+            {
+                validated = new Vector3(terrainPosition.x, terrainPosition.y, terrainPosition.z);
+
+                return true;
+            }
+            else
+            {
+                validated = new Vector3(waterPosition.x, waterPosition.y, waterPosition.z);
+
+                return true;
+            }
+        }
+
+        // Position on terrain.
+        if (terrain)
+        {
+            if (terrainPosition.y > waterPosition.y)
+            {
+                validated = new Vector3(terrainPosition.x, terrainPosition.y, terrainPosition.z);
+
+                return true;
+            }
+            else
+            {
+                validated = Vector3.zero;
+
+                return false;
+            }
+        }
+
+        // Position on water.
+        if (water)
+        {
+            if (waterPosition.y > terrainPosition.y)
+            {
+                validated = new Vector3(waterPosition.x, waterPosition.y, waterPosition.z);
+
+                return true;
+            }
+            else
+            {
+                validated = Vector3.zero;
+
+                return false;
+            }
+        }
+
+        validated = Vector3.zero;
+
+        return false;
+    }
+
+    private void Clear()
     {
         for (int x = 0; x < Config.TerrainVisibilitySize; x++)
         {
@@ -468,9 +478,6 @@ public class Map : MonoBehaviour
             }
         }
     }
-
-    private Transform Terrain;
-    private Transform Water;
 
     private Cell[,] Cells = new Cell[Config.TerrainVisibilitySize, Config.TerrainVisibilitySize];
 }

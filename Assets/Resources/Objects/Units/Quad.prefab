@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 6294112693154751892}
   - component: {fileID: -5526787300716293082}
   - component: {fileID: -983595188522550754}
-  m_Layer: 0
+  m_Layer: 20
   m_Name: Quad
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -34,7 +34,6 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 5360197081205465464}
-  - {fileID: 559145696797074735}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &3955217894934674591
@@ -64,7 +63,6 @@ MonoBehaviour:
   <MapLayers>k__BackingField: 02000000
   <ShowIndicators>k__BackingField: 1
   <ShowOrders>k__BackingField: 1
-  <ShowSigns>k__BackingField: 0
   <ShowEntrance>k__BackingField: 0
   <ShowExit>k__BackingField: 0
   <ExpirationTimer>k__BackingField:
@@ -130,7 +128,7 @@ GameObject:
   - component: {fileID: 351513304281384890}
   - component: {fileID: 5158796773696290964}
   - component: {fileID: 5683544140866545401}
-  m_Layer: 0
+  m_Layer: 20
   m_Name: unit_Quad_A_Wheel_Front_yup
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -213,7 +211,7 @@ GameObject:
   - component: {fileID: 7560336768307332979}
   - component: {fileID: 443689968014960889}
   - component: {fileID: 6953766932218039890}
-  m_Layer: 0
+  m_Layer: 20
   m_Name: unit_Quad_A_Gun_Turret_yup
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -297,7 +295,7 @@ GameObject:
   - component: {fileID: 3216643378614914948}
   - component: {fileID: 7137209894247026056}
   - component: {fileID: 2589091065436520205}
-  m_Layer: 0
+  m_Layer: 20
   m_Name: unit_Quad_A_Gun_yup
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -380,7 +378,7 @@ GameObject:
   - component: {fileID: 4583229231058252311}
   - component: {fileID: 4544839558620220859}
   - component: {fileID: 6085572423978312243}
-  m_Layer: 0
+  m_Layer: 20
   m_Name: unit_Quad_A_Wheel_Rear_yup
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -464,7 +462,7 @@ GameObject:
   - component: {fileID: 3651856514401725032}
   - component: {fileID: 1502541725769656319}
   - component: {fileID: 7088240299372549622}
-  m_Layer: 0
+  m_Layer: 20
   m_Name: Body
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -560,45 +558,3 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 2.2922084, y: 2.1277518, z: 3.7806258}
   m_Center: {x: -0.00000014901161, y: 1.0946527, z: 0.07975161}
---- !u!1001 &1227847046246206109
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 4036648820349360246}
-    m_Modifications:
-    - target: {fileID: 1641646101339811762, guid: 8da4a421bde8f734593a8c934f793019, type: 3}
-      propertyPath: m_RootOrder
-      value: -1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1641646101339811762, guid: 8da4a421bde8f734593a8c934f793019, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1641646101339811762, guid: 8da4a421bde8f734593a8c934f793019, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1641646101339811762, guid: 8da4a421bde8f734593a8c934f793019, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4051881364568090456, guid: 8da4a421bde8f734593a8c934f793019, type: 3}
-      propertyPath: m_Name
-      value: Indicators
-      objectReference: {fileID: 0}
-    - target: {fileID: 9138663778288361040, guid: 8da4a421bde8f734593a8c934f793019, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 8da4a421bde8f734593a8c934f793019, type: 3}
---- !u!4 &559145696797074735 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 1641646101339811762, guid: 8da4a421bde8f734593a8c934f793019, type: 3}
-  m_PrefabInstance: {fileID: 1227847046246206109}
-  m_PrefabAsset: {fileID: 0}

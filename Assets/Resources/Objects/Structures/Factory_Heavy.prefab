@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 5145607101561842014}
   - component: {fileID: 8971166466582014946}
   - component: {fileID: 4331919413812250565}
-  m_Layer: 0
+  m_Layer: 20
   m_Name: struct_Factory_Heavy_A_Door_Lower_yup
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -94,7 +94,7 @@ GameObject:
   - component: {fileID: 4827675681071317213}
   - component: {fileID: 8234003315114358991}
   - component: {fileID: 885911540787494950}
-  m_Layer: 0
+  m_Layer: 20
   m_Name: struct_Factory_Heavy_A_Door_Upper_yup
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -179,7 +179,7 @@ GameObject:
   - component: {fileID: 138149840326488954}
   - component: {fileID: -6975170152775641333}
   - component: {fileID: 7901436378423947559}
-  m_Layer: 0
+  m_Layer: 20
   m_Name: Factory_Heavy
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -200,7 +200,6 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 780428623299032782}
-  - {fileID: 2392589853860610249}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &138149840326488954
@@ -275,7 +274,6 @@ MonoBehaviour:
       <Max>k__BackingField: 100
       <Name>k__BackingField: Iron
       <Direction>k__BackingField: 0
-    <MaxStorage>k__BackingField: -1
 --- !u!1 &2428546814843670131
 GameObject:
   m_ObjectHideFlags: 0
@@ -288,7 +286,7 @@ GameObject:
   - component: {fileID: 1060526174392328988}
   - component: {fileID: 7227785817644131817}
   - component: {fileID: 3331362356143167217}
-  m_Layer: 0
+  m_Layer: 20
   m_Name: Body
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -393,7 +391,7 @@ GameObject:
   - component: {fileID: 2386469903833100279}
   - component: {fileID: 4003543518472727697}
   - component: {fileID: 2279770495424877947}
-  m_Layer: 0
+  m_Layer: 20
   m_Name: struct_Factory_Heavy_A_End_yup
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -477,7 +475,7 @@ GameObject:
   - component: {fileID: 2036700682990714784}
   - component: {fileID: 6649431963587938259}
   - component: {fileID: 111261578058670526}
-  m_Layer: 0
+  m_Layer: 20
   m_Name: struct_Factory_Heavy_A_Mid_yup
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -550,45 +548,3 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!1001 &4034208929789734779
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 1557780845714414655}
-    m_Modifications:
-    - target: {fileID: 1641646101339811762, guid: 8da4a421bde8f734593a8c934f793019, type: 3}
-      propertyPath: m_RootOrder
-      value: -1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1641646101339811762, guid: 8da4a421bde8f734593a8c934f793019, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1641646101339811762, guid: 8da4a421bde8f734593a8c934f793019, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1641646101339811762, guid: 8da4a421bde8f734593a8c934f793019, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4051881364568090456, guid: 8da4a421bde8f734593a8c934f793019, type: 3}
-      propertyPath: m_Name
-      value: Indicators
-      objectReference: {fileID: 0}
-    - target: {fileID: 9138663778288361040, guid: 8da4a421bde8f734593a8c934f793019, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 8da4a421bde8f734593a8c934f793019, type: 3}
---- !u!4 &2392589853860610249 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 1641646101339811762, guid: 8da4a421bde8f734593a8c934f793019, type: 3}
-  m_PrefabInstance: {fileID: 4034208929789734779}
-  m_PrefabAsset: {fileID: 0}

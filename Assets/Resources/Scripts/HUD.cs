@@ -26,10 +26,240 @@ public class HUD : MonoBehaviour
 
     void Update()
     {
-        UpdateCursor();
         UpdateKeyboard();
         UpdateMouse();
     }
+
+    private void UpdateKeyboard()
+    {
+        CheckCloseApplication();
+        CheckShowMenu();
+        CheckGroupCreate();
+        CheckGroupActivate();
+    }
+
+    private void CheckCloseApplication()
+    {
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            Application.Quit();
+        }
+    }
+
+    private void CheckShowMenu()
+    {
+        if (Input.GetKeyDown(KeyCode.F10))
+        {
+            if (MainMenu.Instance.gameObject.activeInHierarchy || SceneMenu.Instance.gameObject.activeInHierarchy)
+            {
+                MainMenu.Instance.gameObject.SetActive(false);
+                SceneMenu.Instance.gameObject.SetActive(false);
+            }
+            else
+            {
+                MainMenu.Instance.gameObject.SetActive(true);
+            }
+        }
+    }
+
+    private void CheckGroupCreate()
+    {
+        for (KeyCode i = KeyCode.Alpha0; i <= KeyCode.Alpha9; i++)
+        {
+            if (MyInput.GetControl() && Input.GetKeyDown(i))
+            {
+                ActivePlayer.AssignGroup(i);
+            }
+        }
+    }
+
+    private void CheckGroupActivate()
+    {
+        for (KeyCode i = KeyCode.Alpha0; i <= KeyCode.Alpha9; i++)
+        {
+            if (MyInput.GetControl() == false && Input.GetKeyDown(i))
+            {
+                ActivePlayer.SelectGroup(i, MyInput.GetShift());
+            }
+        }
+    }
+
+    private void UpdateMouse()
+    {
+        if (Input.GetMouseButtonDown(0))
+        {
+            if (EventSystem.current.IsPointerOverGameObject())
+            {
+                return;
+            }
+
+            startPosition = Input.mousePosition;
+            drag = true;
+        }
+
+        if (Input.GetMouseButton(0))
+        {
+            if (EventSystem.current.IsPointerOverGameObject())
+            {
+                return;
+            }
+
+            if (drag)
+            {
+                endPosition = Input.mousePosition;
+
+                DrawVisual();
+                DrawSelection();
+            }
+        }
+
+        if (Input.GetMouseButtonUp(0))
+        {
+            if ((startPosition - endPosition).magnitude <= 10)
+            {
+                drag = false;
+            }
+
+            if (drag)
+            {
+                SelectUnitInBox();
+            }
+
+            if (EventSystem.current.IsPointerOverGameObject())
+            {
+                return;
+            }
+
+            if (drag == false)
+            {
+                if (Order == OrderType.None)
+                {
+                    ProcessSelection();
+                }
+                else
+                {
+                    if (ProcessOrder())
+                    {
+                        if (MyInput.GetShift() == false)
+                        {
+                            Order = OrderType.None;
+                            Prefab = string.Empty;
+                        }
+                    }
+                }
+            }
+
+            drag = false;
+
+            ResetVisual();
+            DrawVisual();
+            DrawSelection();
+        }
+        else if (Input.GetMouseButtonUp(1))
+        {
+            if (EventSystem.current.IsPointerOverGameObject())
+            {
+                return;
+            }
+
+            if (Order == OrderType.None)
+            {
+                ProcessOrder();
+            }
+            else
+            {
+                if (MyInput.GetShift() == false)
+                {
+                    Order = OrderType.None;
+                    Prefab = string.Empty;
+                }
+            }
+        }
+
+        UpdateCursor();
+        UpdateGameObjectUnderMouse();
+    }
+
+    private void UpdateCursor()
+    {
+        if (Cursor == null)
+        {
+            return;
+        }
+
+        // Rotate.
+        if (Input.GetAxis("Mouse ScrollWheel") > 0.0f)
+        {
+            Cursor.transform.Rotate(Vector3.up, Config.CursorRotateStep);
+        }
+        else if (Input.GetAxis("Mouse ScrollWheel") < 0.0f)
+        {
+            Cursor.transform.Rotate(Vector3.down, Config.CursorRotateStep);
+        }
+
+        // Follow mouse.
+        Vector3 position;
+
+        if (Map.Instance.MouseToPosition(Cursor, out position, out _))
+        {
+            Cursor.transform.position = Config.SnapToGrid ? Utils.SnapToGrid(position) : position;
+        }
+
+        if (Cursor.HasCorrectPosition())
+        {
+            Cursor.Indicators.OnErrorEnd();
+        }
+        else
+        {
+            Cursor.Indicators.OnError();
+        }
+    }
+
+    private void UpdateGameObjectUnderMouse()
+    {
+        if (Cursor == null)
+        {
+            Hovered = GetGameObjectUnderMouse();
+        }
+        else
+        {
+            Hovered = null;
+        }
+    }
+
+    private MyGameObject GetGameObjectUnderMouse()
+    {
+        RaycastHit hitInfo;
+
+        if (Utils.RaycastFromMouse(out hitInfo, LayerMask.GetMask("GameObject")))
+        {
+            return hitInfo.transform.GetComponentInParent<MyGameObject>();
+        }
+
+        return null;
+    }
+
+    private void SelectUnitInBox()
+    {
+        if (MyInput.GetShift() == false)
+        {
+            ActivePlayer.Selection.Clear();
+        }
+
+        foreach (MyGameObject myGameObject in FindObjectsByType<MyGameObject>(FindObjectsSortMode.None)) // TODO: Not very efficient. Refactor into raycast.
+        {
+            Vector3 screenPosition = Camera.main.WorldToScreenPoint(myGameObject.Position);
+
+            if (selectionBox.Contains(screenPosition) == false)
+            {
+                continue;
+            }
+
+            Select(myGameObject);
+        }
+    }
+
+
 
     private void DrawSelection()
     {
@@ -280,224 +510,6 @@ public class HUD : MonoBehaviour
         }
     }
 
-    private void SelectUnitInBox()
-    {
-        if (MyInput.GetShift() == false)
-        {
-            ActivePlayer.Selection.Clear();
-        }
-
-        foreach (MyGameObject myGameObject in FindObjectsByType<MyGameObject>(FindObjectsSortMode.None)) // TODO: Not very efficient. Refactor into raycast.
-        {
-            Vector3 screenPosition = Camera.main.WorldToScreenPoint(myGameObject.Position);
-
-            if (selectionBox.Contains(screenPosition) == false)
-            {
-                continue;
-            }
-
-            Select(myGameObject);
-        }
-    }
-
-    private void UpdateKeyboard()
-    {
-        CheckCloseApplication();
-        CheckShowMenu();
-        CheckGroupCreate();
-        CheckGroupActivate();
-    }
-
-    private void CheckCloseApplication()
-    {
-        if (Input.GetKeyDown(KeyCode.Escape))
-        {
-            Application.Quit();
-        }
-    }
-
-    private void CheckShowMenu()
-    {
-        if (Input.GetKeyDown(KeyCode.F10))
-        {
-            if (MainMenu.Instance.gameObject.activeInHierarchy || SceneMenu.Instance.gameObject.activeInHierarchy)
-            {
-                MainMenu.Instance.gameObject.SetActive(false);
-                SceneMenu.Instance.gameObject.SetActive(false);
-            }
-            else
-            {
-                MainMenu.Instance.gameObject.SetActive(true);
-            }
-        }
-    }
-
-    private void CheckGroupCreate()
-    {
-        for (KeyCode i = KeyCode.Alpha0; i <= KeyCode.Alpha9; i++)
-        {
-            if (MyInput.GetControl() && Input.GetKeyDown(i))
-            {
-                ActivePlayer.AssignGroup(i);
-            }
-        }
-    }
-
-    private void CheckGroupActivate()
-    {
-        for (KeyCode i = KeyCode.Alpha0; i <= KeyCode.Alpha9; i++)
-        {
-            if (MyInput.GetControl() == false && Input.GetKeyDown(i))
-            {
-                ActivePlayer.SelectGroup(i, MyInput.GetShift());
-            }
-        }
-    }
-
-    private void UpdateMouse()
-    {
-        if (Input.GetMouseButtonDown(0))
-        {
-            if (EventSystem.current.IsPointerOverGameObject())
-            {
-                return;
-            }
-
-            startPosition = Input.mousePosition;
-            drag = true;
-        }
-
-        if (Input.GetMouseButton(0))
-        {
-            if (EventSystem.current.IsPointerOverGameObject())
-            {
-                return;
-            }
-
-            if (drag)
-            {
-                endPosition = Input.mousePosition;
-
-                DrawVisual();
-                DrawSelection();
-            }
-        }
-
-        if (Input.GetMouseButtonUp(0))
-        {
-            if ((startPosition - endPosition).magnitude <= 10)
-            {
-                drag = false;
-            }
-
-            if (drag)
-            {
-                SelectUnitInBox();
-            }
-
-            if (EventSystem.current.IsPointerOverGameObject())
-            {
-                return;
-            }
-
-            if (drag == false)
-            {
-                if (Order == OrderType.None)
-                {
-                    ProcessSelection();
-                }
-                else
-                {
-                    if (ProcessOrder())
-                    {
-                        if (MyInput.GetShift() == false)
-                        {
-                            Order = OrderType.None;
-                            Prefab = string.Empty;
-                        }
-                    }
-                }
-            }
-
-            drag = false;
-
-            ResetVisual();
-            DrawVisual();
-            DrawSelection();
-        }
-        else if (Input.GetMouseButtonUp(1))
-        {
-            if (EventSystem.current.IsPointerOverGameObject())
-            {
-                return;
-            }
-
-            if (Order == OrderType.None)
-            {
-                ProcessOrder();
-            }
-            else
-            {
-                if (MyInput.GetShift() == false)
-                {
-                    Order = OrderType.None;
-                    Prefab = string.Empty;
-                }
-            }
-        }
-
-        HoverOverObjects();
-    }
-
-    private void UpdateCursor()
-    {
-        if (Cursor == null)
-        {
-            return;
-        }
-
-        // Rotate.
-        if (Input.GetAxis("Mouse ScrollWheel") > 0.0f)
-        {
-            Cursor.transform.Rotate(Vector3.up, Config.CursorRotateStep);
-        }
-        else if (Input.GetAxis("Mouse ScrollWheel") < 0.0f)
-        {
-            Cursor.transform.Rotate(Vector3.down, Config.CursorRotateStep);
-        }
-
-        // Follow mouse.
-        Vector3 position;
-
-        if (Map.Instance.MouseToPosition(Cursor, out position, out _))
-        {
-            Cursor.transform.position = Config.SnapToGrid ? Utils.SnapToGrid(position) : position;
-        }
-
-        if (Cursor.HasCorrectPosition())
-        {
-            Cursor.Indicators.OnErrorEnd();
-        }
-        else
-        {
-            Cursor.Indicators.OnError();
-        }
-    }
-
-    private void HoverOverObjects()
-    {
-        RaycastHit hitInfo;
-
-        if (Cursor == null && Utils.RaycastFromMouse(out hitInfo))
-        {
-            Hovered = hitInfo.transform.GetComponentInParent<MyGameObject>();
-        }
-        else
-        {
-            Hovered = null;
-        }
-    }
-
     private MyGameObject Cursor { get; set; }
 
     public OrderType Order
@@ -534,7 +546,7 @@ public class HUD : MonoBehaviour
             if (prefab.Equals(string.Empty) == false)
             {
                 Cursor = Utils.CreateGameObject(Prefab, Vector3.zero, Quaternion.identity, ActivePlayer, MyGameObjectState.Cursor);
-                Cursor.GetComponentInChildren<Indicators>().OnConstruction();
+                Cursor.gameObject.layer = LayerMask.NameToLayer("Cursor");
             }
         }
     }

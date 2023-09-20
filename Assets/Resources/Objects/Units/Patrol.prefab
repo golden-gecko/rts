@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: -1351394139304665732}
   - component: {fileID: -7612602296410814948}
   - component: {fileID: 5031213568676112035}
-  m_Layer: 0
+  m_Layer: 20
   m_Name: Patrol
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -34,7 +34,6 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 2800890405151462793}
-  - {fileID: 5479601828020467614}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1187475442492165667
@@ -130,7 +129,7 @@ GameObject:
   - component: {fileID: 5177910126177844959}
   - component: {fileID: 2712191212144745641}
   - component: {fileID: 4043427730760923459}
-  m_Layer: 0
+  m_Layer: 20
   m_Name: Body
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -235,7 +234,7 @@ GameObject:
   - component: {fileID: 8597799461565670169}
   - component: {fileID: 2938474518052692221}
   - component: {fileID: 2095265388040305172}
-  m_Layer: 0
+  m_Layer: 20
   m_Name: unit_Ship_Patrol_B_Gun_yup
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -307,41 +306,3 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!1001 &6540133459564566572
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 1125467308273082621}
-    m_Modifications:
-    - target: {fileID: 1641646101339811762, guid: 8da4a421bde8f734593a8c934f793019, type: 3}
-      propertyPath: m_RootOrder
-      value: -1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1641646101339811762, guid: 8da4a421bde8f734593a8c934f793019, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1641646101339811762, guid: 8da4a421bde8f734593a8c934f793019, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1641646101339811762, guid: 8da4a421bde8f734593a8c934f793019, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4051881364568090456, guid: 8da4a421bde8f734593a8c934f793019, type: 3}
-      propertyPath: m_Name
-      value: Indicators
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 8da4a421bde8f734593a8c934f793019, type: 3}
---- !u!4 &5479601828020467614 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 1641646101339811762, guid: 8da4a421bde8f734593a8c934f793019, type: 3}
-  m_PrefabInstance: {fileID: 6540133459564566572}
-  m_PrefabAsset: {fileID: 0}
