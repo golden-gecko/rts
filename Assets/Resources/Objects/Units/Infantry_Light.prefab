@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 8390890349562236540}
   - component: {fileID: 4681425669654366011}
   - component: {fileID: 415234696511439339}
-  m_Layer: 0
+  m_Layer: 20
   m_Name: unit_Infantry_Light_B_Wheel_yup
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -95,7 +95,7 @@ GameObject:
   - component: {fileID: 6804613719802564898}
   - component: {fileID: 2154504341395656598}
   - component: {fileID: 2840550439682990493}
-  m_Layer: 0
+  m_Layer: 20
   m_Name: Body
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -201,7 +201,7 @@ GameObject:
   - component: {fileID: 4005311559285770666}
   - component: {fileID: 9054222174644997289}
   - component: {fileID: 3453376020920054975}
-  m_Layer: 0
+  m_Layer: 20
   m_Name: unit_Infantry_Light_B_Upper_yup
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -287,7 +287,7 @@ GameObject:
   - component: {fileID: -2369591204685981222}
   - component: {fileID: -2318656066432629002}
   - component: {fileID: 5963572498318276875}
-  m_Layer: 0
+  m_Layer: 20
   m_Name: Infantry_Light
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -308,7 +308,6 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 8699543689800385120}
-  - {fileID: 791284324150142892}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &8197329825504324516
@@ -336,7 +335,10 @@ MonoBehaviour:
   <DestroyEffect>k__BackingField: {fileID: 100006, guid: bf98fad54e73fb8448b7b1b9ba4fd0b6, type: 3}
   <Altitude>k__BackingField: -1
   <MapLayers>k__BackingField: 02000000
-  ShowIndicators: 1
+  <ShowIndicators>k__BackingField: 1
+  <ShowOrders>k__BackingField: 1
+  <ShowEntrance>k__BackingField: 0
+  <ShowExit>k__BackingField: 0
   <ExpirationTimer>k__BackingField:
     <Current>k__BackingField: -1
     <Max>k__BackingField: -1
@@ -400,7 +402,7 @@ GameObject:
   - component: {fileID: 8296406833730617240}
   - component: {fileID: 7354815825739109985}
   - component: {fileID: 5498415651768443849}
-  m_Layer: 0
+  m_Layer: 20
   m_Name: unit_Infantry_Light_B_Gun_yup
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -472,45 +474,3 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!1001 &2032100386345469982
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 9159270735983976980}
-    m_Modifications:
-    - target: {fileID: 1641646101339811762, guid: 8da4a421bde8f734593a8c934f793019, type: 3}
-      propertyPath: m_RootOrder
-      value: -1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1641646101339811762, guid: 8da4a421bde8f734593a8c934f793019, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1641646101339811762, guid: 8da4a421bde8f734593a8c934f793019, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1641646101339811762, guid: 8da4a421bde8f734593a8c934f793019, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4051881364568090456, guid: 8da4a421bde8f734593a8c934f793019, type: 3}
-      propertyPath: m_Name
-      value: Indicators
-      objectReference: {fileID: 0}
-    - target: {fileID: 9138663778288361040, guid: 8da4a421bde8f734593a8c934f793019, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 8da4a421bde8f734593a8c934f793019, type: 3}
---- !u!4 &791284324150142892 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 1641646101339811762, guid: 8da4a421bde8f734593a8c934f793019, type: 3}
-  m_PrefabInstance: {fileID: 2032100386345469982}
-  m_PrefabAsset: {fileID: 0}

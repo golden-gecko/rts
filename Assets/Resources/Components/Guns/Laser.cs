@@ -1,3 +1,4 @@
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class Laser : Gun
@@ -14,11 +15,11 @@ public class Laser : Gun
         GameObject gameObject = Instantiate(MissilePrefab, myGameObject.Center, Quaternion.identity);
         Missile missile = gameObject.GetComponent<Missile>();
 
-        missile.Parent = myGameObject;
-        missile.Player = myGameObject.Player;
-        missile.Damage = Damage;
+        missile.Damage = Damage.Clone() as Property;
         missile.Range = Range;
 
+        missile.SetParent(myGameObject);
+        missile.SetPlayer(myGameObject.Player);
         missile.Attack(position);
 
         Ammunition.Dec();

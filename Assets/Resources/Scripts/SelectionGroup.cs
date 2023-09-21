@@ -85,7 +85,7 @@ public class SelectionGroup
         }
     }
 
-    public void Construct(string prefab, Vector3 position, Quaternion rotation, bool append = false)
+    public void Construct(MyGameObject myGameObject, bool append = false)
     {
         foreach (MyGameObject selected in Items)
         {
@@ -94,7 +94,7 @@ public class SelectionGroup
                 selected.ClearOrders();
             }
 
-            selected.Construct(prefab, position, rotation);
+            selected.Construct(myGameObject);
         }
 
     }

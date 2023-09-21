@@ -7,6 +7,7 @@ public class MyGameObject : MonoBehaviour
     protected virtual void Awake()
     {
         Body = transform.Find("Body");
+        Indicators = Instantiate( Resources.Load<Indicators>("Indicators"), transform, false);
 
         Orders.AllowOrder(OrderType.Destroy); // TODO: Move to component.
         Orders.AllowOrder(OrderType.Disable);
@@ -25,18 +26,9 @@ public class MyGameObject : MonoBehaviour
 
         ConstructionResources.Init("Iron", 0, 30, ResourceDirection.In);
 
-        Recipe r1 = new Recipe("Iron"); // TODO: Remove.
-        r1.Consumes("Iron", 30);
-        ConstructionRecipies.Add(r1);
-
         Stats.Player = Player;
 
-        SkillManager skillManager = Game.Instance.GetComponent<SkillManager>();
-
-        foreach (string skillName in SkillsNames)
-        {
-            Skills[skillName] = skillManager.Get(skillName).Clone() as Skill;
-        }
+        CreateSkills();
     }
 
     protected virtual void Start()
@@ -93,47 +85,6 @@ public class MyGameObject : MonoBehaviour
     {
     }
 
-    protected void UpdateSkills()
-    {
-        foreach (Skill skill in Skills.Values)
-        {
-            skill.Update();
-        }
-    }
-
-    protected void UpdateVisibility()
-    {
-        Player active = HUD.Instance.ActivePlayer;
-
-        if (Player == active || Map.Instance.IsVisibleBySight(this, active))
-        {
-            foreach (Renderer renderer in Body.GetComponentsInChildren<Renderer>(true))
-            {
-                renderer.enabled = true;
-            }
-
-            GetComponentInChildren<Indicators>().OnShow();
-        }
-        else if (Map.Instance.IsVisibleByRadar(this, active))
-        {
-            foreach (Renderer renderer in Body.GetComponentsInChildren<Renderer>(true))
-            {
-                renderer.enabled = false;
-            }
-
-            GetComponentInChildren<Indicators>().OnRadar();
-        }
-        else
-        {
-            foreach (Renderer renderer in Body.GetComponentsInChildren<Renderer>(true))
-            {
-                renderer.enabled = false;
-            }
-
-            GetComponentInChildren<Indicators>().OnHide();
-        }
-    }
-
     public void Assemble(string prefab)
     {
         Orders.Add(Order.Assemble(prefab));
@@ -152,11 +103,6 @@ public class MyGameObject : MonoBehaviour
     public void Construct(MyGameObject myGameObject)
     {
         Orders.Add(Order.Construct(myGameObject));
-    }
-
-    public void Construct(string prefab, Vector3 position, Quaternion rotation)
-    {
-        Orders.Add(Order.Construct(prefab, position, rotation));
     }
 
     public void Destroy(int priority = -1)
@@ -281,6 +227,18 @@ public class MyGameObject : MonoBehaviour
     public void Research(string technology)
     {
         Orders.Add(Order.Research(technology));
+    }
+
+    public void Stock(MyGameObject myGameObject, string resource, int value, int priority = -1)
+    {
+        if (0 <= priority && priority < Orders.Count)
+        {
+            Orders.Insert(priority, Order.Stock(myGameObject, resource, value));
+        }
+        else
+        {
+            Orders.Add(Order.Stock(myGameObject, resource, value));
+        }
     }
 
     public void Stop()
@@ -432,7 +390,12 @@ public class MyGameObject : MonoBehaviour
             Instantiate(DestroyEffect, Position, Quaternion.identity);
         }
 
-        Destroy(gameObject);
+        foreach (Skill skill in Skills.Values)
+        {
+            skill.OnDestroy(this);
+        }
+
+        Destroy(gameObject); // TODO: Delay?
     }
 
     public void OnRepair(float value)
@@ -447,7 +410,7 @@ public class MyGameObject : MonoBehaviour
             return;
         }
 
-        GetComponentInChildren<Indicators>().OnSelect(status);
+        Indicators.GetComponent<Indicators>().OnSelect(status);
     }
 
     protected virtual void UpdatePosition()
@@ -464,7 +427,7 @@ public class MyGameObject : MonoBehaviour
     {
         if (Player != null)
         {
-            GetComponentInChildren<Indicators>().OnPlayerChange(Player);
+            Indicators.GetComponent<Indicators>().OnPlayerChange(Player);
         }
     }
 
@@ -518,7 +481,7 @@ public class MyGameObject : MonoBehaviour
                 }
                 else
                 {
-                    Player.RegisterConsumer(this, resource.Name, resource.Capacity, resource.Direction);
+                    Player.RegisterConsumer(this, resource.Name, resource.Available, resource.Direction);
                 }
             }
 
@@ -530,7 +493,7 @@ public class MyGameObject : MonoBehaviour
                 }
                 else
                 {
-                    Player.RegisterProducer(this, resource.Name, resource.Storage, resource.Direction);
+                    Player.RegisterProducer(this, resource.Name, resource.Current, resource.Direction);
                 }
             }
         }
@@ -559,23 +522,108 @@ public class MyGameObject : MonoBehaviour
         UpdateSelection();
     }
 
+    public void SetParent(MyGameObject myGameObject)
+    {
+        Parent = myGameObject;
+    }
+
+    public void SetState(MyGameObjectState state)
+    {
+        State = state;
+
+        switch (state)
+        {
+            case MyGameObjectState.Cursor:
+                Indicators.OnConstruction();
+                break;
+
+            case MyGameObjectState.UnderAssembly:
+                Indicators.OnConstruction();
+                break;
+
+            case MyGameObjectState.UnderConstruction:
+                RaiseConstructionResourceFlags();
+
+                Indicators.OnConstruction();
+                break;
+
+            case MyGameObjectState.Operational:
+                RemoveConstructionResourceFlags();
+
+                Indicators.OnConstructionEnd();
+                break;
+        }
+    }
+
     public bool HasCorrectPosition()
     {
         MyGameObjectMapLayer mapLayer;
 
-        if (Map.Instance.GetPosition(Position, out _, out mapLayer) == false)
+        if (Map.Instance.GetPosition(this, Position, out _, out mapLayer) == false)
         {
             return false;
         }
 
-        return mapLayer == MyGameObjectMapLayer.Terrain == MapLayers.Contains(MyGameObjectMapLayer.Terrain)
-            || mapLayer == MyGameObjectMapLayer.Water == MapLayers.Contains(MyGameObjectMapLayer.Water);
+        return (mapLayer == MyGameObjectMapLayer.Terrain && MapLayers.Contains(MyGameObjectMapLayer.Terrain))
+            || (mapLayer == MyGameObjectMapLayer.Underwater && MapLayers.Contains(MyGameObjectMapLayer.Underwater))
+            || (mapLayer == MyGameObjectMapLayer.Water && MapLayers.Contains(MyGameObjectMapLayer.Water));
     }
 
     public void ClearOrders()
     {
         Stats.Add(Stats.OrdersCancelled, Orders.Count);
         Orders.Clear();
+    }
+
+    private void CreateSkills()
+    {
+        SkillManager skillManager = Game.Instance.GetComponent<SkillManager>();
+
+        foreach (string skillName in SkillsNames)
+        {
+            Skills[skillName] = skillManager.Get(skillName).Clone() as Skill;
+        }
+    }
+
+    private void UpdateSkills()
+    {
+        foreach (Skill skill in Skills.Values)
+        {
+            skill.Update(this);
+        }
+    }
+
+    private void UpdateVisibility()
+    {
+        Player active = HUD.Instance.ActivePlayer;
+
+        if (Player == active || Map.Instance.IsVisibleBySight(this, active))
+        {
+            foreach (Renderer renderer in Body.GetComponentsInChildren<Renderer>(true))
+            {
+                renderer.enabled = true;
+            }
+
+            Indicators.GetComponent<Indicators>().OnShow();
+        }
+        else if (Map.Instance.IsVisibleByRadar(this, active))
+        {
+            foreach (Renderer renderer in Body.GetComponentsInChildren<Renderer>(true))
+            {
+                renderer.enabled = false;
+            }
+
+            Indicators.GetComponent<Indicators>().OnRadar();
+        }
+        else
+        {
+            foreach (Renderer renderer in Body.GetComponentsInChildren<Renderer>(true))
+            {
+                renderer.enabled = false;
+            }
+
+            Indicators.GetComponent<Indicators>().OnHide();
+        }
     }
 
     public Vector3 Center
@@ -606,28 +654,18 @@ public class MyGameObject : MonoBehaviour
 
     public Vector3 Exit { get => Position - new Vector3(Direction.x * Size.x, Direction.y * Size.y, Direction.z * Size.z); }
 
-    public float Radius
-    {
-        get
-        {
-            Vector3 size = Size;
-
-            return (size.x + size.y + size.z) / 3.0f;
-        }
-    }
+    public float Radius { get => (Size.x + Size.y + Size.z) / 3.0f; }
 
     public Vector3 Size
     {
         get
         {
-            Quaternion rotation = Rotation;
-            Rotation = Quaternion.identity;
-            Physics.SyncTransforms();
+            Quaternion rotation = Utils.ResetRotation(this);
 
             Vector3 min = new Vector3(float.MaxValue, float.MaxValue, float.MaxValue);
             Vector3 max = new Vector3(float.MinValue, float.MinValue, float.MinValue);
 
-            foreach (Collider collider in GetComponentsInChildren<Collider>())
+            foreach (Collider collider in Body.GetComponentsInChildren<Collider>())
             {
                 min.x = Mathf.Min(min.x, collider.bounds.min.x);
                 min.y = Mathf.Min(min.y, collider.bounds.min.y);
@@ -638,8 +676,7 @@ public class MyGameObject : MonoBehaviour
                 max.z = Mathf.Max(max.z, collider.bounds.max.z);
             }
 
-            Rotation = rotation;
-            Physics.SyncTransforms();
+            Utils.RestoreRotation(this, rotation);
 
             return max - min;
         }
@@ -655,12 +692,14 @@ public class MyGameObject : MonoBehaviour
         }
     }
 
+    public bool Constructed { get => ConstructionResources.CurrentSum == ConstructionResources.MaxSum; }
+
     public bool Powered { get => Map.Instance.IsVisibleByPower(this, HUD.Instance.ActivePlayer); }
 
     public bool Working { get => Enabled && (Powerable == false || Powered); }
 
     [field: SerializeField]
-    public Player Player { get; set; }
+    public Player Player { get; private set; }
 
     [field: SerializeField]
     public bool Enabled { get; set; } = true;
@@ -696,10 +735,22 @@ public class MyGameObject : MonoBehaviour
     public bool ShowIndicators { get; set; } = true;
 
     [field: SerializeField]
+    public bool ShowOrders { get; set; } = true;
+
+    [field: SerializeField]
+    public bool ShowEntrance { get; set; } = true;
+
+    [field: SerializeField]
+    public bool ShowExit { get; set; } = true;
+
+    [field: SerializeField]
     public Timer ExpirationTimer { get; set; } = new Timer(-1.0f, -1.0f);
 
     [field: SerializeField]
     public List<string> SkillsNames { get; set; } = new List<string>();
+
+    [field: SerializeField]
+    public MyGameObjectState State { get; private set; } = MyGameObjectState.Operational;
 
     public Vector3 Position { get => transform.position; set => transform.position = value; }
 
@@ -711,17 +762,15 @@ public class MyGameObject : MonoBehaviour
 
     public Stats Stats { get; } = new Stats();
 
-    public MyGameObjectState State { get; set; } = MyGameObjectState.Operational;
-
     public ResourceContainer ConstructionResources { get; } = new ResourceContainer();
 
-    public RecipeContainer ConstructionRecipies { get; } = new RecipeContainer(); // TODO: Remove.
-
-    public MyGameObject Parent { get; set; } // TODO: Hide setter.
+    public MyGameObject Parent { get; private set; }
 
     public Dictionary<string, Skill> Skills { get; } = new Dictionary<string, Skill>();
 
     public Dictionary<OrderType, OrderHandler> OrderHandlers { get; } = new Dictionary<OrderType, OrderHandler>();
 
     public Transform Body { get; private set; }
+
+    public Indicators Indicators { get; private set; }
 }

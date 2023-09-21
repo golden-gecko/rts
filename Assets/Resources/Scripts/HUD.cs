@@ -19,281 +19,14 @@ public class HUD : MonoBehaviour
 
     void Start()
     {
-        ResetVisual();
-        DrawVisual();
-        DrawSelection();
+        DragReset();
+        DragDraw();
     }
 
     void Update()
     {
-        UpdateCursor();
         UpdateKeyboard();
         UpdateMouse();
-    }
-
-    private void DrawSelection()
-    {
-        if (Input.mousePosition.x < startPosition.x)
-        {
-            // Drag left.
-            selectionBox.xMin = Input.mousePosition.x;
-            selectionBox.xMax = startPosition.x;
-        }
-        else
-        {
-            // Drag right.
-            selectionBox.xMin = startPosition.x;
-            selectionBox.xMax = Input.mousePosition.x;
-        }
-
-        if (Input.mousePosition.y < startPosition.y)
-        {
-            // Drag down.
-            selectionBox.yMin = Input.mousePosition.y;
-            selectionBox.yMax = startPosition.y;
-        }
-        else
-        {
-            // Drag up.
-            selectionBox.yMin = startPosition.y;
-            selectionBox.yMax = Input.mousePosition.y;
-        }
-    }
-
-    private void DrawVisual()
-    {
-        Vector2 boxCenter = (startPosition + endPosition) / 2;
-        boxVisual.position = boxCenter;
-
-        Vector2 boxSize = new Vector2(Mathf.Abs(startPosition.x - endPosition.x), Mathf.Abs(startPosition.y - endPosition.y));
-        boxVisual.sizeDelta = boxSize;
-    }
-
-    private void IssueOrder(Vector3 position)
-    {
-        switch (Order)
-        {
-            case OrderType.Attack:
-                ActivePlayer.Selection.Attack(position, MyInput.IsShift());
-                break;
-
-            case OrderType.Guard:
-                ActivePlayer.Selection.Guard(position, MyInput.IsShift());
-                break;
-
-            case OrderType.Move:
-                ActivePlayer.Selection.Move(position, MyInput.IsShift());
-                break;
-
-            case OrderType.Patrol:
-                ActivePlayer.Selection.Patrol(position, MyInput.IsShift());
-                break;
-
-            case OrderType.Rally:
-                ActivePlayer.Selection.Rally(position, MyInput.IsShift());
-                break;
-        }
-    }
-
-    private void IssueOrder(MyGameObject myGameObject)
-    {
-        foreach (MyGameObject selected in ActivePlayer.Selection.Items)
-        {
-            if (MyInput.IsShift() == false)
-            {
-                selected.Stats.Add(Stats.OrdersCancelled, selected.Orders.Count);
-                selected.Orders.Clear();
-            }
-
-            switch (Order)
-            {
-                // case OrderType.Assemble: // TODO: Implement.
-
-                case OrderType.Attack:
-                    selected.Attack(myGameObject);
-                    break;
-
-                case OrderType.Construct:
-                    selected.Construct(myGameObject);
-                    break;
-
-                case OrderType.Gather:
-                    selected.Gather(myGameObject);
-                    break;
-
-                case OrderType.Guard:
-                    selected.Guard(myGameObject);
-                    break;
-
-                case OrderType.Follow:
-                    selected.Follow(myGameObject);
-                    break;
-            }
-        }
-    }
-
-    private bool MouseToRaycast(out RaycastHit hitInfo, int layerMask = Physics.DefaultRaycastLayers)
-    {
-        return Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out hitInfo, Config.RaycastMaxDistance, layerMask);
-    }
-
-    private bool ProcessOrder()
-    {
-        if (Order == OrderType.Construct)
-        {
-            if (Cursor.HasCorrectPosition())
-            {
-                ActivePlayer.Selection.Construct(Prefab, Cursor.Position, Cursor.Rotation, MyInput.IsShift());
-
-                return true;
-            }
-        }
-        else
-        {
-            RaycastHit hitInfo;
-
-            if (MouseToRaycast(out hitInfo))
-            {
-                if (Utils.IsTerrain(hitInfo) || Utils.IsWater(hitInfo))
-                {
-                    if (Order == OrderType.None)
-                    {
-                        IssueOrderDefault(hitInfo.point);
-                    }
-                    else
-                    {
-                        IssueOrder(hitInfo.point);
-                    }
-                }
-                else
-                {
-                    if (Order == OrderType.None)
-                    {
-                        IssueOrderDefault(hitInfo.transform.GetComponentInParent<MyGameObject>());
-                    }
-                    else
-                    {
-                        IssueOrder(hitInfo.transform.GetComponentInParent<MyGameObject>());
-                    }
-                }
-
-                return true;
-            }
-        }
-
-        return false;
-    }
-
-    private void IssueOrderDefault(Vector3 position)
-    {
-        foreach (MyGameObject selected in ActivePlayer.Selection.Items)
-        {
-            if (MyInput.IsShift() == false)
-            {
-                selected.Stats.Add(Stats.OrdersCancelled, selected.Orders.Count);
-                selected.Orders.Clear();
-            }
-
-            selected.Move(position);
-        }
-    }
-
-    private void IssueOrderDefault(MyGameObject myGameObject)
-    {
-        foreach (MyGameObject selected in ActivePlayer.Selection.Items)
-        {
-            if (MyInput.IsShift() == false)
-            {
-                selected.Stats.Add(Stats.OrdersCancelled, selected.Orders.Count);
-                selected.Orders.Clear();
-            }
-
-            if (myGameObject.Is(selected, DiplomacyState.Ally))
-            {
-                selected.Follow(myGameObject);
-            }
-            else if (myGameObject.Is(selected, DiplomacyState.Enemy))
-            {
-                selected.Attack(myGameObject);
-            }
-            else if (myGameObject.Gatherable)
-            {
-                selected.Gather(myGameObject);
-            }
-        }
-    }
-
-    private void ProcessSelection()
-    {
-        RaycastHit hitInfo;
-
-        if (MouseToRaycast(out hitInfo))
-        {
-            if (MyInput.IsShift() == false)
-            {
-                ActivePlayer.Selection.Clear();
-            }
-
-            if (Utils.IsTerrain(hitInfo) == false && Utils.IsWater(hitInfo) == false)
-            {
-                Select(hitInfo.transform.GetComponentInParent<MyGameObject>());
-            }
-        }
-    }
-
-    private void ResetVisual()
-    {
-        startPosition = Vector2.zero;
-        endPosition = Vector2.zero;
-    }
-
-    public void Select(MyGameObject myGameObject)
-    {
-        if (myGameObject == null)
-        {
-            return;
-        }
-
-        if (myGameObject.Player != ActivePlayer)
-        {
-            return;
-        }
-
-        if (myGameObject.Selectable == false)
-        {
-            return;
-        }
-
-        if (MyInput.IsShift() && ActivePlayer.Selection.Contains(myGameObject))
-        {
-            myGameObject.Select(false);
-            ActivePlayer.Selection.Remove(myGameObject);
-        }
-        else
-        {
-            myGameObject.Select(true);
-            ActivePlayer.Selection.Add(myGameObject);
-        }
-    }
-
-    private void SelectUnitInBox()
-    {
-        if (MyInput.IsShift() == false)
-        {
-            ActivePlayer.Selection.Clear();
-        }
-
-        foreach (MyGameObject myGameObject in FindObjectsByType<MyGameObject>(FindObjectsSortMode.None)) // TODO: Not very efficient. Refactor into raycast.
-        {
-            Vector3 screenPosition = Camera.main.WorldToScreenPoint(myGameObject.Position);
-
-            if (selectionBox.Contains(screenPosition) == false)
-            {
-                continue;
-            }
-
-            Select(myGameObject);
-        }
     }
 
     private void UpdateKeyboard()
@@ -332,7 +65,7 @@ public class HUD : MonoBehaviour
     {
         for (KeyCode i = KeyCode.Alpha0; i <= KeyCode.Alpha9; i++)
         {
-            if (MyInput.IsControl() && Input.GetKeyDown(i))
+            if (MyInput.GetControl() && Input.GetKeyDown(i))
             {
                 ActivePlayer.AssignGroup(i);
             }
@@ -343,9 +76,9 @@ public class HUD : MonoBehaviour
     {
         for (KeyCode i = KeyCode.Alpha0; i <= KeyCode.Alpha9; i++)
         {
-            if (MyInput.IsControl() == false && Input.GetKeyDown(i))
+            if (MyInput.GetControl() == false && Input.GetKeyDown(i))
             {
-                ActivePlayer.SelectGroup(i, MyInput.IsShift());
+                ActivePlayer.SelectGroup(i, MyInput.GetShift());
             }
         }
     }
@@ -359,8 +92,7 @@ public class HUD : MonoBehaviour
                 return;
             }
 
-            startPosition = Input.mousePosition;
-            drag = true;
+            DragStart();
         }
 
         if (Input.GetMouseButton(0))
@@ -372,24 +104,14 @@ public class HUD : MonoBehaviour
 
             if (drag)
             {
-                endPosition = Input.mousePosition;
-
-                DrawVisual();
-                DrawSelection();
+                DragUpdate();
+                DragDraw();
             }
         }
 
         if (Input.GetMouseButtonUp(0))
         {
-            if ((startPosition - endPosition).magnitude <= 10)
-            {
-                drag = false;
-            }
-
-            if (drag)
-            {
-                SelectUnitInBox();
-            }
+            DragEnd();
 
             if (EventSystem.current.IsPointerOverGameObject())
             {
@@ -406,7 +128,7 @@ public class HUD : MonoBehaviour
                 {
                     if (ProcessOrder())
                     {
-                        if (MyInput.IsShift() == false)
+                        if (MyInput.GetShift() == false)
                         {
                             Order = OrderType.None;
                             Prefab = string.Empty;
@@ -417,9 +139,8 @@ public class HUD : MonoBehaviour
 
             drag = false;
 
-            ResetVisual();
-            DrawVisual();
-            DrawSelection();
+            DragReset();
+            DragDraw();
         }
         else if (Input.GetMouseButtonUp(1))
         {
@@ -432,17 +153,15 @@ public class HUD : MonoBehaviour
             {
                 ProcessOrder();
             }
-            else
+            else if (MyInput.GetShift() == false)
             {
-                if (MyInput.IsShift() == false)
-                {
-                    Order = OrderType.None;
-                    Prefab = string.Empty;
-                }
+                Order = OrderType.None;
+                Prefab = string.Empty;
             }
         }
 
-        HoverOverObjects();
+        UpdateCursor();
+        UpdateGameObjectUnderMouse();
     }
 
     private void UpdateCursor()
@@ -452,20 +171,7 @@ public class HUD : MonoBehaviour
             return;
         }
 
-        Vector3 position;
-
-        if (Map.Instance.MouseToPosition(out position, out _))
-        {
-            if (Config.SnapToGrid)
-            {
-                Cursor.transform.position = Utils.SnapToGrid(position);
-            }
-            else
-            {
-                Cursor.transform.position = position;
-            }
-        }
-
+        // Rotate.
         if (Input.GetAxis("Mouse ScrollWheel") > 0.0f)
         {
             Cursor.transform.Rotate(Vector3.up, Config.CursorRotateStep);
@@ -475,27 +181,330 @@ public class HUD : MonoBehaviour
             Cursor.transform.Rotate(Vector3.down, Config.CursorRotateStep);
         }
 
+        // Follow mouse.
+        Vector3 position;
+
+        if (Map.Instance.MouseToPosition(Cursor, out position, out _))
+        {
+            Cursor.transform.position = Config.SnapToGrid ? Utils.SnapToGrid(position) : position;
+        }
+
         if (Cursor.HasCorrectPosition())
         {
-            Cursor.GetComponentInChildren<Indicators>().OnErrorEnd();
+            Cursor.Indicators.OnErrorEnd();
         }
         else
         {
-            Cursor.GetComponentInChildren<Indicators>().OnError();
+            Cursor.Indicators.OnError();
         }
     }
 
-    private void HoverOverObjects()
+    private void UpdateGameObjectUnderMouse()
     {
-        RaycastHit hitInfo;
-
-        if (Cursor == null && MouseToRaycast(out hitInfo))
+        if (Cursor == null)
         {
-            Hovered = hitInfo.transform.GetComponentInParent<MyGameObject>();
+            Hovered = GetGameObjectUnderMouse();
         }
         else
         {
             Hovered = null;
+        }
+    }
+
+    private void DragStart()
+    {
+        startPosition = Input.mousePosition;
+        drag = true;
+    }
+
+    private void DragUpdate()
+    {
+        endPosition = Input.mousePosition;
+    }
+
+    private void DragEnd()
+    {
+        if ((startPosition - endPosition).magnitude <= 10)
+        {
+            drag = false;
+        }
+
+        if (drag)
+        {
+            SelectUnitInBox();
+        }
+    }
+
+    private void DragReset()
+    {
+        startPosition = Vector2.zero;
+        endPosition = Vector2.zero;
+    }
+
+    private void DragDraw()
+    {
+        Vector2 boxCenter = (startPosition + endPosition) / 2;
+        BoxVisual.position = boxCenter;
+
+        Vector2 boxSize = new Vector2(Mathf.Abs(startPosition.x - endPosition.x), Mathf.Abs(startPosition.y - endPosition.y));
+        BoxVisual.sizeDelta = boxSize;
+
+        if (Input.mousePosition.x < startPosition.x)
+        {
+            // Drag left.
+            selectionBox.xMin = Input.mousePosition.x;
+            selectionBox.xMax = startPosition.x;
+        }
+        else
+        {
+            // Drag right.
+            selectionBox.xMin = startPosition.x;
+            selectionBox.xMax = Input.mousePosition.x;
+        }
+
+        if (Input.mousePosition.y < startPosition.y)
+        {
+            // Drag down.
+            selectionBox.yMin = Input.mousePosition.y;
+            selectionBox.yMax = startPosition.y;
+        }
+        else
+        {
+            // Drag up.
+            selectionBox.yMin = startPosition.y;
+            selectionBox.yMax = Input.mousePosition.y;
+        }
+    }
+
+    private MyGameObject GetGameObjectUnderMouse()
+    {
+        RaycastHit hitInfo;
+
+        if (Utils.RaycastFromMouse(out hitInfo, LayerMask.GetMask("GameObject")))
+        {
+            return hitInfo.transform.GetComponentInParent<MyGameObject>();
+        }
+
+        return null;
+    }
+
+    private void SelectUnitInBox()
+    {
+        if (MyInput.GetShift() == false)
+        {
+            ActivePlayer.Selection.Clear();
+        }
+
+        foreach (MyGameObject myGameObject in FindObjectsByType<MyGameObject>(FindObjectsSortMode.None)) // TODO: Not very efficient. Refactor into raycast.
+        {
+            if (selectionBox.Contains(Camera.main.WorldToScreenPoint(myGameObject.Position)))
+            {
+                Select(myGameObject);
+            }
+        }
+    }
+
+    private void IssueOrder(Vector3 position)
+    {
+        switch (Order)
+        {
+            case OrderType.Attack:
+                ActivePlayer.Selection.Attack(position, MyInput.GetShift());
+                break;
+
+            case OrderType.Guard:
+                ActivePlayer.Selection.Guard(position, MyInput.GetShift());
+                break;
+
+            case OrderType.Move:
+                ActivePlayer.Selection.Move(position, MyInput.GetShift());
+                break;
+
+            case OrderType.Patrol:
+                ActivePlayer.Selection.Patrol(position, MyInput.GetShift());
+                break;
+
+            case OrderType.Rally:
+                ActivePlayer.Selection.Rally(position, MyInput.GetShift());
+                break;
+        }
+    }
+
+    private void IssueOrder(MyGameObject myGameObject)
+    {
+        foreach (MyGameObject selected in ActivePlayer.Selection.Items)
+        {
+            if (MyInput.GetShift() == false)
+            {
+                selected.ClearOrders();
+            }
+
+            switch (Order)
+            {
+                // case OrderType.Assemble: // TODO: Implement.
+
+                case OrderType.Attack:
+                    selected.Attack(myGameObject);
+                    break;
+
+                case OrderType.Construct:
+                    selected.Construct(myGameObject);
+                    break;
+
+                case OrderType.Gather:
+                    selected.Gather(myGameObject);
+                    break;
+
+                case OrderType.Guard:
+                    selected.Guard(myGameObject);
+                    break;
+
+                case OrderType.Follow:
+                    selected.Follow(myGameObject);
+                    break;
+            }
+        }
+    }
+
+    private bool ProcessOrder()
+    {
+        if (Order == OrderType.Construct)
+        {
+            if (Cursor.HasCorrectPosition())
+            {
+                MyGameObject myGameObject = Utils.CreateGameObject(Prefab, Cursor.Position, Cursor.Rotation, ActivePlayer, MyGameObjectState.UnderConstruction);
+
+                ActivePlayer.Selection.Construct(myGameObject, MyInput.GetShift());
+
+                return true;
+            }
+        }
+        else
+        {
+            RaycastHit hitInfo;
+
+            if (Utils.RaycastFromMouse(out hitInfo, LayerMask.GetMask("GameObject")))
+            {
+                if (Order == OrderType.None)
+                {
+                    IssueOrderDefault(hitInfo.transform.GetComponentInParent<MyGameObject>());
+                }
+                else
+                {
+                    IssueOrder(hitInfo.transform.GetComponentInParent<MyGameObject>());
+                }
+
+                return true;
+            }
+            else if (Utils.RaycastFromMouse(out hitInfo, LayerMask.GetMask("Terrain") | LayerMask.GetMask("Water")))
+            {
+                if (Order == OrderType.None)
+                {
+                    IssueOrderDefault(hitInfo.point);
+                }
+                else
+                {
+                    IssueOrder(hitInfo.point);
+                }
+
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    private void IssueOrderDefault(Vector3 position)
+    {
+        foreach (MyGameObject selected in ActivePlayer.Selection.Items)
+        {
+            if (MyInput.GetShift() == false)
+            {
+                selected.ClearOrders();
+            }
+
+            selected.Move(position);
+        }
+    }
+
+    private void IssueOrderDefault(MyGameObject myGameObject)
+    {
+        foreach (MyGameObject selected in ActivePlayer.Selection.Items)
+        {
+            if (MyInput.GetShift() == false)
+            {
+                selected.ClearOrders();
+            }
+
+            if (myGameObject.Is(selected, DiplomacyState.Ally) && myGameObject.State == MyGameObjectState.UnderAssembly)
+            {
+                // TODO: Implement.
+            }
+            else if (myGameObject.Is(selected, DiplomacyState.Ally) && myGameObject.State == MyGameObjectState.UnderConstruction)
+            {
+                selected.Construct(myGameObject);
+            }
+            else if (myGameObject.Is(selected, DiplomacyState.Ally))
+            {
+                selected.Follow(myGameObject);
+            }
+            else if (myGameObject.Is(selected, DiplomacyState.Enemy))
+            {
+                selected.Attack(myGameObject);
+            }
+            else if (myGameObject.Gatherable)
+            {
+                selected.Gather(myGameObject);
+            }
+        }
+    }
+
+    private void ProcessSelection()
+    {
+        RaycastHit hitInfo;
+
+        if (Utils.RaycastFromMouse(out hitInfo) == false)
+        {
+            return;
+        }
+
+        if (MyInput.GetShift() == false)
+        {
+            ActivePlayer.Selection.Clear();
+        }
+
+        if (Utils.IsTerrain(hitInfo) == false && Utils.IsWater(hitInfo) == false)
+        {
+            Select(hitInfo.transform.GetComponentInParent<MyGameObject>());
+        }
+    }
+
+    public void Select(MyGameObject myGameObject)
+    {
+        if (myGameObject == null)
+        {
+            return;
+        }
+
+        if (myGameObject.Player != ActivePlayer)
+        {
+            return;
+        }
+
+        if (myGameObject.Selectable == false)
+        {
+            return;
+        }
+
+        if (MyInput.GetShift() && ActivePlayer.Selection.Contains(myGameObject))
+        {
+            myGameObject.Select(false);
+            ActivePlayer.Selection.Remove(myGameObject);
+        }
+        else
+        {
+            myGameObject.Select(true);
+            ActivePlayer.Selection.Add(myGameObject);
         }
     }
 
@@ -534,21 +543,19 @@ public class HUD : MonoBehaviour
 
             if (prefab.Equals(string.Empty) == false)
             {
-                Cursor = Utils.CreateGameObject(Prefab, Vector3.zero, Quaternion.identity, null, MyGameObjectState.Cursor);
-                Cursor.GetComponentInChildren<Indicators>().OnConstruction();
+                Cursor = Utils.CreateGameObject(Prefab, Vector3.zero, Quaternion.identity, ActivePlayer, MyGameObjectState.Cursor);
+                Cursor.gameObject.layer = LayerMask.NameToLayer("Cursor");
             }
         }
     }
 
-    public Player ActivePlayer;
+    [field: SerializeField]
+    public Player ActivePlayer { get; private set; }
 
-    public RectTransform boxVisual;
+    [field: SerializeField]
+    public RectTransform BoxVisual { get; private set; }
 
     public MyGameObject Hovered { get; private set; }
-
-    private bool drag = false;
-
-    private Vector2 endPosition = Vector2.zero;
 
     private OrderType order = OrderType.None;
 
@@ -556,5 +563,9 @@ public class HUD : MonoBehaviour
 
     private Rect selectionBox;
 
+    private bool drag = false;
+
     private Vector2 startPosition = Vector2.zero;
+
+    private Vector2 endPosition = Vector2.zero;
 }
