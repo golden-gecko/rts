@@ -1,3 +1,4 @@
+using UnityEditor.PackageManager;
 using UnityEngine;
 using static UnityEngine.UI.Image;
 
@@ -36,6 +37,11 @@ public class Utils
         return myGameObject;
     }
 
+    public static MyGameObject GetGameObject(RaycastHit hitInfo)
+    {
+        return hitInfo.transform.GetComponentInParent<MyGameObject>();
+    }
+
     public static bool IsCloseTo(Vector3 source, Vector3 target)
     {
         return IsInRange(source, target, 0.0f, 1.0f);
@@ -59,14 +65,14 @@ public class Utils
         return rangeMin <= magnitude && magnitude <= rangeMax;
     }
 
-    public static bool IsTerrain(RaycastHit hit)
+    public static bool IsTerrain(RaycastHit hitInfo)
     {
-        return hit.transform.CompareTag("Terrain");
+        return hitInfo.transform.CompareTag("Terrain");
     }
 
-    public static bool IsWater(RaycastHit hit)
+    public static bool IsWater(RaycastHit hitInfo)
     {
-        return hit.transform.CompareTag("Water");
+        return hitInfo.transform.CompareTag("Water");
     }
 
     public static Quaternion ResetRotation(MyGameObject myGameObject)
@@ -122,5 +128,10 @@ public class Utils
     public static RaycastHit[] RaycastAll(Ray ray, int layerMask = Physics.DefaultRaycastLayers)
     {
         return Physics.RaycastAll(ray, float.MaxValue, layerMask);
+    }
+
+    public static RaycastHit[] SphereCastAll(Vector3 position,  float range, int layerMask = Physics.DefaultRaycastLayers)
+    {
+        return Physics.SphereCastAll(position, range, Vector3.down, 0.0f, layerMask);
     }
 }

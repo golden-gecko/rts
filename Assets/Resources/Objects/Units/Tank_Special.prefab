@@ -238,6 +238,7 @@ MonoBehaviour:
     <Max>k__BackingField: -1
   <SkillsNames>k__BackingField:
   - Damage
+  - Damage_Aura
 --- !u!114 &5524956404379026895
 MonoBehaviour:
   m_ObjectHideFlags: 0

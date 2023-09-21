@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class Skill : ICloneable
@@ -20,9 +21,21 @@ public class Skill : ICloneable
     {
     }
 
-    public virtual void Update()
+    public virtual void Update(MyGameObject myGameObject)
     {
         Cooldown.Update(Time.deltaTime);
+
+        RaycastHit[] hitInfos = Utils.SphereCastAll(myGameObject.Position, Range, LayerMask.GetMask("GameObject"));
+
+        foreach (RaycastHit hitInfo in hitInfos)
+        {
+            MyGameObject target = Utils.GetGameObject(hitInfo);
+
+            if (Timers.ContainsKey(target) == false)
+            {
+                Timers.Add(target, new Timer());
+            }
+        }
     }
 
     public string GetInfo()
@@ -37,4 +50,6 @@ public class Skill : ICloneable
     public Timer Cooldown { get; }
 
     public string Effect { get; protected set; } = string.Empty;
+
+    private Dictionary<MyGameObject, Timer> Timers = new Dictionary<MyGameObject, Timer>();
 }

@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using System.Linq;
 using TMPro;
 using UnityEngine;
@@ -111,7 +110,17 @@ public class Indicators : MonoBehaviour
 
     public void OnRadar()
     {
-        bar.gameObject.SetActive(false);
+        MyGameObject myGameObject = GetComponentInParent<MyGameObject>();
+
+        if (HUD.Instance.ActivePlayer == myGameObject.Player || HUD.Instance.ActivePlayer.TechnologyTree.IsDiscovered("Radar 3"))
+        {
+            bar.gameObject.SetActive(true);
+        }
+        else
+        {
+            bar.gameObject.SetActive(false);
+        }
+
         range.gameObject.SetActive(false);
 
         construction.gameObject.SetActive(false);
@@ -137,12 +146,16 @@ public class Indicators : MonoBehaviour
         {
             case MyGameObjectState.UnderAssembly:
             case MyGameObjectState.UnderConstruction:
+                OnConstruction();
                 break;
 
             case MyGameObjectState.Operational:
-                break;
+                if (HUD.Instance.ActivePlayer == myGameObject.Player)
+                {
+                    bar.gameObject.SetActive(true);
+                }
 
-            default:
+                trace.gameObject.SetActive(false);
                 break;
         }
     }
@@ -386,12 +399,6 @@ public class Indicators : MonoBehaviour
 
                 orderSphere.gameObject.SetActive(true);
                 orderSphere.transform.position = order.TargetGameObject.Position;
-                break;
-
-            case OrderType.UseSkill:
-                orderText.gameObject.SetActive(true);
-                orderText.transform.localPosition = new Vector3(orderText.transform.localPosition.x, size.y * Config.IndicatorTextOffset, orderText.transform.localPosition.z);
-                orderTextValueMesh.SetText(string.Format("Using skill\n{0}", order.Skill));
                 break;
         }
     }

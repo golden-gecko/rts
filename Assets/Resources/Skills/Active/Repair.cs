@@ -14,8 +14,12 @@ public class Repair : Skill
 
     public override void Execute(MyGameObject myGameObject)
     {
-        foreach (MyGameObject target in Object.FindObjectsByType<MyGameObject>(FindObjectsSortMode.None))
+        RaycastHit[] hitInfos = Utils.SphereCastAll(myGameObject.Position, Range, LayerMask.GetMask("GameObject"));
+
+        foreach (RaycastHit hitInfo in hitInfos)
         {
+            MyGameObject target = Utils.GetGameObject(hitInfo);
+
             if (target.Is(myGameObject, DiplomacyState.Ally) == false)
             {
                 continue;

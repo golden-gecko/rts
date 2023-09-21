@@ -68,7 +68,8 @@ MonoBehaviour:
   <ExpirationTimer>k__BackingField:
     <Current>k__BackingField: -1
     <Max>k__BackingField: -1
-  <SkillsNames>k__BackingField: []
+  <SkillsNames>k__BackingField:
+  - Health_Aura
 --- !u!114 &6294112693154751892
 MonoBehaviour:
   m_ObjectHideFlags: 0

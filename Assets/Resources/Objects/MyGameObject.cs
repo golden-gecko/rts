@@ -89,7 +89,7 @@ public class MyGameObject : MonoBehaviour
     {
         foreach (Skill skill in Skills.Values)
         {
-            skill.Update();
+            skill.Update(this);
         }
     }
 
@@ -744,6 +744,9 @@ public class MyGameObject : MonoBehaviour
     [field: SerializeField]
     public List<string> SkillsNames { get; set; } = new List<string>();
 
+    [field: SerializeField]
+    public MyGameObjectState State { get; private set; } = MyGameObjectState.Operational;
+
     public Vector3 Position { get => transform.position; set => transform.position = value; }
 
     public Quaternion Rotation { get => transform.rotation; set => transform.rotation = value; }
@@ -753,8 +756,6 @@ public class MyGameObject : MonoBehaviour
     public OrderContainer Orders { get; } = new OrderContainer();
 
     public Stats Stats { get; } = new Stats();
-
-    public MyGameObjectState State { get; private set; } = MyGameObjectState.Operational;
 
     public ResourceContainer ConstructionResources { get; } = new ResourceContainer();
 
