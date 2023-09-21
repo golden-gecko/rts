@@ -27,6 +27,10 @@ public class Skill : ICloneable
     {
     }
 
+    public virtual void OnDestroy(MyGameObject myGameObject)
+    {
+    }
+
     public string GetInfo()
     {
         return string.Format("Name: {0}, Cooldown: {1}, Range: {2}", Name, Cooldown.GetInfo(), Range);
@@ -39,6 +43,4 @@ public class Skill : ICloneable
     public Timer Cooldown { get; }
 
     public string Effect { get; protected set; } = string.Empty;
-
-    protected HashSet<MyGameObject> Targets = new HashSet<MyGameObject>();
 }

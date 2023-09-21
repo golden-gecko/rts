@@ -68,8 +68,8 @@ MonoBehaviour:
   <ExpirationTimer>k__BackingField:
     <Current>k__BackingField: -1
     <Max>k__BackingField: -1
-  <SkillsNames>k__BackingField:
-  - Health_Aura
+  <SkillsNames>k__BackingField: []
+  <State>k__BackingField: 2
 --- !u!114 &6294112693154751892
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -85,6 +85,7 @@ MonoBehaviour:
   <Mass>k__BackingField: 10
   <MissilePrefab>k__BackingField: {fileID: 3841255586236475405, guid: 86513724c5de2df4da484cb23191a7e5, type: 3}
   <Damage>k__BackingField: 10
+  <DamageFactor>k__BackingField: 1
   <Range>k__BackingField: 4
   <Reload>k__BackingField:
     <Current>k__BackingField: 4

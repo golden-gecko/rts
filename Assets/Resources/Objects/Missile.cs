@@ -19,11 +19,8 @@ public class Missile : MyGameObject // TODO: Add collision with terrain to missi
     public GameObject HitEffectPrefab { get; set; }
 
     [field: SerializeField]
-    public float Damage { get; set; } = 10.0f;
+    public Property Damage { get; set; } = new Property();
 
     [field: SerializeField]
-    public float DamageFactor { get; set; } = 1.0f;
-
-    [field: SerializeField]
-    public float Range { get; set; } = 10.0f;
+    public Property Range { get; set; } = new Property();
 }

@@ -21,7 +21,7 @@ public class Sight : MyComponent
             return;
         }
 
-        Map.Instance.SetVisibleBySight(parent, parent.Position, Range, 1);
+        Map.Instance.SetVisibleBySight(parent, parent.Position, Range.Value, 1);
     }
 
     protected override void Update()
@@ -40,11 +40,11 @@ public class Sight : MyComponent
         {
             if (parent.Enabled)
             {
-                Map.Instance.SetVisibleBySight(parent, parent.Position, Range, 1);
+                Map.Instance.SetVisibleBySight(parent, parent.Position, Range.Value, 1);
             }
             else
             {
-                Map.Instance.SetVisibleBySight(parent, parent.Position, Range, -1);
+                Map.Instance.SetVisibleBySight(parent, parent.Position, Range.Value, -1);
             }
 
 
@@ -53,8 +53,8 @@ public class Sight : MyComponent
 
         if (PreviousPositionInt != CurrentPositionInt)
         {
-            Map.Instance.SetVisibleBySight(parent, PreviousPosition, Range, -1);
-            Map.Instance.SetVisibleBySight(parent, parent.Position, Range, 1);
+            Map.Instance.SetVisibleBySight(parent, PreviousPosition, Range.Value, -1);
+            Map.Instance.SetVisibleBySight(parent, parent.Position, Range.Value, 1);
 
             PreviousPosition = parent.Position;
             PreviousPositionInt = CurrentPositionInt;
@@ -63,16 +63,16 @@ public class Sight : MyComponent
 
     public override string GetInfo()
     {
-        return string.Format("Sight: {0}, Range: {1:0.}", base.GetInfo(), Range);
+        return string.Format("Sight: {0}, Range: {1:0.}", base.GetInfo(), Range.Value);
     }
 
     public bool IsInRange(Vector3 position)
     {
-        return Utils.IsInRange(GetComponent<MyGameObject>().Position, position, Range);
+        return Utils.IsInRange(GetComponent<MyGameObject>().Position, position, Range.Value);
     }
 
     [field: SerializeField]
-    public float Range { get; set; } = 10.0f;
+    public Property Range { get; set; } = new Property();
 
     private bool PreviousEnabled = true;
     private Vector3 PreviousPosition = new Vector3();

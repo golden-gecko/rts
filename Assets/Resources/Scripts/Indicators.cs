@@ -254,12 +254,12 @@ public class Indicators : MonoBehaviour
     {
         Gun gun;
         
-        if (myGameObject.TryGetComponent<Gun>(out gun))
+        if (myGameObject.TryGetComponent(out gun))
         {
             Vector3 scale = myGameObject.Scale;
 
             rangeGun.gameObject.SetActive(true);
-            rangeGun.localScale = new Vector3(gun.Range * 2.0f / scale.x, gun.Range * 2.0f / scale.z, 1.0f);
+            rangeGun.localScale = new Vector3(gun.Range.Value * 2.0f / scale.x, gun.Range.Value * 2.0f / scale.z, 1.0f);
 
         }
         else
@@ -272,7 +272,7 @@ public class Indicators : MonoBehaviour
     {
         PowerPlant powerPlant;
 
-        if (myGameObject.TryGetComponent<PowerPlant>(out powerPlant))
+        if (myGameObject.TryGetComponent(out powerPlant))
         {
             Vector3 scale = myGameObject.Scale;
 
@@ -289,12 +289,12 @@ public class Indicators : MonoBehaviour
     {
         Radar radar;
 
-        if (myGameObject.TryGetComponent<Radar>(out radar))
+        if (myGameObject.TryGetComponent(out radar))
         {
             Vector3 scale = myGameObject.Scale;
 
             rangeRadar.gameObject.SetActive(true);
-            rangeRadar.localScale = new Vector3(radar.Range * 2.0f / scale.x, radar.Range * 2.0f / scale.z, 1.0f);
+            rangeRadar.localScale = new Vector3(radar.Range.Value * 2.0f / scale.x, radar.Range.Value * 2.0f / scale.z, 1.0f);
         }
         else
         {
@@ -306,12 +306,12 @@ public class Indicators : MonoBehaviour
     {
         Sight sight;
 
-        if (myGameObject.TryGetComponent<Sight>(out sight))
+        if (myGameObject.TryGetComponent(out sight))
         {
             Vector3 scale = myGameObject.Scale;
 
             rangeSight.gameObject.SetActive(true);
-            rangeSight.localScale = new Vector3(sight.Range * 2.0f / scale.x, sight.Range * 2.0f / scale.z, 1.0f);
+            rangeSight.localScale = new Vector3(sight.Range.Value * 2.0f / scale.x, sight.Range.Value * 2.0f / scale.z, 1.0f);
         }
         else
         {
@@ -352,7 +352,7 @@ public class Indicators : MonoBehaviour
             case OrderType.Move:
             case OrderType.Patrol:
             case OrderType.Rally:
-                Vector3 position = order.IsTargetGameObject ? order.TargetGameObject.Position : order.TargetPosition;
+                Vector3 position = order.IsTargetGameObject && order.TargetGameObject != null ? order.TargetGameObject.Position : order.TargetPosition;
 
                 orderLine.gameObject.SetActive(true);
                 orderLine.useWorldSpace = true;

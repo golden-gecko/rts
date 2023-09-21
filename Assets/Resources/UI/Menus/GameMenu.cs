@@ -131,7 +131,7 @@ public class GameMenu : MonoBehaviour
 
             button.RegisterCallback<ClickEvent>(ev => OnOrder(Enum.Parse<OrderType>(i)));
             button.style.display = DisplayStyle.None;
-            button.text = i.Replace("_", " ");
+            button.text = Utils.FormatName(i);
             button.userData = Enum.Parse<OrderType>(i);
 
             orders.Add(buttonContainer);
@@ -152,7 +152,7 @@ public class GameMenu : MonoBehaviour
 
             button.RegisterCallback<ClickEvent>(ev => OnConstruct(path));
             button.style.display = DisplayStyle.None;
-            button.text = Path.GetFileName(path).Replace("_", " ");
+            button.text = Utils.FormatName(Path.GetFileName(path));
             button.userData = path;
 
             prefabs.Add(buttonContainer);
@@ -168,7 +168,7 @@ public class GameMenu : MonoBehaviour
 
             button.RegisterCallback<ClickEvent>(ev => OnAssemble(path));
             button.style.display = DisplayStyle.None;
-            button.text = Path.GetFileName(path).Replace("_", " ");
+            button.text = Utils.FormatName(Path.GetFileName(path));
             button.userData = path;
 
             prefabs.Add(buttonContainer);
@@ -187,7 +187,7 @@ public class GameMenu : MonoBehaviour
 
             button.RegisterCallback<ClickEvent>(ev => OnRecipe(i));
             button.style.display = DisplayStyle.None;
-            button.text = i.Replace("_", " ");
+            button.text = Utils.FormatName(i);
             button.userData = i;
 
             recipes.Add(buttonContainer);
@@ -206,7 +206,7 @@ public class GameMenu : MonoBehaviour
 
             button.RegisterCallback<ClickEvent>(ev => OnUseSkill(i));
             button.style.display = DisplayStyle.None;
-            button.text = i.Replace("_", " ");
+            button.text = Utils.FormatName(i);
             button.userData = i;
 
             skills.Add(buttonContainer);
@@ -225,7 +225,7 @@ public class GameMenu : MonoBehaviour
 
             button.RegisterCallback<ClickEvent>(ev => OnResearch(i));
             button.style.display = DisplayStyle.None;
-            button.text = i.Replace("_", " ");
+            button.text = Utils.FormatName(i);
             button.userData = i;
 
             technologies.Add(buttonContainer);

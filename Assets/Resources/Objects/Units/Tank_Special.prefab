@@ -238,7 +238,9 @@ MonoBehaviour:
     <Max>k__BackingField: -1
   <SkillsNames>k__BackingField:
   - Damage
-  - Damage_Aura
+  - PassiveIncreaseDamage
+  - PassiveIncreaseRange
+  <State>k__BackingField: 2
 --- !u!114 &5524956404379026895
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -269,8 +271,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <Mass>k__BackingField: 30
   <MissilePrefab>k__BackingField: {fileID: 3841255586236475405, guid: 86513724c5de2df4da484cb23191a7e5, type: 3}
-  <Damage>k__BackingField: 4
-  <Range>k__BackingField: 30
   <Reload>k__BackingField:
     <Current>k__BackingField: 4
     <Max>k__BackingField: 4
@@ -322,7 +322,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   <Mass>k__BackingField: 10
-  <Range>k__BackingField: 10
 --- !u!1 &5938523042102776864
 GameObject:
   m_ObjectHideFlags: 0

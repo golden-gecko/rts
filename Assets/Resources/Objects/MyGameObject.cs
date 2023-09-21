@@ -85,47 +85,6 @@ public class MyGameObject : MonoBehaviour
     {
     }
 
-    protected void UpdateSkills()
-    {
-        foreach (Skill skill in Skills.Values)
-        {
-            skill.Update(this);
-        }
-    }
-
-    protected void UpdateVisibility()
-    {
-        Player active = HUD.Instance.ActivePlayer;
-
-        if (Player == active || Map.Instance.IsVisibleBySight(this, active))
-        {
-            foreach (Renderer renderer in Body.GetComponentsInChildren<Renderer>(true))
-            {
-                renderer.enabled = true;
-            }
-
-            Indicators.GetComponent<Indicators>().OnShow();
-        }
-        else if (Map.Instance.IsVisibleByRadar(this, active))
-        {
-            foreach (Renderer renderer in Body.GetComponentsInChildren<Renderer>(true))
-            {
-                renderer.enabled = false;
-            }
-
-            Indicators.GetComponent<Indicators>().OnRadar();
-        }
-        else
-        {
-            foreach (Renderer renderer in Body.GetComponentsInChildren<Renderer>(true))
-            {
-                renderer.enabled = false;
-            }
-
-            Indicators.GetComponent<Indicators>().OnHide();
-        }
-    }
-
     public void Assemble(string prefab)
     {
         Orders.Add(Order.Assemble(prefab));
@@ -431,7 +390,12 @@ public class MyGameObject : MonoBehaviour
             Instantiate(DestroyEffect, Position, Quaternion.identity);
         }
 
-        Destroy(gameObject);
+        foreach (Skill skill in Skills.Values)
+        {
+            skill.OnDestroy(this);
+        }
+
+        Destroy(gameObject); // TODO: Delay?
     }
 
     public void OnRepair(float value)
@@ -618,6 +582,47 @@ public class MyGameObject : MonoBehaviour
         foreach (string skillName in SkillsNames)
         {
             Skills[skillName] = skillManager.Get(skillName).Clone() as Skill;
+        }
+    }
+
+    private void UpdateSkills()
+    {
+        foreach (Skill skill in Skills.Values)
+        {
+            skill.Update(this);
+        }
+    }
+
+    private void UpdateVisibility()
+    {
+        Player active = HUD.Instance.ActivePlayer;
+
+        if (Player == active || Map.Instance.IsVisibleBySight(this, active))
+        {
+            foreach (Renderer renderer in Body.GetComponentsInChildren<Renderer>(true))
+            {
+                renderer.enabled = true;
+            }
+
+            Indicators.GetComponent<Indicators>().OnShow();
+        }
+        else if (Map.Instance.IsVisibleByRadar(this, active))
+        {
+            foreach (Renderer renderer in Body.GetComponentsInChildren<Renderer>(true))
+            {
+                renderer.enabled = false;
+            }
+
+            Indicators.GetComponent<Indicators>().OnRadar();
+        }
+        else
+        {
+            foreach (Renderer renderer in Body.GetComponentsInChildren<Renderer>(true))
+            {
+                renderer.enabled = false;
+            }
+
+            Indicators.GetComponent<Indicators>().OnHide();
         }
     }
 

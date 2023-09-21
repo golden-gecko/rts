@@ -14,8 +14,7 @@ public class Gauss : Gun
         GameObject gameObject = Instantiate(MissilePrefab, myGameObject.Center, Quaternion.identity);
         Missile missile = gameObject.GetComponent<Missile>();
 
-        missile.Damage = Damage;
-        missile.DamageFactor = DamageFactor;
+        missile.Damage = Damage.Clone() as Property;
         missile.Range = Range;
 
         missile.SetParent(myGameObject);

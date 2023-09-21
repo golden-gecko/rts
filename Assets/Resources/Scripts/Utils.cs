@@ -1,6 +1,4 @@
-using UnityEditor.PackageManager;
 using UnityEngine;
-using static UnityEngine.UI.Image;
 
 public class Utils
 {
@@ -35,6 +33,11 @@ public class Utils
         }
 
         return myGameObject;
+    }
+
+    public static string FormatName(string name)
+    {
+        return name.Replace("_", " ");
     }
 
     public static MyGameObject GetGameObject(RaycastHit hitInfo)
