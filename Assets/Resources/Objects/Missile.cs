@@ -22,5 +22,8 @@ public class Missile : MyGameObject // TODO: Add collision with terrain to missi
     public float Damage { get; set; } = 10.0f;
 
     [field: SerializeField]
+    public float DamageFactor { get; set; } = 1.0f;
+
+    [field: SerializeField]
     public float Range { get; set; } = 10.0f;
 }

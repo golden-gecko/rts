@@ -15,6 +15,7 @@ public class Cannon : Gun
         Missile missile = gameObject.GetComponent<Missile>();
 
         missile.Damage = Damage;
+        missile.DamageFactor = DamageFactor;
         missile.Range = Range;
 
         missile.SetParent(myGameObject);

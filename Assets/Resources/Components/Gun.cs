@@ -54,6 +54,9 @@ public class Gun : MyComponent
     public float Damage { get; set; } = 10.0f;
 
     [field: SerializeField]
+    public float DamageFactor { get; set; } = 1.0f;
+
+    [field: SerializeField]
     public float Range { get; set; } = 10.0f;
 
     [field: SerializeField]

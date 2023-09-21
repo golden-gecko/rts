@@ -131,7 +131,7 @@ public class GameMenu : MonoBehaviour
 
             button.RegisterCallback<ClickEvent>(ev => OnOrder(Enum.Parse<OrderType>(i)));
             button.style.display = DisplayStyle.None;
-            button.text = i;
+            button.text = i.Replace("_", " ");
             button.userData = Enum.Parse<OrderType>(i);
 
             orders.Add(buttonContainer);
@@ -187,7 +187,7 @@ public class GameMenu : MonoBehaviour
 
             button.RegisterCallback<ClickEvent>(ev => OnRecipe(i));
             button.style.display = DisplayStyle.None;
-            button.text = i;
+            button.text = i.Replace("_", " ");
             button.userData = i;
 
             recipes.Add(buttonContainer);
@@ -206,7 +206,7 @@ public class GameMenu : MonoBehaviour
 
             button.RegisterCallback<ClickEvent>(ev => OnUseSkill(i));
             button.style.display = DisplayStyle.None;
-            button.text = i;
+            button.text = i.Replace("_", " ");
             button.userData = i;
 
             skills.Add(buttonContainer);
@@ -225,7 +225,7 @@ public class GameMenu : MonoBehaviour
 
             button.RegisterCallback<ClickEvent>(ev => OnResearch(i));
             button.style.display = DisplayStyle.None;
-            button.text = i;
+            button.text = i.Replace("_", " ");
             button.userData = i;
 
             technologies.Add(buttonContainer);

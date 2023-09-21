@@ -1,4 +1,5 @@
 using UnityEngine;
+using static UnityEngine.GraphicsBuffer;
 
 public class OrderHandlerAttackLaser : OrderHandler
 {
@@ -62,7 +63,8 @@ public class OrderHandlerAttackLaser : OrderHandler
             myGameObject.Body.transform.localScale = new Vector3(myGameObject.Body.transform.localScale.x, myGameObject.Body.transform.localScale.y, magnitude);
             myGameObject.transform.LookAt(order.TargetPosition);
 
-            float damageDealt = closest.OnDamage(myGameObject.GetComponent<Missile>().Damage);
+            Missile missile = myGameObject.GetComponent<Missile>();
+            float damageDealt = closest.OnDamage(missile.Damage * missile.DamageFactor);
 
             if (closest.Alive == false)
             {

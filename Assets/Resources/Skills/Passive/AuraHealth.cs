@@ -10,9 +10,5 @@ public class AuraHealth : Skill
         Value = value;
     }
 
-    public override void Execute(MyGameObject myGameObject)
-    {
-    }
-
     public float Value { get; } = 0.0f;
 }

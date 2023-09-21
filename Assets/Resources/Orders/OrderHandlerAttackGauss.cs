@@ -35,7 +35,8 @@ public class OrderHandlerAttackGauss : OrderHandler
                 continue;
             }
 
-            float damageDealt = target.OnDamage(myGameObject.GetComponent<Missile>().Damage);
+            Missile missile = myGameObject.GetComponent<Missile>();
+            float damageDealt = target.OnDamage(missile.Damage * missile.DamageFactor);
 
             if (target.Alive == false)
             {
