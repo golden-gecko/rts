@@ -384,29 +384,28 @@ public class HUD : MonoBehaviour
         {
             RaycastHit hitInfo;
 
-            if (Utils.RaycastFromMouse(out hitInfo))
+            if (Utils.RaycastFromMouse(out hitInfo, LayerMask.GetMask("GameObject")))
             {
-                if (Utils.IsTerrain(hitInfo) || Utils.IsWater(hitInfo))
+                if (Order == OrderType.None)
                 {
-                    if (Order == OrderType.None)
-                    {
-                        IssueOrderDefault(hitInfo.point);
-                    }
-                    else
-                    {
-                        IssueOrder(hitInfo.point);
-                    }
+                    IssueOrderDefault(hitInfo.transform.GetComponentInParent<MyGameObject>());
                 }
                 else
                 {
-                    if (Order == OrderType.None)
-                    {
-                        IssueOrderDefault(hitInfo.transform.GetComponentInParent<MyGameObject>());
-                    }
-                    else
-                    {
-                        IssueOrder(hitInfo.transform.GetComponentInParent<MyGameObject>());
-                    }
+                    IssueOrder(hitInfo.transform.GetComponentInParent<MyGameObject>());
+                }
+
+                return true;
+            }
+            else if (Utils.RaycastFromMouse(out hitInfo, LayerMask.GetMask("Terrain") | LayerMask.GetMask("Water")))
+            {
+                if (Order == OrderType.None)
+                {
+                    IssueOrderDefault(hitInfo.point);
+                }
+                else
+                {
+                    IssueOrder(hitInfo.point);
                 }
 
                 return true;
