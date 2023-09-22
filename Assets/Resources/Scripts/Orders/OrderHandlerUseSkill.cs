@@ -23,9 +23,7 @@ public class OrderHandlerUseSkill : OrderHandler
             return;
         }
 
-        myGameObject.Skills[order.Skill].Execute(myGameObject);
-        myGameObject.Skills[order.Skill].Cooldown.Reset();
-
+        myGameObject.Skills[order.Skill].OnExecute(myGameObject);
         myGameObject.Stats.Inc(Stats.OrdersCompleted);
         myGameObject.Stats.Inc(Stats.SkillsUsed);
         myGameObject.Orders.Pop();

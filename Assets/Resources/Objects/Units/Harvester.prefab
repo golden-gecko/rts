@@ -158,6 +158,7 @@ MonoBehaviour:
     <Max>k__BackingField: -1
   <SkillsNames>k__BackingField:
   - Repair
+  <State>k__BackingField: 2
 --- !u!114 &-7296574799590733170
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -199,7 +200,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   <Mass>k__BackingField: 10
-  <Power>k__BackingField: 100
+  <Power>k__BackingField:
+    <Base>k__BackingField: 100
   <FuelUsage>k__BackingField: 10
 --- !u!114 &2949164819816468667
 MonoBehaviour:
@@ -227,7 +229,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   <Mass>k__BackingField: 10
-  <Range>k__BackingField: 4
+  <Range>k__BackingField:
+    <Base>k__BackingField: 10
 --- !u!114 &4744879806858303384
 MonoBehaviour:
   m_ObjectHideFlags: 0

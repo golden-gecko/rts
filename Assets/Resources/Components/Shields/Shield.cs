@@ -12,7 +12,7 @@ public class Shield : MyComponent // TODO: Shield puts health bar in wrong posit
             GameObject mesh = Instantiate(Mesh, parent.Position, Quaternion.identity);
 
             mesh.transform.parent = parent.Body.transform;
-            mesh.transform.localScale = new Vector3(Range * 2.0f / parent.Scale.x, Range * 2.0f / parent.Scale.y, Range * 2.0f / parent.Scale.z);
+            mesh.transform.localScale = new Vector3(Range.Total * 2.0f / parent.Scale.x, Range.Total * 2.0f / parent.Scale.y, Range.Total * 2.0f / parent.Scale.z);
         }
     }
 
@@ -25,7 +25,7 @@ public class Shield : MyComponent // TODO: Shield puts health bar in wrong posit
 
     public override string GetInfo()
     {
-        return string.Format("Shield: {0}, Range: {1:0.}, Power: {2:0.}", base.GetInfo(), Range, Power);
+        return string.Format("Shield: {0}, Range: {1:0.}, Power: {2:0.}", base.GetInfo(), Range.Total, Power);
     }
 
     public float Absorb(float damage)
@@ -37,7 +37,7 @@ public class Shield : MyComponent // TODO: Shield puts health bar in wrong posit
     public GameObject Mesh { get; set; }
 
     [field: SerializeField]
-    public float Range { get; set; } = 4.0f;
+    public Property Range { get; set; } = new Property();
 
     [field: SerializeField]
     public Progress Capacity { get; set; } = new Progress(100.0f, 100.0f);

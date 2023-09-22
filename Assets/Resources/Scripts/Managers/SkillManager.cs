@@ -16,6 +16,7 @@ public class SkillManager : MonoBehaviour
     private void CreateSkills()
     {
         Skills["PassiveIncreaseDamage"] = new PassiveIncreaseDamage("PassiveIncreaseDamage", 10.0f, -1.0f, 2.0f);
+        Skills["PassiveIncreasePower"] = new PassiveIncreasePower("PassiveIncreasePower", 10.0f, -1.0f, 2.0f);
         Skills["PassiveIncreaseRange"] = new PassiveIncreaseRange("PassiveIncreaseRange", 10.0f, -1.0f, 2.0f);
 
         Skills["Damage"] = new Damage("Damage", 10.0f, 3.0f, 20.0f);

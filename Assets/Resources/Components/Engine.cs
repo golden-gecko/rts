@@ -23,7 +23,7 @@ public class Engine : MyComponent
 
     public override string GetInfo()
     {
-        return string.Format("{0}, Power: {1:0.}, Fuel: {2}/{3} Speed: {4:0.}", base.GetInfo(), Power, Fuel.GetInfo(), FuelUsage, Speed);
+        return string.Format("{0}, Power: {1:0.}, Fuel: {2}/{3} Speed: {4:0.}", base.GetInfo(), Power.Total, Fuel.GetInfo(), FuelUsage, Speed);
     }
 
     public bool CanDrive(float distance)
@@ -49,7 +49,7 @@ public class Engine : MyComponent
     }
 
     [field: SerializeField]
-    public float Power { get; set; } = 50.0f;
+    public Property Power { get; set; } = new Property(100.0f);
 
     [field: SerializeField]
     public Counter Fuel { get; } = new Counter(100, 100);
@@ -57,7 +57,7 @@ public class Engine : MyComponent
     [field: SerializeField]
     public float FuelUsage { get; set; } = 1.0f;
 
-    public float Speed { get => Power / GetComponent<MyGameObject>().Mass; }
+    public float Speed { get => Power.Total / GetComponent<MyGameObject>().Mass; }
 
     private float distanceToDrive = 0.0f;
 }

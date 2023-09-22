@@ -398,6 +398,16 @@ public class MyGameObject : MonoBehaviour
         Destroy(gameObject); // TODO: Delay?
     }
 
+    public void OnMove(Vector3 position)
+    {
+        foreach (Skill skill in Skills.Values)
+        {
+            skill.OnMove(this, position);
+        }
+
+        Position = position;
+    }
+
     public void OnRepair(float value)
     {
         Stats.Add(Stats.DamageRepaired, Health.Add(value));
@@ -534,16 +544,7 @@ public class MyGameObject : MonoBehaviour
         switch (state)
         {
             case MyGameObjectState.Cursor:
-                Indicators.OnConstruction();
-                break;
-
             case MyGameObjectState.UnderAssembly:
-                Indicators.OnConstruction();
-                break;
-
-            case MyGameObjectState.UnderConstruction:
-                RaiseConstructionResourceFlags();
-
                 Indicators.OnConstruction();
                 break;
 
@@ -551,6 +552,12 @@ public class MyGameObject : MonoBehaviour
                 RemoveConstructionResourceFlags();
 
                 Indicators.OnConstructionEnd();
+                break;
+
+            case MyGameObjectState.UnderConstruction:
+                RaiseConstructionResourceFlags();
+
+                Indicators.OnConstruction();
                 break;
         }
     }

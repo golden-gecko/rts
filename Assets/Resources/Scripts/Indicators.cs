@@ -259,7 +259,7 @@ public class Indicators : MonoBehaviour
             Vector3 scale = myGameObject.Scale;
 
             rangeGun.gameObject.SetActive(true);
-            rangeGun.localScale = new Vector3(gun.Range.Value * 2.0f / scale.x, gun.Range.Value * 2.0f / scale.z, 1.0f);
+            rangeGun.localScale = new Vector3(gun.Range.Total * 2.0f / scale.x, gun.Range.Total * 2.0f / scale.z, 1.0f);
 
         }
         else
@@ -294,7 +294,7 @@ public class Indicators : MonoBehaviour
             Vector3 scale = myGameObject.Scale;
 
             rangeRadar.gameObject.SetActive(true);
-            rangeRadar.localScale = new Vector3(radar.Range.Value * 2.0f / scale.x, radar.Range.Value * 2.0f / scale.z, 1.0f);
+            rangeRadar.localScale = new Vector3(radar.Range.Total * 2.0f / scale.x, radar.Range.Total * 2.0f / scale.z, 1.0f);
         }
         else
         {
@@ -311,7 +311,7 @@ public class Indicators : MonoBehaviour
             Vector3 scale = myGameObject.Scale;
 
             rangeSight.gameObject.SetActive(true);
-            rangeSight.localScale = new Vector3(sight.Range.Value * 2.0f / scale.x, sight.Range.Value * 2.0f / scale.z, 1.0f);
+            rangeSight.localScale = new Vector3(sight.Range.Total * 2.0f / scale.x, sight.Range.Total * 2.0f / scale.z, 1.0f);
         }
         else
         {
@@ -439,7 +439,7 @@ public class Indicators : MonoBehaviour
     {
         Vector3 scale = myGameObject.Scale;
 
-        if (HUD.Instance.ActivePlayer.TechnologyTree.IsUnlocked("Radar 2")) // TODO: Is ActivePlayer correct here?
+        if (HUD.Instance.ActivePlayer.TechnologyTree.IsDiscovered("Radar 2")) // TODO: Is ActivePlayer correct here?
         {
             float radius = myGameObject.Radius;
 

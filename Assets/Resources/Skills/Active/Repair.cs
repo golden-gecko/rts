@@ -7,13 +7,15 @@ public class Repair : Skill
         return new Repair(Name, Range, Cooldown.Max, Value);
     }
 
-    public Repair(string name, float range, float cooldown, float value) : base(name, range, cooldown, "Effects/Skills/Healing")
+    public Repair(string name, float range, float cooldown, float value) : base(name, range, cooldown, "Effects/Skills/Healing", false)
     {
         Value = value;
     }
 
-    public override void Execute(MyGameObject myGameObject)
+    public override void OnExecute(MyGameObject myGameObject)
     {
+        base.OnExecute(myGameObject);
+
         RaycastHit[] hitInfos = Utils.SphereCastAll(myGameObject.Position, Range, LayerMask.GetMask("GameObject"));
 
         foreach (RaycastHit hitInfo in hitInfos)

@@ -2,6 +2,25 @@ using UnityEngine;
 
 public class OrderHandlerMove : OrderHandler
 {
+    public float GetDistance(MyGameObject myGameObject, Vector3 a, Vector3 b)
+    {
+        if (myGameObject.MapLayers.Contains(MyGameObjectMapLayer.Air))
+        {
+            if (myGameObject.Altitude > 0)
+            {
+                a.y = myGameObject.Altitude;
+                b.y = myGameObject.Altitude;
+            }
+        }
+        else
+        {
+            a.y = 0;
+            b.y = 0;
+        }
+
+        return (a - b).magnitude;
+    }
+
     public override void OnExecute(MyGameObject myGameObject)
     {
         Order order = myGameObject.Orders.First();
@@ -9,18 +28,7 @@ public class OrderHandlerMove : OrderHandler
         Vector3 target = order.TargetPosition;
         Vector3 position = myGameObject.Position;
 
-        if (myGameObject.MapLayers.Contains(MyGameObjectMapLayer.Air) && myGameObject.Altitude > 0)
-        {
-            target.y = myGameObject.Altitude;
-            position.y = myGameObject.Altitude;
-        }
-        else
-        {
-            target.y = 0;
-            position.y = 0;
-        }
-
-        float distanceToTarget = (target - position).magnitude;
+        float distanceToTarget = GetDistance(myGameObject, position, target);
         float distanceToTravel = myGameObject.GetComponent<Engine>().Speed * Time.deltaTime;
 
         myGameObject.transform.LookAt(new Vector3(target.x, myGameObject.Position.y, target.z));
@@ -44,7 +52,7 @@ public class OrderHandlerMove : OrderHandler
             }
 
             myGameObject.GetComponent<Engine>().Drive(distanceToTravel);
-            myGameObject.Position = validated;
+            myGameObject.OnMove(validated);
             myGameObject.Stats.Add(Stats.DistanceDriven, distanceToTravel);
         }
         else
@@ -66,7 +74,7 @@ public class OrderHandlerMove : OrderHandler
             }
 
             myGameObject.GetComponent<Engine>().Drive(distanceToTarget);
-            myGameObject.Position = validated;
+            myGameObject.OnMove(validated);
             myGameObject.Stats.Add(Stats.DistanceDriven, distanceToTarget);
             myGameObject.Stats.Inc(Stats.OrdersCompleted);
             myGameObject.Orders.Pop();

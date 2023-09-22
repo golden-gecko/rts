@@ -425,6 +425,7 @@ MonoBehaviour:
     <Current>k__BackingField: -1
     <Max>k__BackingField: -1
   <SkillsNames>k__BackingField: []
+  <State>k__BackingField: 2
 --- !u!114 &7764472481935986510
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -439,8 +440,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <Mass>k__BackingField: 10
   <Prefabs>k__BackingField:
+  - Caryall
   - Grav_Light
   - Harvester
+  - Ornithopter_Light
   - Quad
   - Trike
   <ResourceUsage>k__BackingField: 2

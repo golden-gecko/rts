@@ -7,7 +7,7 @@ public class JobHandlerConstruct : JobHandler
         float minDistance = float.MaxValue;
         MyGameObject closest = null;
 
-        foreach (MyGameObject underConstruction in Object.FindObjectsByType<MyGameObject>(FindObjectsSortMode.None))
+        foreach (MyGameObject underConstruction in Object.FindObjectsByType<MyGameObject>(FindObjectsSortMode.None)) // TODO: Refactor.
         {
             if (underConstruction.State != MyGameObjectState.UnderConstruction)
             {
