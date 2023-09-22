@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
@@ -32,28 +33,25 @@ public class Map : MonoBehaviour
         Vector3Int start = new Vector3Int(Mathf.FloorToInt((position.x - range) / Config.TerrainVisibilityScale), 0, Mathf.FloorToInt((position.z - range) / Config.TerrainVisibilityScale));
         Vector3Int end = new Vector3Int(Mathf.FloorToInt((position.x + range) / Config.TerrainVisibilityScale), 0, Mathf.FloorToInt((position.z + range) / Config.TerrainVisibilityScale));
 
+        Vector3Int center = new Vector3Int(Mathf.FloorToInt(position.x / Config.TerrainVisibilityScale), 0, Mathf.FloorToInt(position.z / Config.TerrainVisibilityScale));
+
+        int radius = Mathf.FloorToInt(range / Config.TerrainVisibilityScale);
+
         for (int x = start.x; x < end.x; x++)
         {
             for (int z = start.z; z < end.z; z++)
             {
-                if (x < 0 || x > Config.TerrainVisibilitySize - 1)
+                if (Utils.PointInRect(x, z, Config.TerrainVisibilitySize) == false)
                 {
                     continue;
                 }
 
-                if (z < 0 || z > Config.TerrainVisibilitySize - 1)
+                if (Utils.PointInCircle(x, z, center, radius) == false)
                 {
                     continue;
                 }
 
-                if (Cells[x, z].VisibleByRadar.ContainsKey(myGameObject.Player) == false)
-                {
-                    Cells[x, z].VisibleByRadar[myGameObject.Player] = value;
-                }
-                else
-                {
-                    Cells[x, z].VisibleByRadar[myGameObject.Player] += value;
-                }
+                SetVisible(Cells[x, z].VisibleByRadar, myGameObject.Player, value);
             }
         }
     }
@@ -63,28 +61,25 @@ public class Map : MonoBehaviour
         Vector3Int start = new Vector3Int(Mathf.FloorToInt((position.x - range) / Config.TerrainVisibilityScale), 0, Mathf.FloorToInt((position.z - range) / Config.TerrainVisibilityScale));
         Vector3Int end = new Vector3Int(Mathf.FloorToInt((position.x + range) / Config.TerrainVisibilityScale), 0, Mathf.FloorToInt((position.z + range) / Config.TerrainVisibilityScale));
 
+        Vector3Int center = new Vector3Int(Mathf.FloorToInt(position.x / Config.TerrainVisibilityScale), 0, Mathf.FloorToInt(position.z / Config.TerrainVisibilityScale));
+
+        int radius = Mathf.FloorToInt(range / Config.TerrainVisibilityScale);
+
         for (int x = start.x; x < end.x; x++)
         {
             for (int z = start.z; z < end.z; z++)
             {
-                if (x < 0 || x > Config.TerrainVisibilitySize - 1)
+                if (Utils.PointInRect(x, z, Config.TerrainVisibilitySize) == false)
                 {
                     continue;
                 }
 
-                if (z < 0 || z > Config.TerrainVisibilitySize - 1)
+                if (Utils.PointInCircle(x, z, center, radius) == false)
                 {
                     continue;
                 }
 
-                if (Cells[x, z].VisibleByAntiRadar.ContainsKey(myGameObject.Player) == false)
-                {
-                    Cells[x, z].VisibleByAntiRadar[myGameObject.Player] = value;
-                }
-                else
-                {
-                    Cells[x, z].VisibleByAntiRadar[myGameObject.Player] += value;
-                }
+                SetVisible(Cells[x, z].VisibleByAntiRadar, myGameObject.Player, value);
             }
         }
     }
@@ -94,28 +89,25 @@ public class Map : MonoBehaviour
         Vector3Int start = new Vector3Int(Mathf.FloorToInt((position.x - range) / Config.TerrainVisibilityScale), 0, Mathf.FloorToInt((position.z - range) / Config.TerrainVisibilityScale));
         Vector3Int end = new Vector3Int(Mathf.FloorToInt((position.x + range) / Config.TerrainVisibilityScale), 0, Mathf.FloorToInt((position.z + range) / Config.TerrainVisibilityScale));
 
+        Vector3Int center = new Vector3Int(Mathf.FloorToInt(position.x / Config.TerrainVisibilityScale), 0, Mathf.FloorToInt(position.z / Config.TerrainVisibilityScale));
+
+        int radius = Mathf.FloorToInt(range / Config.TerrainVisibilityScale);
+
         for (int x = start.x; x < end.x; x++)
         {
             for (int z = start.z; z < end.z; z++)
             {
-                if (x < 0 || x > Config.TerrainVisibilitySize - 1)
+                if (Utils.PointInRect(x, z, Config.TerrainVisibilitySize) == false)
                 {
                     continue;
                 }
 
-                if (z < 0 || z > Config.TerrainVisibilitySize - 1)
+                if (Utils.PointInCircle(x, z, center, radius) == false)
                 {
                     continue;
                 }
 
-                if (Cells[x, z].VisibleBySight.ContainsKey(myGameObject.Player) == false)
-                {
-                    Cells[x, z].VisibleBySight[myGameObject.Player] = value;
-                }
-                else
-                {
-                    Cells[x, z].VisibleBySight[myGameObject.Player] += value;
-                }
+                SetVisible(Cells[x, z].VisibleBySight, myGameObject.Player, value);
             }
         }
     }
@@ -125,28 +117,25 @@ public class Map : MonoBehaviour
         Vector3Int start = new Vector3Int(Mathf.FloorToInt((position.x - range) / Config.TerrainVisibilityScale), 0, Mathf.FloorToInt((position.z - range) / Config.TerrainVisibilityScale));
         Vector3Int end = new Vector3Int(Mathf.FloorToInt((position.x + range) / Config.TerrainVisibilityScale), 0, Mathf.FloorToInt((position.z + range) / Config.TerrainVisibilityScale));
 
+        Vector3Int center = new Vector3Int(Mathf.FloorToInt(position.x / Config.TerrainVisibilityScale), 0, Mathf.FloorToInt(position.z / Config.TerrainVisibilityScale));
+
+        int radius = Mathf.FloorToInt(range / Config.TerrainVisibilityScale);
+
         for (int x = start.x; x < end.x; x++)
         {
             for (int z = start.z; z < end.z; z++)
             {
-                if (x < 0 || x > Config.TerrainVisibilitySize - 1)
+                if (Utils.PointInRect(x, z, Config.TerrainVisibilitySize) == false)
                 {
                     continue;
                 }
 
-                if (z < 0 || z > Config.TerrainVisibilitySize - 1)
+                if (Utils.PointInCircle(x, z, center, radius) == false)
                 {
                     continue;
                 }
 
-                if (Cells[x, z].VisibleByPower.ContainsKey(myGameObject.Player) == false)
-                {
-                    Cells[x, z].VisibleByPower[myGameObject.Player] = value;
-                }
-                else
-                {
-                    Cells[x, z].VisibleByPower[myGameObject.Player] += value;
-                }
+                SetVisible(Cells[x, z].VisibleByPower, myGameObject.Player, value);
             }
         }
     }
@@ -476,6 +465,18 @@ public class Map : MonoBehaviour
                     Cells[x, z].VisibleByPower[player] = 0;
                 }
             }
+        }
+    }
+
+    private void SetVisible(Dictionary<Player, int> layer, Player player, int value)
+    {
+        if (layer.ContainsKey(player) == false)
+        {
+            layer[player] = value;
+        }
+        else
+        {
+            layer[player] += value;
         }
     }
 

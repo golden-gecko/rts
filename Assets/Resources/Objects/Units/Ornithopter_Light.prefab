@@ -274,7 +274,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <Mass>k__BackingField: 10
   <Power>k__BackingField:
-    <Base>k__BackingField: 100
+    <Value>k__BackingField: 100
   <FuelUsage>k__BackingField: 10
 --- !u!114 &-6277090249591134895
 MonoBehaviour:
@@ -290,7 +290,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <Mass>k__BackingField: 10
   <Range>k__BackingField:
-    <Base>k__BackingField: 10
+    <Value>k__BackingField: 10
 --- !u!1 &6516586485310122464
 GameObject:
   m_ObjectHideFlags: 0

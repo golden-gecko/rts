@@ -1,3 +1,4 @@
+using System.Runtime.InteropServices.WindowsRuntime;
 using UnityEngine;
 
 public class Utils
@@ -95,6 +96,43 @@ public class Utils
     public static bool IsWater(RaycastHit hitInfo)
     {
         return hitInfo.transform.CompareTag("Water");
+    }
+
+    public static bool PointInCircle(int x, int z, Vector3Int center, int radius)
+    {
+        int dx = Mathf.Abs(x - center.x);
+        int dz = Mathf.Abs(z - center.z);
+
+        if (dx + dz <= radius)
+        {
+            return true;
+        }
+
+        if (dx > radius)
+        {
+            return false;
+        }
+
+        if (dz > radius)
+        {
+            return false;
+        }
+
+        return dx * dx + dz * dz <= radius * radius;
+    }
+    public static bool PointInRect(int x, int z, int size)
+    {
+        if (x < 0 || x > size - 1)
+        {
+            return false;
+        }
+
+        if (z < 0 || z > size - 1)
+        {
+            return false;
+        }
+
+        return true;
     }
 
     public static Quaternion ResetRotation(MyGameObject myGameObject)

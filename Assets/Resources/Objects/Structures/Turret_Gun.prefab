@@ -237,6 +237,7 @@ MonoBehaviour:
     <Current>k__BackingField: -1
     <Max>k__BackingField: -1
   <SkillsNames>k__BackingField: []
+  <State>k__BackingField: 2
 --- !u!114 &7435805196623170354
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -267,8 +268,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <Mass>k__BackingField: 10
   <MissilePrefab>k__BackingField: {fileID: 4056876892418310127, guid: 2cefb862ac51a544a9b2146c2e0ba611, type: 3}
-  <Damage>k__BackingField: 8
-  <Range>k__BackingField: 8
+  <Damage>k__BackingField:
+    <Value>k__BackingField: 10
+  <Range>k__BackingField:
+    <Value>k__BackingField: 8
   <Reload>k__BackingField:
     <Current>k__BackingField: 4
     <Max>k__BackingField: 4
@@ -285,7 +288,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   <Mass>k__BackingField: 10
-  <Range>k__BackingField: 10
+  <Range>k__BackingField:
+    <Value>k__BackingField: 0
 --- !u!114 &1451842189104751394
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -300,7 +304,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <Mass>k__BackingField: 10
   <Mesh>k__BackingField: {fileID: 5771986485392630128, guid: b94669363ef5204408e8b921ce0e4006, type: 3}
-  <Range>k__BackingField: 4
+  <Range>k__BackingField:
+    <Value>k__BackingField: 0
   <Capacity>k__BackingField:
     <Current>k__BackingField: 100
     <Max>k__BackingField: 100
