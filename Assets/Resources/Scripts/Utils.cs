@@ -1,8 +1,8 @@
-using System.Runtime.InteropServices.WindowsRuntime;
 using UnityEngine;
 
 public class Utils
 {
+    #region Instantiate
     public static MyGameObject CreateGameObject(string prefab, Vector3 position, Quaternion rotation, Player player, MyGameObjectState state)
     {
         return CreateGameObject(Resources.Load<MyGameObject>(prefab), position, rotation, player, state);
@@ -35,36 +35,21 @@ public class Utils
 
         return myGameObject;
     }
+    #endregion
 
-    public static string FormatName(string name)
+    #region Mask
+    public static int GetGameObjectMask()
     {
-        string formatted = string.Empty;
-
-        foreach (char c in name)
-        {
-            if (c >= 'A' && c <= 'Z')
-            {
-                formatted += ' ';
-                formatted += c;
-            }
-            else if (c == '_')
-            {
-                formatted += ' ';
-            }
-            else
-            {
-                formatted += c;
-            }
-        }
-
-        return formatted.Trim();
+        return LayerMask.GetMask("GameObject");
     }
 
-    public static MyGameObject GetGameObject(RaycastHit hitInfo)
+    public static int GetMapMask()
     {
-        return hitInfo.transform.GetComponentInParent<MyGameObject>();
+        return LayerMask.GetMask("Terrain") | LayerMask.GetMask("Water");
     }
+    #endregion
 
+    #region Math
     public static bool IsCloseTo(Vector3 source, Vector3 target)
     {
         return IsInRange(source, target, 0.0f, 1.0f);
@@ -88,17 +73,7 @@ public class Utils
         return rangeMin <= magnitude && magnitude <= rangeMax;
     }
 
-    public static bool IsTerrain(RaycastHit hitInfo)
-    {
-        return hitInfo.transform.CompareTag("Terrain");
-    }
-
-    public static bool IsWater(RaycastHit hitInfo)
-    {
-        return hitInfo.transform.CompareTag("Water");
-    }
-
-    public static bool PointInCircle(int x, int z, Vector3Int center, int radius)
+    public static bool IsPointInCircle(int x, int z, Vector3Int center, int radius)
     {
         int dx = Mathf.Abs(x - center.x);
         int dz = Mathf.Abs(z - center.z);
@@ -120,7 +95,8 @@ public class Utils
 
         return dx * dx + dz * dz <= radius * radius;
     }
-    public static bool PointInRect(int x, int z, int size)
+
+    public static bool IsPointInRect(int x, int z, int size)
     {
         if (x < 0 || x > size - 1)
         {
@@ -134,30 +110,31 @@ public class Utils
 
         return true;
     }
+    #endregion
 
-    public static Quaternion ResetRotation(MyGameObject myGameObject)
+    #region Raycast
+    public static MyGameObject RaycastGameObjectFromMouse()
     {
-        Quaternion rotation = myGameObject.Rotation;
-        myGameObject.Rotation = Quaternion.identity;
-        Physics.SyncTransforms();
+        RaycastHit hitInfo;
 
-        return rotation;
-    }
+        if (Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out hitInfo, GetGameObjectMask()) == false)
+        {
+            return null;
+        }
 
-    public static void RestoreRotation(MyGameObject myGameObject, Quaternion rotation)
-    {
-        myGameObject.Rotation = rotation;
-        Physics.SyncTransforms();
-    }
+        MyGameObject myGameObject = GetGameObject(hitInfo);
 
-    public static Vector3 SnapToGrid(Vector3 position)
-    {
-        float scale = Config.TerrainConstructionScale;
+        if (myGameObject == null)
+        {
+            return null;
+        }
 
-        float x = Mathf.Floor(position.x / scale) * scale + scale / 2.0f;
-        float z = Mathf.Floor(position.z / scale) * scale + scale / 2.0f;
+        if (myGameObject.VisibilityState != MyGameObjectVisibilityState.Visible)
+        {
+            return null;
+        }
 
-        return new Vector3(x, position.y, z);
+        return myGameObject;
     }
 
     public static bool RaycastFromMouse(out RaycastHit hitInfo, int layerMask = Physics.DefaultRaycastLayers)
@@ -190,8 +167,77 @@ public class Utils
         return Physics.RaycastAll(ray, float.MaxValue, layerMask);
     }
 
-    public static RaycastHit[] SphereCastAll(Vector3 position,  float range, int layerMask = Physics.DefaultRaycastLayers)
+    public static RaycastHit[] SphereCastAll(Vector3 position, float range, int layerMask = Physics.DefaultRaycastLayers)
     {
         return Physics.SphereCastAll(position, range, Vector3.down, 0.0f, layerMask);
+    }
+    #endregion
+
+    #region Rotation
+    public static Quaternion ResetRotation(MyGameObject myGameObject)
+    {
+        Quaternion rotation = myGameObject.Rotation;
+        myGameObject.Rotation = Quaternion.identity;
+        Physics.SyncTransforms();
+
+        return rotation;
+    }
+
+    public static void RestoreRotation(MyGameObject myGameObject, Quaternion rotation)
+    {
+        myGameObject.Rotation = rotation;
+        Physics.SyncTransforms();
+    }
+    #endregion
+
+    #region String
+    public static string FormatName(string name)
+    {
+        string formatted = string.Empty;
+
+        foreach (char c in name)
+        {
+            if (c >= 'A' && c <= 'Z')
+            {
+                formatted += ' ';
+                formatted += c;
+            }
+            else if (c == '_')
+            {
+                formatted += ' ';
+            }
+            else
+            {
+                formatted += c;
+            }
+        }
+
+        return formatted.Trim();
+    }
+    #endregion
+
+    public static MyGameObject GetGameObject(RaycastHit hitInfo)
+    {
+        return hitInfo.transform.GetComponentInParent<MyGameObject>();
+    }
+
+    public static bool IsTerrain(RaycastHit hitInfo)
+    {
+        return hitInfo.transform.CompareTag("Terrain");
+    }
+
+    public static bool IsWater(RaycastHit hitInfo)
+    {
+        return hitInfo.transform.CompareTag("Water");
+    }
+
+    public static Vector3 SnapToGrid(Vector3 position)
+    {
+        float scale = Config.TerrainConstructionScale;
+
+        float x = Mathf.Floor(position.x / scale) * scale + scale / 2.0f;
+        float z = Mathf.Floor(position.z / scale) * scale + scale / 2.0f;
+
+        return new Vector3(x, position.y, z);
     }
 }

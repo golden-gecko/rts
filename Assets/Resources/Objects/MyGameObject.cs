@@ -614,6 +614,8 @@ public class MyGameObject : MonoBehaviour
             }
 
             Indicators.GetComponent<Indicators>().OnShow();
+
+            VisibilityState = MyGameObjectVisibilityState.Visible;
         }
         else if (Map.Instance.IsVisibleByRadar(this, active))
         {
@@ -623,6 +625,8 @@ public class MyGameObject : MonoBehaviour
             }
 
             Indicators.GetComponent<Indicators>().OnRadar();
+
+            VisibilityState = MyGameObjectVisibilityState.Radar;
         }
         else
         {
@@ -632,6 +636,8 @@ public class MyGameObject : MonoBehaviour
             }
 
             Indicators.GetComponent<Indicators>().OnHide();
+
+            VisibilityState = MyGameObjectVisibilityState.Hidden;
         }
     }
 
@@ -782,4 +788,6 @@ public class MyGameObject : MonoBehaviour
     public Transform Body { get; private set; }
 
     public Indicators Indicators { get; private set; }
+
+    public MyGameObjectVisibilityState VisibilityState { get; private set; } = MyGameObjectVisibilityState.Visible;
 }

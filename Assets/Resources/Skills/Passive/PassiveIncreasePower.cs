@@ -32,7 +32,7 @@ public class PassiveIncreasePower : Skill
 
         targets.Clear();
 
-        foreach (RaycastHit hitInfo in Utils.SphereCastAll(myGameObject.Position, Range, LayerMask.GetMask("GameObject")))
+        foreach (RaycastHit hitInfo in Utils.SphereCastAll(myGameObject.Position, Range, Utils.GetGameObjectMask()))
         {
             MyGameObject target = Utils.GetGameObject(hitInfo);
 

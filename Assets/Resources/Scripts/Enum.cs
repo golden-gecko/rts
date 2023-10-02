@@ -10,8 +10,15 @@ public enum MyGameObjectMapLayer
     Air,
     None,
     Terrain,
-    Underwater, // TODO: Implement.
+    Underwater,
     Water,
+}
+
+public enum MyGameObjectVisibilityState
+{
+    Hidden,
+    Radar,
+    Visible,
 }
 
 public enum MyGameObjectState
