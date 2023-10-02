@@ -52,7 +52,6 @@ public class MyGameObject : MonoBehaviour
                 if (Working)
                 {
                     ProcessOrders();
-                    UpdateSkills();
                 }
                 else
                 {
@@ -70,6 +69,7 @@ public class MyGameObject : MonoBehaviour
                 break;
         }
 
+        UpdateSkills();
         UpdateVisibility();
     }
 
@@ -85,6 +85,7 @@ public class MyGameObject : MonoBehaviour
     {
     }
 
+    #region Orders
     public void Assemble(string prefab)
     {
         Orders.Add(Order.Assemble(prefab));
@@ -286,6 +287,7 @@ public class MyGameObject : MonoBehaviour
             Orders.Add(Order.Wait());
         }
     }
+    #endregion
 
     public virtual string GetInfo(bool ally)
     {
