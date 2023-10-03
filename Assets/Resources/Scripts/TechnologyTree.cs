@@ -6,15 +6,8 @@ public class TechnologyTree
 {
     public void Load()
     {
-        foreach (MyGameObject myGameObject in Resources.LoadAll<MyGameObject>(Config.DirectoryStructures))
-        {
-            Technologies[myGameObject.name] = new Technology(myGameObject.name) { Discovered = true };
-        }
-
-        foreach (MyGameObject myGameObject in Resources.LoadAll<MyGameObject>(Config.DirectoryUnits))
-        {
-            Technologies[myGameObject.name] = new Technology(myGameObject.name) { Discovered = true };
-        }
+        Load(Config.DirectoryStructures);
+        Load(Config.DirectoryUnits);
 
         // Starting technologies.
         Technologies["Colonization"] = new Technology("Colonization");
@@ -87,10 +80,13 @@ public class TechnologyTree
         Technologies["Turret_Missile"] = new Technology("Turret_Missile", new HashSet<string> { "Stationary_Defences" });
         Technologies["Turret_Missile"].Cost.Init("Crystal", 0, 20, ResourceDirection.In);
 
-        // Discover starting technologies.
-        Discover("Colonization");
-        Discover("Electricity");
-        Discover("Infantry");
+        // Submarines.
+        Technologies["Submarines"] = new Technology("Submarines", new HashSet<string> { "Electricity" });
+        Technologies["Submarines"].Cost.Init("Crystal", 0, 20, ResourceDirection.In);
+
+        Technologies["Submarine"] = new Technology("Laser", new HashSet<string> { "Submarines" });
+
+        DiscoverStartingTechnologies();
     }
 
     public bool IsDiscovered(string name)
@@ -142,6 +138,21 @@ public class TechnologyTree
         }
 
         return true;
+    }
+
+    private void DiscoverStartingTechnologies()
+    {
+        Discover("Colonization");
+        Discover("Electricity");
+        Discover("Infantry");
+    }
+
+    private void Load(string directory)
+    {
+        foreach (MyGameObject myGameObject in Resources.LoadAll<MyGameObject>(directory))
+        {
+            Technologies[myGameObject.name] = new Technology(myGameObject.name) { Discovered = true };
+        }
     }
 
     public Dictionary<string, Technology> Technologies { get; } = new Dictionary<string, Technology>();

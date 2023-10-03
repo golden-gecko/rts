@@ -744,6 +744,9 @@ public class MyGameObject : MonoBehaviour
     public float Altitude { get; set; } = -1.0f;
 
     [field: SerializeField]
+    public float Depth { get; set; } = -1.0f;
+
+    [field: SerializeField]
     public List<MyGameObjectMapLayer> MapLayers { get; set; } = new List<MyGameObjectMapLayer>();
 
     [field: SerializeField]

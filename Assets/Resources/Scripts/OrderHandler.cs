@@ -14,4 +14,10 @@ public class OrderHandler
         myGameObject.Stats.Inc(Stats.OrdersFailed);
         myGameObject.Orders.Pop();
     }
+
+    protected void Success(MyGameObject myGameObject)
+    {
+        myGameObject.Stats.Inc(Stats.OrdersCompleted);
+        myGameObject.Orders.Pop();
+    }
 }

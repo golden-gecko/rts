@@ -24,9 +24,9 @@ public class OrderHandlerUseSkill : OrderHandler
         }
 
         myGameObject.Skills[order.Skill].OnExecute(myGameObject);
-        myGameObject.Stats.Inc(Stats.OrdersCompleted);
         myGameObject.Stats.Inc(Stats.SkillsUsed);
-        myGameObject.Orders.Pop();
+
+        Success(myGameObject);
     }
 
     protected override bool IsValid(MyGameObject myGameObject, Order order)

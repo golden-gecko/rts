@@ -35,10 +35,10 @@ public class OrderHandlerAssemble : OrderHandler
         order.TargetGameObject.SetState(MyGameObjectState.Operational);
         order.TargetGameObject.Move(myGameObject.GetComponent<Assembler>().RallyPoint, 0);
 
-        myGameObject.Stats.Inc(Stats.OrdersCompleted);
         myGameObject.Stats.Inc(Stats.ObjectsAssembled);
         myGameObject.Stats.Add(Stats.TimeAssembling, order.Timer.Max);
-        myGameObject.Orders.Pop();
+
+        Success(myGameObject);
     }
 
     private bool HaveResources(MyGameObject myGameObject, ResourceContainer resourceContainer)

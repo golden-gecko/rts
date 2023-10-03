@@ -62,8 +62,7 @@ public class OrderHandlerLoad : OrderHandler
 
         MoveResources(order.SourceGameObject, myGameObject, order.Resource, valueEnd);
 
-        myGameObject.Stats.Inc(Stats.OrdersCompleted);
-        myGameObject.Orders.Pop();
+        Success(myGameObject);
     }
 
     protected override bool IsValid(MyGameObject myGameObject, Order order)

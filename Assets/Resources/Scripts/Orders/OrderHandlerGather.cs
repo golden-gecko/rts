@@ -143,8 +143,7 @@ public class OrderHandlerGather : OrderHandler
     {
         if (myResource == null || storage == null)
         {
-            myGameObject.Stats.Inc(Stats.OrdersCompleted);
-            myGameObject.Orders.Pop();
+            Success(myGameObject); // TODO: Sucess or fail?
 
             return;
         }
