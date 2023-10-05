@@ -25,20 +25,27 @@ public class GameMenu : MonoBehaviour
         UIDocument uiDocument = GetComponent<UIDocument>();
         VisualElement rootVisualElement = uiDocument.rootVisualElement;
 
-        bottomPanel = rootVisualElement.Q<VisualElement>("BottomPanel");
-        infoPanel = rootVisualElement.Q<VisualElement>("InfoPanel");
+        panel_Commands = rootVisualElement.Q<VisualElement>("Panel_Commands");
+        panel_Info = rootVisualElement.Q<VisualElement>("Panel_Info");
+        panel_Log = rootVisualElement.Q<VisualElement>("Panel_Log");
+        panel_Menu = rootVisualElement.Q<VisualElement>("Panel_Menu");
+        panel_Minimap = rootVisualElement.Q<VisualElement>("Panel_Minimap");
+        panel_Orders = rootVisualElement.Q<VisualElement>("Panel_Orders");
+        panel_Resources = rootVisualElement.Q<VisualElement>("Panel_Resources");
 
-        log = rootVisualElement.Q<Label>("Log");
-        info = rootVisualElement.Q<Label>("Info");
+        value_Info = panel_Info.Q<Label>("Value");
+        value_Log = panel_Log.Q<Label>("Value");
+        value_Orders = panel_Orders.Q<Label>("Value");
+        value_Resources = panel_Resources.Q<Label>("Value");
 
-        menu = rootVisualElement.Q<Button>("Menu");
+        menu = panel_Menu.Q<Button>("Menu");
         menu.RegisterCallback<ClickEvent>(ev => OnMenu());
 
-        orders = rootVisualElement.Q<VisualElement>("OrderList");
-        prefabs = rootVisualElement.Q<VisualElement>("PrefabList");
-        technologies = rootVisualElement.Q<VisualElement>("TechnologyList");
-        recipes = rootVisualElement.Q<VisualElement>("RecipeList");
-        skills = rootVisualElement.Q<VisualElement>("Skills");
+        orders = panel_Commands.Q<VisualElement>("List_Orders");
+        prefabs = panel_Commands.Q<VisualElement>("List_Prefabs");
+        recipes = panel_Commands.Q<VisualElement>("List_Recipes");
+        skills = panel_Commands.Q<VisualElement>("List_Skills");
+        technologies = panel_Commands.Q<VisualElement>("List_Technologies");
 
         CreateOrders();
         CreatePrefabs();
@@ -57,17 +64,17 @@ public class GameMenu : MonoBehaviour
         {
             bool ally = HUD.Instance.Hovered.Is(activePlayer, DiplomacyState.Ally);
 
-            info.text = HUD.Instance.Hovered.GetInfo(ally);
+            value_Info.text = HUD.Instance.Hovered.GetInfo(ally);
+
+            panel_Info.style.display = DisplayStyle.Flex;
 
             if (ally)
             {
-                bottomPanel.style.display = DisplayStyle.Flex;
-            }
+                panel_Commands.style.display = DisplayStyle.Flex;
+                panel_Orders.style.display = DisplayStyle.Flex;
 
-            infoPanel.style.display = DisplayStyle.Flex;
+                value_Orders.text = HUD.Instance.Hovered.GetInfoOrders(ally);
 
-            if (ally)
-            {
                 UpdateOrders(HUD.Instance.Hovered);
                 UpdatePrefabs(HUD.Instance.Hovered);
                 UpdateTechnologies(HUD.Instance.Hovered);
@@ -77,10 +84,12 @@ public class GameMenu : MonoBehaviour
         }
         else if (activePlayer.Selection.Count > 0 && activePlayer.Selection.First() != null)
         {
-            info.text = activePlayer.Selection.First().GetInfo(true);
+            value_Info.text = activePlayer.Selection.First().GetInfo(true);
+            value_Orders.text = activePlayer.Selection.First().GetInfoOrders(true);
 
-            bottomPanel.style.display = DisplayStyle.Flex;
-            infoPanel.style.display = DisplayStyle.Flex;
+            panel_Commands.style.display = DisplayStyle.Flex;
+            panel_Info.style.display = DisplayStyle.Flex;
+            panel_Orders.style.display = DisplayStyle.Flex;
 
             UpdateOrders(null);
             UpdatePrefabs(null);
@@ -90,16 +99,19 @@ public class GameMenu : MonoBehaviour
         }
         else
         {
-            info.text = string.Empty;
+            value_Info.text = string.Empty;
 
-            bottomPanel.style.display = DisplayStyle.None;
-            infoPanel.style.display = DisplayStyle.None;
+            panel_Commands.style.display = DisplayStyle.None;
+            panel_Info.style.display = DisplayStyle.None;
+            panel_Orders.style.display = DisplayStyle.None;
         }
+
+        UpdateResources();
     }
 
     public void Log(string message)
     {
-        log.text = message;
+        value_Log.text = message;
     }
 
     private void CreateOrders()
@@ -428,6 +440,40 @@ public class GameMenu : MonoBehaviour
         }
     }
 
+    private void UpdateResources()
+    {
+        ResourceContainer resources = new ResourceContainer();
+
+        foreach (Storage storage in FindObjectsByType<Storage>(FindObjectsSortMode.None))
+        {
+            if (storage.GetComponent<MyGameObject>().Player != HUD.Instance.ActivePlayer)
+            {
+                continue;
+            }
+
+            foreach (Resource resource in storage.Resources.Items)
+            {
+                if (resources.Current(resource.Name) > 0)
+                {
+                    resources.Add(resource.Name, resource.Current);
+                }
+                else
+                {
+                    resources.Init(resource.Name, resource.Current, int.MaxValue);
+                }
+            }
+        }
+
+        string value = String.Empty;
+
+        foreach (Resource resource in resources.Items)
+        {
+            value += string.Format("{0}: {1}, ", resource.Name, resource.Current);
+        }
+
+        panel_Resources.Q<Label>("Value").text = value;
+    }
+
     private void UpdateSkills(MyGameObject hovered)
     {
         Dictionary<string, bool> whitelist = new Dictionary<string, bool>();
@@ -528,11 +574,19 @@ public class GameMenu : MonoBehaviour
     [SerializeField]
     private VisualTreeAsset templateButton;
 
-    private VisualElement bottomPanel;
-    private VisualElement infoPanel;
+    private VisualElement panel_Commands;
+    private VisualElement panel_Info;
+    private VisualElement panel_Log;
+    private VisualElement panel_Menu;
+    private VisualElement panel_Minimap;
+    private VisualElement panel_Orders;
+    private VisualElement panel_Resources;
 
-    private Label log;
-    private Label info;
+    private Label value_Info;
+    private Label value_Log;
+    private Label value_Orders;
+    private Label value_Resources;
+
     private Button menu;
 
     private VisualElement orders;

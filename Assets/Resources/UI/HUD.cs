@@ -22,6 +22,7 @@ public class HUD : MonoBehaviour
         DragReset();
         DragDraw();
 
+        DiplomacyMenu.Instance.gameObject.SetActive(false);
         GameMenu.Instance.gameObject.SetActive(true);
         MainMenu.Instance.gameObject.SetActive(false);
         SceneMenu.Instance.gameObject.SetActive(false);

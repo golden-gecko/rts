@@ -34,4 +34,8 @@ public class Config
         public static float VisibilityScale { get; } = 2.0f;
         public static int VisibilitySize { get; } = 250;
     }
+
+    public class UI
+    {
+    }
 }

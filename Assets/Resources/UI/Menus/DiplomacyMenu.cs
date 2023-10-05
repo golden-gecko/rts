@@ -21,11 +21,6 @@ public class DiplomacyMenu : MonoBehaviour
     {
         UIDocument uiDocument = GetComponent<UIDocument>();
         VisualElement rootVisualElement = uiDocument.rootVisualElement;
-
-        
-
-        // log = rootVisualElement.Q<Label>("Log");
-        // info = rootVisualElement.Q<Label>("Info");
     }
 
     [field: SerializeField]

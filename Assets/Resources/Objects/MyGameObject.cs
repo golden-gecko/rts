@@ -297,18 +297,13 @@ public class MyGameObject : MonoBehaviour
         switch (State)
         {
             case MyGameObjectState.Operational:
-                info += string.Format("ID: {0}\nName: {1}", GetInstanceID(), name);
-
-                if (Health.Max > 0.0f)
-                {
-                    info += string.Format("\nHP: {0}", Health.GetInfo());
-                }
+                info += string.Format("{0}\n\nHP: {1}", name, Health.GetInfo());
 
                 MyComponent[] myComponents = GetComponents<MyComponent>();
 
                 if (myComponents.Length > 0)
                 {
-                    info += "\nComponents:";
+                    info += "\n\nComponents:";
 
                     foreach (MyComponent myComponent in myComponents)
                     {
@@ -318,17 +313,11 @@ public class MyGameObject : MonoBehaviour
 
                 if (ally)
                 {
-                    string orders = Orders.GetInfo();
                     string stats = Stats.GetInfo();
-
-                    if (orders.Length > 0)
-                    {
-                        info += string.Format("\nOrders: {0}", orders);
-                    }
 
                     if (stats.Length > 0)
                     {
-                        info += string.Format("\nStats: {0}", stats);
+                        info += string.Format("\n\nStats: {0}", stats);
                     }
 
                     if (Skills.Count > 0)
@@ -348,7 +337,29 @@ public class MyGameObject : MonoBehaviour
 
             case MyGameObjectState.UnderAssembly:
             case MyGameObjectState.UnderConstruction:
-                info += string.Format("ID: {0}\nName: {1}\nResources:{2}", GetInstanceID(), name, ConstructionResources.GetInfo());
+                info += string.Format("{0}\n\nResources:{1}", GetInstanceID(), name, ConstructionResources.GetInfo());
+                break;
+        }
+
+        return info;
+    }
+
+    public virtual string GetInfoOrders(bool ally)
+    {
+        string info = string.Empty;
+
+        switch (State)
+        {
+            case MyGameObjectState.Operational:
+                if (ally)
+                {
+                    string orders = Orders.GetInfo();
+
+                    if (orders.Length > 0)
+                    {
+                        info += string.Format("\n\nOrders: {0}", orders);
+                    }
+                }
                 break;
         }
 
