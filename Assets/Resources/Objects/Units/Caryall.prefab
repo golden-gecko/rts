@@ -356,7 +356,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <Mass>k__BackingField: 10
   <Power>k__BackingField:
-    <Value>k__BackingField: 100
+    <Value>k__BackingField: 200
   <FuelUsage>k__BackingField: 10
 --- !u!114 &-3863305394958440406
 MonoBehaviour:

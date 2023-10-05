@@ -231,13 +231,27 @@ public class Utils
         return hitInfo.transform.CompareTag("Water");
     }
 
-    public static Vector3 SnapToGrid(Vector3 position)
+    public static Vector3 SnapToCorner(Vector3 position, float scale)
     {
-        float scale = Config.Map.ConstructionScale;
+        float x = Mathf.Floor(position.x / scale) * scale;
+        float z = Mathf.Floor(position.z / scale) * scale;
 
+        return new Vector3(x, position.y, z);
+    }
+
+    public static Vector3 SnapToCenter(Vector3 position, float scale)
+    {
         float x = Mathf.Floor(position.x / scale) * scale + scale / 2.0f;
         float z = Mathf.Floor(position.z / scale) * scale + scale / 2.0f;
 
         return new Vector3(x, position.y, z);
+    }
+
+    public static Vector3Int ToGrid(Vector3 position, float scale)
+    {
+        int x = Mathf.FloorToInt(position.x / scale);
+        int z = Mathf.FloorToInt(position.z / scale);
+
+        return new Vector3Int(x, 0, z);
     }
 }

@@ -30,11 +30,10 @@ public class Map : MonoBehaviour
 
     public void SetVisibleByRadar(MyGameObject myGameObject, Vector3 position, float range, int value)
     {
-        Vector3Int start = new Vector3Int(Mathf.FloorToInt((position.x - range) / Config.Map.VisibilityScale), 0, Mathf.FloorToInt((position.z - range) / Config.Map.VisibilityScale));
-        Vector3Int end = new Vector3Int(Mathf.FloorToInt((position.x + range) / Config.Map.VisibilityScale), 0, Mathf.FloorToInt((position.z + range) / Config.Map.VisibilityScale));
+        Vector3Int start = Utils.ToGrid(new Vector3(position.x - range, 0.0f, position.z - range), Config.Map.VisibilityScale);
+        Vector3Int end = Utils.ToGrid(new Vector3(position.x + range, 0.0f, position.z + range), Config.Map.VisibilityScale);
 
-        Vector3Int center = new Vector3Int(Mathf.FloorToInt(position.x / Config.Map.VisibilityScale), 0, Mathf.FloorToInt(position.z / Config.Map.VisibilityScale));
-
+        Vector3Int center = Utils.ToGrid(position, Config.Map.VisibilityScale);
         int radius = Mathf.FloorToInt(range / Config.Map.VisibilityScale);
 
         for (int x = start.x; x < end.x; x++)
@@ -58,11 +57,10 @@ public class Map : MonoBehaviour
 
     public void SetVisibleByAntiRadar(MyGameObject myGameObject, Vector3 position, float range, int value)
     {
-        Vector3Int start = new Vector3Int(Mathf.FloorToInt((position.x - range) / Config.Map.VisibilityScale), 0, Mathf.FloorToInt((position.z - range) / Config.Map.VisibilityScale));
-        Vector3Int end = new Vector3Int(Mathf.FloorToInt((position.x + range) / Config.Map.VisibilityScale), 0, Mathf.FloorToInt((position.z + range) / Config.Map.VisibilityScale));
+        Vector3Int start = Utils.ToGrid(new Vector3(position.x - range, 0.0f, position.z - range), Config.Map.VisibilityScale);
+        Vector3Int end = Utils.ToGrid(new Vector3(position.x + range, 0.0f, position.z + range), Config.Map.VisibilityScale);
 
-        Vector3Int center = new Vector3Int(Mathf.FloorToInt(position.x / Config.Map.VisibilityScale), 0, Mathf.FloorToInt(position.z / Config.Map.VisibilityScale));
-
+        Vector3Int center = Utils.ToGrid(position, Config.Map.VisibilityScale);
         int radius = Mathf.FloorToInt(range / Config.Map.VisibilityScale);
 
         for (int x = start.x; x < end.x; x++)
@@ -86,11 +84,10 @@ public class Map : MonoBehaviour
 
     public void SetVisibleBySight(MyGameObject myGameObject, Vector3 position, float range, int value)
     {
-        Vector3Int start = new Vector3Int(Mathf.FloorToInt((position.x - range) / Config.Map.VisibilityScale), 0, Mathf.FloorToInt((position.z - range) / Config.Map.VisibilityScale));
-        Vector3Int end = new Vector3Int(Mathf.FloorToInt((position.x + range) / Config.Map.VisibilityScale), 0, Mathf.FloorToInt((position.z + range) / Config.Map.VisibilityScale));
+        Vector3Int start = Utils.ToGrid(new Vector3(position.x - range, 0.0f, position.z - range), Config.Map.VisibilityScale);
+        Vector3Int end = Utils.ToGrid(new Vector3(position.x + range, 0.0f, position.z + range), Config.Map.VisibilityScale);
 
-        Vector3Int center = new Vector3Int(Mathf.FloorToInt(position.x / Config.Map.VisibilityScale), 0, Mathf.FloorToInt(position.z / Config.Map.VisibilityScale));
-
+        Vector3Int center = Utils.ToGrid(position, Config.Map.VisibilityScale);
         int radius = Mathf.FloorToInt(range / Config.Map.VisibilityScale);
 
         for (int x = start.x; x < end.x; x++)
@@ -114,11 +111,10 @@ public class Map : MonoBehaviour
 
     public void SetVisibleByPower(MyGameObject myGameObject, Vector3 position, float range, int value)
     {
-        Vector3Int start = new Vector3Int(Mathf.FloorToInt((position.x - range) / Config.Map.VisibilityScale), 0, Mathf.FloorToInt((position.z - range) / Config.Map.VisibilityScale));
-        Vector3Int end = new Vector3Int(Mathf.FloorToInt((position.x + range) / Config.Map.VisibilityScale), 0, Mathf.FloorToInt((position.z + range) / Config.Map.VisibilityScale));
+        Vector3Int start = Utils.ToGrid(new Vector3(position.x - range, 0.0f, position.z - range), Config.Map.VisibilityScale);
+        Vector3Int end = Utils.ToGrid(new Vector3(position.x + range, 0.0f, position.z + range), Config.Map.VisibilityScale);
 
-        Vector3Int center = new Vector3Int(Mathf.FloorToInt(position.x / Config.Map.VisibilityScale), 0, Mathf.FloorToInt(position.z / Config.Map.VisibilityScale));
-
+        Vector3Int center = Utils.ToGrid(position, Config.Map.VisibilityScale);
         int radius = Mathf.FloorToInt(range / Config.Map.VisibilityScale);
 
         for (int x = start.x; x < end.x; x++)
@@ -142,7 +138,7 @@ public class Map : MonoBehaviour
 
     public bool IsVisibleByRadar(MyGameObject myGameObject, Player active)
     {
-        Vector3Int position = new Vector3Int(Mathf.FloorToInt(myGameObject.Position.x / Config.Map.VisibilityScale), 0, Mathf.FloorToInt(myGameObject.Position.z / Config.Map.VisibilityScale));
+        Vector3Int position = Utils.ToGrid(myGameObject.Position, Config.Map.VisibilityScale);
 
         int byRadar = Cells[position.x, position.z].VisibleByRadar.ContainsKey(active) ? Cells[position.x, position.z].VisibleByRadar[active] : 0;
         int byAntiRadar = Cells[position.x, position.z].VisibleByAntiRadar.ContainsKey(myGameObject.Player) ? Cells[position.x, position.z].VisibleByAntiRadar[myGameObject.Player] : 0;
@@ -152,14 +148,14 @@ public class Map : MonoBehaviour
 
     public bool IsVisibleBySight(MyGameObject myGameObject, Player active)
     {
-        Vector3Int position = new Vector3Int(Mathf.FloorToInt(myGameObject.Position.x / Config.Map.VisibilityScale), 0, Mathf.FloorToInt(myGameObject.Position.z / Config.Map.VisibilityScale));
+        Vector3Int position = Utils.ToGrid(myGameObject.Position, Config.Map.VisibilityScale);
 
         return Cells[position.x, position.z].VisibleBySight.ContainsKey(active) && Cells[position.x, position.z].VisibleBySight[active] > 0;
     }
 
     public bool IsVisibleByPower(MyGameObject myGameObject, Player active)
     {
-        Vector3Int position = new Vector3Int(Mathf.FloorToInt(myGameObject.Position.x / Config.Map.VisibilityScale), 0, Mathf.FloorToInt(myGameObject.Position.z / Config.Map.VisibilityScale));
+        Vector3Int position = Utils.ToGrid(myGameObject.Position, Config.Map.VisibilityScale);
 
         return Cells[position.x, position.z].VisibleByPower.ContainsKey(active) && Cells[position.x, position.z].VisibleByPower[active] > 0;
     }
