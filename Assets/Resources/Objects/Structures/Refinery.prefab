@@ -89,7 +89,7 @@ MonoBehaviour:
   - Iron
   - Plastic
   - Charcoal
-  <ResourceUsage>k__BackingField: 1
+  <ResourceUsage>k__BackingField: 4
 --- !u!114 &-8543086153947244168
 MonoBehaviour:
   m_ObjectHideFlags: 0

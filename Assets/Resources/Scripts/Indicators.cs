@@ -329,7 +329,7 @@ public class Indicators : MonoBehaviour
 
         Order order = myGameObject.Orders.Items.Where(x => x.Type != OrderType.Wait).FirstOrDefault();
 
-        if (order == null)
+        if (order == null || order.IsValid() == false)
         {
             return;
         }

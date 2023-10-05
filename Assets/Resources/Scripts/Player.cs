@@ -1,7 +1,4 @@
 using System.Collections.Generic;
-using System.Linq;
-using Unity.VisualScripting.Antlr3.Runtime.Collections;
-using UnityEditor.SceneManagement;
 using UnityEngine;
 
 public class Player : MonoBehaviour
@@ -87,9 +84,12 @@ public class Player : MonoBehaviour
         Unregister(Producers, myGameObject, name);
     }
 
-    public MyGameObject GetProducer(MyGameObject myGameObject, string resource, int value) // TODO: Implement second argument.
+    public MyGameObject GetProducer(MyGameObject myGameObject, string resource, int value)
     {
-        foreach (ResourceRequest i in Producers.Items)
+        int max = 0;
+        MyGameObject target = null;
+
+        foreach (ResourceRequest i in Producers.Items) // TODO: Return closest object.
         {
             if (i.MyGameObject == myGameObject)
             {
@@ -101,10 +101,23 @@ public class Player : MonoBehaviour
                 continue;
             }
 
-            return i.MyGameObject;
+            if (i.Value < value)
+            {
+                if (i.Value > max)
+                {
+                    max = i.Value;
+                    target = i.MyGameObject;
+                }
+
+                continue;
+            }
+            else
+            {
+                return i.MyGameObject;
+            }
         }
 
-        return null;
+        return target;
     }
 
     public MyResource GetResource(MyGameObject myGameObject, string resource = "")
@@ -173,6 +186,57 @@ public class Player : MonoBehaviour
             if (magnitude < distance)
             {
                 closest = i.MyGameObject;
+                distance = magnitude;
+            }
+        }
+
+        return closest;
+    }
+
+    public MyResource GetResourceToGather(MyGameObject myGameObject, string resource = "", int value = 0)
+    {
+        MyResource closest = null;
+        float distance = float.MaxValue;
+
+        foreach (MyResource myResource in FindObjectsByType<MyResource>(FindObjectsSortMode.None)) // TODO: Refactor.  
+        {
+            if (myResource == myGameObject)
+            {
+                continue;
+            }
+
+            if (myResource.Gatherable == false)
+            {
+                continue;
+            }
+
+            if (myResource.VisibilityState != MyGameObjectVisibilityState.Explored && myResource.VisibilityState != MyGameObjectVisibilityState.Visible)
+            {
+                continue;
+            }
+
+            float magnitude = (myGameObject.Position - myResource.Position).magnitude;
+
+            if (magnitude < distance)
+            {
+                MyGameObject storage = null;
+
+                foreach (Resource i in myResource.GetComponent<Storage>().Resources.Items)
+                {
+                    storage = myGameObject.Player.GetStorage(myGameObject, i.Name, i.Current);
+
+                    if (storage != null)
+                    {
+                        break;
+                    }
+                }
+
+                if (storage == null)
+                {
+                    continue;
+                }
+
+                closest = myResource;
                 distance = magnitude;
             }
         }

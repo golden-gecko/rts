@@ -200,7 +200,7 @@ MonoBehaviour:
   - Space_Travels
   - Static_Defences
   - Stationary_Defences
-  <ResourceUsage>k__BackingField: 10
+  <ResourceUsage>k__BackingField: 4
 --- !u!114 &-3540461504229549173
 MonoBehaviour:
   m_ObjectHideFlags: 0
