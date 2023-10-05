@@ -253,7 +253,7 @@ MonoBehaviour:
   <Prefabs>k__BackingField:
   - Tank_Combat
   - Tank_Missile
-  <ResourceUsage>k__BackingField: 2
+  <ResourceUsage>k__BackingField: 4
   <RallyPoint>k__BackingField: {x: 0, y: 0, z: 0}
 --- !u!114 &7901436378423947559
 MonoBehaviour:

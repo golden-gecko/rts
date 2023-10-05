@@ -3,8 +3,19 @@ using UnityEngine;
 
 public class SkillManager : MonoBehaviour
 {
+    public static SkillManager Instance { get; private set; }
+
     void Awake()
     {
+        if (Instance != null && Instance != this)
+        {
+            Destroy(this);
+        }
+        else
+        {
+            Instance = this;
+        }
+
         CreateSkills();
     }
 

@@ -29,7 +29,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Resources/Scenes/Test_Attack_Plane.unity
     guid: a21818c3b52e9ee43b9c91d95ba946b0
-  - enabled: 1
+  - enabled: 0
     path: Assets/Resources/Scenes/Test_Disaster.unity
     guid: 28f0c79af0fb2244eb8c918a4536d13a
   - enabled: 1
@@ -37,7 +37,7 @@ EditorBuildSettings:
     guid: f4abf558c7579b14dbf59845834dc595
   - enabled: 1
     path: Assets/Resources/Scenes/Test_Move.unity
-    guid: 5f09fbb7398581c4c93610c545b2bf17
+    guid: f8c2d589cb6c70043bbf02e58ca74c68
   - enabled: 1
     path: Assets/Resources/Scenes/Test_Research.unity
     guid: ae2e4a2bd0774f54386be67248d89a3a

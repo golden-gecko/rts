@@ -1444,6 +1444,10 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 4703427129416132906, guid: 838528c30748ad1409e28e3a543244c6, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4785110659018959346, guid: 838528c30748ad1409e28e3a543244c6, type: 3}
       propertyPath: m_Enabled
       value: 1
@@ -1480,8 +1484,12 @@ PrefabInstance:
       propertyPath: SelectionSprite
       value: 
       objectReference: {fileID: 21300000, guid: 1841cd3def226a749ad666a6152d2cc8, type: 3}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
+    m_RemovedComponents:
+    - {fileID: 3580768856924153551, guid: 838528c30748ad1409e28e3a543244c6, type: 3}
+    - {fileID: 117974251609430779, guid: 838528c30748ad1409e28e3a543244c6, type: 3}
+    - {fileID: 910538487316295332, guid: 838528c30748ad1409e28e3a543244c6, type: 3}
+    m_RemovedGameObjects:
+    - {fileID: 2543591127373794835, guid: 838528c30748ad1409e28e3a543244c6, type: 3}
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 838528c30748ad1409e28e3a543244c6, type: 3}

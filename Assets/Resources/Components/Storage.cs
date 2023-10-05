@@ -29,17 +29,14 @@ public class Storage : MyComponent
 
         MyGameObject parent = GetComponent<MyGameObject>();
 
-        switch (parent.State) // TODO: Refactor.
+        switch (parent.State)
         {
             case MyGameObjectState.Operational:
-                if (parent.Working && RaiseResourceFlags)
-                {
-                    CreateResourceFlags(parent);
-                }
-                else
-                {
-                    RemoveResourceFlags(parent);
-                }
+                CreateResourceFlags(parent);
+                break;
+
+            default:
+                RemoveResourceFlags(parent);
                 break;
         }
     }
