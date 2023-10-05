@@ -2,8 +2,19 @@ using UnityEngine;
 
 public class RecipeManager : MonoBehaviour
 {
+    public static RecipeManager Instance { get; private set; }
+
     void Awake()
     {
+        if (Instance != null && Instance != this)
+        {
+            Destroy(this);
+        }
+        else
+        {
+            Instance = this;
+        }
+
         CreateRecipes();
     }
 

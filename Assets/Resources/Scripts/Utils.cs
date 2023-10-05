@@ -149,12 +149,12 @@ public class Utils
 
     public static bool RaycastFromTop(Vector3 position, out RaycastHit hitInfo, int layerMask = Physics.DefaultRaycastLayers)
     {
-        return Raycast(new Ray(new Vector3(position.x, Config.TerrainMaxHeight, position.z), Vector3.down), out hitInfo, layerMask);
+        return Raycast(new Ray(new Vector3(position.x, Config.Map.MaxHeight, position.z), Vector3.down), out hitInfo, layerMask);
     }
 
     public static RaycastHit[] RaycastAllFromTop(Vector3 position, int layerMask = Physics.DefaultRaycastLayers)
     {
-        return RaycastAll(new Ray(new Vector3(position.x, Config.TerrainMaxHeight, position.z), Vector3.down), layerMask);
+        return RaycastAll(new Ray(new Vector3(position.x, Config.Map.MaxHeight, position.z), Vector3.down), layerMask);
     }
 
     public static bool Raycast(Ray ray, out RaycastHit hitInfo, int layerMask = Physics.DefaultRaycastLayers)
@@ -233,7 +233,7 @@ public class Utils
 
     public static Vector3 SnapToGrid(Vector3 position)
     {
-        float scale = Config.TerrainConstructionScale;
+        float scale = Config.Map.ConstructionScale;
 
         float x = Mathf.Floor(position.x / scale) * scale + scale / 2.0f;
         float z = Mathf.Floor(position.z / scale) * scale + scale / 2.0f;

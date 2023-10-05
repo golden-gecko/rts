@@ -2,27 +2,36 @@ using System.IO;
 
 public class Config
 {
-    public static float CameraMinHeight = 2.0f;
-    public static float CameraMaxHeight = 100.0f;
+    public class Asset
+    {
+        public static string Disasters { get; } = Path.Join("Objects", "Disasters");
+        public static string Structures { get; } = Path.Join("Objects", "Structures");
+        public static string Units { get; } = Path.Join("Objects", "Units");
+    }
 
-    public static float CursorRotateStep = 45.0f;
+    public class Camera
+    {
+        public static float MinHeight { get; } = 2.0f;
+        public static float MaxHeight { get; } = 100.0f;
+    }
 
-    public static string DirectoryDisasters = Path.Join("Objects", "Disasters");
-    public static string DirectoryStructures = Path.Join("Objects", "Structures");
-    public static string DirectoryUnits = Path.Join("Objects", "Units");
+    public class Cursor3D
+    {
+        public static float RotateStep { get; } = 45.0f;
+        public static bool SnapToGrid { get; } = true;
+    }
 
-    public static float IndicatorMargin = 1.1f;
-    public static float IndicatorTextOffset = 2.0f;
+    public class Indicator
+    {
+        public static float Margin { get; } = 1.1f;
+        public static float TextOffset { get; } = 2.0f;
+    }
 
-    public static bool SnapToGrid = true;
-
-    public static float TerrainConstructionScale = 2.0f;
-    public static float TerrainVisibilityScale = 2.0f;
-    public static int TerrainVisibilitySize = 250;
-    public static float TerrainMaxHeight = 2000.0f;
-
-    public static float WaterConstructionScale = 2.0f;
-    public static float WaterVisibilityScale = 2.0f;
-    public static int WaterVisibilitySize = 250;
-    public static float WaterMaxHeight = 2000.0f;
+    public class Map
+    {
+        public static float ConstructionScale { get; } = 2.0f;
+        public static float MaxHeight { get; } = 2000.0f;
+        public static float VisibilityScale { get; } = 2.0f;
+        public static int VisibilitySize { get; } = 250;
+    }
 }

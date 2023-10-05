@@ -9,7 +9,6 @@ public class Producer : MyComponent
         base.Awake();
 
         MyGameObject parent = GetComponent<MyGameObject>();
-        RecipeManager recipeManager = Game.Instance.GetComponent<RecipeManager>();
 
         parent.Orders.AllowOrder(OrderType.Produce);
 
@@ -18,7 +17,7 @@ public class Producer : MyComponent
 
         foreach (string recipe in Recipes)
         {
-            parent.Orders.AllowRecipe(recipeManager.Get(recipe));
+            parent.Orders.AllowRecipe(RecipeManager.Instance.Get(recipe));
         }
     }
 

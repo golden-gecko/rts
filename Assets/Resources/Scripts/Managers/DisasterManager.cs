@@ -3,12 +3,20 @@ using UnityEngine;
 
 public class DisasterManager : MonoBehaviour
 {
+    public static DisasterManager Instance { get; private set; }
+
     void Awake()
     {
-        foreach (Disaster disaster in Resources.LoadAll<Disaster>(Config.DirectoryDisasters))
+        if (Instance != null && Instance != this)
         {
-            DisasterTimer[disaster] = new Timer(Random.Range(disaster.FrequencyInSecondsMin, disaster.FrequencyInSecondsMax));
+            Destroy(this);
         }
+        else
+        {
+            Instance = this;
+        }
+
+        CreateTimers();
     }
 
     void Update()
@@ -34,6 +42,14 @@ public class DisasterManager : MonoBehaviour
             i.Value.Max = Random.Range(i.Key.FrequencyInSecondsMin, i.Key.FrequencyInSecondsMax);
 
             Utils.CreateGameObject(i.Key, GetDisasterPosition(), Quaternion.identity, Player, MyGameObjectState.Operational);
+        }
+    }
+
+    private void CreateTimers()
+    {
+        foreach (Disaster disaster in Resources.LoadAll<Disaster>(Config.Asset.Disasters))
+        {
+            DisasterTimer[disaster] = new Timer(Random.Range(disaster.FrequencyInSecondsMin, disaster.FrequencyInSecondsMax));
         }
     }
 

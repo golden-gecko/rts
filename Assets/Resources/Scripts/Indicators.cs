@@ -340,7 +340,7 @@ public class Indicators : MonoBehaviour
         {
             case OrderType.Assemble:
                 orderText.gameObject.SetActive(true);
-                orderText.transform.localPosition = new Vector3(orderText.transform.localPosition.x, size.y * Config.IndicatorTextOffset, orderText.transform.localPosition.z);
+                orderText.transform.localPosition = new Vector3(orderText.transform.localPosition.x, size.y * Config.Indicator.TextOffset, orderText.transform.localPosition.z);
                 orderTextValueMesh.SetText(string.Format("Assembling\n{0}", order.Prefab));
                 break;
 
@@ -373,13 +373,13 @@ public class Indicators : MonoBehaviour
 
             case OrderType.Produce:
                 orderText.gameObject.SetActive(true);
-                orderText.transform.localPosition = new Vector3(orderText.transform.localPosition.x, size.y * Config.IndicatorTextOffset, orderText.transform.localPosition.z);
+                orderText.transform.localPosition = new Vector3(orderText.transform.localPosition.x, size.y * Config.Indicator.TextOffset, orderText.transform.localPosition.z);
                 orderTextValueMesh.SetText(string.Format("Producing\n{0}", order.Recipe));
                 break;
 
             case OrderType.Research:
                 orderText.gameObject.SetActive(true);
-                orderText.transform.localPosition = new Vector3(orderText.transform.localPosition.x, size.y * Config.IndicatorTextOffset, orderText.transform.localPosition.z);
+                orderText.transform.localPosition = new Vector3(orderText.transform.localPosition.x, size.y * Config.Indicator.TextOffset, orderText.transform.localPosition.z);
                 orderTextValueMesh.SetText(string.Format("Researching\n{0}", order.Technology));
                 break;
 
@@ -417,7 +417,7 @@ public class Indicators : MonoBehaviour
         Vector3 size = myGameObject.Size;
 
         construction.transform.localPosition = new Vector3(0.0f, size.y * 0.5f, 0.0f);
-        construction.transform.localScale = size * Config.IndicatorMargin;
+        construction.transform.localScale = size * Config.Indicator.Margin;
     }
 
     private void UpdateError(MyGameObject myGameObject)
@@ -425,14 +425,14 @@ public class Indicators : MonoBehaviour
         Vector3 size = myGameObject.Size;
 
         error.transform.localPosition = new Vector3(0.0f, size.y * 0.5f, 0.0f);
-        error.transform.localScale = size * Config.IndicatorMargin;
+        error.transform.localScale = size * Config.Indicator.Margin;
     }
 
     private void UpdateSelection(MyGameObject myGameObject)
     {
         Vector3 size = myGameObject.Size;
 
-        selection.localScale = new Vector3(size.x * Config.IndicatorMargin, size.z * Config.IndicatorMargin, 1.0f);
+        selection.localScale = new Vector3(size.x * Config.Indicator.Margin, size.z * Config.Indicator.Margin, 1.0f);
     }
 
     private void UpdateTrace(MyGameObject myGameObject)

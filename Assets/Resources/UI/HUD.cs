@@ -21,6 +21,10 @@ public class HUD : MonoBehaviour
     {
         DragReset();
         DragDraw();
+
+        GameMenu.Instance.gameObject.SetActive(true);
+        MainMenu.Instance.gameObject.SetActive(false);
+        SceneMenu.Instance.gameObject.SetActive(false);
     }
 
     void Update()
@@ -160,54 +164,18 @@ public class HUD : MonoBehaviour
             }
         }
 
-        UpdateCursor();
         UpdateGameObjectUnderMouse();
-    }
-
-    private void UpdateCursor()
-    {
-        if (Cursor == null)
-        {
-            return;
-        }
-
-        // Rotate.
-        if (Input.GetAxis("Mouse ScrollWheel") > 0.0f)
-        {
-            Cursor.transform.Rotate(Vector3.up, Config.CursorRotateStep);
-        }
-        else if (Input.GetAxis("Mouse ScrollWheel") < 0.0f)
-        {
-            Cursor.transform.Rotate(Vector3.down, Config.CursorRotateStep);
-        }
-
-        // Follow mouse.
-        Vector3 position;
-
-        if (Map.Instance.MouseToPosition(Cursor, out position, out _))
-        {
-            Cursor.transform.position = Config.SnapToGrid ? Utils.SnapToGrid(position) : position;
-        }
-
-        if (Cursor.HasCorrectPosition())
-        {
-            Cursor.Indicators.OnErrorEnd();
-        }
-        else
-        {
-            Cursor.Indicators.OnError();
-        }
     }
 
     private void UpdateGameObjectUnderMouse()
     {
-        if (Cursor == null)
+        if (Cursor3D.Instance.Visible)
         {
-            Hovered = Utils.RaycastGameObjectFromMouse();
+            Hovered = null;
         }
         else
         {
-            Hovered = null;
+            Hovered = Utils.RaycastGameObjectFromMouse();
         }
     }
 
@@ -382,9 +350,9 @@ public class HUD : MonoBehaviour
     {
         if (Order == OrderType.Construct)
         {
-            if (Cursor.HasCorrectPosition())
+            if (Cursor3D.Instance.HasCorrectPosition())
             {
-                MyGameObject myGameObject = Utils.CreateGameObject(Prefab, Cursor.Position, Cursor.Rotation, ActivePlayer, MyGameObjectState.UnderConstruction);
+                MyGameObject myGameObject = Utils.CreateGameObject(Prefab, Cursor3D.Instance.Position, Cursor3D.Instance.Rotation, ActivePlayer, MyGameObjectState.UnderConstruction);
 
                 ActivePlayer.Selection.Construct(myGameObject, MyInput.GetShift());
 
@@ -520,8 +488,6 @@ public class HUD : MonoBehaviour
         }
     }
 
-    private MyGameObject Cursor { get; set; }
-
     public OrderType Order
     {
         get
@@ -533,7 +499,7 @@ public class HUD : MonoBehaviour
         {
             order = value;
 
-            MyCursor.Instance.Set(order);
+            Cursor2D.Instance.Set(order);
         }
     }
 
@@ -548,15 +514,14 @@ public class HUD : MonoBehaviour
         {
             prefab = value;
 
-            if (Cursor != null)
+            if (Cursor3D.Instance.Visible)
             {
-                Destroy(Cursor.gameObject);
+                Cursor3D.Instance.Destroy();
             }
 
-            if (prefab.Equals(string.Empty) == false)
+            if (prefab.Length > 0)
             {
-                Cursor = Utils.CreateGameObject(Prefab, Vector3.zero, Quaternion.identity, ActivePlayer, MyGameObjectState.Cursor);
-                Cursor.gameObject.layer = LayerMask.NameToLayer("Cursor");
+                Cursor3D.Instance.Create(prefab, ActivePlayer);
             }
         }
     }

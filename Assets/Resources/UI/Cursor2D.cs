@@ -1,9 +1,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MyCursor : MonoBehaviour
+public class Cursor2D : MonoBehaviour
 {
-    public static MyCursor Instance { get; private set; }
+    public static Cursor2D Instance { get; private set; }
 
     void Awake()
     {

@@ -586,11 +586,9 @@ public class MyGameObject : MonoBehaviour
 
     private void CreateSkills()
     {
-        SkillManager skillManager = Game.Instance.GetComponent<SkillManager>();
-
         foreach (string skillName in SkillsNames)
         {
-            Skills[skillName] = skillManager.Get(skillName).Clone() as Skill;
+            Skills[skillName] = SkillManager.Instance.Get(skillName).Clone() as Skill;
         }
     }
 
