@@ -650,28 +650,28 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 77b45246a74a7cf499603e33216f0ce6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <CursorAssemble>k__BackingField: {fileID: 0}
-  <CursorAttack>k__BackingField: {fileID: 0}
-  <CursorConstruct>k__BackingField: {fileID: 0}
-  <CursorDestroy>k__BackingField: {fileID: 0}
-  <CursorDisable>k__BackingField: {fileID: 0}
-  <CursorEnable>k__BackingField: {fileID: 0}
-  <CursorExplore>k__BackingField: {fileID: 0}
-  <CursorFollow>k__BackingField: {fileID: 0}
-  <CursorGather>k__BackingField: {fileID: 0}
-  <CursorGuard>k__BackingField: {fileID: 0}
-  <CursorLoad>k__BackingField: {fileID: 0}
-  <CursorMove>k__BackingField: {fileID: 0}
-  <CursorNone>k__BackingField: {fileID: 0}
-  <CursorPatrol>k__BackingField: {fileID: 0}
-  <CursorProduce>k__BackingField: {fileID: 0}
-  <CursorRally>k__BackingField: {fileID: 0}
-  <CursorResearch>k__BackingField: {fileID: 0}
-  <CursorStop>k__BackingField: {fileID: 0}
-  <CursorTransport>k__BackingField: {fileID: 0}
-  <CursorUnload>k__BackingField: {fileID: 0}
+  <CursorAssemble>k__BackingField: {fileID: 2800000, guid: a51b5507f808ef741b4b8d931446dcf2, type: 3}
+  <CursorAttack>k__BackingField: {fileID: 2800000, guid: 85ddc6d7dd5b2df44ba6a61e4303c346, type: 3}
+  <CursorConstruct>k__BackingField: {fileID: 2800000, guid: a51b5507f808ef741b4b8d931446dcf2, type: 3}
+  <CursorDestroy>k__BackingField: {fileID: 2800000, guid: 155fec741e1ae1541a8b15815708f22f, type: 3}
+  <CursorDisable>k__BackingField: {fileID: 2800000, guid: 0e1ef189d1b346442a12611aa5449450, type: 3}
+  <CursorEnable>k__BackingField: {fileID: 2800000, guid: 0e1ef189d1b346442a12611aa5449450, type: 3}
+  <CursorExplore>k__BackingField: {fileID: 2800000, guid: e3ef9f2923945cc478ca579788b600e8, type: 3}
+  <CursorFollow>k__BackingField: {fileID: 2800000, guid: e3ef9f2923945cc478ca579788b600e8, type: 3}
+  <CursorGather>k__BackingField: {fileID: 2800000, guid: 78a83adafab618348abe30d8dafb4df8, type: 3}
+  <CursorGuard>k__BackingField: {fileID: 2800000, guid: c8e79f28e5c2f3b4eaec0c398104bb09, type: 3}
+  <CursorLoad>k__BackingField: {fileID: 2800000, guid: a577fdb2cadffe046a9507f06299760b, type: 3}
+  <CursorMove>k__BackingField: {fileID: 2800000, guid: e3ef9f2923945cc478ca579788b600e8, type: 3}
+  <CursorNone>k__BackingField: {fileID: 2800000, guid: 1dd8503434121a74cb6940256bad447e, type: 3}
+  <CursorPatrol>k__BackingField: {fileID: 2800000, guid: e3ef9f2923945cc478ca579788b600e8, type: 3}
+  <CursorProduce>k__BackingField: {fileID: 2800000, guid: 830bd5e270cb3fd45bfdccdf5a5ebc9a, type: 3}
+  <CursorRally>k__BackingField: {fileID: 2800000, guid: e3ef9f2923945cc478ca579788b600e8, type: 3}
+  <CursorResearch>k__BackingField: {fileID: 2800000, guid: 830bd5e270cb3fd45bfdccdf5a5ebc9a, type: 3}
+  <CursorStop>k__BackingField: {fileID: 2800000, guid: b1beb0307dd779b43ba7acd113f564aa, type: 3}
+  <CursorTransport>k__BackingField: {fileID: 2800000, guid: a577fdb2cadffe046a9507f06299760b, type: 3}
+  <CursorUnload>k__BackingField: {fileID: 2800000, guid: a577fdb2cadffe046a9507f06299760b, type: 3}
   <CursorUseSkill>k__BackingField: {fileID: 0}
-  <CursorWait>k__BackingField: {fileID: 0}
+  <CursorWait>k__BackingField: {fileID: 2800000, guid: 232f0227ce7b864468d8ff397392e8cc, type: 3}
 --- !u!114 &9149501194478599473
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -696,7 +696,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 759a23959f37ced4fb97787adaf1e11e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <ActivePlayer>k__BackingField: {fileID: 5026949370379153494}
+  <ActivePlayer>k__BackingField: {fileID: 4880484019323439521}
   <BoxVisual>k__BackingField: {fileID: 105550648329484035}
 --- !u!1 &8635667874559708494
 GameObject:
@@ -1098,6 +1098,17 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4910da90e5b8b5b44af3c23f0b2540ac, type: 3}
+--- !u!114 &4880484019323439521 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: -4702457767120387336, guid: 4910da90e5b8b5b44af3c23f0b2540ac, type: 3}
+  m_PrefabInstance: {fileID: 9009299085126912857}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cea68fef326733b43bf02e1527062e10, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &5076375745524075944 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4284503315215206129, guid: 4910da90e5b8b5b44af3c23f0b2540ac, type: 3}
