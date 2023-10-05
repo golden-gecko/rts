@@ -105,6 +105,11 @@ public class Map : MonoBehaviour
                 }
 
                 SetVisible(Cells[x, z].VisibleBySight, myGameObject.Player, value);
+
+                if (value > 0)
+                {
+                    SetVisible(Cells[x, z].Explored, myGameObject.Player, 1);
+                }
             }
         }
     }
@@ -134,6 +139,13 @@ public class Map : MonoBehaviour
                 SetVisible(Cells[x, z].VisibleByPower, myGameObject.Player, value);
             }
         }
+    }
+
+    public bool IsExplored(MyGameObject myGameObject, Player active)
+    {
+        Vector3Int position = new Vector3Int(Mathf.FloorToInt(myGameObject.Position.x / Config.Map.VisibilityScale), 0, Mathf.FloorToInt(myGameObject.Position.z / Config.Map.VisibilityScale));
+
+        return Cells[position.x, position.z].Explored.ContainsKey(active) && Cells[position.x, position.z].Explored[active] > 0;
     }
 
     public bool IsVisibleByRadar(MyGameObject myGameObject, Player active)

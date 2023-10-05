@@ -187,7 +187,7 @@ MonoBehaviour:
   - Turret_Missile
   - Wall
   - Windtrap
-  <ResourceUsage>k__BackingField: 2
+  <ResourceUsage>k__BackingField: 4
 --- !u!114 &4793784651987314840
 MonoBehaviour:
   m_ObjectHideFlags: 0

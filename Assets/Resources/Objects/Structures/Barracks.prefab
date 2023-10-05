@@ -190,7 +190,7 @@ MonoBehaviour:
   <Mass>k__BackingField: 10
   <Prefabs>k__BackingField:
   - Infantry_Light
-  <ResourceUsage>k__BackingField: 2
+  <ResourceUsage>k__BackingField: 4
   <RallyPoint>k__BackingField: {x: 0, y: 0, z: 0}
 --- !u!114 &-8899617089933281433
 MonoBehaviour:
