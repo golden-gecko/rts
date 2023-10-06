@@ -346,24 +346,16 @@ public class MyGameObject : MonoBehaviour
 
     public virtual string GetInfoOrders(bool ally)
     {
-        string info = string.Empty;
-
-        switch (State)
+        if (ally)
         {
-            case MyGameObjectState.Operational:
-                if (ally)
-                {
-                    string orders = Orders.GetInfo();
-
-                    if (orders.Length > 0)
-                    {
-                        info += string.Format("\n\nOrders: {0}", orders);
-                    }
-                }
-                break;
+            switch (State)
+            {
+                case MyGameObjectState.Operational:
+                    return Orders.GetInfo();
+            }
         }
 
-        return info;
+        return string.Empty;
     }
 
     public bool Is(MyGameObject myGameObject, DiplomacyState state)
