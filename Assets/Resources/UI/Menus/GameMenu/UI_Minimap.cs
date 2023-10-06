@@ -46,7 +46,7 @@ public class UI_Minimap : MonoBehaviour
 
     private void OnZoomIn()
     {
-        cameraComponent.orthographicSize = Mathf.Clamp(cameraComponent.orthographicSize - ZoomStep, MinZoom, MaxZoom);
+        cameraComponent.orthographicSize = Mathf.Clamp(cameraComponent.orthographicSize - 10.0f, MinZoom, MaxZoom);
     }
 
     private void OnZoomOut()

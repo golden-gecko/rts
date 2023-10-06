@@ -23,6 +23,8 @@ public class DiplomacyMenu : MonoBehaviour
         VisualElement rootVisualElement = uiDocument.rootVisualElement;
     }
 
-    [field: SerializeField]
-    private Transform Players { get; set; }
+    public void Show(bool value)
+    {
+        GetComponent<UIDocument>().gameObject.SetActive(value);
+    }
 }

@@ -28,9 +28,14 @@ public class GameMenu : MonoBehaviour
         menu.RegisterCallback<ClickEvent>(ev => OnMenu());
     }
 
+    public void Show(bool value)
+    {
+        GetComponent<UIDocument>().gameObject.SetActive(value);
+    }
+
     private void OnMenu()
     {
-        MainMenu.Instance.gameObject.SetActive(true);
+        MainMenu.Instance.Show(true);
     }
 
     private VisualElement panel_Menu;

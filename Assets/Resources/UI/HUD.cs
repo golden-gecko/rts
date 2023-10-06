@@ -22,10 +22,10 @@ public class HUD : MonoBehaviour
         DragReset();
         DragDraw();
 
-        DiplomacyMenu.Instance.gameObject.SetActive(false);
-        GameMenu.Instance.gameObject.SetActive(true);
-        MainMenu.Instance.gameObject.SetActive(false);
-        SceneMenu.Instance.gameObject.SetActive(false);
+        DiplomacyMenu.Instance.Show(false);
+        GameMenu.Instance.Show(true);
+        MainMenu.Instance.Show(false);
+        SceneMenu.Instance.Show(false);
     }
 
     void Update()
@@ -56,12 +56,12 @@ public class HUD : MonoBehaviour
         {
             if (MainMenu.Instance.gameObject.activeInHierarchy || SceneMenu.Instance.gameObject.activeInHierarchy)
             {
-                MainMenu.Instance.gameObject.SetActive(false);
-                SceneMenu.Instance.gameObject.SetActive(false);
+                MainMenu.Instance.Show(false);
+                SceneMenu.Instance.Show(false);
             }
             else
             {
-                MainMenu.Instance.gameObject.SetActive(true);
+                MainMenu.Instance.Show(true);
             }
         }
     }

@@ -24,6 +24,11 @@ public class MainMenu : MonoBehaviour
         GetButton("Quit").RegisterCallback<ClickEvent>(ev => OnButtonQuit());
     }
 
+    public void Show(bool value)
+    {
+        GetComponent<UIDocument>().gameObject.SetActive(value);
+    }
+
     private Button GetButton(string name)
     {
         return GetComponent<UIDocument>().rootVisualElement.Q<Button>(name);
@@ -31,13 +36,13 @@ public class MainMenu : MonoBehaviour
 
     private void OnButtonContinue()
     {
-        gameObject.SetActive(false);
+        Show(false);
     }
 
     private void OnButtonNew()
     {
-        gameObject.SetActive(false);
-        SceneMenu.Instance.gameObject.SetActive(true);
+        Show(false);
+        SceneMenu.Instance.Show(true);
     }
 
     private void OnButtonQuit()

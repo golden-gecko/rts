@@ -1436,6 +1436,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1104453597228002752, guid: 838528c30748ad1409e28e3a543244c6, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1874948758393139739, guid: 838528c30748ad1409e28e3a543244c6, type: 3}
       propertyPath: SelectionSprite
       value: 
@@ -1444,8 +1448,16 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 4651843294058532779, guid: 838528c30748ad1409e28e3a543244c6, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4703427129416132906, guid: 838528c30748ad1409e28e3a543244c6, type: 3}
       propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4771283690470332358, guid: 838528c30748ad1409e28e3a543244c6, type: 3}
+      propertyPath: m_Enabled
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4785110659018959346, guid: 838528c30748ad1409e28e3a543244c6, type: 3}
@@ -1460,6 +1472,10 @@ PrefabInstance:
       propertyPath: <CursorAssemble>k__BackingField
       value: 
       objectReference: {fileID: 2800000, guid: a51b5507f808ef741b4b8d931446dcf2, type: 3}
+    - target: {fileID: 7233029928211121440, guid: 838528c30748ad1409e28e3a543244c6, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7443654836005963256, guid: 838528c30748ad1409e28e3a543244c6, type: 3}
       propertyPath: m_IsActive
       value: 1

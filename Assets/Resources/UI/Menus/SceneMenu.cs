@@ -19,7 +19,7 @@ public class SceneMenu : MonoBehaviour
         }
     }
 
-    protected void OnEnable()
+    void OnEnable()
     {
         UIDocument uiDocument = GetComponent<UIDocument>();
         VisualElement rootVisualElement = uiDocument.rootVisualElement;
@@ -44,6 +44,11 @@ public class SceneMenu : MonoBehaviour
 
             menu.Add(buttonContainer);
         }
+    }
+
+    public void Show(bool value)
+    {
+        GetComponent<UIDocument>().gameObject.SetActive(value);
     }
 
     private void OnButtonScene(string scene)

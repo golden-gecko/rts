@@ -14,6 +14,10 @@ public class Indicators : MonoBehaviour
         barFuel = bar.Find("Fuel").GetComponent<Image>();
         barShield = bar.Find("Shield").GetComponent<Image>();
 
+        icon = transform.Find("Icon");
+        iconPowerOn = icon.Find("Power").Find("On").GetComponent<Image>();
+        iconPowerOff = icon.Find("Power").Find("Off").GetComponent<Image>();
+
         order = transform.Find("Order");
         orderLine = order.Find("Line").GetComponent<LineRenderer>();
         orderSphere = order.Find("Sphere");
@@ -51,8 +55,9 @@ public class Indicators : MonoBehaviour
             gameObject.SetActive(true);
 
             UpdateBars(myGameObject);
-            UpdateRange(myGameObject);
+            UpdateIcons(myGameObject);
             UpdateOrders(myGameObject);
+            UpdateRange(myGameObject);
             UpdateSigns(myGameObject);
 
             UpdateConstruction(myGameObject);
@@ -240,6 +245,22 @@ public class Indicators : MonoBehaviour
         {
             barShield.gameObject.SetActive(false);
         }
+    }
+
+    private void UpdateIcons(MyGameObject myGameObject)
+    {
+        Vector3 size = myGameObject.Size;
+
+        icon.transform.localPosition = new Vector3(0.0f, size.y, 0.0f);
+        icon.transform.LookAt(Camera.main.transform.position);
+        icon.transform.Rotate(0.0f, 180.0f, 0.0f);
+
+        /*
+        UpdateIconDamage(myGameObject);
+        UpdateIconPower(myGameObject);
+        UpdateIconResource(myGameObject);
+        UpdateIconWork(myGameObject);
+        */
     }
 
     private void UpdateRange(MyGameObject myGameObject)
@@ -459,6 +480,16 @@ public class Indicators : MonoBehaviour
     private Image barFuel;
     private Image barHealth;
     private Image barShield;
+
+    private Transform icon;
+    private Image iconPowerOn;
+    private Image iconPowerOff;
+    private Image iconDamageOn;
+    private Image iconDamageOff;
+    private Image iconResourceOn;
+    private Image iconResourceOff;
+    private Image iconWorkOn;
+    private Image iconWorkOff;
 
     private Transform order;
     private LineRenderer orderLine;
