@@ -11,13 +11,9 @@ public class PowerPlant : MyComponent
         PreviousEnabled = parent.Enabled;
         PreviousPowered = parent.Powered;
         PreviousPosition = parent.Position;
-        PreviousPositionInt = new Vector3Int(
-            Mathf.FloorToInt(parent.Position.x / Config.Map.VisibilityScale),
-            0,
-            Mathf.FloorToInt(parent.Position.z / Config.Map.VisibilityScale)
-        );
+        PreviousPositionInt = Utils.ToGrid(parent.Position, Config.Map.VisibilityScale);
 
-        if (parent.Working == false)
+        if (parent.Enabled == false)
         {
             return;
         }
@@ -34,11 +30,7 @@ public class PowerPlant : MyComponent
 
         MyGameObject parent = GetComponent<MyGameObject>();
 
-        Vector3Int CurrentPositionInt = new Vector3Int(
-            Mathf.FloorToInt(parent.Position.x / Config.Map.VisibilityScale),
-            0,
-            Mathf.FloorToInt(parent.Position.z / Config.Map.VisibilityScale)
-        );
+        Vector3Int CurrentPositionInt = Utils.ToGrid(parent.Position, Config.Map.VisibilityScale);
 
         if (PreviousEnabled != parent.Enabled)
         {
@@ -89,6 +81,18 @@ public class PowerPlant : MyComponent
         }
 
         return info;
+    }
+
+    public override void OnDestroy_(MyGameObject myGameObject)
+    {
+        base.OnDestroy_(myGameObject);
+
+        MyGameObject parent = GetComponent<MyGameObject>();
+
+        if (parent.Powered)
+        {
+            Map.Instance.SetVisibleByPower(parent, parent.Position, Range, -1);
+        }
     }
 
     [field: SerializeField]

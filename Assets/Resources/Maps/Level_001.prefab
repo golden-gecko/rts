@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5595032788690334252}
   - component: {fileID: 8283662526500950310}
+  - component: {fileID: 8094676293168256334}
   m_Layer: 0
   m_Name: Level_001
   m_TagString: Untagged
@@ -46,6 +47,29 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2cc8b974e7c51de4b8261f72636a6284, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  <Explored>k__BackingField: {fileID: 2100000, guid: dc75f0452bbad234fa10d40351ebee8c, type: 2}
+  <Power>k__BackingField: {fileID: 2100000, guid: 70c59f7324f0e47478dcffcf08d14c0d, type: 2}
+  <Radar>k__BackingField: {fileID: 2100000, guid: 5561643e7529d344cb082276a84e8066, type: 2}
+  <Sight>k__BackingField: {fileID: 2100000, guid: cc399b6df0904fd40a6b920972d35e1b, type: 2}
+--- !u!119 &8094676293168256334
+Projector:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8689057717051226601}
+  m_Enabled: 1
+  serializedVersion: 2
+  m_NearClipPlane: 1
+  m_FarClipPlane: 1000
+  m_FieldOfView: 60
+  m_AspectRatio: 1
+  m_Orthographic: 1
+  m_OrthographicSize: 1000
+  m_Material: {fileID: 2100000, guid: 5561643e7529d344cb082276a84e8066, type: 2}
+  m_IgnoreLayers:
+    serializedVersion: 2
+    m_Bits: 1343225911
 --- !u!1001 &4067907102998597236
 PrefabInstance:
   m_ObjectHideFlags: 0

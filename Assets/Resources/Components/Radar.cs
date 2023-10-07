@@ -10,13 +10,9 @@ public class Radar : MyComponent
 
         PreviousEnabled = parent.Enabled;
         PreviousPosition = parent.Position;
-        PreviousPositionInt = new Vector3Int(
-            Mathf.FloorToInt(parent.Position.x / Config.Map.VisibilityScale),
-            0,
-            Mathf.FloorToInt(parent.Position.z / Config.Map.VisibilityScale)
-        );
+        PreviousPositionInt = Utils.ToGrid(parent.Position, Config.Map.VisibilityScale);
 
-        if (parent.Working == false)
+        if (parent.Enabled == false)
         {
             return;
         }
@@ -37,11 +33,7 @@ public class Radar : MyComponent
 
         MyGameObject parent = GetComponent<MyGameObject>();
 
-        Vector3Int CurrentPositionInt = new Vector3Int(
-            Mathf.FloorToInt(parent.Position.x / Config.Map.VisibilityScale),
-            0,
-            Mathf.FloorToInt(parent.Position.z / Config.Map.VisibilityScale)
-        );
+        Vector3Int CurrentPositionInt = Utils.ToGrid(parent.Position, Config.Map.VisibilityScale);
 
         if (PreviousEnabled != parent.Enabled)
         {

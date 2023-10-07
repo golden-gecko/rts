@@ -15,8 +15,14 @@ public class Indicators : MonoBehaviour
         barShield = bar.Find("Shield").GetComponent<Image>();
 
         icon = transform.Find("Icon");
+        iconDamageOn = icon.Find("Damage").Find("On").GetComponent<Image>();
+        iconDamageOff = icon.Find("Damage").Find("Off").GetComponent<Image>();
         iconPowerOn = icon.Find("Power").Find("On").GetComponent<Image>();
         iconPowerOff = icon.Find("Power").Find("Off").GetComponent<Image>();
+        iconResourceOn = icon.Find("Resource").Find("On").GetComponent<Image>();
+        iconResourceOff = icon.Find("Resource").Find("Off").GetComponent<Image>();
+        iconWorkOn = icon.Find("Work").Find("On").GetComponent<Image>();
+        iconWorkOff = icon.Find("Work").Find("Off").GetComponent<Image>();
 
         order = transform.Find("Order");
         orderLine = order.Find("Line").GetComponent<LineRenderer>();
@@ -74,6 +80,7 @@ public class Indicators : MonoBehaviour
     public void OnConstruction()
     {
         bar.gameObject.SetActive(false);
+        icon.gameObject.SetActive(false);
         range.gameObject.SetActive(false);
 
         construction.gameObject.SetActive(true);
@@ -82,6 +89,7 @@ public class Indicators : MonoBehaviour
     public void OnConstructionEnd()
     {
         bar.gameObject.SetActive(true);
+        icon.gameObject.SetActive(true);
 
         construction.gameObject.SetActive(false);
     }
@@ -99,6 +107,7 @@ public class Indicators : MonoBehaviour
     public void OnHide()
     {
         bar.gameObject.SetActive(false);
+        icon.gameObject.SetActive(false);
         range.gameObject.SetActive(false);
 
         construction.gameObject.SetActive(false);
@@ -126,6 +135,7 @@ public class Indicators : MonoBehaviour
             bar.gameObject.SetActive(false);
         }
 
+        icon.gameObject.SetActive(false);
         range.gameObject.SetActive(false);
 
         construction.gameObject.SetActive(false);
@@ -134,8 +144,8 @@ public class Indicators : MonoBehaviour
 
     public void OnSelect(bool status)
     {
-        range.gameObject.SetActive(status);
         order.gameObject.SetActive(status);
+        range.gameObject.SetActive(status);
         sign.gameObject.SetActive(status);
 
         selection.gameObject.SetActive(status);
@@ -158,6 +168,7 @@ public class Indicators : MonoBehaviour
                 if (HUD.Instance.ActivePlayer == myGameObject.Player)
                 {
                     bar.gameObject.SetActive(true);
+                    icon.gameObject.SetActive(true);
                 }
 
                 trace.gameObject.SetActive(false);
@@ -183,9 +194,7 @@ public class Indicators : MonoBehaviour
 
     private void UpdateBarAmmunition(MyGameObject myGameObject)
     {
-        Gun gun;
-
-        if (myGameObject.TryGetComponent<Gun>(out gun))
+        if (myGameObject.TryGetComponent(out Gun gun))
         {
             barAmmunition.gameObject.SetActive(true);
             barAmmunition.fillAmount = gun.Ammunition.Percent;
@@ -198,9 +207,7 @@ public class Indicators : MonoBehaviour
 
     private void UpdateBarArmour(MyGameObject myGameObject)
     {
-        Armour armour;
-
-        if (myGameObject.TryGetComponent<Armour>(out armour))
+        if (myGameObject.TryGetComponent(out Armour armour))
         {
             barArmour.gameObject.SetActive(true);
             barArmour.fillAmount = armour.Value.Percent;
@@ -213,9 +220,7 @@ public class Indicators : MonoBehaviour
 
     private void UpdateBarFuel(MyGameObject myGameObject)
     {
-        Engine engine;
-
-        if (myGameObject.TryGetComponent<Engine>(out engine))
+        if (myGameObject.TryGetComponent(out Engine engine))
         {
             barFuel.gameObject.SetActive(true);
             barFuel.fillAmount = engine.Fuel.Percent;
@@ -234,9 +239,7 @@ public class Indicators : MonoBehaviour
 
     private void UpdateBarShield(MyGameObject myGameObject)
     {
-        Shield shield;
-
-        if (myGameObject.TryGetComponent<Shield>(out shield))
+        if (myGameObject.TryGetComponent(out Shield shield))
         {
             barShield.gameObject.SetActive(true);
             barShield.fillAmount = shield.Capacity.Percent;
@@ -255,12 +258,43 @@ public class Indicators : MonoBehaviour
         icon.transform.LookAt(Camera.main.transform.position);
         icon.transform.Rotate(0.0f, 180.0f, 0.0f);
 
-        /*
         UpdateIconDamage(myGameObject);
         UpdateIconPower(myGameObject);
         UpdateIconResource(myGameObject);
         UpdateIconWork(myGameObject);
-        */
+    }
+
+    private void UpdateIconDamage(MyGameObject myGameObject)
+    {
+        iconDamageOn.gameObject.SetActive(myGameObject.Health.Full == false);
+        iconDamageOff.gameObject.SetActive(false);
+    }
+
+    private void UpdateIconPower(MyGameObject myGameObject)
+    {
+        iconPowerOn.gameObject.SetActive(myGameObject.Powerable && myGameObject.Powered);
+        iconPowerOff.gameObject.SetActive(myGameObject.Powerable && myGameObject.Powered == false);
+    }
+
+    private void UpdateIconResource(MyGameObject myGameObject)
+    {
+        if (myGameObject.TryGetComponent(out Storage storage))
+        {
+            float percent = storage.Resources.PercentSum;
+
+            iconResourceOn.gameObject.SetActive(percent >= 0.5f);
+            iconResourceOff.gameObject.SetActive(percent < 0.5f);
+        }
+        else
+        {
+            iconResourceOn.gameObject.SetActive(false);
+            iconResourceOff.gameObject.SetActive(false);
+        }
+    }
+
+    private void UpdateIconWork(MyGameObject myGameObject)
+    {
+        // TODO: Implement.
     }
 
     private void UpdateRange(MyGameObject myGameObject)
@@ -273,9 +307,7 @@ public class Indicators : MonoBehaviour
 
     private void UpdateRangeGun(MyGameObject myGameObject)
     {
-        Gun gun;
-        
-        if (myGameObject.TryGetComponent(out gun))
+        if (myGameObject.TryGetComponent(out Gun gun))
         {
             Vector3 scale = myGameObject.Scale;
 
@@ -291,9 +323,7 @@ public class Indicators : MonoBehaviour
     
     private void UpdateRangePower(MyGameObject myGameObject)
     {
-        PowerPlant powerPlant;
-
-        if (myGameObject.TryGetComponent(out powerPlant))
+        if (myGameObject.TryGetComponent(out PowerPlant powerPlant))
         {
             Vector3 scale = myGameObject.Scale;
 
@@ -308,9 +338,7 @@ public class Indicators : MonoBehaviour
 
     private void UpdateRangeRadar(MyGameObject myGameObject)
     {
-        Radar radar;
-
-        if (myGameObject.TryGetComponent(out radar))
+        if (myGameObject.TryGetComponent(out Radar radar))
         {
             Vector3 scale = myGameObject.Scale;
 
@@ -325,9 +353,7 @@ public class Indicators : MonoBehaviour
 
     private void UpdateRangeSight(MyGameObject myGameObject)
     {
-        Sight sight;
-
-        if (myGameObject.TryGetComponent(out sight))
+        if (myGameObject.TryGetComponent(out Sight sight))
         {
             Vector3 scale = myGameObject.Scale;
 
@@ -438,7 +464,7 @@ public class Indicators : MonoBehaviour
         Vector3 size = myGameObject.Size;
 
         construction.transform.localPosition = new Vector3(0.0f, size.y * 0.5f, 0.0f);
-        construction.transform.localScale = size * Config.Indicator.Margin;
+        construction.transform.localScale = size; // * Config.Indicator.Margin;
     }
 
     private void UpdateError(MyGameObject myGameObject)
@@ -446,7 +472,7 @@ public class Indicators : MonoBehaviour
         Vector3 size = myGameObject.Size;
 
         error.transform.localPosition = new Vector3(0.0f, size.y * 0.5f, 0.0f);
-        error.transform.localScale = size * Config.Indicator.Margin;
+        error.transform.localScale = size; // * Config.Indicator.Margin;
     }
 
     private void UpdateSelection(MyGameObject myGameObject)
@@ -482,10 +508,10 @@ public class Indicators : MonoBehaviour
     private Image barShield;
 
     private Transform icon;
-    private Image iconPowerOn;
-    private Image iconPowerOff;
     private Image iconDamageOn;
     private Image iconDamageOff;
+    private Image iconPowerOn;
+    private Image iconPowerOff;
     private Image iconResourceOn;
     private Image iconResourceOff;
     private Image iconWorkOn;

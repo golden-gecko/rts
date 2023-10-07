@@ -17,7 +17,7 @@ public class Config
 
     public class Cursor3D
     {
-        public static float RotateStep { get; } = 45.0f;
+        public static float RotateStep { get; } = 90.0f;
         public static bool SnapToGrid { get; } = true;
     }
 
@@ -29,13 +29,9 @@ public class Config
 
     public class Map
     {
-        public static float ConstructionScale { get; } = 2.0f;
+        public static float ConstructionScale { get; } = 1.0f;
         public static float MaxHeight { get; } = 2000.0f;
-        public static float VisibilityScale { get; } = 2.0f;
-        public static int VisibilitySize { get; } = 250;
-    }
-
-    public class UI
-    {
+        public static float VisibilityScale { get; } = 1.0f;
+        public static int VisibilitySize { get; } = 512;
     }
 }

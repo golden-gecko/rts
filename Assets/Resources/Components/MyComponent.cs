@@ -19,6 +19,10 @@ public class MyComponent : MonoBehaviour
         return string.Format("Mass: {0:0.}", Mass);
     }
 
+    public virtual void OnDestroy_(MyGameObject myGameObject)
+    {
+    }
+
     [field: SerializeField]
     public float Mass { get; set; } = 10.0f;
 }

@@ -61,7 +61,6 @@ MonoBehaviour:
   <Depth>k__BackingField: -1
   <MapLayers>k__BackingField: 02000000
   <ShowIndicators>k__BackingField: 1
-  <ShowOrders>k__BackingField: 0
   <ShowEntrance>k__BackingField: 0
   <ShowExit>k__BackingField: 0
   <ExpirationTimer>k__BackingField:
@@ -69,6 +68,8 @@ MonoBehaviour:
     <Max>k__BackingField: -1
   <SkillsNames>k__BackingField: []
   <State>k__BackingField: 1
+  <CreateBase>k__BackingField: 0
+  <SnapToGrid>k__BackingField: 1
 --- !u!114 &9108965739217152530
 MonoBehaviour:
   m_ObjectHideFlags: 0
