@@ -153,6 +153,7 @@ GameObject:
   - component: {fileID: 3123906382185115740}
   - component: {fileID: 8533653805232871137}
   - component: {fileID: 4899817629036544483}
+  - component: {fileID: 7228321971956885366}
   - component: {fileID: 4839600703007158894}
   - component: {fileID: 5256114998172162860}
   - component: {fileID: 7554343126755328530}
@@ -247,6 +248,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: db87418578179304f911312d157810a2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &7228321971956885366
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3216390920405479871}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e94a947451c84624caea3a0751881e52, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &4839600703007158894
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -261,6 +274,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cameraComponent: {fileID: 8287268935677405822}
   <CenterOnMainCamera>k__BackingField: 1
+  <MinZoom>k__BackingField: 10
+  <MaxZoom>k__BackingField: 100
+  <ZoomStep>k__BackingField: 10
 --- !u!114 &5256114998172162860
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -350,7 +366,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d51a3bd4e7d80bb4aa79c8a2ec74dd38, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <Players>k__BackingField: {fileID: 5556194626136808948}
 --- !u!1 &4703427129416132906
 GameObject:
   m_ObjectHideFlags: 0

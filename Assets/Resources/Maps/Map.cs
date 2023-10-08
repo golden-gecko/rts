@@ -588,16 +588,16 @@ public class Map : MonoBehaviour
     }
 
     [field: SerializeField]
-    private Material Exploration { get; set; }
+    public Material Exploration { get; private set; }
 
     [field: SerializeField]
-    private Material Power { get; set; }
+    public Material Power { get; private set; }
 
     [field: SerializeField]
-    private Material Radar { get; set; }
+    public Material Radar { get; private set; }
 
     [field: SerializeField]
-    private Material Sight { get; set; }
+    public Material Sight { get; private set; }
 
     private Cell[,] Cells { get; set; } = new Cell[Config.Map.VisibilitySize, Config.Map.VisibilitySize];
 }

@@ -43,3 +43,7 @@
 .panel-background {
     background-color: rgba(0, 128, 0, 0.75);
 }
+
+.panel-layers .unity-label {
+    min-width: auto;
+}

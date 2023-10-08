@@ -11,11 +11,11 @@
         <ui:VisualElement name="Panel_Resources" class="panel-background" style="top: 1%;">
             <ui:Label tabindex="-1" name="Value" text="Coal: 50, Wood: 80" style="padding-top: 0; padding-right: 0; padding-bottom: 0; padding-left: 0; margin-top: 8px; margin-right: 8px; margin-bottom: 8px; margin-left: 8px;" />
         </ui:VisualElement>
-        <ui:VisualElement name="Panel_Layers" class="panel-background" style="flex-direction: row; top: 2%; justify-content: flex-end;">
-            <ui:Toggle label="Exploration" />
-            <ui:Toggle label="Power" />
-            <ui:Toggle label="Radar" />
-            <ui:Toggle label="Sight" />
+        <ui:VisualElement name="Panel_Layers" class="panel-background panel-layers" style="flex-direction: row; top: 2%; justify-content: flex-end;">
+            <ui:Toggle label="Exploration" name="Exploration" focusable="false" />
+            <ui:Toggle label="Power" name="Power" focusable="false" />
+            <ui:Toggle label="Radar" name="Radar" focusable="false" />
+            <ui:Toggle label="Sight" name="Sight" focusable="false" />
         </ui:VisualElement>
     </ui:VisualElement>
     <ui:VisualElement name="Container" picking-mode="Ignore" style="flex-grow: 1; bottom: 0; left: 0; top: 0; right: 80%; position: absolute; align-items: flex-start; justify-content: flex-end; flex-direction: column;">
