@@ -59,11 +59,11 @@ public class Map : MonoBehaviour
                 {
                     if (Cells[x, z].VisibleByRadar[myGameObject.Player] > (Cells[x, z].VisibleByAntiRadar.ContainsKey(myGameObject.Player) ? Cells[x, z].VisibleByAntiRadar[myGameObject.Player] : 0))
                     {
-                        radarTexture.SetPixel(x, z, new Color(0.0f, 0.0f, 0.0f, 1.0f));
+                        radarTexture.SetPixel(x, z, Config.Map.DataLayerColor);
                     }
                     else
                     {
-                        radarTexture.SetPixel(x, z, new Color(1.0f, 1.0f, 1.0f, 0.0f));
+                        radarTexture.SetPixel(x, z, Config.Map.DataLayerColorEmpty);
                     }
                 }
             }
@@ -102,11 +102,11 @@ public class Map : MonoBehaviour
                 {
                     if (Cells[x, z].VisibleByRadar[myGameObject.Player] > Cells[x, z].VisibleByAntiRadar[myGameObject.Player])
                     {
-                        radarTexture.SetPixel(x, z, new Color(0.0f, 0.0f, 0.0f, 1.0f));
+                        radarTexture.SetPixel(x, z, Config.Map.DataLayerColor);
                     }
                     else
                     {
-                        radarTexture.SetPixel(x, z, new Color(1.0f, 1.0f, 1.0f, 0.0f));
+                        radarTexture.SetPixel(x, z, Config.Map.DataLayerColorEmpty);
                     }
                 }
             }
@@ -123,6 +123,7 @@ public class Map : MonoBehaviour
         Vector3Int center = Utils.ToGrid(position, Config.Map.VisibilityScale);
         int radius = Mathf.FloorToInt(range / Config.Map.VisibilityScale);
 
+        Texture2D explorationTexture = Exploration.mainTexture as Texture2D;
         Texture2D sightTexture = Sight.mainTexture as Texture2D;
 
         for (int x = start.x; x < end.x; x++)
@@ -143,23 +144,29 @@ public class Map : MonoBehaviour
 
                 if (value > 0)
                 {
-                    SetVisible(Cells[x, z].Explored, myGameObject.Player, 1);
+                    SetVisible(Cells[x, z].Explored, myGameObject.Player, value);
+
+                    if (HUD.Instance.ActivePlayer == myGameObject.Player)
+                    {
+                        explorationTexture.SetPixel(x, z, Config.Map.DataLayerColor);
+                    }
                 }
 
                 if (HUD.Instance.ActivePlayer == myGameObject.Player)
                 {
                     if (Cells[x, z].VisibleBySight[myGameObject.Player] > 0)
                     {
-                        sightTexture.SetPixel(x, z, new Color(0.0f, 0.0f, 0.0f, 1.0f));
+                        sightTexture.SetPixel(x, z, Config.Map.DataLayerColor);
                     }
                     else
                     {
-                        sightTexture.SetPixel(x, z, new Color(1.0f, 1.0f, 1.0f, 0.0f));
+                        sightTexture.SetPixel(x, z, Config.Map.DataLayerColorEmpty);
                     }
                 }
             }
         }
 
+        explorationTexture.Apply();
         sightTexture.Apply();
     }
 
@@ -193,11 +200,11 @@ public class Map : MonoBehaviour
                 {
                     if (Cells[x, z].VisibleByPower[myGameObject.Player] > 0)
                     {
-                        powerTexture.SetPixel(x, z, new Color(0.0f, 0.0f, 0.0f, 1.0f));
+                        powerTexture.SetPixel(x, z, Config.Map.DataLayerColor);
                     }
                     else
                     {
-                        powerTexture.SetPixel(x, z, new Color(1.0f, 1.0f, 1.0f, 0.0f));
+                        powerTexture.SetPixel(x, z, Config.Map.DataLayerColorEmpty);
                     }
                 }
             }
@@ -206,14 +213,14 @@ public class Map : MonoBehaviour
         powerTexture.Apply();
     }
 
-    public bool IsExplored(MyGameObject myGameObject, Player active)
+    public bool IsExplored(MyGameObject myGameObject, Player active) // TODO: Why active player?
     {
         Vector3Int position = new Vector3Int(Mathf.FloorToInt(myGameObject.Position.x / Config.Map.VisibilityScale), 0, Mathf.FloorToInt(myGameObject.Position.z / Config.Map.VisibilityScale));
 
         return Cells[position.x, position.z].Explored.ContainsKey(active) && Cells[position.x, position.z].Explored[active] > 0;
     }
 
-    public bool IsVisibleByRadar(MyGameObject myGameObject, Player active)
+    public bool IsVisibleByRadar(MyGameObject myGameObject, Player active) // TODO: Why active player?
     {
         Vector3Int position = Utils.ToGrid(myGameObject.Position, Config.Map.VisibilityScale);
 
@@ -223,18 +230,18 @@ public class Map : MonoBehaviour
         return byRadar > byAntiRadar;
     }
 
-    public bool IsVisibleBySight(MyGameObject myGameObject, Player active)
+    public bool IsVisibleBySight(MyGameObject myGameObject, Player active) // TODO: Why active player?
     {
         Vector3Int position = Utils.ToGrid(myGameObject.Position, Config.Map.VisibilityScale);
 
         return Cells[position.x, position.z].VisibleBySight.ContainsKey(active) && Cells[position.x, position.z].VisibleBySight[active] > 0;
     }
 
-    public bool IsVisibleByPower(MyGameObject myGameObject, Player active)
+    public bool IsVisibleByPower(MyGameObject myGameObject)
     {
         Vector3Int position = Utils.ToGrid(myGameObject.Position, Config.Map.VisibilityScale);
 
-        return Cells[position.x, position.z].VisibleByPower.ContainsKey(active) && Cells[position.x, position.z].VisibleByPower[active] > 0;
+        return Cells[position.x, position.z].VisibleByPower.ContainsKey(myGameObject.Player) && Cells[position.x, position.z].VisibleByPower[myGameObject.Player] > 0;
     }
 
     public bool GetPosition(MyGameObject myGameObject, Vector3 origin, out Vector3 position, out MyGameObjectMapLayer mapLayer)
@@ -553,7 +560,7 @@ public class Map : MonoBehaviour
             }
         }
 
-        ClearTexture(Explored.mainTexture as Texture2D);
+        ClearTexture(Exploration.mainTexture as Texture2D);
         ClearTexture(Power.mainTexture as Texture2D);
         ClearTexture(Radar.mainTexture as Texture2D);
         ClearTexture(Sight.mainTexture as Texture2D);
@@ -581,7 +588,7 @@ public class Map : MonoBehaviour
     }
 
     [field: SerializeField]
-    private Material Explored { get; set; }
+    private Material Exploration { get; set; }
 
     [field: SerializeField]
     private Material Power { get; set; }

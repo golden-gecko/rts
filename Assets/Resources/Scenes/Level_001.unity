@@ -354,10 +354,7 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 4970704545215597287, guid: 5bf7f9b2e8c29074fa120402c79687cd, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1894657310}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5bf7f9b2e8c29074fa120402c79687cd, type: 3}
 --- !u!1001 &555816720
 PrefabInstance:
@@ -1350,30 +1347,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2611ed8fbff91a64aa42f06d5f9cdf23, type: 3}
---- !u!1 &1894657306 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 4970704545215597287, guid: 5bf7f9b2e8c29074fa120402c79687cd, type: 3}
-  m_PrefabInstance: {fileID: 496169036}
-  m_PrefabAsset: {fileID: 0}
---- !u!119 &1894657310
-Projector:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1894657306}
-  m_Enabled: 1
-  serializedVersion: 2
-  m_NearClipPlane: 1
-  m_FarClipPlane: 1000
-  m_FieldOfView: 60
-  m_AspectRatio: 1
-  m_Orthographic: 1
-  m_OrthographicSize: 1000
-  m_Material: {fileID: 2100000, guid: c2f5151577e17c3429479f3fc80c32ab, type: 2}
-  m_IgnoreLayers:
-    serializedVersion: 2
-    m_Bits: 1343225911
 --- !u!1001 &1919195311
 PrefabInstance:
   m_ObjectHideFlags: 0

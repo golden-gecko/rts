@@ -34,6 +34,11 @@ public class PassiveIncreaseRange : Skill
                 radar.Range.Factor.Remove(myGameObject);
             }
 
+            foreach (PowerPlant powerPlant in target.GetComponents<PowerPlant>())
+            {
+                powerPlant.Range.Factor.Remove(myGameObject);
+            }
+
             foreach (Shield shield in target.GetComponents<Shield>())
             {
                 shield.Range.Factor.Remove(myGameObject);
@@ -64,6 +69,11 @@ public class PassiveIncreaseRange : Skill
             foreach (Radar radar in target.GetComponents<Radar>())
             {
                 radar.Range.Factor.Add(myGameObject, Value);
+            }
+
+            foreach (PowerPlant powerPlant in target.GetComponents<PowerPlant>())
+            {
+                powerPlant.Range.Factor.Add(myGameObject, Value);
             }
 
             foreach (Shield shield in target.GetComponents<Shield>())
@@ -99,6 +109,16 @@ public class PassiveIncreaseRange : Skill
             foreach (Radar radar in target.GetComponents<Radar>())
             {
                 radar.Range.Factor.Remove(myGameObject);
+            }
+
+            foreach (PowerPlant powerPlant in target.GetComponents<PowerPlant>())
+            {
+                powerPlant.Range.Factor.Remove(myGameObject);
+            }
+
+            foreach (Shield shield in target.GetComponents<Shield>())
+            {
+                shield.Range.Factor.Remove(myGameObject);
             }
 
             foreach (Sight sight in target.GetComponents<Sight>())

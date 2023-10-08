@@ -86,6 +86,21 @@ public class Radar : MyComponent
         return string.Format("Radar: {0}, Range: {1:0.}, Anti: {2}", base.GetInfo(), Range.Total, Anti);
     }
 
+    public override void OnDestroy_(MyGameObject myGameObject)
+    {
+        if (myGameObject.Enabled)
+        {
+            if (Anti)
+            {
+                Map.Instance.SetVisibleByAntiRadar(myGameObject, Utils.ToGrid(myGameObject.Position, Config.Map.VisibilityScale), Range.Total, -1);
+            }
+            else
+            {
+                Map.Instance.SetVisibleByRadar(myGameObject, Utils.ToGrid(myGameObject.Position, Config.Map.VisibilityScale), Range.Total, -1);
+            }
+        }
+    }
+
     public bool IsInRange(Vector3 position)
     {
         return Utils.IsInRange(GetComponent<MyGameObject>().Position, position, Range.Total);

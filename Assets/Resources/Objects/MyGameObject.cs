@@ -785,7 +785,7 @@ public class MyGameObject : MonoBehaviour
 
     public bool Constructed { get => ConstructionResources.CurrentSum == ConstructionResources.MaxSum; }
 
-    public bool Powered { get => Map.Instance.IsVisibleByPower(this, HUD.Instance.ActivePlayer); }
+    public bool Powered { get => Map.Instance.IsVisibleByPower(this); }
 
     public bool Working { get => Enabled && (Powerable == false || Powered); }
 

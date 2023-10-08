@@ -9,7 +9,6 @@ public class PowerPlant : MyComponent
         MyGameObject parent = GetComponent<MyGameObject>();
 
         PreviousEnabled = parent.Enabled;
-        PreviousPowered = parent.Powered;
         PreviousPosition = parent.Position;
         PreviousPositionInt = Utils.ToGrid(parent.Position, Config.Map.VisibilityScale);
 
@@ -20,8 +19,10 @@ public class PowerPlant : MyComponent
 
         if (Power > 0.0f || parent.Powered)
         {
-            Map.Instance.SetVisibleByPower(parent, parent.Position, Range, 1); // TODO: Use Power instead of 1.
+            Map.Instance.SetVisibleByPower(parent, parent.Position, Range.Total, 1); // TODO: Use Power instead of 1.
         }
+
+        PreviousPowered = parent.Powered;
     }
 
     protected override void Update()
@@ -36,11 +37,11 @@ public class PowerPlant : MyComponent
         {
             if (parent.Enabled)
             {
-                Map.Instance.SetVisibleByPower(parent, parent.Position, Range, 1);
+                Map.Instance.SetVisibleByPower(parent, parent.Position, Range.Total, 1);
             }
             else
             {
-                Map.Instance.SetVisibleByPower(parent, parent.Position, Range, -1);
+                Map.Instance.SetVisibleByPower(parent, parent.Position, Range.Total, -1);
             }
 
 
@@ -51,11 +52,11 @@ public class PowerPlant : MyComponent
         {
             if (parent.Powered)
             {
-                Map.Instance.SetVisibleByPower(parent, parent.Position, Range, 1);
+                Map.Instance.SetVisibleByPower(parent, parent.Position, Range.Total, 1);
             }
             else
             {
-                Map.Instance.SetVisibleByPower(parent, parent.Position, Range, -1);
+                Map.Instance.SetVisibleByPower(parent, parent.Position, Range.Total, -1);
             }
 
             PreviousPowered = parent.Powered;
@@ -63,8 +64,8 @@ public class PowerPlant : MyComponent
 
         if (PreviousPositionInt != CurrentPositionInt)
         {
-            Map.Instance.SetVisibleByPower(parent, PreviousPosition, Range, -1);
-            Map.Instance.SetVisibleByPower(parent, parent.Position, Range, 1);
+            Map.Instance.SetVisibleByPower(parent, PreviousPosition, Range.Total, -1);
+            Map.Instance.SetVisibleByPower(parent, parent.Position, Range.Total, 1);
 
             PreviousPosition = parent.Position;
             PreviousPositionInt = CurrentPositionInt;
@@ -85,13 +86,9 @@ public class PowerPlant : MyComponent
 
     public override void OnDestroy_(MyGameObject myGameObject)
     {
-        base.OnDestroy_(myGameObject);
-
-        MyGameObject parent = GetComponent<MyGameObject>();
-
-        if (parent.Powered)
+        // if (myGameObject.Enabled && (Power > 0.0f || myGameObject.Powered))
         {
-            Map.Instance.SetVisibleByPower(parent, parent.Position, Range, -1);
+            Map.Instance.SetVisibleByPower(myGameObject, Utils.ToGrid(myGameObject.Position, Config.Map.VisibilityScale), Range.Total, -1);
         }
     }
 
@@ -99,7 +96,7 @@ public class PowerPlant : MyComponent
     public float Power { get; set; } = 20.0f;
 
     [field: SerializeField]
-    public float Range { get; set; } = 10.0f;
+    public Property Range { get; set; } = new Property();
 
     [field: SerializeField]
     public float PowerUsage { get; set; } = 1.0f; // TODO: Implement.

@@ -328,7 +328,7 @@ public class Indicators : MonoBehaviour
             Vector3 scale = myGameObject.Scale;
 
             rangePower.gameObject.SetActive(true);
-            rangePower.localScale = new Vector3(powerPlant.Range * 2.0f / scale.x, powerPlant.Range * 2.0f / scale.z, 1.0f);
+            rangePower.localScale = new Vector3(powerPlant.Range.Total * 2.0f / scale.x, powerPlant.Range.Total * 2.0f / scale.z, 1.0f);
         }
         else
         {
