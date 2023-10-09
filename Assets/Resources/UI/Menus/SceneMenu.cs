@@ -3,11 +3,11 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UIElements;
 
-public class SceneMenu : MonoBehaviour
+public class SceneMenu : Menu
 {
     public static SceneMenu Instance { get; private set; }
 
-    void Awake()
+    protected override void Awake()
     {
         if (Instance != null && Instance != this)
         {
@@ -17,13 +17,10 @@ public class SceneMenu : MonoBehaviour
         {
             Instance = this;
         }
-    }
+        
+        base.Awake();
 
-    protected void OnEnable()
-    {
-        UIDocument uiDocument = GetComponent<UIDocument>();
-        VisualElement rootVisualElement = uiDocument.rootVisualElement;
-        VisualElement menu = rootVisualElement.Q<VisualElement>("Menu");
+        menu = root.Q<VisualElement>("Menu");
 
         int sceneCount = SceneManager.sceneCountInBuildSettings;
         string[] scenes = new string[sceneCount];
@@ -53,4 +50,6 @@ public class SceneMenu : MonoBehaviour
 
     [SerializeField]
     private VisualTreeAsset templateButton;
+
+    private VisualElement menu;
 }

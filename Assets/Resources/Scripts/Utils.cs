@@ -78,7 +78,7 @@ public class Utils
         int dx = Mathf.Abs(x - center.x);
         int dz = Mathf.Abs(z - center.z);
 
-        if (dx + dz <= radius)
+        if (dx + dz < radius)
         {
             return true;
         }
@@ -93,7 +93,7 @@ public class Utils
             return false;
         }
 
-        return dx * dx + dz * dz <= radius * radius;
+        return dx * dx + dz * dz < radius * radius;
     }
 
     public static bool IsPointInRect(int x, int z, int size)
@@ -109,6 +109,11 @@ public class Utils
         }
 
         return true;
+    }
+
+    public static int MakeOdd(int value)
+    {
+        return value % 2 == 0 ? value + 1 : value;
     }
     #endregion
 

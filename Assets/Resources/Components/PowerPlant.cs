@@ -8,24 +8,27 @@ public class PowerPlant : MyComponent
 
         MyGameObject parent = GetComponent<MyGameObject>();
 
+        PreviousState = parent.State;
         PreviousEnabled = parent.Enabled;
-        PreviousPowered = parent.Powered;
         PreviousPosition = parent.Position;
-        PreviousPositionInt = new Vector3Int(
-            Mathf.FloorToInt(parent.Position.x / Config.Map.VisibilityScale),
-            0,
-            Mathf.FloorToInt(parent.Position.z / Config.Map.VisibilityScale)
-        );
+        PreviousPositionInt = Utils.ToGrid(parent.Position, Config.Map.VisibilityScale);
 
-        if (parent.Working == false)
+        if (parent.State != MyGameObjectState.Operational)
+        {
+            return;
+        }
+
+        if (parent.Enabled == false)
         {
             return;
         }
 
         if (Power > 0.0f || parent.Powered)
         {
-            Map.Instance.SetVisibleByPower(parent, parent.Position, Range, 1); // TODO: Use Power instead of 1.
+            Map.Instance.SetVisibleByPower(parent, parent.Position, Range.Total, 1); // TODO: Use Power instead of 1.
         }
+
+        PreviousPowered = parent.Powered;
     }
 
     protected override void Update()
@@ -34,48 +37,73 @@ public class PowerPlant : MyComponent
 
         MyGameObject parent = GetComponent<MyGameObject>();
 
-        Vector3Int CurrentPositionInt = new Vector3Int(
-            Mathf.FloorToInt(parent.Position.x / Config.Map.VisibilityScale),
-            0,
-            Mathf.FloorToInt(parent.Position.z / Config.Map.VisibilityScale)
-        );
-
-        if (PreviousEnabled != parent.Enabled)
+        if (PreviousState != parent.State)
         {
-            if (parent.Enabled)
+            PreviousState = parent.State;
+
+            if (parent.State == MyGameObjectState.Operational)
             {
-                Map.Instance.SetVisibleByPower(parent, parent.Position, Range, 1);
+                Vector3Int CurrentPositionInt = Utils.ToGrid(parent.Position, Config.Map.VisibilityScale);
+
+                if (parent.Enabled && parent.Powered)
+                {
+                    Map.Instance.SetVisibleByPower(parent, parent.Position, Range.Total, 1);
+                }
+                else
+                {
+                    Map.Instance.SetVisibleByPower(parent, parent.Position, Range.Total, -1);
+                }
+
+                PreviousEnabled = parent.Enabled;
+                PreviousPowered = parent.Powered;
+                PreviousPosition = parent.Position;
+                PreviousPositionInt = CurrentPositionInt;
             }
             else
             {
-                Map.Instance.SetVisibleByPower(parent, parent.Position, Range, -1);
+                Map.Instance.SetVisibleByPower(parent, parent.Position, Range.Total, -1);
             }
-
-
-            PreviousEnabled = parent.Enabled;
         }
-
-        if (PreviousPowered != parent.Powered)
+        else
         {
-            if (parent.Powered)
+            Vector3Int CurrentPositionInt = Utils.ToGrid(parent.Position, Config.Map.VisibilityScale);
+
+            if (PreviousEnabled != parent.Enabled)
             {
-                Map.Instance.SetVisibleByPower(parent, parent.Position, Range, 1);
+                if (parent.Enabled)
+                {
+                    Map.Instance.SetVisibleByPower(parent, parent.Position, Range.Total, 1);
+                }
+                else
+                {
+                    Map.Instance.SetVisibleByPower(parent, parent.Position, Range.Total, -1);
+                }
+
+                PreviousEnabled = parent.Enabled;
             }
-            else
+
+            if (PreviousPowered != parent.Powered)
             {
-                Map.Instance.SetVisibleByPower(parent, parent.Position, Range, -1);
+                if (parent.Powered)
+                {
+                    Map.Instance.SetVisibleByPower(parent, parent.Position, Range.Total, 1);
+                }
+                else
+                {
+                    Map.Instance.SetVisibleByPower(parent, parent.Position, Range.Total, -1);
+                }
+
+                PreviousPowered = parent.Powered;
             }
 
-            PreviousPowered = parent.Powered;
-        }
+            if (PreviousPositionInt != CurrentPositionInt)
+            {
+                Map.Instance.SetVisibleByPower(parent, PreviousPosition, Range.Total, -1);
+                Map.Instance.SetVisibleByPower(parent, parent.Position, Range.Total, 1);
 
-        if (PreviousPositionInt != CurrentPositionInt)
-        {
-            Map.Instance.SetVisibleByPower(parent, PreviousPosition, Range, -1);
-            Map.Instance.SetVisibleByPower(parent, parent.Position, Range, 1);
-
-            PreviousPosition = parent.Position;
-            PreviousPositionInt = CurrentPositionInt;
+                PreviousPosition = parent.Position;
+                PreviousPositionInt = CurrentPositionInt;
+            }
         }
     }
 
@@ -91,16 +119,48 @@ public class PowerPlant : MyComponent
         return info;
     }
 
+    public override void OnDestroy_()
+    {
+        base.OnDestroy_();
+
+        MyGameObject parent = GetComponent<MyGameObject>();
+
+        if (parent.State != MyGameObjectState.Operational)
+        {
+            return;
+        }
+
+        // if (parent.Enabled && (Power > 0.0f || parent.Powered))
+        {
+            Map.Instance.SetVisibleByPower(parent, parent.Position, Range.Total, -1);
+        }
+    }
+
+    private void PowerUp()
+    {
+        MyGameObject parent = GetComponent<MyGameObject>();
+
+        Map.Instance.SetVisibleByPower(parent, parent.Position, Range.Total, 1);
+    }
+
+    private void PowerDown()
+    {
+        MyGameObject parent = GetComponent<MyGameObject>();
+
+        Map.Instance.SetVisibleByPower(parent, parent.Position, Range.Total, -1);
+    }
+
     [field: SerializeField]
     public float Power { get; set; } = 20.0f;
 
     [field: SerializeField]
-    public float Range { get; set; } = 10.0f;
+    public Property Range { get; set; } = new Property();
 
     [field: SerializeField]
     public float PowerUsage { get; set; } = 1.0f; // TODO: Implement.
 
-    private bool PreviousEnabled = true;
+    private MyGameObjectState PreviousState = MyGameObjectState.Operational;
+    private bool PreviousEnabled = false;
     private bool PreviousPowered = false;
     private Vector3 PreviousPosition = new Vector3();
     private Vector3Int PreviousPositionInt = new Vector3Int();

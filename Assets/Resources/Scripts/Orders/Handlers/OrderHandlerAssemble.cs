@@ -15,7 +15,7 @@ public class OrderHandlerAssemble : OrderHandler
 
         if (order.Timer == null)
         {
-            order.Timer = new Timer(resourceContainer.MaxSum / myGameObject.GetComponent<Assembler>().ResourceUsage);
+            order.Timer = new Timer(Mathf.Ceil((float)resourceContainer.MaxSum / myGameObject.GetComponent<Assembler>().ResourceUsage));
         }
 
         if (HaveResources(myGameObject, resourceContainer) == false)
