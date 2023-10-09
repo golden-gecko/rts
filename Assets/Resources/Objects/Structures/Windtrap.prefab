@@ -275,4 +275,5 @@ MonoBehaviour:
   <Power>k__BackingField: 20
   <Range>k__BackingField:
     <Value>k__BackingField: 10
-  <PowerUsage>k__BackingField: 1
+  <PowerUsage>k__BackingField:
+    <Value>k__BackingField: -1

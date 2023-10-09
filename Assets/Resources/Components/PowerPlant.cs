@@ -11,7 +11,8 @@ public class PowerPlant : MyComponent
         previousPosition = parent.Position;
         previousPowered = parent.Powered;
 
-        if (parent.State == MyGameObjectState.Operational && parent.Enabled && (IsRelay == false || parent.Powered))
+        // if (parent.State == MyGameObjectState.Operational && parent.Enabled && (IsRelay == false || parent.Powered))
+        if (parent.State == MyGameObjectState.Operational && parent.Enabled)
         {
             PowerUp(parent.Position);
         }
@@ -21,14 +22,17 @@ public class PowerPlant : MyComponent
     {
         base.Update();
 
-        if (previousState != parent.State || previousEnabled != parent.Enabled || Utils.ToGrid(previousPosition, Config.Map.VisibilityScale) != Utils.ToGrid(parent.Position, Config.Map.VisibilityScale) || (IsRelay && previousPowered != parent.Powered))
+        // if (previousState != parent.State || previousEnabled != parent.Enabled || Utils.ToGrid(previousPosition, Config.Map.VisibilityScale) != Utils.ToGrid(parent.Position, Config.Map.VisibilityScale) || (IsRelay && previousPowered != parent.Powered))
+        if (previousState != parent.State || previousEnabled != parent.Enabled || Utils.ToGrid(previousPosition, Config.Map.VisibilityScale) != Utils.ToGrid(parent.Position, Config.Map.VisibilityScale))
         {
-            if (previousState == MyGameObjectState.Operational && previousEnabled && (IsRelay == false || previousPowered))
+            // if (previousState == MyGameObjectState.Operational && previousEnabled && (IsRelay == false || previousPowered))
+            if (previousState == MyGameObjectState.Operational && previousEnabled)
             {
                 PowerDown(previousPosition);
             }
 
-            if (parent.State == MyGameObjectState.Operational && parent.Enabled && (IsRelay == false || parent.Powered))
+            // if (parent.State == MyGameObjectState.Operational && parent.Enabled && (IsRelay == false || parent.Powered))
+            if (parent.State == MyGameObjectState.Operational && parent.Enabled)
             {
                 PowerUp(parent.Position);
             }
@@ -56,7 +60,8 @@ public class PowerPlant : MyComponent
     {
         base.OnDestroy_();
 
-        if (previousState == MyGameObjectState.Operational && previousEnabled && (IsRelay == false || previousPowered))
+        // if (previousState == MyGameObjectState.Operational && previousEnabled && (IsRelay == false || previousPowered))
+        if (previousState == MyGameObjectState.Operational && previousEnabled)
         {
             PowerDown(previousPosition);
         }

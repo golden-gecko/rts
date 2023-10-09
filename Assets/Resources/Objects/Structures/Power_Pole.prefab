@@ -153,7 +153,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <Player>k__BackingField: {fileID: 0}
   <Enabled>k__BackingField: 1
-  <Powerable>k__BackingField: 0
+  <Powerable>k__BackingField: 1
   <Gatherable>k__BackingField: 0
   <Selectable>k__BackingField: 1
   <Health>k__BackingField:
@@ -191,4 +191,5 @@ MonoBehaviour:
   <Power>k__BackingField: -1
   <Range>k__BackingField:
     <Value>k__BackingField: 10
-  <PowerUsage>k__BackingField: 1
+  <PowerUsage>k__BackingField:
+    <Value>k__BackingField: -1
