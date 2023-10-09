@@ -10,16 +10,22 @@ public class UI_Layers : MonoBehaviour
         VisualElement rootVisualElement = uiDocument.rootVisualElement;
 
         panel = rootVisualElement.Q<VisualElement>("Panel_Layers");
-
+        grid = panel.Q<Toggle>("Grid");
         exploration = panel.Q<Toggle>("Exploration");
         power = panel.Q<Toggle>("Power");
         radar = panel.Q<Toggle>("Radar");
         sight = panel.Q<Toggle>("Sight");
 
+        grid.RegisterValueChangedCallback(OnToggleGrid);
         exploration.RegisterValueChangedCallback(OnToggleExploration);
         power.RegisterValueChangedCallback(OnTogglePower);
         radar.RegisterValueChangedCallback(OnToggleRadar);
         sight.RegisterValueChangedCallback(OnToggleSight);
+    }
+
+    private void OnToggleGrid(ChangeEvent<bool> evt)
+    {
+        Map.Instance.transform.Find("Grid").GetComponent<Projector>().enabled = evt.newValue;
     }
 
     private void OnToggleExploration(ChangeEvent<bool> evt)
@@ -105,6 +111,8 @@ public class UI_Layers : MonoBehaviour
     }
 
     private VisualElement panel;
+
+    private Toggle grid;
 
     private Toggle exploration;
     private Toggle power;
