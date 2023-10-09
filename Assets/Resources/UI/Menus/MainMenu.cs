@@ -5,7 +5,7 @@ public class MainMenu : Menu
 {
     public static MainMenu Instance { get; private set; }
 
-    void Awake()
+    protected override void Awake()
     {
         if (Instance != null && Instance != this)
         {
@@ -16,30 +16,8 @@ public class MainMenu : Menu
             Instance = this;
         }
 
-        buttonContinue = GetButton("Continue");
-        buttonContinue.RegisterCallback<ClickEvent>(ev => OnButtonContinue());
+        base.Awake();
 
-        buttonNew = GetButton("New");
-        buttonNew.RegisterCallback<ClickEvent>(ev => OnButtonNew());
-
-        buttonQuit = GetButton("Quit");
-        buttonQuit.RegisterCallback<ClickEvent>(ev => OnButtonQuit());
-    }
-
-    void Start()
-    {
-        buttonContinue = GetButton("Continue");
-        buttonContinue.RegisterCallback<ClickEvent>(ev => OnButtonContinue());
-
-        buttonNew = GetButton("New");
-        buttonNew.RegisterCallback<ClickEvent>(ev => OnButtonNew());
-
-        buttonQuit = GetButton("Quit");
-        buttonQuit.RegisterCallback<ClickEvent>(ev => OnButtonQuit());
-    }
-
-    void OnEnable()
-    {
         buttonContinue = GetButton("Continue");
         buttonContinue.RegisterCallback<ClickEvent>(ev => OnButtonContinue());
 
@@ -52,10 +30,7 @@ public class MainMenu : Menu
 
     private Button GetButton(string name)
     {
-        var i = GetComponent<UIDocument>();
-        var j = i.rootVisualElement;
-
-        return j.Q<Button>(name);
+        return root.Q<Button>(name);
     }
 
     private void OnButtonContinue()

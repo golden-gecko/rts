@@ -3,10 +3,19 @@ using UnityEngine.UIElements;
 
 public class Menu : MonoBehaviour
 {
-    public void Show(bool value)
+    protected virtual void Awake()
     {
-        GetComponent<UIDocument>().rootVisualElement.visible = value;
+        document = GetComponent<UIDocument>();
+        root = document.rootVisualElement;
     }
 
-    public bool Visible { get => GetComponent<UIDocument>().rootVisualElement.visible; }
+    public void Show(bool value)
+    {
+        root.visible = value;
+    }
+
+    public bool Visible { get => root.visible; }
+
+    protected UIDocument document { get; private set; }
+    protected VisualElement root { get; private set; }
 }

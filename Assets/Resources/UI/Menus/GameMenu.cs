@@ -2,7 +2,7 @@ public class GameMenu : Menu
 {
     public static GameMenu Instance { get; private set; }
 
-    void Awake()
+    protected override void Awake()
     {
         if (Instance != null && Instance != this)
         {
@@ -12,5 +12,7 @@ public class GameMenu : Menu
         {
             Instance = this;
         }
+
+        base.Awake();
     }
 }

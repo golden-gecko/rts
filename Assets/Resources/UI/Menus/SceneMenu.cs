@@ -7,7 +7,7 @@ public class SceneMenu : Menu
 {
     public static SceneMenu Instance { get; private set; }
 
-    void Awake()
+    protected override void Awake()
     {
         if (Instance != null && Instance != this)
         {
@@ -17,10 +17,10 @@ public class SceneMenu : Menu
         {
             Instance = this;
         }
+        
+        base.Awake();
 
-        UIDocument uiDocument = GetComponent<UIDocument>();
-        VisualElement rootVisualElement = uiDocument.rootVisualElement;
-        VisualElement menu = rootVisualElement.Q<VisualElement>("Menu");
+        menu = root.Q<VisualElement>("Menu");
 
         int sceneCount = SceneManager.sceneCountInBuildSettings;
         string[] scenes = new string[sceneCount];
@@ -50,4 +50,6 @@ public class SceneMenu : Menu
 
     [SerializeField]
     private VisualTreeAsset templateButton;
+
+    private VisualElement menu;
 }
