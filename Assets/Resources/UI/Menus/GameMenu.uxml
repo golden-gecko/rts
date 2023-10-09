@@ -1,9 +1,6 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" editor-extension-mode="False">
     <ui:Template name="Button" src="project://database/Assets/Resources/UI/Templates/ButtonOrder.uxml?fileID=9197481963319205126&amp;guid=a3fb7fe5ff2f5a5498b9a348c95d0ca1&amp;type=3#ButtonOrder" />
     <Style src="project://database/Assets/Resources/UI/Styles/Style.uss?fileID=7433441132597879392&amp;guid=231d51774ac67094591621cc55974d8c&amp;type=3#Style" />
-    <ui:VisualElement name="Panel_Menu" class="panel-background" style="position: absolute; top: 0; right: 0;">
-        <ui:Button text="Menu (F10)" name="Menu" style="padding-top: 2px; padding-right: 2px; padding-bottom: 2px; padding-left: 2px; margin-top: 4px; margin-right: 4px; margin-bottom: 4px; margin-left: 4px;" />
-    </ui:VisualElement>
     <ui:VisualElement name="Container" picking-mode="Ignore" style="flex-grow: 1; position: absolute; top: 0; right: 0; left: 0; bottom: 0;">
         <ui:VisualElement name="Panel_Log" class="panel-background">
             <ui:Label tabindex="-1" display-tooltip-when-elided="true" name="Value" text="Unit destroyed" style="padding-top: 0; padding-right: 0; padding-bottom: 0; padding-left: 0; margin-top: 8px; margin-right: 8px; margin-bottom: 8px; margin-left: 8px;" />
@@ -18,6 +15,9 @@
             <ui:Toggle label="Radar" name="Radar" focusable="false" />
             <ui:Toggle label="Sight" name="Sight" focusable="false" />
         </ui:VisualElement>
+    </ui:VisualElement>
+    <ui:VisualElement name="Panel_Menu" class="panel-background" style="position: absolute; top: 0; right: 0;">
+        <ui:Button text="Menu (F10)" name="Menu" style="padding-top: 2px; padding-right: 2px; padding-bottom: 2px; padding-left: 2px; margin-top: 4px; margin-right: 4px; margin-bottom: 4px; margin-left: 4px;" />
     </ui:VisualElement>
     <ui:VisualElement name="Container" picking-mode="Ignore" style="flex-grow: 1; bottom: 0; left: 0; top: 0; right: 80%; position: absolute; align-items: flex-start; justify-content: flex-end; flex-direction: column;">
         <ui:VisualElement name="Panel_Orders" class="panel-background" style="margin-bottom: 8px;">

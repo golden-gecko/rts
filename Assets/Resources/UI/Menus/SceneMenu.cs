@@ -3,7 +3,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UIElements;
 
-public class SceneMenu : MonoBehaviour
+public class SceneMenu : Menu
 {
     public static SceneMenu Instance { get; private set; }
 
@@ -17,10 +17,7 @@ public class SceneMenu : MonoBehaviour
         {
             Instance = this;
         }
-    }
 
-    void OnEnable()
-    {
         UIDocument uiDocument = GetComponent<UIDocument>();
         VisualElement rootVisualElement = uiDocument.rootVisualElement;
         VisualElement menu = rootVisualElement.Q<VisualElement>("Menu");
@@ -44,11 +41,6 @@ public class SceneMenu : MonoBehaviour
 
             menu.Add(buttonContainer);
         }
-    }
-
-    public void Show(bool value)
-    {
-        GetComponent<UIDocument>().gameObject.SetActive(value);
     }
 
     private void OnButtonScene(string scene)

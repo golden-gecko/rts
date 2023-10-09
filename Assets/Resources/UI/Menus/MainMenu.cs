@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.UIElements;
 
-public class MainMenu : MonoBehaviour
+public class MainMenu : Menu
 {
     public static MainMenu Instance { get; private set; }
 
@@ -15,28 +15,52 @@ public class MainMenu : MonoBehaviour
         {
             Instance = this;
         }
+
+        buttonContinue = GetButton("Continue");
+        buttonContinue.RegisterCallback<ClickEvent>(ev => OnButtonContinue());
+
+        buttonNew = GetButton("New");
+        buttonNew.RegisterCallback<ClickEvent>(ev => OnButtonNew());
+
+        buttonQuit = GetButton("Quit");
+        buttonQuit.RegisterCallback<ClickEvent>(ev => OnButtonQuit());
+    }
+
+    void Start()
+    {
+        buttonContinue = GetButton("Continue");
+        buttonContinue.RegisterCallback<ClickEvent>(ev => OnButtonContinue());
+
+        buttonNew = GetButton("New");
+        buttonNew.RegisterCallback<ClickEvent>(ev => OnButtonNew());
+
+        buttonQuit = GetButton("Quit");
+        buttonQuit.RegisterCallback<ClickEvent>(ev => OnButtonQuit());
     }
 
     void OnEnable()
     {
-        GetButton("Continue").RegisterCallback<ClickEvent>(ev => OnButtonContinue());
-        GetButton("New").RegisterCallback<ClickEvent>(ev => OnButtonNew());
-        GetButton("Quit").RegisterCallback<ClickEvent>(ev => OnButtonQuit());
-    }
+        buttonContinue = GetButton("Continue");
+        buttonContinue.RegisterCallback<ClickEvent>(ev => OnButtonContinue());
 
-    public void Show(bool value)
-    {
-        GetComponent<UIDocument>().gameObject.SetActive(value);
+        buttonNew = GetButton("New");
+        buttonNew.RegisterCallback<ClickEvent>(ev => OnButtonNew());
+
+        buttonQuit = GetButton("Quit");
+        buttonQuit.RegisterCallback<ClickEvent>(ev => OnButtonQuit());
     }
 
     private Button GetButton(string name)
     {
-        return GetComponent<UIDocument>().rootVisualElement.Q<Button>(name);
+        var i = GetComponent<UIDocument>();
+        var j = i.rootVisualElement;
+
+        return j.Q<Button>(name);
     }
 
     private void OnButtonContinue()
     {
-        Show(false);
+        UI_Menu.Instance.OnMenu();
     }
 
     private void OnButtonNew()
@@ -49,4 +73,8 @@ public class MainMenu : MonoBehaviour
     {
         Application.Quit();
     }
+
+    private Button buttonContinue;
+    private Button buttonNew;
+    private Button buttonQuit;
 }

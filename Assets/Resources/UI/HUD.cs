@@ -54,15 +54,7 @@ public class HUD : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.F10))
         {
-            if (MainMenu.Instance.gameObject.activeInHierarchy || SceneMenu.Instance.gameObject.activeInHierarchy)
-            {
-                MainMenu.Instance.Show(false);
-                SceneMenu.Instance.Show(false);
-            }
-            else
-            {
-                MainMenu.Instance.Show(true);
-            }
+            UI_Menu.Instance.OnMenu();
         }
     }
 

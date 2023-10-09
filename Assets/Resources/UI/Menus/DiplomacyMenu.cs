@@ -1,7 +1,4 @@
-using UnityEngine;
-using UnityEngine.UIElements;
-
-public class DiplomacyMenu : MonoBehaviour
+public class DiplomacyMenu : Menu
 {
     public static DiplomacyMenu Instance { get; private set; }
 
@@ -15,16 +12,5 @@ public class DiplomacyMenu : MonoBehaviour
         {
             Instance = this;
         }
-    }
-
-    void OnEnable()
-    {
-        UIDocument uiDocument = GetComponent<UIDocument>();
-        VisualElement rootVisualElement = uiDocument.rootVisualElement;
-    }
-
-    public void Show(bool value)
-    {
-        GetComponent<UIDocument>().gameObject.SetActive(value);
     }
 }
