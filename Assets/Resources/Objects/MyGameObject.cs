@@ -419,7 +419,7 @@ public class MyGameObject : MonoBehaviour
 
         foreach (MyComponent myComponent in GetComponents<MyComponent>())
         {
-            myComponent.OnDestroy_(this);
+            myComponent.OnDestroy_();
         }
 
         foreach (Skill skill in Skills.Values)

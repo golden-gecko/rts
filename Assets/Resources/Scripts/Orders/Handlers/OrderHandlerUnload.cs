@@ -54,7 +54,7 @@ public class OrderHandlerUnload : OrderHandler
 
         if (order.Timer == null)
         {
-            order.Timer = new Timer(valueStart / myGameObject.GetComponent<Storage>().ResourceUsage);
+            order.Timer = new Timer(Mathf.Ceil((float)valueStart / myGameObject.GetComponent<Storage>().ResourceUsage));
         }
 
         if (order.Timer.Update(Time.deltaTime) == false)

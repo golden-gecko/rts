@@ -86,17 +86,21 @@ public class Radar : MyComponent
         return string.Format("Radar: {0}, Range: {1:0.}, Anti: {2}", base.GetInfo(), Range.Total, Anti);
     }
 
-    public override void OnDestroy_(MyGameObject myGameObject)
+    public override void OnDestroy_()
     {
-        if (myGameObject.Enabled)
+        base.OnDestroy_();
+
+        MyGameObject parent = GetComponent<MyGameObject>();
+
+        if (parent.Enabled)
         {
             if (Anti)
             {
-                Map.Instance.SetVisibleByAntiRadar(myGameObject, Utils.ToGrid(myGameObject.Position, Config.Map.VisibilityScale), Range.Total, -1);
+                Map.Instance.SetVisibleByAntiRadar(parent, parent.Position, Range.Total, -1);
             }
             else
             {
-                Map.Instance.SetVisibleByRadar(myGameObject, Utils.ToGrid(myGameObject.Position, Config.Map.VisibilityScale), Range.Total, -1);
+                Map.Instance.SetVisibleByRadar(parent, parent.Position, Range.Total, -1);
             }
         }
     }

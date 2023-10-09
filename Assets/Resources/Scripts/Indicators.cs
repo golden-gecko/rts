@@ -84,6 +84,7 @@ public class Indicators : MonoBehaviour
         range.gameObject.SetActive(false);
 
         construction.gameObject.SetActive(true);
+        sign.gameObject.SetActive(true);
     }
 
     public void OnConstructionEnd()

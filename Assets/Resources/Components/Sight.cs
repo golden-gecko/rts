@@ -58,11 +58,15 @@ public class Sight : MyComponent
         return string.Format("Sight: {0}, Range: {1:0.}", base.GetInfo(), Range.Total);
     }
 
-    public override void OnDestroy_(MyGameObject myGameObject)
+    public override void OnDestroy_()
     {
-        if (myGameObject.Enabled)
+        base.OnDestroy_();
+
+        MyGameObject parent = GetComponent<MyGameObject>();
+
+        if (parent.Enabled)
         {
-            Map.Instance.SetVisibleBySight(myGameObject, Utils.ToGrid(myGameObject.Position, Config.Map.VisibilityScale), Range.Total, -1);
+            Map.Instance.SetVisibleBySight(parent, parent.Position, Range.Total, -1);
         }
     }
 
