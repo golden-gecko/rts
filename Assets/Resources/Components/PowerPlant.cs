@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class PowerPlant : MyComponent
@@ -67,16 +68,35 @@ public class PowerPlant : MyComponent
         }
     }
 
+    public void Connect(PowerPlant powerPlant)
+    {
+        Connections.Add(powerPlant);
+    }
+
     private void PowerUp(Vector3 position)
     {
+        foreach (RaycastHit hitInfo in Utils.SphereCastAll(parent.Position, Range.Total))
+        {
+            if (hitInfo.transform.TryGetComponent(out PowerPlant powerPlant))
+            {
+                powerPlant.Connect(this);
+            }
+        }
+
         if (IsRelay)
         {
-            // Map.Instance.SetVisibleByPowerRelay(parent, position, Range.Total, 1);
-            Map.Instance.SetVisibleByPower(parent, position, Range.Total, 1);
         }
         else
         {
-            Map.Instance.SetVisibleByPower(parent, position, Range.Total, 1);
+        }
+
+        if (IsRelay)
+        {
+            // Map.Instance.SetVisibleByPower(parent, position, Range.Total, 1);
+        }
+        else
+        {
+            // Map.Instance.SetVisibleByPower(parent, position, Range.Total, 1);
         }
     }
 
@@ -84,12 +104,11 @@ public class PowerPlant : MyComponent
     {
         if (IsRelay)
         {
-            // Map.Instance.SetVisibleByPowerRelay(parent, position, Range.Total, -1);
-            Map.Instance.SetVisibleByPower(parent, position, Range.Total, -1);
+            // Map.Instance.SetVisibleByPower(parent, position, Range.Total, -1);
         }
         else
         {
-            Map.Instance.SetVisibleByPower(parent, position, Range.Total, -1);
+            // Map.Instance.SetVisibleByPower(parent, position, Range.Total, -1);
         }
     }
 
@@ -103,6 +122,8 @@ public class PowerPlant : MyComponent
     public Property PowerUsage { get; set; } = new Property(); // TODO: Implement.
 
     public bool IsRelay { get => Power < 0.0f; }
+
+    private HashSet<PowerPlant> Connections { get; } = new HashSet<PowerPlant>();
 
     private MyGameObjectState previousState;
     private bool previousEnabled;

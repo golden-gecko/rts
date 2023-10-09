@@ -12,7 +12,6 @@
             <ui:Toggle label="Grid" focusable="false" name="Grid" style="flex-direction: row-reverse; align-items: center;" />
             <ui:Toggle label="Exploration" name="Exploration" focusable="false" style="flex-direction: row-reverse; align-items: center;" />
             <ui:Toggle label="Power" name="Power" focusable="false" style="flex-direction: row-reverse; align-items: center;" />
-            <ui:Toggle label="Power Relay" name="PowerRelay" focusable="false" style="flex-direction: row-reverse; align-items: center;" />
             <ui:Toggle label="Radar" name="Radar" focusable="false" style="flex-direction: row-reverse; align-items: center;" />
             <ui:Toggle label="Sight" name="Sight" focusable="false" style="flex-direction: row-reverse; align-items: center;" />
         </ui:VisualElement>
