@@ -6,6 +6,8 @@ public class Missile : MyGameObject // TODO: Add collision with terrain to missi
     {
         base.Start();
 
+        parent = GetComponent<MyGameObject>();
+
         if (FireEffectPrefab != null)
         {
             Instantiate(FireEffectPrefab, Position, Quaternion.identity);
@@ -23,4 +25,6 @@ public class Missile : MyGameObject // TODO: Add collision with terrain to missi
 
     [field: SerializeField]
     public Property Range { get; set; } = new Property();
+
+    protected MyGameObject parent { get; private set; }
 }

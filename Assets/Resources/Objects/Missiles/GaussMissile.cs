@@ -4,8 +4,6 @@ public class GaussMissile : Missile
     {
         base.Awake();
 
-        MyGameObject parent = GetComponent<MyGameObject>();
-
         parent.Orders.AllowOrder(OrderType.Attack);
 
         parent.OrderHandlers[OrderType.Attack] = new OrderHandlerAttackGauss();

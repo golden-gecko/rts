@@ -8,7 +8,6 @@ public class Shield : MyComponent // TODO: Shield puts health bar in wrong posit
 
         if (Mesh != null)
         {
-            MyGameObject parent = GetComponent<MyGameObject>();
             GameObject mesh = Instantiate(Mesh, parent.Position, Quaternion.identity);
 
             mesh.transform.parent = parent.Body.transform;

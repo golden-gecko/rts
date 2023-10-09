@@ -9,8 +9,6 @@ public class Assembler : MyComponent
     {
         base.Start();
 
-        MyGameObject parent = GetComponent<MyGameObject>();
-
         parent.Orders.AllowOrder(OrderType.Assemble);
         parent.Orders.AllowOrder(OrderType.Rally);
 

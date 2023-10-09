@@ -152,6 +152,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <Exploration>k__BackingField: {fileID: 2100000, guid: dc75f0452bbad234fa10d40351ebee8c, type: 2}
   <Power>k__BackingField: {fileID: 2100000, guid: 70c59f7324f0e47478dcffcf08d14c0d, type: 2}
+  <PowerRelay>k__BackingField: {fileID: 2100000, guid: 537db339baa3dc34ebe185c99371a8e5, type: 2}
   <Radar>k__BackingField: {fileID: 2100000, guid: 5561643e7529d344cb082276a84e8066, type: 2}
   <Sight>k__BackingField: {fileID: 2100000, guid: cc399b6df0904fd40a6b920972d35e1b, type: 2}
 --- !u!1001 &4067907102998597236

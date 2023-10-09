@@ -9,8 +9,6 @@ public class Constructor : MyComponent
     {
         base.Awake();
 
-        MyGameObject parent = GetComponent<MyGameObject>();
-
         parent.Orders.AllowOrder(OrderType.Construct);
 
         foreach (string prefab in Prefabs)

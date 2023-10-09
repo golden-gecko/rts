@@ -13,12 +13,14 @@ public class UI_Layers : MonoBehaviour
         grid = panel.Q<Toggle>("Grid");
         exploration = panel.Q<Toggle>("Exploration");
         power = panel.Q<Toggle>("Power");
+        powerRelay = panel.Q<Toggle>("PowerRelay");
         radar = panel.Q<Toggle>("Radar");
         sight = panel.Q<Toggle>("Sight");
 
         grid.RegisterValueChangedCallback(OnToggleGrid);
         exploration.RegisterValueChangedCallback(OnToggleExploration);
         power.RegisterValueChangedCallback(OnTogglePower);
+        powerRelay.RegisterValueChangedCallback(OnTogglePowerRelay);
         radar.RegisterValueChangedCallback(OnToggleRadar);
         sight.RegisterValueChangedCallback(OnToggleSight);
     }
@@ -33,6 +35,7 @@ public class UI_Layers : MonoBehaviour
         if (evt.newValue)
         {
             Disable(power);
+            Disable(powerRelay);
             Disable(radar);
             Disable(sight);
         }
@@ -45,6 +48,20 @@ public class UI_Layers : MonoBehaviour
         if (evt.newValue)
         {
             Disable(exploration);
+            Disable(powerRelay);
+            Disable(radar);
+            Disable(sight);
+        }
+
+        Set();
+    }
+
+    private void OnTogglePowerRelay(ChangeEvent<bool> evt)
+    {
+        if (evt.newValue)
+        {
+            Disable(exploration);
+            Disable(power);
             Disable(radar);
             Disable(sight);
         }
@@ -58,6 +75,7 @@ public class UI_Layers : MonoBehaviour
         {
             Disable(exploration);
             Disable(power);
+            Disable(powerRelay);
             Disable(sight);
         }
 
@@ -70,6 +88,7 @@ public class UI_Layers : MonoBehaviour
         {
             Disable(exploration);
             Disable(power);
+            Disable(powerRelay);
             Disable(radar);
         }
 
@@ -96,6 +115,10 @@ public class UI_Layers : MonoBehaviour
         {
             projector.material = Map.Instance.Power;
         }
+        else if (powerRelay.value)
+        {
+            projector.material = Map.Instance.PowerRelay;
+        }
         else if (radar.value)
         {
             projector.material = Map.Instance.Radar;
@@ -116,6 +139,7 @@ public class UI_Layers : MonoBehaviour
 
     private Toggle exploration;
     private Toggle power;
+    private Toggle powerRelay;
     private Toggle radar;
     private Toggle sight;
 }

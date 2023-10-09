@@ -8,8 +8,6 @@ public class Producer : MyComponent
     {
         base.Awake();
 
-        MyGameObject parent = GetComponent<MyGameObject>();
-
         parent.Orders.AllowOrder(OrderType.Produce);
 
         parent.OrderHandlers[OrderType.Idle] = new OrderHandlerIdleProducer();

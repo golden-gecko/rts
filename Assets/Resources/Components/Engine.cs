@@ -6,8 +6,6 @@ public class Engine : MyComponent
     {
         base.Awake();
 
-        MyGameObject parent = GetComponent<MyGameObject>();
-
         parent.Orders.AllowOrder(OrderType.Explore);
         parent.Orders.AllowOrder(OrderType.Follow);
         parent.Orders.AllowOrder(OrderType.Guard);
