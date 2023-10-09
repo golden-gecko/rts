@@ -1,3 +1,4 @@
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UIElements;
 
@@ -25,63 +26,81 @@ public class UI_Layers : MonoBehaviour
     {
         if (evt.newValue)
         {
-            Map.Instance.transform.Find("Layers").GetComponent<Projector>().material = Map.Instance.Exploration;
+            Disable(power);
+            Disable(radar);
+            Disable(sight);
+        }
 
-            power.value = false;
-            radar.value = false;
-            sight.value = false;
-        }
-        else
-        {
-            Map.Instance.transform.Find("Layers").GetComponent<Projector>().material = null;
-        }
+        Set();
     }
 
     private void OnTogglePower(ChangeEvent<bool> evt)
     {
         if (evt.newValue)
         {
-            Map.Instance.transform.Find("Layers").GetComponent<Projector>().material = Map.Instance.Power;
+            Disable(exploration);
+            Disable(radar);
+            Disable(sight);
+        }
 
-            exploration.value = false;
-            radar.value = false;
-            sight.value = false;
-        }
-        else
-        {
-            Map.Instance.transform.Find("Layers").GetComponent<Projector>().material = null;
-        }
+        Set();
     }
 
     private void OnToggleRadar(ChangeEvent<bool> evt)
     {
         if (evt.newValue)
         {
-            Map.Instance.transform.Find("Layers").GetComponent<Projector>().material = Map.Instance.Radar;
+            Disable(exploration);
+            Disable(power);
+            Disable(sight);
+        }
 
-            exploration.value = false;
-            power.value = false;
-            sight.value = false;
-        }
-        else
-        {
-            Map.Instance.transform.Find("Layers").GetComponent<Projector>().material = null;
-        }
+        Set();
     }
 
     private void OnToggleSight(ChangeEvent<bool> evt)
     {
         if (evt.newValue)
         {
-            Map.Instance.transform.Find("Layers").GetComponent<Projector>().material = Map.Instance.Sight;
+            Disable(exploration);
+            Disable(power);
+            Disable(radar);
+        }
 
-            exploration.value = false;
-            power.value = false;
-            radar.value = false;
+        Set();
+    }
+
+    private void Disable(Toggle toggle)
+    {
+        if (toggle.value)
+        {
+            toggle.value = false;
+        }
+    }
+
+    private void Set()
+    {
+        Projector projector = Map.Instance.transform.Find("Layers").GetComponent<Projector>();
+
+        if (exploration.value)
+        {
+            projector.material = Map.Instance.Exploration;
+        }
+        else if (power.value)
+        {
+            projector.material = Map.Instance.Power;
+        }
+        else if (radar.value)
+        {
+            projector.material = Map.Instance.Radar;
+        }
+        else if (sight.value)
+        {
+            projector.material = Map.Instance.Sight;
         }
         else
         {
-            Map.Instance.transform.Find("Layers").GetComponent<Projector>().material = null;
+            projector.material = null;
         }
     }
 

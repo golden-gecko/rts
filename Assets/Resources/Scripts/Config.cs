@@ -31,8 +31,11 @@ public class Config
     public class Map
     {
         public static float ConstructionScale { get; } = 1.0f;
-        public static Color DataLayerColor { get; } = new Color(1.0f, 1.0f, 1.0f, 0.5f);
-        public static Color DataLayerColorEmpty { get; } = new Color(1.0f, 1.0f, 1.0f, 0.0f);
+        public static Color DataLayerColorExploration { get; } = new Color(1.0f, 1.0f, 1.0f, 0.25f);
+        public static Color DataLayerColorPower { get; } = new Color(1.0f, 1.0f, 0.0f, 0.25f);
+        public static Color DataLayerColorRadar { get; } = new Color(0.0f, 0.0f, 1.0f, 0.25f);
+        public static Color DataLayerColorSight { get; } = new Color(0.0f, 1.0f, 0.0f, 0.25f);
+        public static Color DataLayerColorEmpty { get; } = new Color(0.0f, 0.0f, 0.0f, 0.0f);
         public static float MaxHeight { get; } = 2000.0f;
         public static float VisibilityScale { get; } = 1.0f;
         public static int VisibilitySize { get; } = 512;

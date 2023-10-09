@@ -59,7 +59,7 @@ public class Map : MonoBehaviour
                 {
                     if (Cells[x, z].VisibleByRadar[myGameObject.Player] > (Cells[x, z].VisibleByAntiRadar.ContainsKey(myGameObject.Player) ? Cells[x, z].VisibleByAntiRadar[myGameObject.Player] : 0))
                     {
-                        radarTexture.SetPixel(x, z, Config.Map.DataLayerColor);
+                        radarTexture.SetPixel(x, z, Config.Map.DataLayerColorRadar);
                     }
                     else
                     {
@@ -102,7 +102,7 @@ public class Map : MonoBehaviour
                 {
                     if (Cells[x, z].VisibleByRadar[myGameObject.Player] > Cells[x, z].VisibleByAntiRadar[myGameObject.Player])
                     {
-                        radarTexture.SetPixel(x, z, Config.Map.DataLayerColor);
+                        radarTexture.SetPixel(x, z, Config.Map.DataLayerColorRadar);
                     }
                     else
                     {
@@ -148,7 +148,7 @@ public class Map : MonoBehaviour
 
                     if (HUD.Instance.ActivePlayer == myGameObject.Player)
                     {
-                        explorationTexture.SetPixel(x, z, Config.Map.DataLayerColor);
+                        explorationTexture.SetPixel(x, z, Config.Map.DataLayerColorExploration);
                     }
                 }
 
@@ -156,7 +156,7 @@ public class Map : MonoBehaviour
                 {
                     if (Cells[x, z].VisibleBySight[myGameObject.Player] > 0)
                     {
-                        sightTexture.SetPixel(x, z, Config.Map.DataLayerColor);
+                        sightTexture.SetPixel(x, z, Config.Map.DataLayerColorSight);
                     }
                     else
                     {
@@ -200,7 +200,7 @@ public class Map : MonoBehaviour
                 {
                     if (Cells[x, z].VisibleByPower[myGameObject.Player] > 0)
                     {
-                        powerTexture.SetPixel(x, z, Config.Map.DataLayerColor);
+                        powerTexture.SetPixel(x, z, Config.Map.DataLayerColorPower);
                     }
                     else
                     {
