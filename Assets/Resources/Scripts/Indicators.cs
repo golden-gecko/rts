@@ -21,6 +21,8 @@ public class Indicators : MonoBehaviour
         iconPowerOff = icon.Find("Power").Find("Off").GetComponent<Image>();
         iconResourceOn = icon.Find("Resource").Find("On").GetComponent<Image>();
         iconResourceOff = icon.Find("Resource").Find("Off").GetComponent<Image>();
+        iconStateOn = icon.Find("State").Find("On").GetComponent<Image>();
+        iconStateOff = icon.Find("State").Find("Off").GetComponent<Image>();
         iconWorkOn = icon.Find("Work").Find("On").GetComponent<Image>();
         iconWorkOff = icon.Find("Work").Find("Off").GetComponent<Image>();
 
@@ -262,6 +264,7 @@ public class Indicators : MonoBehaviour
         UpdateIconDamage(myGameObject);
         UpdateIconPower(myGameObject);
         UpdateIconResource(myGameObject);
+        UpdateIconState(myGameObject);
         UpdateIconWork(myGameObject);
     }
 
@@ -291,6 +294,12 @@ public class Indicators : MonoBehaviour
             iconResourceOn.gameObject.SetActive(false);
             iconResourceOff.gameObject.SetActive(false);
         }
+    }
+
+    private void UpdateIconState(MyGameObject myGameObject)
+    {
+        iconStateOn.gameObject.SetActive(myGameObject.Enabled);
+        iconStateOff.gameObject.SetActive(myGameObject.Enabled == false);
     }
 
     private void UpdateIconWork(MyGameObject myGameObject)
@@ -515,6 +524,8 @@ public class Indicators : MonoBehaviour
     private Image iconPowerOff;
     private Image iconResourceOn;
     private Image iconResourceOff;
+    private Image iconStateOn;
+    private Image iconStateOff;
     private Image iconWorkOn;
     private Image iconWorkOff;
 

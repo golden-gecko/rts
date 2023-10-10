@@ -14,6 +14,7 @@ public class PowerPlant : MyComponent
         previousState = Parent.State;
         previousEnabled = Parent.Enabled;
         previousPosition = Parent.Position;
+        previousProducerConnected = (IsProducer || IsProducerConnected);
 
         if (Parent.State == MyGameObjectState.Operational && Parent.Enabled && (IsProducer || IsProducerConnected))
         {
@@ -25,14 +26,14 @@ public class PowerPlant : MyComponent
     {
         base.Update();
 
-        if (previousState != Parent.State || previousEnabled != Parent.Enabled || Utils.ToGrid(previousPosition, Config.Map.VisibilityScale) != Utils.ToGrid(Parent.Position, Config.Map.VisibilityScale))
+        if (previousState != Parent.State || previousEnabled != Parent.Enabled || Utils.ToGrid(previousPosition, Config.Map.VisibilityScale) != Utils.ToGrid(Parent.Position, Config.Map.VisibilityScale) || previousProducerConnected != (IsProducer || IsProducerConnected))
         {
-            if (previousState == MyGameObjectState.Operational && previousEnabled)
+            if (previousState == MyGameObjectState.Operational && previousEnabled && previousProducerConnected)
             {
                 PowerDown(previousPosition);
             }
 
-            if (Parent.State == MyGameObjectState.Operational && Parent.Enabled)
+            if (Parent.State == MyGameObjectState.Operational && Parent.Enabled && (IsProducer || IsProducerConnected))
             {
                 PowerUp(Parent.Position);
             }
@@ -40,6 +41,7 @@ public class PowerPlant : MyComponent
             previousState = Parent.State;
             previousEnabled = Parent.Enabled;
             previousPosition = Parent.Position;
+            previousProducerConnected = (IsProducer || IsProducerConnected);
         }
     }
 
@@ -118,17 +120,22 @@ public class PowerPlant : MyComponent
                 PowerPlant powerPlant = queue.First();
                 queue.Remove(powerPlant);
 
-                if (powerPlant.IsProducer)
-                {
-                    return true;
-                }
-
                 if (visited.Contains(powerPlant))
                 {
                     continue;
                 }
 
                 visited.Add(powerPlant);
+
+                if (powerPlant.Parent.State != MyGameObjectState.Operational || powerPlant.Parent.Enabled == false)
+                {
+                    continue;
+                }
+
+                if (powerPlant.IsProducer)
+                {
+                    return true;
+                }
 
                 foreach (PowerPlant i in powerPlant.Connections)
                 {
@@ -145,4 +152,5 @@ public class PowerPlant : MyComponent
     private MyGameObjectState previousState;
     private bool previousEnabled;
     private Vector3 previousPosition;
+    private bool previousProducerConnected;
 }
