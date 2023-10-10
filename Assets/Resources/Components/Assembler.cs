@@ -9,18 +9,18 @@ public class Assembler : MyComponent
     {
         base.Start();
 
-        parent.Orders.AllowOrder(OrderType.Assemble);
-        parent.Orders.AllowOrder(OrderType.Rally);
+        Parent.Orders.AllowOrder(OrderType.Assemble);
+        Parent.Orders.AllowOrder(OrderType.Rally);
 
         foreach (string prefab in Prefabs)
         {
-            parent.Orders.AllowPrefab(Path.Join(Config.Asset.Units, prefab));
+            Parent.Orders.AllowPrefab(Path.Join(Config.Asset.Units, prefab));
         }
 
-        parent.OrderHandlers[OrderType.Assemble] = new OrderHandlerAssemble();
-        parent.OrderHandlers[OrderType.Rally] = new OrderHandlerRally();
+        Parent.OrderHandlers[OrderType.Assemble] = new OrderHandlerAssemble();
+        Parent.OrderHandlers[OrderType.Rally] = new OrderHandlerRally();
 
-        RallyPoint = parent.Exit;
+        RallyPoint = Parent.Exit;
     }
 
     public override string GetInfo()

@@ -246,7 +246,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6146446851295090096, guid: 21fb8379eb49db94ab8ebb7269aafbd9, type: 3}
       propertyPath: m_Name
-      value: Power_Pole_0001
+      value: Power_Pole_0002
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -372,7 +372,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6146446851295090096, guid: 21fb8379eb49db94ab8ebb7269aafbd9, type: 3}
       propertyPath: m_Name
-      value: Power_Pole
+      value: Power_Pole_0001
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -576,8 +576,8 @@ SceneRoots:
   m_Roots:
   - {fileID: 450540953}
   - {fileID: 505519082}
-  - {fileID: 1446401766}
-  - {fileID: 2074298751}
   - {fileID: 1600643025}
+  - {fileID: 1446401766}
   - {fileID: 573184664}
   - {fileID: 469081241}
+  - {fileID: 2074298751}

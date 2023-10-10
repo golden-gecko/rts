@@ -1,4 +1,6 @@
+using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class PowerPlant : MyComponent
@@ -7,15 +9,15 @@ public class PowerPlant : MyComponent
     {
         base.Start();
 
-        previousState = parent.State;
-        previousEnabled = parent.Enabled;
-        previousPosition = parent.Position;
-        previousPowered = parent.Powered;
+        MakeConnections();
 
-        // if (parent.State == MyGameObjectState.Operational && parent.Enabled && (IsRelay == false || parent.Powered))
-        if (parent.State == MyGameObjectState.Operational && parent.Enabled)
+        previousState = Parent.State;
+        previousEnabled = Parent.Enabled;
+        previousPosition = Parent.Position;
+
+        if (Parent.State == MyGameObjectState.Operational && Parent.Enabled && (IsProducer || IsProducerConnected))
         {
-            PowerUp(parent.Position);
+            PowerUp(Parent.Position);
         }
     }
 
@@ -23,45 +25,35 @@ public class PowerPlant : MyComponent
     {
         base.Update();
 
-        // if (previousState != parent.State || previousEnabled != parent.Enabled || Utils.ToGrid(previousPosition, Config.Map.VisibilityScale) != Utils.ToGrid(parent.Position, Config.Map.VisibilityScale) || (IsRelay && previousPowered != parent.Powered))
-        if (previousState != parent.State || previousEnabled != parent.Enabled || Utils.ToGrid(previousPosition, Config.Map.VisibilityScale) != Utils.ToGrid(parent.Position, Config.Map.VisibilityScale))
+        if (previousState != Parent.State || previousEnabled != Parent.Enabled || Utils.ToGrid(previousPosition, Config.Map.VisibilityScale) != Utils.ToGrid(Parent.Position, Config.Map.VisibilityScale))
         {
-            // if (previousState == MyGameObjectState.Operational && previousEnabled && (IsRelay == false || previousPowered))
             if (previousState == MyGameObjectState.Operational && previousEnabled)
             {
                 PowerDown(previousPosition);
             }
 
-            // if (parent.State == MyGameObjectState.Operational && parent.Enabled && (IsRelay == false || parent.Powered))
-            if (parent.State == MyGameObjectState.Operational && parent.Enabled)
+            if (Parent.State == MyGameObjectState.Operational && Parent.Enabled)
             {
-                PowerUp(parent.Position);
+                PowerUp(Parent.Position);
             }
 
-            previousState = parent.State;
-            previousEnabled = parent.Enabled;
-            previousPosition = parent.Position;
-            previousPowered = parent.Powered;
+            previousState = Parent.State;
+            previousEnabled = Parent.Enabled;
+            previousPosition = Parent.Position;
         }
     }
 
     public override string GetInfo()
     {
-        string info = string.Format("PowerPlant: {0}, Range: {1}", base.GetInfo(), Range);
-
-        if (Power > 0.0f)
-        {
-            info += string.Format(" Power: {0}", Power);
-        }
-
-        return info;
+        return string.Format("PowerPlant: {0}, Range: {1}", base.GetInfo(), Range);
     }
 
     public override void OnDestroy_()
     {
         base.OnDestroy_();
 
-        // if (previousState == MyGameObjectState.Operational && previousEnabled && (IsRelay == false || previousPowered))
+        Connections.Clear();
+
         if (previousState == MyGameObjectState.Operational && previousEnabled)
         {
             PowerDown(previousPosition);
@@ -73,60 +65,84 @@ public class PowerPlant : MyComponent
         Connections.Add(powerPlant);
     }
 
-    private void PowerUp(Vector3 position)
+    private void MakeConnections()
     {
-        foreach (RaycastHit hitInfo in Utils.SphereCastAll(parent.Position, Range.Total))
+        Connections.Clear();
+
+        foreach (RaycastHit hitInfo in Utils.SphereCastAll(Parent.Position, Range.Total, Utils.GetGameObjectMask()))
         {
-            if (hitInfo.transform.TryGetComponent(out PowerPlant powerPlant))
+            PowerPlant powerPlant = hitInfo.transform.GetComponentInParent<PowerPlant>();
+
+            if (powerPlant != null && powerPlant != this && powerPlant.Parent.Player == Parent.Player)
             {
+                Connect(powerPlant);
                 powerPlant.Connect(this);
             }
         }
+    }
 
-        if (IsRelay)
-        {
-        }
-        else
-        {
-        }
-
-        if (IsRelay)
-        {
-            // Map.Instance.SetVisibleByPower(parent, position, Range.Total, 1);
-        }
-        else
-        {
-            // Map.Instance.SetVisibleByPower(parent, position, Range.Total, 1);
-        }
+    private void PowerUp(Vector3 position)
+    {
+        Map.Instance.SetVisibleByPower(Parent, position, Range.Total, 1);
     }
 
     private void PowerDown(Vector3 position)
     {
-        if (IsRelay)
-        {
-            // Map.Instance.SetVisibleByPower(parent, position, Range.Total, -1);
-        }
-        else
-        {
-            // Map.Instance.SetVisibleByPower(parent, position, Range.Total, -1);
-        }
+        Map.Instance.SetVisibleByPower(Parent, position, Range.Total, -1);
     }
 
     [field: SerializeField]
-    public float Power { get; set; } = 20.0f;
-
-    [field: SerializeField]
-    public Property Range { get; set; } = new Property();
+    public Property PowerGeneration { get; set; } = new Property(); // TODO: Implement.
 
     [field: SerializeField]
     public Property PowerUsage { get; set; } = new Property(); // TODO: Implement.
 
-    public bool IsRelay { get => Power < 0.0f; }
+    [field: SerializeField]
+    public Property Range { get; set; } = new Property();
+
+    public bool IsRelay { get => PowerGeneration.Total <= 0.0f && PowerUsage.Total <= 0.0f; }
+
+    public bool IsProducer { get => PowerGeneration.Total > 0.0f; }
+
+    public bool IsConsumer { get => PowerUsage.Total > 0.0f; }
+
+    public bool IsProducerConnected
+    {
+        get
+        {
+            HashSet<PowerPlant> queue = new HashSet<PowerPlant>(Connections);
+            HashSet<PowerPlant> visited = new HashSet<PowerPlant>();
+
+            while (queue.Count > 0)
+            {
+                PowerPlant powerPlant = queue.First();
+                queue.Remove(powerPlant);
+
+                if (powerPlant.IsProducer)
+                {
+                    return true;
+                }
+
+                if (visited.Contains(powerPlant))
+                {
+                    continue;
+                }
+
+                visited.Add(powerPlant);
+
+                foreach (PowerPlant i in powerPlant.Connections)
+                {
+                    queue.Add(i);
+                }
+            }
+
+            return false;
+        }
+    }
 
     private HashSet<PowerPlant> Connections { get; } = new HashSet<PowerPlant>();
 
     private MyGameObjectState previousState;
     private bool previousEnabled;
     private Vector3 previousPosition;
-    private bool previousPowered;
 }

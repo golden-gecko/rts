@@ -6,17 +6,17 @@ public class Gun : MyComponent
     {
         base.Awake();
 
-        parent.Orders.AllowOrder(OrderType.Attack);
+        Parent.Orders.AllowOrder(OrderType.Attack);
 
-        parent.OrderHandlers[OrderType.Attack] = new OrderHandlerAttack();
-        parent.OrderHandlers[OrderType.Idle] = new OrderHandlerIdleAttacker();
+        Parent.OrderHandlers[OrderType.Attack] = new OrderHandlerAttack();
+        Parent.OrderHandlers[OrderType.Idle] = new OrderHandlerIdleAttacker();
     }
 
     protected override void Update()
     {
         base.Update();
 
-        if (parent.Working == false)
+        if (Parent.Working == false)
         {
             return;
         }

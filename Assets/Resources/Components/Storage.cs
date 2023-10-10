@@ -7,32 +7,32 @@ public class Storage : MyComponent
     {
         base.Awake();
 
-        parent.Orders.AllowOrder(OrderType.Load);
-        parent.Orders.AllowOrder(OrderType.Stock);
-        parent.Orders.AllowOrder(OrderType.Transport);
-        parent.Orders.AllowOrder(OrderType.Unload);
+        Parent.Orders.AllowOrder(OrderType.Load);
+        Parent.Orders.AllowOrder(OrderType.Stock);
+        Parent.Orders.AllowOrder(OrderType.Transport);
+        Parent.Orders.AllowOrder(OrderType.Unload);
 
-        parent.OrderHandlers[OrderType.Load] = new OrderHandlerLoad();
-        parent.OrderHandlers[OrderType.Stock] = new OrderHandlerStock();
-        parent.OrderHandlers[OrderType.Transport] = new OrderHandlerTransport();
-        parent.OrderHandlers[OrderType.Unload] = new OrderHandlerUnload();
+        Parent.OrderHandlers[OrderType.Load] = new OrderHandlerLoad();
+        Parent.OrderHandlers[OrderType.Stock] = new OrderHandlerStock();
+        Parent.OrderHandlers[OrderType.Transport] = new OrderHandlerTransport();
+        Parent.OrderHandlers[OrderType.Unload] = new OrderHandlerUnload();
 
-        parent.ShowEntrance = Resources.In;
-        parent.ShowExit = Resources.Out;
+        Parent.ShowEntrance = Resources.In;
+        Parent.ShowExit = Resources.Out;
     }
 
     protected override void Update()
     {
         base.Update();
 
-        switch (parent.State)
+        switch (Parent.State)
         {
             case MyGameObjectState.Operational:
-                CreateResourceFlags(parent);
+                CreateResourceFlags(Parent);
                 break;
 
             default:
-                RemoveResourceFlags(parent);
+                RemoveResourceFlags(Parent);
                 break;
         }
     }
