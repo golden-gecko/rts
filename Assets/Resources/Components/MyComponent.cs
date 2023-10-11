@@ -4,7 +4,7 @@ public class MyComponent : MonoBehaviour
 {
     protected virtual void Awake()
     {
-        parent = GetComponent<MyGameObject>();
+        Parent = GetComponent<MyGameObject>();
     }
 
     protected virtual void Start()
@@ -27,5 +27,5 @@ public class MyComponent : MonoBehaviour
     [field: SerializeField]
     public float Mass { get; set; } = 10.0f;
 
-    protected MyGameObject parent { get; private set; }
+    public MyGameObject Parent { get; private set; }
 }

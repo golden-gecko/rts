@@ -369,6 +369,7 @@ GameObject:
   - component: {fileID: -3752629039536107593}
   - component: {fileID: 7764472481935986510}
   - component: {fileID: 418980675449498400}
+  - component: {fileID: 2933446433100080002}
   m_Layer: 20
   m_Name: Factory_Light
   m_TagString: Untagged
@@ -471,3 +472,25 @@ MonoBehaviour:
       <Max>k__BackingField: 100
       <Name>k__BackingField: Iron
       <Direction>k__BackingField: 0
+--- !u!114 &2933446433100080002
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8035996494400900344}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 26ef1c7f6037537498318d7dd9d37db3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  <Mass>k__BackingField: 10
+  <PowerGeneration>k__BackingField:
+    <Value>k__BackingField: -1
+  <PowerUsage>k__BackingField:
+    <Value>k__BackingField: 10
+  <Range>k__BackingField:
+    <Value>k__BackingField: 0
+  <PowerUpTime>k__BackingField:
+    <Current>k__BackingField: 0
+    <Max>k__BackingField: 1

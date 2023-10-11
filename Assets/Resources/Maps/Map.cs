@@ -218,54 +218,6 @@ public class Map : MonoBehaviour
         powerTexture.Apply();
     }
 
-    public void SetVisibleByPowerRelay(MyGameObject myGameObject, Vector3 position, float range, int value)
-    {
-        Vector3Int start = Utils.ToGrid(new Vector3(position.x - range, 0.0f, position.z - range), Config.Map.VisibilityScale);
-        Vector3Int end = Utils.ToGrid(new Vector3(position.x + range, 0.0f, position.z + range), Config.Map.VisibilityScale);
-
-        Vector3Int center = Utils.ToGrid(position, Config.Map.VisibilityScale);
-        int radius = Mathf.FloorToInt(range / Config.Map.VisibilityScale);
-
-        Texture2D powerRelayTexture = PowerRelay.mainTexture as Texture2D;
-
-        for (int x = start.x; x < end.x; x++)
-        {
-            for (int z = start.z; z < end.z; z++)
-            {
-                if (x == center.x && z == center.z)
-                {
-                    continue;
-                }
-
-                if (Utils.IsPointInRect(x, z, Config.Map.VisibilitySize) == false)
-                {
-                    continue;
-                }
-
-                if (Utils.IsPointInCircle(x, z, center, radius) == false)
-                {
-                    continue;
-                }
-
-                SetVisible(Cells[x, z].VisibleByPowerRelay, myGameObject.Player, value);
-
-                if (HUD.Instance.ActivePlayer == myGameObject.Player)
-                {
-                    if (Cells[x, z].VisibleByPowerRelay[myGameObject.Player] > 0)
-                    {
-                        powerRelayTexture.SetPixel(x, z, Config.Map.DataLayerColorPowerRelay);
-                    }
-                    else
-                    {
-                        powerRelayTexture.SetPixel(x, z, Config.Map.DataLayerColorEmpty);
-                    }
-                }
-            }
-        }
-
-        powerRelayTexture.Apply();
-    }
-
     public bool IsExplored(MyGameObject myGameObject, Player active) // TODO: Why active player?
     {
         Vector3Int position = new Vector3Int(Mathf.FloorToInt(myGameObject.Position.x / Config.Map.VisibilityScale), 0, Mathf.FloorToInt(myGameObject.Position.z / Config.Map.VisibilityScale));
@@ -629,7 +581,6 @@ public class Map : MonoBehaviour
 
         ClearTexture(Exploration.mainTexture as Texture2D);
         ClearTexture(Power.mainTexture as Texture2D);
-        ClearTexture(PowerRelay.mainTexture as Texture2D);
         ClearTexture(Radar.mainTexture as Texture2D);
         ClearTexture(Sight.mainTexture as Texture2D);
         ClearTexture(Sight.mainTexture as Texture2D);
@@ -661,9 +612,6 @@ public class Map : MonoBehaviour
 
     [field: SerializeField]
     public Material Power { get; private set; }
-
-    [field: SerializeField]
-    public Material PowerRelay { get; private set; }
 
     [field: SerializeField]
     public Material Radar { get; private set; }

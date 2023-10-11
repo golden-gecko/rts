@@ -9,14 +9,14 @@ public class Constructor : MyComponent
     {
         base.Awake();
 
-        parent.Orders.AllowOrder(OrderType.Construct);
+        Parent.Orders.AllowOrder(OrderType.Construct);
 
         foreach (string prefab in Prefabs)
         {
-            parent.Orders.AllowPrefab(Path.Join(Config.Asset.Structures, prefab));
+            Parent.Orders.AllowPrefab(Path.Join(Config.Asset.Structures, prefab));
         }
 
-        parent.OrderHandlers[OrderType.Construct] = new OrderHandlerConstruct();
+        Parent.OrderHandlers[OrderType.Construct] = new OrderHandlerConstruct();
     }
 
     public override string GetInfo()

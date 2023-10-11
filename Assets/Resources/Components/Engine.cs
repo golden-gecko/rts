@@ -6,17 +6,17 @@ public class Engine : MyComponent
     {
         base.Awake();
 
-        parent.Orders.AllowOrder(OrderType.Explore);
-        parent.Orders.AllowOrder(OrderType.Follow);
-        parent.Orders.AllowOrder(OrderType.Guard);
-        parent.Orders.AllowOrder(OrderType.Move);
-        parent.Orders.AllowOrder(OrderType.Patrol);
+        Parent.Orders.AllowOrder(OrderType.Explore);
+        Parent.Orders.AllowOrder(OrderType.Follow);
+        Parent.Orders.AllowOrder(OrderType.Guard);
+        Parent.Orders.AllowOrder(OrderType.Move);
+        Parent.Orders.AllowOrder(OrderType.Patrol);
 
-        parent.OrderHandlers[OrderType.Explore] = new OrderHandlerExplore();
-        parent.OrderHandlers[OrderType.Follow] = new OrderHandlerFollow();
-        parent.OrderHandlers[OrderType.Guard] = new OrderHandlerGuard();
-        parent.OrderHandlers[OrderType.Move] = new OrderHandlerMove();
-        parent.OrderHandlers[OrderType.Patrol] = new OrderHandlerPatrol();
+        Parent.OrderHandlers[OrderType.Explore] = new OrderHandlerExplore();
+        Parent.OrderHandlers[OrderType.Follow] = new OrderHandlerFollow();
+        Parent.OrderHandlers[OrderType.Guard] = new OrderHandlerGuard();
+        Parent.OrderHandlers[OrderType.Move] = new OrderHandlerMove();
+        Parent.OrderHandlers[OrderType.Patrol] = new OrderHandlerPatrol();
     }
 
     public override string GetInfo()

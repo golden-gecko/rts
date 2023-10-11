@@ -8,14 +8,14 @@ public class Producer : MyComponent
     {
         base.Awake();
 
-        parent.Orders.AllowOrder(OrderType.Produce);
+        Parent.Orders.AllowOrder(OrderType.Produce);
 
-        parent.OrderHandlers[OrderType.Idle] = new OrderHandlerIdleProducer();
-        parent.OrderHandlers[OrderType.Produce] = new OrderHandlerProduce();
+        Parent.OrderHandlers[OrderType.Idle] = new OrderHandlerIdleProducer();
+        Parent.OrderHandlers[OrderType.Produce] = new OrderHandlerProduce();
 
         foreach (string recipe in Recipes)
         {
-            parent.Orders.AllowRecipe(RecipeManager.Instance.Get(recipe));
+            Parent.Orders.AllowRecipe(RecipeManager.Instance.Get(recipe));
         }
     }
 

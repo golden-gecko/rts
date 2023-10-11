@@ -6,13 +6,13 @@ public class Sight : MyComponent
     {
         base.Start();
 
-        previousState = parent.State;
-        previousEnabled = parent.Enabled;
-        previousPosition = parent.Position;
+        previousState = Parent.State;
+        previousEnabled = Parent.Enabled;
+        previousPosition = Parent.Position;
 
-        if (parent.State == MyGameObjectState.Operational && parent.Enabled)
+        if (Parent.State == MyGameObjectState.Operational && Parent.Enabled)
         {
-            PowerUp(parent.Position);
+            PowerUp(Parent.Position);
         }
     }
 
@@ -20,21 +20,21 @@ public class Sight : MyComponent
     {
         base.Update();
 
-        if (previousState != parent.State || previousEnabled != parent.Enabled || Utils.ToGrid(previousPosition, Config.Map.VisibilityScale) != Utils.ToGrid(parent.Position, Config.Map.VisibilityScale))
+        if (previousState != Parent.State || previousEnabled != Parent.Enabled || Utils.ToGrid(previousPosition, Config.Map.VisibilityScale) != Utils.ToGrid(Parent.Position, Config.Map.VisibilityScale))
         {
             if (previousState == MyGameObjectState.Operational && previousEnabled)
             {
                 PowerDown(previousPosition);
             }
 
-            if (parent.State == MyGameObjectState.Operational && parent.Enabled)
+            if (Parent.State == MyGameObjectState.Operational && Parent.Enabled)
             {
-                PowerUp(parent.Position);
+                PowerUp(Parent.Position);
             }
 
-            previousState = parent.State;
-            previousEnabled = parent.Enabled;
-            previousPosition = parent.Position;
+            previousState = Parent.State;
+            previousEnabled = Parent.Enabled;
+            previousPosition = Parent.Position;
         }
     }
 
@@ -60,12 +60,12 @@ public class Sight : MyComponent
 
     private void PowerUp(Vector3 position)
     {
-        Map.Instance.SetVisibleBySight(parent, position, Range.Total, 1);
+        Map.Instance.SetVisibleBySight(Parent, position, Range.Total, 1);
     }
 
     private void PowerDown(Vector3 position)
     {
-        Map.Instance.SetVisibleBySight(parent, position, Range.Total, -1);
+        Map.Instance.SetVisibleBySight(Parent, position, Range.Total, -1);
     }
 
     [field: SerializeField]
