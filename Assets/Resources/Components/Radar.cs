@@ -83,10 +83,10 @@ public class Radar : MyComponent
     }
 
     [field: SerializeField]
-    public Property Range { get; set; } = new Property();
+    public Property Range { get; private set; } = new Property();
 
     [field: SerializeField]
-    public bool Anti { get; set; } = false;
+    public bool Anti { get; private set; } = false;
 
     private MyGameObjectState previousState;
     private bool previousEnabled;

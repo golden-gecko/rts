@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using System.Linq;
-using UnityEditorInternal;
 using UnityEngine;
 
 public class MyGameObject : MonoBehaviour
@@ -23,12 +22,12 @@ public class MyGameObject : MonoBehaviour
             size.x = x * Config.Map.VisibilityScale;
             size.z = z * Config.Map.VisibilityScale;
 
-            Body.transform.localPosition = new Vector3(0.0f, 0.5f, 0.0f);
+            Body.transform.localPosition = new Vector3(0.0f, 0.25f, 0.0f);
 
             Base = Instantiate(Resources.Load<GameObject>("Base"), transform, false);
-            Base.transform.localScale = new Vector3(size.x, 1.0f, size.z);
+            Base.transform.localScale = new Vector3(size.x, 0.5f, size.z);
 
-            Indicators.transform.localPosition = new Vector3(0.0f, 0.5f, 0.0f);
+            Indicators.transform.localPosition = new Vector3(0.0f, 0.25f, 0.0f);
         }
 
         Orders.AllowOrder(OrderType.Destroy); // TODO: Move to component.
@@ -642,75 +641,31 @@ public class MyGameObject : MonoBehaviour
 
         if (Player == active || Map.Instance.IsVisibleBySight(this, active))
         {
-            foreach (Renderer renderer in Body.GetComponentsInChildren<Renderer>(true))
-            {
-                renderer.enabled = true;
-            }
-
-            if (Base != null)
-            {
-                foreach (Renderer renderer in Base.GetComponentsInChildren<Renderer>(true))
-                {
-                    renderer.enabled = true;
-                }
-            }
+            EnableRenderers(true);
 
             Indicators.GetComponent<Indicators>().OnShow();
 
             VisibilityState = MyGameObjectVisibilityState.Visible;
         }
+        else if (Map.Instance.IsExplored(this, active))
+        {
+            EnableRenderers(true);
+
+            Indicators.GetComponent<Indicators>().OnExploration();
+
+            VisibilityState = MyGameObjectVisibilityState.Explored;
+        }
         else if (Map.Instance.IsVisibleByRadar(this, active))
         {
-            foreach (Renderer renderer in Body.GetComponentsInChildren<Renderer>(true))
-            {
-                renderer.enabled = false;
-            }
-
-            if (Base != null)
-            {
-                foreach (Renderer renderer in Base.GetComponentsInChildren<Renderer>(true))
-                {
-                    renderer.enabled = false;
-                }
-            }
+            EnableRenderers(false);
 
             Indicators.GetComponent<Indicators>().OnRadar();
 
             VisibilityState = MyGameObjectVisibilityState.Radar;
         }
-        else if (Map.Instance.IsExplored(this, active))
-        {
-            foreach (Renderer renderer in Body.GetComponentsInChildren<Renderer>(true))
-            {
-                renderer.enabled = false;
-            }
-
-            if (Base != null)
-            {
-                foreach (Renderer renderer in Base.GetComponentsInChildren<Renderer>(true))
-                {
-                    renderer.enabled = false;
-                }
-            }
-
-            Indicators.GetComponent<Indicators>().OnHide();
-
-            VisibilityState = MyGameObjectVisibilityState.Explored;
-        }
         else
         {
-            foreach (Renderer renderer in Body.GetComponentsInChildren<Renderer>(true))
-            {
-                renderer.enabled = false;
-            }
-
-            if (Base != null)
-            {
-                foreach (Renderer renderer in Base.GetComponentsInChildren<Renderer>(true))
-                {
-                    renderer.enabled = false;
-                }
-            }
+            EnableRenderers(false);
 
             Indicators.GetComponent<Indicators>().OnHide();
 
@@ -718,25 +673,41 @@ public class MyGameObject : MonoBehaviour
         }
     }
 
+    private void EnableRenderers(bool enabled)
+    {
+        foreach (Renderer renderer in Body.GetComponentsInChildren<Renderer>(true))
+        {
+            renderer.enabled = enabled;
+        }
+
+        if (Base != null)
+        {
+            foreach (Renderer renderer in Base.GetComponentsInChildren<Renderer>(true))
+            {
+                renderer.enabled = enabled;
+            }
+        }
+    }
+
     public Vector3 Center
     {
         get
         {
-            Vector3 center = Vector3.zero;
-
             Collider[] colliders = GetComponentsInChildren<Collider>();
+
+            if (colliders.Length <= 0)
+            {
+                return Vector3.zero;
+            }
+
+            Vector3 center = Vector3.zero;
 
             foreach (Collider collider in colliders)
             {
                 center += collider.bounds.center;
             }
 
-            if (colliders.Length > 1)
-            {
-                center /= colliders.Length;
-            }
-
-            return center;
+            return center / colliders.Length;
         }
     }
 

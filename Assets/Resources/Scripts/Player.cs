@@ -193,7 +193,7 @@ public class Player : MonoBehaviour
         return closest;
     }
 
-    public MyResource GetResourceToGather(MyGameObject myGameObject, string resource = "", int value = 0)
+    public MyResource GetResourceToGather(MyGameObject myGameObject, string resource = "", int value = 0) // TODO: Implement.
     {
         MyResource closest = null;
         float distance = float.MaxValue;

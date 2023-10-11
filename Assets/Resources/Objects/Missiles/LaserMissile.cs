@@ -4,8 +4,8 @@ public class LaserMissile : Missile
     {
         base.Awake();
 
-        parent.Orders.AllowOrder(OrderType.Attack);
+        Orders.AllowOrder(OrderType.Attack);
 
-        parent.OrderHandlers[OrderType.Attack] = new OrderHandlerAttackLaser();
+        OrderHandlers[OrderType.Attack] = new OrderHandlerAttackLaser();
     }
 }

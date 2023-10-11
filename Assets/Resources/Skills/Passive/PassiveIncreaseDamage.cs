@@ -19,6 +19,11 @@ public class PassiveIncreaseDamage : Skill
 
         foreach (MyGameObject target in targets)
         {
+            if (target == null)
+            {
+                continue;
+            }
+
             foreach (Gun gun in target.GetComponents<Gun>())
             {
                 gun.Damage.Factor.Remove(myGameObject);

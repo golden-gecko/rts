@@ -25,8 +25,8 @@ public class Producer : MyComponent
     }
 
     [field: SerializeField]
-    public List<string> Recipes { get; set; } = new List<string>();
+    public List<string> Recipes { get; private set; } = new List<string>();
 
     [field: SerializeField]
-    public int ResourceUsage { get; set; } = 1; // Number of resources used per second.
+    public int ResourceUsage { get; private set; } = 1; // Number of resources used per second.
 }
