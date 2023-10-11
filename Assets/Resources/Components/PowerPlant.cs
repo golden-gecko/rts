@@ -47,14 +47,21 @@ public class PowerPlant : MyComponent
 
     public override string GetInfo()
     {
-        return string.Format("PowerPlant: {0}, Range: {1}", base.GetInfo(), Range);
+        string info = string.Format("PowerPlant: {0}\n  Range: {1}", base.GetInfo(), Range.Total);
+
+        if (IsConsumer)
+        {
+            info += string.Format("\n  Efficiency: {0:0.}%", Efficiency * 100.0f);
+        }
+
+        return info;
     }
 
     public override void OnDestroy_()
     {
         base.OnDestroy_();
 
-        Connections.Clear();
+        ClearConnections();
 
         if (previousState == MyGameObjectState.Operational && previousEnabled)
         {
@@ -67,9 +74,14 @@ public class PowerPlant : MyComponent
         Connections.Add(powerPlant);
     }
 
+    public void Disconnect(PowerPlant powerPlant)
+    {
+        Connections.Remove(powerPlant);
+    }
+
     private void MakeConnections()
     {
-        Connections.Clear();
+        ClearConnections();
 
         foreach (RaycastHit hitInfo in Utils.SphereCastAll(Parent.Position, Range.Total, Utils.GetGameObjectMask()))
         {
@@ -83,6 +95,16 @@ public class PowerPlant : MyComponent
         }
     }
 
+    private void ClearConnections()
+    {
+        foreach (PowerPlant powerPlant in Connections)
+        {
+            powerPlant.Disconnect(this);
+        }
+
+        Connections.Clear();
+    }
+
     private void PowerUp(Vector3 position)
     {
         Map.Instance.SetVisibleByPower(Parent, position, Range.Total, 1);
@@ -94,15 +116,16 @@ public class PowerPlant : MyComponent
     }
 
     [field: SerializeField]
-    public Property PowerGeneration { get; set; } = new Property(); // TODO: Implement.
+    public Property PowerGeneration { get; private set; } = new Property();
 
     [field: SerializeField]
-    public Property PowerUsage { get; set; } = new Property(); // TODO: Implement.
+    public Property PowerUsage { get; private set; } = new Property();
 
     [field: SerializeField]
-    public Property Range { get; set; } = new Property();
+    public Property Range { get; private set; } = new Property();
 
-    public bool IsRelay { get => PowerGeneration.Total <= 0.0f && PowerUsage.Total <= 0.0f; }
+    [field: SerializeField]
+    public Timer PowerUpTime { get; private set; } = new Timer(0.0f, 1.0f); // TODO: Implement.
 
     public bool IsProducer { get => PowerGeneration.Total > 0.0f; }
 
@@ -146,6 +169,90 @@ public class PowerPlant : MyComponent
             return false;
         }
     }
+
+    public float PowerGenerationNetworkTotal
+    {
+        get
+        {
+            float powerGenerationNetworkTotal = 0.0f;
+
+            HashSet<PowerPlant> queue = new HashSet<PowerPlant>(Connections);
+            HashSet<PowerPlant> visited = new HashSet<PowerPlant>();
+
+            while (queue.Count > 0)
+            {
+                PowerPlant powerPlant = queue.First();
+                queue.Remove(powerPlant);
+
+                if (visited.Contains(powerPlant))
+                {
+                    continue;
+                }
+
+                visited.Add(powerPlant);
+
+                if (powerPlant.Parent.State != MyGameObjectState.Operational || powerPlant.Parent.Enabled == false)
+                {
+                    continue;
+                }
+
+                if (powerPlant.IsProducer)
+                {
+                    powerGenerationNetworkTotal += powerPlant.PowerGeneration.Total;
+                }
+
+                foreach (PowerPlant i in powerPlant.Connections)
+                {
+                    queue.Add(i);
+                }
+            }
+
+            return powerGenerationNetworkTotal;
+        }
+    }
+
+    public float PowerUsageNetworkTotal
+    {
+        get
+        {
+            float powerUsageNetworkTotal = 0.0f;
+
+            HashSet<PowerPlant> queue = new HashSet<PowerPlant>(Connections);
+            HashSet<PowerPlant> visited = new HashSet<PowerPlant>();
+
+            while (queue.Count > 0)
+            {
+                PowerPlant powerPlant = queue.First();
+                queue.Remove(powerPlant);
+
+                if (visited.Contains(powerPlant))
+                {
+                    continue;
+                }
+
+                visited.Add(powerPlant);
+
+                if (powerPlant.Parent.State != MyGameObjectState.Operational || powerPlant.Parent.Enabled == false)
+                {
+                    continue;
+                }
+
+                if (powerPlant.IsConsumer)
+                {
+                    powerUsageNetworkTotal += powerPlant.PowerUsage.Total;
+                }
+
+                foreach (PowerPlant i in powerPlant.Connections)
+                {
+                    queue.Add(i);
+                }
+            }
+
+            return powerUsageNetworkTotal;
+        }
+    }
+
+    public float Efficiency { get => Math.Min(PowerGenerationNetworkTotal / PowerUsageNetworkTotal, 1.0f); }
 
     private HashSet<PowerPlant> Connections { get; } = new HashSet<PowerPlant>();
 

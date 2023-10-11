@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using UnityEditorInternal;
 using UnityEngine;
 
 public class MyGameObject : MonoBehaviour
@@ -71,7 +72,7 @@ public class MyGameObject : MonoBehaviour
                     OnDestroy_();
                 }
 
-                if (Working)
+                if (Operational)
                 {
                     ProcessOrders();
                 }
@@ -352,7 +353,7 @@ public class MyGameObject : MonoBehaviour
                     }
 
                     info += string.Format("\nPowered: {0}", Powered);
-                    info += string.Format("\nWorking: {0}", Working);
+                    info += string.Format("\nWorking: {0}", Operational);
                 }
                 break;
 
@@ -775,19 +776,13 @@ public class MyGameObject : MonoBehaviour
 
     public bool Alive { get => Health.Current > 0.0f && (ExpirationTimer.Active == false || ExpirationTimer.Finished == false); }
 
-    public float Mass
-    {
-        get
-        {
-            return GetComponents<MyComponent>().Sum(x => x.Mass);
-        }
-    }
+    public float Mass { get => GetComponents<MyComponent>().Sum(x => x.Mass); }
 
-    public bool Constructed { get => ConstructionResources.CurrentSum == ConstructionResources.MaxSum; }
+    public bool Constructed { get => ConstructionResources.CurrentSum >= ConstructionResources.MaxSum; }
 
     public bool Powered { get => Map.Instance.IsVisibleByPower(this); }
 
-    public bool Working { get => Enabled && (Powerable == false || Powered); }
+    public bool Operational { get => Enabled && State == MyGameObjectState.Operational && (Powerable == false || Powered); }
 
     [field: SerializeField]
     public Player Player { get; private set; }

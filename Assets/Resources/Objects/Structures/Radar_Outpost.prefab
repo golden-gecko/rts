@@ -118,6 +118,7 @@ GameObject:
   - component: {fileID: 6136798559353269400}
   - component: {fileID: 9033325699283123535}
   - component: {fileID: 5196037313112179487}
+  - component: {fileID: 6594992851572917325}
   m_Layer: 20
   m_Name: Radar_Outpost
   m_TagString: Untagged
@@ -208,6 +209,28 @@ MonoBehaviour:
   <Mass>k__BackingField: 10
   <Range>k__BackingField:
     <Value>k__BackingField: 10
+--- !u!114 &6594992851572917325
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5838947687989452244}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 26ef1c7f6037537498318d7dd9d37db3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  <Mass>k__BackingField: 10
+  <PowerGeneration>k__BackingField:
+    <Value>k__BackingField: -1
+  <PowerUsage>k__BackingField:
+    <Value>k__BackingField: 10
+  <Range>k__BackingField:
+    <Value>k__BackingField: -1
+  <PowerUpTime>k__BackingField:
+    <Current>k__BackingField: 0
+    <Max>k__BackingField: 1
 --- !u!1 &5866001181412925978
 GameObject:
   m_ObjectHideFlags: 0

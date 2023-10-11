@@ -117,6 +117,7 @@ GameObject:
   - component: {fileID: -4655764025613243680}
   - component: {fileID: 4576625105702019730}
   - component: {fileID: -3540461504229549173}
+  - component: {fileID: -2405146836434808691}
   m_Layer: 20
   m_Name: Research_Lab
   m_TagString: Untagged
@@ -223,3 +224,25 @@ MonoBehaviour:
       <Max>k__BackingField: 100
       <Name>k__BackingField: Crystal
       <Direction>k__BackingField: 0
+--- !u!114 &-2405146836434808691
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6093475309484964639}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 26ef1c7f6037537498318d7dd9d37db3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  <Mass>k__BackingField: 10
+  <PowerGeneration>k__BackingField:
+    <Value>k__BackingField: -1
+  <PowerUsage>k__BackingField:
+    <Value>k__BackingField: 10
+  <Range>k__BackingField:
+    <Value>k__BackingField: 0
+  <PowerUpTime>k__BackingField:
+    <Current>k__BackingField: 0
+    <Max>k__BackingField: 1

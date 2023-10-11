@@ -16,7 +16,7 @@ public class Gun : MyComponent
     {
         base.Update();
 
-        if (Parent.Working == false)
+        if (Parent.Operational == false)
         {
             return;
         }
