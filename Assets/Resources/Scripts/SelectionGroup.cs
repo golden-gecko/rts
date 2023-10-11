@@ -179,6 +179,7 @@ public class SelectionGroup
 
     public void Move(Vector3 position, bool append = false)
     {
+        /*
         foreach (MyGameObject selected in Items)
         {
             if (append == false)
@@ -188,6 +189,9 @@ public class SelectionGroup
 
             selected.Move(position);
         }
+        */
+
+        int unitsCount = Items.Where(x => x.TryGetComponent(out Engine _)).Count();
     }
 
     public void Patrol(Vector3 position, bool append = false)
