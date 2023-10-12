@@ -5,6 +5,14 @@ public enum DiplomacyState
     Neutral = 2,
 }
 
+public enum Formation
+{
+    None = 0,
+    Column = 1,
+    Line = 2,
+    Square = 3,
+}
+
 /*
  * Supported combinations:
  * - Air (missiles),

@@ -389,20 +389,12 @@ public class HUD : MonoBehaviour
 
     private void IssueOrderDefault(Vector3 position)
     {
-        foreach (MyGameObject selected in ActivePlayer.Selection.Items)
-        {
-            if (MyInput.GetShift() == false)
-            {
-                selected.ClearOrders();
-            }
-
-            selected.Move(position);
-        }
+        ActivePlayer.Selection.Move(position);
     }
 
     private void IssueOrderDefault(MyGameObject myGameObject)
     {
-        foreach (MyGameObject selected in ActivePlayer.Selection.Items)
+        foreach (MyGameObject selected in ActivePlayer.Selection.Items) // TODO: Fix. Call method from selection group.
         {
             if (MyInput.GetShift() == false)
             {
