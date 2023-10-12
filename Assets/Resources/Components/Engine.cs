@@ -11,12 +11,14 @@ public class Engine : MyComponent
         Parent.Orders.AllowOrder(OrderType.Guard);
         Parent.Orders.AllowOrder(OrderType.Move);
         Parent.Orders.AllowOrder(OrderType.Patrol);
+        Parent.Orders.AllowOrder(OrderType.Turn);
 
         Parent.OrderHandlers[OrderType.Explore] = new OrderHandlerExplore();
         Parent.OrderHandlers[OrderType.Follow] = new OrderHandlerFollow();
         Parent.OrderHandlers[OrderType.Guard] = new OrderHandlerGuard();
         Parent.OrderHandlers[OrderType.Move] = new OrderHandlerMove();
         Parent.OrderHandlers[OrderType.Patrol] = new OrderHandlerPatrol();
+        Parent.OrderHandlers[OrderType.Turn] = new OrderHandlerTurn();
     }
 
     public override string GetInfo()

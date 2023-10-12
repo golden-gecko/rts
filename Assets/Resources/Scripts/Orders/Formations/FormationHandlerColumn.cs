@@ -10,22 +10,12 @@ public class FormationHandlerColumn : FormationHandler
             return;
         }
 
-        Vector3 start = Vector3.zero;
-
-        foreach (MyGameObject selected in selectionGroup.Items)
-        {
-            start += selected.Position;
-        }
-
-        start /= selectionGroup.Items.Count;
-
+        Vector3 start = selectionGroup.First().Position;
         Vector3 direction = (new Vector3(position.x, 0.0f, position.z) - new Vector3(start.x, 0.0f, start.z)).normalized;
         Vector3 cross = Vector3.Cross(Vector3.up, direction).normalized;
 
         int unitsCount = selectionGroup.Items.Where(x => x.TryGetComponent(out Engine _)).Count();
-        int size = Mathf.CeilToInt(Mathf.Sqrt(unitsCount));
 
-        float spacing = 5.0f;
         float row = 0.0f;
 
         foreach (MyGameObject selected in selectionGroup.Items)
@@ -35,11 +25,15 @@ public class FormationHandlerColumn : FormationHandler
                 selected.ClearOrders();
             }
 
-            Vector3 positionInFormation = new Vector3(-direction.x * row, 0.0f, -direction.z * row);
+            Vector3 positionInFormation = new Vector3(row, 0.0f, 0.0f);
+
+            float angle = Utils.Angle(cross);
+
+            positionInFormation = Quaternion.Euler(0.0f, angle, 0.0f) * positionInFormation;
 
             selected.Move(position + positionInFormation);
 
-            row += spacing;
+            row += Config.Formation.Spacing;
         }
     }
 }

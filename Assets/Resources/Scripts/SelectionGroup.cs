@@ -233,6 +233,10 @@ public class SelectionGroup
                 new FormationHandlerSquare().Execute(this, position, append);
                 break;
 
+            case Formation.Wedge:
+                new FormationHandlerWedge().Execute(this, position, append);
+                break;
+
             default:
                 new FormationHandlerNone().Execute(this, position, append);
                 break;

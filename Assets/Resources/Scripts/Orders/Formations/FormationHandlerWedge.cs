@@ -1,7 +1,7 @@
 using System.Linq;
 using UnityEngine;
 
-public class FormationHandlerLine : FormationHandler
+public class FormationHandlerWedge : FormationHandler
 {
     public override void Execute(SelectionGroup selectionGroup, Vector3 position, bool append = false)
     {
@@ -17,7 +17,9 @@ public class FormationHandlerLine : FormationHandler
         int unitsCount = selectionGroup.Items.Where(x => x.TryGetComponent(out Engine _)).Count();
 
         float column = 0.0f;
-        float columnOffset = (unitsCount % 2 == 0) ? (unitsCount / 2.0f * Config.Formation.Spacing - Config.Formation.Spacing / 2.0f) : ((unitsCount - 1) / 2.0f * Config.Formation.Spacing);
+        float columnMax = Config.Formation.Spacing;
+        float columnOffset = 0.0f;
+        float row = 0.0f;
 
         foreach (MyGameObject selected in selectionGroup.Items)
         {
@@ -26,7 +28,7 @@ public class FormationHandlerLine : FormationHandler
                 selected.ClearOrders();
             }
 
-            Vector3 positionInFormation = new Vector3(0.0f, 0.0f, column - columnOffset);
+            Vector3 positionInFormation = new Vector3(row, 0.0f, column - columnOffset);
 
             float angle = Utils.Angle(cross);
 
@@ -35,6 +37,14 @@ public class FormationHandlerLine : FormationHandler
             selected.Move(position + positionInFormation);
 
             column += Config.Formation.Spacing;
+
+            if (column >= columnMax) // TODO: Is it correct (floating errors)?
+            {
+                column = 0.0f;
+                columnMax += Config.Formation.Spacing * 2.0f;
+                columnOffset += Config.Formation.Spacing;
+                row += Config.Formation.Spacing;
+            }
         }
     }
 }

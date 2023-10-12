@@ -11,6 +11,7 @@ public enum Formation
     Column = 1,
     Line = 2,
     Square = 3,
+    Wedge = 4,
 }
 
 /*
@@ -76,6 +77,7 @@ public enum OrderType
     Unload = 21,
     UseSkill = 22,
     Wait = 23,
+    Turn = 23,
 }
 
 public enum ResourceDirection
