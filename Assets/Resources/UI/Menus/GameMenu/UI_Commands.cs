@@ -14,6 +14,7 @@ public class UI_Commands : MonoBehaviour
 
         panel = rootVisualElement.Q<VisualElement>("Panel_Commands");
 
+        formations = panel.Q<VisualElement>("List_Formations");
         orders = panel.Q<VisualElement>("List_Orders");
         prefabs = panel.Q<VisualElement>("List_Prefabs");
         recipes = panel.Q<VisualElement>("List_Recipes");
@@ -23,6 +24,7 @@ public class UI_Commands : MonoBehaviour
 
     void Start()
     {
+        CreateFormations();
         CreateOrders();
         CreatePrefabs();
         CreateRecipes();
@@ -63,6 +65,25 @@ public class UI_Commands : MonoBehaviour
         else
         {
             panel.style.display = DisplayStyle.None;
+        }
+    }
+
+    private void CreateFormations()
+    {
+        formations.Clear();
+
+        foreach (string i in Enum.GetNames(typeof(Formation)))
+        {
+            TemplateContainer buttonContainer = templateButton.Instantiate();
+            Button button = buttonContainer.Q<Button>();
+
+            button.RegisterCallback<ClickEvent>(ev => OnFormation(Enum.Parse<Formation>(i)));
+            button.style.display = DisplayStyle.Flex;
+            button.text = Utils.FormatName(i);
+            button.userData = Enum.Parse<Formation>(i);
+
+            formations.Add(buttonContainer);
+            formationsButtons[Enum.Parse<Formation>(i)] = button;
         }
     }
 
@@ -433,6 +454,11 @@ public class UI_Commands : MonoBehaviour
         HUD.Instance.Prefab = prefab;
     }
 
+    private void OnFormation(Formation formation)
+    {
+        HUD.Instance.Formation = formation;
+    }
+
     private void OnOrder(OrderType orderType)
     {
         Player activePlayer = HUD.Instance.ActivePlayer;
@@ -489,12 +515,14 @@ public class UI_Commands : MonoBehaviour
 
     private VisualElement panel;
 
+    private VisualElement formations;
     private VisualElement orders;
     private VisualElement prefabs;
     private VisualElement recipes;
     private VisualElement skills;
     private VisualElement technologies;
 
+    private Dictionary<Formation, Button> formationsButtons = new Dictionary<Formation, Button>();
     private Dictionary<OrderType, Button> ordersButtons = new Dictionary<OrderType, Button>();
     private Dictionary<string, Button> prefabsButtons = new Dictionary<string, Button>();
     private Dictionary<string, Button> recipesButtons = new Dictionary<string, Button>();

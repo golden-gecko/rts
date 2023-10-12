@@ -68,6 +68,13 @@
                 <ui:Instance template="Button" name="Button" />
             </ui:VisualElement>
         </ui:VisualElement>
+        <ui:VisualElement name="Container" style="flex-grow: 1; flex-direction: row;">
+            <ui:Label tabindex="-1" text="Formation" display-tooltip-when-elided="true" style="width: 20%;" />
+            <ui:VisualElement name="List_Formations" style="flex-grow: 1; flex-direction: row; align-items: flex-start; align-self: center;">
+                <ui:Instance template="Button" name="Button" />
+                <ui:Instance template="Button" name="Button" />
+            </ui:VisualElement>
+        </ui:VisualElement>
     </ui:VisualElement>
     <ui:VisualElement name="Panel_Minimap" class="panel-background" style="flex-grow: 1; right: 0; bottom: 0; top: 75%; left: 80%; position: absolute; flex-direction: column;">
         <ui:VisualElement name="Image" style="background-image: resource(&apos;Maps/Minimap&apos;); top: 0; left: 0; right: 100%; bottom: 100%; flex-grow: 1;" />
