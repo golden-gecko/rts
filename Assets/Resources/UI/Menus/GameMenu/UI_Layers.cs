@@ -30,7 +30,10 @@ public class UI_Layers : UI_Element<UI_Layers>
 
     private void OnToggleRange(ChangeEvent<bool> evt)
     {
-        // TODO: Implement.
+        foreach (MyGameObject myGameObject in HUD.Instance.ActivePlayer.Selection.Items)
+        {
+            myGameObject.Indicators.OnToggleRange(evt.newValue);
+        }
     }
 
     private void OnToggleExploration(ChangeEvent<bool> evt)

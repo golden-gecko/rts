@@ -72,7 +72,7 @@ public class MyGameObject : MonoBehaviour
                     OnDestroy_();
                 }
 
-                if (Operational)
+                if (Working) // TODO: OK?
                 {
                     ProcessOrders();
                 }
@@ -358,7 +358,7 @@ public class MyGameObject : MonoBehaviour
                     }
 
                     info += string.Format("\nPowered: {0}", Powered);
-                    info += string.Format("\nWorking: {0}", Operational);
+                    info += string.Format("\nWorking: {0}", Working);
                 }
                 break;
 
@@ -759,7 +759,7 @@ public class MyGameObject : MonoBehaviour
 
     public bool Powered { get => Map.Instance.IsVisibleByPower(this); }
 
-    public bool Operational { get => Enabled && State == MyGameObjectState.Operational && (Powerable == false || Powered); }
+    public bool Working { get => Enabled && State == MyGameObjectState.Operational && (Powerable == false || Powered); }
 
     [field: SerializeField]
     public Player Player { get; private set; }
