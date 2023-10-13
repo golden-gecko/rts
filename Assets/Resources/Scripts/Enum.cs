@@ -5,6 +5,15 @@ public enum DiplomacyState
     Neutral = 2,
 }
 
+public enum Formation
+{
+    None = 0,
+    Column = 1,
+    Line = 2,
+    Square = 3,
+    Wedge = 4,
+}
+
 /*
  * Supported combinations:
  * - Air (missiles),
@@ -68,6 +77,7 @@ public enum OrderType
     Unload = 21,
     UseSkill = 22,
     Wait = 23,
+    Turn = 23,
 }
 
 public enum ResourceDirection

@@ -4,6 +4,15 @@ using UnityEngine;
 
 public class SelectionGroup
 {
+    public SelectionGroup()
+    {
+        FormationHandlers[Formation.None] = new FormationHandlerNone();
+        FormationHandlers[Formation.Column] = new FormationHandlerColumn();
+        FormationHandlers[Formation.Line] = new FormationHandlerLine();
+        FormationHandlers[Formation.Square] = new FormationHandlerSquare();
+        FormationHandlers[Formation.Wedge] = new FormationHandlerWedge();
+    }
+
     public void Add(MyGameObject myGameObject)
     {
         myGameObject.Select(true);
@@ -69,6 +78,19 @@ public class SelectionGroup
             }
 
             selected.Attack(position);
+        }
+    }
+
+    public void Attack(MyGameObject myGameObject, bool append = false)
+    {
+        foreach (MyGameObject selected in Items)
+        {
+            if (append == false)
+            {
+                selected.ClearOrders();
+            }
+
+            selected.Attack(myGameObject);
         }
     }
 
@@ -151,6 +173,19 @@ public class SelectionGroup
         }
     }
 
+    public void Follow(MyGameObject myGameObject, bool append = false)
+    {
+        foreach (MyGameObject selected in Items)
+        {
+            if (append == false)
+            {
+                selected.ClearOrders();
+            }
+
+            selected.Follow(myGameObject);
+        }
+    }
+
     public void Gather(bool append = false)
     {
         foreach (MyGameObject selected in Items)
@@ -177,7 +212,7 @@ public class SelectionGroup
         }
     }
 
-    public void Move(Vector3 position, bool append = false)
+    public void Guard(MyGameObject myGameObject, bool append = false)
     {
         foreach (MyGameObject selected in Items)
         {
@@ -186,7 +221,15 @@ public class SelectionGroup
                 selected.ClearOrders();
             }
 
-            selected.Move(position);
+            selected.Guard(myGameObject);
+        }
+    }
+
+    public void Move(Vector3 position, Formation formation = Formation.None, bool append = false)
+    {
+        if (FormationHandlers.TryGetValue(formation, out FormationHandler handler))
+        {
+            handler.Execute(this, position, append);
         }
     }
 
@@ -284,4 +327,6 @@ public class SelectionGroup
     public int Count { get => Items.Count; }
 
     public HashSet<MyGameObject> Items { get; set; } = new HashSet<MyGameObject>();
+
+    private Dictionary<Formation, FormationHandler> FormationHandlers { get; } = new Dictionary<Formation, FormationHandler>();
 }

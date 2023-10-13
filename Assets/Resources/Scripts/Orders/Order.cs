@@ -225,6 +225,15 @@ public class Order
         };
     }
 
+    public static Order Turn(Vector3 position)
+    {
+        return new Order
+        {
+            Type = OrderType.Turn,
+            TargetPosition = position,
+        };
+    }
+
     public static Order Unload(MyGameObject myGameObject, string resource, int value)
     {
         return new Order

@@ -50,6 +50,13 @@ public class Utils
     #endregion
 
     #region Math
+    public static float Angle(Vector3 value)
+    {
+        float angle = Vector3.Angle(value, Vector3.forward);
+
+        return (Vector3.Angle(Vector3.right, value) > 90.0f) ? 360.0f - angle : angle;
+    }
+
     public static bool IsCloseTo(Vector3 source, Vector3 target)
     {
         return IsInRange(source, target, 0.0f, 1.0f);

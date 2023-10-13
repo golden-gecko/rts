@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.UIElements;
 
 public class HUD : MonoBehaviour
 {
@@ -237,30 +238,6 @@ public class HUD : MonoBehaviour
         }
     }
 
-    private MyGameObject GetGameObjectUnderMouse()
-    {
-        RaycastHit hitInfo;
-
-        if (Utils.RaycastFromMouse(out hitInfo, Utils.GetGameObjectMask()) == false)
-        {
-            return null;
-        }
-
-        MyGameObject myGameObject = hitInfo.transform.GetComponentInParent<MyGameObject>();
-
-        if (myGameObject == null)
-        {
-            return null;
-        }
-
-        if (myGameObject.VisibilityState == MyGameObjectVisibilityState.Hidden)
-        {
-            return null;
-        }
-
-        return myGameObject;
-    }
-
     private void SelectUnitInBox()
     {
         if (MyInput.GetShift() == false)
@@ -290,7 +267,7 @@ public class HUD : MonoBehaviour
                 break;
 
             case OrderType.Move:
-                ActivePlayer.Selection.Move(position, MyInput.GetShift());
+                ActivePlayer.Selection.Move(position, Formation, MyInput.GetShift());
                 break;
 
             case OrderType.Patrol:
@@ -305,37 +282,29 @@ public class HUD : MonoBehaviour
 
     private void IssueOrder(MyGameObject myGameObject)
     {
-        foreach (MyGameObject selected in ActivePlayer.Selection.Items)
+        switch (Order)
         {
-            if (MyInput.GetShift() == false)
-            {
-                selected.ClearOrders();
-            }
+            // TODO: Implement assemble order.
 
-            switch (Order)
-            {
-                // case OrderType.Assemble: // TODO: Implement.
+            case OrderType.Attack:
+                ActivePlayer.Selection.Attack(myGameObject, MyInput.GetShift());
+                break;
 
-                case OrderType.Attack:
-                    selected.Attack(myGameObject);
-                    break;
+            case OrderType.Construct:
+                ActivePlayer.Selection.Construct(myGameObject, MyInput.GetShift());
+                break;
 
-                case OrderType.Construct:
-                    selected.Construct(myGameObject);
-                    break;
+            case OrderType.Gather:
+                ActivePlayer.Selection.Gather(MyInput.GetShift());
+                break;
 
-                case OrderType.Gather:
-                    selected.Gather(myGameObject);
-                    break;
+            case OrderType.Guard:
+                ActivePlayer.Selection.Guard(myGameObject, MyInput.GetShift());
+                break;
 
-                case OrderType.Guard:
-                    selected.Guard(myGameObject);
-                    break;
-
-                case OrderType.Follow:
-                    selected.Follow(myGameObject);
-                    break;
-            }
+            case OrderType.Follow:
+                ActivePlayer.Selection.Follow(myGameObject, MyInput.GetShift());
+                break;
         }
     }
 
@@ -389,20 +358,12 @@ public class HUD : MonoBehaviour
 
     private void IssueOrderDefault(Vector3 position)
     {
-        foreach (MyGameObject selected in ActivePlayer.Selection.Items)
-        {
-            if (MyInput.GetShift() == false)
-            {
-                selected.ClearOrders();
-            }
-
-            selected.Move(position);
-        }
+        ActivePlayer.Selection.Move(position, Formation, MyInput.GetShift());
     }
 
     private void IssueOrderDefault(MyGameObject myGameObject)
     {
-        foreach (MyGameObject selected in ActivePlayer.Selection.Items)
+        foreach (MyGameObject selected in ActivePlayer.Selection.Items) // TODO: Fix. Call method from selection group.
         {
             if (MyInput.GetShift() == false)
             {
@@ -481,6 +442,12 @@ public class HUD : MonoBehaviour
         }
     }
 
+    [field: SerializeField]
+    public Player ActivePlayer { get; private set; }
+
+    [field: SerializeField]
+    public RectTransform BoxVisual { get; private set; }
+
     public OrderType Order
     {
         get
@@ -519,17 +486,34 @@ public class HUD : MonoBehaviour
         }
     }
 
-    [field: SerializeField]
-    public Player ActivePlayer { get; private set; }
-
-    [field: SerializeField]
-    public RectTransform BoxVisual { get; private set; }
-
     public MyGameObject Hovered { get; private set; }
+
+    public Formation Formation
+    {
+        get
+        {
+            return formation;
+        }
+
+        set
+        {
+            formation = value;
+
+            if (formation != Formation.None)
+            {
+                if (ActivePlayer.Selection.Items.Count > 0)
+                {
+                    ActivePlayer.Selection.Move(ActivePlayer.Selection.First().Position, Formation, MyInput.GetShift());
+                }
+            }
+        }
+    }
 
     private OrderType order = OrderType.None;
 
     private string prefab = string.Empty;
+
+    private Formation formation = Formation.None;
 
     private Rect selectionBox;
 
