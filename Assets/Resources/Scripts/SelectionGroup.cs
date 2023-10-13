@@ -1,10 +1,18 @@
 using System.Collections.Generic;
 using System.Linq;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class SelectionGroup
 {
+    public SelectionGroup()
+    {
+        FormationHandlers[Formation.None] = new FormationHandlerNone();
+        FormationHandlers[Formation.Column] = new FormationHandlerColumn();
+        FormationHandlers[Formation.Line] = new FormationHandlerLine();
+        FormationHandlers[Formation.Square] = new FormationHandlerSquare();
+        FormationHandlers[Formation.Wedge] = new FormationHandlerWedge();
+    }
+
     public void Add(MyGameObject myGameObject)
     {
         myGameObject.Select(true);
@@ -219,27 +227,9 @@ public class SelectionGroup
 
     public void Move(Vector3 position, Formation formation = Formation.None, bool append = false)
     {
-        switch (formation) // TODO: Create a manager for those handlers.
+        if (FormationHandlers.TryGetValue(formation, out FormationHandler handler))
         {
-            case Formation.Column:
-                new FormationHandlerColumn().Execute(this, position, append);
-                break;
-
-            case Formation.Line:
-                new FormationHandlerLine().Execute(this, position, append);
-                break;
-
-            case Formation.Square:
-                new FormationHandlerSquare().Execute(this, position, append);
-                break;
-
-            case Formation.Wedge:
-                new FormationHandlerWedge().Execute(this, position, append);
-                break;
-
-            default:
-                new FormationHandlerNone().Execute(this, position, append);
-                break;
+            handler.Execute(this, position, append);
         }
     }
 
@@ -337,4 +327,6 @@ public class SelectionGroup
     public int Count { get => Items.Count; }
 
     public HashSet<MyGameObject> Items { get; set; } = new HashSet<MyGameObject>();
+
+    private Dictionary<Formation, FormationHandler> FormationHandlers { get; } = new Dictionary<Formation, FormationHandler>();
 }
