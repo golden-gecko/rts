@@ -2,14 +2,13 @@ using System;
 using UnityEngine;
 using UnityEngine.UIElements;
 
-public class UI_Resources : MonoBehaviour
+public class UI_Resources : UI_Element<UI_Resources>
 {
-    void Awake()
+    protected override void Awake()
     {
-        UIDocument uiDocument = GetComponent<UIDocument>();
-        VisualElement rootVisualElement = uiDocument.rootVisualElement;
+        base.Awake();
 
-        panel = rootVisualElement.Q<VisualElement>("Panel_Resources");
+        panel = root.Q<VisualElement>("Panel_Resources");
         value = panel.Q<Label>("Value");
     }
 

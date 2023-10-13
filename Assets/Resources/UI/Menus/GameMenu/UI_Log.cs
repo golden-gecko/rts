@@ -1,25 +1,12 @@
-using UnityEngine;
 using UnityEngine.UIElements;
 
-public class UI_Log : MonoBehaviour
+public class UI_Log : UI_Element<UI_Log>
 {
-    public static UI_Log Instance { get; private set; } // TODO: Remove singleton from this class.
-
-    void Awake()
+    protected override void Awake()
     {
-        if (Instance != null && Instance != this)
-        {
-            Destroy(this);
-        }
-        else
-        {
-            Instance = this;
-        }
+        base.Awake();
 
-        UIDocument uiDocument = GetComponent<UIDocument>();
-        VisualElement rootVisualElement = uiDocument.rootVisualElement;
-
-        panel = rootVisualElement.Q<VisualElement>("Panel_Log");
+        panel = root.Q<VisualElement>("Panel_Log");
         value = panel.Q<Label>("Value");
 
         Log("");

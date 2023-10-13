@@ -1,14 +1,12 @@
-using UnityEngine;
 using UnityEngine.UIElements;
 
-public class UI_Orders : MonoBehaviour
+public class UI_Orders : UI_Element<UI_Orders>
 {
-    void Awake()
+    protected override void Awake()
     {
-        UIDocument uiDocument = GetComponent<UIDocument>();
-        VisualElement rootVisualElement = uiDocument.rootVisualElement;
+        base.Awake();
 
-        panel = rootVisualElement.Q<VisualElement>("Panel_Orders");
+        panel = root.Q<VisualElement>("Panel_Orders");
         value = panel.Q<Label>("Value");
     }
 

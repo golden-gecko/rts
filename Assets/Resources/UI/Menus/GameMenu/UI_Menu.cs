@@ -1,25 +1,12 @@
-using UnityEngine;
 using UnityEngine.UIElements;
 
-public class UI_Menu : MonoBehaviour
+public class UI_Menu : UI_Element<UI_Menu>
 {
-    public static UI_Menu Instance { get; private set; } // TODO: Remove singleton from this class.
-
-    void Awake()
+    protected override void Awake()
     {
-        if (Instance != null && Instance != this)
-        {
-            Destroy(this);
-        }
-        else
-        {
-            Instance = this;
-        }
+        base.Awake();
 
-        UIDocument uiDocument = GetComponent<UIDocument>();
-        VisualElement rootVisualElement = uiDocument.rootVisualElement;
-
-        panel = rootVisualElement.Q<VisualElement>("Panel_Menu");
+        panel = root.Q<VisualElement>("Panel_Menu");
 
         buttonMenu = panel.Q<Button>("Menu");
         buttonMenu.RegisterCallback<ClickEvent>(ev => OnMenu());

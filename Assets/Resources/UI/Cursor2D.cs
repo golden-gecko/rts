@@ -1,20 +1,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Cursor2D : MonoBehaviour
+public class Cursor2D : Singleton<Cursor2D>
 {
-    public static Cursor2D Instance { get; private set; }
-
-    void Awake()
+    protected override void Awake()
     {
-        if (Instance != null && Instance != this)
-        {
-            Destroy(this);
-        }
-        else
-        {
-            Instance = this;
-        }
+        base.Awake();
 
         cursors[OrderType.Assemble] = CursorAssemble;
         cursors[OrderType.Attack] = CursorAttack;

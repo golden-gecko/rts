@@ -1,10 +1,12 @@
 using UnityEngine;
 using UnityEngine.UIElements;
 
-public class Menu : MonoBehaviour
+public class UI_Element<T> : Singleton<T> where T : Component
 {
-    protected virtual void Awake()
+    protected override void Awake()
     {
+        base.Awake();
+
         document = GetComponent<UIDocument>();
         root = document.rootVisualElement;
     }

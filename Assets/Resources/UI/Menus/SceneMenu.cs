@@ -3,21 +3,10 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UIElements;
 
-public class SceneMenu : Menu
+public class SceneMenu : UI_Element<SceneMenu>
 {
-    public static SceneMenu Instance { get; private set; }
-
     protected override void Awake()
     {
-        if (Instance != null && Instance != this)
-        {
-            Destroy(this);
-        }
-        else
-        {
-            Instance = this;
-        }
-        
         base.Awake();
 
         menu = root.Q<VisualElement>("Menu");

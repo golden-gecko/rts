@@ -1,23 +1,8 @@
 using UnityEngine;
 using UnityEngine.EventSystems;
-using UnityEngine.UIElements;
 
-public class HUD : MonoBehaviour
+public class HUD : Singleton<HUD>
 {
-    public static HUD Instance { get; private set; }
-
-    void Awake()
-    {
-        if (Instance != null && Instance != this)
-        {
-            Destroy(this);
-        }
-        else
-        {
-            Instance = this;
-        }
-    }
-
     void Start()
     {
         DragReset();

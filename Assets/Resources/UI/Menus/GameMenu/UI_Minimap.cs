@@ -1,14 +1,13 @@
 using UnityEngine;
 using UnityEngine.UIElements;
 
-public class UI_Minimap : MonoBehaviour
+public class UI_Minimap : UI_Element<UI_Minimap>
 {
-    void Awake()
+    protected override void Awake()
     {
-        UIDocument uiDocument = GetComponent<UIDocument>();
-        VisualElement rootVisualElement = uiDocument.rootVisualElement;
+        base.Awake();
 
-        panel = rootVisualElement.Q<VisualElement>("Panel_Minimap");
+        panel = root.Q<VisualElement>("Panel_Minimap");
 
         centerOnMainCamera = panel.Q<Button>("CenterOnMainCamera");
         centerOnMainCamera.RegisterCallback<ClickEvent>(ev => OnCenterOnMainCamera());

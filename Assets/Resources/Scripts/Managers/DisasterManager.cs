@@ -1,20 +1,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DisasterManager : MonoBehaviour
+public class DisasterManager : Singleton<DisasterManager>
 {
-    public static DisasterManager Instance { get; private set; }
-
-    void Awake()
+    protected override void Awake()
     {
-        if (Instance != null && Instance != this)
-        {
-            Destroy(this);
-        }
-        else
-        {
-            Instance = this;
-        }
+        base.Awake();
 
         CreateTimers();
     }

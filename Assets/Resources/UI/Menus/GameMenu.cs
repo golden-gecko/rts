@@ -1,18 +1,26 @@
-public class GameMenu : Menu
+public class GameMenu : UI_Element<GameMenu>
 {
-    public static GameMenu Instance { get; private set; }
-
     protected override void Awake()
     {
-        if (Instance != null && Instance != this)
-        {
-            Destroy(this);
-        }
-        else
-        {
-            Instance = this;
-        }
-
         base.Awake();
+
+        // button = GameMenu.Instance.GetComponent<UIDocument>().rootVisualElement.Q<VisualElement>("Panel_Indicators").Q<Button>("Button");
     }
+
+    /*
+    void Update()
+    {
+        if (HUD.Instance.ActivePlayer.Selection.Items.Count > 0)
+        {
+            var position = Camera.main.WorldToScreenPoint(HUD.Instance.ActivePlayer.Selection.First().Position);
+
+            button.style.left = position.x;
+            button.style.right = StyleKeyword.Auto;
+            button.style.bottom = position.y;
+            button.style.top = StyleKeyword.Auto;
+        }
+    }
+
+    Button button;
+    */
 }

@@ -1,21 +1,10 @@
 using UnityEngine;
 using UnityEngine.UIElements;
 
-public class MainMenu : Menu
+public class MainMenu : UI_Element<MainMenu>
 {
-    public static MainMenu Instance { get; private set; }
-
     protected override void Awake()
     {
-        if (Instance != null && Instance != this)
-        {
-            Destroy(this);
-        }
-        else
-        {
-            Instance = this;
-        }
-
         base.Awake();
 
         buttonContinue = GetButton("Continue");

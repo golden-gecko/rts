@@ -1,25 +1,13 @@
 using UnityEngine;
 using UnityEngine.UIElements;
 
-public class UI_Layers : MonoBehaviour
+public class UI_Layers : UI_Element<UI_Layers>
 {
-    public static UI_Layers Instance { get; private set; } // TODO: Remove singleton from this class.
-
-    void Awake()
+    protected override void Awake()
     {
-        if (Instance != null && Instance != this)
-        {
-            Destroy(this);
-        }
-        else
-        {
-            Instance = this;
-        }
+        base.Awake();
 
-        UIDocument uiDocument = GetComponent<UIDocument>();
-        VisualElement rootVisualElement = uiDocument.rootVisualElement;
-
-        panel = rootVisualElement.Q<VisualElement>("Panel_Layers");
+        panel = root.Q<VisualElement>("Panel_Layers");
         grid = panel.Q<Toggle>("Grid");
         range = panel.Q<Toggle>("Range");
         exploration = panel.Q<Toggle>("Exploration");
