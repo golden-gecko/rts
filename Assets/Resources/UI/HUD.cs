@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.UIElements;
 
 public class HUD : Singleton<HUD>
 {
@@ -314,7 +315,7 @@ public class HUD : Singleton<HUD>
             {
                 if (Order == OrderType.None)
                 {
-                    IssueOrderDefault(myGameObject);
+                    ActivePlayer.Selection.Default(myGameObject, MyInput.GetShift());
                 }
                 else
                 {
@@ -327,7 +328,7 @@ public class HUD : Singleton<HUD>
             {
                 if (Order == OrderType.None)
                 {
-                    IssueOrderDefault(hitInfo.point);
+                    ActivePlayer.Selection.Default(hitInfo.point, MyInput.GetShift());
                 }
                 else
                 {
@@ -339,43 +340,6 @@ public class HUD : Singleton<HUD>
         }
 
         return false;
-    }
-
-    private void IssueOrderDefault(Vector3 position)
-    {
-        ActivePlayer.Selection.Move(position, Formation, MyInput.GetShift());
-    }
-
-    private void IssueOrderDefault(MyGameObject myGameObject)
-    {
-        foreach (MyGameObject selected in ActivePlayer.Selection.Items) // TODO: Fix. Call method from selection group.
-        {
-            if (MyInput.GetShift() == false)
-            {
-                selected.ClearOrders();
-            }
-
-            if (myGameObject.Is(selected, DiplomacyState.Ally) && myGameObject.State == MyGameObjectState.UnderAssembly)
-            {
-                // TODO: Implement.
-            }
-            else if (myGameObject.Is(selected, DiplomacyState.Ally) && myGameObject.State == MyGameObjectState.UnderConstruction)
-            {
-                selected.Construct(myGameObject);
-            }
-            else if (myGameObject.Is(selected, DiplomacyState.Ally))
-            {
-                selected.Follow(myGameObject);
-            }
-            else if (myGameObject.Is(selected, DiplomacyState.Enemy))
-            {
-                selected.Attack(myGameObject);
-            }
-            else if (myGameObject.Gatherable)
-            {
-                selected.Gather(myGameObject);
-            }
-        }
     }
 
     private void ProcessSelection()

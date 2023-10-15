@@ -770,7 +770,7 @@ public class MyGameObject : MonoBehaviour
         }
     }
 
-    public bool Working { get => false; } // Enabled && State == MyGameObjectState.Operational && (TryGetComponent(out PowerPlant _) == false || Powered); } // TODO: Add orders and fix.
+    public bool Working { get => Enabled && State == MyGameObjectState.Operational && (TryGetComponent(out PowerPlant _) == false || Powered); }
 
     [field: SerializeField]
     public Player Player { get; private set; }

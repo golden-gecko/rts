@@ -211,14 +211,14 @@ public class Map : Singleton<Map>
         powerTexture.Apply();
     }
 
-    public bool IsExplored(MyGameObject myGameObject, Player active) // TODO: Why active player?
+    public bool IsExplored(MyGameObject myGameObject, Player active)
     {
         Vector3Int position = new Vector3Int(Mathf.FloorToInt(myGameObject.Position.x / Config.Map.VisibilityScale), 0, Mathf.FloorToInt(myGameObject.Position.z / Config.Map.VisibilityScale));
 
         return Cells[position.x, position.z].Explored.ContainsKey(active) && Cells[position.x, position.z].Explored[active] > 0;
     }
 
-    public bool IsVisibleByRadar(MyGameObject myGameObject, Player active) // TODO: Why active player?
+    public bool IsVisibleByRadar(MyGameObject myGameObject, Player active)
     {
         Vector3Int position = Utils.ToGrid(myGameObject.Position, Config.Map.VisibilityScale);
 
@@ -228,7 +228,7 @@ public class Map : Singleton<Map>
         return byRadar > byAntiRadar;
     }
 
-    public bool IsVisibleBySight(MyGameObject myGameObject, Player active) // TODO: Why active player?
+    public bool IsVisibleBySight(MyGameObject myGameObject, Player active)
     {
         Vector3Int position = Utils.ToGrid(myGameObject.Position, Config.Map.VisibilityScale);
 
