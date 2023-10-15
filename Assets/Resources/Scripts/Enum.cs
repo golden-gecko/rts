@@ -9,9 +9,11 @@ public enum Formation
 {
     None = 0,
     Column = 1,
-    Line = 2,
-    Square = 3,
-    Wedge = 4,
+    Diamond = 2,
+    Line = 3,
+    Square = 4,
+    Triangle = 5,
+    Wedge = 6,
 }
 
 /*
@@ -24,6 +26,7 @@ public enum Formation
  * - Terrain and Water (amphibious vehicles or hovercrafts),
  * - Water (ships).
  */
+
 public enum MyGameObjectMapLayer
 {
     Air = 0,

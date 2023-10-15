@@ -1,7 +1,6 @@
-using System.Linq;
 using UnityEngine;
 
-public class FormationHandlerWedge : FormationHandler
+public class FormationHandlerTriangle : FormationHandler
 {
     public override void Execute(SelectionGroup selectionGroup, Vector3 position, bool append = false)
     {
