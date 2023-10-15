@@ -407,7 +407,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <Player>k__BackingField: {fileID: 0}
   <Enabled>k__BackingField: 1
-  <Powerable>k__BackingField: 1
   <Gatherable>k__BackingField: 0
   <Selectable>k__BackingField: 1
   <Health>k__BackingField:
@@ -464,7 +463,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   <Mass>k__BackingField: 10
-  RaiseResourceFlags: 1
+  <RaiseResourceFlags>k__BackingField: 1
   <ResourceUsage>k__BackingField: 1
   <Resources>k__BackingField:
     <Items>k__BackingField:
@@ -490,7 +489,7 @@ MonoBehaviour:
   <PowerUsage>k__BackingField:
     <Value>k__BackingField: 10
   <Range>k__BackingField:
-    <Value>k__BackingField: 0
+    <Value>k__BackingField: -1
   <PowerUpTime>k__BackingField:
     <Current>k__BackingField: 0
     <Max>k__BackingField: 1

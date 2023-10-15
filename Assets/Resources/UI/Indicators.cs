@@ -1,7 +1,6 @@
 using System.Linq;
 using TMPro;
 using UnityEngine;
-using UnityEngine.Profiling;
 using UnityEngine.UI;
 
 public class Indicators : MonoBehaviour
@@ -292,8 +291,11 @@ public class Indicators : MonoBehaviour
 
     private void UpdateIconPower(MyGameObject myGameObject)
     {
-        iconPowerOn.gameObject.SetActive(myGameObject.Powerable && myGameObject.Powered);
-        iconPowerOff.gameObject.SetActive(myGameObject.Powerable && myGameObject.Powered == false);
+        if (myGameObject.TryGetComponent(out PowerPlant _))
+        {
+            iconPowerOn.gameObject.SetActive(myGameObject.Powered);
+            iconPowerOff.gameObject.SetActive(myGameObject.Powered == false);
+        }
     }
 
     private void UpdateIconResource(MyGameObject myGameObject)
