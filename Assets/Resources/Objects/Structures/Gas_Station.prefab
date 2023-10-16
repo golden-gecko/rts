@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 626706505030732574}
   - component: {fileID: -3162199593519929267}
+  - component: {fileID: -8301554509698339432}
   - component: {fileID: 424665814299938391}
   m_Layer: 20
   m_Name: Gas_Station
@@ -48,7 +49,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <Player>k__BackingField: {fileID: 0}
   <Enabled>k__BackingField: 1
-  <Powerable>k__BackingField: 1
   <Gatherable>k__BackingField: 0
   <Selectable>k__BackingField: 1
   <Health>k__BackingField:
@@ -61,8 +61,6 @@ MonoBehaviour:
   <Depth>k__BackingField: -1
   <MapLayers>k__BackingField: 0200000004000000
   <ShowIndicators>k__BackingField: 1
-  <ShowEntrance>k__BackingField: 0
-  <ShowExit>k__BackingField: 0
   <ExpirationTimer>k__BackingField:
     <Current>k__BackingField: -1
     <Max>k__BackingField: -1
@@ -70,6 +68,28 @@ MonoBehaviour:
   <State>k__BackingField: 1
   <CreateBase>k__BackingField: 1
   <SnapToGrid>k__BackingField: 1
+--- !u!114 &-8301554509698339432
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 286350840086188452}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 26ef1c7f6037537498318d7dd9d37db3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  <Mass>k__BackingField: 10
+  <PowerGeneration>k__BackingField:
+    <Value>k__BackingField: -1
+  <PowerUsage>k__BackingField:
+    <Value>k__BackingField: 10
+  <Range>k__BackingField:
+    <Value>k__BackingField: -1
+  <PowerUpTime>k__BackingField:
+    <Current>k__BackingField: 0
+    <Max>k__BackingField: 1
 --- !u!114 &424665814299938391
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -83,7 +103,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   <Mass>k__BackingField: 10
-  RaiseResourceFlags: 1
+  <RaiseResourceFlags>k__BackingField: 1
   <ResourceUsage>k__BackingField: 1
   <Resources>k__BackingField:
     <Items>k__BackingField:
