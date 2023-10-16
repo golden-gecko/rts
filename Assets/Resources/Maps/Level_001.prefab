@@ -150,9 +150,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2cc8b974e7c51de4b8261f72636a6284, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  <Occupation>k__BackingField: {fileID: 2100000, guid: a842b400252600040b62b46c6819a8ba, type: 2}
   <Exploration>k__BackingField: {fileID: 2100000, guid: dc75f0452bbad234fa10d40351ebee8c, type: 2}
   <Power>k__BackingField: {fileID: 2100000, guid: 70c59f7324f0e47478dcffcf08d14c0d, type: 2}
-  <PowerRelay>k__BackingField: {fileID: 2100000, guid: 537db339baa3dc34ebe185c99371a8e5, type: 2}
   <Radar>k__BackingField: {fileID: 2100000, guid: 5561643e7529d344cb082276a84e8066, type: 2}
   <Sight>k__BackingField: {fileID: 2100000, guid: cc399b6df0904fd40a6b920972d35e1b, type: 2}
 --- !u!1001 &4067907102998597236

@@ -535,6 +535,15 @@ public class Map : Singleton<Map>
         {
             for (int z = 0; z < Config.Map.VisibilitySize; z++)
             {
+                Cells[x, z].Occupied = 0;
+
+                Player[] players0 = Cells[x, z].Explored.Keys.ToArray();
+
+                foreach (Player player in players0)
+                {
+                    Cells[x, z].Explored[player] = 0;
+                }
+
                 Player[] players1 = Cells[x, z].VisibleByRadar.Keys.ToArray();
 
                 foreach (Player player in players1)
@@ -572,6 +581,7 @@ public class Map : Singleton<Map>
             }
         }
 
+        ClearTexture(Occupation.mainTexture as Texture2D);
         ClearTexture(Exploration.mainTexture as Texture2D);
         ClearTexture(Power.mainTexture as Texture2D);
         ClearTexture(Radar.mainTexture as Texture2D);
@@ -599,6 +609,9 @@ public class Map : Singleton<Map>
             layer[player] += value;
         }
     }
+
+    [field: SerializeField]
+    public Material Occupation { get; private set; }
 
     [field: SerializeField]
     public Material Exploration { get; private set; }
