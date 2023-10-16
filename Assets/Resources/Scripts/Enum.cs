@@ -8,12 +8,13 @@ public enum DiplomacyState
 public enum Formation
 {
     None = 0,
-    Column = 1,
-    Diamond = 2,
-    Line = 3,
-    Square = 4,
-    Triangle = 5,
-    Wedge = 6,
+    Arrow = 1,
+    Column = 2,
+    Diamond = 3,
+    Line = 4,
+    Square = 5,
+    Triangle = 6,
+    Wedge = 7,
 }
 
 /*

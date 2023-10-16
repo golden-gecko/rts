@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class FormationHandlerWedge : FormationHandler
+public class FormationHandlerArrow : FormationHandler
 {
     public override void Execute(SelectionGroup selectionGroup, Vector3 position, bool append = false)
     {
@@ -34,7 +34,14 @@ public class FormationHandlerWedge : FormationHandler
 
             selected.Move(position + positionInFormation);
 
-            column += 1;
+            if (columnMax > 2)
+            {
+                column += columnMax - 1;
+            }
+            else
+            {
+                column += 1;
+            }
 
             if (column >= columnMax)
             {
