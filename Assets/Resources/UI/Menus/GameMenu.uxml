@@ -12,6 +12,7 @@
             <ui:VisualElement name="Panel_Layers" class="panel-layers" style="flex-direction: row; justify-content: flex-end; flex-grow: 1;">
                 <ui:Toggle label="Grid" focusable="false" name="Grid" style="flex-direction: row-reverse; align-items: center;" />
                 <ui:Toggle label="Range" focusable="false" name="Range" style="flex-direction: row-reverse; align-items: center;" />
+                <ui:Toggle label="Occupation" name="Occupation" focusable="false" style="flex-direction: row-reverse; align-items: center;" />
                 <ui:Toggle label="Exploration" name="Exploration" focusable="false" style="flex-direction: row-reverse; align-items: center;" />
                 <ui:Toggle label="Power" name="Power" focusable="false" style="flex-direction: row-reverse; align-items: center;" />
                 <ui:Toggle label="Radar" name="Radar" focusable="false" style="flex-direction: row-reverse; align-items: center;" />
