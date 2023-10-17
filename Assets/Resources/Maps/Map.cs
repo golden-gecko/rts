@@ -1,8 +1,8 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.UIElements;
 
 public class Map : Singleton<Map>
 {
@@ -19,6 +19,25 @@ public class Map : Singleton<Map>
         }
 
         Clear();
+
+        /*
+        Terrain terrain = transform.Find("Terrain").GetComponent<Terrain>();
+        TerrainData terrainData = terrain.terrainData;
+
+        Terrain.activeTerrain = Instantiate(terrainData);
+
+        float[,] heights = terrainData.GetHeights(0, 0, 10, 10);
+
+        for (int x = 0; x < 10; x++)
+        {
+            for (int z = 0; z < 10; z++)
+            {
+                heights[x, z] = 20.0f;
+            }
+        }
+
+        terrainData.SetHeightsDelayLOD(0, 0, heights);
+        */
     }
 
     public void SetOccupied(MyGameObject myGameObject, Vector3 position, int value)
@@ -252,11 +271,11 @@ public class Map : Singleton<Map>
         return byRadar > byAntiRadar;
     }
 
-    public bool IsVisibleBySight(MyGameObject myGameObject, Player active)
+    public bool IsVisibleBySight(Vector3 position, Player active)
     {
-        Vector3Int position = Utils.ToGrid(myGameObject.Position, Config.Map.Scale);
+        Vector3Int positionGrid = Utils.ToGrid(position, Config.Map.Scale);
 
-        return Cells[position.x, position.z].VisibleBySight.ContainsKey(active) && Cells[position.x, position.z].VisibleBySight[active] > 0;
+        return Cells[positionGrid.x, positionGrid.z].VisibleBySight.ContainsKey(active) && Cells[positionGrid.x, positionGrid.z].VisibleBySight[active] > 0;
     }
 
     public bool IsVisibleByPower(MyGameObject myGameObject)

@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class Missile : MyGameObject // TODO: Add collision with terrain to missiles.
+public class Missile : MyGameObject
 {
     protected override void Start()
     {
@@ -10,15 +10,15 @@ public class Missile : MyGameObject // TODO: Add collision with terrain to missi
 
         if (FireEffectPrefab != null)
         {
-            Instantiate(FireEffectPrefab, Position, Quaternion.identity);
+            Instantiate(FireEffectPrefab, Position, Quaternion.identity); // TODO: Set in inspector.
         }
     }
 
     [field: SerializeField]
-    public GameObject FireEffectPrefab { get; set; }
+    public GameObject FireEffectPrefab { get; private set; }
 
     [field: SerializeField]
-    public GameObject HitEffectPrefab { get; set; }
+    public GameObject HitEffectPrefab { get; private set; }
 
     [field: SerializeField]
     public Property Damage { get; set; } = new Property();

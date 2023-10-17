@@ -107,15 +107,27 @@ public class MyGameObject : MonoBehaviour
         }
     }
 
-    protected virtual void OnTriggerEnter(Collider other)
+    protected virtual void OnCollisionEnter(Collision collision)
     {
     }
 
-    protected virtual void OnTriggerStay(Collider other)
+    protected virtual void OnCollisionStay(Collision collision)
     {
     }
 
-    protected virtual void OnTriggerExit(Collider other)
+    protected virtual void OnCollisionExit(Collision collision)
+    {
+    }
+
+    protected virtual void OnTriggerEnter(Collider collider)
+    {
+    }
+
+    protected virtual void OnTriggerStay(Collider collider)
+    {
+    }
+
+    protected virtual void OnTriggerExit(Collider collider)
     {
     }
 
@@ -656,7 +668,7 @@ public class MyGameObject : MonoBehaviour
     {
         Player active = HUD.Instance.ActivePlayer;
 
-        if (Player == active || Map.Instance.IsVisibleBySight(this, active))
+        if (Player == active || Map.Instance.IsVisibleBySight(this.Position, active))
         {
             EnableRenderers(true);
 
