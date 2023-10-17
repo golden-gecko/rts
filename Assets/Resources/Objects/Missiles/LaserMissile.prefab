@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4981349056295886816}
   - component: {fileID: -7982725455688851971}
-  m_Layer: 0
+  m_Layer: 21
   m_Name: LaserMissile
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -47,7 +47,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <Player>k__BackingField: {fileID: 0}
   <Enabled>k__BackingField: 1
-  <Powerable>k__BackingField: 0
   <Gatherable>k__BackingField: 0
   <Selectable>k__BackingField: 0
   <Health>k__BackingField:
@@ -60,14 +59,13 @@ MonoBehaviour:
   <Depth>k__BackingField: -1
   <MapLayers>k__BackingField: 00000000
   <ShowIndicators>k__BackingField: 0
-  <ShowOrders>k__BackingField: 0
-  <ShowEntrance>k__BackingField: 0
-  <ShowExit>k__BackingField: 0
   <ExpirationTimer>k__BackingField:
     <Current>k__BackingField: 0
     <Max>k__BackingField: 0.2
   <SkillsNames>k__BackingField: []
   <State>k__BackingField: 1
+  <CreateBase>k__BackingField: 0
+  <SnapToGrid>k__BackingField: 0
   <FireEffectPrefab>k__BackingField: {fileID: 0}
   <HitEffectPrefab>k__BackingField: {fileID: 1141330259687333427, guid: f4732139be8d4054a825d2fb80594129, type: 3}
   <Damage>k__BackingField:
@@ -86,7 +84,7 @@ GameObject:
   - component: {fileID: 7122231444254036179}
   - component: {fileID: 7514069267881879034}
   - component: {fileID: 3876411120774628078}
-  m_Layer: 0
+  m_Layer: 21
   m_Name: Body
   m_TagString: Untagged
   m_Icon: {fileID: 0}

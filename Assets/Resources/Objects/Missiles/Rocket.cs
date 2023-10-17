@@ -2,17 +2,22 @@ using UnityEngine;
 
 public class Rocket : Missile
 {
-    protected override void OnTriggerEnter(Collider other)
+    protected override void OnCollisionEnter(Collision collision)
     {
-        base.OnTriggerEnter(other);
+        MyGameObject myGameObject = Utils.GetGameObject(collision.collider);
 
-        MyGameObject myGameObject = other.GetComponentInParent<MyGameObject>();
+        Terrain terrain = collision.collider.GetComponent<Terrain>();
 
+        Collide(myGameObject);
+    }
+
+    private void Collide(MyGameObject myGameObject)
+    {
         if (myGameObject == null)
         {
             return;
         }
-            
+
         if (myGameObject.Is(this, DiplomacyState.Ally))
         {
             return;

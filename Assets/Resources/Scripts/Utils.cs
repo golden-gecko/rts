@@ -228,9 +228,29 @@ public class Utils
     }
     #endregion
 
+    public static MyGameObject GetGameObject(Collider collider)
+    {
+        return collider.GetComponentInParent<MyGameObject>();
+    }
+
+    public static MyGameObject GetGameObject(Collision collision)
+    {
+        return collision.collider.GetComponentInParent<MyGameObject>();
+    }
+
     public static MyGameObject GetGameObject(RaycastHit hitInfo)
     {
         return hitInfo.transform.GetComponentInParent<MyGameObject>();
+    }
+
+    public static bool IsTerrain(Collision collision)
+    {
+        return collision.collider.CompareTag("Terrain");
+    }
+
+    public static bool IsWater(Collision collision)
+    {
+        return collision.collider.CompareTag("Water");
     }
 
     public static bool IsTerrain(RaycastHit hitInfo)
