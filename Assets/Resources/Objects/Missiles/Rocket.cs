@@ -6,18 +6,23 @@ public class Rocket : Missile
     {
         MyGameObject myGameObject = Utils.GetGameObject(collision.collider);
 
-        Terrain terrain = collision.collider.GetComponent<Terrain>();
+        if (myGameObject != null)
+        {
+            Collide(myGameObject);
+        }
+        else
+        {
+            Terrain terrain = collision.collider.GetComponent<Terrain>();
 
-        Collide(myGameObject);
+            if (terrain != null && collision.contacts.Length > 0)
+            {
+                Collide(collision.contacts[0].point);
+            }
+        }
     }
 
     private void Collide(MyGameObject myGameObject)
     {
-        if (myGameObject == null)
-        {
-            return;
-        }
-
         if (myGameObject.Is(this, DiplomacyState.Ally))
         {
             return;
@@ -28,7 +33,7 @@ public class Rocket : Missile
             return;
         }
 
-        if (Map.Instance.IsVisibleBySight(myGameObject, HUD.Instance.ActivePlayer))
+        if (Map.Instance.IsVisibleBySight(myGameObject.Position, HUD.Instance.ActivePlayer))
         {
             Instantiate(HitEffectPrefab, Position, Quaternion.identity);
         }
@@ -45,5 +50,13 @@ public class Rocket : Missile
         Destroy(0);
     }
 
-    // TODO: Add hit effect when missile does not hit anything.
+    private void Collide(Vector3 position)
+    {
+        if (Map.Instance.IsVisibleBySight(position, HUD.Instance.ActivePlayer))
+        {
+            Instantiate(HitEffectPrefab, Position, Quaternion.identity);
+        }
+
+        Destroy(0);
+    }
 }

@@ -9,6 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1702014145004635914}
+  - component: {fileID: -8651534604779877949}
   - component: {fileID: -6591473423801908206}
   - component: {fileID: -8510754742537900643}
   - component: {fileID: -8592949413886164666}
@@ -35,6 +36,33 @@ Transform:
   - {fileID: 1320509604547785435}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!54 &-8651534604779877949
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2077589293580246448}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 0
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!114 &-6591473423801908206
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -49,7 +77,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <Player>k__BackingField: {fileID: 0}
   <Enabled>k__BackingField: 1
-  <Powerable>k__BackingField: 0
   <Gatherable>k__BackingField: 0
   <Selectable>k__BackingField: 1
   <Health>k__BackingField:
@@ -62,8 +89,6 @@ MonoBehaviour:
   <Depth>k__BackingField: -1
   <MapLayers>k__BackingField: 02000000
   <ShowIndicators>k__BackingField: 1
-  <ShowEntrance>k__BackingField: 0
-  <ShowExit>k__BackingField: 0
   <ExpirationTimer>k__BackingField:
     <Current>k__BackingField: -1
     <Max>k__BackingField: -1
@@ -84,7 +109,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   <Mass>k__BackingField: 10
-  RaiseResourceFlags: 1
+  <RaiseResourceFlags>k__BackingField: 1
   <ResourceUsage>k__BackingField: 1
   <Resources>k__BackingField:
     <Items>k__BackingField:

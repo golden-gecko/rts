@@ -366,6 +366,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7263823035188942402}
+  - component: {fileID: -8211980769731172961}
   - component: {fileID: -3752629039536107593}
   - component: {fileID: 7764472481935986510}
   - component: {fileID: 418980675449498400}
@@ -393,6 +394,33 @@ Transform:
   - {fileID: 6161624261470564852}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!54 &-8211980769731172961
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8035996494400900344}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 0
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!114 &-3752629039536107593
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -419,8 +447,6 @@ MonoBehaviour:
   <Depth>k__BackingField: -1
   <MapLayers>k__BackingField: 02000000
   <ShowIndicators>k__BackingField: 1
-  <ShowEntrance>k__BackingField: 0
-  <ShowExit>k__BackingField: 0
   <ExpirationTimer>k__BackingField:
     <Current>k__BackingField: -1
     <Max>k__BackingField: -1

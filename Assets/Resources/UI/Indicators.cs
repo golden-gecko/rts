@@ -285,16 +285,20 @@ public class Indicators : MonoBehaviour
 
     private void UpdateIconDamage(MyGameObject myGameObject)
     {
-        iconDamageOn.gameObject.SetActive(myGameObject.Health.Full == false);
-        iconDamageOff.gameObject.SetActive(false);
+        float percent = myGameObject.Health.Percent;
+
+        iconDamageOn.gameObject.SetActive(percent < 0.5f);
+        iconDamageOff.gameObject.SetActive(percent >= 0.5f);
     }
 
     private void UpdateIconPower(MyGameObject myGameObject)
     {
         if (myGameObject.TryGetComponent(out PowerPlant _))
         {
-            iconPowerOn.gameObject.SetActive(myGameObject.Powered);
-            iconPowerOff.gameObject.SetActive(myGameObject.Powered == false);
+            bool powered = myGameObject.Powered;
+
+            iconPowerOn.gameObject.SetActive(powered);
+            iconPowerOff.gameObject.SetActive(powered == false);
         }
     }
 
@@ -316,14 +320,18 @@ public class Indicators : MonoBehaviour
 
     private void UpdateIconState(MyGameObject myGameObject)
     {
-        iconStateOn.gameObject.SetActive(myGameObject.Enabled);
-        iconStateOff.gameObject.SetActive(myGameObject.Enabled == false);
+        bool enabled = myGameObject.Enabled;
+
+        iconStateOn.gameObject.SetActive(enabled);
+        iconStateOff.gameObject.SetActive(enabled == false);
     }
 
     private void UpdateIconWork(MyGameObject myGameObject)
     {
-        iconWorkOn.gameObject.SetActive(myGameObject.Working);
-        iconWorkOff.gameObject.SetActive(myGameObject.Working == false);
+        bool working = myGameObject.Working;
+
+        iconWorkOn.gameObject.SetActive(working);
+        iconWorkOff.gameObject.SetActive(working == false);
     }
 
     private void UpdateRange(MyGameObject myGameObject)
@@ -342,7 +350,6 @@ public class Indicators : MonoBehaviour
 
             rangeGun.gameObject.SetActive(true);
             rangeGun.localScale = new Vector3(gun.Range.Total * 2.0f / scale.x, gun.Range.Total * 2.0f / scale.z, 1.0f);
-
         }
         else
         {

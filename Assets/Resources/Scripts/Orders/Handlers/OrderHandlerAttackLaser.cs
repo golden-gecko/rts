@@ -50,7 +50,7 @@ public class OrderHandlerAttackLaser : OrderHandler
 
         if (closest == null)
         {
-            if (Map.Instance.IsVisibleBySight(myGameObject, HUD.Instance.ActivePlayer))
+            if (Map.Instance.IsVisibleBySight(myGameObject.Position, HUD.Instance.ActivePlayer))
             {
                 Object.Instantiate(myGameObject.GetComponent<Missile>().HitEffectPrefab, order.TargetPosition, Quaternion.identity);
             }
@@ -71,7 +71,7 @@ public class OrderHandlerAttackLaser : OrderHandler
                 myGameObject.Stats.Inc(Stats.TargetsDestroyed);
             }
 
-            if (Map.Instance.IsVisibleBySight(myGameObject, HUD.Instance.ActivePlayer))
+            if (Map.Instance.IsVisibleBySight(myGameObject.Position, HUD.Instance.ActivePlayer))
             {
                 Object.Instantiate(myGameObject.GetComponent<Missile>().HitEffectPrefab, hitPoint, Quaternion.identity);
             }

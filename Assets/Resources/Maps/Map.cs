@@ -271,11 +271,11 @@ public class Map : Singleton<Map>
         return byRadar > byAntiRadar;
     }
 
-    public bool IsVisibleBySight(MyGameObject myGameObject, Player active)
+    public bool IsVisibleBySight(Vector3 position, Player active)
     {
-        Vector3Int position = Utils.ToGrid(myGameObject.Position, Config.Map.Scale);
+        Vector3Int positionGrid = Utils.ToGrid(position, Config.Map.Scale);
 
-        return Cells[position.x, position.z].VisibleBySight.ContainsKey(active) && Cells[position.x, position.z].VisibleBySight[active] > 0;
+        return Cells[positionGrid.x, positionGrid.z].VisibleBySight.ContainsKey(active) && Cells[positionGrid.x, positionGrid.z].VisibleBySight[active] > 0;
     }
 
     public bool IsVisibleByPower(MyGameObject myGameObject)
