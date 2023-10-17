@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class Map : Singleton<Map>
 {
@@ -9,9 +10,9 @@ public class Map : Singleton<Map>
     {
         base.Awake();
 
-        for (int x = 0; x < Config.Map.VisibilitySize; x++)
+        for (int x = 0; x < Config.Map.Size; x++)
         {
-            for (int z = 0; z < Config.Map.VisibilitySize; z++)
+            for (int z = 0; z < Config.Map.Size; z++)
             {
                 Cells[x, z] = new Cell();
             }
@@ -20,13 +21,36 @@ public class Map : Singleton<Map>
         Clear();
     }
 
+    public void SetOccupied(MyGameObject myGameObject, Vector3 position, int value)
+    {
+        Vector3Int positionGrid = Utils.ToGrid(position, Config.Map.Scale);
+
+        SetVisible(Cells[positionGrid.x, positionGrid.z].Occupied, myGameObject.Player, value);
+
+        if (HUD.Instance.ActivePlayer == myGameObject.Player)
+        {
+            Texture2D ocupationTexture = Occupation.mainTexture as Texture2D;
+
+            if (Cells[positionGrid.x, positionGrid.z].Occupied[myGameObject.Player] == 0)
+            {
+                ocupationTexture.SetPixel(positionGrid.x, positionGrid.z, Config.Map.DataLayerColorEmpty);
+            }
+            else
+            {
+                ocupationTexture.SetPixel(positionGrid.x, positionGrid.z, Config.Map.DataLayerColorOccupation);
+            }
+
+            ocupationTexture.Apply();
+        }
+    }
+
     public void SetVisibleByRadar(MyGameObject myGameObject, Vector3 position, float range, int value)
     {
-        Vector3Int start = Utils.ToGrid(new Vector3(position.x - range, 0.0f, position.z - range), Config.Map.VisibilityScale);
-        Vector3Int end = Utils.ToGrid(new Vector3(position.x + range, 0.0f, position.z + range), Config.Map.VisibilityScale);
+        Vector3Int start = Utils.ToGrid(new Vector3(position.x - range, 0.0f, position.z - range), Config.Map.Scale);
+        Vector3Int end = Utils.ToGrid(new Vector3(position.x + range, 0.0f, position.z + range), Config.Map.Scale);
 
-        Vector3Int center = Utils.ToGrid(position, Config.Map.VisibilityScale);
-        int radius = Mathf.FloorToInt(range / Config.Map.VisibilityScale);
+        Vector3Int center = Utils.ToGrid(position, Config.Map.Scale);
+        int radius = Mathf.FloorToInt(range / Config.Map.Scale);
 
         Texture2D radarTexture = Radar.mainTexture as Texture2D;
 
@@ -34,7 +58,7 @@ public class Map : Singleton<Map>
         {
             for (int z = start.z; z < end.z; z++)
             {
-                if (Utils.IsPointInRect(x, z, Config.Map.VisibilitySize) == false)
+                if (Utils.IsPointInRect(x, z, Config.Map.Size) == false)
                 {
                     continue;
                 }
@@ -65,11 +89,11 @@ public class Map : Singleton<Map>
 
     public void SetVisibleByAntiRadar(MyGameObject myGameObject, Vector3 position, float range, int value)
     {
-        Vector3Int start = Utils.ToGrid(new Vector3(position.x - range, 0.0f, position.z - range), Config.Map.VisibilityScale);
-        Vector3Int end = Utils.ToGrid(new Vector3(position.x + range, 0.0f, position.z + range), Config.Map.VisibilityScale);
+        Vector3Int start = Utils.ToGrid(new Vector3(position.x - range, 0.0f, position.z - range), Config.Map.Scale);
+        Vector3Int end = Utils.ToGrid(new Vector3(position.x + range, 0.0f, position.z + range), Config.Map.Scale);
 
-        Vector3Int center = Utils.ToGrid(position, Config.Map.VisibilityScale);
-        int radius = Mathf.FloorToInt(range / Config.Map.VisibilityScale);
+        Vector3Int center = Utils.ToGrid(position, Config.Map.Scale);
+        int radius = Mathf.FloorToInt(range / Config.Map.Scale);
 
         Texture2D radarTexture = Radar.mainTexture as Texture2D;
 
@@ -77,7 +101,7 @@ public class Map : Singleton<Map>
         {
             for (int z = start.z; z < end.z; z++)
             {
-                if (Utils.IsPointInRect(x, z, Config.Map.VisibilitySize) == false)
+                if (Utils.IsPointInRect(x, z, Config.Map.Size) == false)
                 {
                     continue;
                 }
@@ -108,11 +132,11 @@ public class Map : Singleton<Map>
 
     public void SetVisibleBySight(MyGameObject myGameObject, Vector3 position, float range, int value)
     {
-        Vector3Int start = Utils.ToGrid(new Vector3(position.x - range, 0.0f, position.z - range), Config.Map.VisibilityScale);
-        Vector3Int end = Utils.ToGrid(new Vector3(position.x + range, 0.0f, position.z + range), Config.Map.VisibilityScale);
+        Vector3Int start = Utils.ToGrid(new Vector3(position.x - range, 0.0f, position.z - range), Config.Map.Scale);
+        Vector3Int end = Utils.ToGrid(new Vector3(position.x + range, 0.0f, position.z + range), Config.Map.Scale);
 
-        Vector3Int center = Utils.ToGrid(position, Config.Map.VisibilityScale);
-        int radius = Mathf.FloorToInt(range / Config.Map.VisibilityScale);
+        Vector3Int center = Utils.ToGrid(position, Config.Map.Scale);
+        int radius = Mathf.FloorToInt(range / Config.Map.Scale);
 
         Texture2D explorationTexture = Exploration.mainTexture as Texture2D;
         Texture2D sightTexture = Sight.mainTexture as Texture2D;
@@ -121,7 +145,7 @@ public class Map : Singleton<Map>
         {
             for (int z = start.z; z < end.z; z++)
             {
-                if (Utils.IsPointInRect(x, z, Config.Map.VisibilitySize) == false)
+                if (Utils.IsPointInRect(x, z, Config.Map.Size) == false)
                 {
                     continue;
                 }
@@ -163,11 +187,11 @@ public class Map : Singleton<Map>
 
     public void SetVisibleByPower(MyGameObject myGameObject, Vector3 position, float range, int value)
     {
-        Vector3Int start = Utils.ToGrid(new Vector3(position.x - range, 0.0f, position.z - range), Config.Map.VisibilityScale);
-        Vector3Int end = Utils.ToGrid(new Vector3(position.x + range, 0.0f, position.z + range), Config.Map.VisibilityScale);
+        Vector3Int start = Utils.ToGrid(new Vector3(position.x - range, 0.0f, position.z - range), Config.Map.Scale);
+        Vector3Int end = Utils.ToGrid(new Vector3(position.x + range, 0.0f, position.z + range), Config.Map.Scale);
 
-        Vector3Int center = Utils.ToGrid(position, Config.Map.VisibilityScale);
-        int radius = Mathf.FloorToInt(range / Config.Map.VisibilityScale);
+        Vector3Int center = Utils.ToGrid(position, Config.Map.Scale);
+        int radius = Mathf.FloorToInt(range / Config.Map.Scale);
 
         Texture2D powerTexture = Power.mainTexture as Texture2D;
 
@@ -182,7 +206,7 @@ public class Map : Singleton<Map>
                 }
                 */
 
-                if (Utils.IsPointInRect(x, z, Config.Map.VisibilitySize) == false)
+                if (Utils.IsPointInRect(x, z, Config.Map.Size) == false)
                 {
                     continue;
                 }
@@ -213,14 +237,14 @@ public class Map : Singleton<Map>
 
     public bool IsExplored(MyGameObject myGameObject, Player active)
     {
-        Vector3Int position = new Vector3Int(Mathf.FloorToInt(myGameObject.Position.x / Config.Map.VisibilityScale), 0, Mathf.FloorToInt(myGameObject.Position.z / Config.Map.VisibilityScale));
+        Vector3Int position = new Vector3Int(Mathf.FloorToInt(myGameObject.Position.x / Config.Map.Scale), 0, Mathf.FloorToInt(myGameObject.Position.z / Config.Map.Scale));
 
         return Cells[position.x, position.z].Explored.ContainsKey(active) && Cells[position.x, position.z].Explored[active] > 0;
     }
 
     public bool IsVisibleByRadar(MyGameObject myGameObject, Player active)
     {
-        Vector3Int position = Utils.ToGrid(myGameObject.Position, Config.Map.VisibilityScale);
+        Vector3Int position = Utils.ToGrid(myGameObject.Position, Config.Map.Scale);
 
         int byRadar = Cells[position.x, position.z].VisibleByRadar.ContainsKey(active) ? Cells[position.x, position.z].VisibleByRadar[active] : 0;
         int byAntiRadar = Cells[position.x, position.z].VisibleByAntiRadar.ContainsKey(myGameObject.Player) ? Cells[position.x, position.z].VisibleByAntiRadar[myGameObject.Player] : 0;
@@ -230,21 +254,21 @@ public class Map : Singleton<Map>
 
     public bool IsVisibleBySight(MyGameObject myGameObject, Player active)
     {
-        Vector3Int position = Utils.ToGrid(myGameObject.Position, Config.Map.VisibilityScale);
+        Vector3Int position = Utils.ToGrid(myGameObject.Position, Config.Map.Scale);
 
         return Cells[position.x, position.z].VisibleBySight.ContainsKey(active) && Cells[position.x, position.z].VisibleBySight[active] > 0;
     }
 
     public bool IsVisibleByPower(MyGameObject myGameObject)
     {
-        Vector3Int position = Utils.ToGrid(myGameObject.Position, Config.Map.VisibilityScale);
+        Vector3Int position = Utils.ToGrid(myGameObject.Position, Config.Map.Scale);
 
         return Cells[position.x, position.z].VisibleByPower.ContainsKey(myGameObject.Player) && Cells[position.x, position.z].VisibleByPower[myGameObject.Player] > 0;
     }
 
     public bool IsVisibleByPowerRelay(MyGameObject myGameObject)
     {
-        Vector3Int position = Utils.ToGrid(myGameObject.Position, Config.Map.VisibilityScale);
+        Vector3Int position = Utils.ToGrid(myGameObject.Position, Config.Map.Scale);
 
         return Cells[position.x, position.z].VisibleByPowerRelay.ContainsKey(myGameObject.Player) && Cells[position.x, position.z].VisibleByPowerRelay[myGameObject.Player] > 0;
     }
@@ -531,10 +555,24 @@ public class Map : Singleton<Map>
 
     private void Clear()
     {
-        for (int x = 0; x < Config.Map.VisibilitySize; x++)
+        for (int x = 0; x < Config.Map.Size; x++)
         {
-            for (int z = 0; z < Config.Map.VisibilitySize; z++)
+            for (int z = 0; z < Config.Map.Size; z++)
             {
+                Player[] players00 = Cells[x, z].Occupied.Keys.ToArray();
+
+                foreach (Player player in players00)
+                {
+                    Cells[x, z].Occupied[player] = 0;
+                }
+
+                Player[] players0 = Cells[x, z].Explored.Keys.ToArray();
+
+                foreach (Player player in players0)
+                {
+                    Cells[x, z].Explored[player] = 0;
+                }
+
                 Player[] players1 = Cells[x, z].VisibleByRadar.Keys.ToArray();
 
                 foreach (Player player in players1)
@@ -572,6 +610,7 @@ public class Map : Singleton<Map>
             }
         }
 
+        ClearTexture(Occupation.mainTexture as Texture2D);
         ClearTexture(Exploration.mainTexture as Texture2D);
         ClearTexture(Power.mainTexture as Texture2D);
         ClearTexture(Radar.mainTexture as Texture2D);
@@ -601,6 +640,9 @@ public class Map : Singleton<Map>
     }
 
     [field: SerializeField]
+    public Material Occupation { get; private set; }
+
+    [field: SerializeField]
     public Material Exploration { get; private set; }
 
     [field: SerializeField]
@@ -612,5 +654,5 @@ public class Map : Singleton<Map>
     [field: SerializeField]
     public Material Sight { get; private set; }
 
-    private Cell[,] Cells { get; } = new Cell[Config.Map.VisibilitySize, Config.Map.VisibilitySize];
+    private Cell[,] Cells { get; } = new Cell[Config.Map.Size, Config.Map.Size];
 }

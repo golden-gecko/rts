@@ -309,15 +309,15 @@ public class Order
 
     public bool IsValid()
     {
-        switch (Type) // TODO: Finish.
+        switch (Type)
         {
+            case OrderType.Assemble:
+                return Prefab != null && Prefab.Length > 0;
+
             case OrderType.Attack:
             case OrderType.Gather:
             case OrderType.Guard:
                 return IsTargetGameObject && TargetGameObject != null;
-
-            case OrderType.Assemble:
-                return Prefab != null && Prefab.Length > 0;
 
             case OrderType.Load:
                 return SourceGameObject != null;

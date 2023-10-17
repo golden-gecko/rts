@@ -10,6 +10,8 @@ public class UI_Layers : UI_Element<UI_Layers>
         panel = root.Q<VisualElement>("Panel_Layers");
         grid = panel.Q<Toggle>("Grid");
         range = panel.Q<Toggle>("Range");
+
+        occupation = panel.Q<Toggle>("Occupation");
         exploration = panel.Q<Toggle>("Exploration");
         power = panel.Q<Toggle>("Power");
         radar = panel.Q<Toggle>("Radar");
@@ -17,6 +19,8 @@ public class UI_Layers : UI_Element<UI_Layers>
 
         grid.RegisterValueChangedCallback(OnToggleGrid);
         range.RegisterValueChangedCallback(OnToggleRange);
+
+        occupation.RegisterValueChangedCallback(OnToggleOccupation);
         exploration.RegisterValueChangedCallback(OnToggleExploration);
         power.RegisterValueChangedCallback(OnTogglePower);
         radar.RegisterValueChangedCallback(OnToggleRadar);
@@ -36,10 +40,24 @@ public class UI_Layers : UI_Element<UI_Layers>
         }
     }
 
+    private void OnToggleOccupation(ChangeEvent<bool> evt)
+    {
+        if (evt.newValue)
+        {
+            Disable(exploration);
+            Disable(power);
+            Disable(radar);
+            Disable(sight);
+        }
+
+        Set();
+    }
+
     private void OnToggleExploration(ChangeEvent<bool> evt)
     {
         if (evt.newValue)
         {
+            Disable(occupation);
             Disable(power);
             Disable(radar);
             Disable(sight);
@@ -52,6 +70,7 @@ public class UI_Layers : UI_Element<UI_Layers>
     {
         if (evt.newValue)
         {
+            Disable(occupation);
             Disable(exploration);
             Disable(radar);
             Disable(sight);
@@ -64,6 +83,7 @@ public class UI_Layers : UI_Element<UI_Layers>
     {
         if (evt.newValue)
         {
+            Disable(occupation);
             Disable(exploration);
             Disable(power);
             Disable(sight);
@@ -76,6 +96,7 @@ public class UI_Layers : UI_Element<UI_Layers>
     {
         if (evt.newValue)
         {
+            Disable(occupation);
             Disable(exploration);
             Disable(power);
             Disable(radar);
@@ -96,7 +117,11 @@ public class UI_Layers : UI_Element<UI_Layers>
     {
         Projector projector = Map.Instance.transform.Find("Layers").GetComponent<Projector>();
 
-        if (exploration.value)
+        if (occupation.value)
+        {
+            projector.material = Map.Instance.Occupation;
+        }
+        else if (exploration.value)
         {
             projector.material = Map.Instance.Exploration;
         }
@@ -123,6 +148,7 @@ public class UI_Layers : UI_Element<UI_Layers>
     private Toggle grid;
     public Toggle range; // TODO: Make private.
 
+    private Toggle occupation;
     private Toggle exploration;
     private Toggle power;
     private Toggle radar;

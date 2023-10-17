@@ -20,7 +20,7 @@ public class Radar : MyComponent
     {
         base.Update();
 
-        if (previousState != Parent.State || previousEnabled != Parent.Enabled || Utils.ToGrid(previousPosition, Config.Map.VisibilityScale) != Utils.ToGrid(Parent.Position, Config.Map.VisibilityScale))
+        if (previousState != Parent.State || previousEnabled != Parent.Enabled || Utils.ToGrid(previousPosition, Config.Map.Scale) != Utils.ToGrid(Parent.Position, Config.Map.Scale))
         {
             if (previousState == MyGameObjectState.Operational && previousEnabled)
             {
