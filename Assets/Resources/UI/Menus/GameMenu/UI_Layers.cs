@@ -117,7 +117,11 @@ public class UI_Layers : UI_Element<UI_Layers>
     {
         Projector projector = Map.Instance.transform.Find("Layers").GetComponent<Projector>();
 
-        if (exploration.value)
+        if (occupation.value)
+        {
+            projector.material = Map.Instance.Occupation;
+        }
+        else if (exploration.value)
         {
             projector.material = Map.Instance.Exploration;
         }

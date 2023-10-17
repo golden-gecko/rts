@@ -78,10 +78,10 @@ public enum OrderType
     Stock = 18,
     Stop = 19,
     Transport = 20,
+    Turn = 24,
     Unload = 21,
     UseSkill = 22,
     Wait = 23,
-    Turn = 23,
 }
 
 public enum ResourceDirection

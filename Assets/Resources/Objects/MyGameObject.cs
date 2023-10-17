@@ -13,14 +13,14 @@ public class MyGameObject : MonoBehaviour
         {
             Vector3 size = Size;
 
-            int x = Mathf.CeilToInt(size.x / Config.Map.VisibilityScale);
-            int z = Mathf.CeilToInt(size.z / Config.Map.VisibilityScale);
+            int x = Mathf.CeilToInt(size.x / Config.Map.Scale);
+            int z = Mathf.CeilToInt(size.z / Config.Map.Scale);
 
             x = Utils.MakeOdd(x);
             z = Utils.MakeOdd(z);
 
-            size.x = x * Config.Map.VisibilityScale;
-            size.z = z * Config.Map.VisibilityScale;
+            size.x = x * Config.Map.Scale;
+            size.z = z * Config.Map.Scale;
 
             Body.transform.localPosition = new Vector3(0.0f, 0.25f, 0.0f);
 
@@ -57,6 +57,10 @@ public class MyGameObject : MonoBehaviour
         UpdatePosition();
         UpdateSelection();
         UpdateVisibility();
+
+        PreviousPosition = Position;
+
+        Map.Instance.SetOccupied(this, Position, 1);
     }
 
     protected virtual void Update()
@@ -93,6 +97,14 @@ public class MyGameObject : MonoBehaviour
 
         UpdateSkills();
         UpdateVisibility();
+
+        if (Utils.ToGrid(PreviousPosition, Config.Map.Scale) != Utils.ToGrid(Position, Config.Map.Scale))
+        {
+            Map.Instance.SetOccupied(this, PreviousPosition, -1);
+            Map.Instance.SetOccupied(this, Position, 1);
+
+            PreviousPosition = Position;
+        }
     }
 
     protected virtual void OnTriggerEnter(Collider other)
@@ -432,7 +444,7 @@ public class MyGameObject : MonoBehaviour
             skill.OnDestroy(this);
         }
 
-        Destroy(gameObject); // TODO: Delay?
+        Destroy(gameObject);
     }
 
     public void OnMove(Vector3 position)
@@ -466,7 +478,7 @@ public class MyGameObject : MonoBehaviour
         {
             if (SnapToGrid)
             {
-                Position = Utils.SnapToCenter(validated, Config.Map.ConstructionScale);
+                Position = Utils.SnapToCenter(validated, Config.Map.Scale);
             }
             else
             {
@@ -847,4 +859,22 @@ public class MyGameObject : MonoBehaviour
     public GameObject Base { get; private set; }
 
     public Indicators Indicators { get; private set; }
+
+    private Vector3 PreviousPosition { get; set; }
+
+    public void AssignWorker(MyGameObject myGameObject)
+    {
+        Workers.Add(myGameObject);
+        myGameObject.Workplaces.Add(this);
+    }
+
+    public void RemoveWorker(MyGameObject myGameObject)
+    {
+        Workers.Remove(myGameObject);
+        myGameObject.Workplaces.Remove(this);
+    }
+
+    public HashSet<MyGameObject> Workers { get; } = new HashSet<MyGameObject>();
+
+    public HashSet<MyGameObject> Workplaces { get; } = new HashSet<MyGameObject>();
 }

@@ -2,8 +2,7 @@ using System.Collections.Generic;
 
 public class Cell
 {
-    public int Occupied;
-
+    public Dictionary<Player, int> Occupied = new Dictionary<Player, int>();
     public Dictionary<Player, int> Explored = new Dictionary<Player, int>();
 
     public Dictionary<Player, int> VisibleByPower = new Dictionary<Player, int>();

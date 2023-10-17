@@ -22,7 +22,7 @@ public class Cursor3D : Singleton<Cursor3D>
         // Follow mouse.
         if (Map.Instance.MouseToPosition(GameObject, out Vector3 position, out _))
         {
-            GameObject.Position = Config.Cursor3D.SnapToGrid ? Utils.SnapToCenter(position, Config.Map.ConstructionScale) : position;
+            GameObject.Position = Config.Cursor3D.SnapToGrid ? Utils.SnapToCenter(position, Config.Map.Scale) : position;
         }
 
         // Verify position.

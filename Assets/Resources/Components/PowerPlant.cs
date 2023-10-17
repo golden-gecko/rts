@@ -32,7 +32,7 @@ public class PowerPlant : MyComponent
 
         bool state = previousState != Parent.State;
         bool enabled = previousEnabled != Parent.Enabled;
-        bool position = Utils.ToGrid(previousPosition, Config.Map.VisibilityScale) != Utils.ToGrid(Parent.Position, Config.Map.VisibilityScale);
+        bool position = Utils.ToGrid(previousPosition, Config.Map.Scale) != Utils.ToGrid(Parent.Position, Config.Map.Scale);
         bool connected = previousProducerConnected != (IsProducer || IsProducerConnected);
 
         if (state || enabled || position || connected)
@@ -123,10 +123,10 @@ public class PowerPlant : MyComponent
                 continue;
             }
 
-            Vector3Int position = Utils.ToGrid(powerPlant.Parent.Position, Config.Map.VisibilityScale);
-            Vector3Int center = Utils.ToGrid(Parent.Position, Config.Map.VisibilityScale);
+            Vector3Int position = Utils.ToGrid(powerPlant.Parent.Position, Config.Map.Scale);
+            Vector3Int center = Utils.ToGrid(Parent.Position, Config.Map.Scale);
 
-            if (Utils.IsPointInCircle(position.x, position.z, center, Mathf.FloorToInt(Range.Total / Config.Map.VisibilityScale)) == false)
+            if (Utils.IsPointInCircle(position.x, position.z, center, Mathf.FloorToInt(Range.Total / Config.Map.Scale)) == false)
             {
                 continue;
             }
