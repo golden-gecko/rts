@@ -31,6 +31,11 @@ public class SelectionGroup
         }
     }
 
+    public void Replace(HashSet<MyGameObject> newItems)
+    {
+        Items = new HashSet<MyGameObject>(newItems);
+    }
+
     public void Clear()
     {
         foreach (MyGameObject selected in Items)
@@ -364,7 +369,7 @@ public class SelectionGroup
 
     public int Count { get => Items.Count; }
 
-    public HashSet<MyGameObject> Items { get; set; } = new HashSet<MyGameObject>();
+    public HashSet<MyGameObject> Items { get; private set; } = new HashSet<MyGameObject>();
 
     private Dictionary<Formation, FormationHandler> FormationHandlers { get; } = new Dictionary<Formation, FormationHandler>();
 }
