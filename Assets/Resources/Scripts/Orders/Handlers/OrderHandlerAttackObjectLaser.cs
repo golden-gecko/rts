@@ -1,7 +1,6 @@
 using UnityEngine;
-using static UnityEngine.GraphicsBuffer;
 
-public class OrderHandlerAttackLaser : OrderHandler
+public class OrderHandlerAttackObjectLaser : OrderHandler
 {
     public override void OnExecute(MyGameObject myGameObject)
     {
@@ -14,7 +13,7 @@ public class OrderHandlerAttackLaser : OrderHandler
             return;
         }
 
-        Vector3 direction = order.TargetPosition - myGameObject.Center;
+        Vector3 direction = order.TargetGameObject.Position - myGameObject.Center;
         RaycastHit[] hits = Utils.RaycastAll(new Ray(myGameObject.Center, direction));
 
         MyGameObject closest = null;
@@ -52,7 +51,7 @@ public class OrderHandlerAttackLaser : OrderHandler
         {
             if (Map.Instance.IsVisibleBySight(myGameObject.Position, HUD.Instance.ActivePlayer))
             {
-                Object.Instantiate(myGameObject.GetComponent<Missile>().HitEffectPrefab, order.TargetPosition, Quaternion.identity);
+                Object.Instantiate(myGameObject.GetComponent<Missile>().HitEffectPrefab, order.TargetGameObject.Position, Quaternion.identity);
             }
         }
         else
@@ -61,7 +60,7 @@ public class OrderHandlerAttackLaser : OrderHandler
 
             myGameObject.Body.transform.localPosition = new Vector3(0.0f, 0.0f, magnitude / 2.0f);
             myGameObject.Body.transform.localScale = new Vector3(myGameObject.Body.transform.localScale.x, myGameObject.Body.transform.localScale.y, magnitude);
-            myGameObject.transform.LookAt(order.TargetPosition);
+            myGameObject.transform.LookAt(order.TargetGameObject.Position);
 
             Missile missile = myGameObject.GetComponent<Missile>();
             float damageDealt = closest.OnDamage(missile.Damage.Total);
@@ -84,6 +83,6 @@ public class OrderHandlerAttackLaser : OrderHandler
 
     protected override bool IsValid(MyGameObject myGameObject, Order order)
     {
-        return order.IsTargetGameObject == false || (order.IsTargetGameObject == true && order.TargetGameObject != null && order.TargetGameObject != myGameObject);
+        return order.TargetGameObject != null && order.TargetGameObject != myGameObject;
     }
 }

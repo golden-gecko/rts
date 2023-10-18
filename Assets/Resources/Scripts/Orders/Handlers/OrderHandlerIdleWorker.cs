@@ -29,7 +29,7 @@ public class OrderHandlerIdleWorker : OrderHandler
             return;
         }
 
-        order = myGameObject.Player.GetJob(myGameObject, OrderType.Gather);
+        order = myGameObject.Player.GetJob(myGameObject, OrderType.GatherObject);
 
         if (order != null)
         {

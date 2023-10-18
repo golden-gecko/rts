@@ -427,15 +427,25 @@ public class Indicators : MonoBehaviour
                 orderTextValueMesh.SetText(string.Format("Assembling\n{0}", order.Prefab));
                 break;
 
-            case OrderType.Attack:
+            case OrderType.AttackObject:
             case OrderType.Construct:
             case OrderType.Follow:
-            case OrderType.Gather:
-            case OrderType.Guard:
+            case OrderType.GatherObject:
+            case OrderType.GuardObject:
+                orderLine.gameObject.SetActive(true);
+                orderLine.useWorldSpace = true;
+                orderLine.SetPositions(new Vector3[] { myGameObject.Position, order.TargetGameObject.Position });
+
+                orderSphere.gameObject.SetActive(true);
+                orderSphere.transform.position = order.TargetGameObject.Position;
+                break;
+
+            case OrderType.AttackPosition:
+            case OrderType.GuardPosition:
             case OrderType.Move:
             case OrderType.Patrol:
             case OrderType.Rally:
-                Vector3 position = order.IsTargetGameObject && order.TargetGameObject != null ? order.TargetGameObject.Position : order.TargetPosition;
+                Vector3 position = order.TargetPosition;
 
                 orderLine.gameObject.SetActive(true);
                 orderLine.useWorldSpace = true;

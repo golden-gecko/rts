@@ -7,9 +7,11 @@ public class Gatherer : MyComponent
     {
         base.Awake();
 
-        Parent.Orders.AllowOrder(OrderType.Gather);
+        Parent.Orders.AllowOrder(OrderType.GatherObject);
+        Parent.Orders.AllowOrder(OrderType.GatherResource);
 
-        Parent.OrderHandlers[OrderType.Gather] = new OrderHandlerGather();
+        Parent.OrderHandlers[OrderType.GatherObject] = new OrderHandlerGatherObject();
+        Parent.OrderHandlers[OrderType.GatherResource] = new OrderHandlerGatherResource();
     }
 
     public override string GetInfo()

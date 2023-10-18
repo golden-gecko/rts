@@ -11,22 +11,21 @@ public class Order
         };
     }
 
-    public static Order Attack(Vector3 position)
+    public static Order AttackObject(MyGameObject myGameObject)
     {
         return new Order
         {
-            Type = OrderType.Attack,
-            TargetPosition = position,
+            Type = OrderType.AttackObject,
+            TargetGameObject = myGameObject,
         };
     }
 
-    public static Order Attack(MyGameObject myGameObject)
+    public static Order AttackPosition(Vector3 position)
     {
         return new Order
         {
-            Type = OrderType.Attack,
-            TargetGameObject = myGameObject,
-            IsTargetGameObject = true,
+            Type = OrderType.AttackPosition,
+            TargetPosition = position,
         };
     }
 
@@ -36,7 +35,6 @@ public class Order
         {
             Type = OrderType.Construct,
             TargetGameObject = myGameObject,
-            IsTargetGameObject = true,
         };
     }
 
@@ -79,53 +77,42 @@ public class Order
         {
             Type = OrderType.Follow,
             TargetGameObject = myGameObject,
-            IsTargetGameObject = true,
         };
     }
 
-    public static Order Gather(MyGameObject myGameObject)
+    public static Order GatherObject(MyGameObject myGameObject)
     {
         return new Order
         {
-            Type = OrderType.Gather,
+            Type = OrderType.GatherObject,
             TargetGameObject = myGameObject,
-            IsTargetGameObject = true,
         };
     }
 
-    public static Order Gather(string resource)
+    public static Order GatherResource(string resource)
     {
         return new Order
         {
-            Type = OrderType.Gather,
+            Type = OrderType.GatherResource,
             Resource = resource,
         };
     }
 
-    public static Order Gather()
+    public static Order GuardObject(MyGameObject myGameObject)
     {
         return new Order
         {
-            Type = OrderType.Gather,
-        };
-    }
-
-    public static Order Guard(Vector3 position)
-    {
-        return new Order
-        {
-            Type = OrderType.Guard,
-            TargetPosition = position,
-        };
-    }
-
-    public static Order Guard(MyGameObject myGameObject)
-    {
-        return new Order
-        {
-            Type = OrderType.Guard,
+            Type = OrderType.GuardObject,
             TargetGameObject = myGameObject,
-            IsTargetGameObject = true,
+        };
+    }
+
+    public static Order GuardPosition(Vector3 position)
+    {
+        return new Order
+        {
+            Type = OrderType.GuardPosition,
+            TargetPosition = position,
         };
     }
 
@@ -314,26 +301,25 @@ public class Order
             case OrderType.Assemble:
                 return Prefab != null && Prefab.Length > 0;
 
-            case OrderType.Attack:
-            case OrderType.Gather:
-            case OrderType.Guard:
-                return IsTargetGameObject && TargetGameObject != null;
+            case OrderType.AttackObject:
+            case OrderType.Follow:
+            case OrderType.GatherObject:
+            case OrderType.GuardObject:
+            case OrderType.Stock:
+            case OrderType.Unload:
+                return TargetGameObject != null;
+
+            case OrderType.GatherResource:
+                return Resource != null && Resource.Length > 0;
 
             case OrderType.Load:
                 return SourceGameObject != null;
-
-            case OrderType.Follow:
-            case OrderType.Unload:
-                return TargetGameObject != null;
 
             case OrderType.Produce:
                 return Recipe != null && Recipe.Length > 0;
 
             case OrderType.Research:
                 return Technology != null && Technology.Length > 0;
-
-            case OrderType.Stock:
-                return TargetGameObject != null;
 
             case OrderType.Transport:
                 return SourceGameObject != null && TargetGameObject != null;
@@ -344,8 +330,6 @@ public class Order
 
         return true;
     }
-
-    public bool IsTargetGameObject { get; private set; } // TODO: Get rid of this. Maybe add a new order type.
 
     public MyGameObject SourceGameObject { get; private set; }
 
