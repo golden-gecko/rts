@@ -272,7 +272,7 @@ public class Indicators : MonoBehaviour
     {
         Vector3 size = myGameObject.Size;
 
-        icon.transform.localPosition = new Vector3(0.0f, size.y, 0.0f);
+        icon.transform.localPosition = new Vector3(0.0f, size.y + 3.0f, 0.0f);
         icon.transform.LookAt(Camera.main.transform.position);
         icon.transform.Rotate(0.0f, 180.0f, 0.0f);
 

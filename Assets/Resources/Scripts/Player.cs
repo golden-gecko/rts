@@ -127,11 +127,6 @@ public class Player : MonoBehaviour
 
         foreach (MyResource myResource in FindObjectsByType<MyResource>(FindObjectsSortMode.None))
         {
-            if (myResource.Working == false) // TODO: OK?
-            {
-                continue;
-            }
-
             if (myResource == myGameObject)
             {
                 continue;

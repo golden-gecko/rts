@@ -75,7 +75,7 @@ public class MyGameObject : MonoBehaviour
                     OnDestroy_();
                 }
 
-                if (Working) // TODO: OK?
+                if (Working)
                 {
                     ProcessOrders();
                 }

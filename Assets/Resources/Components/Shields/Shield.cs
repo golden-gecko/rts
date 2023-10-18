@@ -10,7 +10,7 @@ public class Shield : MyComponent // TODO: Shield puts health bar in wrong posit
         {
             GameObject mesh = Instantiate(Mesh, Parent.Position, Quaternion.identity);
 
-            mesh.transform.parent = Parent.Body.transform;
+            mesh.transform.parent = Parent.transform;
             mesh.transform.localScale = new Vector3(Range.Total * 2.0f / Parent.Scale.x, Range.Total * 2.0f / Parent.Scale.y, Range.Total * 2.0f / Parent.Scale.z);
         }
     }
