@@ -1,3 +1,4 @@
+using System.Linq;
 using UnityEngine;
 
 public class Utils
@@ -5,7 +6,7 @@ public class Utils
     #region Enum
     public static string[] GetFormationNames()
     {
-        string[] names = System.Enum.GetNames(typeof(Formation));
+        string[] names = System.Enum.GetNames(typeof(Formation)).Where(x => x != "MAX").ToArray();
 
         System.Array.Sort(names);
 
@@ -14,7 +15,7 @@ public class Utils
 
     public static string[] GetOrderNames()
     {
-        string[] names = System.Enum.GetNames(typeof(OrderType));
+        string[] names = System.Enum.GetNames(typeof(OrderType)).Where(x => x != "MAX").ToArray();
 
         System.Array.Sort(names);
 
