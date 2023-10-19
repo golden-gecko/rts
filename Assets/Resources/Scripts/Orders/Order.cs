@@ -333,9 +333,9 @@ public class Order
 
     public MyGameObject SourceGameObject { get; private set; }
 
-    public MyGameObject TargetGameObject { get; set; }
+    public MyGameObject TargetGameObject { get; set; } // TODO: Hide setter.
 
-    public Vector3 TargetPosition { get; set; } // TODO: Hide setter.
+    public Vector3 TargetPosition { get; private set; }
 
     public Quaternion TargetRotation { get; private set; }
 
@@ -345,11 +345,11 @@ public class Order
 
     public string Prefab { get; private set; }
 
-    public string Recipe { get; set; }
+    public string Recipe { get; set; } // TODO: Hide setter.
 
-    public string Resource { get; set; }
+    public string Resource { get; private set; }
 
-    public int Value { get; set; }
+    public int Value { get; private set; }
 
     public string Skill { get; private set; }
 
