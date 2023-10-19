@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class OrderHandlerAttack : OrderHandler
+public class OrderHandlerAttackPosition : OrderHandler
 {
     public override void OnExecute(MyGameObject myGameObject)
     {
@@ -13,25 +13,7 @@ public class OrderHandlerAttack : OrderHandler
             return;
         }
 
-        Vector3 position;
-
-        if (order.IsTargetGameObject)
-        {
-            if (order.TargetGameObject == null)
-            {
-                Success(myGameObject);
-
-                return;
-            }
-            else
-            {
-                position = order.TargetGameObject.Center;
-            }
-        }
-        else
-        {
-            position = order.TargetPosition;
-        }
+        Vector3 position = order.TargetPosition;
 
         if (myGameObject.GetComponent<Engine>())
         {
@@ -61,11 +43,6 @@ public class OrderHandlerAttack : OrderHandler
                 }
             }
         }
-    }
-
-    protected override bool IsValid(MyGameObject myGameObject, Order order)
-    {
-        return order.IsTargetGameObject == false || (order.IsTargetGameObject == true && order.TargetGameObject != null && order.TargetGameObject != myGameObject);
     }
 
     private Vector3 GetPositionToAttack(Vector3 position, Vector3 target, float missileRangeMax)

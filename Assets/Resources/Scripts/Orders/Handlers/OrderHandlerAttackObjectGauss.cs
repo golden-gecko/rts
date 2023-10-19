@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class OrderHandlerAttackGauss : OrderHandler
+public class OrderHandlerAttackObjectGauss : OrderHandler
 {
     public override void OnExecute(MyGameObject myGameObject)
     {
@@ -13,7 +13,7 @@ public class OrderHandlerAttackGauss : OrderHandler
             return;
         }
 
-        Vector3 direction = order.TargetPosition - myGameObject.Center;
+        Vector3 direction = order.TargetGameObject.Position - myGameObject.Center;
         RaycastHit[] hits = Utils.RaycastAll(new Ray(myGameObject.Center, direction));
 
         foreach (RaycastHit hit in hits)
@@ -53,20 +53,20 @@ public class OrderHandlerAttackGauss : OrderHandler
 
         if (Map.Instance.IsVisibleBySight(myGameObject.Position, HUD.Instance.ActivePlayer))
         {
-            Object.Instantiate(myGameObject.GetComponent<Missile>().HitEffectPrefab, order.TargetPosition, Quaternion.identity);
+            Object.Instantiate(myGameObject.GetComponent<Missile>().HitEffectPrefab, order.TargetGameObject.Position, Quaternion.identity);
         }
 
         float range = myGameObject.GetComponent<Missile>().Range.Total;
 
         myGameObject.Body.transform.localPosition = new Vector3(0.0f, 0.0f, range / 2.0f);
         myGameObject.Body.transform.localScale = new Vector3(myGameObject.Body.transform.localScale.x, myGameObject.Body.transform.localScale.y, range);
-        myGameObject.transform.LookAt(order.TargetPosition);
+        myGameObject.transform.LookAt(order.TargetGameObject.Position);
 
         myGameObject.Orders.Pop();
     }
 
     protected override bool IsValid(MyGameObject myGameObject, Order order)
     {
-        return order.IsTargetGameObject == false || (order.IsTargetGameObject == true && order.TargetGameObject != null && order.TargetGameObject != myGameObject);
+        return order.TargetGameObject != null && order.TargetGameObject != myGameObject;
     }
 }

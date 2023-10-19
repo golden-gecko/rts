@@ -34,6 +34,8 @@ public class MyGameObject : MonoBehaviour
         Orders.AllowOrder(OrderType.Disable);
         Orders.AllowOrder(OrderType.Enable);
         Orders.AllowOrder(OrderType.Idle);
+        Orders.AllowOrder(OrderType.GuardObject);
+        Orders.AllowOrder(OrderType.GuardPosition);
         Orders.AllowOrder(OrderType.Stop);
         Orders.AllowOrder(OrderType.UseSkill);
         Orders.AllowOrder(OrderType.Wait);
@@ -137,14 +139,14 @@ public class MyGameObject : MonoBehaviour
         Orders.Add(Order.Assemble(prefab));
     }
 
-    public void Attack(Vector3 position)
+    public void AttackObject(MyGameObject myGameObject)
     {
-        Orders.Add(Order.Attack(position));
+        Orders.Add(Order.AttackObject(myGameObject));
     }
 
-    public void Attack(MyGameObject myGameObject)
+    public void AttackPosition(Vector3 position)
     {
-        Orders.Add(Order.Attack(myGameObject));
+        Orders.Add(Order.AttackPosition(position));
     }
 
     public void Construct(MyGameObject myGameObject)
@@ -205,24 +207,24 @@ public class MyGameObject : MonoBehaviour
         }
     }
 
-    public void Gather(MyGameObject myGameObject)
+    public void GatherObject(MyGameObject myGameObject)
     {
-        Orders.Add(Order.Gather(myGameObject));
+        Orders.Add(Order.GatherObject(myGameObject));
     }
 
-    public void Gather(string resource = "")
+    public void GatherResource(string resource = "")
     {
-        Orders.Add(Order.Gather(resource));
+        Orders.Add(Order.GatherResource(resource));
     }
 
-    public void Guard(Vector3 position)
+    public void GuardObject(MyGameObject myGameObject)
     {
-        Orders.Add(Order.Guard(position));
+        Orders.Add(Order.GuardObject(myGameObject));
     }
 
-    public void Guard(MyGameObject myGameObject)
+    public void GuardPosition(Vector3 position)
     {
-        Orders.Add(Order.Guard(myGameObject));
+        Orders.Add(Order.GuardPosition(position));
     }
 
     public void Load(MyGameObject myGameObject, string resource, int value, int priority = -1)
@@ -846,6 +848,9 @@ public class MyGameObject : MonoBehaviour
     [field: SerializeField]
     private bool SnapToGrid { get; set; } = false;
 
+    [field: SerializeField]
+    public MyGameObjectVisibilityState VisibilityState { get; private set; } = MyGameObjectVisibilityState.Visible;
+
     public Vector3 Position { get => transform.position; set => transform.position = value; }
 
     public Quaternion Rotation { get => transform.rotation; set => transform.rotation = value; }
@@ -863,8 +868,6 @@ public class MyGameObject : MonoBehaviour
     public Dictionary<string, Skill> Skills { get; } = new Dictionary<string, Skill>();
 
     public Dictionary<OrderType, OrderHandler> OrderHandlers { get; } = new Dictionary<OrderType, OrderHandler>();
-
-    public MyGameObjectVisibilityState VisibilityState { get; private set; } = MyGameObjectVisibilityState.Visible;
 
     public Transform Body { get; private set; }
 

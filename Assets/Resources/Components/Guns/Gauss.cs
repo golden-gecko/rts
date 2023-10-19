@@ -19,7 +19,7 @@ public class Gauss : Gun
 
         missile.SetParent(myGameObject);
         missile.SetPlayer(myGameObject.Player);
-        missile.Attack(position);
+        missile.AttackPosition(position);
 
         Ammunition.Dec();
 

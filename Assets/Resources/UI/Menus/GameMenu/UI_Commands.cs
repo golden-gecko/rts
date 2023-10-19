@@ -70,7 +70,7 @@ public class UI_Commands : UI_Element<UI_Commands>
     {
         formations.Clear();
 
-        foreach (string i in Enum.GetNames(typeof(Formation)))
+        foreach (string i in Utils.GetFormationNames())
         {
             TemplateContainer buttonContainer = templateButton.Instantiate();
             Button button = buttonContainer.Q<Button>();
@@ -91,6 +91,7 @@ public class UI_Commands : UI_Element<UI_Commands>
         {
             OrderType.Assemble,
             OrderType.Construct,
+            OrderType.GatherResource,
             OrderType.Idle,
             OrderType.Load,
             OrderType.None,
@@ -102,7 +103,7 @@ public class UI_Commands : UI_Element<UI_Commands>
 
         orders.Clear();
 
-        foreach (string i in Enum.GetNames(typeof(OrderType)))
+        foreach (string i in Utils.GetOrderNames())
         {
             if (forbiddenInUI.Contains(Enum.Parse<OrderType>(i)))
             {

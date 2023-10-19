@@ -8,15 +8,18 @@ public class Cursor2D : Singleton<Cursor2D>
         base.Awake();
 
         cursors[OrderType.Assemble] = CursorAssemble;
-        cursors[OrderType.Attack] = CursorAttack;
+        cursors[OrderType.AttackObject] = CursorAttack;
+        cursors[OrderType.AttackPosition] = CursorAttack;
         cursors[OrderType.Construct] = CursorConstruct;
         cursors[OrderType.Destroy] = CursorDestroy;
         cursors[OrderType.Disable] = CursorDisable;
         cursors[OrderType.Enable] = CursorEnable;
         cursors[OrderType.Explore] = CursorExplore;
         cursors[OrderType.Follow] = CursorFollow;
-        cursors[OrderType.Gather] = CursorGather;
-        cursors[OrderType.Guard] = CursorGuard;
+        cursors[OrderType.GatherObject] = CursorGather;
+        cursors[OrderType.GatherResource] = CursorGather;
+        cursors[OrderType.GuardObject] = CursorGuard;
+        cursors[OrderType.GuardPosition] = CursorGuard;
         cursors[OrderType.Load] = CursorLoad;
         cursors[OrderType.Move] = CursorMove;
         cursors[OrderType.None] = CursorNone;

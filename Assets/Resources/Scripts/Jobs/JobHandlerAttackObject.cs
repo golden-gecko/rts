@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class JobHandlerAttack : JobHandler
+public class JobHandlerAttackObject : JobHandler
 {
     public override Order OnExecute(MyGameObject myGameObject)
     {
@@ -42,7 +42,7 @@ public class JobHandlerAttack : JobHandler
 
         if (closest != null)
         {
-            return Order.Attack(closest);
+            return Order.AttackObject(closest);
         }
 
         return null;

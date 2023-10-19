@@ -244,12 +244,12 @@ public class HUD : Singleton<HUD>
     {
         switch (Order)
         {
-            case OrderType.Attack:
-                ActivePlayer.Selection.Attack(position, MyInput.GetShift());
+            case OrderType.AttackPosition:
+                ActivePlayer.Selection.AttackPosition(position, MyInput.GetShift());
                 break;
 
-            case OrderType.Guard:
-                ActivePlayer.Selection.Guard(position, MyInput.GetShift());
+            case OrderType.GuardPosition:
+                ActivePlayer.Selection.GuardPosition(position, MyInput.GetShift());
                 break;
 
             case OrderType.Move:
@@ -272,20 +272,20 @@ public class HUD : Singleton<HUD>
         {
             // TODO: Implement assemble order.
 
-            case OrderType.Attack:
-                ActivePlayer.Selection.Attack(myGameObject, MyInput.GetShift());
+            case OrderType.AttackObject:
+                ActivePlayer.Selection.AttackObject(myGameObject, MyInput.GetShift());
                 break;
 
             case OrderType.Construct:
                 ActivePlayer.Selection.Construct(myGameObject, MyInput.GetShift());
                 break;
 
-            case OrderType.Gather:
-                ActivePlayer.Selection.Gather(MyInput.GetShift());
+            case OrderType.GatherObject:
+                ActivePlayer.Selection.GatherObject(myGameObject, MyInput.GetShift());
                 break;
 
-            case OrderType.Guard:
-                ActivePlayer.Selection.Guard(myGameObject, MyInput.GetShift());
+            case OrderType.GuardObject:
+                ActivePlayer.Selection.GuardObject(myGameObject, MyInput.GetShift());
                 break;
 
             case OrderType.Follow:
