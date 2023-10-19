@@ -10,7 +10,7 @@ public class Missile : MyGameObject
 
         if (FireEffectPrefab != null)
         {
-            Instantiate(FireEffectPrefab, Position, Quaternion.identity); // TODO: Set in inspector.
+            Instantiate(FireEffectPrefab, Position, Quaternion.identity);
         }
     }
 

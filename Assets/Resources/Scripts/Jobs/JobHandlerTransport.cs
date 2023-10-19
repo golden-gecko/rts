@@ -2,7 +2,7 @@ public class JobHandlerTransport : JobHandler
 {
     public override Order OnExecute(MyGameObject myGameObject)
     {
-        foreach (ResourceRequest consumer in myGameObject.Player.Consumers.Items) // TODO: Return closest object.
+        foreach (ResourceRequest consumer in myGameObject.Player.Consumers.Items)
         {
             if (consumer.MyGameObject == false)
             {
@@ -14,7 +14,7 @@ public class JobHandlerTransport : JobHandler
                 continue;
             }
 
-            foreach (ResourceRequest producer in myGameObject.Player.Producers.Items) // TODO: Return closest object.
+            foreach (ResourceRequest producer in myGameObject.Player.Producers.Items)
             {
                 if (producer.MyGameObject == false)
                 {
