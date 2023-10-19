@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class Map : Singleton<Map>
@@ -568,6 +567,81 @@ public class Map : Singleton<Map>
         }
 
         validated = Vector3.zero;
+
+        return false;
+    }
+
+    public bool GetNearestUnexplored(Order order, Player player, out Vector3 position)
+    {
+        Vector3Int positionGrid = Utils.ToGrid(order.TargetPosition, Config.Map.Scale);
+
+        positionGrid.y = 0;
+
+        if (order.Queue == null)
+        {
+            order.Queue = new List<Vector3Int> { positionGrid };
+        }
+
+        if (order.Visited == null)
+        {
+            order.Visited = new List<Vector3Int>();
+        }
+
+        while (order.Queue.Count > 0)
+        {
+            Vector3Int sector = order.Queue.First();
+            order.Queue.Remove(sector);
+
+            if (order.Visited.Contains(sector))
+            {
+                continue;
+            }
+
+            order.Visited.Add(sector);
+
+            if (Cells[sector.x, sector.z].Explored.TryGetValue(player, out int value))
+            {
+                if (value <= 0)
+                {
+                    position = new Vector3(sector.x * Config.Map.Scale, 0.0f, sector.z * Config.Map.Scale);
+
+                    return true; 
+                }
+            }
+            else
+            {
+                position = new Vector3(sector.x * Config.Map.Scale, 0.0f, sector.z * Config.Map.Scale);
+
+                return true; 
+            }
+
+            Vector3Int forward = sector + Vector3Int.forward;
+            Vector3Int back = sector + Vector3Int.back;
+            Vector3Int right = sector + Vector3Int.right;
+            Vector3Int left = sector + Vector3Int.left;
+
+            if (Utils.IsPointInRect(forward.x, forward.z, Config.Map.Size))
+            {
+                order.Queue.Add(forward);
+            }
+
+            if (Utils.IsPointInRect(back.x, back.z, Config.Map.Size))
+            {
+                order.Queue.Add(back);
+            }
+
+            if (Utils.IsPointInRect(right.x, right.z, Config.Map.Size))
+            {
+                order.Queue.Add(right);
+            }
+
+            if (Utils.IsPointInRect(left.x, left.z, Config.Map.Size))
+            {
+                order.Queue.Add(left);
+            }
+        }
+
+        position = Vector3.zero;
 
         return false;
     }

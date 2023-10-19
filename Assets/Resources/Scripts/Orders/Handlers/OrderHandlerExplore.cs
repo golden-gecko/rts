@@ -4,11 +4,15 @@ public class OrderHandlerExplore : OrderHandler
 {
     public override void OnExecute(MyGameObject myGameObject)
     {
-        float range = myGameObject.GetComponent<Sight>().Range.Total;
+        Order order = myGameObject.Orders.First();
 
-        float x = Random.Range(myGameObject.Position.x - range, myGameObject.Position.x + range);
-        float z = Random.Range(myGameObject.Position.z - range, myGameObject.Position.z + range);
-
-        myGameObject.Move(new Vector3(x, 0.0f, z), 0); // TODO: Replace random with move towards unexplored sectors.
+        if (Map.Instance.GetNearestUnexplored(order, myGameObject.Player, out Vector3 position))
+        {
+            myGameObject.Move(position, 0);
+        }
+        else
+        {
+            Fail(myGameObject);
+        }
     }
 }

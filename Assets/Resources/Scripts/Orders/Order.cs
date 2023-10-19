@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class Order
@@ -62,12 +63,13 @@ public class Order
         };
     }
 
-    public static Order Explore()
+    public static Order Explore(Vector3 position)
     {
 
         return new Order
         {
             Type = OrderType.Explore,
+            TargetPosition = position,
         };
     }
 
@@ -354,4 +356,8 @@ public class Order
     public string Skill { get; private set; }
 
     public string Technology { get; private set; }
+
+    public List<Vector3Int> Queue { get; set; }
+
+    public List<Vector3Int> Visited { get; set; }
 }

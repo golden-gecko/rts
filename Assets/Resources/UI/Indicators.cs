@@ -498,7 +498,7 @@ public class Indicators : MonoBehaviour
 
     private void UpdateSigns(MyGameObject myGameObject)
     {
-        if (myGameObject.TryGetComponent(out Storage storage))
+        if (myGameObject.TryGetComponent(out Storage storage) && myGameObject.TryGetComponent(out Engine _) == false)
         {
             signEntrance.gameObject.SetActive(storage.Resources.In);
             signEntrance.position = myGameObject.Entrance;

@@ -11,15 +11,15 @@ public class PowerPlant : MyComponent
 
         MakeConnections();
 
-        previousState = Parent.State;
-        previousEnabled = Parent.Enabled;
-        previousPosition = Parent.Position;
-        previousProducerConnected = (IsProducer || IsProducerConnected);
-
         if (Parent.State == MyGameObjectState.Operational && Parent.Enabled && (IsProducer || IsProducerConnected))
         {
             PowerUpTimeActive = true;
         }
+
+        previousState = Parent.State;
+        previousEnabled = Parent.Enabled;
+        previousPosition = Parent.Position;
+        previousProducerConnected = (IsProducer || IsProducerConnected);
     }
 
     private bool PowerUpTimeActive = false;

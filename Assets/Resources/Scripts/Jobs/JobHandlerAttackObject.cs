@@ -7,7 +7,7 @@ public class JobHandlerAttackObject : JobHandler
         float minDistance = float.MaxValue;
         MyGameObject closest = null;
 
-        foreach (MyGameObject target in Object.FindObjectsByType<MyGameObject>(FindObjectsSortMode.None)) // TODO: Refactor.
+        foreach (MyGameObject target in Object.FindObjectsByType<MyGameObject>(FindObjectsSortMode.None))
         {
             if (myGameObject.Is(target, DiplomacyState.Enemy) == false)
             {
