@@ -264,6 +264,7 @@ MonoBehaviour:
   <State>k__BackingField: 1
   <CreateBase>k__BackingField: 0
   <SnapToGrid>k__BackingField: 0
+  <VisibilityState>k__BackingField: 2
 --- !u!114 &-1905707371472494572
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -285,6 +286,7 @@ MonoBehaviour:
   <Reload>k__BackingField:
     <Current>k__BackingField: 4
     <Max>k__BackingField: 4
+  <DamageType>k__BackingField: []
 --- !u!114 &-794089965590381253
 MonoBehaviour:
   m_ObjectHideFlags: 0

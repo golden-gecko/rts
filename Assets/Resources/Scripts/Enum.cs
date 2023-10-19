@@ -3,8 +3,6 @@ public enum DiplomacyState
     Ally = 0,
     Enemy = 1,
     Neutral = 2,
-
-    MAX = 3,
 }
 
 public enum Formation
@@ -17,8 +15,6 @@ public enum Formation
     Square = 5,
     Triangle = 6,
     Wedge = 7,
-
-    MAX = 8,
 }
 
 /*
@@ -51,8 +47,6 @@ public enum MyGameObjectVisibilityState
     Radar = 1,
     Visible = 2,
     Explored = 3,
-
-    MAX = 4,
 }
 
 public enum MyGameObjectState
@@ -61,8 +55,6 @@ public enum MyGameObjectState
     Operational = 1,
     UnderAssembly = 2,
     UnderConstruction = 3,
-
-    MAX = 4,
 }
 
 public enum OrderType
@@ -95,8 +87,6 @@ public enum OrderType
     Unload = 21,
     UseSkill = 22,
     Wait = 23,
-
-    MAX = 28,
 }
 
 public enum ResourceDirection
@@ -105,6 +95,10 @@ public enum ResourceDirection
     None = 1,
     Out = 2,
     Store = 3,
+}
 
-    MAX = 4,
+public enum DamageType
+{
+    Kinetic = 0,
+    Laser = 1,
 }

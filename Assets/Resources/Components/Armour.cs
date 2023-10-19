@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class Armour : MyComponent
@@ -14,4 +15,7 @@ public class Armour : MyComponent
 
     [field: SerializeField]
     public Progress Value { get; private set; } = new Progress(100.0f, 100.0f);
+
+    [field: SerializeField]
+    public List<DamageTypeItem> ProtectionType { get; private set; } = new List<DamageTypeItem>();
 }

@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class Shield : MyComponent
@@ -46,4 +47,7 @@ public class Shield : MyComponent
 
     [field: SerializeField]
     public float ChargeRate { get; private set; } = 0.1f;
+
+    [field: SerializeField]
+    public List<DamageTypeItem> ProtectionType { get; private set; } = new List<DamageTypeItem>();
 }

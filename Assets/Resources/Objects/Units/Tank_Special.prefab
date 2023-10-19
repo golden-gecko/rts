@@ -269,6 +269,7 @@ MonoBehaviour:
   <State>k__BackingField: 1
   <CreateBase>k__BackingField: 0
   <SnapToGrid>k__BackingField: 0
+  <VisibilityState>k__BackingField: 2
 --- !u!114 &5524956404379026895
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -285,6 +286,11 @@ MonoBehaviour:
   <Value>k__BackingField:
     <Current>k__BackingField: 100
     <Max>k__BackingField: 100
+  <ProtectionType>k__BackingField:
+  - <Type>k__BackingField: 0
+    <Ratio>k__BackingField: 0.5
+  - <Type>k__BackingField: 1
+    <Ratio>k__BackingField: 0.8
 --- !u!114 &-5010447674212785321
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -306,6 +312,9 @@ MonoBehaviour:
   <Reload>k__BackingField:
     <Current>k__BackingField: 4
     <Max>k__BackingField: 4
+  <DamageType>k__BackingField:
+  - <Type>k__BackingField: 0
+    <Ratio>k__BackingField: 1
 --- !u!114 &-7318105187754308936
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -343,6 +352,11 @@ MonoBehaviour:
     <Max>k__BackingField: 100
   <Power>k__BackingField: 0.2
   <ChargeRate>k__BackingField: 0.1
+  <ProtectionType>k__BackingField:
+  - <Type>k__BackingField: 0
+    <Ratio>k__BackingField: 0.8
+  - <Type>k__BackingField: 1
+    <Ratio>k__BackingField: 0.2
 --- !u!114 &-5877654829243037068
 MonoBehaviour:
   m_ObjectHideFlags: 0

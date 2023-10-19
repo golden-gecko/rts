@@ -1,3 +1,5 @@
+using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class Gun : MyComponent
@@ -54,4 +56,7 @@ public class Gun : MyComponent
 
     [field: SerializeField]
     public Counter Ammunition { get; } = new Counter(100, 100);
+
+    [field: SerializeField]
+    public List<DamageTypeItem> DamageType { get; private set; } = new List<DamageTypeItem>();
 }
