@@ -184,7 +184,7 @@ BoxCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
@@ -371,6 +371,7 @@ MonoBehaviour:
   <State>k__BackingField: 1
   <CreateBase>k__BackingField: 0
   <SnapToGrid>k__BackingField: 0
+  <VisibilityState>k__BackingField: 2
 --- !u!114 &-2369591204685981222
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -388,10 +389,13 @@ MonoBehaviour:
   <Damage>k__BackingField:
     <Value>k__BackingField: 10
   <Range>k__BackingField:
-    <Value>k__BackingField: 8
+    <Value>k__BackingField: 10
   <Reload>k__BackingField:
     <Current>k__BackingField: 4
     <Max>k__BackingField: 4
+  <DamageType>k__BackingField:
+  - <Type>k__BackingField: 0
+    <Ratio>k__BackingField: 1
 --- !u!114 &-2318656066432629002
 MonoBehaviour:
   m_ObjectHideFlags: 0

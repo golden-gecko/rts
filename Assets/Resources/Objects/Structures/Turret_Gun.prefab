@@ -265,6 +265,7 @@ MonoBehaviour:
   <State>k__BackingField: 1
   <CreateBase>k__BackingField: 1
   <SnapToGrid>k__BackingField: 1
+  <VisibilityState>k__BackingField: 2
 --- !u!114 &7435805196623170354
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -281,6 +282,11 @@ MonoBehaviour:
   <Value>k__BackingField:
     <Current>k__BackingField: 100
     <Max>k__BackingField: 100
+  <ProtectionType>k__BackingField:
+  - <Type>k__BackingField: 0
+    <Ratio>k__BackingField: 0.5
+  - <Type>k__BackingField: 1
+    <Ratio>k__BackingField: 0.2
 --- !u!114 &6061490095772530966
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -302,6 +308,9 @@ MonoBehaviour:
   <Reload>k__BackingField:
     <Current>k__BackingField: 4
     <Max>k__BackingField: 4
+  <DamageType>k__BackingField:
+  - <Type>k__BackingField: 1
+    <Ratio>k__BackingField: 1
 --- !u!114 &7198170055507870707
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -338,6 +347,7 @@ MonoBehaviour:
     <Max>k__BackingField: 100
   <Power>k__BackingField: 0.2
   <ChargeRate>k__BackingField: 0.1
+  <ProtectionType>k__BackingField: []
 --- !u!1 &7684841566980852796
 GameObject:
   m_ObjectHideFlags: 0

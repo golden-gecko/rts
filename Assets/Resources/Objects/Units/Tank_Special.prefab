@@ -261,11 +261,7 @@ MonoBehaviour:
   <ExpirationTimer>k__BackingField:
     <Current>k__BackingField: -1
     <Max>k__BackingField: -1
-  <SkillsNames>k__BackingField:
-  - Damage
-  - PassiveIncreaseDamage
-  - PassiveIncreasePower
-  - PassiveIncreaseRange
+  <SkillsNames>k__BackingField: []
   <State>k__BackingField: 1
   <CreateBase>k__BackingField: 0
   <SnapToGrid>k__BackingField: 0
@@ -290,7 +286,7 @@ MonoBehaviour:
   - <Type>k__BackingField: 0
     <Ratio>k__BackingField: 0.5
   - <Type>k__BackingField: 1
-    <Ratio>k__BackingField: 0.8
+    <Ratio>k__BackingField: 0.2
 --- !u!114 &-5010447674212785321
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -303,12 +299,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3a403fb22d2914049ac162610b2aebf2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <Mass>k__BackingField: 30
+  <Mass>k__BackingField: 10
   <MissilePrefab>k__BackingField: {fileID: 3841255586236475405, guid: 86513724c5de2df4da484cb23191a7e5, type: 3}
   <Damage>k__BackingField:
     <Value>k__BackingField: 10
   <Range>k__BackingField:
-    <Value>k__BackingField: 8
+    <Value>k__BackingField: 10
   <Reload>k__BackingField:
     <Current>k__BackingField: 4
     <Max>k__BackingField: 4

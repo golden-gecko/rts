@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 3641180028853205744}
   - component: {fileID: 6056742031258224151}
   - component: {fileID: 1146566098120608045}
-  m_Layer: 0
+  m_Layer: 20
   m_Name: Body
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -117,7 +117,7 @@ GameObject:
   - component: {fileID: -3062233178644774705}
   - component: {fileID: 5235805936999583960}
   - component: {fileID: 1444006043923519877}
-  m_Layer: 0
+  m_Layer: 20
   m_Name: Storage
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -200,6 +200,7 @@ MonoBehaviour:
   <State>k__BackingField: 1
   <CreateBase>k__BackingField: 1
   <SnapToGrid>k__BackingField: 1
+  <VisibilityState>k__BackingField: 2
 --- !u!114 &1444006043923519877
 MonoBehaviour:
   m_ObjectHideFlags: 0

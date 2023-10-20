@@ -729,6 +729,9 @@ public class MyGameObject : MonoBehaviour
     {
         get
         {
+            // TODO: Fix center of an object.
+
+            /*
             Collider[] colliders = GetComponentsInChildren<Collider>();
 
             if (colliders.Length <= 0)
@@ -744,6 +747,9 @@ public class MyGameObject : MonoBehaviour
             }
 
             return center / colliders.Length;
+            */
+
+            return new Vector3(Position.x, Position.y + Size.y / 2.0f, Position.z);
         }
     }
 

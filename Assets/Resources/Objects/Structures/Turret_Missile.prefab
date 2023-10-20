@@ -181,6 +181,7 @@ MonoBehaviour:
   <State>k__BackingField: 1
   <CreateBase>k__BackingField: 1
   <SnapToGrid>k__BackingField: 1
+  <VisibilityState>k__BackingField: 2
 --- !u!114 &-1034757096108681396
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -197,6 +198,11 @@ MonoBehaviour:
   <Value>k__BackingField:
     <Current>k__BackingField: 100
     <Max>k__BackingField: 100
+  <ProtectionType>k__BackingField:
+  - <Type>k__BackingField: 0
+    <Ratio>k__BackingField: 0.5
+  - <Type>k__BackingField: 1
+    <Ratio>k__BackingField: 0.2
 --- !u!114 &1663271716841619100
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -218,6 +224,9 @@ MonoBehaviour:
   <Reload>k__BackingField:
     <Current>k__BackingField: 4
     <Max>k__BackingField: 4
+  <DamageType>k__BackingField:
+  - <Type>k__BackingField: 0
+    <Ratio>k__BackingField: 1
 --- !u!114 &8291041007294955635
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -416,7 +425,7 @@ BoxCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3

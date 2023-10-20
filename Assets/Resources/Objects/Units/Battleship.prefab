@@ -282,11 +282,13 @@ MonoBehaviour:
   <Damage>k__BackingField:
     <Value>k__BackingField: 10
   <Range>k__BackingField:
-    <Value>k__BackingField: 8
+    <Value>k__BackingField: 10
   <Reload>k__BackingField:
     <Current>k__BackingField: 4
     <Max>k__BackingField: 4
-  <DamageType>k__BackingField: []
+  <DamageType>k__BackingField:
+  - <Type>k__BackingField: 0
+    <Ratio>k__BackingField: 1
 --- !u!114 &-794089965590381253
 MonoBehaviour:
   m_ObjectHideFlags: 0
