@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class Damage : Skill
@@ -32,7 +33,7 @@ public class Damage : Skill
                 continue;
             }
 
-            target.OnDamage(Value);
+            target.OnDamage(new List<DamageTypeItem>(), Value); // TODO: Fix damage.
         }
 
         Object.Instantiate(Resources.Load(Effect), myGameObject.Position, Quaternion.identity);

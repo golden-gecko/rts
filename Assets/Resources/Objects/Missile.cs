@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class Missile : MyGameObject
@@ -23,4 +24,7 @@ public class Missile : MyGameObject
 
     [field: SerializeField]
     public Property Range { get; set; } = new Property();
+
+    [field: SerializeField]
+    public List<DamageTypeItem> DamageType { get; set; } = new List<DamageTypeItem>();
 }

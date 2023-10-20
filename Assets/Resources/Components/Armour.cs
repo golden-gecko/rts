@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using static UnityEditor.Experimental.GraphView.Port;
 
 public class Armour : MyComponent
 {
@@ -8,9 +9,25 @@ public class Armour : MyComponent
         return string.Format("Armour: {0}, Value: {1}", base.GetInfo(), Value.GetInfo());
     }
 
-    public float Absorb(float damage)
+    public float Absorb(DamageType type, float damage)
     {
-        return Value.Remove(damage);
+        float absorbed = 0.0f;
+
+        foreach (DamageTypeItem i in ProtectionType)
+        {
+            if (i.Type == type)
+            {
+                float damageToReflect = damage * i.Ratio;
+                float damageToAbsorb = damage - damageToReflect;
+
+                absorbed += damageToReflect;
+                absorbed += Value.Remove(damageToAbsorb);
+
+                break;
+            }
+        }
+
+        return absorbed;
     }
 
     [field: SerializeField]

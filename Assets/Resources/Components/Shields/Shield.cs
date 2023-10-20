@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using static UnityEditor.Experimental.GraphView.Port;
 
 public class Shield : MyComponent
 {
@@ -25,12 +26,28 @@ public class Shield : MyComponent
 
     public override string GetInfo()
     {
-        return string.Format("Shield: {0}, Range: {1:0.}, Power: {2:0.}", base.GetInfo(), Range.Total, Power);
+        return string.Format("Shield: {0}, Range: {1:0.}", base.GetInfo(), Range.Total);
     }
 
-    public float Absorb(float damage)
+    public float Absorb(DamageType type, float damage)
     {
-        return Capacity.Remove(damage * Power);
+        float absorbed = 0.0f;
+
+        foreach (DamageTypeItem i in ProtectionType)
+        {
+            if (i.Type == type)
+            {
+                float damageToReflect = damage * i.Ratio;
+                float damageToAbsorb = damage - damageToReflect;
+
+                absorbed += damageToReflect;
+                absorbed += Capacity.Remove(damageToAbsorb);
+
+                break;
+            }
+        }
+
+        return absorbed;
     }
 
     [field: SerializeField]
@@ -41,9 +58,6 @@ public class Shield : MyComponent
 
     [field: SerializeField]
     public Progress Capacity { get; private set; } = new Progress(100.0f, 100.0f);
-
-    [field: SerializeField]
-    public float Power { get; private set; } = 0.2f; // From 0.0 to 1.0 (0.0 - no damage is absorbed, 1.0 - all damage is absorbed).
 
     [field: SerializeField]
     public float ChargeRate { get; private set; } = 0.1f;

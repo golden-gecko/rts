@@ -56,7 +56,7 @@ public class OrderHandlerAttackPositionLaser : OrderHandler
             myGameObject.transform.LookAt(order.TargetPosition);
 
             Missile missile = myGameObject.GetComponent<Missile>();
-            float damageDealt = closest.OnDamage(missile.Damage.Total);
+            float damageDealt = closest.OnDamage(missile.DamageType, missile.Damage.Total);
 
             if (closest.Alive == false)
             {

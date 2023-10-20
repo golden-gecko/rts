@@ -517,6 +517,8 @@ MonoBehaviour:
     <Current>k__BackingField: 4
     <Max>k__BackingField: 4
   <DamageType>k__BackingField:
+  - <Type>k__BackingField: 0
+    <Ratio>k__BackingField: 1
   - <Type>k__BackingField: 1
     <Ratio>k__BackingField: 1
 --- !u!114 &1711648457831509688

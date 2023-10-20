@@ -20,7 +20,7 @@ public class Disaster : MyGameObject
                 {
                     i.Value.Reset();
 
-                    i.Key.OnDamage(DamagePerSecond);
+                    i.Key.OnDamage(new List<DamageTypeItem>(), DamagePerSecond); // TODO: Fix damage.
                 }
             }
         }
@@ -46,7 +46,7 @@ public class Disaster : MyGameObject
         {
             Damaged.Add(myGameObject);
 
-            myGameObject.OnDamage(Damage);
+            myGameObject.OnDamage(new List<DamageTypeItem>(), Damage); // TODO: Fix damage.
         }
     }
 

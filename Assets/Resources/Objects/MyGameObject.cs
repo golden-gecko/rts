@@ -392,18 +392,24 @@ public class MyGameObject : MonoBehaviour
         return Player.Is(player, state);
     }
 
-    public float OnDamage(float damage)
+    public float OnDamage(List<DamageTypeItem> damageType, float damage)
     {
         float damageLeft = damage;
 
-        foreach (Shield shield in GetComponents<Shield>())
+        if (TryGetComponent(out Shield shield))
         {
-            damageLeft -= shield.Absorb(damageLeft);
+            foreach (DamageTypeItem damageTypeItem in damageType)
+            {
+                damageLeft -= shield.Absorb(damageTypeItem.Type, damageTypeItem.Ratio * damageLeft);
+            }
         }
 
-        foreach (Armour armour in GetComponents<Armour>())
+        if (TryGetComponent(out Armour armour))
         {
-            damageLeft -= armour.Absorb(damageLeft);
+            foreach (DamageTypeItem damageTypeItem in damageType)
+            {
+                damageLeft -= armour.Absorb(damageTypeItem.Type, damageTypeItem.Ratio * damageLeft);
+            }
         }
 
         damageLeft -= Health.Remove(damageLeft);

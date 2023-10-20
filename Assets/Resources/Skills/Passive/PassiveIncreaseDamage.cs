@@ -24,7 +24,7 @@ public class PassiveIncreaseDamage : Skill
                 continue;
             }
 
-            foreach (Gun gun in target.GetComponents<Gun>())
+            if (target.TryGetComponent(out Gun gun))
             {
                 gun.Damage.Factor.Remove(myGameObject);
             }
@@ -41,7 +41,7 @@ public class PassiveIncreaseDamage : Skill
                 continue;
             }
 
-            foreach (Gun gun in target.GetComponents<Gun>())
+            if (target.TryGetComponent(out Gun gun))
             {
                 gun.Damage.Factor.Add(myGameObject, Value);
 
@@ -57,7 +57,7 @@ public class PassiveIncreaseDamage : Skill
 
         foreach (MyGameObject target in targets)
         {
-            foreach (Gun gun in target.GetComponents<Gun>())
+            if (target.TryGetComponent(out Gun gun))
             {
                 gun.Damage.Factor.Remove(myGameObject);
             }
