@@ -347,6 +347,9 @@ MonoBehaviour:
     <Current>k__BackingField: 100
     <Max>k__BackingField: 100
   <ChargeRate>k__BackingField: 0.1
+  <ResetTime>k__BackingField:
+    <Current>k__BackingField: 3
+    <Max>k__BackingField: 3
   <ProtectionType>k__BackingField:
   - <Type>k__BackingField: 0
     <Ratio>k__BackingField: 0.8

@@ -10,10 +10,9 @@ public class Shield : MyComponent
 
         if (Mesh != null)
         {
-            GameObject mesh = Instantiate(Mesh, Parent.Position, Quaternion.identity);
-
-            mesh.transform.parent = Parent.transform;
-            mesh.transform.localScale = new Vector3(Range.Total * 2.0f / Parent.Scale.x, Range.Total * 2.0f / Parent.Scale.y, Range.Total * 2.0f / Parent.Scale.z);
+            shield = Instantiate(Mesh, Parent.Position, Quaternion.identity);
+            shield.transform.parent = Parent.transform;
+            shield.transform.localScale = new Vector3(Range.Total * 2.0f / Parent.Scale.x, Range.Total * 2.0f / Parent.Scale.y, Range.Total * 2.0f / Parent.Scale.z);
         }
     }
 
@@ -21,7 +20,16 @@ public class Shield : MyComponent
     {
         base.Update();
 
-        Capacity.Add(ChargeRate * Time.deltaTime);
+        if (ResetTime.Update(Time.deltaTime))
+        {
+            shield.SetActive(true);
+
+            Capacity.Add(ChargeRate * Time.deltaTime);
+        }
+        else
+        {
+            shield.SetActive(false);
+        }
     }
 
     public override string GetInfo()
@@ -43,6 +51,11 @@ public class Shield : MyComponent
                 absorbed += damageToReflect;
                 absorbed += Capacity.Remove(damageToAbsorb);
 
+                if (Capacity.Current <= 0.0f)
+                {
+                    ResetTime.Reset();
+                }
+
                 break;
             }
         }
@@ -63,5 +76,10 @@ public class Shield : MyComponent
     public float ChargeRate { get; private set; } = 0.1f;
 
     [field: SerializeField]
+    public Timer ResetTime { get; private set; } = new Timer(3.0f, 3.0f);
+
+    [field: SerializeField]
     public List<DamageTypeItem> ProtectionType { get; private set; } = new List<DamageTypeItem>();
+
+    private GameObject shield;
 }
