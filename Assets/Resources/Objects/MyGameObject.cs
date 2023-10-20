@@ -2,33 +2,15 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
+[DisallowMultipleComponent]
 public class MyGameObject : MonoBehaviour
 {
     protected virtual void Awake()
     {
         Body = transform.Find("Body");
-        Indicators = Instantiate(Resources.Load<Indicators>("Indicators"), transform, false);
 
-        if (CreateBase)
-        {
-            Vector3 size = Size;
-
-            int x = Mathf.CeilToInt(size.x / Config.Map.Scale);
-            int z = Mathf.CeilToInt(size.z / Config.Map.Scale);
-
-            x = Utils.MakeOdd(x);
-            z = Utils.MakeOdd(z);
-
-            size.x = x * Config.Map.Scale;
-            size.z = z * Config.Map.Scale;
-
-            Body.transform.localPosition = new Vector3(0.0f, 0.25f, 0.0f);
-
-            Base = Instantiate(Resources.Load<GameObject>("Base"), transform, false);
-            Base.transform.localScale = new Vector3(size.x, 0.5f, size.z);
-
-            Indicators.transform.localPosition = new Vector3(0.0f, 0.25f, 0.0f);
-        }
+        SetupIndicators();
+        SetupBase();
 
         Orders.AllowOrder(OrderType.Destroy); // TODO: Move to component.
         Orders.AllowOrder(OrderType.Disable);
@@ -463,7 +445,8 @@ public class MyGameObject : MonoBehaviour
 
     public void OnRepair(float value)
     {
-        Stats.Add(Stats.DamageRepaired, Health.Add(value));
+        // TODO: Repair health, armour and shield.
+        // Stats.Add(Stats.DamageRepaired, Health.Add(value));
     }
 
     public void Select(bool status)
@@ -473,7 +456,7 @@ public class MyGameObject : MonoBehaviour
             return;
         }
 
-        Indicators.GetComponent<Indicators>().OnSelect(status);
+        Indicators.OnSelect(status);
     }
 
     private void InitializePosition()
@@ -510,7 +493,7 @@ public class MyGameObject : MonoBehaviour
     {
         if (Player != null)
         {
-            Indicators.GetComponent<Indicators>().OnPlayerChange(Player);
+            Indicators.OnPlayerChange(Player);
         }
     }
 
@@ -655,6 +638,34 @@ public class MyGameObject : MonoBehaviour
         Orders.Clear();
     }
 
+    private void SetupIndicators()
+    {
+        Indicators = Instantiate(Resources.Load<Indicators>("Indicators"), transform, false);
+    }
+
+    private void SetupBase()
+    {
+        if (CreateBase == false)
+        {
+            return;
+        }
+
+        Vector3 size = Size;
+
+        int x = Utils.MakeOdd(Mathf.CeilToInt(size.x / Config.Map.Scale));
+        int z = Utils.MakeOdd(Mathf.CeilToInt(size.z / Config.Map.Scale));
+
+        size.x = x * Config.Map.Scale;
+        size.z = z * Config.Map.Scale;
+
+        Body.transform.localPosition = new Vector3(0.0f, 0.25f, 0.0f);
+
+        Indicators.transform.localPosition = new Vector3(0.0f, 0.25f, 0.0f);
+
+        Base = Instantiate(Resources.Load<GameObject>("Base"), transform, false);
+        Base.transform.localScale = new Vector3(size.x, 0.5f, size.z);
+    }
+
     private void CreateSkills()
     {
         foreach (string skillName in SkillsNames)
@@ -679,7 +690,7 @@ public class MyGameObject : MonoBehaviour
         {
             EnableRenderers(true);
 
-            Indicators.GetComponent<Indicators>().OnShow();
+            Indicators.OnShow();
 
             VisibilityState = MyGameObjectVisibilityState.Visible;
         }
@@ -687,7 +698,7 @@ public class MyGameObject : MonoBehaviour
         {
             EnableRenderers(true);
 
-            Indicators.GetComponent<Indicators>().OnExploration();
+            Indicators.OnExploration();
 
             VisibilityState = MyGameObjectVisibilityState.Explored;
         }
@@ -695,7 +706,7 @@ public class MyGameObject : MonoBehaviour
         {
             EnableRenderers(false);
 
-            Indicators.GetComponent<Indicators>().OnRadar();
+            Indicators.OnRadar();
 
             VisibilityState = MyGameObjectVisibilityState.Radar;
         }
@@ -703,7 +714,7 @@ public class MyGameObject : MonoBehaviour
         {
             EnableRenderers(false);
 
-            Indicators.GetComponent<Indicators>().OnHide();
+            Indicators.OnHide();
 
             VisibilityState = MyGameObjectVisibilityState.Hidden;
         }
