@@ -51,10 +51,6 @@ public class DisasterManager : Singleton<DisasterManager>
         position.x += Random.Range(-DisasterRange, DisasterRange);
         position.z += Random.Range(-DisasterRange, DisasterRange);
 
-        position.x = 291.47f;
-        position.y = 9.998167f;
-        position.z = 110.13f;
-
         return position;
     }
 

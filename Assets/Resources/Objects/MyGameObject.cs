@@ -877,6 +877,9 @@ public class MyGameObject : MonoBehaviour
     [field: SerializeField]
     public MyGameObjectVisibilityState VisibilityState { get; private set; } = MyGameObjectVisibilityState.Visible;
 
+    [field: SerializeField]
+    public bool RotateTowardsTarget { get; private set; } = true;
+
     public Vector3 Position { get => transform.position; set => transform.position = value; }
 
     public Quaternion Rotation { get => transform.rotation; set => transform.rotation = value; }

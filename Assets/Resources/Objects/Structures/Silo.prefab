@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 970409583821205617}
   - component: {fileID: 3116152599023592423}
   - component: {fileID: 6894268574580375520}
+  - component: {fileID: -2740928720530658496}
   m_Layer: 0
   m_Name: Silo
   m_TagString: Untagged
@@ -95,6 +96,31 @@ MonoBehaviour:
   <CreateBase>k__BackingField: 1
   <SnapToGrid>k__BackingField: 1
   <VisibilityState>k__BackingField: 2
+  <RotateTowardsTarget>k__BackingField: 0
+--- !u!114 &-2740928720530658496
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 449311907384158923}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ecda5608eea4a56479ada7dabce2d1bd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  <Mass>k__BackingField: 10
+  <MissilePrefab>k__BackingField: {fileID: 3841255586236475405, guid: 93bebf80087827f49b9a953289778170, type: 3}
+  <Damage>k__BackingField:
+    <Value>k__BackingField: 20
+  <Range>k__BackingField:
+    <Value>k__BackingField: 100
+  <Reload>k__BackingField:
+    <Current>k__BackingField: 4
+    <Max>k__BackingField: 4
+  <DamageType>k__BackingField:
+  - <Type>k__BackingField: 0
+    <Ratio>k__BackingField: 1
 --- !u!1 &5357928085654594938
 GameObject:
   m_ObjectHideFlags: 0

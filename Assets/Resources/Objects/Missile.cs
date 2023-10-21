@@ -17,6 +17,9 @@ public class Missile : MyGameObject
     public GameObject FireEffectPrefab { get; private set; }
 
     [field: SerializeField]
+    public GameObject MoveEffectPrefab { get; private set; }
+
+    [field: SerializeField]
     public GameObject HitEffectPrefab { get; private set; }
 
     [field: SerializeField]

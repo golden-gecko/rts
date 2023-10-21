@@ -60,7 +60,11 @@ public class OrderHandlerAttackObjectLaser : OrderHandler
 
             myGameObject.Body.transform.localPosition = new Vector3(0.0f, 0.0f, magnitude / 2.0f);
             myGameObject.Body.transform.localScale = new Vector3(myGameObject.Body.transform.localScale.x, myGameObject.Body.transform.localScale.y, magnitude);
-            myGameObject.transform.LookAt(order.TargetGameObject.Position);
+
+            if (myGameObject.RotateTowardsTarget)
+            {
+                myGameObject.transform.LookAt(order.TargetGameObject.Position);
+            }
 
             Missile missile = myGameObject.GetComponent<Missile>();
             float damageDealt = closest.OnDamageHandler(missile.DamageType, missile.Damage.Total);
