@@ -13,7 +13,7 @@ public class OrderHandlerMove : OrderHandler
         return (a - b).magnitude;
     }
 
-    public override void OnExecute(MyGameObject myGameObject)
+    public override void OnExecuteHandler(MyGameObject myGameObject)
     {
         Order order = myGameObject.Orders.First();
 
@@ -51,7 +51,7 @@ public class OrderHandlerMove : OrderHandler
             }
 
             myGameObject.GetComponent<Engine>().Drive(distanceToTravel);
-            myGameObject.OnMove(validated);
+            myGameObject.OnMoveHandler(validated);
             myGameObject.Stats.Add(Stats.DistanceDriven, distanceToTravel);
         }
         else
@@ -73,7 +73,7 @@ public class OrderHandlerMove : OrderHandler
             }
 
             myGameObject.GetComponent<Engine>().Drive(distanceToTarget);
-            myGameObject.OnMove(validated);
+            myGameObject.OnMoveHandler(validated);
             myGameObject.Stats.Add(Stats.DistanceDriven, distanceToTarget);
 
             Success(myGameObject);

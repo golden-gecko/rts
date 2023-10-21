@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class OrderHandlerAttackPositionLaser : OrderHandler
 {
-    public override void OnExecute(MyGameObject myGameObject)
+    public override void OnExecuteHandler(MyGameObject myGameObject)
     {
         Order order = myGameObject.Orders.First();
 
@@ -56,7 +56,7 @@ public class OrderHandlerAttackPositionLaser : OrderHandler
             myGameObject.transform.LookAt(order.TargetPosition);
 
             Missile missile = myGameObject.GetComponent<Missile>();
-            float damageDealt = closest.OnDamage(missile.DamageType, missile.Damage.Total);
+            float damageDealt = closest.OnDamageHandler(missile.DamageType, missile.Damage.Total);
 
             if (closest.Alive == false)
             {

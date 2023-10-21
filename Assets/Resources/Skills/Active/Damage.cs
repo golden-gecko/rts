@@ -14,9 +14,9 @@ public class Damage : Skill
         DamageType = damageType;
     }
 
-    public override void OnExecute(MyGameObject myGameObject)
+    public override void OnExecuteHandler(MyGameObject myGameObject)
     {
-        base.OnExecute(myGameObject);
+        base.OnExecuteHandler(myGameObject);
 
         RaycastHit[] hitInfos = Utils.SphereCastAll(myGameObject.Position, Range, Utils.GetGameObjectMask());
 
@@ -34,7 +34,7 @@ public class Damage : Skill
                 continue;
             }
 
-            target.OnDamage(DamageType, Value);
+            target.OnDamageHandler(DamageType, Value);
         }
 
         Object.Instantiate(Resources.Load(Effect), myGameObject.Position, Quaternion.identity);

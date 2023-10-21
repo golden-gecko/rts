@@ -48,9 +48,9 @@ public class PassiveIncreaseDamage : Skill
         }
     }
 
-    public override void OnDestroy(MyGameObject myGameObject)
+    public override void OnDestroyHandler(MyGameObject myGameObject)
     {
-        base.OnDestroy(myGameObject);
+        base.OnDestroyHandler(myGameObject);
 
         if (previousState == MyGameObjectState.Operational && previousEnabled)
         {

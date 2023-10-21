@@ -1,6 +1,6 @@
 public class OrderHandlerUseSkill : OrderHandler
 {
-    public override void OnExecute(MyGameObject myGameObject)
+    public override void OnExecuteHandler(MyGameObject myGameObject)
     {
         Order order = myGameObject.Orders.First();
 
@@ -23,7 +23,7 @@ public class OrderHandlerUseSkill : OrderHandler
             return;
         }
 
-        myGameObject.Skills[order.Skill].OnExecute(myGameObject);
+        myGameObject.Skills[order.Skill].OnExecuteHandler(myGameObject);
         myGameObject.Stats.Inc(Stats.SkillsUsed);
 
         Success(myGameObject);

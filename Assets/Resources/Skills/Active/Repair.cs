@@ -12,9 +12,9 @@ public class Repair : Skill
         Value = value;
     }
 
-    public override void OnExecute(MyGameObject myGameObject)
+    public override void OnExecuteHandler(MyGameObject myGameObject)
     {
-        base.OnExecute(myGameObject);
+        base.OnExecuteHandler(myGameObject);
 
         RaycastHit[] hitInfos = Utils.SphereCastAll(myGameObject.Position, Range, Utils.GetGameObjectMask());
 
@@ -32,7 +32,7 @@ public class Repair : Skill
                 continue;
             }
 
-            target.OnRepair(Value);
+            target.OnRepairHandler(Value);
         }
 
         Object.Instantiate(Resources.Load(Effect), myGameObject.Position, Quaternion.identity);

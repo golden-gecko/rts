@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class Rocket : Missile
+public class Projectile : Missile
 {
     protected override void OnCollisionEnter(Collision collision)
     {
@@ -36,7 +36,7 @@ public class Rocket : Missile
             Instantiate(HitEffectPrefab, Position, Quaternion.identity);
         }
 
-        float damageDealt = myGameObject.OnDamage(DamageType, Damage.Total);
+        float damageDealt = myGameObject.OnDamageHandler(DamageType, Damage.Total);
 
         if (myGameObject.Alive == false)
         {

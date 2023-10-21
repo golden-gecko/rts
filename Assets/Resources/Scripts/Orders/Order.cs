@@ -290,7 +290,7 @@ public class Order
             case OrderType.Assemble:
                 if (TargetGameObject != null)
                 {
-                    TargetGameObject.OnDestroy_();
+                    TargetGameObject.Destroy(0);
                 }
                 break;
         }

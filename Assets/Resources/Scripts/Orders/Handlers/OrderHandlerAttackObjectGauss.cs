@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class OrderHandlerAttackObjectGauss : OrderHandler
 {
-    public override void OnExecute(MyGameObject myGameObject)
+    public override void OnExecuteHandler(MyGameObject myGameObject)
     {
         Order order = myGameObject.Orders.First();
 
@@ -36,7 +36,7 @@ public class OrderHandlerAttackObjectGauss : OrderHandler
             }
 
             Missile missile = myGameObject.GetComponent<Missile>();
-            float damageDealt = target.OnDamage(missile.DamageType, missile.Damage.Total);
+            float damageDealt = target.OnDamageHandler(missile.DamageType, missile.Damage.Total);
 
             if (target.Alive == false)
             {
