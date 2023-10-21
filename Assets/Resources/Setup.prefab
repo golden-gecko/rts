@@ -505,7 +505,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4885079203805521602}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 156c90d9e21d8594bb630ff152fe2785, type: 3}
   m_Name: 
@@ -1080,10 +1080,6 @@ PrefabInstance:
     - target: {fileID: 6252956672336896765, guid: 7193002665813b540ba7257fb9ba605d, type: 3}
       propertyPath: m_Name
       value: MinimapCamera
-      objectReference: {fileID: 0}
-    - target: {fileID: 7060352874131748427, guid: 7193002665813b540ba7257fb9ba605d, type: 3}
-      propertyPath: m_CullingMask.m_Bits
-      value: 1049616
       objectReference: {fileID: 0}
     - target: {fileID: 8350530467748327393, guid: 7193002665813b540ba7257fb9ba605d, type: 3}
       propertyPath: m_RootOrder

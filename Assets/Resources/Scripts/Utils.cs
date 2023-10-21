@@ -274,11 +274,6 @@ public class Utils
     }
     #endregion
 
-    public static MyGameObject GetGameObject(Collider collider)
-    {
-        return collider.GetComponentInParent<MyGameObject>();
-    }
-
     public static MyGameObject GetGameObject(Collision collision)
     {
         return collision.collider.GetComponentInParent<MyGameObject>();
