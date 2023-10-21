@@ -131,6 +131,11 @@ MonoBehaviour:
   FrequencyInSecondsMax: 180
   <Damage>k__BackingField: 20
   <DamagePerSecond>k__BackingField: 0
+  <DamageType>k__BackingField:
+  - <Type>k__BackingField: 0
+    <Ratio>k__BackingField: 1
+  - <Type>k__BackingField: 1
+    <Ratio>k__BackingField: 1
 --- !u!1001 &2123650418308622200
 PrefabInstance:
   m_ObjectHideFlags: 0

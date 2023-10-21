@@ -154,6 +154,11 @@ MonoBehaviour:
   FrequencyInSecondsMax: 180
   <Damage>k__BackingField: 0
   <DamagePerSecond>k__BackingField: 10
+  <DamageType>k__BackingField:
+  - <Type>k__BackingField: 0
+    <Ratio>k__BackingField: 1
+  - <Type>k__BackingField: 1
+    <Ratio>k__BackingField: 1
 --- !u!114 &-6922015923480559394
 MonoBehaviour:
   m_ObjectHideFlags: 0

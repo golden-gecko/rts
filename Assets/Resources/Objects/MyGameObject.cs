@@ -25,6 +25,8 @@ public class MyGameObject : MonoBehaviour
         OrderHandlers[OrderType.Destroy] = new OrderHandlerDestroy(); // TODO: Move to component.
         OrderHandlers[OrderType.Disable] = new OrderHandlerDisable();
         OrderHandlers[OrderType.Enable] = new OrderHandlerEnable();
+        OrderHandlers[OrderType.GuardObject] = new OrderHandlerGuardObject();
+        OrderHandlers[OrderType.GuardPosition] = new OrderHandlerGuardPosition();
         OrderHandlers[OrderType.Stop] = new OrderHandlerStop();
         OrderHandlers[OrderType.UseSkill] = new OrderHandlerUseSkill();
         OrderHandlers[OrderType.Wait] = new OrderHandlerWait();

@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using UnityEngine;
-using static UnityEditor.Experimental.GraphView.Port;
 
 public class Shield : MyComponent
 {
@@ -39,7 +38,7 @@ public class Shield : MyComponent
 
     public float Absorb(DamageType type, float damage)
     {
-        float absorbed = 0.0f;
+        float removed = 0.0f;
 
         foreach (DamageTypeItem i in ProtectionType)
         {
@@ -48,8 +47,8 @@ public class Shield : MyComponent
                 float damageToReflect = damage * i.Ratio;
                 float damageToAbsorb = damage - damageToReflect;
 
-                absorbed += damageToReflect;
-                absorbed += Capacity.Remove(damageToAbsorb);
+                removed += damageToReflect;
+                removed += Capacity.Remove(damageToAbsorb);
 
                 if (Capacity.Current <= 0.0f)
                 {
@@ -60,7 +59,7 @@ public class Shield : MyComponent
             }
         }
 
-        return absorbed;
+        return removed;
     }
 
     [field: SerializeField]

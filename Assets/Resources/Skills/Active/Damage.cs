@@ -5,12 +5,13 @@ public class Damage : Skill
 {
     public override object Clone()
     {
-        return new Damage(Name, Range, Cooldown.Max, Value);
+        return new Damage(Name, Range, Cooldown.Max, Value, DamageType);
     }
 
-    public Damage(string name, float range, float cooldown, float value) : base(name, range, cooldown, "Effects/Skills/Green hit", false)
+    public Damage(string name, float range, float cooldown, float value, List<DamageTypeItem> damageType) : base(name, range, cooldown, "Effects/Skills/Green hit", false)
     {
         Value = value;
+        DamageType = damageType;
     }
 
     public override void OnExecute(MyGameObject myGameObject)
@@ -33,11 +34,13 @@ public class Damage : Skill
                 continue;
             }
 
-            target.OnDamage(new List<DamageTypeItem>(), Value); // TODO: Fix damage.
+            target.OnDamage(DamageType, Value);
         }
 
         Object.Instantiate(Resources.Load(Effect), myGameObject.Position, Quaternion.identity);
     }
 
     public float Value { get; } = 0.0f;
+
+    public List<DamageTypeItem> DamageType { get; private set; } = new List<DamageTypeItem>();
 }
