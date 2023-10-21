@@ -148,6 +148,135 @@ public class Map : Singleton<Map>
         radarTexture.Apply();
     }
 
+    public void VisibleByPassiveDamage(MyGameObject myGameObject, Vector3 position, float range, float value)
+    {
+        Vector3Int start = Utils.ToGrid(new Vector3(position.x - range, 0.0f, position.z - range), Config.Map.Scale);
+        Vector3Int end = Utils.ToGrid(new Vector3(position.x + range, 0.0f, position.z + range), Config.Map.Scale);
+
+        Vector3Int center = Utils.ToGrid(position, Config.Map.Scale);
+        int radius = Mathf.FloorToInt(range / Config.Map.Scale);
+
+        Texture2D passiveDamage = PassiveDamage.mainTexture as Texture2D;
+
+        for (int x = start.x; x < end.x; x++)
+        {
+            for (int z = start.z; z < end.z; z++)
+            {
+                if (Utils.IsPointInRect(x, z, Config.Map.Size) == false)
+                {
+                    continue;
+                }
+
+                if (Utils.IsPointInCircle(x, z, center, radius) == false)
+                {
+                    continue;
+                }
+
+                SetVisible(Cells[x, z].VisibleByPassiveDamage, myGameObject.Player, value);
+
+                if (HUD.Instance.ActivePlayer == myGameObject.Player)
+                {
+                    if (Cells[x, z].VisibleByPassiveDamage[myGameObject.Player] > 0)
+                    {
+                        passiveDamage.SetPixel(x, z, Config.Map.DataLayerColorPassiveDamage);
+                    }
+                    else
+                    {
+                        passiveDamage.SetPixel(x, z, Config.Map.DataLayerColorEmpty);
+                    }
+                }
+            }
+        }
+
+        passiveDamage.Apply();
+    }
+
+    public void VisibleByPassivePower(MyGameObject myGameObject, Vector3 position, float range, float value)
+    {
+        Vector3Int start = Utils.ToGrid(new Vector3(position.x - range, 0.0f, position.z - range), Config.Map.Scale);
+        Vector3Int end = Utils.ToGrid(new Vector3(position.x + range, 0.0f, position.z + range), Config.Map.Scale);
+
+        Vector3Int center = Utils.ToGrid(position, Config.Map.Scale);
+        int radius = Mathf.FloorToInt(range / Config.Map.Scale);
+
+        Texture2D passivePower = PassivePower.mainTexture as Texture2D;
+
+        for (int x = start.x; x < end.x; x++)
+        {
+            for (int z = start.z; z < end.z; z++)
+            {
+                if (Utils.IsPointInRect(x, z, Config.Map.Size) == false)
+                {
+                    continue;
+                }
+
+                if (Utils.IsPointInCircle(x, z, center, radius) == false)
+                {
+                    continue;
+                }
+
+                SetVisible(Cells[x, z].VisibleByPassivePower, myGameObject.Player, value);
+
+                if (HUD.Instance.ActivePlayer == myGameObject.Player)
+                {
+                    if (Cells[x, z].VisibleByPassivePower[myGameObject.Player] > 0)
+                    {
+                        passivePower.SetPixel(x, z, Config.Map.DataLayerColorPassivePower);
+                    }
+                    else
+                    {
+                        passivePower.SetPixel(x, z, Config.Map.DataLayerColorEmpty);
+                    }
+                }
+            }
+        }
+
+        passivePower.Apply();
+    }
+
+    public void VisibleByPassiveRange(MyGameObject myGameObject, Vector3 position, float range, float value)
+    {
+        Vector3Int start = Utils.ToGrid(new Vector3(position.x - range, 0.0f, position.z - range), Config.Map.Scale);
+        Vector3Int end = Utils.ToGrid(new Vector3(position.x + range, 0.0f, position.z + range), Config.Map.Scale);
+
+        Vector3Int center = Utils.ToGrid(position, Config.Map.Scale);
+        int radius = Mathf.FloorToInt(range / Config.Map.Scale);
+
+        Texture2D passiveRange = PassiveRange.mainTexture as Texture2D;
+
+        for (int x = start.x; x < end.x; x++)
+        {
+            for (int z = start.z; z < end.z; z++)
+            {
+                if (Utils.IsPointInRect(x, z, Config.Map.Size) == false)
+                {
+                    continue;
+                }
+
+                if (Utils.IsPointInCircle(x, z, center, radius) == false)
+                {
+                    continue;
+                }
+
+                SetVisible(Cells[x, z].VisibleByPassiveRange, myGameObject.Player, value);
+
+                if (HUD.Instance.ActivePlayer == myGameObject.Player)
+                {
+                    if (Cells[x, z].VisibleByPassiveRange[myGameObject.Player] > 0)
+                    {
+                        passiveRange.SetPixel(x, z, Config.Map.DataLayerColorPassiveRange);
+                    }
+                    else
+                    {
+                        passiveRange.SetPixel(x, z, Config.Map.DataLayerColorEmpty);
+                    }
+                }
+            }
+        }
+
+        passiveRange.Apply();
+    }
+
     public void SetVisibleBySight(MyGameObject myGameObject, Vector3 position, float range, int value)
     {
         Vector3Int start = Utils.ToGrid(new Vector3(position.x - range, 0.0f, position.z - range), Config.Map.Scale);
@@ -282,13 +411,6 @@ public class Map : Singleton<Map>
         Vector3Int position = Utils.ToGrid(myGameObject.Position, Config.Map.Scale);
 
         return Cells[position.x, position.z].VisibleByPower.ContainsKey(myGameObject.Player) && Cells[position.x, position.z].VisibleByPower[myGameObject.Player] > 0;
-    }
-
-    public bool IsVisibleByPowerRelay(MyGameObject myGameObject)
-    {
-        Vector3Int position = Utils.ToGrid(myGameObject.Position, Config.Map.Scale);
-
-        return Cells[position.x, position.z].VisibleByPowerRelay.ContainsKey(myGameObject.Player) && Cells[position.x, position.z].VisibleByPowerRelay[myGameObject.Player] > 0;
     }
 
     public bool GetPosition(MyGameObject myGameObject, Vector3 origin, out Vector3 position, out MyGameObjectMapLayer mapLayer)
@@ -693,13 +815,6 @@ public class Map : Singleton<Map>
                 {
                     Cells[x, z].VisibleByPower[player] = 0;
                 }
-
-                Player[] players5 = Cells[x, z].VisibleByPowerRelay.Keys.ToArray();
-
-                foreach (Player player in players5)
-                {
-                    Cells[x, z].VisibleByPowerRelay[player] = 0;
-                }
             }
         }
 
@@ -732,6 +847,18 @@ public class Map : Singleton<Map>
         }
     }
 
+    private void SetVisible(Dictionary<Player, float> layer, Player player, float value)
+    {
+        if (layer.ContainsKey(player) == false)
+        {
+            layer[player] = value;
+        }
+        else
+        {
+            layer[player] += value;
+        }
+    }
+
     [field: SerializeField]
     public Material Occupation { get; private set; }
 
@@ -746,6 +873,15 @@ public class Map : Singleton<Map>
 
     [field: SerializeField]
     public Material Sight { get; private set; }
+
+    [field: SerializeField]
+    public Material PassiveDamage { get; private set; }
+
+    [field: SerializeField]
+    public Material PassivePower { get; private set; }
+
+    [field: SerializeField]
+    public Material PassiveRange { get; private set; }
 
     private Cell[,] Cells { get; } = new Cell[Config.Map.Size, Config.Map.Size];
 }

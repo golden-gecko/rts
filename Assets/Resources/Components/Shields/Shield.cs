@@ -62,6 +62,11 @@ public class Shield : MyComponent
         return removed;
     }
 
+    public float Repair(float health)
+    {
+        return Capacity.Add(health);
+    }
+
     [field: SerializeField]
     public GameObject Mesh { get; private set; }
 

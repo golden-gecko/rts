@@ -17,6 +17,9 @@
                 <ui:Toggle label="Power" name="Power" focusable="false" style="flex-direction: row-reverse; align-items: center;" />
                 <ui:Toggle label="Radar" name="Radar" focusable="false" style="flex-direction: row-reverse; align-items: center;" />
                 <ui:Toggle label="Sight" name="Sight" focusable="false" style="flex-direction: row-reverse; align-items: center;" />
+                <ui:Toggle label="Passive Damage" name="PassiveDamage" focusable="false" style="flex-direction: row-reverse; align-items: center;" />
+                <ui:Toggle label="Passive Power" name="PassivePower" focusable="false" style="flex-direction: row-reverse; align-items: center;" />
+                <ui:Toggle label="Passive Range" name="PassiveRange" focusable="false" style="flex-direction: row-reverse; align-items: center;" />
             </ui:VisualElement>
         </ui:VisualElement>
     </ui:VisualElement>

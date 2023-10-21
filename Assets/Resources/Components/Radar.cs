@@ -47,7 +47,7 @@ public class Radar : MyComponent
     {
         base.OnDestroy_();
 
-        if (previousState == MyGameObjectState.Operational || previousEnabled)
+        if (previousState == MyGameObjectState.Operational && previousEnabled)
         {
             PowerDown(previousPosition);
         }

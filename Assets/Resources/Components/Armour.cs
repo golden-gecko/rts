@@ -29,6 +29,11 @@ public class Armour : MyComponent
         return removed;
     }
 
+    public float Repair(float health)
+    {
+        return Value.Add(health);
+    }
+
     [field: SerializeField]
     public Progress Value { get; private set; } = new Progress(100.0f, 100.0f);
 
