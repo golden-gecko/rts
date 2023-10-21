@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class Shield : MyComponent
@@ -8,10 +9,9 @@ public class Shield : MyComponent
 
         if (Mesh != null)
         {
-            GameObject mesh = Instantiate(Mesh, Parent.Position, Quaternion.identity);
-
-            mesh.transform.parent = Parent.transform;
-            mesh.transform.localScale = new Vector3(Range.Total * 2.0f / Parent.Scale.x, Range.Total * 2.0f / Parent.Scale.y, Range.Total * 2.0f / Parent.Scale.z);
+            shield = Instantiate(Mesh, Parent.Position, Quaternion.identity);
+            shield.transform.parent = Parent.transform;
+            shield.transform.localScale = new Vector3(Range.Total * 2.0f / Parent.Scale.x, Range.Total * 2.0f / Parent.Scale.y, Range.Total * 2.0f / Parent.Scale.z);
         }
     }
 
@@ -19,17 +19,47 @@ public class Shield : MyComponent
     {
         base.Update();
 
-        Capacity.Add(ChargeRate * Time.deltaTime);
+        if (ResetTime.Update(Time.deltaTime))
+        {
+            shield.SetActive(true);
+
+            Capacity.Add(ChargeRate * Time.deltaTime);
+        }
+        else
+        {
+            shield.SetActive(false);
+        }
     }
 
     public override string GetInfo()
     {
-        return string.Format("Shield: {0}, Range: {1:0.}, Power: {2:0.}", base.GetInfo(), Range.Total, Power);
+        return string.Format("Shield: {0}, Range: {1:0.}", base.GetInfo(), Range.Total);
     }
 
-    public float Absorb(float damage)
+    public float Absorb(DamageType type, float damage)
     {
-        return Capacity.Remove(damage * Power);
+        float removed = 0.0f;
+
+        foreach (DamageTypeItem i in ProtectionType)
+        {
+            if (i.Type == type)
+            {
+                float damageToReflect = damage * i.Ratio;
+                float damageToAbsorb = damage - damageToReflect;
+
+                removed += damageToReflect;
+                removed += Capacity.Remove(damageToAbsorb);
+
+                if (Capacity.Current <= 0.0f)
+                {
+                    ResetTime.Reset();
+                }
+
+                break;
+            }
+        }
+
+        return removed;
     }
 
     [field: SerializeField]
@@ -42,8 +72,13 @@ public class Shield : MyComponent
     public Progress Capacity { get; private set; } = new Progress(100.0f, 100.0f);
 
     [field: SerializeField]
-    public float Power { get; private set; } = 0.2f; // From 0.0 to 1.0 (0.0 - no damage is absorbed, 1.0 - all damage is absorbed).
+    public float ChargeRate { get; private set; } = 0.1f;
 
     [field: SerializeField]
-    public float ChargeRate { get; private set; } = 0.1f;
+    public Timer ResetTime { get; private set; } = new Timer(3.0f, 3.0f);
+
+    [field: SerializeField]
+    public List<DamageTypeItem> ProtectionType { get; private set; } = new List<DamageTypeItem>();
+
+    private GameObject shield;
 }

@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 4206166972233702672}
   - component: {fileID: 950094741628219163}
   - component: {fileID: 8781057650838951838}
-  m_Layer: 0
+  m_Layer: 20
   m_Name: unit_Grav_Light_B_Gun_Turret_yup
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -97,7 +97,8 @@ GameObject:
   - component: {fileID: 5392526372755733412}
   - component: {fileID: -2341637660641267736}
   - component: {fileID: -1888375728700643307}
-  m_Layer: 0
+  - component: {fileID: 4641138035033775087}
+  m_Layer: 20
   m_Name: Submarine
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -180,6 +181,7 @@ MonoBehaviour:
   <State>k__BackingField: 1
   <CreateBase>k__BackingField: 0
   <SnapToGrid>k__BackingField: 0
+  <VisibilityState>k__BackingField: 2
 --- !u!114 &-2341637660641267736
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -193,14 +195,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   <Mass>k__BackingField: 10
-  <MissilePrefab>k__BackingField: {fileID: 0}
+  <MissilePrefab>k__BackingField: {fileID: 3841255586236475405, guid: 86513724c5de2df4da484cb23191a7e5, type: 3}
   <Damage>k__BackingField:
-    <Value>k__BackingField: 0
+    <Value>k__BackingField: 10
   <Range>k__BackingField:
-    <Value>k__BackingField: 0
+    <Value>k__BackingField: 10
   <Reload>k__BackingField:
-    <Current>k__BackingField: 10
-    <Max>k__BackingField: 10
+    <Current>k__BackingField: 4
+    <Max>k__BackingField: 4
+  <DamageType>k__BackingField:
+  - <Type>k__BackingField: 0
+    <Ratio>k__BackingField: 1
 --- !u!114 &-1888375728700643307
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -217,6 +222,21 @@ MonoBehaviour:
   <Power>k__BackingField:
     <Value>k__BackingField: 200
   <FuelUsage>k__BackingField: 10
+--- !u!114 &4641138035033775087
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3049796617130582417}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 79a39b5131237dc428a9b67a3936e144, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  <Mass>k__BackingField: 10
+  <Range>k__BackingField:
+    <Value>k__BackingField: 10
 --- !u!1 &4067676291938002347
 GameObject:
   m_ObjectHideFlags: 0
@@ -228,7 +248,7 @@ GameObject:
   - component: {fileID: 2870059950926197906}
   - component: {fileID: 1226883424243859215}
   - component: {fileID: 6416338701762471642}
-  m_Layer: 0
+  m_Layer: 20
   m_Name: unit_Grav_Light_B_Gun_yup
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -312,7 +332,7 @@ GameObject:
   - component: {fileID: 8622717617955326670}
   - component: {fileID: 1034984741969677476}
   - component: {fileID: 5892208355696448631}
-  m_Layer: 0
+  m_Layer: 20
   m_Name: Body
   m_TagString: Untagged
   m_Icon: {fileID: 0}

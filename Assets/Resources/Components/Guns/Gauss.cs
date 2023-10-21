@@ -16,6 +16,7 @@ public class Gauss : Gun
 
         missile.Damage = Damage.Clone() as Property;
         missile.Range = Range;
+        missile.DamageType = DamageType;
 
         missile.SetParent(myGameObject);
         missile.SetPlayer(myGameObject.Player);

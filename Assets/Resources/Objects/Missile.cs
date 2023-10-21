@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class Missile : MyGameObject
@@ -6,11 +7,9 @@ public class Missile : MyGameObject
     {
         base.Start();
 
-        parent = GetComponent<MyGameObject>();
-
         if (FireEffectPrefab != null)
         {
-            Instantiate(FireEffectPrefab, Position, Quaternion.identity);
+            Instantiate(FireEffectPrefab, Position, Parent.Rotation);
         }
     }
 
@@ -26,5 +25,6 @@ public class Missile : MyGameObject
     [field: SerializeField]
     public Property Range { get; set; } = new Property();
 
-    protected MyGameObject parent { get; private set; }
+    [field: SerializeField]
+    public List<DamageTypeItem> DamageType { get; set; } = new List<DamageTypeItem>();
 }

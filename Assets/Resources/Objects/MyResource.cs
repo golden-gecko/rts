@@ -14,5 +14,5 @@ public class MyResource : MyGameObject
         }
     }
 
-    private bool Depleted { get => GetComponents<Storage>().All(x => x.Resources.Items.All(x => x.Empty)); }
+    private bool Depleted { get => TryGetComponent(out Storage storage) ? storage.Resources.Items.All(x => x.Empty) : true; }
 }

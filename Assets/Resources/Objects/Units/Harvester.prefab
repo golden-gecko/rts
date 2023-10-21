@@ -229,7 +229,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <Mass>k__BackingField: 10
   <Power>k__BackingField:
-    <Value>k__BackingField: 100
+    <Value>k__BackingField: 200
   <FuelUsage>k__BackingField: 10
 --- !u!114 &2949164819816468667
 MonoBehaviour:
@@ -1592,7 +1592,7 @@ BoxCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
