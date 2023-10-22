@@ -1,5 +1,6 @@
 using UnityEngine;
 
+[DisallowMultipleComponent]
 public class Launcher : Gun
 {
     public override void Fire(MyGameObject myGameObject, Vector3 position)

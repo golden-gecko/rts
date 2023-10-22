@@ -1,6 +1,5 @@
 using UnityEngine;
 
-[DisallowMultipleComponent]
 public class MyComponent : MonoBehaviour
 {
     protected virtual void Awake()

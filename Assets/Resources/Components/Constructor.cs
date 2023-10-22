@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
 
-[RequireComponent(typeof(Storage))]
+[DisallowMultipleComponent, RequireComponent(typeof(Storage))]
 public class Constructor : MyComponent
 {
     protected override void Awake()

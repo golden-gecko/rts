@@ -1,5 +1,6 @@
 using UnityEngine;
 
+[DisallowMultipleComponent]
 public class Engine : MyComponent
 {
     protected override void Awake()

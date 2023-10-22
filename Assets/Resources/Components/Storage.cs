@@ -1,6 +1,7 @@
 using System.Linq;
 using UnityEngine;
 
+[DisallowMultipleComponent]
 public class Storage : MyComponent
 {
     protected override void Awake()

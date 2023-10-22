@@ -1,5 +1,6 @@
 using UnityEngine;
 
+[DisallowMultipleComponent]
 public class Teleporter : MyComponent
 {
     protected override void Start()
@@ -24,13 +25,18 @@ public class Teleporter : MyComponent
     {
         base.Update();
 
+        /*
         foreach (RaycastHit hitInfo in Utils.SphereCastAll(Parent.Position, Parent.Radius, Utils.GetGameObjectMask()))
         {
         }
+        */
     }
 
     public override string GetInfo()
     {
         return string.Format("Teleporter: {0}", base.GetInfo());
     }
+
+    [field: SerializeField]
+    public Property Range = new Property(100.0f);
 }
