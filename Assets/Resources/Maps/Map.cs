@@ -815,6 +815,27 @@ public class Map : Singleton<Map>
                 {
                     Cells[x, z].VisibleByPower[player] = 0;
                 }
+
+                Player[] players5 = Cells[x, z].VisibleByPassiveDamage.Keys.ToArray();
+
+                foreach (Player player in players5)
+                {
+                    Cells[x, z].VisibleByPassiveDamage[player] = 0;
+                }
+
+                Player[] players6 = Cells[x, z].VisibleByPassivePower.Keys.ToArray();
+
+                foreach (Player player in players6)
+                {
+                    Cells[x, z].VisibleByPassivePower[player] = 0;
+                }
+
+                Player[] players7 = Cells[x, z].VisibleByPassiveRange.Keys.ToArray();
+
+                foreach (Player player in players7)
+                {
+                    Cells[x, z].VisibleByPassiveRange[player] = 0;
+                }
             }
         }
 
@@ -823,7 +844,9 @@ public class Map : Singleton<Map>
         ClearTexture(Power.mainTexture as Texture2D);
         ClearTexture(Radar.mainTexture as Texture2D);
         ClearTexture(Sight.mainTexture as Texture2D);
-        ClearTexture(Sight.mainTexture as Texture2D);
+        ClearTexture(PassiveDamage.mainTexture as Texture2D);
+        ClearTexture(PassivePower.mainTexture as Texture2D);
+        ClearTexture(PassiveRange.mainTexture as Texture2D);
     }
 
     private void ClearTexture(Texture2D texture)

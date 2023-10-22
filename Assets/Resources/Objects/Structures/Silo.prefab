@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 3116152599023592423}
   - component: {fileID: 6894268574580375520}
   - component: {fileID: -2740928720530658496}
-  m_Layer: 0
+  m_Layer: 20
   m_Name: Silo
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -133,7 +133,7 @@ GameObject:
   - component: {fileID: 6707755511503142644}
   - component: {fileID: 4220057041802259465}
   - component: {fileID: 7235800273322118827}
-  m_Layer: 0
+  m_Layer: 20
   m_Name: Body
   m_TagString: Untagged
   m_Icon: {fileID: 0}

@@ -93,14 +93,12 @@ MonoBehaviour:
   <ExpirationTimer>k__BackingField:
     <Current>k__BackingField: -1
     <Max>k__BackingField: -1
-  <SkillsNames>k__BackingField:
-  - PassiveIncreaseDamage
-  - PassiveIncreasePower
-  - PassiveIncreaseRange
+  <SkillsNames>k__BackingField: []
   <State>k__BackingField: 1
   <CreateBase>k__BackingField: 0
   <SnapToGrid>k__BackingField: 0
   <VisibilityState>k__BackingField: 2
+  <RotateTowardsTarget>k__BackingField: 1
 --- !u!114 &6294112693154751892
 MonoBehaviour:
   m_ObjectHideFlags: 0
