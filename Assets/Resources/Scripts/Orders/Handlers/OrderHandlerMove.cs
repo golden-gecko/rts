@@ -9,10 +9,6 @@ public class OrderHandlerMove : OrderHandler
         Vector3 target = order.TargetPosition;
         Vector3 position = myGameObject.Position;
 
-
-        PathFinder.Instance.GetPath(position, target);
-
-
         float distanceToTarget = GetDistance(myGameObject, ref position, ref target);
         float distanceToTravel = myGameObject.GetComponent<Engine>().Speed * Time.deltaTime;
 

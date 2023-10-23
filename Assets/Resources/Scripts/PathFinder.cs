@@ -43,40 +43,35 @@ public class PathFinder : Singleton<PathFinder>
         Teleporters.Remove(teleporter);
     }
 
-    public List<Vector3> GetPath(Vector3 start, Vector3 end)
+    public List<Node> GetPath(Vector3 start, Vector3 end)
     {
-        MakeGraph(start, end);
+        // MakeGraph(start, end);
 
         List<Node> queue = new List<Node>();
         List<Node> visited = new List<Node>();
 
-        Teleporter teleporterStart = GetNearest(start);
-        Teleporter teleporterEnd = GetNearest(end);
+        Teleporter nodeStart = GetNearest(start);
+        Teleporter nodeEnd = GetNearest(end);
 
-        Node nodeStart = new Node
+        if (nodeStart == nodeEnd)
         {
-            teleporter = teleporterStart,
-            distanceFromStart = (start - teleporterStart.Parent.Position).sqrMagnitude,
-            parent = null,
-        };
+            return new List<Node>
+            {
+                new Node { position = start },
+                new Node { position = end },
+            };
+        }
 
-        Node nodeEnd = new Node
-        {
-            teleporter = teleporterEnd,
-            distanceFromStart = (start - teleporterEnd.Parent.Position).sqrMagnitude,
-            parent = null,
-        };
-
-        queue.Add(nodeStart);
+        queue.Add(new Node { teleporter = nodeStart });
 
         while (queue.Count > 0)
         {
             Node node = queue.First();
             queue.Remove(node);
 
-            if (node.teleporter == nodeEnd.teleporter)
+            if (node.teleporter == nodeEnd)
             {
-                // return MoveBack(node, start, end);
+                return MakePath(node, end);
             }
 
             if (visited.Contains(node, new NodeComparer()))
@@ -98,50 +93,58 @@ public class PathFinder : Singleton<PathFinder>
 
             foreach (Teleporter i in node.teleporter.Connections)
             {
-                queue.Add(new Node { teleporter = i, distanceFromStart = node.distanceFromStart, parent = node });
+                queue.Add(new Node { teleporter = i, parent = node });
             }
         }
 
-        return new List<Vector3>();
+        return new List<Node>
+        {
+            new Node { position = start },
+            new Node { position = end },
+        };
     }
 
     private void MakeGraph(Vector3 start, Vector3 end)
     {
         Nodes.Clear();
+        Edges.Clear();
 
-        Nodes.Add(new Node { position = start, distanceFromStart = 0.0f });
-        Nodes.Add(new Node { position = end, distanceFromStart = 0.0f });
+        // Nodes.Add(new Node { position = start, distanceFromStart = 0.0f });
+        // Nodes.Add(new Node { position = end, distanceFromStart = 0.0f });
 
-        Edges.Add(new KeyValuePair<int, int>(0, 1));
+        // Edges.Add(new KeyValuePair<int, int>(0, 1));
 
-        foreach (Teleporter teleporter in FindObjectsByType<Teleporter>(FindObjectsSortMode.None))
+        foreach (Teleporter i in FindObjectsByType<Teleporter>(FindObjectsSortMode.None))
         {
-            int teleporterIndex = Nodes.FindIndex(x => x.teleporter == teleporter);
+            int teleporterIndex = Nodes.FindIndex(x => x.teleporter == i);
 
             if (teleporterIndex == -1)
             {
-                Nodes.Add(new Node { teleporter = teleporter, distanceFromStart = 0.0f });
+                Nodes.Add(new Node { teleporter = i, distanceFromStart = 0.0f });
 
                 teleporterIndex = Nodes.Count - 1;
             }
 
-            foreach (Teleporter neighbour in teleporter.Connections)
+            foreach (Teleporter j in i.Connections)
             {
-                int neighbourIndex = Nodes.FindIndex(x => x.teleporter == teleporter);
+                int neighbourIndex = Nodes.FindIndex(x => x.teleporter == j);
 
                 if (neighbourIndex == -1)
                 {
-                    Nodes.Add(new Node { teleporter = teleporter, distanceFromStart = 0.0f });
+                    Nodes.Add(new Node { teleporter = j, distanceFromStart = 0.0f });
 
                     neighbourIndex = Nodes.Count - 1;
                 }
 
-                if (Edges.FindIndex(x => x.Value == teleporterIndex && x.Key == neighbourIndex) == -1)
+                if (Edges.FindIndex(x => (x.Value == teleporterIndex && x.Key == neighbourIndex) || (x.Value == neighbourIndex && x.Key == teleporterIndex)) == -1)
                 {
                     Edges.Add(new KeyValuePair<int, int>(teleporterIndex, neighbourIndex));
                 }
             }
         }
+
+        // Edges.Add(new KeyValuePair<int, int>(0, Nodes.FindIndex(x => x.teleporter == GetNearest(start))));
+        // Edges.Add(new KeyValuePair<int, int>(1, Nodes.FindIndex(x => x.teleporter == GetNearest(end))));
     }
 
     private Teleporter GetNearest(Vector3 position)
@@ -161,6 +164,22 @@ public class PathFinder : Singleton<PathFinder>
         }
 
         return closest;
+    }
+
+    private List<Node> MakePath(Node node, Vector3 end)
+    {
+        List<Node> path = new List<Node>();
+
+        while (node != null)
+        {
+            path.Insert(0, node);
+
+            node = node.parent;
+        }
+
+        path.Add(new Node { position = end });
+
+        return path;
     }
 
     private List<Node> Nodes = new List<Node>();

@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using static UnityEngine.GraphicsBuffer;
 
 [DisallowMultipleComponent]
 public class MyGameObject : MonoBehaviour
@@ -221,7 +222,19 @@ public class MyGameObject : MonoBehaviour
         }
         else
         {
-            Orders.Add(Order.Move(position));
+            foreach (Node node in PathFinder.Instance.GetPath(Position, position))
+            {
+                if (node.teleporter == null)
+                {
+                    Orders.Add(Order.Move(node.position));
+                }
+                else
+                {
+                    Orders.Add(Order.Move(node.teleporter.Parent.Position));
+                }
+            }
+
+            // Orders.Add(Order.Move(position));
         }
     }
 
