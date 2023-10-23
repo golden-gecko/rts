@@ -13,14 +13,6 @@ labels:
 - fire
 - explosion
 - particles
-MonoImporter:
-  serializedVersion: 2
-  defaultReferences: []
-  executionOrder: 0
-  icon: {instanceID: 0}
-  userData: 
-  assetBundleName: 
-  assetBundleVariant: 
 AssetOrigin:
   serializedVersion: 1
   productId: 20251
@@ -28,3 +20,12 @@ AssetOrigin:
   packageVersion: 1.2.3
   assetPath: Assets/ParticleProFX/Resources/Scripts/PPFXAutodestruct.cs
   uploadId: 158327
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 700
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

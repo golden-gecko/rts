@@ -1,5 +1,6 @@
 using UnityEngine;
 
+[DisallowMultipleComponent]
 public class Bullet : Missile
 {
     protected override void OnCollisionEnter(Collision collision)

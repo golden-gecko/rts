@@ -1,3 +1,6 @@
+using UnityEngine;
+
+[DisallowMultipleComponent]
 public class GaussMissile : Missile
 {
     protected override void Awake()

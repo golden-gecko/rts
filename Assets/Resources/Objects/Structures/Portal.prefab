@@ -262,7 +262,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <Mass>k__BackingField: 10
   Range:
-    <Value>k__BackingField: 100
+    <Value>k__BackingField: 30
 --- !u!1 &5996340516263330089
 GameObject:
   m_ObjectHideFlags: 0

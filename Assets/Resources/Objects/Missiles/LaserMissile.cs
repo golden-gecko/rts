@@ -1,3 +1,6 @@
+using UnityEngine;
+
+[DisallowMultipleComponent]
 public class LaserMissile : Missile
 {
     protected override void Awake()

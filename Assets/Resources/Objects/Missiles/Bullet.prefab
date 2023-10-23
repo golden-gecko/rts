@@ -101,12 +101,14 @@ MonoBehaviour:
   <MoveEffectPrefab>k__BackingField: {fileID: 0}
   <HitEffectPrefab>k__BackingField: {fileID: 100006, guid: 24295e2be01bda1438e5198083b282af, type: 3}
   <Damage>k__BackingField:
-    <Value>k__BackingField: 0
-  <DamageRange>k__BackingField:
-    <Value>k__BackingField: -1
+    <Value>k__BackingField: 10
   <Range>k__BackingField:
     <Value>k__BackingField: 0
-  <DamageType>k__BackingField: []
+  <DamageType>k__BackingField:
+  - <Type>k__BackingField: 0
+    <Ratio>k__BackingField: 1
+  - <Type>k__BackingField: 1
+    <Ratio>k__BackingField: 1
 --- !u!114 &2314022501189633522
 MonoBehaviour:
   m_ObjectHideFlags: 0

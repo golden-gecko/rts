@@ -2,23 +2,16 @@ using UnityEngine;
 
 public class OrderHandlerMove : OrderHandler
 {
-    public float GetDistance(MyGameObject myGameObject, ref Vector3 a, ref Vector3 b)
-    {
-        if (myGameObject.MapLayers.Contains(MyGameObjectMapLayer.Air) == false)
-        {
-            a.y = 0.0f;
-            b.y = 0.0f;
-        }
-
-        return (a - b).magnitude;
-    }
-
     public override void OnExecuteHandler(MyGameObject myGameObject)
     {
         Order order = myGameObject.Orders.First();
 
         Vector3 target = order.TargetPosition;
         Vector3 position = myGameObject.Position;
+
+
+        PathFinder.Instance.GetPath(position, target);
+
 
         float distanceToTarget = GetDistance(myGameObject, ref position, ref target);
         float distanceToTravel = myGameObject.GetComponent<Engine>().Speed * Time.deltaTime;
@@ -78,5 +71,16 @@ public class OrderHandlerMove : OrderHandler
 
             Success(myGameObject);
         }
+    }
+
+    private float GetDistance(MyGameObject myGameObject, ref Vector3 a, ref Vector3 b)
+    {
+        if (myGameObject.MapLayers.Contains(MyGameObjectMapLayer.Air) == false)
+        {
+            a.y = 0.0f;
+            b.y = 0.0f;
+        }
+
+        return (a - b).magnitude;
     }
 }

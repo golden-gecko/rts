@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5913490181949494746}
   - component: {fileID: 5835790162013295089}
-  - component: {fileID: 1803477458616272879}
+  - component: {fileID: 9053656812100369039}
   - component: {fileID: 2314022501189633522}
   m_Layer: 21
   m_Name: Rocket
@@ -62,7 +62,7 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!114 &1803477458616272879
+--- !u!114 &9053656812100369039
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -87,7 +87,7 @@ MonoBehaviour:
   <Altitude>k__BackingField: -1
   <Depth>k__BackingField: -1
   <MapLayers>k__BackingField: 00000000
-  <ShowIndicators>k__BackingField: 0
+  <ShowIndicators>k__BackingField: 1
   <ExpirationTimer>k__BackingField:
     <Current>k__BackingField: -1
     <Max>k__BackingField: -1
@@ -101,12 +101,14 @@ MonoBehaviour:
   <MoveEffectPrefab>k__BackingField: {fileID: 0}
   <HitEffectPrefab>k__BackingField: {fileID: 108048, guid: bef0671c561d074428627f6ef5e140b6, type: 3}
   <Damage>k__BackingField:
-    <Value>k__BackingField: 0
-  <DamageRange>k__BackingField:
-    <Value>k__BackingField: 10
+    <Value>k__BackingField: 30
   <Range>k__BackingField:
     <Value>k__BackingField: 0
-  <DamageType>k__BackingField: []
+  <DamageType>k__BackingField:
+  - <Type>k__BackingField: 0
+    <Ratio>k__BackingField: 1
+  - <Type>k__BackingField: 1
+    <Ratio>k__BackingField: 1
 --- !u!114 &2314022501189633522
 MonoBehaviour:
   m_ObjectHideFlags: 0

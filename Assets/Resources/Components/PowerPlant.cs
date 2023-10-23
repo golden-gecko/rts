@@ -98,12 +98,12 @@ public class PowerPlant : MyComponent
         return info;
     }
 
-    public void Connect(PowerPlant powerPlant)
+    private void Connect(PowerPlant powerPlant)
     {
         Connections.Add(powerPlant);
     }
 
-    public void Disconnect(PowerPlant powerPlant)
+    private void Disconnect(PowerPlant powerPlant)
     {
         Connections.Remove(powerPlant);
     }
