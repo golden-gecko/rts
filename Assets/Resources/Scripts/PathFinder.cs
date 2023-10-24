@@ -1,21 +1,13 @@
-using System;
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 
-public class Node // : IComparable<Node>
+public class Node
 {
     public Teleporter teleporter;
     public Vector3 position;
-    public float distanceFromStart;
-    public Node parent;
 
-    /*
-    public int CompareTo(Node other)
-    {
-        return distanceFromStart < other.distanceFromStart ? -1 : 1;
-    }
-    */
+    // public float distanceFromStart;
+    // public Node parent;
 }
 
 public class NodeComparer : IEqualityComparer<Node>
@@ -33,16 +25,6 @@ public class NodeComparer : IEqualityComparer<Node>
 
 public class PathFinder : Singleton<PathFinder>
 {
-    public void RegisterTeleporter(Teleporter teleporter)
-    {
-        Teleporters.Add(teleporter);
-    }
-
-    public void UnregisterTeleporter(Teleporter teleporter)
-    {
-        Teleporters.Remove(teleporter);
-    }
-
     public List<Node> GetPath(Vector3 start, Vector3 end)
     {
         Teleporter nodeStart = GetNearest(start);
@@ -83,6 +65,7 @@ public class PathFinder : Singleton<PathFinder>
         };
     }
 
+    /*
     public List<Node> GetPathUsingConnections(Vector3 start, Vector3 end)
     {
         // MakeGraph(start, end);
@@ -186,6 +169,7 @@ public class PathFinder : Singleton<PathFinder>
         // Edges.Add(new KeyValuePair<int, int>(0, Nodes.FindIndex(x => x.teleporter == GetNearest(start))));
         // Edges.Add(new KeyValuePair<int, int>(1, Nodes.FindIndex(x => x.teleporter == GetNearest(end))));
     }
+    */
 
     private Teleporter GetNearest(Vector3 position)
     {
@@ -206,6 +190,7 @@ public class PathFinder : Singleton<PathFinder>
         return closest;
     }
 
+    /*
     private List<Node> MakePath(Node node, Vector3 end)
     {
         List<Node> path = new List<Node>();
@@ -221,10 +206,9 @@ public class PathFinder : Singleton<PathFinder>
 
         return path;
     }
+    */
 
-    private List<Node> Nodes = new List<Node>();
+    // private List<Node> Nodes = new List<Node>();
 
-    private List<KeyValuePair<int, int>> Edges = new List<KeyValuePair<int, int>>();
-
-    private HashSet<Teleporter> Teleporters = new HashSet<Teleporter>();
+    // private List<KeyValuePair<int, int>> Edges = new List<KeyValuePair<int, int>>();
 }
