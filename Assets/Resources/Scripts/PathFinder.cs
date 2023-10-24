@@ -25,25 +25,39 @@ public class NodeComparer : IEqualityComparer<Node>
 
 public class PathFinder : Singleton<PathFinder>
 {
-    public List<Node> GetPath(Vector3 start, Vector3 end)
+    public List<Order> GetPath(Vector3 start, Vector3 end)
     {
         Teleporter nodeStart = GetNearest(start);
         Teleporter nodeEnd = GetNearest(end);
 
         if (nodeStart == null || nodeEnd == null)
         {
+            return new List<Order>
+            {
+                Order.Move(end),
+            };
+
+            /*
             return new List<Node>
             {
                 new Node { position = end },
             };
+            */
         }
 
         if (nodeStart == nodeEnd)
         {
+            return new List<Order>
+            {
+                Order.Move(end),
+            };
+
+            /*
             return new List<Node>
             {
                 new Node { position = end },
             };
+            */
         }
 
         float direct = (end - start).sqrMagnitude;
@@ -51,18 +65,33 @@ public class PathFinder : Singleton<PathFinder>
 
         if (direct <= teleport)
         {
+            return new List<Order>
+            {
+                Order.Move(end),
+            };
+
+            /*
             return new List<Node>
             {
                 new Node { position = end },
             };
+            */
         }
 
+        return new List<Order>
+        {
+            Order.Teleport(nodeStart.Parent, nodeEnd.Parent),
+            Order.Move(end),
+        };
+
+        /*
         return new List<Node>
         {
             new Node { teleporter = nodeStart },
             new Node { teleporter = nodeEnd },
             new Node { position = end },
         };
+        */
     }
 
     /*
@@ -171,7 +200,7 @@ public class PathFinder : Singleton<PathFinder>
     }
     */
 
-    private Teleporter GetNearest(Vector3 position)
+            private Teleporter GetNearest(Vector3 position)
     {
         float minDistance = float.MaxValue;
         Teleporter closest = null;

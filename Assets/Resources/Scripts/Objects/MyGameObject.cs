@@ -217,20 +217,20 @@ public class MyGameObject : MonoBehaviour
     {
         if (0 <= priority && priority < Orders.Count)
         {
-            Orders.Insert(priority, Order.Move(position));
+            List<Order> path = PathFinder.Instance.GetPath(Position, position);
+
+            for (int i = 0; i < path.Count; i++)
+            {
+                Orders.Insert(priority + i, path[i]);
+            }
+
+            // Orders.Insert(priority, Order.Move(position));
         }
         else
         {
-            foreach (Node node in PathFinder.Instance.GetPath(Position, position))
+            foreach (Order order in PathFinder.Instance.GetPath(Position, position))
             {
-                if (node.teleporter == null)
-                {
-                    Orders.Add(Order.Move(node.position));
-                }
-                else
-                {
-                    Orders.Add(Order.Move(node.teleporter.Parent.Position));
-                }
+                Orders.Add(order);
             }
 
             // Orders.Add(Order.Move(position));
@@ -673,11 +673,6 @@ public class MyGameObject : MonoBehaviour
         Orders.Clear();
     }
 
-    private void SetupIndicators()
-    {
-        Indicators = Instantiate(Resources.Load<Indicators>("Indicators"), transform, false);
-    }
-
     private void SetupBase()
     {
         if (CreateBase == false)
@@ -697,8 +692,13 @@ public class MyGameObject : MonoBehaviour
 
         Indicators.transform.localPosition = new Vector3(0.0f, 0.25f, 0.0f);
 
-        Base = Instantiate(Resources.Load<GameObject>("Base"), transform, false);
+        Base = Instantiate(Resources.Load<GameObject>(Config.Prefab.Base), transform, false);
         Base.transform.localScale = new Vector3(size.x, 0.5f, size.z);
+    }
+
+    private void SetupIndicators()
+    {
+        Indicators = Instantiate(Resources.Load<Indicators>(Config.Prefab.Indicators), transform, false);
     }
 
     private void CreateSkills()

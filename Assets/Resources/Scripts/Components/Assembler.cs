@@ -14,7 +14,7 @@ public class Assembler : MyComponent
 
         foreach (string prefab in Prefabs)
         {
-            Parent.Orders.AllowPrefab(Path.Join(Config.Asset.Units, prefab));
+            Parent.Orders.AllowPrefab(Path.Join(Config.Directory.Units, prefab));
         }
 
         Parent.OrderHandlers[OrderType.Assemble] = new OrderHandlerAssemble();

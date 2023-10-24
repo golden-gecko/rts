@@ -127,9 +127,9 @@ public class UI_Commands : UI_Element<UI_Commands>
     {
         prefabs.Clear();
 
-        foreach (MyGameObject myGameObject in Resources.LoadAll<MyGameObject>(Config.Asset.Structures))
+        foreach (MyGameObject myGameObject in Resources.LoadAll<MyGameObject>(Config.Directory.Structures))
         {
-            string path = Path.Combine(Config.Asset.Structures, myGameObject.name);
+            string path = Path.Combine(Config.Directory.Structures, myGameObject.name);
 
             TemplateContainer buttonContainer = templateButton.Instantiate();
             Button button = buttonContainer.Q<Button>();
@@ -143,9 +143,9 @@ public class UI_Commands : UI_Element<UI_Commands>
             prefabsButtons[path] = button;
         }
 
-        foreach (MyGameObject myGameObject in Resources.LoadAll<MyGameObject>(Config.Asset.Units))
+        foreach (MyGameObject myGameObject in Resources.LoadAll<MyGameObject>(Config.Directory.Units))
         {
-            string path = Path.Combine(Config.Asset.Units, myGameObject.name);
+            string path = Path.Combine(Config.Directory.Units, myGameObject.name);
 
             TemplateContainer buttonContainer = templateButton.Instantiate();
             Button button = buttonContainer.Q<Button>();

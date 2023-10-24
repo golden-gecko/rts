@@ -13,7 +13,7 @@ public class Constructor : MyComponent
 
         foreach (string prefab in Prefabs)
         {
-            Parent.Orders.AllowPrefab(Path.Join(Config.Asset.Structures, prefab));
+            Parent.Orders.AllowPrefab(Path.Join(Config.Directory.Structures, prefab));
         }
 
         Parent.OrderHandlers[OrderType.Construct] = new OrderHandlerConstruct();

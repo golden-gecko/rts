@@ -38,7 +38,7 @@ public class DisasterManager : Singleton<DisasterManager>
 
     private void CreateTimers()
     {
-        foreach (Disaster disaster in Resources.LoadAll<Disaster>(Config.Asset.Disasters))
+        foreach (Disaster disaster in Resources.LoadAll<Disaster>(Config.Directory.Disasters))
         {
             DisasterTimer[disaster] = new Timer(Random.Range(disaster.FrequencyInSecondsMin, disaster.FrequencyInSecondsMax));
         }

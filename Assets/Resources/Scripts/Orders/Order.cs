@@ -174,15 +174,6 @@ public class Order
         };
     }
 
-    public static Order UseSkill(string skill)
-    {
-        return new Order
-        {
-            Type = OrderType.UseSkill,
-            Skill = skill,
-        };
-    }
-
     public static Order Stock(MyGameObject myGameObject, string resource, int value)
     {
         return new Order
@@ -199,6 +190,16 @@ public class Order
         return new Order
         {
             Type = OrderType.Stop,
+        };
+    }
+
+    public static Order Teleport(MyGameObject sourceGameObject, MyGameObject targetGameObject)
+    {
+        return new Order
+        {
+            Type = OrderType.Teleport,
+            SourceGameObject = sourceGameObject,
+            TargetGameObject = targetGameObject,
         };
     }
 
@@ -231,6 +232,15 @@ public class Order
             TargetGameObject = myGameObject,
             Resource = resource,
             Value = value,
+        };
+    }
+
+    public static Order UseSkill(string skill)
+    {
+        return new Order
+        {
+            Type = OrderType.UseSkill,
+            Skill = skill,
         };
     }
 
@@ -333,7 +343,7 @@ public class Order
         return true;
     }
 
-    public MyGameObject SourceGameObject { get; private set; }
+    public MyGameObject SourceGameObject { get; set; } // TODO: Hide setter.
 
     public MyGameObject TargetGameObject { get; set; } // TODO: Hide setter.
 
