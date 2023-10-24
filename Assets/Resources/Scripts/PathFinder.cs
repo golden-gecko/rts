@@ -45,6 +45,46 @@ public class PathFinder : Singleton<PathFinder>
 
     public List<Node> GetPath(Vector3 start, Vector3 end)
     {
+        Teleporter nodeStart = GetNearest(start);
+        Teleporter nodeEnd = GetNearest(end);
+
+        if (nodeStart == null || nodeEnd == null)
+        {
+            return new List<Node>
+            {
+                new Node { position = end },
+            };
+        }
+
+        if (nodeStart == nodeEnd)
+        {
+            return new List<Node>
+            {
+                new Node { position = end },
+            };
+        }
+
+        float direct = (end - start).sqrMagnitude;
+        float teleport = (nodeEnd.Parent.Position - nodeStart.Parent.Position).sqrMagnitude;
+
+        if (direct <= teleport)
+        {
+            return new List<Node>
+            {
+                new Node { position = end },
+            };
+        }
+
+        return new List<Node>
+        {
+            new Node { teleporter = nodeStart },
+            new Node { teleporter = nodeEnd },
+            new Node { position = end },
+        };
+    }
+
+    public List<Node> GetPathUsingConnections(Vector3 start, Vector3 end)
+    {
         // MakeGraph(start, end);
 
         List<Node> queue = new List<Node>();
