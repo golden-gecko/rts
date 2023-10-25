@@ -10,11 +10,11 @@ public class Validator : EditorWindow
     {
         ClearLog();
 
-        GameObject[] disasters = Resources.LoadAll<GameObject>(Config.Asset.Disasters);
-        GameObject[] plants = Resources.LoadAll<GameObject>(Config.Asset.Plants);
-        GameObject[] rocks = Resources.LoadAll<GameObject>(Config.Asset.Rocks);
-        GameObject[] structures = Resources.LoadAll<GameObject>(Config.Asset.Structures);
-        GameObject[] units = Resources.LoadAll<GameObject>(Config.Asset.Units);
+        GameObject[] disasters = Resources.LoadAll<GameObject>(Config.Directory.Disasters);
+        GameObject[] plants = Resources.LoadAll<GameObject>(Config.Directory.Plants);
+        GameObject[] rocks = Resources.LoadAll<GameObject>(Config.Directory.Rocks);
+        GameObject[] structures = Resources.LoadAll<GameObject>(Config.Directory.Structures);
+        GameObject[] units = Resources.LoadAll<GameObject>(Config.Directory.Units);
 
         CheckPhysics(disasters);
         CheckPhysics(plants);
