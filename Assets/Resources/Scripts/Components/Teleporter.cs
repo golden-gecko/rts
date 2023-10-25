@@ -39,7 +39,7 @@ public class Teleporter : MyComponent
 
     public override string GetInfo()
     {
-        return string.Format("Teleporter: {0}", base.GetInfo());
+        return string.Format("Teleporter - {0}", base.GetInfo());
     }
 
     public void Open()
@@ -119,7 +119,7 @@ public class Teleporter : MyComponent
     */
 
     [field: SerializeField]
-    public float UsageTime { get; } = 2.0f;
+    public float UsageTime { get; private set; } = 2.0f;
 
-    private ParticleSystem Gate;
+    private ParticleSystem Gate { get; set; }
 }

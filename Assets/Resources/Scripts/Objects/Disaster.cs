@@ -65,21 +65,21 @@ public class Disaster : MyGameObject
     }
 
     [field: SerializeField]
-    public float FrequencyInSecondsMin = 120.0f;
+    public float FrequencyInSecondsMin { get; private set; } = 120.0f;
 
     [field: SerializeField]
-    public float FrequencyInSecondsMax = 180.0f;
+    public float FrequencyInSecondsMax { get; private set; } = 180.0f;
 
     [field: SerializeField]
-    public float Damage { get; set; } = 10.0f;
+    public float Damage { get; private set; } = 10.0f;
 
     [field: SerializeField]
-    public float DamagePerSecond { get; set; } = 10.0f;
+    public float DamagePerSecond { get; private set; } = 10.0f;
 
     [field: SerializeField]
     public List<DamageTypeItem> DamageType { get; private set; } = new List<DamageTypeItem>();
 
-    private List<MyGameObject> Damaged = new List<MyGameObject>();
+    private List<MyGameObject> Damaged { get; } = new List<MyGameObject>();
 
-    private Dictionary<MyGameObject, Timer> DamageTimer = new Dictionary<MyGameObject, Timer>();
+    private Dictionary<MyGameObject, Timer> DamageTimer { get; } = new Dictionary<MyGameObject, Timer>();
 }

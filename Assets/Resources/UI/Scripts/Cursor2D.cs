@@ -7,40 +7,40 @@ public class Cursor2D : Singleton<Cursor2D>
     {
         base.Awake();
 
-        cursors[OrderType.Assemble] = CursorAssemble;
-        cursors[OrderType.AttackObject] = CursorAttack;
-        cursors[OrderType.AttackPosition] = CursorAttack;
-        cursors[OrderType.Construct] = CursorConstruct;
-        cursors[OrderType.Destroy] = CursorDestroy;
-        cursors[OrderType.Disable] = CursorDisable;
-        cursors[OrderType.Enable] = CursorEnable;
-        cursors[OrderType.Explore] = CursorExplore;
-        cursors[OrderType.Follow] = CursorFollow;
-        cursors[OrderType.GatherObject] = CursorGather;
-        cursors[OrderType.GatherResource] = CursorGather;
-        cursors[OrderType.GuardObject] = CursorGuard;
-        cursors[OrderType.GuardPosition] = CursorGuard;
-        cursors[OrderType.Load] = CursorLoad;
-        cursors[OrderType.Move] = CursorMove;
-        cursors[OrderType.None] = CursorNone;
-        cursors[OrderType.Patrol] = CursorPatrol;
-        cursors[OrderType.Produce] = CursorProduce;
-        cursors[OrderType.Rally] = CursorRally;
-        cursors[OrderType.Research] = CursorResearch;
-        cursors[OrderType.Stop] = CursorStop;
-        cursors[OrderType.Transport] = CursorTransport;
-        cursors[OrderType.Unload] = CursorUnload;
-        cursors[OrderType.UseSkill] = CursorUseSkill;
-        cursors[OrderType.Wait] = CursorWait;
+        Cursors[OrderType.Assemble] = CursorAssemble;
+        Cursors[OrderType.AttackObject] = CursorAttack;
+        Cursors[OrderType.AttackPosition] = CursorAttack;
+        Cursors[OrderType.Construct] = CursorConstruct;
+        Cursors[OrderType.Destroy] = CursorDestroy;
+        Cursors[OrderType.Disable] = CursorDisable;
+        Cursors[OrderType.Enable] = CursorEnable;
+        Cursors[OrderType.Explore] = CursorExplore;
+        Cursors[OrderType.Follow] = CursorFollow;
+        Cursors[OrderType.GatherObject] = CursorGather;
+        Cursors[OrderType.GatherResource] = CursorGather;
+        Cursors[OrderType.GuardObject] = CursorGuard;
+        Cursors[OrderType.GuardPosition] = CursorGuard;
+        Cursors[OrderType.Load] = CursorLoad;
+        Cursors[OrderType.Move] = CursorMove;
+        Cursors[OrderType.None] = CursorNone;
+        Cursors[OrderType.Patrol] = CursorPatrol;
+        Cursors[OrderType.Produce] = CursorProduce;
+        Cursors[OrderType.Rally] = CursorRally;
+        Cursors[OrderType.Research] = CursorResearch;
+        Cursors[OrderType.Stop] = CursorStop;
+        Cursors[OrderType.Transport] = CursorTransport;
+        Cursors[OrderType.Unload] = CursorUnload;
+        Cursors[OrderType.UseSkill] = CursorUseSkill;
+        Cursors[OrderType.Wait] = CursorWait;
 
         Set(OrderType.None);
     }
 
     public void Set(OrderType orderType)
     {
-        if (cursors.ContainsKey(orderType))
+        if (Cursors.ContainsKey(orderType))
         {
-            Cursor.SetCursor(cursors[orderType], Vector2.zero, CursorMode.Auto);
+            Cursor.SetCursor(Cursors[orderType], Vector2.zero, CursorMode.Auto);
         }
     }
 
@@ -110,5 +110,5 @@ public class Cursor2D : Singleton<Cursor2D>
     [field: SerializeField]
     private Texture2D CursorWait { get; set; }
 
-    private Dictionary<OrderType, Texture2D> cursors = new Dictionary<OrderType, Texture2D>();
+    private Dictionary<OrderType, Texture2D> Cursors { get; } = new Dictionary<OrderType, Texture2D>();
 }

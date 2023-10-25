@@ -892,6 +892,12 @@ public class MyGameObject : MonoBehaviour
     [field: SerializeField]
     public bool RotateTowardsTarget { get; private set; } = true;
 
+    [field: SerializeField]
+    public bool ShowEntrance = false;
+
+    [field: SerializeField]
+    public bool ShowExit = false;
+
     public Vector3 Position { get => transform.position; set => transform.position = value; }
 
     public Quaternion Rotation { get => transform.rotation; set => transform.rotation = value; }
@@ -918,6 +924,7 @@ public class MyGameObject : MonoBehaviour
 
     private Vector3 PreviousPosition { get; set; }
 
+    /*
     public void AssignWorker(MyGameObject myGameObject)
     {
         Workers.Add(myGameObject);
@@ -933,4 +940,5 @@ public class MyGameObject : MonoBehaviour
     public HashSet<MyGameObject> Workers { get; } = new HashSet<MyGameObject>();
 
     public HashSet<MyGameObject> Workplaces { get; } = new HashSet<MyGameObject>();
+    */
 }

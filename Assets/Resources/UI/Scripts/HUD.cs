@@ -1,10 +1,9 @@
 using UnityEngine;
 using UnityEngine.EventSystems;
-using UnityEngine.UIElements;
 
 public class HUD : Singleton<HUD>
 {
-    void Start()
+    private void Start()
     {
         DragReset();
         DragDraw();
@@ -15,7 +14,7 @@ public class HUD : Singleton<HUD>
         SceneMenu.Instance.Show(false);
     }
 
-    void Update()
+    private void Update()
     {
         UpdateKeyboard();
         UpdateMouse();

@@ -6,11 +6,11 @@ public class UI_Orders : UI_Element<UI_Orders>
     {
         base.Awake();
 
-        panel = root.Q<VisualElement>("Panel_Orders");
+        panel = Root.Q<VisualElement>("Panel_Orders");
         value = panel.Q<Label>("Value");
     }
 
-    void Update()
+    private void Update()
     {
         Player activePlayer = HUD.Instance.ActivePlayer;
         MyGameObject hovered = HUD.Instance.Hovered;

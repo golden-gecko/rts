@@ -6,7 +6,7 @@ public class UI_Menu : UI_Element<UI_Menu>
     {
         base.Awake();
 
-        panel = root.Q<VisualElement>("Panel_Menu");
+        panel = Root.Q<VisualElement>("Panel_Menu");
 
         buttonMenu = panel.Q<Button>("Menu");
         buttonMenu.RegisterCallback<ClickEvent>(ev => OnMenu());

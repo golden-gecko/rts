@@ -27,4 +27,9 @@ public class Gauss : Gun
 
         myGameObject.Stats.Inc(Stats.MissilesFired);
     }
+
+    public override string GetInfo()
+    {
+        return string.Format("Gauss - {0}", base.GetInfo());
+    }
 }

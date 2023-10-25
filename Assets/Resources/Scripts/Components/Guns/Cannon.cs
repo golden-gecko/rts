@@ -28,4 +28,9 @@ public class Cannon : Gun
 
         myGameObject.Stats.Inc(Stats.MissilesFired);
     }
+
+    public override string GetInfo()
+    {
+        return string.Format("Cannon - {0}", base.GetInfo());
+    }
 }

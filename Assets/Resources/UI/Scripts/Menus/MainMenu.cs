@@ -19,7 +19,7 @@ public class MainMenu : UI_Element<MainMenu>
 
     private Button GetButton(string name)
     {
-        return root.Q<Button>(name);
+        return Root.Q<Button>(name);
     }
 
     private void OnButtonContinue()

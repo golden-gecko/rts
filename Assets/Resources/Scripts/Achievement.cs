@@ -20,5 +20,5 @@ public class Achievement
 
     public bool Completed { get; private set; } = false;
 
-    private Func<bool> Handler;
+    private Func<bool> Handler { get; set; }
 }

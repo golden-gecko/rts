@@ -14,11 +14,11 @@ public class Player : MonoBehaviour
 
         Achievements.Player = this;
 
-        jobHandlers[OrderType.AttackObject] = new JobHandlerAttackObject();
-        jobHandlers[OrderType.Construct] = new JobHandlerConstruct();
-        jobHandlers[OrderType.GatherObject] = new JobHandlerGatherObject();
-        jobHandlers[OrderType.Transport] = new JobHandlerTransport();
-        jobHandlers[OrderType.Unload] = new JobHandlerUnload();
+        JobHandlers[OrderType.AttackObject] = new JobHandlerAttackObject();
+        JobHandlers[OrderType.Construct] = new JobHandlerConstruct();
+        JobHandlers[OrderType.GatherObject] = new JobHandlerGatherObject();
+        JobHandlers[OrderType.Transport] = new JobHandlerTransport();
+        JobHandlers[OrderType.Unload] = new JobHandlerUnload();
     }
 
     protected virtual void Update()
@@ -61,7 +61,7 @@ public class Player : MonoBehaviour
 
     public Order GetJob(MyGameObject myGameObject, OrderType orderType)
     {
-        return jobHandlers.ContainsKey(orderType) ? jobHandlers[orderType].OnExecute(myGameObject) : null;
+        return JobHandlers.ContainsKey(orderType) ? JobHandlers[orderType].OnExecute(myGameObject) : null;
     }
 
     public void RegisterConsumer(MyGameObject myGameObject, string name, int value, ResourceDirection direction)
@@ -260,10 +260,10 @@ public class Player : MonoBehaviour
     }
 
     [field: SerializeField]
-    public Sprite SelectionSprite { get; set; }
+    public Sprite SelectionSprite { get; private set; }
 
     [field: SerializeField]
-    public string Name { get; set; }
+    public string Name { get; private set; }
 
     public SelectionGroup Selection { get; } = new SelectionGroup();
 
@@ -281,5 +281,5 @@ public class Player : MonoBehaviour
 
     public ResourceRequestContainer Producers { get; } = new ResourceRequestContainer();
 
-    private Dictionary<OrderType, JobHandler> jobHandlers = new Dictionary<OrderType, JobHandler>();
+    private Dictionary<OrderType, JobHandler> JobHandlers { get; } = new Dictionary<OrderType, JobHandler>();
 }

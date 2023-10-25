@@ -7,7 +7,7 @@ public class UI_Layers : UI_Element<UI_Layers>
     {
         base.Awake();
 
-        panel = root.Q<VisualElement>("Panel_Layers");
+        panel = Root.Q<VisualElement>("Panel_Layers");
         grid = panel.Q<Toggle>("Grid");
         range = panel.Q<Toggle>("Range");
 

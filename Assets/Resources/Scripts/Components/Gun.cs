@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -25,7 +24,7 @@ public class Gun : MyComponent
 
     public override string GetInfo()
     {
-        return string.Format("Gun: {0}, Damage: {1:0.}, Range: {2:0.}, Reload: {3} Ammunition: {4}", base.GetInfo(), Damage.Total, Range.Total, Reload.GetInfo(), Ammunition.GetInfo());
+        return string.Format("{0}, Damage: {1:0.}, Range: {2:0.}, Reload: {3} Ammunition: {4}", base.GetInfo(), Damage.Total, Range.Total, Reload.GetInfo(), Ammunition.GetInfo());
     }
 
     public bool IsInRange(Vector3 position)
@@ -55,7 +54,7 @@ public class Gun : MyComponent
     public Timer Reload { get; private set; } = new Timer(10.0f, 10.0f);
 
     [field: SerializeField]
-    public Counter Ammunition { get; } = new Counter(100, 100);
+    public Counter Ammunition { get; private set; } = new Counter(100, 100);
 
     [field: SerializeField]
     public List<DamageTypeItem> DamageType { get; private set; } = new List<DamageTypeItem>();

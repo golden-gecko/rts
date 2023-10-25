@@ -10,9 +10,9 @@ public class Shield : MyComponent
 
         if (Mesh != null)
         {
-            shield = Instantiate(Mesh, Parent.Position, Quaternion.identity);
-            shield.transform.parent = Parent.transform;
-            shield.transform.localScale = new Vector3(Range.Total * 2.0f / Parent.Scale.x, Range.Total * 2.0f / Parent.Scale.y, Range.Total * 2.0f / Parent.Scale.z);
+            ShieldMesh = Instantiate(Mesh, Parent.Position, Quaternion.identity);
+            ShieldMesh.transform.parent = Parent.transform;
+            ShieldMesh.transform.localScale = new Vector3(Range.Total * 2.0f / Parent.Scale.x, Range.Total * 2.0f / Parent.Scale.y, Range.Total * 2.0f / Parent.Scale.z);
         }
     }
 
@@ -22,19 +22,19 @@ public class Shield : MyComponent
 
         if (ResetTime.Update(Time.deltaTime))
         {
-            shield.SetActive(true);
+            ShieldMesh.SetActive(true);
 
             Capacity.Add(ChargeRate * Time.deltaTime);
         }
         else
         {
-            shield.SetActive(false);
+            ShieldMesh.SetActive(false);
         }
     }
 
     public override string GetInfo()
     {
-        return string.Format("Shield: {0}, Range: {1:0.}", base.GetInfo(), Range.Total);
+        return string.Format("Shield - {0}, Range: {1:0.}", base.GetInfo(), Range.Total);
     }
 
     public float Absorb(DamageType type, float damage)
@@ -86,5 +86,5 @@ public class Shield : MyComponent
     [field: SerializeField]
     public List<DamageTypeItem> ProtectionType { get; private set; } = new List<DamageTypeItem>();
 
-    private GameObject shield;
+    private GameObject ShieldMesh { get; set; }
 }

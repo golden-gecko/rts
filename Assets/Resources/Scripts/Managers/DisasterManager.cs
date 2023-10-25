@@ -10,7 +10,7 @@ public class DisasterManager : Singleton<DisasterManager>
         CreateTimers();
     }
 
-    void Update()
+    private void Update()
     {
         CreateDisaster();
     }

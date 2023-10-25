@@ -343,21 +343,21 @@ public class Order
         return true;
     }
 
-    public MyGameObject SourceGameObject { get; set; } // TODO: Hide setter.
+    public MyGameObject SourceGameObject { get; set; }
 
-    public MyGameObject TargetGameObject { get; set; } // TODO: Hide setter.
+    public MyGameObject TargetGameObject { get; set; }
 
     public Vector3 TargetPosition { get; private set; }
 
     public Quaternion TargetRotation { get; private set; }
 
-    public Timer Timer { get; set; } // TODO: Hide setter.
+    public Timer Timer { get; set; }
 
     public OrderType Type { get; private set; }
 
     public string Prefab { get; private set; }
 
-    public string Recipe { get; set; } // TODO: Hide setter.
+    public string Recipe { get; set; }
 
     public string Resource { get; private set; }
 

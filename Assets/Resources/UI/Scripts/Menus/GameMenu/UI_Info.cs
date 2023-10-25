@@ -6,11 +6,11 @@ public class UI_Info : UI_Element<UI_Info>
     {
         base.Awake();
 
-        panel = root.Q<VisualElement>("Panel_Info");
+        panel = Root.Q<VisualElement>("Panel_Info");
         value = panel.Q<Label>("Value");
     }
 
-    void Update()
+    private void Update()
     {
         Player activePlayer = HUD.Instance.ActivePlayer;
         MyGameObject hovered = HUD.Instance.Hovered;
