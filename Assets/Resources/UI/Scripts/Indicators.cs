@@ -498,19 +498,14 @@ public class Indicators : MonoBehaviour
 
     private void UpdateSigns(MyGameObject myGameObject)
     {
-        if (myGameObject.TryGetComponent(out Storage storage) && myGameObject.TryGetComponent(out Engine _) == false)
-        {
-            signEntrance.gameObject.SetActive(storage.Resources.In);
-            signEntrance.position = myGameObject.Entrance;
+        Engine engine = myGameObject.GetComponent<Engine>();
+        Storage storage = myGameObject.GetComponent<Storage>();
 
-            signExit.gameObject.SetActive(storage.Resources.Out);
-            signExit.position = myGameObject.Exit;
-        }
-        else
-        {
-            signEntrance.gameObject.SetActive(false);
-            signExit.gameObject.SetActive(false);
-        }
+        signEntrance.gameObject.SetActive((storage != null && engine == null && storage.Resources.In) || myGameObject.ShowEntrance);
+        signEntrance.position = myGameObject.Entrance;
+
+        signExit.gameObject.SetActive((storage != null && engine == null && storage.Resources.Out) || myGameObject.ShowExit);
+        signExit.position = myGameObject.Exit;
     }
 
     private void UpdateConstruction(MyGameObject myGameObject)

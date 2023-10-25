@@ -13,16 +13,16 @@ public class OrderHandlerTeleport : OrderHandler
             return;
         }
 
-        if (order.State == null && Utils.IsCloseTo(myGameObject.Position, order.SourceGameObject.Position) == false)
+        if (order.State == OrderState.GoToEntrance && Utils.IsCloseTo(myGameObject.Position, order.SourceGameObject.Position) == false)
         {
             myGameObject.Move(order.SourceGameObject.Position, 0);
 
-            order.State = "GoToEntrance";
+            order.State = OrderState.Open;
 
             return;
         }
 
-        if (order.State == "GoToEntrance")
+        if (order.State == OrderState.Open)
         {
             if (order.Timer == null)
             {
@@ -32,7 +32,7 @@ public class OrderHandlerTeleport : OrderHandler
             order.SourceGameObject.GetComponent<Teleporter>().Open();
             order.TargetGameObject.GetComponent<Teleporter>().Open();
 
-            order.State = "Open";
+            order.State = OrderState.Teleport;
         }
 
         if (order.Timer.Update(Time.deltaTime) == false)
@@ -40,22 +40,27 @@ public class OrderHandlerTeleport : OrderHandler
             return;
         }
 
-        if (order.State == "Open")
+        if (order.State == OrderState.Teleport)
         {
             myGameObject.Position = order.TargetGameObject.Position;
 
-            order.State = "GoToExit";
+            order.State = OrderState.GoToExit;
         }
 
-        if (order.TargetGameObject != null && Utils.IsCloseTo(myGameObject.Position, order.TargetGameObject.Exit) == false)
+        if (order.State == OrderState.GoToExit && order.TargetGameObject != null && Utils.IsCloseTo(myGameObject.Position, order.TargetGameObject.Exit) == false)
         {
             myGameObject.Move(order.TargetGameObject.Exit, 0);
+
+            order.State = OrderState.Close;
 
             return;
         }
 
-        order.SourceGameObject.GetComponent<Teleporter>().Close();
-        order.TargetGameObject.GetComponent<Teleporter>().Close();
+        if (order.State == OrderState.Close)
+        {
+            order.SourceGameObject.GetComponent<Teleporter>().Close();
+            order.TargetGameObject.GetComponent<Teleporter>().Close();
+        }
 
         Success(myGameObject);
     }

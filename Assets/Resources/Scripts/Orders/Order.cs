@@ -200,6 +200,7 @@ public class Order
             Type = OrderType.Teleport,
             SourceGameObject = sourceGameObject,
             TargetGameObject = targetGameObject,
+            State = OrderState.GoToEntrance,
         };
     }
 
@@ -371,5 +372,5 @@ public class Order
 
     public List<Vector3Int> Visited { get; set; }
 
-    public string State { get; set; }
+    public OrderState State { get; set; } = OrderState.None;
 }

@@ -372,6 +372,9 @@ MonoBehaviour:
   <CreateBase>k__BackingField: 0
   <SnapToGrid>k__BackingField: 0
   <VisibilityState>k__BackingField: 2
+  <RotateTowardsTarget>k__BackingField: 1
+  ShowEntrance: 0
+  ShowExit: 0
 --- !u!114 &-2369591204685981222
 MonoBehaviour:
   m_ObjectHideFlags: 0

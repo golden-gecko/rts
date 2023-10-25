@@ -57,6 +57,18 @@ public enum MyGameObjectState
     UnderConstruction = 3,
 }
 
+public enum OrderState
+{
+    None = 0,
+    GoToSource = 1,
+    GoToTarget = 2,
+    Open = 3,
+    Close = 4,
+    GoToEntrance = 5,
+    GoToExit = 6,
+    Teleport = 7,
+}
+
 public enum OrderType
 {
     Assemble = 0,

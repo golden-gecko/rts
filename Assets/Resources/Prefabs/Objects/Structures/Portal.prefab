@@ -226,6 +226,8 @@ MonoBehaviour:
   <SnapToGrid>k__BackingField: 1
   <VisibilityState>k__BackingField: 2
   <RotateTowardsTarget>k__BackingField: 1
+  ShowEntrance: 1
+  ShowExit: 1
 --- !u!114 &5662359848947303080
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -261,8 +263,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   <Mass>k__BackingField: 10
-  Range:
-    <Value>k__BackingField: 30
 --- !u!1 &5996340516263330089
 GameObject:
   m_ObjectHideFlags: 0

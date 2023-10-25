@@ -892,6 +892,12 @@ public class MyGameObject : MonoBehaviour
     [field: SerializeField]
     public bool RotateTowardsTarget { get; private set; } = true;
 
+    [field: SerializeField]
+    public bool ShowEntrance = false;
+
+    [field: SerializeField]
+    public bool ShowExit = false;
+
     public Vector3 Position { get => transform.position; set => transform.position = value; }
 
     public Quaternion Rotation { get => transform.rotation; set => transform.rotation = value; }
