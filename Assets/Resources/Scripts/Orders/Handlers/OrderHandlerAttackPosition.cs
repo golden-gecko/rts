@@ -6,13 +6,6 @@ public class OrderHandlerAttackPosition : OrderHandler
     {
         Order order = myGameObject.Orders.First();
 
-        if (IsValid(myGameObject, order) == false)
-        {
-            Fail(myGameObject);
-
-            return;
-        }
-
         Vector3 position = order.TargetPosition;
 
         if (myGameObject.GetComponent<Engine>())

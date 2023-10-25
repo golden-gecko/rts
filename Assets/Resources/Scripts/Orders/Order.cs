@@ -370,4 +370,6 @@ public class Order
     public List<Vector3Int> Queue { get; set; }
 
     public List<Vector3Int> Visited { get; set; }
+
+    public string State { get; set; }
 }

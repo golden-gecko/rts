@@ -1,14 +1,21 @@
-using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 [DisallowMultipleComponent]
 public class Teleporter : MyComponent
 {
+    protected override void Awake()
+    {
+        base.Awake();
+
+        Gate = transform.GetComponentsInChildren<Transform>().Where(x => x.name == "Gate").First().GetComponent<ParticleSystem>();
+    }
+
     protected override void Start()
     {
         base.Start();
 
-        MakeConnections();
+        // MakeConnections();
     }
 
     protected override void Update()
@@ -20,14 +27,14 @@ public class Teleporter : MyComponent
             return;
         }
 
-        UpdateConnections();
+        // UpdateConnections();
     }
 
     public override void OnDestroyHandler()
     {
         base.OnDestroyHandler();
 
-        ClearConnections();
+        // ClearConnections();
     }
 
     public override string GetInfo()
@@ -35,6 +42,17 @@ public class Teleporter : MyComponent
         return string.Format("Teleporter: {0}", base.GetInfo());
     }
 
+    public void Open()
+    {
+        Gate.Play();
+    }
+
+    public void Close()
+    {
+        Gate.Stop();
+    }
+
+    /*
     private void MakeConnections()
     {
         foreach (RaycastHit hitInfo in Utils.SphereCastAll(Parent.Position, Range.Total, Utils.GetGameObjectMask()))
@@ -98,4 +116,10 @@ public class Teleporter : MyComponent
     public Property Range = new Property(100.0f);
 
     public HashSet<Teleporter> Connections { get; } = new HashSet<Teleporter>();
+    */
+
+    [field: SerializeField]
+    public float UsageTime { get; } = 2.0f;
+
+    private ParticleSystem Gate;
 }

@@ -36,13 +36,6 @@ public class PathFinder : Singleton<PathFinder>
             {
                 Order.Move(end),
             };
-
-            /*
-            return new List<Node>
-            {
-                new Node { position = end },
-            };
-            */
         }
 
         if (nodeStart == nodeEnd)
@@ -51,17 +44,10 @@ public class PathFinder : Singleton<PathFinder>
             {
                 Order.Move(end),
             };
-
-            /*
-            return new List<Node>
-            {
-                new Node { position = end },
-            };
-            */
         }
 
         float direct = (end - start).sqrMagnitude;
-        float teleport = (nodeEnd.Parent.Position - nodeStart.Parent.Position).sqrMagnitude;
+        float teleport = (nodeStart.Parent.Position - start).sqrMagnitude + (nodeEnd.Parent.Position - end).sqrMagnitude;
 
         if (direct <= teleport)
         {
@@ -69,13 +55,6 @@ public class PathFinder : Singleton<PathFinder>
             {
                 Order.Move(end),
             };
-
-            /*
-            return new List<Node>
-            {
-                new Node { position = end },
-            };
-            */
         }
 
         return new List<Order>
@@ -83,15 +62,6 @@ public class PathFinder : Singleton<PathFinder>
             Order.Teleport(nodeStart.Parent, nodeEnd.Parent),
             Order.Move(end),
         };
-
-        /*
-        return new List<Node>
-        {
-            new Node { teleporter = nodeStart },
-            new Node { teleporter = nodeEnd },
-            new Node { position = end },
-        };
-        */
     }
 
     /*
