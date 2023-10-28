@@ -10,6 +10,11 @@ public class Progress
         Max = max;
     }
 
+    public void Set(float value)
+    {
+        Current = value;
+    }
+
     public float Add(float value)
     {
         float valueToAdd = Mathf.Min(Max - Current, value);
