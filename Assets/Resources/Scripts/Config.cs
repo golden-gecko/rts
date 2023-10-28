@@ -17,11 +17,11 @@ public class Config
 
     public class Directory
     {
-        public static string Disasters { get; } = Path.Join("Objects", "Disasters");
-        public static string Plants { get; } = Path.Join("Objects", "Plants");
-        public static string Rocks { get; } = Path.Join("Objects", "Rocks");
-        public static string Structures { get; } = Path.Join("Objects", "Structures");
-        public static string Units { get; } = Path.Join("Objects", "Units");
+        public static string Disasters { get; } = Path.Join("Prefabs", "Objects", "Disasters");
+        public static string Plants { get; } = Path.Join("Prefabs", "Objects", "Plants");
+        public static string Rocks { get; } = Path.Join("Prefabs", "Objects", "Rocks");
+        public static string Structures { get; } = Path.Join("Prefabs", "Objects", "Structures");
+        public static string Units { get; } = Path.Join("Prefabs", "Objects", "Units");
     }
 
     public class Formation
