@@ -84,9 +84,7 @@ public class MainCamera : MonoBehaviour
 
     private void UpdatePosition()
     {
-        Vector3 position;
-
-        if (Map.Instance.GetPositionForCamera(transform.position, out position, out _))
+        if (Map.Instance.GetPositionForCamera(transform.position, out Vector3 position, out _))
         {
             Position = new Vector3(Position.x, Mathf.Clamp(Position.y, position.y + Config.Camera.MinHeight, position.y + Config.Camera.MaxHeight), Position.z);
         }
