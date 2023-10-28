@@ -57,6 +57,6 @@ public class Config
     public class Prefab
     {
         public static string Base { get; } = Path.Join("Prefabs", "Base");
-        public static string Indicators { get; } = Path.Join("UI", "Prefabs", "Indicators");
+        public static string Indicators { get; } = Path.Join("Prefabs", "Indicators");
     }
 }
