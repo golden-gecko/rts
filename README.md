@@ -4,6 +4,11 @@ Simple RTS game.
 
 ## Assets
 
+### Audio
+
+https://assetstore.unity.com/packages/audio/sound-fx/weapons/free-laser-weapons-214929
+https://assetstore.unity.com/packages/audio/sound-fx/weapons/ultra-sci-fi-game-audio-weapons-pack-vol-1-113047
+
 ### Models
 
 https://assetstore.unity.com/packages/3d/environments/sci-fi/canopus-iii-low-poly-sci-fi-desert-units-set-106304

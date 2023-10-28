@@ -26,6 +26,11 @@ public class Gauss : Gun
         Ammunition.Dec();
 
         myGameObject.Stats.Inc(Stats.MissilesFired);
+
+        if (AudioFire != null)
+        {
+            AudioSource.PlayClipAtPoint(AudioFire, Parent.Position, 1.0f);
+        }
     }
 
     public override string GetInfo()

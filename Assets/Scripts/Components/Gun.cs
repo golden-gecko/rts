@@ -58,4 +58,7 @@ public class Gun : MyComponent
 
     [field: SerializeField]
     public List<DamageTypeItem> DamageType { get; private set; } = new List<DamageTypeItem>();
+
+    [SerializeField]
+    protected AudioClip AudioFire;
 }
