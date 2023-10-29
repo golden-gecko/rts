@@ -202,6 +202,7 @@
         <xs:attribute default="Clamped" name="touch-scroll-type" type="engine:ScrollView_touch-scroll-type_Type" use="optional" />
         <xs:attribute default="0.135" name="scroll-deceleration-rate" type="xs:float" use="optional" />
         <xs:attribute default="0.1" name="elasticity" type="xs:float" use="optional" />
+        <xs:attribute default="16" name="elastic-animation-interval-ms" type="xs:long" use="optional" />
         <xs:anyAttribute processContents="lax" />
       </xs:restriction>
     </xs:complexContent>
