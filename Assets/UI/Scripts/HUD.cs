@@ -8,10 +8,10 @@ public class HUD : Singleton<HUD>
         DragReset();
         DragDraw();
 
-        DiplomacyMenu.Instance.Show(false);
-        GameMenu.Instance.Show(true);
-        MainMenu.Instance.Show(false);
-        SceneMenu.Instance.Show(false);
+        MenuDiplomacy.Instance.Show(false);
+        MenuGame.Instance.Show(true);
+        MenuMain.Instance.Show(false);
+        MenuScene.Instance.Show(false);
     }
 
     private void Update()

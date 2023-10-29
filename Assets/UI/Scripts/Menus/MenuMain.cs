@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.UIElements;
 
-public class MainMenu : UI_Element<MainMenu>
+public class MenuMain : UI_Element<MenuMain>
 {
     protected override void Awake()
     {
@@ -30,7 +30,7 @@ public class MainMenu : UI_Element<MainMenu>
     private void OnButtonNew()
     {
         Show(false);
-        SceneMenu.Instance.Show(true);
+        MenuScene.Instance.Show(true);
     }
 
     private void OnButtonQuit()

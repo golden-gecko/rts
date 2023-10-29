@@ -1417,8 +1417,32 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 1016367653328774682, guid: 838528c30748ad1409e28e3a543244c6, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1016367653328774682, guid: 838528c30748ad1409e28e3a543244c6, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1016367653328774682, guid: 838528c30748ad1409e28e3a543244c6, type: 3}
       propertyPath: m_LocalPosition.z
       value: -0.05166626
+      objectReference: {fileID: 0}
+    - target: {fileID: 1016367653328774682, guid: 838528c30748ad1409e28e3a543244c6, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1016367653328774682, guid: 838528c30748ad1409e28e3a543244c6, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1016367653328774682, guid: 838528c30748ad1409e28e3a543244c6, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1016367653328774682, guid: 838528c30748ad1409e28e3a543244c6, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1016367653328774682, guid: 838528c30748ad1409e28e3a543244c6, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -1432,10 +1456,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 4771283690470332358, guid: 838528c30748ad1409e28e3a543244c6, type: 3}
-      propertyPath: sourceAsset
-      value: 
-      objectReference: {fileID: 9197481963319205126, guid: 01b11fc2c75593744a4634bde6e1cd69, type: 3}
     - target: {fileID: 4885079203805521602, guid: 838528c30748ad1409e28e3a543244c6, type: 3}
       propertyPath: m_Name
       value: Setup

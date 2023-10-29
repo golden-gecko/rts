@@ -1,4 +1,4 @@
-public class GameMenu : UI_Element<GameMenu>
+public class MenuGame : UI_Element<MenuGame>
 {
     protected override void Awake()
     {
@@ -6,6 +6,8 @@ public class GameMenu : UI_Element<GameMenu>
 
         // button = GameMenu.Instance.GetComponent<UIDocument>().rootVisualElement.Q<VisualElement>("Panel_Indicators").Q<Button>("Button");
     }
+
+    // TODO: Implement.
 
     /*
     private void Update()

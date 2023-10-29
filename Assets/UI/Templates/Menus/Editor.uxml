@@ -4,7 +4,13 @@
     <Style src="project://database/Assets/UI/Styles/Style.uss?fileID=7433441132597879392&amp;guid=231d51774ac67094591621cc55974d8c&amp;type=3#Style" />
     <ui:VisualElement class="container">
         <ui:Instance template="Header" />
-        <ui:VisualElement class="container" />
+        <ui:VisualElement style="flex-grow: 1; flex-direction: row;">
+            <ui:VisualElement name="VisualElement" style="flex-grow: 1;">
+                <ui:VisualElement name="Blueprints" style="flex-grow: 1;" />
+                <ui:VisualElement name="Parts" style="flex-grow: 2;" />
+            </ui:VisualElement>
+            <ui:VisualElement name="Preview" style="flex-grow: 2; background-image: url(&apos;project://database/Assets/Materials/Textures/Preview.renderTexture?fileID=8400000&amp;guid=8a8495d382840e945b0db524eaca0092&amp;type=2#Preview&apos;); -unity-background-scale-mode: scale-to-fit;" />
+        </ui:VisualElement>
         <ui:Instance template="Buttons" />
     </ui:VisualElement>
 </ui:UXML>

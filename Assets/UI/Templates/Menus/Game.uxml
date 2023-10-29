@@ -23,7 +23,9 @@
             </ui:VisualElement>
         </ui:VisualElement>
     </ui:VisualElement>
-    <ui:VisualElement name="Panel_Menu" class="panel-background" style="position: absolute; top: 0; right: 0;">
+    <ui:VisualElement name="Panel_Menu" class="panel-background" style="position: absolute; top: 0; right: 0; flex-direction: row;">
+        <ui:Button text="Diplomacy (F8)" name="Diplomacy" style="padding-top: 2px; padding-right: 2px; padding-bottom: 2px; padding-left: 2px; margin-top: 4px; margin-right: 4px; margin-bottom: 4px; margin-left: 4px;" />
+        <ui:Button text="Editor (F9)" name="Editor" style="padding-top: 2px; padding-right: 2px; padding-bottom: 2px; padding-left: 2px; margin-top: 4px; margin-right: 4px; margin-bottom: 4px; margin-left: 4px;" />
         <ui:Button text="Menu (F10)" name="Menu" style="padding-top: 2px; padding-right: 2px; padding-bottom: 2px; padding-left: 2px; margin-top: 4px; margin-right: 4px; margin-bottom: 4px; margin-left: 4px;" />
     </ui:VisualElement>
     <ui:VisualElement name="Container" picking-mode="Ignore" style="flex-grow: 1; bottom: 0; left: 0; top: 0; right: 80%; position: absolute; align-items: flex-start; justify-content: flex-end; flex-direction: column;">

@@ -1,3 +1,10 @@
+public enum DamageType
+{
+    Kinetic = 0,
+    Laser = 1,
+    Fire = 2, // TODO: Implement.
+}
+
 public enum DiplomacyState
 {
     Ally = 0,
@@ -17,16 +24,12 @@ public enum Formation
     Wedge = 7,
 }
 
-/*
- * Supported combinations:
- * - Air (missiles),
- * - Hover (planes),
- * - Submerged (submarines),
- * - Terrain (vehicles),
- * - Terrain and Underwater (vehicles),
- * - Terrain and Water (amphibious vehicles or hovercrafts),
- * - Water (ships).
- */
+public enum GameState
+{
+    Game = 0,
+    Editor = 1,
+    Menu = 2,
+}
 
 public enum MyGameObjectMapLayer
 {
@@ -37,8 +40,6 @@ public enum MyGameObjectMapLayer
     Water = 4,
     Hover = 5,
     Submerged = 6,
-
-    MAX = 7,
 }
 
 public enum MyGameObjectVisibilityState
@@ -57,11 +58,22 @@ public enum MyGameObjectState
     UnderConstruction = 3,
 }
 
+public enum OrderState
+{
+    None = 0,
+    GoToSource = 1,
+    GoToTarget = 2,
+    Open = 3,
+    Close = 4,
+    GoToEntrance = 5,
+    GoToExit = 6,
+    Teleport = 7,
+}
+
 public enum OrderType
 {
     Assemble = 0,
     AttackObject = 1,
-    AttackPosition = 25,
     Construct = 2,
     Destroy = 3,
     Disable = 4,
@@ -69,9 +81,7 @@ public enum OrderType
     Explore = 6,
     Follow = 7,
     GatherObject = 8,
-    GatherResource = 27,
     GuardObject = 9,
-    GuardPosition = 26,
     Idle = 10,
     Load = 11,
     Move = 12,
@@ -82,12 +92,15 @@ public enum OrderType
     Research = 17,
     Stock = 18,
     Stop = 19,
-    Teleport = 28,
     Transport = 20,
-    Turn = 24,
     Unload = 21,
     UseSkill = 22,
     Wait = 23,
+    Turn = 24,
+    AttackPosition = 25,
+    GuardPosition = 26,
+    GatherResource = 27,
+    Teleport = 28,
 }
 
 public enum ResourceDirection
@@ -96,10 +109,4 @@ public enum ResourceDirection
     None = 1,
     Out = 2,
     Store = 3,
-}
-
-public enum DamageType
-{
-    Kinetic = 0,
-    Laser = 1,
 }
