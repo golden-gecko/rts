@@ -127,36 +127,32 @@ public class UI_Commands : UI_Element<UI_Commands>
     {
         prefabs.Clear();
 
-        foreach (MyGameObject myGameObject in Resources.LoadAll<MyGameObject>(Config.Directory.Structures))
+        foreach (GameObject gameObject in ConfigPrefabs.Instance.Structures)
         {
-            string path = Path.Combine(Config.Directory.Structures, myGameObject.name);
-
             TemplateContainer buttonContainer = templateButton.Instantiate();
             Button button = buttonContainer.Q<Button>();
 
-            button.RegisterCallback<ClickEvent>(ev => OnConstruct(path));
+            button.RegisterCallback<ClickEvent>(ev => OnConstruct(gameObject.name));
             button.style.display = DisplayStyle.None;
-            button.text = Utils.FormatName(Path.GetFileName(path));
-            button.userData = path;
+            button.text = Utils.FormatName(gameObject.name);
+            button.userData = gameObject.name;
 
             prefabs.Add(buttonContainer);
-            prefabsButtons[path] = button;
+            prefabsButtons[gameObject.name] = button;
         }
 
-        foreach (MyGameObject myGameObject in Resources.LoadAll<MyGameObject>(Config.Directory.Units))
+        foreach (GameObject gameObject in ConfigPrefabs.Instance.Units)
         {
-            string path = Path.Combine(Config.Directory.Units, myGameObject.name);
-
             TemplateContainer buttonContainer = templateButton.Instantiate();
             Button button = buttonContainer.Q<Button>();
 
-            button.RegisterCallback<ClickEvent>(ev => OnAssemble(path));
+            button.RegisterCallback<ClickEvent>(ev => OnAssemble(gameObject.name));
             button.style.display = DisplayStyle.None;
-            button.text = Utils.FormatName(Path.GetFileName(path));
-            button.userData = path;
+            button.text = Utils.FormatName(Path.GetFileName(gameObject.name));
+            button.userData = gameObject.name;
 
             prefabs.Add(buttonContainer);
-            prefabsButtons[path] = button;
+            prefabsButtons[gameObject.name] = button;
         }
     }
 

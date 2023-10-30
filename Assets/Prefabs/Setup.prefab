@@ -102,8 +102,8 @@ RectTransform:
   - {fileID: 7995864682003217618}
   - {fileID: 6537542866703058750}
   - {fileID: 1011825083512513672}
-  - {fileID: 2883002097507125338}
   - {fileID: 450918614060605123}
+  - {fileID: 2883002097507125338}
   m_Father: {fileID: 1016367653328774682}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -521,6 +521,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1016367653328774682}
+  - component: {fileID: 5927054192065729548}
   - component: {fileID: 873085916221255505}
   - component: {fileID: 5440007449397948649}
   - component: {fileID: 2149643044942977690}
@@ -555,6 +556,56 @@ Transform:
   - {fileID: 8589857658123335874}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &5927054192065729548
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4885079203805521602}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9bff7ae963c9e2140b85113e008dd4d5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  <Base>k__BackingField: {fileID: 7275714258754569701, guid: 918976e2d137c6e4b914674d087492ff, type: 3}
+  <Indicators>k__BackingField: {fileID: 4051881364568090456, guid: 8da4a421bde8f734593a8c934f793019, type: 3}
+  <Disasters>k__BackingField:
+  - {fileID: 7750618690855558970, guid: f4f338176e607de448d44e6e1f78485e, type: 3}
+  - {fileID: 7181744628251240676, guid: 6761c256f34f2d941bc5fb124f122a6f, type: 3}
+  <Structures>k__BackingField:
+  - {fileID: 8922419687152604470, guid: f3495fef36cb5d04ea4899005805849b, type: 3}
+  - {fileID: 2221833450515023493, guid: 02e86a9710426ab45878cfedc265edb3, type: 3}
+  - {fileID: 8035996494400900344, guid: 15c8c9404fe01ca48853d483a4c6d6e8, type: 3}
+  - {fileID: 286350840086188452, guid: 7e702282b74426e4cbddf2a58ca7cb65, type: 3}
+  - {fileID: 2077589293580246448, guid: 61a7c4fca0a2a36409924024a26dbdde, type: 3}
+  - {fileID: 5603255856444034891, guid: b5843382cd866c94d9be29adad947c23, type: 3}
+  - {fileID: 6146446851295090096, guid: 21fb8379eb49db94ab8ebb7269aafbd9, type: 3}
+  - {fileID: 5838947687989452244, guid: 48e139de85287b74c817be832a80eefa, type: 3}
+  - {fileID: 3489344766907041493, guid: ed5910d57c89c724db1b0534a0e552fc, type: 3}
+  - {fileID: 6093475309484964639, guid: 542c111a9f30e3541a642356c50b03f2, type: 3}
+  - {fileID: 449311907384158923, guid: b92fb0682a588ff42aaf0a9d859ccf18, type: 3}
+  - {fileID: 4606917738391197512, guid: a7dab093d7c2d7a45920bcbd207ecbb8, type: 3}
+  - {fileID: 6793258599659259535, guid: 3598fdb006583704b9b0ec7d6f433789, type: 3}
+  - {fileID: 6239037674919067970, guid: eded832657e136542a403b188149892c, type: 3}
+  - {fileID: 6647195554574366884, guid: eb168a83fa925ad449da007ada6a2c83, type: 3}
+  - {fileID: 8362479133154386629, guid: d40d59f27e4cc7548853cd261e9d0587, type: 3}
+  - {fileID: 8840283984941553690, guid: 3a78786306fb3e64c943434c0935d749, type: 3}
+  <Units>k__BackingField:
+  - {fileID: 827890342975937740, guid: 943f05b478a807f47ad3e0056e214bc5, type: 3}
+  - {fileID: 3420214958373469289, guid: 797049024c95e2f4ca58838b4b979817, type: 3}
+  - {fileID: 9059119356659640769, guid: a5da38ddd7ec73d4a81a5e15d263131d, type: 3}
+  - {fileID: 6014288322611724604, guid: c6bff8f514d78c941a4b26fda1761e40, type: 3}
+  - {fileID: 1578887994438585109, guid: 7bf9b4588e172054c9a42a043a553419, type: 3}
+  - {fileID: 8383332613024446638, guid: 5a7982acb30e300498c70b254ff7488b, type: 3}
+  - {fileID: 5182510588389146488, guid: 289cf86174328e84cb91cfafacb41fde, type: 3}
+  - {fileID: 348367208220392007, guid: 52ead875ff6aac7449e15509dd920e29, type: 3}
+  - {fileID: 3697136554101965516, guid: b6ba41d8b212c1c4baec81b0ae9b1d54, type: 3}
+  - {fileID: 3049796617130582417, guid: 3febbd7a8624717448deed3b1fed4237, type: 3}
+  - {fileID: 6672543193626275511, guid: 101742dd777d60a4cb1fe9bb59224ef3, type: 3}
+  - {fileID: 4170081986206172789, guid: 8fb2190244191d24b85a422517186272, type: 3}
+  - {fileID: 4916527176359590894, guid: ceb46998882ca5e4d8b15b00b6dd5a74, type: 3}
+  - {fileID: 7348057453300986480, guid: 9e6ab894155a77546803ba41d8ea1fc4, type: 3}
 --- !u!114 &873085916221255505
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -628,7 +679,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7995864682003217618}
   - component: {fileID: 8528536790993542859}
-  - component: {fileID: 3386784984845876705}
+  - component: {fileID: 475748922596856571}
   m_Layer: 5
   m_Name: Editor
   m_TagString: Untagged
@@ -671,7 +722,7 @@ MonoBehaviour:
   m_ParentUI: {fileID: 0}
   sourceAsset: {fileID: 9197481963319205126, guid: a274d1e654248934abc45df6650e3a72, type: 3}
   m_SortingOrder: 0
---- !u!114 &3386784984845876705
+--- !u!114 &475748922596856571
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -680,9 +731,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 5577755948661113508}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d51a3bd4e7d80bb4aa79c8a2ec74dd38, type: 3}
+  m_Script: {fileID: 11500000, guid: 9eff1595a8f6746429d543e3a3cc5c7f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  TemplatePart: {fileID: 0}
 --- !u!1 &6004862327981080187
 GameObject:
   m_ObjectHideFlags: 0
@@ -1214,7 +1266,7 @@ GameObject:
   m_Component:
   - component: {fileID: 450918614060605123}
   - component: {fileID: 2238394413952579749}
-  - component: {fileID: 3419456069147729286}
+  - component: {fileID: 6260979331421240301}
   m_Layer: 5
   m_Name: Options
   m_TagString: Untagged
@@ -1257,7 +1309,7 @@ MonoBehaviour:
   m_ParentUI: {fileID: 0}
   sourceAsset: {fileID: 9197481963319205126, guid: bb257f28b9a7507479811f08e184ddc4, type: 3}
   m_SortingOrder: 0
---- !u!114 &3419456069147729286
+--- !u!114 &6260979331421240301
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1266,10 +1318,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 8730340540353958170}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1269fa98f7087ef488116f39bebc07b4, type: 3}
+  m_Script: {fileID: 11500000, guid: 5b6aabd21b21e5f4bbfa258de29c4d00, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  templateButton: {fileID: 9197481963319205126, guid: a3fb7fe5ff2f5a5498b9a348c95d0ca1, type: 3}
 --- !u!1 &8970328701858661987
 GameObject:
   m_ObjectHideFlags: 0

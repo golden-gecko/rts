@@ -56,6 +56,7 @@ public enum MyGameObjectState
     Operational = 1,
     UnderAssembly = 2,
     UnderConstruction = 3,
+    Preview = 4,
 }
 
 public enum OrderState

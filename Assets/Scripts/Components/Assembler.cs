@@ -12,9 +12,9 @@ public class Assembler : MyComponent
         Parent.Orders.AllowOrder(OrderType.Assemble);
         Parent.Orders.AllowOrder(OrderType.Rally);
 
-        foreach (string prefab in Prefabs)
+        foreach (GameObject prefab in ConfigPrefabs.Instance.Units)
         {
-            Parent.Orders.AllowPrefab(Path.Join(Config.Directory.Units, prefab));
+            Parent.Orders.AllowPrefab(prefab.name);
         }
 
         Parent.OrderHandlers[OrderType.Assemble] = new OrderHandlerAssemble();

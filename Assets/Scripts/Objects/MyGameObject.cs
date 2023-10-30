@@ -34,12 +34,12 @@ public class MyGameObject : MonoBehaviour
         ConstructionResources.Init("Iron", 0, 30, ResourceDirection.In);
 
         Stats.Player = Player;
-
-        CreateSkills();
     }
 
     protected virtual void Start()
     {
+        CreateSkills();
+
         InitializePosition();
 
         UpdateSelection();
@@ -707,13 +707,13 @@ public class MyGameObject : MonoBehaviour
 
         Indicators.transform.localPosition = new Vector3(0.0f, 0.25f, 0.0f);
 
-        Base = Instantiate(Resources.Load<GameObject>(Config.Prefab.Base), transform, false);
+        Base = Instantiate(ConfigPrefabs.Instance.Base, transform, false);
         Base.transform.localScale = new Vector3(size.x, 0.5f, size.z);
     }
 
     private void SetupIndicators()
     {
-        Indicators = Instantiate(Resources.Load<Indicators>(Config.Prefab.Indicators), transform, false);
+        Indicators = Instantiate(ConfigPrefabs.Instance.Indicators, transform, false).GetComponent<Indicators>();
     }
 
     private void CreateSkills()

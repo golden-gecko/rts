@@ -1,6 +1,4 @@
-using System.IO;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 using UnityEngine.UIElements;
 
 public class MenuEditor : UI_Element<MenuScene>
@@ -9,6 +7,17 @@ public class MenuEditor : UI_Element<MenuScene>
     {
         base.Awake();
 
+        Blueprints = Root.Q<VisualElement>("Blueprints");
+        Parts = Root.Q<VisualElement>("Parts");
+        Preview = Root.Q<VisualElement>("Preview");
+
+        ButtonOK = Root.Q<Button>("OK");
+        ButtonOK.RegisterCallback<ClickEvent>(ev => OnButtonOK());
+
+        ButtonCancel = Root.Q<Button>("Cancel");
+        ButtonCancel.RegisterCallback<ClickEvent>(ev => OnButtonCancel());
+
+        /*
         visualElement = Root.Q<VisualElement>("VisualElement");
 
         int sceneCount = SceneManager.sceneCountInBuildSettings;
@@ -30,16 +39,21 @@ public class MenuEditor : UI_Element<MenuScene>
 
             visualElement.Add(buttonContainer);
         }
+        */
     }
 
-    private void OnButtonScene(string scene)
+    private void OnButtonOK()
     {
-        SceneManager.LoadScene(scene, LoadSceneMode.Single);
+    }
+
+    private void OnButtonCancel()
+    {
     }
 
     [SerializeField]
     private VisualTreeAsset TemplatePart;
 
+    private VisualElement Blueprints;
     private VisualElement Parts;
     private VisualElement Preview;
 

@@ -6,8 +6,8 @@ public class TechnologyTree
 {
     public void Load()
     {
-        Load(Config.Directory.Structures);
-        Load(Config.Directory.Units);
+        Load(ConfigPrefabs.Instance.Structures);
+        Load(ConfigPrefabs.Instance.Units);
 
         // Starting technologies.
         Technologies["Colonization"] = new Technology("Colonization");
@@ -147,11 +147,11 @@ public class TechnologyTree
         Discover("Infantry");
     }
 
-    private void Load(string directory)
+    private void Load(List<GameObject> gameObjects)
     {
-        foreach (MyGameObject myGameObject in Resources.LoadAll<MyGameObject>(directory))
+        foreach (GameObject gameObject in gameObjects)
         {
-            Technologies[myGameObject.name] = new Technology(myGameObject.name) { Discovered = true };
+            Technologies[gameObject.name] = new Technology(gameObject.name) { Discovered = true };
         }
     }
 

@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &2092139814121432623
+--- !u!1 &3395374425289180605
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,10 +8,10 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 2264708636606124358}
-  - component: {fileID: 6325770349575027670}
-  - component: {fileID: 7522811966287296779}
-  - component: {fileID: 2952976590466927314}
+  - component: {fileID: 7899838580853385846}
+  - component: {fileID: 5993964032730141298}
+  - component: {fileID: 2661966824581646539}
+  - component: {fileID: 193435156754362597}
   m_Layer: 20
   m_Name: Body
   m_TagString: Untagged
@@ -19,36 +19,36 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &2264708636606124358
+--- !u!4 &7899838580853385846
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2092139814121432623}
+  m_GameObject: {fileID: 3395374425289180605}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.4, y: 0.4, z: 0.4}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 6907271885525262757}
+  m_Father: {fileID: 3793402985773567474}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!33 &6325770349575027670
+--- !u!33 &5993964032730141298
 MeshFilter:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2092139814121432623}
-  m_Mesh: {fileID: 3808435388899654712, guid: 582f4f8fa24df2a43a5548965d28b9cc, type: 3}
---- !u!23 &7522811966287296779
+  m_GameObject: {fileID: 3395374425289180605}
+  m_Mesh: {fileID: 510665732211489323, guid: 1b499af0e0a9b1d49b67689f6177e80f, type: 3}
+--- !u!23 &2661966824581646539
 MeshRenderer:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2092139814121432623}
+  m_GameObject: {fileID: 3395374425289180605}
   m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
@@ -62,7 +62,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: d7f0c86ff6be81e4d8e82f13e6fa7691, type: 2}
+  - {fileID: 2100000, guid: d697aa8eca9a6074e932a13fe7d7f5c1, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -84,13 +84,13 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!65 &2952976590466927314
+--- !u!65 &193435156754362597
 BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2092139814121432623}
+  m_GameObject: {fileID: 3395374425289180605}
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
@@ -103,9 +103,9 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 5, y: 6.9748974, z: 5}
-  m_Center: {x: 0, y: 3.4874487, z: 0}
---- !u!1 &6093475309484964639
+  m_Size: {x: 15.000001, y: 8.089302, z: 10.000002}
+  m_Center: {x: 0, y: 4.044651, z: 0}
+--- !u!1 &4606917738391197512
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -113,42 +113,39 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 6907271885525262757}
-  - component: {fileID: 7164507789798897428}
-  - component: {fileID: -4655764025613243680}
-  - component: {fileID: 4576625105702019730}
-  - component: {fileID: -3540461504229549173}
-  - component: {fileID: -2405146836434808691}
+  - component: {fileID: 3793402985773567474}
+  - component: {fileID: -3355764351564070608}
+  - component: {fileID: 2887738243623664993}
   m_Layer: 20
-  m_Name: Research_Lab
+  m_Name: Spaceport
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &6907271885525262757
+--- !u!4 &3793402985773567474
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6093475309484964639}
+  m_GameObject: {fileID: 4606917738391197512}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 2264708636606124358}
+  - {fileID: 7899838580853385846}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!54 &7164507789798897428
+--- !u!54 &-3355764351564070608
 Rigidbody:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6093475309484964639}
+  m_GameObject: {fileID: 4606917738391197512}
   serializedVersion: 4
   m_Mass: 1
   m_Drag: 0
@@ -169,18 +166,21 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!114 &-4655764025613243680
+--- !u!114 &2887738243623664993
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6093475309484964639}
+  m_GameObject: {fileID: 4606917738391197512}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 28d73f8fbe8af464f8ccdeabaf462443, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  <Experience>k__BackingField:
+    <Current>k__BackingField: 0
+    <Max>k__BackingField: 1000
   <Player>k__BackingField: {fileID: 0}
   <Enabled>k__BackingField: 1
   <Gatherable>k__BackingField: 0
@@ -198,83 +198,12 @@ MonoBehaviour:
   <ExpirationTimer>k__BackingField:
     <Current>k__BackingField: -1
     <Max>k__BackingField: -1
-  <SkillsNames>k__BackingField: []
+  <SkillsNames>k__BackingField:
+  - 
   <State>k__BackingField: 1
   <CreateBase>k__BackingField: 1
   <SnapToGrid>k__BackingField: 1
   <VisibilityState>k__BackingField: 2
   <RotateTowardsTarget>k__BackingField: 1
-  ShowEntrance: 0
-  ShowExit: 0
---- !u!114 &4576625105702019730
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6093475309484964639}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4d4c46a200faaed4fa9a0dcf28640d4c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  <Mass>k__BackingField: 10
-  <Technologies>k__BackingField:
-  - Colonization
-  - Electricity
-  - Flight
-  - Heavy_Industry
-  - Infantry
-  - Laser
-  - Radar_1
-  - Radar_2
-  - Radar_3
-  - Space_Travels
-  - Spaceport
-  - Static_Defences
-  - Stationary_Defences
-  - Submarines
-  <ResourceUsage>k__BackingField: 4
---- !u!114 &-3540461504229549173
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6093475309484964639}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9f7fc2f43637b07428d9ff8d0e38edaa, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  <Mass>k__BackingField: 10
-  <RaiseResourceFlags>k__BackingField: 1
-  <ResourceUsage>k__BackingField: 1
-  <Resources>k__BackingField:
-    <Items>k__BackingField:
-    - <Current>k__BackingField: 0
-      <Max>k__BackingField: 100
-      <Name>k__BackingField: Crystal
-      <Direction>k__BackingField: 0
---- !u!114 &-2405146836434808691
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6093475309484964639}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 26ef1c7f6037537498318d7dd9d37db3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  <Mass>k__BackingField: 10
-  <PowerGeneration>k__BackingField:
-    <Value>k__BackingField: -1
-  <PowerUsage>k__BackingField:
-    <Value>k__BackingField: 10
-  <Range>k__BackingField:
-    <Value>k__BackingField: -1
-  <PowerUpTime>k__BackingField:
-    <Current>k__BackingField: 0
-    <Max>k__BackingField: 1
+  <ShowEntrance>k__BackingField: 0
+  <ShowExit>k__BackingField: 0

@@ -1,4 +1,3 @@
-using System.IO;
 using UnityEngine;
 
 public class Config
@@ -13,15 +12,6 @@ public class Config
     {
         public static float RotateStep { get; } = 90.0f;
         public static bool SnapToGrid { get; } = true;
-    }
-
-    public class Directory
-    {
-        public static string Disasters { get; } = Path.Join("Prefabs", "Objects", "Disasters");
-        public static string Plants { get; } = Path.Join("Prefabs", "Objects", "Plants");
-        public static string Rocks { get; } = Path.Join("Prefabs", "Objects", "Rocks");
-        public static string Structures { get; } = Path.Join("Prefabs", "Objects", "Structures");
-        public static string Units { get; } = Path.Join("Prefabs", "Objects", "Units");
     }
 
     public class Formation
@@ -52,11 +42,5 @@ public class Config
         public static float MaxHeight { get; } = 2000.0f;
         public static float Scale { get; } = 1.0f;
         public static int Size { get; } = 512;
-    }
-
-    public class Prefab
-    {
-        public static string Base { get; } = Path.Join("Prefabs", "Base");
-        public static string Indicators { get; } = Path.Join("Prefabs", "Indicators");
     }
 }

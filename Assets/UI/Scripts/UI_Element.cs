@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.UIElements;
 
-public class UI_Element<T> : Singleton<T> where T : Component
+public class UI_Element<T> : Singleton<T> where T : MonoBehaviour
 {
     protected override void Awake()
     {

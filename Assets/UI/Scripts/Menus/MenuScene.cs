@@ -1,4 +1,3 @@
-using System.ComponentModel;
 using System.IO;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -10,7 +9,8 @@ public class MenuScene : UI_Element<MenuScene>
     {
         base.Awake();
 
-        visualElement = Root.Q<VisualElement>("VisualElement");
+        /*
+        Menu = Root.Q<VisualElement>("Menu");
 
         int sceneCount = SceneManager.sceneCountInBuildSettings;
         string[] scenes = new string[sceneCount];
@@ -29,8 +29,9 @@ public class MenuScene : UI_Element<MenuScene>
             button.text = scene;
             button.userData = scene;
 
-            visualElement.Add(buttonContainer);
+            Menu.Add(buttonContainer);
         }
+        */
     }
 
     private void OnButtonScene(string scene)
@@ -41,5 +42,5 @@ public class MenuScene : UI_Element<MenuScene>
     [SerializeField]
     private VisualTreeAsset templateButton;
 
-    private VisualElement visualElement;
+    private VisualElement Menu;
 }

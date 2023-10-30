@@ -5,7 +5,7 @@
     <ui:VisualElement class="container">
         <ui:Instance template="Header" />
         <ui:VisualElement style="flex-grow: 1; flex-direction: row;">
-            <ui:VisualElement name="VisualElement" style="flex-grow: 1;">
+            <ui:VisualElement style="flex-grow: 1;">
                 <ui:VisualElement name="Blueprints" style="flex-grow: 1;" />
                 <ui:VisualElement name="Parts" style="flex-grow: 2;" />
             </ui:VisualElement>

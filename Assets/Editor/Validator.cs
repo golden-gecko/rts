@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Reflection;
 using UnityEditor;
 using UnityEngine;
@@ -10,28 +11,22 @@ public class Validator : EditorWindow
     {
         ClearLog();
 
-        GameObject[] disasters = Resources.LoadAll<GameObject>(Config.Directory.Disasters);
-        GameObject[] plants = Resources.LoadAll<GameObject>(Config.Directory.Plants);
-        GameObject[] rocks = Resources.LoadAll<GameObject>(Config.Directory.Rocks);
-        GameObject[] structures = Resources.LoadAll<GameObject>(Config.Directory.Structures);
-        GameObject[] units = Resources.LoadAll<GameObject>(Config.Directory.Units);
+        CheckPhysics(ConfigPrefabs.Instance.Disasters);
+        // CheckPhysics(plants);
+        // CheckPhysics(rocks);
+        CheckPhysics(ConfigPrefabs.Instance.Structures);
+        CheckPhysics(ConfigPrefabs.Instance.Units);
 
-        CheckPhysics(disasters);
-        CheckPhysics(plants);
-        CheckPhysics(rocks);
-        CheckPhysics(structures);
-        CheckPhysics(units);
-
-        CheckStorage(disasters);
-        CheckStorage(plants);
-        CheckStorage(rocks);
-        CheckStorage(structures);
-        CheckStorage(units);
+        CheckStorage(ConfigPrefabs.Instance.Disasters);
+        // CheckStorage(plants);
+        // CheckStorage(rocks);
+        CheckStorage(ConfigPrefabs.Instance.Structures);
+        CheckStorage(ConfigPrefabs.Instance.Units);
     }
 
-    private static void CheckPhysics(GameObject[] resources)
+    private static void CheckPhysics(List<GameObject> gameObjects)
     {
-        foreach (GameObject gameObject in resources)
+        foreach (GameObject gameObject in gameObjects)
         {
             foreach (Collider collider in gameObject.GetComponentsInChildren<Collider>())
             {
@@ -56,9 +51,9 @@ public class Validator : EditorWindow
         }
     }
 
-    private static void CheckStorage(GameObject[] resources)
+    private static void CheckStorage(List<GameObject> gameObjects)
     {
-        foreach (GameObject gameObject in resources)
+        foreach (GameObject gameObject in gameObjects)
         {
             foreach (Storage storage in gameObject.GetComponentsInChildren<Storage>())
             {

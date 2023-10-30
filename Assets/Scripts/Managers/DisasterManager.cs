@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class DisasterManager : Singleton<DisasterManager>
@@ -38,7 +39,7 @@ public class DisasterManager : Singleton<DisasterManager>
 
     private void CreateTimers()
     {
-        foreach (Disaster disaster in Resources.LoadAll<Disaster>(Config.Directory.Disasters))
+        foreach (Disaster disaster in ConfigPrefabs.Instance.Disasters.Select(x => x.GetComponent<Disaster>()))
         {
             DisasterTimer[disaster] = new Timer(Random.Range(disaster.FrequencyInSecondsMin, disaster.FrequencyInSecondsMax));
         }
