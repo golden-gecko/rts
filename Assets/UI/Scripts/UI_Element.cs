@@ -18,6 +18,6 @@ public class UI_Element<T> : Singleton<T> where T : MonoBehaviour
 
     public bool Visible { get => Root.visible; }
 
-    protected UIDocument Document;
-    protected VisualElement Root;
+    protected UIDocument Document { get; private set; }
+    protected VisualElement Root { get; private set; }
 }

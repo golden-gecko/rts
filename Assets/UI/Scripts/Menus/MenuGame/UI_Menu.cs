@@ -20,12 +20,30 @@ public class UI_Menu : UI_Element<UI_Menu>
 
     public void OnDiplomacy()
     {
-
+        if (MenuDiplomacy.Instance.Visible)
+        {
+            MenuGame.Instance.Show(true);
+            MenuDiplomacy.Instance.Show(false);
+        }
+        else
+        {
+            MenuGame.Instance.Show(false);
+            MenuDiplomacy.Instance.Show(true);
+        }
     }
 
     public void OnEditor()
     {
-
+        if (MenuEditor.Instance.Visible)
+        {
+            MenuGame.Instance.Show(true);
+            MenuEditor.Instance.Show(false);
+        }
+        else
+        {
+            MenuGame.Instance.Show(false);
+            MenuEditor.Instance.Show(true);
+        }
     }
 
     public void OnMenu()

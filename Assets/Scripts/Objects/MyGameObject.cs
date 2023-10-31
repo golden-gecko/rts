@@ -38,6 +38,11 @@ public class MyGameObject : MonoBehaviour
 
     protected virtual void Start()
     {
+        if (State == MyGameObjectState.Cursor || State == MyGameObjectState.Preview)
+        {
+            return;
+        }
+
         CreateSkills();
 
         InitializePosition();
@@ -48,6 +53,11 @@ public class MyGameObject : MonoBehaviour
 
     protected virtual void Update()
     {
+        if (State == MyGameObjectState.Cursor || State == MyGameObjectState.Preview)
+        {
+            return;
+        }
+
         ExpirationTimer.Update(Time.deltaTime);
 
         switch (State)

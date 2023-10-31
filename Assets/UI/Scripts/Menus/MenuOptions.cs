@@ -1,7 +1,3 @@
-public class MenuOptions : UI_Element<MenuScene>
+public class MenuOptions : UI_Element<MenuOptions>
 {
-    protected override void Awake()
-    {
-        base.Awake();
-    }
 }

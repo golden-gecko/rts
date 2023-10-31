@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.UIElements;
 
-public class MenuEditor : UI_Element<MenuScene>
+public class MenuEditor : UI_Element<MenuEditor>
 {
     protected override void Awake()
     {
@@ -16,38 +16,24 @@ public class MenuEditor : UI_Element<MenuScene>
 
         ButtonCancel = Root.Q<Button>("Cancel");
         ButtonCancel.RegisterCallback<ClickEvent>(ev => OnButtonCancel());
+    }
 
-        /*
-        visualElement = Root.Q<VisualElement>("VisualElement");
-
-        int sceneCount = SceneManager.sceneCountInBuildSettings;
-        string[] scenes = new string[sceneCount];
-
-        for (int i = 0; i < sceneCount; i++)
+    private void Update()
+    {
+        if (Visible && Input.GetMouseButton(0))
         {
-            scenes[i] = Path.GetFileNameWithoutExtension(SceneUtility.GetScenePathByBuildIndex(i));
+            GameObject.Find("Setup").transform.Find("Editor").transform.Find("GameObject").Rotate(Input.GetAxis("Mouse Y") * 3.0f, Input.GetAxis("Mouse X") * 3.0f, 0.0f, Space.Self);
         }
-
-        foreach (string scene in scenes)
-        {
-            TemplateContainer buttonContainer = templateButton.Instantiate();
-            Button button = buttonContainer.Q<Button>();
-
-            button.RegisterCallback<ClickEvent>(ev => OnButtonScene(scene));
-            button.text = scene;
-            button.userData = scene;
-
-            visualElement.Add(buttonContainer);
-        }
-        */
     }
 
     private void OnButtonOK()
     {
+        Show(false);
     }
 
     private void OnButtonCancel()
     {
+        Show(false);
     }
 
     [SerializeField]

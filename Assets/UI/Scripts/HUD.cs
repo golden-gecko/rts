@@ -40,6 +40,16 @@ public class HUD : Singleton<HUD>
 
     private void CheckShowMenu()
     {
+        if (Input.GetKeyDown(KeyCode.F8))
+        {
+            UI_Menu.Instance.OnDiplomacy();
+        }
+
+        if (Input.GetKeyDown(KeyCode.F9))
+        {
+            UI_Menu.Instance.OnEditor();
+        }
+
         if (Input.GetKeyDown(KeyCode.F10))
         {
             UI_Menu.Instance.OnMenu();

@@ -570,6 +570,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <Base>k__BackingField: {fileID: 7275714258754569701, guid: 918976e2d137c6e4b914674d087492ff, type: 3}
   <Indicators>k__BackingField: {fileID: 4051881364568090456, guid: 8da4a421bde8f734593a8c934f793019, type: 3}
+  <Drives>k__BackingField:
+  - {fileID: 6014288322611724604, guid: 3a46ffd9342c7f149902e9c62ae76283, type: 3}
+  - {fileID: 3697136554101965516, guid: ced1ed7904c29e5459c6256c871f3fa6, type: 3}
+  <Guns>k__BackingField:
+  - {fileID: 827890342975937740, guid: 37a01d71e9b387b448da6c80e7c90c7a, type: 3}
+  - {fileID: 827890342975937740, guid: c16f44da35c43c045b367eddbcd1e59a, type: 3}
+  - {fileID: 6014288322611724604, guid: c0c27b841091e2849b51b49ec96c0c73, type: 3}
+  - {fileID: 6672543193626275511, guid: c0967d702df221a439ac077aa6a6ec59, type: 3}
+  - {fileID: 4170081986206172789, guid: 95ad2d330b401f041b236d67ed031c5c, type: 3}
+  - {fileID: 4916527176359590894, guid: c559902122f92ab46a9fafb85156b9cb, type: 3}
+  <Shields>k__BackingField:
+  - {fileID: 5771986485392630128, guid: 48ec2c1cdd5391c4ea06176574fddbc9, type: 3}
   <Disasters>k__BackingField:
   - {fileID: 7750618690855558970, guid: f4f338176e607de448d44e6e1f78485e, type: 3}
   - {fileID: 7181744628251240676, guid: 6761c256f34f2d941bc5fb124f122a6f, type: 3}
