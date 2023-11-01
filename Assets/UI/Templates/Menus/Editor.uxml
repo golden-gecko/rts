@@ -1,21 +1,17 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
     <ui:Template name="Header" src="project://database/Assets/UI/Templates/Header.uxml?fileID=9197481963319205126&amp;guid=4431d286fc167324b887444984d2db7a&amp;type=3#Header" />
-    <ui:Template name="Part" src="project://database/Assets/UI/Templates/Part.uxml?fileID=9197481963319205126&amp;guid=6ae173a539a2b184e8ea140fed115df7&amp;type=3#Part" />
-    <ui:Template name="Buttons" src="project://database/Assets/UI/Templates/Buttons.uxml?fileID=9197481963319205126&amp;guid=bd1b907a14528c34ab54178530bec841&amp;type=3#Buttons" />
+    <ui:Template name="Buttons_2" src="project://database/Assets/UI/Templates/Buttons_2.uxml?fileID=9197481963319205126&amp;guid=fb0e537cceaba4e4b800757af08e963d&amp;type=3#Buttons_2" />
+    <ui:Template name="Buttons" src="project://database/Assets/UI/Templates/Buttons_1.uxml?fileID=9197481963319205126&amp;guid=bd1b907a14528c34ab54178530bec841&amp;type=3#Buttons_1" />
     <Style src="project://database/Assets/UI/Styles/Style.uss?fileID=7433441132597879392&amp;guid=231d51774ac67094591621cc55974d8c&amp;type=3#Style" />
     <ui:VisualElement class="container">
         <ui:Instance template="Header" />
         <ui:VisualElement style="flex-grow: 1; flex-direction: row;">
-            <ui:VisualElement style="flex-grow: 1;">
-                <ui:VisualElement name="Blueprints" style="flex-grow: 1;" />
-                <ui:VisualElement name="Parts" style="flex-grow: 1;">
-                    <ui:Instance template="Part" />
-                    <ui:Instance template="Part" />
-                    <ui:Instance template="Part" />
-                </ui:VisualElement>
-            </ui:VisualElement>
-            <ui:VisualElement name="Preview" style="flex-grow: 2; background-image: url(&apos;project://database/Assets/Materials/Textures/Preview.renderTexture?fileID=8400000&amp;guid=8a8495d382840e945b0db524eaca0092&amp;type=2#Preview&apos;); -unity-background-scale-mode: scale-to-fit;" />
+            <ui:ListView name="Parts" style="flex-grow: 1;" />
+            <ui:VisualElement name="Preview" style="background-image: url(&apos;project://database/Assets/Materials/Textures/Preview.renderTexture?fileID=8400000&amp;guid=8a8495d382840e945b0db524eaca0092&amp;type=2#Preview&apos;); -unity-background-scale-mode: scale-and-crop; flex-grow: 1;" />
         </ui:VisualElement>
+    </ui:VisualElement>
+    <ui:VisualElement style="align-items: center; flex-direction: row; justify-content: center;">
+        <ui:Instance template="Buttons_2" />
         <ui:Instance template="Buttons" />
     </ui:VisualElement>
 </ui:UXML>
