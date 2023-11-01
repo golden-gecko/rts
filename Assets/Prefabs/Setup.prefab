@@ -585,6 +585,17 @@ MonoBehaviour:
   <Disasters>k__BackingField:
   - {fileID: 7750618690855558970, guid: f4f338176e607de448d44e6e1f78485e, type: 3}
   - {fileID: 7181744628251240676, guid: 6761c256f34f2d941bc5fb124f122a6f, type: 3}
+  <Plants>k__BackingField:
+  - {fileID: 2222111361404534124, guid: 2611ed8fbff91a64aa42f06d5f9cdf23, type: 3}
+  - {fileID: 4661435515762455780, guid: 85251ca15e5c69c49b6d707d6e616399, type: 3}
+  - {fileID: 6941765000743290380, guid: 574a1e8e85e755940b7fc595e9675a88, type: 3}
+  - {fileID: 2807449429036958551, guid: e574ac9f96f69fe408f996d73dd9f5dc, type: 3}
+  - {fileID: 9069115365609291303, guid: 08ce1d492a8b66e429f719032407aaf8, type: 3}
+  <Rocks>k__BackingField:
+  - {fileID: 1649971028671782476, guid: db55b7ec92afd89458b89889e498a3a7, type: 3}
+  - {fileID: 1231909215900800693, guid: 9b1b6d56c457fee4c9e8d5a341317e2a, type: 3}
+  - {fileID: 2040145519782903273, guid: 0724eebae05d77a4f9efb0701d38dc78, type: 3}
+  - {fileID: 2110397422985802995, guid: 5c39a0841becb1043836da952b114254, type: 3}
   <Structures>k__BackingField:
   - {fileID: 8922419687152604470, guid: f3495fef36cb5d04ea4899005805849b, type: 3}
   - {fileID: 2221833450515023493, guid: 02e86a9710426ab45878cfedc265edb3, type: 3}

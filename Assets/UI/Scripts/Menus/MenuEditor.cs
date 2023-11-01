@@ -18,6 +18,21 @@ public class MenuEditor : UI_Element<MenuEditor>
         ButtonCancel.RegisterCallback<ClickEvent>(ev => OnButtonCancel());
     }
 
+    private void Start()
+    {
+        foreach (GameObject part in ConfigPrefabs.Instance.Drives)
+        {
+        }
+
+        foreach (GameObject part in ConfigPrefabs.Instance.Guns)
+        {
+        }
+
+        foreach (GameObject part in ConfigPrefabs.Instance.Shields)
+        {
+        }
+    }
+
     private void Update()
     {
         if (Visible && Input.GetMouseButton(0))
