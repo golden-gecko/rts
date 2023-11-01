@@ -21,14 +21,14 @@ public class MenuScene : UI_Element<MenuScene>
 
         foreach (string scene in scenes)
         {
-            TemplateContainer buttonContainer = templateButton.Instantiate();
-            Button button = buttonContainer.Q<Button>();
+            TemplateContainer container = templateButton.Instantiate();
+            Button button = container.Q<Button>();
 
             button.RegisterCallback<ClickEvent>(ev => OnButtonScene(scene));
             button.text = scene;
             button.userData = scene;
 
-            Menu.Add(buttonContainer);
+            Menu.Add(container);
         }
         */
     }

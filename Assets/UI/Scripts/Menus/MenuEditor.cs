@@ -22,6 +22,14 @@ public class MenuEditor : UI_Element<MenuEditor>
     {
         foreach (GameObject part in ConfigPrefabs.Instance.Drives)
         {
+            TemplateContainer container = TemplatePart.Instantiate();
+            Label name = container.Q<Label>("Name");
+            Button preview = container.Q<Button>("Preview");
+
+            name.text = part.name;
+            // preview.style.backgroundImage = "";
+
+            Preview.Add(container);
         }
 
         foreach (GameObject part in ConfigPrefabs.Instance.Guns)

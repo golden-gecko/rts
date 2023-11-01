@@ -15,33 +15,30 @@ public class Tools : EditorWindow
         EditorSceneManager.SaveCurrentModifiedScenesIfUserWantsTo();
         EditorSceneManager.OpenScene(Path.Join("Assets", "Scenes", "Editor.unity"));
 
+        int size = 256;
+        RenderTexture renderTexture = new RenderTexture(size, size, 24);
+
         Camera camera = GameObject.Find("Setup").transform.Find("Cameras").transform.Find("MainCamera").GetComponent<Camera>();
         camera.transform.position = new Vector3(1.5f, 1.0f, 1.5f);
         camera.transform.localEulerAngles = new Vector3(15.0f, 235.0f, 0.0f);
-
-        int size = 256;
-
-        RenderTexture renderTexture = new RenderTexture(size, size, 24);
         camera.targetTexture = renderTexture;
 
-        Texture2D screenShot = new Texture2D(size, size, TextureFormat.RGB24, false);
+        Texture2D texture = new Texture2D(size, size, TextureFormat.RGB24, false);
 
         foreach (GameObject gameObject in GetGameObjects())
         {
-            // GameObject gameObject = AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Prefabs/Objects/Units/Quad.prefab");
-            
             GameObject instance = Instantiate(gameObject);
 
             camera.Render();
 
             RenderTexture.active = renderTexture;
-            screenShot.ReadPixels(new Rect(0, 0, size, size), 0, 0);
+            texture.ReadPixels(new Rect(0, 0, size, size), 0, 0);
 
-            byte[] bytes = screenShot.EncodeToPNG();
+            byte[] bytes = texture.EncodeToPNG();
             string filename = GetPortraitPath(gameObject.name);
             File.WriteAllBytes(filename, bytes);
 
-            Debug.Log(string.Format("Took screenshot to: {0}", filename));
+            Debug.Log(string.Format("Saving portrait to {0}", filename));
 
             DestroyImmediate(instance);
         }
@@ -75,7 +72,7 @@ public class Tools : EditorWindow
 
     private static string GetPortraitPath(string name)
     {
-        return string.Format("Assets/UI/Materials/Portraits/{0}.png", name);
+        return Path.Combine(new string[] { "Assets", "UI", "Materials", "Portraits", string.Format("{0}.png", name) });
     }
 
     private static void ClearLog()

@@ -2,6 +2,6 @@
     <Style src="project://database/Assets/UI/Styles/Style.uss?fileID=7433441132597879392&amp;guid=231d51774ac67094591621cc55974d8c&amp;type=3#Style" />
     <ui:VisualElement style="flex-grow: 1;">
         <ui:Label text="Name" name="Name" style="padding-top: 5px; padding-right: 5px; padding-bottom: 5px; padding-left: 5px; margin-top: 5px; margin-right: 5px; margin-bottom: 5px; margin-left: 5px;" />
-        <ui:Button display-tooltip-when-elided="true" name="Preview" style="flex-grow: 1;" />
+        <ui:Button display-tooltip-when-elided="true" name="Image" style="background-image: url(&apos;project://database/Assets/UI/Materials/Portraits/Gun_001.png?fileID=2800000&amp;guid=eaaed73c1e297524ab4f5ae2b2f1e57a&amp;type=3#Gun_001&apos;); flex-grow: 1;" />
     </ui:VisualElement>
 </ui:UXML>
