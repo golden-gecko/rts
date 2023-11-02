@@ -11,6 +11,9 @@ public class ConfigPrefabs : Singleton<ConfigPrefabs>
 
     #region Components
     [field: SerializeField]
+    public List<GameObject> Chassis { get; private set; } = new List<GameObject>();
+
+    [field: SerializeField]
     public List<GameObject> Drives { get; private set; } = new List<GameObject>();
 
     [field: SerializeField]

@@ -6,8 +6,8 @@
     <ui:VisualElement class="container">
         <ui:Instance template="Header" />
         <ui:VisualElement style="flex-grow: 1; flex-direction: row;">
-            <ui:ListView name="Parts" style="flex-grow: 1;" />
-            <ui:VisualElement name="Preview" style="background-image: url(&apos;project://database/Assets/Materials/Textures/Preview.renderTexture?fileID=8400000&amp;guid=8a8495d382840e945b0db524eaca0092&amp;type=2#Preview&apos;); -unity-background-scale-mode: scale-and-crop; flex-grow: 1;" />
+            <ui:ListView name="Parts" fixed-item-height="200" style="flex-grow: 1;" />
+            <ui:VisualElement name="Preview" style="background-image: url(&apos;project://database/Assets/Materials/Textures/Preview.renderTexture?fileID=8400000&amp;guid=8a8495d382840e945b0db524eaca0092&amp;type=2#Preview&apos;); -unity-background-scale-mode: scale-and-crop; flex-grow: 2;" />
         </ui:VisualElement>
     </ui:VisualElement>
     <ui:VisualElement style="align-items: center; flex-direction: row; justify-content: center;">
