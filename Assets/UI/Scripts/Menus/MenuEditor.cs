@@ -1,5 +1,8 @@
+using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.UIElements;
+using static Config;
 
 public class MenuEditor : UI_Element<MenuEditor>
 {
@@ -9,23 +12,110 @@ public class MenuEditor : UI_Element<MenuEditor>
 
         Root.Q<Label>("Header").text = "Editor";
 
-        Parts = Root.Q<ListView>("Parts");
+        PartsChassis = Root.Q<ListView>("PartsChassis");
+        PartsChassis.selectionChanged += (IEnumerable<object> objects) => OnSelectionChanged(PartType.Chassis, objects);
+
+        PartsDrive = Root.Q<ListView>("PartsDrive");
+        PartsDrive.selectionChanged += (IEnumerable<object> objects) => OnSelectionChanged(PartType.Drive, objects);
+
+        PartsGun = Root.Q<ListView>("PartsGun");
+        PartsGun.selectionChanged += (IEnumerable<object> objects) => OnSelectionChanged(PartType.Gun, objects);
+
         Preview = Root.Q<VisualElement>("Preview");
+        Preview.RegisterCallback<MouseEnterEvent>(x => OnMouseEnterEvent());
+        Preview.RegisterCallback<MouseLeaveEvent>(x => OnMouseLeaveEvent());
+
+        ButtonPrevious = Root.Q<Button>("Previous");
+        ButtonPrevious.RegisterCallback<ClickEvent>(x => OnButtonPrevious());
+
+        ButtonNext = Root.Q<Button>("Next");
+        ButtonNext.RegisterCallback<ClickEvent>(x => OnButtonNext());
 
         ButtonOK = Root.Q<Button>("OK");
-        ButtonOK.RegisterCallback<ClickEvent>(ev => OnButtonOK());
+        ButtonOK.RegisterCallback<ClickEvent>(x => OnButtonOK());
 
         ButtonCancel = Root.Q<Button>("Cancel");
-        ButtonCancel.RegisterCallback<ClickEvent>(ev => OnButtonCancel());
+        ButtonCancel.RegisterCallback<ClickEvent>(x => OnButtonCancel());
 
-        CreateChasisList();
+        CreatePartList(PartsChassis, ConfigPrefabs.Instance.Chassis);
+        CreatePartList(PartsDrive, ConfigPrefabs.Instance.Drives);
+        CreatePartList(PartsGun, ConfigPrefabs.Instance.Guns);
+
+        PartsSelected.Add(PartType.Chassis, null);
+        PartsSelected.Add(PartType.Drive, null);
+        PartsSelected.Add(PartType.Gun, null);
     }
 
     private void Update()
     {
-        if (Visible && Input.GetMouseButton(0))
+        if (Visible && MouseInside && Input.GetMouseButton(0))
         {
-            GameObject.Find("Setup").transform.Find("Editor").transform.Find("GameObject").Rotate(Input.GetAxis("Mouse Y") * 3.0f, Input.GetAxis("Mouse X") * 3.0f, 0.0f, Space.Self);
+            Transform setup = GameObject.Find("Setup").transform;
+            Transform editor = setup.Find("Editor").transform;
+            Transform placeholder = editor.Find("Placeholder").transform;
+
+            placeholder.Rotate(Vector3.forward, Input.GetAxis("Mouse Y") * Config.Editor.RotateSpeed, Space.World);
+            placeholder.Rotate(Vector3.down, Input.GetAxis("Mouse X") * Config.Editor.RotateSpeed, Space.World);
+        }
+    }
+
+    private void OnSelectionChanged(PartType type, IEnumerable<object> objects)
+    {
+        if (objects.Count() > 0)
+        {
+            PartsSelected[type] = objects.First() as GameObject;
+        }
+
+        BuildGameObject();
+    }
+
+    private void OnMouseEnterEvent()
+    {
+        MouseInside = true;
+    }
+
+    private void OnMouseLeaveEvent()
+    {
+        MouseInside = false;
+    }
+
+    private void OnButtonPrevious()
+    {
+        switch (PartsListVisible)
+        {
+            case PartType.Drive:
+                PartsListVisible = PartType.Chassis;
+
+                PartsChassis.style.display = DisplayStyle.Flex;
+                PartsDrive.style.display = DisplayStyle.None;
+                break;
+
+            case PartType.Gun:
+                PartsListVisible = PartType.Drive;
+
+                PartsDrive.style.display = DisplayStyle.Flex;
+                PartsGun.style.display = DisplayStyle.None;
+                break;
+        }
+    }
+
+    private void OnButtonNext()
+    {
+        switch (PartsListVisible)
+        {
+            case PartType.Chassis:
+                PartsListVisible = PartType.Drive;
+
+                PartsChassis.style.display = DisplayStyle.None;
+                PartsDrive.style.display = DisplayStyle.Flex;
+                break;
+
+            case PartType.Drive:
+                PartsListVisible = PartType.Gun;
+
+                PartsDrive.style.display = DisplayStyle.None;
+                PartsGun.style.display = DisplayStyle.Flex;
+                break;
         }
     }
 
@@ -39,36 +129,96 @@ public class MenuEditor : UI_Element<MenuEditor>
         Show(false);
     }
 
-    private void CreateChasisList()
+    private void CreatePartList(ListView listView, List<GameObject> parts)
     {
-        Parts.makeItem = () =>
+        listView.makeItem = () =>
         {
             return TemplatePart.Instantiate();
         };
 
-        Parts.bindItem = (VisualElement item, int index) =>
+        listView.bindItem = (VisualElement item, int index) =>
         {
-            item.Q<Label>("Name").text = ConfigPrefabs.Instance.Chassis[index].name;
-            item.userData = ConfigPrefabs.Instance.Chassis[index];
+            item.Q<Label>("Name").text = parts[index].name;
+            item.Q<VisualElement>("Image").style.backgroundImage = new StyleBackground(Utils.LoadPortrait(parts[index].name));
+
+            item.userData = parts[index];
         };
 
-        Parts.itemsSource = ConfigPrefabs.Instance.Chassis;
+        listView.itemsSource = parts;
     }
 
-    private void CreateDriveList()
+    private void BuildGameObject()
     {
-    }
+        Transform setup = GameObject.Find("Setup").transform;
+        Transform editor = setup.Find("Editor").transform;
+        Transform placeholder = editor.Find("Placeholder").transform;
 
-    private void CreateGunList()
-    {
+        foreach (KeyValuePair<PartType, GameObject> i in PartsInstantiated)
+        {
+            if (i.Value == null)
+            {
+                continue;
+            }
+
+            Destroy(i.Value.gameObject);
+        }
+
+        foreach (KeyValuePair<PartType, GameObject> i in PartsSelected)
+        {
+            if (i.Value == null)
+            {
+                continue;
+            }
+
+            PartsInstantiated[i.Key] = Instantiate(i.Value, placeholder);
+        }
+
+        PartsInstantiated.TryGetValue(PartType.Chassis, out GameObject chassis);
+        PartsInstantiated.TryGetValue(PartType.Drive, out GameObject drive);
+        PartsInstantiated.TryGetValue(PartType.Gun, out GameObject gun);
+
+        // Position chassis.
+        if (chassis && drive)
+        {
+            Quaternion rotation = Utils.ResetRotation(placeholder);
+
+            Vector3 position = chassis.transform.position;
+            position.y = drive.GetComponentInChildren<Collider>().bounds.max.y - drive.GetComponentInChildren<Collider>().bounds.extents.y;
+            chassis.transform.position = position;
+
+            Utils.RestoreRotation(placeholder, rotation);
+        }
+
+        // Position gun.
+        if (chassis && gun)
+        {
+            Quaternion rotation = Utils.ResetRotation(placeholder);
+
+            Vector3 position = gun.transform.position;
+            position.y = chassis.GetComponent<Collider>().bounds.max.y;
+            gun.transform.position= position;
+
+            Utils.RestoreRotation(placeholder, rotation);
+        }
     }
 
     [SerializeField]
     private VisualTreeAsset TemplatePart;
 
-    private ListView Parts;
+    private ListView PartsChassis;
+    private ListView PartsDrive;
+    private ListView PartsGun;
+
     private VisualElement Preview;
+    private bool MouseInside = false;
+
+    private Button ButtonPrevious;
+    private Button ButtonNext;
 
     private Button ButtonOK;
     private Button ButtonCancel;
+
+    private PartType PartsListVisible = PartType.Chassis;
+    private Dictionary<PartType, GameObject> PartsSelected = new Dictionary<PartType, GameObject>();
+    private Dictionary<PartType, GameObject> PartsInstantiated = new Dictionary<PartType, GameObject>();
 }

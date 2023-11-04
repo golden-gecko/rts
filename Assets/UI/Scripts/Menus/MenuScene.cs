@@ -24,7 +24,7 @@ public class MenuScene : UI_Element<MenuScene>
             TemplateContainer container = templateButton.Instantiate();
             Button button = container.Q<Button>();
 
-            button.RegisterCallback<ClickEvent>(ev => OnButtonScene(scene));
+            button.RegisterCallback<ClickEvent>(x => OnButtonScene(scene));
             button.text = scene;
             button.userData = scene;
 

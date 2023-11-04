@@ -1,3 +1,4 @@
+using System.IO;
 using UnityEngine;
 
 public class Utils
@@ -231,7 +232,23 @@ public class Utils
     }
     #endregion
 
+    #region Resources
+    public static Texture2D LoadPortrait(string name)
+    {
+        return Resources.Load<Texture2D>(Path.Join("Portraits", name));
+    }
+    #endregion
+
     #region Rotation
+    public static Quaternion ResetRotation(Transform transform)
+    {
+        Quaternion rotation = transform.rotation;
+        transform.rotation = Quaternion.identity;
+        Physics.SyncTransforms();
+
+        return rotation;
+    }
+
     public static Quaternion ResetRotation(MyGameObject myGameObject)
     {
         Quaternion rotation = myGameObject.Rotation;
@@ -239,6 +256,12 @@ public class Utils
         Physics.SyncTransforms();
 
         return rotation;
+    }
+
+    public static void RestoreRotation(Transform transform, Quaternion rotation)
+    {
+        transform.rotation = rotation;
+        Physics.SyncTransforms();
     }
 
     public static void RestoreRotation(MyGameObject myGameObject, Quaternion rotation)

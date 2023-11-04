@@ -15,19 +15,22 @@ public class Tools : EditorWindow
         EditorSceneManager.SaveCurrentModifiedScenesIfUserWantsTo();
         EditorSceneManager.OpenScene(Path.Join("Assets", "Scenes", "Editor.unity"));
 
-        int size = 256;
+        int size = 1024;
         RenderTexture renderTexture = new RenderTexture(size, size, 24);
 
-        Camera camera = GameObject.Find("Setup").transform.Find("Cameras").transform.Find("MainCamera").GetComponent<Camera>();
-        camera.transform.position = new Vector3(1.5f, 1.0f, 1.5f);
-        camera.transform.localEulerAngles = new Vector3(15.0f, 235.0f, 0.0f);
+        Transform setup = GameObject.Find("Setup").transform;
+        Transform editor = setup.Find("Editor").transform;
+        Transform placeholder = editor.Find("Placeholder").transform;
+        Transform cameraTransform = editor.Find("Camera").transform;
+
+        Camera camera = cameraTransform.GetComponent<Camera>();
         camera.targetTexture = renderTexture;
 
         Texture2D texture = new Texture2D(size, size, TextureFormat.RGB24, false);
 
         foreach (GameObject gameObject in GetGameObjects())
         {
-            GameObject instance = Instantiate(gameObject);
+            GameObject instance = Instantiate(gameObject, placeholder);
 
             camera.Render();
 
@@ -72,7 +75,7 @@ public class Tools : EditorWindow
 
     private static string GetPortraitPath(string name)
     {
-        return Path.Combine(new string[] { "Assets", "UI", "Materials", "Portraits", string.Format("{0}.png", name) });
+        return Path.Combine(new string[] { "Assets", "Resources", "Portraits", string.Format("{0}.png", name) });
     }
 
     private static void ClearLog()

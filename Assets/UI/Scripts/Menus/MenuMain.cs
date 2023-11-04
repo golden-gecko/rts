@@ -8,13 +8,13 @@ public class MenuMain : UI_Element<MenuMain>
         base.Awake();
 
         buttonContinue = GetButton("Continue");
-        buttonContinue.RegisterCallback<ClickEvent>(ev => OnButtonContinue());
+        buttonContinue.RegisterCallback<ClickEvent>(x => OnButtonContinue());
 
         buttonNew = GetButton("New");
-        buttonNew.RegisterCallback<ClickEvent>(ev => OnButtonNew());
+        buttonNew.RegisterCallback<ClickEvent>(x => OnButtonNew());
 
         buttonQuit = GetButton("Quit");
-        buttonQuit.RegisterCallback<ClickEvent>(ev => OnButtonQuit());
+        buttonQuit.RegisterCallback<ClickEvent>(x => OnButtonQuit());
     }
 
     private Button GetButton(string name)

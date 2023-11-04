@@ -1,46 +1,55 @@
 using UnityEngine;
 
-public class Config
+public static class Config
 {
-    public class Camera
+    public static class Camera
     {
-        public static float MinHeight { get; } = 2.0f;
-        public static float MaxHeight { get; } = 100.0f;
+        public static float MinHeight = 2.0f;
+        public static float MaxHeight = 100.0f;
     }
 
-    public class Cursor3D
+    public static class Cursor3D
     {
-        public static float RotateStep { get; } = 90.0f;
-        public static bool SnapToGrid { get; } = true;
+        public static float RotateStep = 90.0f;
+        public static bool SnapToGrid = true;
     }
 
-    public class Formation
+    public static class DataLayer
     {
-        public static float Spacing { get; } = 5.0f;
+        public static Color ColorOccupation = new Color(1.0f, 1.0f, 1.0f, 0.25f);
+        public static Color ColorExploration = new Color(1.0f, 1.0f, 1.0f, 0.25f);
+        public static Color ColorPower = new Color(1.0f, 1.0f, 0.0f, 0.25f);
+        public static Color ColorPowerRelay = new Color(1.0f, 1.0f, 0.5f, 0.25f);
+        public static Color ColorRadar = new Color(0.0f, 0.0f, 1.0f, 0.25f);
+        public static Color ColorSight = new Color(0.0f, 1.0f, 0.0f, 0.25f);
+        public static Color ColorPassiveDamage = new Color(1.0f, 0.0f, 0.5f, 0.25f);
+        public static Color ColorPassivePower = new Color(1.0f, 0.0f, 0.5f, 0.25f);
+        public static Color ColorPassiveRange = new Color(1.0f, 0.0f, 0.5f, 0.25f);
+        public static Color ColorEmpty = new Color(0.0f, 0.0f, 0.0f, 0.0f);
     }
 
-    public class Indicator
+    public static class Editor
     {
-        public static float Margin { get; } = 1.1f;
-        public static float TextOffset { get; } = 2.0f;
+        public static float RotateSpeed = 3.0f;
     }
 
-    public class Map
+    public static class Formation
     {
-        public static float ConstructionScale { get; } = 1.0f;
-        public static float DamageFactor { get; } = 0.0002f;
-        public static Color DataLayerColorOccupation { get; } = new Color(1.0f, 1.0f, 1.0f, 0.25f);
-        public static Color DataLayerColorExploration { get; } = new Color(1.0f, 1.0f, 1.0f, 0.25f);
-        public static Color DataLayerColorPower { get; } = new Color(1.0f, 1.0f, 0.0f, 0.25f);
-        public static Color DataLayerColorPowerRelay { get; } = new Color(1.0f, 1.0f, 0.5f, 0.25f);
-        public static Color DataLayerColorRadar { get; } = new Color(0.0f, 0.0f, 1.0f, 0.25f);
-        public static Color DataLayerColorSight { get; } = new Color(0.0f, 1.0f, 0.0f, 0.25f);
-        public static Color DataLayerColorPassiveDamage { get; } = new Color(1.0f, 0.0f, 0.5f, 0.25f);
-        public static Color DataLayerColorPassivePower { get; } = new Color(1.0f, 0.0f, 0.5f, 0.25f);
-        public static Color DataLayerColorPassiveRange { get; } = new Color(1.0f, 0.0f, 0.5f, 0.25f);
-        public static Color DataLayerColorEmpty { get; } = new Color(0.0f, 0.0f, 0.0f, 0.0f);
-        public static float MaxHeight { get; } = 2000.0f;
-        public static float Scale { get; } = 1.0f;
-        public static int Size { get; } = 512;
+        public static float Spacing = 5.0f;
+    }
+
+    public static class Indicator
+    {
+        public static float Margin = 1.1f;
+        public static float TextOffset = 2.0f;
+    }
+
+    public static class Map
+    {
+        public static float ConstructionScale = 1.0f;
+        public static float DamageFactor = 0.0002f;
+        public static float MaxHeight = 2000.0f;
+        public static float Scale = 1.0f;
+        public static int Size = 512;
     }
 }

@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 1775036719549135804}
   - component: {fileID: 4593427936749226976}
   - component: {fileID: 2230375479372936983}
+  - component: {fileID: 4449313675375315080}
   m_Layer: 20
   m_Name: Turret
   m_TagString: Untagged
@@ -27,8 +28,8 @@ Transform:
   m_GameObject: {fileID: 3669360621843456698}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.30916893, z: -0.015535309}
-  m_LocalScale: {x: 0.2, y: 0.2, z: 0.2}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 8868973972600113132}
@@ -84,6 +85,27 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!65 &4449313675375315080
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3669360621843456698}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 2.5607455, y: 2.0386755, z: 2.1812084}
+  m_Center: {x: 0.0023718178, y: 1.0193374, z: -0.10200124}
 --- !u!1 &3866497419981326260
 GameObject:
   m_ObjectHideFlags: 0
@@ -176,12 +198,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3644762111632170191}
-  - component: {fileID: -3688193847759442115}
-  - component: {fileID: 1206055971644970510}
-  - component: {fileID: 1445156918355217825}
-  - component: {fileID: -202160912346554170}
-  - component: {fileID: 2461289451513976625}
-  - component: {fileID: -1373288059243508088}
   m_Layer: 20
   m_Name: Gun_005
   m_TagString: Untagged
@@ -199,149 +215,9 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.4, y: 0.4, z: 0.4}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1775036719549135804}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!54 &-3688193847759442115
-Rigidbody:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4170081986206172789}
-  serializedVersion: 4
-  m_Mass: 1
-  m_Drag: 0
-  m_AngularDrag: 0.05
-  m_CenterOfMass: {x: 0, y: 0, z: 0}
-  m_InertiaTensor: {x: 1, y: 1, z: 1}
-  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ImplicitCom: 1
-  m_ImplicitTensor: 1
-  m_UseGravity: 0
-  m_IsKinematic: 1
-  m_Interpolate: 0
-  m_Constraints: 0
-  m_CollisionDetection: 0
---- !u!114 &1206055971644970510
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4170081986206172789}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 28d73f8fbe8af464f8ccdeabaf462443, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  <Player>k__BackingField: {fileID: 0}
-  <Enabled>k__BackingField: 1
-  <Gatherable>k__BackingField: 0
-  <Selectable>k__BackingField: 1
-  <Health>k__BackingField:
-    <Current>k__BackingField: 100
-    <Max>k__BackingField: 100
-  <EnableTime>k__BackingField: 2
-  <WaitTime>k__BackingField: 2
-  <DestroyEffect>k__BackingField: {fileID: 100006, guid: bf98fad54e73fb8448b7b1b9ba4fd0b6, type: 3}
-  <Altitude>k__BackingField: -1
-  <Depth>k__BackingField: -1
-  <MapLayers>k__BackingField: 02000000
-  <ShowIndicators>k__BackingField: 1
-  <ExpirationTimer>k__BackingField:
-    <Current>k__BackingField: -1
-    <Max>k__BackingField: -1
-  <SkillsNames>k__BackingField: []
-  <State>k__BackingField: 1
-  <CreateBase>k__BackingField: 0
-  <SnapToGrid>k__BackingField: 0
-  <VisibilityState>k__BackingField: 2
-  <RotateTowardsTarget>k__BackingField: 1
-  ShowEntrance: 0
-  ShowExit: 0
---- !u!114 &1445156918355217825
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4170081986206172789}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4248ce16722b7444fac5deb395c690e8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  <Mass>k__BackingField: 10
-  <Value>k__BackingField:
-    <Current>k__BackingField: 100
-    <Max>k__BackingField: 100
-  <ProtectionType>k__BackingField:
-  - <Type>k__BackingField: 0
-    <Ratio>k__BackingField: 0.5
-  - <Type>k__BackingField: 1
-    <Ratio>k__BackingField: 0.2
---- !u!114 &-202160912346554170
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4170081986206172789}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3a403fb22d2914049ac162610b2aebf2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  <Mass>k__BackingField: 10
-  <MissilePrefab>k__BackingField: {fileID: 3841255586236475405, guid: 86513724c5de2df4da484cb23191a7e5, type: 3}
-  <Damage>k__BackingField:
-    <Value>k__BackingField: 10
-  <Range>k__BackingField:
-    <Value>k__BackingField: 10
-  <Reload>k__BackingField:
-    <Current>k__BackingField: 4
-    <Max>k__BackingField: 4
-  <DamageType>k__BackingField:
-  - <Type>k__BackingField: 0
-    <Ratio>k__BackingField: 1
---- !u!114 &2461289451513976625
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4170081986206172789}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 480f2643be9397244bac146d70b54f9f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  <Mass>k__BackingField: 10
-  <Power>k__BackingField:
-    <Value>k__BackingField: 200
-  <FuelUsage>k__BackingField: 10
---- !u!114 &-1373288059243508088
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4170081986206172789}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 79a39b5131237dc428a9b67a3936e144, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  <Mass>k__BackingField: 10
-  <Range>k__BackingField:
-    <Value>k__BackingField: 10

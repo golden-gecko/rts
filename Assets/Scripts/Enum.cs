@@ -104,6 +104,13 @@ public enum OrderType
     Teleport = 28,
 }
 
+public enum PartType
+{
+    Chassis = 1,
+    Drive = 2,
+    Gun = 3,
+}
+
 public enum ResourceDirection
 {
     In = 0,

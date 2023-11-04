@@ -75,7 +75,7 @@ public class UI_Commands : UI_Element<UI_Commands>
             TemplateContainer buttonContainer = templateButton.Instantiate();
             Button button = buttonContainer.Q<Button>();
 
-            button.RegisterCallback<ClickEvent>(ev => OnFormation(Enum.Parse<Formation>(i)));
+            button.RegisterCallback<ClickEvent>(x => OnFormation(Enum.Parse<Formation>(i)));
             button.style.display = DisplayStyle.Flex;
             button.text = Utils.FormatName(i);
             button.userData = Enum.Parse<Formation>(i);
@@ -113,7 +113,7 @@ public class UI_Commands : UI_Element<UI_Commands>
             TemplateContainer buttonContainer = templateButton.Instantiate();
             Button button = buttonContainer.Q<Button>();
 
-            button.RegisterCallback<ClickEvent>(ev => OnOrder(Enum.Parse<OrderType>(i)));
+            button.RegisterCallback<ClickEvent>(x => OnOrder(Enum.Parse<OrderType>(i)));
             button.style.display = DisplayStyle.None;
             button.text = Utils.FormatName(i);
             button.userData = Enum.Parse<OrderType>(i);
@@ -132,7 +132,7 @@ public class UI_Commands : UI_Element<UI_Commands>
             TemplateContainer buttonContainer = templateButton.Instantiate();
             Button button = buttonContainer.Q<Button>();
 
-            button.RegisterCallback<ClickEvent>(ev => OnConstruct(gameObject.name));
+            button.RegisterCallback<ClickEvent>(x => OnConstruct(gameObject.name));
             button.style.display = DisplayStyle.None;
             button.text = Utils.FormatName(gameObject.name);
             button.userData = gameObject.name;
@@ -146,7 +146,7 @@ public class UI_Commands : UI_Element<UI_Commands>
             TemplateContainer buttonContainer = templateButton.Instantiate();
             Button button = buttonContainer.Q<Button>();
 
-            button.RegisterCallback<ClickEvent>(ev => OnAssemble(gameObject.name));
+            button.RegisterCallback<ClickEvent>(x => OnAssemble(gameObject.name));
             button.style.display = DisplayStyle.None;
             button.text = Utils.FormatName(Path.GetFileName(gameObject.name));
             button.userData = gameObject.name;
@@ -165,7 +165,7 @@ public class UI_Commands : UI_Element<UI_Commands>
             TemplateContainer buttonContainer = templateButton.Instantiate();
             Button button = buttonContainer.Q<Button>();
 
-            button.RegisterCallback<ClickEvent>(ev => OnRecipe(i));
+            button.RegisterCallback<ClickEvent>(x => OnRecipe(i));
             button.style.display = DisplayStyle.None;
             button.text = Utils.FormatName(i);
             button.userData = i;
@@ -184,7 +184,7 @@ public class UI_Commands : UI_Element<UI_Commands>
             TemplateContainer buttonContainer = templateButton.Instantiate();
             Button button = buttonContainer.Q<Button>();
 
-            button.RegisterCallback<ClickEvent>(ev => OnUseSkill(i));
+            button.RegisterCallback<ClickEvent>(x => OnUseSkill(i));
             button.style.display = DisplayStyle.None;
             button.text = Utils.FormatName(i);
             button.userData = i;
@@ -203,7 +203,7 @@ public class UI_Commands : UI_Element<UI_Commands>
             TemplateContainer buttonContainer = templateButton.Instantiate();
             Button button = buttonContainer.Q<Button>();
 
-            button.RegisterCallback<ClickEvent>(ev => OnResearch(i));
+            button.RegisterCallback<ClickEvent>(x => OnResearch(i));
             button.style.display = DisplayStyle.None;
             button.text = Utils.FormatName(i);
             button.userData = i;

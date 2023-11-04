@@ -1,4 +1,11 @@
+.background {
+    background-color: rgba(195, 186, 137, 255);
+}
+
 .button {
+    background-color: rgba(221, 217, 168, 255);
+    border-color: rgba(227, 157, 0, 255);
+    border-width: 2px;
     margin: 5px;
     padding: 5px;
 }
@@ -18,11 +25,6 @@
     padding-top: 4px;
     padding-bottom: 4px;
     height: 80%;
-}
-
-.buttons,
-.header {
-    padding: 20px;
 }
 
 .buttons .button {

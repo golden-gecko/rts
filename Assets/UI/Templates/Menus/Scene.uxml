@@ -1,4 +1,6 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" editor-extension-mode="False">
     <Style src="project://database/Assets/UI/Styles/Style.uss?fileID=7433441132597879392&amp;guid=231d51774ac67094591621cc55974d8c&amp;type=3#Style" />
-    <ui:VisualElement name="Menu" class="container" />
+    <ui:VisualElement class="container background">
+        <ui:VisualElement name="Menu" class="menu-main" style="flex-grow: 1;" />
+    </ui:VisualElement>
 </ui:UXML>

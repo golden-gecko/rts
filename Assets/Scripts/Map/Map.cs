@@ -73,11 +73,11 @@ public class Map : Singleton<Map>
 
             if (Cells[positionGrid.x, positionGrid.z].Occupied[myGameObject.Player] == 0)
             {
-                ocupationTexture.SetPixel(positionGrid.x, positionGrid.z, Config.Map.DataLayerColorEmpty);
+                ocupationTexture.SetPixel(positionGrid.x, positionGrid.z, Config.DataLayer.ColorEmpty);
             }
             else
             {
-                ocupationTexture.SetPixel(positionGrid.x, positionGrid.z, Config.Map.DataLayerColorOccupation);
+                ocupationTexture.SetPixel(positionGrid.x, positionGrid.z, Config.DataLayer.ColorOccupation);
             }
 
             ocupationTexture.Apply();
@@ -119,11 +119,11 @@ public class Map : Singleton<Map>
                 {
                     if (Cells[x, z].VisibleByRadar[myGameObject.Player] > (Cells[x, z].VisibleByAntiRadar.ContainsKey(myGameObject.Player) ? Cells[x, z].VisibleByAntiRadar[myGameObject.Player] : 0))
                     {
-                        radarTexture.SetPixel(x, z, Config.Map.DataLayerColorRadar);
+                        radarTexture.SetPixel(x, z, Config.DataLayer.ColorRadar);
                     }
                     else
                     {
-                        radarTexture.SetPixel(x, z, Config.Map.DataLayerColorEmpty);
+                        radarTexture.SetPixel(x, z, Config.DataLayer.ColorEmpty);
                     }
                 }
             }
@@ -167,11 +167,11 @@ public class Map : Singleton<Map>
                 {
                     if (Cells[x, z].VisibleByRadar[myGameObject.Player] > Cells[x, z].VisibleByAntiRadar[myGameObject.Player])
                     {
-                        radarTexture.SetPixel(x, z, Config.Map.DataLayerColorRadar);
+                        radarTexture.SetPixel(x, z, Config.DataLayer.ColorRadar);
                     }
                     else
                     {
-                        radarTexture.SetPixel(x, z, Config.Map.DataLayerColorEmpty);
+                        radarTexture.SetPixel(x, z, Config.DataLayer.ColorEmpty);
                     }
                 }
             }
@@ -215,11 +215,11 @@ public class Map : Singleton<Map>
                 {
                     if (Cells[x, z].VisibleByPassiveDamage[myGameObject.Player] > 0)
                     {
-                        passiveDamage.SetPixel(x, z, Config.Map.DataLayerColorPassiveDamage);
+                        passiveDamage.SetPixel(x, z, Config.DataLayer.ColorPassiveDamage);
                     }
                     else
                     {
-                        passiveDamage.SetPixel(x, z, Config.Map.DataLayerColorEmpty);
+                        passiveDamage.SetPixel(x, z, Config.DataLayer.ColorEmpty);
                     }
                 }
             }
@@ -263,11 +263,11 @@ public class Map : Singleton<Map>
                 {
                     if (Cells[x, z].VisibleByPassivePower[myGameObject.Player] > 0)
                     {
-                        passivePower.SetPixel(x, z, Config.Map.DataLayerColorPassivePower);
+                        passivePower.SetPixel(x, z, Config.DataLayer.ColorPassivePower);
                     }
                     else
                     {
-                        passivePower.SetPixel(x, z, Config.Map.DataLayerColorEmpty);
+                        passivePower.SetPixel(x, z, Config.DataLayer.ColorEmpty);
                     }
                 }
             }
@@ -311,11 +311,11 @@ public class Map : Singleton<Map>
                 {
                     if (Cells[x, z].VisibleByPassiveRange[myGameObject.Player] > 0)
                     {
-                        passiveRange.SetPixel(x, z, Config.Map.DataLayerColorPassiveRange);
+                        passiveRange.SetPixel(x, z, Config.DataLayer.ColorPassiveRange);
                     }
                     else
                     {
-                        passiveRange.SetPixel(x, z, Config.Map.DataLayerColorEmpty);
+                        passiveRange.SetPixel(x, z, Config.DataLayer.ColorEmpty);
                     }
                 }
             }
@@ -362,7 +362,7 @@ public class Map : Singleton<Map>
 
                     if (HUD.Instance.ActivePlayer == myGameObject.Player)
                     {
-                        explorationTexture.SetPixel(x, z, Config.Map.DataLayerColorExploration);
+                        explorationTexture.SetPixel(x, z, Config.DataLayer.ColorExploration);
                     }
                 }
 
@@ -370,11 +370,11 @@ public class Map : Singleton<Map>
                 {
                     if (Cells[x, z].VisibleBySight[myGameObject.Player] > 0)
                     {
-                        sightTexture.SetPixel(x, z, Config.Map.DataLayerColorSight);
+                        sightTexture.SetPixel(x, z, Config.DataLayer.ColorSight);
                     }
                     else
                     {
-                        sightTexture.SetPixel(x, z, Config.Map.DataLayerColorEmpty);
+                        sightTexture.SetPixel(x, z, Config.DataLayer.ColorEmpty);
                     }
                 }
             }
@@ -426,11 +426,11 @@ public class Map : Singleton<Map>
                 {
                     if (Cells[x, z].VisibleByPower[myGameObject.Player] > 0)
                     {
-                        powerTexture.SetPixel(x, z, Config.Map.DataLayerColorPower);
+                        powerTexture.SetPixel(x, z, Config.DataLayer.ColorPower);
                     }
                     else
                     {
-                        powerTexture.SetPixel(x, z, Config.Map.DataLayerColorEmpty);
+                        powerTexture.SetPixel(x, z, Config.DataLayer.ColorEmpty);
                     }
                 }
             }

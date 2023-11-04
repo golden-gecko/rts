@@ -3,15 +3,17 @@
     <ui:Template name="Buttons_2" src="project://database/Assets/UI/Templates/Buttons_2.uxml?fileID=9197481963319205126&amp;guid=fb0e537cceaba4e4b800757af08e963d&amp;type=3#Buttons_2" />
     <ui:Template name="Buttons" src="project://database/Assets/UI/Templates/Buttons_1.uxml?fileID=9197481963319205126&amp;guid=bd1b907a14528c34ab54178530bec841&amp;type=3#Buttons_1" />
     <Style src="project://database/Assets/UI/Styles/Style.uss?fileID=7433441132597879392&amp;guid=231d51774ac67094591621cc55974d8c&amp;type=3#Style" />
-    <ui:VisualElement class="container">
-        <ui:Instance template="Header" />
-        <ui:VisualElement style="flex-grow: 1; flex-direction: row;">
-            <ui:ListView name="Parts" fixed-item-height="200" style="flex-grow: 1;" />
-            <ui:VisualElement name="Preview" style="background-image: url(&apos;project://database/Assets/Materials/Textures/Preview.renderTexture?fileID=8400000&amp;guid=8a8495d382840e945b0db524eaca0092&amp;type=2#Preview&apos;); -unity-background-scale-mode: scale-and-crop; flex-grow: 2;" />
+    <ui:VisualElement class="container background">
+        <ui:Instance template="Header" style="flex-grow: 1;" />
+        <ui:VisualElement style="flex-direction: row; flex-grow: 8;">
+            <ui:ListView name="PartsChassis" fixed-item-height="100" style="flex-grow: 1; margin-top: 10px; margin-right: 10px; margin-bottom: 10px; margin-left: 10px;" />
+            <ui:ListView name="PartsDrive" fixed-item-height="100" style="flex-grow: 1; margin-top: 10px; margin-right: 10px; margin-bottom: 10px; margin-left: 10px; display: none;" />
+            <ui:ListView name="PartsGun" fixed-item-height="100" style="flex-grow: 1; margin-top: 10px; margin-right: 10px; margin-bottom: 10px; margin-left: 10px; display: none;" />
+            <ui:VisualElement name="Preview" style="background-image: url(&apos;project://database/Assets/Materials/Textures/Preview.renderTexture?fileID=8400000&amp;guid=8a8495d382840e945b0db524eaca0092&amp;type=2#Preview&apos;); -unity-background-scale-mode: scale-and-crop; flex-grow: 2; margin-top: 10px; margin-right: 10px; margin-bottom: 10px; margin-left: 10px;" />
         </ui:VisualElement>
-    </ui:VisualElement>
-    <ui:VisualElement style="align-items: center; flex-direction: row; justify-content: center;">
-        <ui:Instance template="Buttons_2" />
-        <ui:Instance template="Buttons" />
+        <ui:VisualElement style="align-items: center; justify-content: center; flex-direction: row; flex-grow: 1;">
+            <ui:Instance template="Buttons_2" style="margin-right: 50px;" />
+            <ui:Instance template="Buttons" />
+        </ui:VisualElement>
     </ui:VisualElement>
 </ui:UXML>

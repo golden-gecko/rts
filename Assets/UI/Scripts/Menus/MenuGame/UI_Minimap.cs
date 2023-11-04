@@ -10,13 +10,13 @@ public class UI_Minimap : UI_Element<UI_Minimap>
         panel = Root.Q<VisualElement>("Panel_Minimap");
 
         centerOnMainCamera = panel.Q<Button>("CenterOnMainCamera");
-        centerOnMainCamera.RegisterCallback<ClickEvent>(ev => OnCenterOnMainCamera());
+        centerOnMainCamera.RegisterCallback<ClickEvent>(x => OnCenterOnMainCamera());
 
         zoomIn = panel.Q<Button>("ZoomIn");
-        zoomIn.RegisterCallback<ClickEvent>(ev => OnZoomIn());
+        zoomIn.RegisterCallback<ClickEvent>(x => OnZoomIn());
 
         zoomOut = panel.Q<Button>("ZoomOut");
-        zoomOut.RegisterCallback<ClickEvent>(ev => OnZoomOut());
+        zoomOut.RegisterCallback<ClickEvent>(x => OnZoomOut());
     }
 
     private void Update()
