@@ -271,8 +271,6 @@ public class HUD : Singleton<HUD>
     {
         switch (Order)
         {
-            // TODO: Implement assemble order.
-
             case OrderType.AttackObject:
                 ActivePlayer.Selection.AttackObject(myGameObject, MyInput.GetShift());
                 break;

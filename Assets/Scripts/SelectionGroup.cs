@@ -143,8 +143,6 @@ public class SelectionGroup
                 selected.ClearOrders();
             }
 
-            // TODO: Add assembly order.
-
             if (myGameObject.Is(selected, DiplomacyState.Ally) && myGameObject.State == MyGameObjectState.UnderConstruction)
             {
                 selected.Construct(myGameObject);
