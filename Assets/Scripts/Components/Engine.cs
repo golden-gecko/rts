@@ -1,7 +1,7 @@
 using UnityEngine;
 
 [DisallowMultipleComponent]
-public class Engine : MyComponent
+public class Engine : Part
 {
     protected override void Awake()
     {

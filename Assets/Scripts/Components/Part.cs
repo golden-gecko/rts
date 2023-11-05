@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class MyComponent : MonoBehaviour
+public class Part : MonoBehaviour
 {
     protected virtual void Awake()
     {

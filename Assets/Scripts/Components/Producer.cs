@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [DisallowMultipleComponent, RequireComponent(typeof(Storage))]
-public class Producer : MyComponent
+public class Producer : Part
 {
     protected override void Awake()
     {

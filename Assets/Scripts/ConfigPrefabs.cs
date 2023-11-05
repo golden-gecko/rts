@@ -9,20 +9,6 @@ public class ConfigPrefabs : Singleton<ConfigPrefabs>
     [field: SerializeField]
     public GameObject Indicators { get; private set; }
 
-    #region Components
-    [field: SerializeField]
-    public List<GameObject> Chassis { get; private set; } = new List<GameObject>();
-
-    [field: SerializeField]
-    public List<GameObject> Drives { get; private set; } = new List<GameObject>();
-
-    [field: SerializeField]
-    public List<GameObject> Guns { get; private set; } = new List<GameObject>();
-
-    [field: SerializeField]
-    public List<GameObject> Shields { get; private set; } = new List<GameObject>();
-    #endregion
-
     #region GameObjects
     [field: SerializeField]
     public List<GameObject> Disasters { get; private set; } = new List<GameObject>();
@@ -38,5 +24,19 @@ public class ConfigPrefabs : Singleton<ConfigPrefabs>
 
     [field: SerializeField]
     public List<GameObject> Units { get; private set; } = new List<GameObject>();
+    #endregion
+
+    #region Parts
+    [field: SerializeField]
+    public List<GameObject> Chassis { get; private set; } = new List<GameObject>();
+
+    [field: SerializeField]
+    public List<GameObject> Drives { get; private set; } = new List<GameObject>();
+
+    [field: SerializeField]
+    public List<GameObject> Guns { get; private set; } = new List<GameObject>();
+
+    [field: SerializeField]
+    public List<GameObject> Shields { get; private set; } = new List<GameObject>();
     #endregion
 }

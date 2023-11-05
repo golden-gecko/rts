@@ -160,7 +160,7 @@ public class UI_Commands : UI_Element<UI_Commands>
     {
         recipes.Clear();
 
-        foreach (string i in RecipeManager.Instance.Recipes.Items.Keys)
+        foreach (string i in RecipeManager.Instance.Recipes.Recipes.Keys)
         {
             TemplateContainer buttonContainer = templateButton.Instantiate();
             Button button = buttonContainer.Q<Button>();
@@ -303,7 +303,7 @@ public class UI_Commands : UI_Element<UI_Commands>
         {
             if (hovered.State == MyGameObjectState.Operational)
             {
-                whitelist = new HashSet<string>(hovered.Orders.RecipeWhitelist.Items.Keys);
+                whitelist = new HashSet<string>(hovered.Orders.RecipeWhitelist.Recipes.Keys);
             }
         }
         else
@@ -320,7 +320,7 @@ public class UI_Commands : UI_Element<UI_Commands>
                     continue;
                 }
 
-                foreach (string recipe in selected.Orders.RecipeWhitelist.Items.Keys)
+                foreach (string recipe in selected.Orders.RecipeWhitelist.Recipes.Keys)
                 {
                     whitelist.Add(recipe);
                 }

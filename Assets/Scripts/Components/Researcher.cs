@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [DisallowMultipleComponent, RequireComponent(typeof(Storage))]
-public class Researcher : MyComponent
+public class Researcher : Part
 {
     protected override void Awake()
     {

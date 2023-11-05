@@ -11,7 +11,12 @@ public class SkillManager : Singleton<SkillManager>
 
     public Skill Get(string name)
     {
-        return Skills[name].Clone() as Skill;
+        if (Skills.TryGetValue(name, out Skill skill))
+        {
+            return Skills[name].Clone() as Skill;
+        }
+
+        return null;
     }
 
     private void CreateSkills()

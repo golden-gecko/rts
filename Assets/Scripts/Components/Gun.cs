@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Gun : MyComponent
+public class Gun : Part
 {
     protected override void Awake()
     {

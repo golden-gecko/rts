@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [DisallowMultipleComponent]
-public class Armour : MyComponent
+public class Armour : Part
 {
     public override string GetInfo()
     {

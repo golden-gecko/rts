@@ -1,6 +1,13 @@
 using System;
 using UnityEngine;
 
+public struct BlueprintComponent
+{
+    public PartType PartType;
+    public Part Part;
+    public Vector3 Position;
+};
+
 [Serializable]
 public struct DamageTypeItem
 {

@@ -1,7 +1,7 @@
 using UnityEngine;
 
 [DisallowMultipleComponent]
-public class Radar : MyComponent
+public class Radar : Part
 {
     protected override void Start()
     {

@@ -3,7 +3,7 @@ using System.IO;
 using UnityEngine;
 
 [DisallowMultipleComponent, RequireComponent(typeof(Storage))]
-public class Assembler : MyComponent
+public class Assembler : Part
 {
     protected override void Start()
     {

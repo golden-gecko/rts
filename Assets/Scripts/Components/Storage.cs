@@ -2,7 +2,7 @@ using System.Linq;
 using UnityEngine;
 
 [DisallowMultipleComponent]
-public class Storage : MyComponent
+public class Storage : Part
 {
     protected override void Awake()
     {

@@ -69,7 +69,7 @@ public class Utils
                 collider.enabled = false;
             }
 
-            foreach (MyComponent myComponent in myGameObject.GetComponents<MyComponent>())
+            foreach (Part myComponent in myGameObject.GetComponents<Part>())
             {
                 myComponent.enabled = false;
             }

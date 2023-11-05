@@ -1,7 +1,7 @@
 using UnityEngine;
 
 [DisallowMultipleComponent]
-public class Sight : MyComponent
+public class Sight : Part
 {
     protected override void Start()
     {

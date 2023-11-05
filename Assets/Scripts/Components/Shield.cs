@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [DisallowMultipleComponent]
-public class Shield : MyComponent
+public class Shield : Part
 {
     protected override void Start()
     {

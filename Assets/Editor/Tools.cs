@@ -64,7 +64,7 @@ public class Tools : EditorWindow
 
     private static IEnumerable<GameObject> GetGameObjects()
     {
-        string[] folders = new string[] { Path.Join("Assets", "Prefabs", "Components"), Path.Join("Assets", "Prefabs", "Objects") };
+        string[] folders = new string[] { Path.Join("Assets", "Prefabs", "Objects"), Path.Join("Assets", "Prefabs", "Parts") };
         string[] assets = AssetDatabase.FindAssets("t:prefab", folders);
 
         IEnumerable<string> paths = assets.Select(x => AssetDatabase.GUIDToAssetPath(x));

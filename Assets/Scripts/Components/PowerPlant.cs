@@ -4,7 +4,7 @@ using System.Linq;
 using UnityEngine;
 
 [DisallowMultipleComponent]
-public class PowerPlant : MyComponent
+public class PowerPlant : Part
 {
     protected override void Start()
     {

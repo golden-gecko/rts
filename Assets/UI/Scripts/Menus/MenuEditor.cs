@@ -2,7 +2,6 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.UIElements;
-using static Config;
 
 public class MenuEditor : UI_Element<MenuEditor>
 {
@@ -31,11 +30,8 @@ public class MenuEditor : UI_Element<MenuEditor>
         ButtonNext = Root.Q<Button>("Next");
         ButtonNext.RegisterCallback<ClickEvent>(x => OnButtonNext());
 
-        ButtonOK = Root.Q<Button>("OK");
-        ButtonOK.RegisterCallback<ClickEvent>(x => OnButtonOK());
-
-        ButtonCancel = Root.Q<Button>("Cancel");
-        ButtonCancel.RegisterCallback<ClickEvent>(x => OnButtonCancel());
+        ButtonClose = Root.Q<Button>("Close");
+        ButtonClose.RegisterCallback<ClickEvent>(x => OnButtonClose());
 
         CreatePartList(PartsChassis, ConfigPrefabs.Instance.Chassis);
         CreatePartList(PartsDrive, ConfigPrefabs.Instance.Drives);
@@ -119,12 +115,7 @@ public class MenuEditor : UI_Element<MenuEditor>
         }
     }
 
-    private void OnButtonOK()
-    {
-        Show(false);
-    }
-
-    private void OnButtonCancel()
+    private void OnButtonClose()
     {
         Show(false);
     }
@@ -214,9 +205,7 @@ public class MenuEditor : UI_Element<MenuEditor>
 
     private Button ButtonPrevious;
     private Button ButtonNext;
-
-    private Button ButtonOK;
-    private Button ButtonCancel;
+    private Button ButtonClose;
 
     private PartType PartsListVisible = PartType.Chassis;
     private Dictionary<PartType, GameObject> PartsSelected = new Dictionary<PartType, GameObject>();

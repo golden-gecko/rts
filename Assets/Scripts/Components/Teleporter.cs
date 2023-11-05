@@ -2,7 +2,7 @@ using System.Linq;
 using UnityEngine;
 
 [DisallowMultipleComponent]
-public class Teleporter : MyComponent
+public class Teleporter : Part
 {
     protected override void Awake()
     {

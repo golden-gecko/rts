@@ -361,13 +361,13 @@ public class MyGameObject : MonoBehaviour
             case MyGameObjectState.Operational:
                 info += string.Format("{0}\n\nHP: {1}", name, Health.GetInfo());
 
-                MyComponent[] myComponents = GetComponents<MyComponent>();
+                Part[] myComponents = GetComponents<Part>();
 
                 if (myComponents.Length > 0)
                 {
-                    info += "\n\nComponents:";
+                    info += "\n\nParts:";
 
-                    foreach (MyComponent myComponent in myComponents)
+                    foreach (Part myComponent in myComponents)
                     {
                         info += string.Format("\n  {0}", myComponent.GetInfo());
                     }
@@ -465,7 +465,7 @@ public class MyGameObject : MonoBehaviour
             Instantiate(DestroyEffect, Position, Quaternion.identity);
         }
 
-        foreach (MyComponent myComponent in GetComponents<MyComponent>())
+        foreach (Part myComponent in GetComponents<Part>())
         {
             myComponent.OnDestroyHandler();
         }
@@ -841,7 +841,7 @@ public class MyGameObject : MonoBehaviour
 
     public bool Alive { get => Health.Current > 0.0f && (ExpirationTimer.Active == false || ExpirationTimer.Finished == false); }
 
-    public float Mass { get => GetComponents<MyComponent>().Sum(x => x.Mass); }
+    public float Mass { get => GetComponents<Part>().Sum(x => x.Mass); }
 
     public bool Constructed { get => ConstructionResources.CurrentSum >= ConstructionResources.MaxSum; }
 

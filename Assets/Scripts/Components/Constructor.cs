@@ -5,7 +5,7 @@ using UnityEditor.Rendering.PostProcessing;
 using UnityEngine;
 
 [DisallowMultipleComponent, RequireComponent(typeof(Storage))]
-public class Constructor : MyComponent
+public class Constructor : Part
 {
     protected override void Awake()
     {
