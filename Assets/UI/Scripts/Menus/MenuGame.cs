@@ -1,4 +1,4 @@
-public class MenuGame : UI_Element<MenuGame>
+public class MenuGame : UI_Element
 {
     protected override void Awake()
     {

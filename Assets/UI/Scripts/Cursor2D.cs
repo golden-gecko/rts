@@ -44,71 +44,71 @@ public class Cursor2D : Singleton<Cursor2D>
         }
     }
 
-    [field: SerializeField]
-    private Texture2D CursorAssemble { get; set; }
+    [SerializeField]
+    private Texture2D CursorAssemble;
 
-    [field: SerializeField]
-    private Texture2D CursorAttack { get; set; }
+    [SerializeField]
+    private Texture2D CursorAttack;
 
-    [field: SerializeField]
-    private Texture2D CursorConstruct { get; set; }
+    [SerializeField]
+    private Texture2D CursorConstruct;
 
-    [field: SerializeField]
-    private Texture2D CursorDestroy { get; set; }
+    [SerializeField]
+    private Texture2D CursorDestroy;
 
-    [field: SerializeField]
-    private Texture2D CursorDisable { get; set; }
+    [SerializeField]
+    private Texture2D CursorDisable;
 
-    [field: SerializeField]
-    private Texture2D CursorEnable { get; set; }
+    [SerializeField]
+    private Texture2D CursorEnable;
 
-    [field: SerializeField]
-    private Texture2D CursorExplore { get; set; }
+    [SerializeField]
+    private Texture2D CursorExplore;
 
-    [field: SerializeField]
-    private Texture2D CursorFollow { get; set; }
+    [SerializeField]
+    private Texture2D CursorFollow;
 
-    [field: SerializeField]
-    private Texture2D CursorGather { get; set; }
+    [SerializeField]
+    private Texture2D CursorGather;
 
-    [field: SerializeField]
-    private Texture2D CursorGuard { get; set; }
+    [SerializeField]
+    private Texture2D CursorGuard;
 
-    [field: SerializeField]
-    private Texture2D CursorLoad { get; set; }
+    [SerializeField]
+    private Texture2D CursorLoad;
 
-    [field: SerializeField]
-    private Texture2D CursorMove { get; set; }
+    [SerializeField]
+    private Texture2D CursorMove;
 
-    [field: SerializeField]
-    private Texture2D CursorNone { get; set; }
+    [SerializeField]
+    private Texture2D CursorNone;
 
-    [field: SerializeField]
-    private Texture2D CursorPatrol { get; set; }
+    [SerializeField]
+    private Texture2D CursorPatrol;
 
-    [field: SerializeField]
-    private Texture2D CursorProduce { get; set; }
+    [SerializeField]
+    private Texture2D CursorProduce;
 
-    [field: SerializeField]
-    private Texture2D CursorRally { get; set; }
+    [SerializeField]
+    private Texture2D CursorRally;
 
-    [field: SerializeField]
-    private Texture2D CursorResearch { get; set; }
+    [SerializeField]
+    private Texture2D CursorResearch;
 
-    [field: SerializeField]
-    private Texture2D CursorStop { get; set; }
+    [SerializeField]
+    private Texture2D CursorStop;
 
-    [field: SerializeField]
-    private Texture2D CursorTransport { get; set; }
+    [SerializeField]
+    private Texture2D CursorTransport;
 
-    [field: SerializeField]
-    private Texture2D CursorUnload { get; set; }
+    [SerializeField]
+    private Texture2D CursorUnload;
 
-    [field: SerializeField]
-    private Texture2D CursorUseSkill { get; set; }
+    [SerializeField]
+    private Texture2D CursorUseSkill;
 
-    [field: SerializeField]
-    private Texture2D CursorWait { get; set; }
+    [SerializeField]
+    private Texture2D CursorWait;
 
-    private Dictionary<OrderType, Texture2D> Cursors { get; } = new Dictionary<OrderType, Texture2D>();
+    private Dictionary<OrderType, Texture2D> Cursors = new Dictionary<OrderType, Texture2D>();
 }

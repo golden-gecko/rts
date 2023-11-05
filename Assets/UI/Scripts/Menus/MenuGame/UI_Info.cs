@@ -1,6 +1,6 @@
 using UnityEngine.UIElements;
 
-public class UI_Info : UI_Element<UI_Info>
+public class UI_Info : UI_Element
 {
     protected override void Awake()
     {

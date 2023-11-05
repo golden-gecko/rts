@@ -1,12 +1,10 @@
 using UnityEngine;
 using UnityEngine.UIElements;
 
-public class UI_Element<T> : Singleton<T> where T : MonoBehaviour
+public class UI_Element : MonoBehaviour
 {
-    protected override void Awake()
+    protected virtual void Awake()
     {
-        base.Awake();
-
         Document = GetComponent<UIDocument>();
         Root = Document.rootVisualElement;
     }
@@ -19,5 +17,6 @@ public class UI_Element<T> : Singleton<T> where T : MonoBehaviour
     public bool Visible { get => Root.visible; }
 
     protected UIDocument Document { get; private set; }
+
     protected VisualElement Root { get; private set; }
 }

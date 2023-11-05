@@ -2,7 +2,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UIElements;
 
-public class MenuScene : UI_Element<MenuScene>
+public class MenuScene : UI_Element
 {
     protected override void Awake()
     {

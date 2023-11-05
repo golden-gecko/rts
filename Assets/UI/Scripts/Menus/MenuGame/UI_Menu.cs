@@ -1,6 +1,6 @@
 using UnityEngine.UIElements;
 
-public class UI_Menu : UI_Element<UI_Menu>
+public class UI_Menu : UI_Element
 {
     protected override void Awake()
     {
@@ -18,46 +18,19 @@ public class UI_Menu : UI_Element<UI_Menu>
         buttonMenu.RegisterCallback<ClickEvent>(x => OnMenu());
     }
 
-    public void OnDiplomacy()
+    private void OnDiplomacy()
     {
-        if (MenuDiplomacy.Instance.Visible)
-        {
-            MenuGame.Instance.Show(true);
-            MenuDiplomacy.Instance.Show(false);
-        }
-        else
-        {
-            MenuGame.Instance.Show(false);
-            MenuDiplomacy.Instance.Show(true);
-        }
+        UI.Instance.GoToMenu(MenuType.Diplomacy);
     }
 
-    public void OnEditor()
+    private void OnEditor()
     {
-        if (MenuEditor.Instance.Visible)
-        {
-            MenuGame.Instance.Show(true);
-            MenuEditor.Instance.Show(false);
-        }
-        else
-        {
-            MenuGame.Instance.Show(false);
-            MenuEditor.Instance.Show(true);
-        }
+        UI.Instance.GoToMenu(MenuType.Editor);
     }
 
-    public void OnMenu()
+    private void OnMenu()
     {
-        if (MenuMain.Instance.Visible)
-        {
-            MenuGame.Instance.Show(true);
-            MenuMain.Instance.Show(false);
-        }
-        else
-        {
-            MenuGame.Instance.Show(false);
-            MenuMain.Instance.Show(true);
-        }
+        UI.Instance.GoToMenu(MenuType.Main);
     }
 
     private VisualElement panel;

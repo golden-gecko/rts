@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.UIElements;
 
-public class UI_Minimap : UI_Element<UI_Minimap>
+public class UI_Minimap : UI_Element
 {
     protected override void Awake()
     {

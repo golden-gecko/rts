@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.UIElements;
 
-public class MenuMain : UI_Element<MenuMain>
+public class MenuMain : UI_Element
 {
     protected override void Awake()
     {
@@ -24,13 +24,12 @@ public class MenuMain : UI_Element<MenuMain>
 
     private void OnButtonContinue()
     {
-        UI_Menu.Instance.OnMenu();
+        UI.Instance.GoToMenu(MenuType.Game);
     }
 
     private void OnButtonNew()
     {
-        Show(false);
-        MenuScene.Instance.Show(true);
+        UI.Instance.GoToMenu(MenuType.Scene);
     }
 
     private void OnButtonQuit()

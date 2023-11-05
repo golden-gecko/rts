@@ -1,6 +1,6 @@
 using UnityEngine.UIElements;
 
-public class UI_Orders : UI_Element<UI_Orders>
+public class UI_Orders : UI_Element
 {
     protected override void Awake()
     {

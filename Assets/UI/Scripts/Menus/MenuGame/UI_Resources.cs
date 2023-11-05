@@ -2,7 +2,7 @@ using System;
 using UnityEngine;
 using UnityEngine.UIElements;
 
-public class UI_Resources : UI_Element<UI_Resources>
+public class UI_Resources : UI_Element
 {
     protected override void Awake()
     {

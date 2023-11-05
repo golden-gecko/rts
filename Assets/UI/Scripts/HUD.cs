@@ -8,12 +8,7 @@ public class HUD : Singleton<HUD>
         DragReset();
         DragDraw();
 
-        MenuDiplomacy.Instance.Show(false);
-        MenuEditor.Instance.Show(false);
-        MenuGame.Instance.Show(true);
-        MenuMain.Instance.Show(false);
-        MenuOptions.Instance.Show(false);
-        MenuScene.Instance.Show(false);
+        UI.Instance.GoToMenu(MenuType.Game);
     }
 
     private void Update()
@@ -42,17 +37,17 @@ public class HUD : Singleton<HUD>
     {
         if (Input.GetKeyDown(KeyCode.F8))
         {
-            UI_Menu.Instance.OnDiplomacy();
+            UI.Instance.GoToMenu(MenuType.Diplomacy);
         }
 
         if (Input.GetKeyDown(KeyCode.F9))
         {
-            UI_Menu.Instance.OnEditor();
+            UI.Instance.GoToMenu(MenuType.Editor);
         }
 
         if (Input.GetKeyDown(KeyCode.F10))
         {
-            UI_Menu.Instance.OnMenu();
+            UI.Instance.GoToMenu(MenuType.Main);
         }
     }
 

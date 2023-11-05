@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.UIElements;
 
-public class UI_Layers : UI_Element<UI_Layers>
+public class UI_Layers : UI_Element
 {
     protected override void Awake()
     {

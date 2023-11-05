@@ -157,7 +157,8 @@ public class Indicators : MonoBehaviour
     public void OnSelect(bool status)
     {
         order.gameObject.SetActive(status);
-        range.gameObject.SetActive(status && UI_Layers.Instance.range.value);
+        // TODO: Fix.
+        // range.gameObject.SetActive(status && UI_Layers.Instance.range.value);
         sign.gameObject.SetActive(status);
 
         selection.gameObject.SetActive(status);

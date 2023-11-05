@@ -31,6 +31,16 @@ public enum GameState
     Menu = 2,
 }
 
+public enum MenuType
+{
+    Diplomacy = 0,
+    Editor = 1,
+    Game = 2,
+    Options = 3,
+    Main = 4,
+    Scene = 5,
+}
+
 public enum MyGameObjectMapLayer
 {
     Air = 0,

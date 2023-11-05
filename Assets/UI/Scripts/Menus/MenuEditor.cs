@@ -3,7 +3,7 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.UIElements;
 
-public class MenuEditor : UI_Element<MenuEditor>
+public class MenuEditor : UI_Element
 {
     protected override void Awake()
     {
@@ -15,12 +15,12 @@ public class MenuEditor : UI_Element<MenuEditor>
         Blueprints.RegisterValueChangedCallback(x => OnBlueprintsChange(x.newValue));
 
         ButtonDelete = Root.Q<Button>("Delete");
-        ButtonDelete.RegisterCallback<MouseEnterEvent>(x => OnButtonDelete());
+        ButtonDelete.RegisterCallback<ClickEvent>(x => OnButtonDelete());
 
         Name = Root.Q<TextField>("Name");
 
         ButtonSave = Root.Q<Button>("Save");
-        ButtonSave.RegisterCallback<MouseEnterEvent>(x => OnButtonSave());
+        ButtonSave.RegisterCallback<ClickEvent>(x => OnButtonSave());
 
         PartsChassis = Root.Q<ListView>("PartsChassis");
         PartsChassis.selectionChanged += (IEnumerable<object> objects) => OnSelectionChanged(PartType.Chassis, objects);
@@ -73,11 +73,13 @@ public class MenuEditor : UI_Element<MenuEditor>
     private void OnButtonDelete()
     {
         Blueprints.choices.Remove(Blueprints.text);
+        Blueprints.index = Blueprints.choices.Count - 1;
     }
 
     private void OnButtonSave()
     {
         Blueprints.choices.Add(Name.text);
+        Blueprints.index = Blueprints.choices.FindIndex(x => x == Name.text);
     }
 
     private void OnSelectionChanged(PartType type, IEnumerable<object> objects)
@@ -142,7 +144,7 @@ public class MenuEditor : UI_Element<MenuEditor>
 
     private void OnButtonClose()
     {
-        Show(false);
+        UI.Instance.GoToMenu(MenuType.Game);
     }
 
     private void CreatePartList(ListView listView, List<GameObject> parts)

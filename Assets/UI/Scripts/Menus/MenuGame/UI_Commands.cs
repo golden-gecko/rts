@@ -4,7 +4,7 @@ using System.IO;
 using UnityEngine;
 using UnityEngine.UIElements;
 
-public class UI_Commands : UI_Element<UI_Commands>
+public class UI_Commands : UI_Element
 {
     protected override void Awake()
     {
