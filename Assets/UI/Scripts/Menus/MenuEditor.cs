@@ -11,6 +11,17 @@ public class MenuEditor : UI_Element<MenuEditor>
 
         Root.Q<Label>("Header").text = "Editor";
 
+        Blueprints = Root.Q<DropdownField>("Blueprints");
+        Blueprints.RegisterValueChangedCallback(x => OnBlueprintsChange(x.newValue));
+
+        ButtonDelete = Root.Q<Button>("Delete");
+        ButtonDelete.RegisterCallback<MouseEnterEvent>(x => OnButtonDelete());
+
+        Name = Root.Q<TextField>("Name");
+
+        ButtonSave = Root.Q<Button>("Save");
+        ButtonSave.RegisterCallback<MouseEnterEvent>(x => OnButtonSave());
+
         PartsChassis = Root.Q<ListView>("PartsChassis");
         PartsChassis.selectionChanged += (IEnumerable<object> objects) => OnSelectionChanged(PartType.Chassis, objects);
 
@@ -53,6 +64,20 @@ public class MenuEditor : UI_Element<MenuEditor>
             placeholder.Rotate(Vector3.forward, Input.GetAxis("Mouse Y") * Config.Editor.RotateSpeed, Space.World);
             placeholder.Rotate(Vector3.down, Input.GetAxis("Mouse X") * Config.Editor.RotateSpeed, Space.World);
         }
+    }
+
+    private void OnBlueprintsChange(string blueprint)
+    {
+    }
+
+    private void OnButtonDelete()
+    {
+        Blueprints.choices.Remove(Blueprints.text);
+    }
+
+    private void OnButtonSave()
+    {
+        Blueprints.choices.Add(Name.text);
     }
 
     private void OnSelectionChanged(PartType type, IEnumerable<object> objects)
@@ -195,6 +220,11 @@ public class MenuEditor : UI_Element<MenuEditor>
 
     [SerializeField]
     private VisualTreeAsset TemplatePart;
+
+    private DropdownField Blueprints;
+    private Button ButtonDelete;
+    private TextField Name;
+    private Button ButtonSave;
 
     private ListView PartsChassis;
     private ListView PartsDrive;

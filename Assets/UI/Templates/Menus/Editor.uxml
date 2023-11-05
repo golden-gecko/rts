@@ -6,8 +6,9 @@
     <ui:VisualElement class="container background">
         <ui:Instance template="Header" />
         <ui:VisualElement style="flex-direction: row; margin-top: 10px; margin-right: 10px; margin-bottom: 10px; margin-left: 10px;">
-            <ui:DropdownField label="Blueprint" name="Blueprint" style="flex-grow: 10;" />
-            <ui:Button text="Load" name="Load" class="button" style="flex-grow: 1;" />
+            <ui:DropdownField label="Blueprints" name="Blueprints" class="dropdown" style="flex-grow: 10;" />
+            <ui:Button text="Delete" name="Delete" class="button" style="flex-grow: 1;" />
+            <ui:TextField name="Name" class="text" style="flex-grow: 1;" />
             <ui:Button text="Save" name="Save" class="button" style="flex-grow: 1;" />
         </ui:VisualElement>
         <ui:VisualElement style="flex-direction: row; flex-grow: 10;">
