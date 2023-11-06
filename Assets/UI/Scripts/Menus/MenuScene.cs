@@ -1,3 +1,4 @@
+using System.IO;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UIElements;
@@ -8,8 +9,8 @@ public class MenuScene : UI_Element
     {
         base.Awake();
 
-        /*
         Menu = Root.Q<VisualElement>("Menu");
+        Menu.Clear();
 
         int sceneCount = SceneManager.sceneCountInBuildSettings;
         string[] scenes = new string[sceneCount];
@@ -30,7 +31,6 @@ public class MenuScene : UI_Element
 
             Menu.Add(container);
         }
-        */
     }
 
     private void OnButtonScene(string scene)

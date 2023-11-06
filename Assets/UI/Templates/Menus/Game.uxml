@@ -1,11 +1,11 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" editor-extension-mode="False">
     <ui:Template name="Button" src="project://database/Assets/UI/Templates/Button.uxml?fileID=9197481963319205126&amp;guid=a3fb7fe5ff2f5a5498b9a348c95d0ca1&amp;type=3#Button" />
     <Style src="project://database/Assets/UI/Styles/Style.uss?fileID=7433441132597879392&amp;guid=231d51774ac67094591621cc55974d8c&amp;type=3#Style" />
-    <ui:VisualElement name="Container" picking-mode="Ignore" style="flex-grow: 1; position: absolute; top: 0; right: 0; left: 0; bottom: 0;">
-        <ui:VisualElement name="Panel_Log" class="panel-background">
+    <ui:VisualElement picking-mode="Ignore" style="flex-grow: 1; position: absolute; top: 0; right: 0; left: 0; bottom: 0;">
+        <ui:VisualElement name="Panel_Log" class="background">
             <ui:Label tabindex="-1" display-tooltip-when-elided="true" name="Value" text="Unit destroyed" style="padding-top: 0; padding-right: 0; padding-bottom: 0; padding-left: 0; margin-top: 8px; margin-right: 8px; margin-bottom: 8px; margin-left: 8px;" />
         </ui:VisualElement>
-        <ui:VisualElement name="Container" picking-mode="Ignore" class="panel-background" style="flex-grow: 0; flex-direction: row; top: 1%;">
+        <ui:VisualElement picking-mode="Ignore" class="background" style="flex-grow: 0; flex-direction: row; top: 1%;">
             <ui:VisualElement name="Panel_Resources">
                 <ui:Label tabindex="-1" name="Value" text="Coal: 50, Wood: 80" style="padding-top: 0; padding-right: 0; padding-bottom: 0; padding-left: 0; margin-top: 8px; margin-right: 8px; margin-bottom: 8px; margin-left: 8px;" />
             </ui:VisualElement>
@@ -23,20 +23,20 @@
             </ui:VisualElement>
         </ui:VisualElement>
     </ui:VisualElement>
-    <ui:VisualElement name="Panel_Menu" class="panel-background" style="position: absolute; top: 0; right: 0; flex-direction: row;">
-        <ui:Button text="Diplomacy (F8)" name="Diplomacy" style="padding-top: 2px; padding-right: 2px; padding-bottom: 2px; padding-left: 2px; margin-top: 4px; margin-right: 4px; margin-bottom: 4px; margin-left: 4px;" />
-        <ui:Button text="Editor (F9)" name="Editor" style="padding-top: 2px; padding-right: 2px; padding-bottom: 2px; padding-left: 2px; margin-top: 4px; margin-right: 4px; margin-bottom: 4px; margin-left: 4px;" />
-        <ui:Button text="Menu (F10)" name="Menu" style="padding-top: 2px; padding-right: 2px; padding-bottom: 2px; padding-left: 2px; margin-top: 4px; margin-right: 4px; margin-bottom: 4px; margin-left: 4px;" />
+    <ui:VisualElement name="Panel_Menu" style="position: absolute; top: 0; right: 0; flex-direction: row;">
+        <ui:Button text="Diplomacy (F8)" name="Diplomacy" class="button" style="padding-top: 2px; padding-right: 2px; padding-bottom: 2px; padding-left: 2px; margin-top: 4px; margin-right: 4px; margin-bottom: 4px; margin-left: 4px;" />
+        <ui:Button text="Editor (F9)" name="Editor" class="button" style="padding-top: 2px; padding-right: 2px; padding-bottom: 2px; padding-left: 2px; margin-top: 4px; margin-right: 4px; margin-bottom: 4px; margin-left: 4px;" />
+        <ui:Button text="Menu (F10)" name="Menu" class="button" style="padding-top: 2px; padding-right: 2px; padding-bottom: 2px; padding-left: 2px; margin-top: 4px; margin-right: 4px; margin-bottom: 4px; margin-left: 4px;" />
     </ui:VisualElement>
-    <ui:VisualElement name="Container" picking-mode="Ignore" style="flex-grow: 1; bottom: 0; left: 0; top: 0; right: 80%; position: absolute; align-items: flex-start; justify-content: flex-end; flex-direction: column;">
-        <ui:VisualElement name="Panel_Orders" class="panel-background" style="margin-bottom: 8px;">
+    <ui:VisualElement picking-mode="Ignore" style="flex-grow: 1; bottom: 0; left: 0; top: 0; right: 80%; position: absolute; align-items: flex-start; justify-content: flex-end; flex-direction: column;">
+        <ui:VisualElement name="Panel_Orders" class="background" style="margin-bottom: 8px;">
             <ui:Label tabindex="-1" text="Move" display-tooltip-when-elided="true" name="Value" style="padding-top: 0; padding-right: 0; padding-bottom: 0; padding-left: 0; margin-top: 8px; margin-right: 8px; margin-bottom: 8px; margin-left: 8px;" />
         </ui:VisualElement>
-        <ui:VisualElement name="Panel_Info" class="panel-background">
+        <ui:VisualElement name="Panel_Info" class="background">
             <ui:Label tabindex="-1" name="Value" text="Game Object" style="padding-top: 0; padding-right: 0; padding-bottom: 0; padding-left: 0; margin-top: 8px; margin-right: 8px; margin-bottom: 8px; margin-left: 8px;" />
         </ui:VisualElement>
     </ui:VisualElement>
-    <ui:VisualElement name="Panel_Commands" class="panel-background" style="position: absolute; left: 25%; right: 25%; bottom: 0; padding-left: 5px; padding-top: 5px; flex-grow: 1; flex-direction: column; top: 75%; padding-right: 5px; padding-bottom: 5px;">
+    <ui:VisualElement name="Panel_Commands" class="background" style="position: absolute; left: 25%; right: 25%; bottom: 0; padding-left: 5px; padding-top: 5px; flex-grow: 1; flex-direction: column; top: 75%; padding-right: 5px; padding-bottom: 5px;">
         <ui:VisualElement name="Panel_Commands_Orders" style="flex-direction: row; flex-grow: 1;">
             <ui:Label tabindex="-1" text="Orders" display-tooltip-when-elided="true" style="width: 20%;" />
             <ui:VisualElement name="List_Orders" style="flex-grow: 1; flex-direction: row; align-items: flex-start; align-self: center;">
@@ -83,7 +83,7 @@
             </ui:VisualElement>
         </ui:VisualElement>
     </ui:VisualElement>
-    <ui:VisualElement name="Panel_Minimap" class="panel-background" style="flex-grow: 1; right: 0; bottom: 0; top: 75%; left: 80%; position: absolute; flex-direction: column;">
+    <ui:VisualElement name="Panel_Minimap" style="flex-grow: 1; right: 0; bottom: 0; top: 75%; left: 80%; position: absolute; flex-direction: column;">
         <ui:VisualElement name="Image" style="background-image: url(&apos;project://database/Assets/Maps/Minimap.renderTexture?fileID=8400000&amp;guid=8b66b331a1315744c86fb24e7afd5b59&amp;type=2#Minimap&apos;); top: 0; left: 0; right: 100%; bottom: 100%; flex-grow: 1;" />
         <ui:VisualElement name="Controls" style="position: absolute; top: 0; right: 0; bottom: auto; left: 0; flex-direction: row;">
             <ui:Button text="+" display-tooltip-when-elided="true" name="ZoomIn" class="button-minimap" style="flex-shrink: 1; flex-grow: 1;" />

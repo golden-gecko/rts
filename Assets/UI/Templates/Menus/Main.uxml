@@ -1,10 +1,10 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" editor-extension-mode="False">
     <Style src="project://database/Assets/UI/Styles/Style.uss?fileID=7433441132597879392&amp;guid=231d51774ac67094591621cc55974d8c&amp;type=3#Style" />
     <ui:VisualElement class="container background">
-        <ui:VisualElement class="menu-main" style="align-items: center; flex-grow: 1; justify-content: center;">
-            <ui:Button text="Continue" display-tooltip-when-elided="true" name="Continue" class="button" />
-            <ui:Button text="New" display-tooltip-when-elided="true" name="New" class="button" />
-            <ui:Button text="Quit" display-tooltip-when-elided="true" name="Quit" class="button" />
+        <ui:VisualElement class="container menu" style="align-items: center; justify-content: center;">
+            <ui:Button text="Continue" name="Continue" class="button" />
+            <ui:Button text="New" name="New" class="button" />
+            <ui:Button text="Quit" name="Quit" class="button" />
         </ui:VisualElement>
     </ui:VisualElement>
 </ui:UXML>
