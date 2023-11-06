@@ -1,10 +1,10 @@
 using System;
 using UnityEngine;
 
-public struct BlueprintComponent
+public class BlueprintComponent
 {
     public PartType PartType;
-    public Part Part;
+    public GameObject Part;
     public Vector3 Position;
 };
 

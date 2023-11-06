@@ -3,11 +3,13 @@ using UnityEngine;
 
 public class Blueprint
 {
-    public Blueprint(string name)
+    public Blueprint(string name, List<BlueprintComponent> parts)
     {
         Name = name;
+        Parts = parts;
     }
 
+    /*
     public void Attach(PartType partType, Part part, Vector3 position)
     {
         Dettach(partType);
@@ -19,6 +21,7 @@ public class Blueprint
     {
         Parts.RemoveAll(x => x.PartType == partType);
     }
+    */
 
     public void Create(Vector3 position)
     {

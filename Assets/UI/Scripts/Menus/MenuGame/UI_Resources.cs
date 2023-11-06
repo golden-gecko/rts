@@ -1,4 +1,4 @@
-using System;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.UIElements;
 
@@ -41,14 +41,7 @@ public class UI_Resources : UI_Element
             }
         }
 
-        string resourceString = String.Empty;
-
-        foreach (Resource resource in resourceCotainer.Items)
-        {
-            resourceString += string.Format("{0}: {1}, ", resource.Name, resource.Current);
-        }
-
-        value.text = resourceString;
+        value.text = string.Join(", ", resourceCotainer.Items.Select(x => string.Format("{0}: {1}", x.Name, x.Current)));
     }
 
     private VisualElement panel;

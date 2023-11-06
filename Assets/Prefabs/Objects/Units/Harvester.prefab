@@ -164,6 +164,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 28d73f8fbe8af464f8ccdeabaf462443, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  <Experience>k__BackingField:
+    <Current>k__BackingField: 0
+    <Max>k__BackingField: 1000
   <Player>k__BackingField: {fileID: 0}
   <Enabled>k__BackingField: 1
   <Gatherable>k__BackingField: 0
@@ -187,6 +190,9 @@ MonoBehaviour:
   <CreateBase>k__BackingField: 0
   <SnapToGrid>k__BackingField: 0
   <VisibilityState>k__BackingField: 2
+  <RotateTowardsTarget>k__BackingField: 1
+  <ShowEntrance>k__BackingField: 0
+  <ShowExit>k__BackingField: 0
 --- !u!114 &-7296574799590733170
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -230,6 +236,9 @@ MonoBehaviour:
   <Mass>k__BackingField: 10
   <Power>k__BackingField:
     <Value>k__BackingField: 200
+  <Fuel>k__BackingField:
+    <Current>k__BackingField: 100
+    <Max>k__BackingField: 100
   <FuelUsage>k__BackingField: 10
 --- !u!114 &2949164819816468667
 MonoBehaviour:
@@ -278,31 +287,31 @@ MonoBehaviour:
     <Items>k__BackingField:
     - <Current>k__BackingField: 0
       <Max>k__BackingField: 10
-      <Name>k__BackingField: 
+      <Name>k__BackingField: Ammunition
       <Direction>k__BackingField: 0
     - <Current>k__BackingField: 0
       <Max>k__BackingField: 10
-      <Name>k__BackingField: 
+      <Name>k__BackingField: Coal
       <Direction>k__BackingField: 0
     - <Current>k__BackingField: 0
       <Max>k__BackingField: 10
-      <Name>k__BackingField: 
+      <Name>k__BackingField: Crystal
       <Direction>k__BackingField: 0
     - <Current>k__BackingField: 0
       <Max>k__BackingField: 10
-      <Name>k__BackingField: 
+      <Name>k__BackingField: Fuel
       <Direction>k__BackingField: 0
     - <Current>k__BackingField: 0
       <Max>k__BackingField: 10
-      <Name>k__BackingField: 
+      <Name>k__BackingField: Iron
       <Direction>k__BackingField: 0
     - <Current>k__BackingField: 0
       <Max>k__BackingField: 10
-      <Name>k__BackingField: 
+      <Name>k__BackingField: Iron Ore
       <Direction>k__BackingField: 0
     - <Current>k__BackingField: 0
       <Max>k__BackingField: 10
-      <Name>k__BackingField: 
+      <Name>k__BackingField: Wood
       <Direction>k__BackingField: 0
 --- !u!114 &-2805528376880930231
 MonoBehaviour:

@@ -1,6 +1,7 @@
 using System.Collections.Generic;
+using UnityEngine;
 
-public class BlueprintManager : Singleton<DiplomacyManager>
+public class BlueprintManager : Singleton<BlueprintManager>
 {
     public Blueprint Get(string name)
     {
@@ -10,6 +11,11 @@ public class BlueprintManager : Singleton<DiplomacyManager>
         }
 
         return null;
+    }
+
+    public void Save(string name, List<BlueprintComponent> parts)
+    {
+        Blueprints[name] = new Blueprint(name, parts);
     }
 
     private Dictionary<string, Blueprint> Blueprints = new Dictionary<string, Blueprint>();
