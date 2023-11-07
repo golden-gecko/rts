@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using UnityEditor;
+using UnityEditor.Experimental.GraphView;
 using UnityEditor.SceneManagement;
 using UnityEngine;
 
@@ -58,8 +59,10 @@ public class Tools : EditorWindow
 
         IEnumerable<GameObject> gameObjects = GetGameObjects();
 
-        CheckPhysics(gameObjects);
-        CheckStorage(gameObjects);
+        ValidateNames(gameObjects);
+        ValidateSkills(gameObjects);
+        ValidateStorage(gameObjects);
+        ValidatePhysics(gameObjects);
     }
 
     private static IEnumerable<GameObject> GetGameObjects()
@@ -87,7 +90,75 @@ public class Tools : EditorWindow
         method.Invoke(new object(), null);
     }
 
-    private static void CheckPhysics(IEnumerable<GameObject> gameObjects)
+    private static void ValidateNames(IEnumerable<GameObject> gameObjects)
+    {
+        Dictionary<string, int> names = new Dictionary<string, int>();
+
+        foreach (GameObject gameObject in gameObjects)
+        {
+            if (names.TryGetValue(gameObject.name, out int _))
+            {
+                names[gameObject.name] += 1;
+            }
+            else
+            {
+                names[gameObject.name] = 1;
+            }
+        }
+
+        IEnumerable<KeyValuePair<string, int>> duplicates = names.Where(x => x.Value > 1);
+
+        if (duplicates.Count() > 0)
+        {
+            Debug.Log(string.Format("Some game objects have duplicates names: {0}", string.Join(", ", names.Where(x => x.Value > 1))));
+        }
+    }
+
+    private static void ValidateSkills(IEnumerable<GameObject> gameObjects)
+    {
+        foreach (GameObject gameObject in gameObjects)
+        {
+            if (gameObject.TryGetComponent(out MyGameObject myGameObject))
+            {
+                foreach (string skill in myGameObject.Skills.Keys)
+                {
+                    if (skill.Length <= 0)
+                    {
+                        Debug.Log(string.Format("Resource {0} has invalid skill name ({1}).", gameObject.name, skill));
+                    }
+                }
+            }
+        }
+    }
+
+    private static void ValidateStorage(IEnumerable<GameObject> gameObjects)
+    {
+        foreach (GameObject gameObject in gameObjects)
+        {
+            foreach (Storage storage in gameObject.GetComponentsInChildren<Storage>())
+            {
+                foreach (Resource resource in storage.Resources.Items)
+                {
+                    if (resource.Name.Length <= 0)
+                    {
+                        Debug.Log(string.Format("Resource {0} has invalid resource name ({1}).", gameObject.name, resource));
+                    }
+
+                    if (resource.Current < 0)
+                    {
+                        Debug.Log(string.Format("Resource {0} has invalid current value ({1}, {2}).", gameObject.name, resource.Name, resource.Current));
+                    }
+
+                    if (resource.Max <= 0)
+                    {
+                        Debug.Log(string.Format("Resource {0} has invalid max value ({1}, {2}).", gameObject.name, resource.Name, resource.Max));
+                    }
+                }
+            }
+        }
+    }
+
+    private static void ValidatePhysics(IEnumerable<GameObject> gameObjects)
     {
         foreach (GameObject gameObject in gameObjects)
         {
@@ -114,20 +185,4 @@ public class Tools : EditorWindow
         }
     }
 
-    private static void CheckStorage(IEnumerable<GameObject> gameObjects)
-    {
-        foreach (GameObject gameObject in gameObjects)
-        {
-            foreach (Storage storage in gameObject.GetComponentsInChildren<Storage>())
-            {
-                foreach (Resource resource in storage.Resources.Items)
-                {
-                    if (resource.Max <= 0)
-                    {
-                        Debug.Log(string.Format("Resource {0} has invalid max value ({1}, {2}).", gameObject.name, resource.Name, resource.Max));
-                    }
-                }
-            }
-        }
-    }
 }

@@ -28,6 +28,11 @@ public class BlueprintManager : Singleton<BlueprintManager>
 
     private void LoadBlueprints()
     {
+        if (Directory.Exists(Config.Blueprints.Directory) == false)
+        {
+            return;
+        }
+
         foreach (string file in Directory.EnumerateFiles(Config.Blueprints.Directory))
         {
             if (Path.GetExtension(file).ToLower() != ".json")

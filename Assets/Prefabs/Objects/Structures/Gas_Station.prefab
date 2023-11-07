@@ -95,8 +95,7 @@ MonoBehaviour:
   <ExpirationTimer>k__BackingField:
     <Current>k__BackingField: -1
     <Max>k__BackingField: -1
-  <SkillsNames>k__BackingField:
-  - 
+  <SkillsNames>k__BackingField: []
   <State>k__BackingField: 1
   <CreateBase>k__BackingField: 1
   <SnapToGrid>k__BackingField: 1
