@@ -1,7 +1,13 @@
+using System.IO;
 using UnityEngine;
 
 public static class Config
 {
+    public static class Blueprints
+    {
+        public static string Directory = Path.Join(Application.persistentDataPath, "Blueprints");
+    }
+
     public static class Camera
     {
         public static float MinHeight = 2.0f;

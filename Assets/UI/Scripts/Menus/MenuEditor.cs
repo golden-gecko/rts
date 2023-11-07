@@ -1,5 +1,5 @@
-using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.UIElements;
@@ -50,6 +50,11 @@ public class MenuEditor : UI_Element
         CreatePartList(PartsGun, ConfigPrefabs.Instance.Guns);
     }
 
+    private void Start()
+    {
+        LoadBlueprints();
+    }
+
     private void Update()
     {
         if (Visible && MouseInside && Input.GetMouseButton(0))
@@ -65,21 +70,42 @@ public class MenuEditor : UI_Element
 
     private void OnBlueprintsChange(string name)
     {
-        Blueprint blueprint = BlueprintManager.Instance.Get(name);
-
-        if (blueprint == null)
+        if (name.Length <= 0)
         {
             return;
         }
 
+        Blueprint newBlueprint = BlueprintManager.Instance.Get(name);
 
+        if (newBlueprint == null)
+        {
+            return;
+        }
+
+        foreach (BlueprintComponent i in blueprint.Parts)
+        {
+            Destroy(i.Instance);
+        }
+
+        blueprint = newBlueprint.Clone() as Blueprint;
+
+        BuildGameObjectFromBlueprint();
     }
 
     private void OnButtonDelete()
     {
-        Blueprints.choices.Remove(Blueprints.text);
+        string name = Blueprints.text;
+
+        if (name.Length <= 0)
+        {
+            return;
+        }
+
+        Blueprints.choices.Remove(name);
         Blueprints.choices.Sort();
         Blueprints.index = Blueprints.choices.Count - 1;
+
+        File.Delete(Path.Join(Config.Blueprints.Directory, string.Format("{0}.json", name)));
     }
 
     private void OnButtonSave()
@@ -91,11 +117,21 @@ public class MenuEditor : UI_Element
             return;
         }
 
-        Blueprints.choices.Add(name);
-        Blueprints.choices.Sort();
+        int index = Blueprints.choices.FindIndex(x => x == name);
+
+        if (index < 0)
+        {
+            Blueprints.choices.Add(name);
+            Blueprints.choices.Sort();
+        }
+
         Blueprints.index = Blueprints.choices.FindIndex(x => x == name);
 
-        BlueprintManager.Instance.Save(name, Parts);
+        blueprint.Name = name;
+
+        BlueprintManager.Instance.Save(blueprint.Clone() as Blueprint);
+
+        SaveBlueprintToFile(blueprint);
     }
 
     private void OnSelectionChanged(PartType partType, IEnumerable<object> objects)
@@ -105,18 +141,19 @@ public class MenuEditor : UI_Element
             return;
         }
 
-        BlueprintComponent part = Parts.Find(x => x.PartType == partType);
+        BlueprintComponent component = blueprint.Parts.Find(x => x.PartType == partType);
 
-        if (part == null)
+        if (component != null)
         {
-            Parts.Add(new BlueprintComponent { PartType = partType, Part = objects.First() as GameObject });
-        }
-        else
-        {
-            part.Part = objects.First() as GameObject;
+            Destroy(component.Instance);
         }
 
-        BuildGameObject();
+        GameObject part = objects.First() as GameObject;
+
+        blueprint.Parts.Remove(component);
+        blueprint.Parts.Add(new BlueprintComponent { PartType = partType, Name = part.name, Part = part });
+
+        BuildGameObjectFromBlueprint();
     }
 
     private void OnMouseEnterEvent()
@@ -185,37 +222,30 @@ public class MenuEditor : UI_Element
         {
             item.Q<Label>("Name").text = parts[index].name;
             item.Q<VisualElement>("Image").style.backgroundImage = new StyleBackground(Utils.LoadPortrait(parts[index].name));
-
-            item.userData = parts[index];
         };
 
         listView.itemsSource = parts;
     }
 
-    private void BuildGameObject()
+    private void BuildGameObjectFromBlueprint()
     {
         Transform setup = GameObject.Find("Setup").transform;
         Transform editor = setup.Find("Editor").transform;
         Transform placeholder = editor.Find("Placeholder").transform;
 
-        foreach (KeyValuePair<PartType, GameObject> i in PartsInstantiated)
+        foreach (BlueprintComponent i in blueprint.Parts)
         {
-            if (i.Value == null)
-            {
-                continue;
-            }
-
-            Destroy(i.Value.gameObject);
+            Destroy(i.Instance);
         }
 
-        foreach (BlueprintComponent i in Parts)
+        foreach (BlueprintComponent i in blueprint.Parts)
         {
             if (i.Part == null)
             {
-                continue;
+                i.Part = LoadPart(i.PartType, i.Name);
             }
 
-            PartsInstantiated[i.PartType] = Instantiate(i.Part, placeholder);
+            i.Instance = Instantiate(i.Part, placeholder);
         }
 
         PositionChassis(placeholder);
@@ -226,16 +256,16 @@ public class MenuEditor : UI_Element
 
     private void PositionChassis(Transform parent)
     {
-        PartsInstantiated.TryGetValue(PartType.Chassis, out GameObject chassis);
-        PartsInstantiated.TryGetValue(PartType.Drive, out GameObject drive);
+        BlueprintComponent chassis = blueprint.Parts.Find(x => x.PartType == PartType.Chassis);
+        BlueprintComponent drive = blueprint.Parts.Find(x => x.PartType == PartType.Drive);
 
-        if (chassis && drive)
+        if (chassis != null && drive != null)
         {
             Quaternion rotation = Utils.ResetRotation(parent);
 
-            Vector3 position = chassis.transform.position;
-            position.y = drive.GetComponentInChildren<Collider>().bounds.max.y - drive.GetComponentInChildren<Collider>().bounds.extents.y;
-            chassis.transform.position = position;
+            Vector3 position = chassis.Instance.transform.position;
+            position.y = drive.Instance.GetComponentInChildren<Collider>().bounds.max.y - drive.Instance.GetComponentInChildren<Collider>().bounds.extents.y;
+            chassis.Instance.transform.position = position;
 
             Utils.RestoreRotation(parent, rotation);
         }
@@ -243,16 +273,16 @@ public class MenuEditor : UI_Element
 
     private void PositionGun(Transform parent)
     {
-        PartsInstantiated.TryGetValue(PartType.Chassis, out GameObject chassis);
-        PartsInstantiated.TryGetValue(PartType.Gun, out GameObject gun);
+        BlueprintComponent chassis = blueprint.Parts.Find(x => x.PartType == PartType.Chassis);
+        BlueprintComponent gun = blueprint.Parts.Find(x => x.PartType == PartType.Gun);
 
-        if (chassis && gun)
+        if (chassis != null && gun != null)
         {
             Quaternion rotation = Utils.ResetRotation(parent);
 
-            Vector3 position = gun.transform.position;
-            position.y = chassis.GetComponent<Collider>().bounds.max.y;
-            gun.transform.position = position;
+            Vector3 position = gun.Instance.transform.position;
+            position.y = chassis.Instance.GetComponent<Collider>().bounds.max.y;
+            gun.Instance.transform.position = position;
 
             Utils.RestoreRotation(parent, rotation);
         }
@@ -260,28 +290,56 @@ public class MenuEditor : UI_Element
 
     private void SavePosition()
     {
-        PartsInstantiated.TryGetValue(PartType.Chassis, out GameObject chassis);
-        PartsInstantiated.TryGetValue(PartType.Drive, out GameObject drive);
-        PartsInstantiated.TryGetValue(PartType.Gun, out GameObject gun);
+        BlueprintComponent chassis = blueprint.Parts.Find(x => x.PartType == PartType.Chassis);
+        BlueprintComponent drive = blueprint.Parts.Find(x => x.PartType == PartType.Drive);
+        BlueprintComponent gun = blueprint.Parts.Find(x => x.PartType == PartType.Gun);
 
-        BlueprintComponent chassisComponent = Parts.Find(x => x.PartType == PartType.Chassis);
-        BlueprintComponent driveComponent = Parts.Find(x => x.PartType == PartType.Drive);
-        BlueprintComponent gunComponent = Parts.Find(x => x.PartType == PartType.Gun);
-
-        if (chassis != null && chassisComponent != null)
+        if (chassis != null)
         {
-            chassisComponent.Position = chassis.transform.localPosition;
+            chassis.Position = chassis.Instance.transform.localPosition;
         }
 
-        if (drive != null && driveComponent != null)
+        if (drive != null)
         {
-            driveComponent.Position = drive.transform.localPosition;
+            drive.Position = drive.Instance.transform.localPosition;
         }
 
-        if (gun != null && gunComponent != null)
+        if (gun != null)
         {
-            gunComponent.Position = gun.transform.localPosition;
+            gun.Position = gun.Instance.transform.localPosition;
         }
+    }
+
+    private void LoadBlueprints()
+    {
+        Blueprints.choices = BlueprintManager.Instance.Blueprints.Keys.ToList();
+    }
+
+    private void SaveBlueprintToFile(Blueprint blueprint)
+    {
+        string directory = Config.Blueprints.Directory;
+        string path = Path.Join(directory, string.Format("{0}.json", blueprint.Name));
+        string json = JsonUtility.ToJson(blueprint, true);
+
+        Directory.CreateDirectory(directory);
+        File.WriteAllText(path, json);
+    }
+
+    private GameObject LoadPart(PartType partType, string name)
+    {
+        switch (partType)
+        {
+            case PartType.Chassis:
+                return ConfigPrefabs.Instance.Chassis.Find(x => x.name == name);
+
+            case PartType.Drive:
+                return ConfigPrefabs.Instance.Drives.Find(x => x.name == name);
+
+            case PartType.Gun:
+                return ConfigPrefabs.Instance.Guns.Find(x => x.name == name);
+        }
+
+        return null;
     }
 
     [SerializeField]
@@ -304,6 +362,5 @@ public class MenuEditor : UI_Element
     private Button ButtonClose;
 
     private PartType PartsListVisible = PartType.Chassis;
-    private List<BlueprintComponent> Parts = new List<BlueprintComponent>();
-    private Dictionary<PartType, GameObject> PartsInstantiated = new Dictionary<PartType, GameObject>();
+    private Blueprint blueprint = new Blueprint();
 }

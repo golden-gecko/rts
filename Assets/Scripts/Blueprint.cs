@@ -1,36 +1,24 @@
+using System;
 using System.Collections.Generic;
-using UnityEngine;
 
-public class Blueprint
+[Serializable]
+public class Blueprint : ICloneable
 {
+    public object Clone()
+    {
+        return new Blueprint(Name, new List<BlueprintComponent>(Parts));
+    }
+
+    public Blueprint()
+    {
+    }
+
     public Blueprint(string name, List<BlueprintComponent> parts)
     {
         Name = name;
         Parts = parts;
     }
 
-    /*
-    public void Attach(PartType partType, Part part, Vector3 position)
-    {
-        Dettach(partType);
-
-        Parts.Add(new BlueprintComponent { PartType = partType, Part = part, Position = position });
-    }
-
-    public void Dettach(PartType partType)
-    {
-        Parts.RemoveAll(x => x.PartType == partType);
-    }
-    */
-
-    public void Create(Vector3 position)
-    {
-        foreach (BlueprintComponent i in Parts)
-        {
-        }
-    }
-
-    public string Name { get; }
-
-    public List<BlueprintComponent> Parts { get; } = new List<BlueprintComponent>();
+    public string Name;
+    public List<BlueprintComponent> Parts = new List<BlueprintComponent>();
 }
