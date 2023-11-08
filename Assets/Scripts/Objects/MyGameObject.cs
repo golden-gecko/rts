@@ -717,13 +717,13 @@ public class MyGameObject : MonoBehaviour
 
         Indicators.transform.localPosition = new Vector3(0.0f, 0.25f, 0.0f);
 
-        Base = Instantiate(Config.Instance.Base, transform, false);
+        Base = Instantiate(Game.Instance.Config.Base, transform, false);
         Base.transform.localScale = new Vector3(size.x, 0.5f, size.z);
     }
 
     private void SetupIndicators()
     {
-        Indicators = Instantiate(Config.Instance.Indicators, transform, false).GetComponent<Indicators>();
+        Indicators = Instantiate(Game.Instance.Config.Indicators, transform, false).GetComponent<Indicators>();
     }
 
     private void CreateSkills()

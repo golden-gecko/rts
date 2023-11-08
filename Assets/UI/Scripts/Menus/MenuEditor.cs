@@ -44,14 +44,14 @@ public class MenuEditor : UI_Element
 
         ButtonClose = Root.Q<Button>("Close");
         ButtonClose.RegisterCallback<ClickEvent>(x => OnButtonClose());
-
-        CreatePartList(PartsChassis, Config.Instance.Chassis);
-        CreatePartList(PartsDrive, Config.Instance.Drives);
-        CreatePartList(PartsGun, Config.Instance.Guns);
     }
 
     private void Start()
     {
+        CreatePartList(PartsChassis, Game.Instance.Config.Chassis);
+        CreatePartList(PartsDrive, Game.Instance.Config.Drives);
+        CreatePartList(PartsGun, Game.Instance.Config.Guns);
+
         LoadBlueprints();
     }
 
@@ -320,13 +320,13 @@ public class MenuEditor : UI_Element
         switch (partType)
         {
             case PartType.Chassis:
-                return Config.Instance.Chassis.Find(x => x.name == name);
+                return Game.Instance.Config.Chassis.Find(x => x.name == name);
 
             case PartType.Drive:
-                return Config.Instance.Drives.Find(x => x.name == name);
+                return Game.Instance.Config.Drives.Find(x => x.name == name);
 
             case PartType.Gun:
-                return Config.Instance.Guns.Find(x => x.name == name);
+                return Game.Instance.Config.Guns.Find(x => x.name == name);
         }
 
         return null;

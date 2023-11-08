@@ -4,6 +4,7 @@ public class Game : Singleton<Game>
     {
         base.Awake();
 
+        Config = GetComponent<Config>();
         BlueprintManager = GetComponent<BlueprintManager>();
         DiplomacyManager = GetComponent<DiplomacyManager>();
         DisasterManager = GetComponent<DisasterManager>();
@@ -11,6 +12,7 @@ public class Game : Singleton<Game>
         SkillManager = GetComponent<SkillManager>();
     }
 
+    public Config Config { get; private set; }
     public BlueprintManager BlueprintManager { get; private set; }
     public DiplomacyManager DiplomacyManager { get; private set; }
     public DisasterManager DisasterManager { get; private set; }

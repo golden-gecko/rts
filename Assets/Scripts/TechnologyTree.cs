@@ -6,8 +6,8 @@ public class TechnologyTree
 {
     public void Load()
     {
-        Load(Config.Instance.Structures);
-        Load(Config.Instance.Units);
+        Load(Game.Instance.Config.Structures);
+        Load(Game.Instance.Config.Units);
 
         // Starting technologies.
         Technologies["Colonization"] = new Technology("Colonization");

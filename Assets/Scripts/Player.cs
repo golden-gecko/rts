@@ -3,14 +3,12 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
-    protected virtual void Awake()
+    private void Awake()
     {
         for (KeyCode i = KeyCode.Alpha0; i <= KeyCode.Alpha9; i++)
         {
             SelectionGroups[i] = new SelectionGroup();
         }
-
-        TechnologyTree.Load();
 
         Achievements.Player = this;
 
@@ -21,7 +19,12 @@ public class Player : MonoBehaviour
         JobHandlers[OrderType.Unload] = new JobHandlerUnload();
     }
 
-    protected virtual void Update()
+    private void Start()
+    {
+        TechnologyTree.Load();
+    }
+
+    private void Update()
     {
         RemoveEmptyObjectsFromSelection();
 

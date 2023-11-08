@@ -24,7 +24,6 @@ public class Tools : EditorWindow
 
         Texture2D texture = new Texture2D(camera.targetTexture.width, camera.targetTexture.height, TextureFormat.RGB24, false, false);
 
-
         foreach (GameObject gameObject in GetGameObjects())
         {
             GameObject instance = Instantiate(gameObject, placeholder);
@@ -112,9 +111,17 @@ public class Tools : EditorWindow
         {
             if (gameObject.TryGetComponent(out MyGameObject myGameObject))
             {
-                if (myGameObject.DestroyEffect == null)
+                bool isDisaster = myGameObject.TryGetComponent(out Disaster _);
+                bool isMissile = myGameObject.TryGetComponent(out Missile _);
+
+                if (isDisaster == false && isMissile == false && myGameObject.DestroyEffect == null)
                 {
                     Debug.Log(string.Format("Resource {0} has no destroy effect.", gameObject.name));
+                }
+
+                if ((isDisaster || isMissile) && myGameObject.DestroyEffect != null)
+                {
+                    Debug.Log(string.Format("Resource {0} has destroy effect.", gameObject.name));
                 }
 
                 if (myGameObject.MapLayers.Count <= 0)
@@ -186,5 +193,4 @@ public class Tools : EditorWindow
             }
         }
     }
-
 }

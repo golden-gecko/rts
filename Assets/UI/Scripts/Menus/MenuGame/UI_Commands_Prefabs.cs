@@ -51,7 +51,7 @@ public class UI_Commands_Prefabs : UI_Element
     {
         prefabs.Clear();
 
-        foreach (GameObject gameObject in Config.Instance.Structures)
+        foreach (GameObject gameObject in Game.Instance.Config.Structures)
         {
             TemplateContainer buttonContainer = templateButton.Instantiate();
             Button button = buttonContainer.Q<Button>();
@@ -65,7 +65,7 @@ public class UI_Commands_Prefabs : UI_Element
             prefabsButtons[gameObject.name] = button;
         }
 
-        foreach (GameObject gameObject in Config.Instance.Units)
+        foreach (GameObject gameObject in Game.Instance.Config.Units)
         {
             TemplateContainer buttonContainer = templateButton.Instantiate();
             Button button = buttonContainer.Q<Button>();

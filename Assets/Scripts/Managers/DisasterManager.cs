@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class DisasterManager : MonoBehaviour
 {
-    private void Awake()
+    private void Start()
     {
         CreateTimers();
     }
@@ -37,7 +37,7 @@ public class DisasterManager : MonoBehaviour
 
     private void CreateTimers()
     {
-        foreach (Disaster disaster in Config.Instance.Disasters.Select(x => x.GetComponent<Disaster>()))
+        foreach (Disaster disaster in Game.Instance.Config.Disasters.Select(x => x.GetComponent<Disaster>()))
         {
             DisasterTimer[disaster] = new Timer(Random.Range(disaster.FrequencyInSecondsMin, disaster.FrequencyInSecondsMax));
         }
