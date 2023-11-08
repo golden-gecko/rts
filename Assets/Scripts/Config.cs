@@ -71,6 +71,9 @@ public class Config : Singleton<Config>
     public List<GameObject> Disasters { get; private set; } = new List<GameObject>();
 
     [field: SerializeField]
+    public List<GameObject> Missiles { get; private set; } = new List<GameObject>();
+
+    [field: SerializeField]
     public List<GameObject> Plants { get; private set; } = new List<GameObject>();
 
     [field: SerializeField]
