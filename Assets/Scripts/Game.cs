@@ -1,3 +1,6 @@
+using System.Linq;
+using UnityEngine;
+
 public class Game : Singleton<Game>
 {
     protected override void Awake()
@@ -10,6 +13,20 @@ public class Game : Singleton<Game>
         DisasterManager = GetComponent<DisasterManager>();
         RecipeManager = GetComponent<RecipeManager>();
         SkillManager = GetComponent<SkillManager>();
+    }
+
+    public MyGameObject GetStructure(string name)
+    {
+        GameObject gameObject = Config.Structures.Where(x => x.name == name).FirstOrDefault();
+
+        return gameObject ? gameObject.GetComponent<MyGameObject>() : null;
+    }
+
+    public MyGameObject GetUnit(string name)
+    {
+        GameObject gameObject = Config.Units.Where(x => x.name == name).FirstOrDefault();
+
+        return gameObject ? gameObject.GetComponent<MyGameObject>() : null;
     }
 
     public Config Config { get; private set; }
