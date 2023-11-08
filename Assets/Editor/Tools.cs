@@ -16,18 +16,15 @@ public class Tools : EditorWindow
         EditorSceneManager.SaveCurrentModifiedScenesIfUserWantsTo();
         EditorSceneManager.OpenScene(Path.Join("Assets", "Scenes", "Editor.unity"));
 
-        int size = 1024;
-        RenderTexture renderTexture = new RenderTexture(size, size, 24);
-
         Transform setup = GameObject.Find("Setup").transform;
         Transform editor = setup.Find("Editor").transform;
         Transform placeholder = editor.Find("Placeholder").transform;
         Transform cameraTransform = editor.Find("Camera").transform;
 
         Camera camera = cameraTransform.GetComponent<Camera>();
-        camera.targetTexture = renderTexture;
 
-        Texture2D texture = new Texture2D(size, size, TextureFormat.RGB24, false);
+        Texture2D texture = new Texture2D(camera.targetTexture.width, camera.targetTexture.height, TextureFormat.RGB24, false, false);
+
 
         foreach (GameObject gameObject in GetGameObjects())
         {
@@ -35,8 +32,8 @@ public class Tools : EditorWindow
 
             camera.Render();
 
-            RenderTexture.active = renderTexture;
-            texture.ReadPixels(new Rect(0, 0, size, size), 0, 0);
+            RenderTexture.active = camera.targetTexture;
+            texture.ReadPixels(new Rect(0, 0, camera.targetTexture.width, camera.targetTexture.height), 0, 0);
 
             byte[] bytes = texture.EncodeToPNG();
             string filename = GetPortraitPath(gameObject.name);
@@ -46,10 +43,6 @@ public class Tools : EditorWindow
 
             DestroyImmediate(instance);
         }
-
-        camera.targetTexture = null;
-        RenderTexture.active = null;
-        DestroyImmediate(renderTexture);
     }
 
     [MenuItem("Tools/Validate")]
@@ -60,7 +53,7 @@ public class Tools : EditorWindow
         IEnumerable<GameObject> gameObjects = GetGameObjects();
 
         ValidateNames(gameObjects);
-        ValidateSkills(gameObjects);
+        ValidateProperties(gameObjects);
         ValidateStorage(gameObjects);
         ValidatePhysics(gameObjects);
     }
@@ -114,12 +107,22 @@ public class Tools : EditorWindow
         }
     }
 
-    private static void ValidateSkills(IEnumerable<GameObject> gameObjects)
+    private static void ValidateProperties(IEnumerable<GameObject> gameObjects)
     {
         foreach (GameObject gameObject in gameObjects)
         {
             if (gameObject.TryGetComponent(out MyGameObject myGameObject))
             {
+                if (myGameObject.DestroyEffect == null)
+                {
+                    Debug.Log(string.Format("Resource {0} has no destroy effect.", gameObject.name));
+                }
+
+                if (myGameObject.MapLayers.Count <= 0)
+                {
+                    Debug.Log(string.Format("Resource {0} has no map layers.", gameObject.name));
+                }
+
                 foreach (string skill in myGameObject.Skills.Keys)
                 {
                     if (skill.Length <= 0)

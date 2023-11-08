@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using System.IO;
 using UnityEngine;
 
 [DisallowMultipleComponent, RequireComponent(typeof(Storage))]
@@ -12,9 +11,9 @@ public class Assembler : Part
         Parent.Orders.AllowOrder(OrderType.Assemble);
         Parent.Orders.AllowOrder(OrderType.Rally);
 
-        foreach (GameObject prefab in ConfigPrefabs.Instance.Units)
+        foreach (string prefab in Prefabs)
         {
-            Parent.Orders.AllowPrefab(prefab.name);
+            Parent.Orders.AllowPrefab(prefab);
         }
 
         Parent.OrderHandlers[OrderType.Assemble] = new OrderHandlerAssemble();
@@ -27,6 +26,9 @@ public class Assembler : Part
     {
         return string.Format("Assembler - {0}, Resource Usage: {1}", base.GetInfo(), ResourceUsage);
     }
+
+    [field: SerializeField]
+    public List<string> Blueprints { get; private set; } = new List<string>();
 
     [field: SerializeField]
     public List<string> Prefabs { get; private set; } = new List<string>();

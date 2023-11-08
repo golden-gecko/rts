@@ -50,7 +50,7 @@ public class UI_Commands_Skills : UI_Element
     {
         skills.Clear();
 
-        foreach (string i in SkillManager.Instance.Skills.Keys)
+        foreach (string i in Game.Instance.SkillManager.Skills.Keys)
         {
             TemplateContainer buttonContainer = templateButton.Instantiate();
             Button button = buttonContainer.Q<Button>();

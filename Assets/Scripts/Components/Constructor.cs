@@ -1,7 +1,4 @@
 using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using UnityEditor.Rendering.PostProcessing;
 using UnityEngine;
 
 [DisallowMultipleComponent, RequireComponent(typeof(Storage))]
@@ -13,9 +10,9 @@ public class Constructor : Part
 
         Parent.Orders.AllowOrder(OrderType.Construct);
 
-        foreach (GameObject prefab in ConfigPrefabs.Instance.Structures)
+        foreach (string prefab in Prefabs)
         {
-            Parent.Orders.AllowPrefab(prefab.name);
+            Parent.Orders.AllowPrefab(prefab);
         }
 
         Parent.OrderHandlers[OrderType.Construct] = new OrderHandlerConstruct();

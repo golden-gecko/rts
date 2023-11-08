@@ -2,12 +2,10 @@ using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
 
-public class BlueprintManager : Singleton<BlueprintManager>
+public class BlueprintManager : MonoBehaviour
 {
-    protected override void Awake()
+    private void Awake()
     {
-        base.Awake();
-
         LoadBlueprints();
     }
 
@@ -24,6 +22,16 @@ public class BlueprintManager : Singleton<BlueprintManager>
     public void Save(Blueprint blueprint)
     {
         Blueprints[blueprint.Name] = blueprint;
+    }
+
+    public void Delete(string name)
+    {
+        if (Blueprints.TryGetValue(name, out Blueprint blueprint))
+        {
+            blueprint.Delete();
+
+            Blueprints.Remove(name);
+        }
     }
 
     private void LoadBlueprints()

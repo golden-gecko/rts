@@ -6,8 +6,8 @@ public class TechnologyTree
 {
     public void Load()
     {
-        Load(ConfigPrefabs.Instance.Structures);
-        Load(ConfigPrefabs.Instance.Units);
+        Load(Config.Instance.Structures);
+        Load(Config.Instance.Units);
 
         // Starting technologies.
         Technologies["Colonization"] = new Technology("Colonization");

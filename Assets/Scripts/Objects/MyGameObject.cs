@@ -717,20 +717,20 @@ public class MyGameObject : MonoBehaviour
 
         Indicators.transform.localPosition = new Vector3(0.0f, 0.25f, 0.0f);
 
-        Base = Instantiate(ConfigPrefabs.Instance.Base, transform, false);
+        Base = Instantiate(Config.Instance.Base, transform, false);
         Base.transform.localScale = new Vector3(size.x, 0.5f, size.z);
     }
 
     private void SetupIndicators()
     {
-        Indicators = Instantiate(ConfigPrefabs.Instance.Indicators, transform, false).GetComponent<Indicators>();
+        Indicators = Instantiate(Config.Instance.Indicators, transform, false).GetComponent<Indicators>();
     }
 
     private void CreateSkills()
     {
         foreach (string skillName in SkillsNames)
         {
-            Skills[skillName] = SkillManager.Instance.Get(skillName).Clone() as Skill;
+            Skills[skillName] = Game.Instance.SkillManager.Get(skillName).Clone() as Skill;
             Skills[skillName].Start(this);
         }
     }

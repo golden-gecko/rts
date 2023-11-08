@@ -1,11 +1,10 @@
 using System.Collections.Generic;
+using UnityEngine;
 
-public class SkillManager : Singleton<SkillManager>
+public class SkillManager : MonoBehaviour
 {
-    protected override void Awake()
+    private void Awake()
     {
-        base.Awake();
-
         CreateSkills();
     }
 

@@ -50,7 +50,7 @@ public class UI_Commands_Recipes : UI_Element
     {
         recipes.Clear();
 
-        foreach (string i in RecipeManager.Instance.Recipes.Recipes.Keys)
+        foreach (string i in Game.Instance.RecipeManager.Recipes.Recipes.Keys)
         {
             TemplateContainer buttonContainer = templateButton.Instantiate();
             Button button = buttonContainer.Q<Button>();

@@ -45,9 +45,9 @@ public class MenuEditor : UI_Element
         ButtonClose = Root.Q<Button>("Close");
         ButtonClose.RegisterCallback<ClickEvent>(x => OnButtonClose());
 
-        CreatePartList(PartsChassis, ConfigPrefabs.Instance.Chassis);
-        CreatePartList(PartsDrive, ConfigPrefabs.Instance.Drives);
-        CreatePartList(PartsGun, ConfigPrefabs.Instance.Guns);
+        CreatePartList(PartsChassis, Config.Instance.Chassis);
+        CreatePartList(PartsDrive, Config.Instance.Drives);
+        CreatePartList(PartsGun, Config.Instance.Guns);
     }
 
     private void Start()
@@ -75,7 +75,7 @@ public class MenuEditor : UI_Element
             return;
         }
 
-        Blueprint newBlueprint = BlueprintManager.Instance.Get(name);
+        Blueprint newBlueprint = Game.Instance.BlueprintManager.Get(name);
 
         if (newBlueprint == null)
         {
@@ -105,7 +105,7 @@ public class MenuEditor : UI_Element
         Blueprints.choices.Sort();
         Blueprints.index = Blueprints.choices.Count - 1;
 
-        File.Delete(Path.Join(Config.Blueprints.Directory, string.Format("{0}.json", name)));
+        Game.Instance.BlueprintManager.Delete(name);
     }
 
     private void OnButtonSave()
@@ -129,9 +129,9 @@ public class MenuEditor : UI_Element
 
         blueprint.Name = name;
 
-        BlueprintManager.Instance.Save(blueprint.Clone() as Blueprint);
+        Game.Instance.BlueprintManager.Save(blueprint.Clone() as Blueprint);
 
-        SaveBlueprintToFile(blueprint);
+        blueprint.Save();
     }
 
     private void OnSelectionChanged(PartType partType, IEnumerable<object> objects)
@@ -312,17 +312,7 @@ public class MenuEditor : UI_Element
 
     private void LoadBlueprints()
     {
-        Blueprints.choices = BlueprintManager.Instance.Blueprints.Keys.ToList();
-    }
-
-    private void SaveBlueprintToFile(Blueprint blueprint)
-    {
-        string directory = Config.Blueprints.Directory;
-        string path = Path.Join(directory, string.Format("{0}.json", blueprint.Name));
-        string json = JsonUtility.ToJson(blueprint, true);
-
-        Directory.CreateDirectory(directory);
-        File.WriteAllText(path, json);
+        Blueprints.choices = Game.Instance.BlueprintManager.Blueprints.Keys.ToList();
     }
 
     private GameObject LoadPart(PartType partType, string name)
@@ -330,13 +320,13 @@ public class MenuEditor : UI_Element
         switch (partType)
         {
             case PartType.Chassis:
-                return ConfigPrefabs.Instance.Chassis.Find(x => x.name == name);
+                return Config.Instance.Chassis.Find(x => x.name == name);
 
             case PartType.Drive:
-                return ConfigPrefabs.Instance.Drives.Find(x => x.name == name);
+                return Config.Instance.Drives.Find(x => x.name == name);
 
             case PartType.Gun:
-                return ConfigPrefabs.Instance.Guns.Find(x => x.name == name);
+                return Config.Instance.Guns.Find(x => x.name == name);
         }
 
         return null;

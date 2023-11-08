@@ -15,7 +15,7 @@ public class Producer : Part
 
         foreach (string recipe in Recipes)
         {
-            Parent.Orders.AllowRecipe(RecipeManager.Instance.Get(recipe));
+            Parent.Orders.AllowRecipe(Game.Instance.RecipeManager.Get(recipe));
         }
     }
 
