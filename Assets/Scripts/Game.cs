@@ -15,23 +15,35 @@ public class Game : Singleton<Game>
         SkillManager = GetComponent<SkillManager>();
     }
 
-    public MyGameObject GetGameObject(string name)
+    public void GetGameObject(string name, out MyGameObject myGameObject, out Blueprint blueprint)
     {
         GameObject gameObject = Config.Structures.Where(x => x.name == name).FirstOrDefault();
 
-        if (gameObject && gameObject.TryGetComponent(out MyGameObject myGameObject))
+        if (gameObject && gameObject.TryGetComponent(out myGameObject))
         {
-            return myGameObject;
+            blueprint = null;
+
+            return;
         }
 
         gameObject = Config.Units.Where(x => x.name == name).FirstOrDefault();
 
         if (gameObject && gameObject.TryGetComponent(out myGameObject))
         {
-            return myGameObject;
+            blueprint = null;
+
+            return;
         }
 
-        return null;
+        if (BlueprintManager.Blueprints.TryGetValue(name, out blueprint))
+        {
+            myGameObject = null;
+
+            return;
+        }
+
+        myGameObject = null;
+        blueprint = null;
     }
 
     public Config Config { get; private set; }

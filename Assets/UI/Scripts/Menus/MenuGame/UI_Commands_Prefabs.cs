@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.UIElements;
 
@@ -47,36 +48,55 @@ public class UI_Commands_Prefabs : UI_Element
         }
     }
 
+    public void Refresh()
+    {
+        CreatePrefabs();
+    }
+
     private void CreatePrefabs()
     {
         prefabs.Clear();
 
-        foreach (GameObject gameObject in Game.Instance.Config.Structures)
+        foreach (GameObject structure in Game.Instance.Config.Structures)
         {
             TemplateContainer buttonContainer = templateButton.Instantiate();
             Button button = buttonContainer.Q<Button>();
 
-            button.RegisterCallback<ClickEvent>(x => OnConstruct(gameObject.name));
+            button.RegisterCallback<ClickEvent>(x => OnConstruct(structure.name));
             button.style.display = DisplayStyle.None;
-            button.text = Utils.FormatName(gameObject.name);
-            button.userData = gameObject.name;
+            button.text = Utils.FormatName(structure.name);
+            button.userData = structure.name;
 
             prefabs.Add(buttonContainer);
-            prefabsButtons[gameObject.name] = button;
+            prefabsButtons[structure.name] = button;
         }
 
-        foreach (GameObject gameObject in Game.Instance.Config.Units)
+        foreach (GameObject unit in Game.Instance.Config.Units)
         {
             TemplateContainer buttonContainer = templateButton.Instantiate();
             Button button = buttonContainer.Q<Button>();
 
-            button.RegisterCallback<ClickEvent>(x => OnAssemble(gameObject.name));
+            button.RegisterCallback<ClickEvent>(x => OnAssemble(unit.name));
             button.style.display = DisplayStyle.None;
-            button.text = Utils.FormatName(Path.GetFileName(gameObject.name));
-            button.userData = gameObject.name;
+            button.text = Utils.FormatName(Path.GetFileName(unit.name));
+            button.userData = unit.name;
 
             prefabs.Add(buttonContainer);
-            prefabsButtons[gameObject.name] = button;
+            prefabsButtons[unit.name] = button;
+        }
+
+        foreach (string blueprint in Game.Instance.BlueprintManager.Blueprints.Keys)
+        {
+            TemplateContainer buttonContainer = templateButton.Instantiate();
+            Button button = buttonContainer.Q<Button>();
+
+            button.RegisterCallback<ClickEvent>(x => OnAssemble(blueprint));
+            button.style.display = DisplayStyle.None;
+            button.text = string.Format("{0} (BP)", Utils.FormatName(Path.GetFileName(blueprint)));
+            button.userData = blueprint;
+
+            prefabs.Add(buttonContainer);
+            prefabsButtons[blueprint] = button;
         }
     }
 
@@ -118,7 +138,7 @@ public class UI_Commands_Prefabs : UI_Element
         {
             if (prefabsButtons.TryGetValue(i, out Button button))
             {
-                bool enabled = technologyTree.IsDiscovered(Path.GetFileName(i));
+                bool enabled = technologyTree.IsDiscovered(i) || Game.Instance.BlueprintManager.Blueprints.Keys.Contains(i);
 
                 button.style.display = DisplayStyle.Flex;
                 button.SetEnabled(enabled);

@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7976539040526297290}
   - component: {fileID: 6945690893137846410}
+  - component: {fileID: -2503661311372365042}
   m_Layer: 20
   m_Name: Mini
   m_TagString: Untagged
@@ -54,6 +55,46 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1.4111015, y: 1.1421183, z: 2.94455}
   m_Center: {x: 0, y: 0.7211562, z: 0}
+--- !u!114 &-2503661311372365042
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7348057453300986480}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 28d73f8fbe8af464f8ccdeabaf462443, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  <Experience>k__BackingField:
+    <Current>k__BackingField: 0
+    <Max>k__BackingField: 1000
+  <Player>k__BackingField: {fileID: 0}
+  <Enabled>k__BackingField: 1
+  <Gatherable>k__BackingField: 0
+  <Selectable>k__BackingField: 1
+  <Health>k__BackingField:
+    <Current>k__BackingField: 100
+    <Max>k__BackingField: 100
+  <EnableTime>k__BackingField: 2
+  <WaitTime>k__BackingField: 2
+  <DestroyEffect>k__BackingField: {fileID: 0}
+  <Altitude>k__BackingField: -1
+  <Depth>k__BackingField: -1
+  <MapLayers>k__BackingField: 
+  <ShowIndicators>k__BackingField: 1
+  <ExpirationTimer>k__BackingField:
+    <Current>k__BackingField: -1
+    <Max>k__BackingField: -1
+  <SkillsNames>k__BackingField: []
+  <State>k__BackingField: 1
+  <CreateBase>k__BackingField: 0
+  <SnapToGrid>k__BackingField: 0
+  <VisibilityState>k__BackingField: 2
+  <RotateTowardsTarget>k__BackingField: 1
+  <ShowEntrance>k__BackingField: 0
+  <ShowExit>k__BackingField: 0
 --- !u!1 &8048346109197778976
 GameObject:
   m_ObjectHideFlags: 0

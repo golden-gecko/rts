@@ -16,6 +16,11 @@ public class Assembler : Part
             Parent.Orders.AllowPrefab(prefab);
         }
 
+        foreach (string prefab in Game.Instance.BlueprintManager.Blueprints.Keys)
+        {
+            Parent.Orders.AllowPrefab(prefab);
+        }
+
         Parent.OrderHandlers[OrderType.Assemble] = new OrderHandlerAssemble();
         Parent.OrderHandlers[OrderType.Rally] = new OrderHandlerRally();
 

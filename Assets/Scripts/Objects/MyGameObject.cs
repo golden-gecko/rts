@@ -952,7 +952,7 @@ public class MyGameObject : MonoBehaviour
 
     private Vector3 PreviousPosition { get; set; }
 
-    public HashSet<MyGameObject> Workers { get; } = new HashSet<MyGameObject>();
+    public HashSet<MyGameObject> Workers { get; } = new HashSet<MyGameObject>(); // TODO: Implement workers mechanic.
 
-    public HashSet<MyGameObject> Workplaces { get; } = new HashSet<MyGameObject>();
+    public HashSet<MyGameObject> Workplaces { get; } = new HashSet<MyGameObject>(); // TODO: Implement workers mechanic.
 }

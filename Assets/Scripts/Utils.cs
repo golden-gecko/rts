@@ -52,7 +52,19 @@ public class Utils
     #region Instantiate
     public static MyGameObject CreateGameObject(string prefab, Vector3 position, Quaternion rotation, Player player, MyGameObjectState state)
     {
-        return CreateGameObject(Game.Instance.GetGameObject(prefab), position, rotation, player, state);
+        Game.Instance.GetGameObject(prefab, out MyGameObject myGameObject, out Blueprint blueprint);
+
+        if (myGameObject != null)
+        {
+            return CreateGameObject(myGameObject, position, rotation, player, state);
+        }
+
+        if (blueprint != null)
+        {
+            return CreateGameObject(blueprint, position, rotation, player, state);
+        }
+
+        return null;
     }
 
     public static MyGameObject CreateGameObject(MyGameObject resource, Vector3 position, Quaternion rotation, Player player, MyGameObjectState state)
@@ -81,6 +93,60 @@ public class Utils
         }
 
         return myGameObject;
+    }
+
+    public static MyGameObject CreateGameObject(Blueprint blueprint, Vector3 position, Quaternion rotation, Player player, MyGameObjectState state)
+    {
+        MyGameObject myGameObject = null;
+
+        foreach (BlueprintComponent part in blueprint.Parts)
+        {
+            GameObject partResource = LoadPart(part.PartType, part.Name);
+            GameObject partInstance = Object.Instantiate(partResource, position, rotation);
+
+            if (partInstance.TryGetComponent(out myGameObject))
+            {
+                myGameObject.SetPlayer(player);
+                myGameObject.SetState(state);
+            }
+        }
+
+        if (myGameObject != null && state == MyGameObjectState.Cursor)
+        {
+            foreach (Collider collider in myGameObject.GetComponents<Collider>())
+            {
+                collider.enabled = false;
+            }
+
+            foreach (Part myComponent in myGameObject.GetComponents<Part>())
+            {
+                myComponent.enabled = false;
+            }
+
+            foreach (MyGameObject i in myGameObject.GetComponents<MyGameObject>())
+            {
+                i.enabled = false;
+            }
+        }
+
+        return myGameObject;
+    }
+
+    public static GameObject LoadPart(PartType partType, string name)
+    {
+        switch (partType)
+        {
+            case PartType.Chassis:
+                return Game.Instance.Config.Chassis.Find(x => x.name == name);
+
+            case PartType.Drive:
+                return Game.Instance.Config.Drives.Find(x => x.name == name);
+
+            case PartType.Gun:
+                return Game.Instance.Config.Guns.Find(x => x.name == name);
+        }
+
+        return null;
     }
     #endregion
 

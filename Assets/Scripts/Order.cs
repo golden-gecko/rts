@@ -301,7 +301,10 @@ public class Order
             case OrderType.Assemble:
                 if (TargetGameObject != null)
                 {
-                    TargetGameObject.Destroy(0);
+                    TargetGameObject.OnDestroyHandler();
+
+                    // TODO: Which one is correct?
+                    // TargetGameObject.Destroy(0);
                 }
                 break;
         }

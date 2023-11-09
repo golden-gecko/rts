@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.UIElements;
@@ -68,6 +67,26 @@ public class MenuEditor : UI_Element
         }
     }
 
+    private void Refresh()
+    {
+        UI.Instance.GetComponentInChildren<UI_Commands_Prefabs>().Refresh(); // TODO: Refactor.
+
+        foreach (Assembler assembler in FindObjectsByType<Assembler>(FindObjectsInactive.Include, FindObjectsSortMode.None)) // TODO: Refactor.
+        {
+            assembler.Parent.Orders.PrefabWhitelist.Clear();
+
+            foreach (string prefab in assembler.Prefabs)
+            {
+                assembler.Parent.Orders.AllowPrefab(prefab);
+            }
+
+            foreach (string prefab in Game.Instance.BlueprintManager.Blueprints.Keys)
+            {
+                assembler.Parent.Orders.AllowPrefab(prefab);
+            }
+        }
+    }
+
     private void OnBlueprintsChange(string name)
     {
         if (name.Length <= 0)
@@ -106,6 +125,8 @@ public class MenuEditor : UI_Element
         Blueprints.index = Blueprints.choices.Count - 1;
 
         Game.Instance.BlueprintManager.Delete(name);
+
+        Refresh();
     }
 
     private void OnButtonSave()
@@ -132,6 +153,8 @@ public class MenuEditor : UI_Element
         Game.Instance.BlueprintManager.Save(blueprint.Clone() as Blueprint);
 
         blueprint.Save();
+
+        Refresh();
     }
 
     private void OnSelectionChanged(PartType partType, IEnumerable<object> objects)
@@ -242,10 +265,15 @@ public class MenuEditor : UI_Element
         {
             if (i.Part == null)
             {
-                i.Part = LoadPart(i.PartType, i.Name);
+                i.Part = Utils.LoadPart(i.PartType, i.Name);
             }
 
             i.Instance = Instantiate(i.Part, placeholder);
+
+            if (i.Instance.TryGetComponent(out MyGameObject myGameObject))
+            {
+                myGameObject.SetState(MyGameObjectState.Preview);
+            }
         }
 
         PositionChassis(placeholder);
@@ -313,23 +341,6 @@ public class MenuEditor : UI_Element
     private void LoadBlueprints()
     {
         Blueprints.choices = Game.Instance.BlueprintManager.Blueprints.Keys.ToList();
-    }
-
-    private GameObject LoadPart(PartType partType, string name)
-    {
-        switch (partType)
-        {
-            case PartType.Chassis:
-                return Game.Instance.Config.Chassis.Find(x => x.name == name);
-
-            case PartType.Drive:
-                return Game.Instance.Config.Drives.Find(x => x.name == name);
-
-            case PartType.Gun:
-                return Game.Instance.Config.Guns.Find(x => x.name == name);
-        }
-
-        return null;
     }
 
     [SerializeField]
