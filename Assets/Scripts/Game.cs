@@ -15,18 +15,23 @@ public class Game : Singleton<Game>
         SkillManager = GetComponent<SkillManager>();
     }
 
-    public MyGameObject GetStructure(string name)
+    public MyGameObject GetGameObject(string name)
     {
         GameObject gameObject = Config.Structures.Where(x => x.name == name).FirstOrDefault();
 
-        return gameObject ? gameObject.GetComponent<MyGameObject>() : null;
-    }
+        if (gameObject && gameObject.TryGetComponent(out MyGameObject myGameObject))
+        {
+            return myGameObject;
+        }
 
-    public MyGameObject GetUnit(string name)
-    {
-        GameObject gameObject = Config.Units.Where(x => x.name == name).FirstOrDefault();
+        gameObject = Config.Units.Where(x => x.name == name).FirstOrDefault();
 
-        return gameObject ? gameObject.GetComponent<MyGameObject>() : null;
+        if (gameObject && gameObject.TryGetComponent(out myGameObject))
+        {
+            return myGameObject;
+        }
+
+        return null;
     }
 
     public Config Config { get; private set; }

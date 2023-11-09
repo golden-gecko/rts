@@ -551,7 +551,7 @@ public class MyGameObject : MonoBehaviour
 
     private void UpdateSelection()
     {
-        if (Player != null)
+        if (Player != null && Indicators)
         {
             Indicators.OnPlayerChange(Player);
         }

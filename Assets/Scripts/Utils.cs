@@ -52,7 +52,7 @@ public class Utils
     #region Instantiate
     public static MyGameObject CreateGameObject(string prefab, Vector3 position, Quaternion rotation, Player player, MyGameObjectState state)
     {
-        return CreateGameObject(Game.Instance.GetUnit(prefab), position, rotation, player, state);
+        return CreateGameObject(Game.Instance.GetGameObject(prefab), position, rotation, player, state);
     }
 
     public static MyGameObject CreateGameObject(MyGameObject resource, Vector3 position, Quaternion rotation, Player player, MyGameObjectState state)
