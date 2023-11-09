@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4036648820349360246}
   - component: {fileID: 2675724827725420312}
+  - component: {fileID: -6138390465254567693}
   m_Layer: 20
   m_Name: Wheel
   m_TagString: Untagged
@@ -55,6 +56,18 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 2.4219413, y: 0.8217981, z: 2.8312616}
   m_Center: {x: -0.001034975, y: -0.0010975599, z: 0.00072169304}
+--- !u!114 &-6138390465254567693
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3697136554101965516}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f88ea3708e1fcf146b11f633a47cfeec, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &4486533599880533956
 GameObject:
   m_ObjectHideFlags: 0

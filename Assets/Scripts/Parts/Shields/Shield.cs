@@ -72,7 +72,7 @@ public class Shield : Part
     public GameObject Mesh { get; private set; }
 
     [field: SerializeField]
-    public Property Range { get; private set; } = new Property();
+    public Property Range { get; private set; } = new Property(1.0f);
 
     [field: SerializeField]
     public Progress Capacity { get; private set; } = new Progress(100.0f, 100.0f);

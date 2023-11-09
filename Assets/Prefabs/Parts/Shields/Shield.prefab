@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4298674376635483952}
   - component: {fileID: 3652317286570132920}
+  - component: {fileID: 8385070670217265588}
   m_Layer: 0
   m_Name: Shield
   m_TagString: Untagged
@@ -54,6 +55,30 @@ SphereCollider:
   serializedVersion: 3
   m_Radius: 0.5
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &8385070670217265588
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5771986485392630128}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5c0cca40e845ed043ae3103480c550a9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  <Mass>k__BackingField: 10
+  <Mesh>k__BackingField: {fileID: 0}
+  <Range>k__BackingField:
+    <Value>k__BackingField: 1
+  <Capacity>k__BackingField:
+    <Current>k__BackingField: 100
+    <Max>k__BackingField: 100
+  <ChargeRate>k__BackingField: 0.1
+  <ResetTime>k__BackingField:
+    <Current>k__BackingField: 3
+    <Max>k__BackingField: 3
+  <ProtectionType>k__BackingField: []
 --- !u!1 &6776726568047145866
 GameObject:
   m_ObjectHideFlags: 0

@@ -97,39 +97,40 @@ public class Utils
 
     public static MyGameObject CreateGameObject(Blueprint blueprint, Vector3 position, Quaternion rotation, Player player, MyGameObjectState state)
     {
-        MyGameObject myGameObject = null;
+        MyGameObject main = null;
 
         foreach (BlueprintComponent part in blueprint.Parts)
         {
             GameObject partResource = LoadPart(part.PartType, part.Name);
             GameObject partInstance = Object.Instantiate(partResource, position, rotation);
 
-            if (partInstance.TryGetComponent(out myGameObject))
+            if (partInstance.TryGetComponent(out MyGameObject myGameObject))
             {
-                myGameObject.SetPlayer(player);
-                myGameObject.SetState(state);
+                main = myGameObject;
+                main.SetPlayer(player);
+                main.SetState(state);
             }
         }
 
-        if (myGameObject != null && state == MyGameObjectState.Cursor)
+        if (main != null && state == MyGameObjectState.Cursor)
         {
-            foreach (Collider collider in myGameObject.GetComponents<Collider>())
+            foreach (Collider collider in main.GetComponents<Collider>())
             {
                 collider.enabled = false;
             }
 
-            foreach (Part myComponent in myGameObject.GetComponents<Part>())
+            foreach (Part myComponent in main.GetComponents<Part>())
             {
                 myComponent.enabled = false;
             }
 
-            foreach (MyGameObject i in myGameObject.GetComponents<MyGameObject>())
+            foreach (MyGameObject i in main.GetComponents<MyGameObject>())
             {
                 i.enabled = false;
             }
         }
 
-        return myGameObject;
+        return main;
     }
 
     public static GameObject LoadPart(PartType partType, string name)

@@ -865,12 +865,9 @@ MonoBehaviour:
   - {fileID: 6014288322611724604, guid: 3a46ffd9342c7f149902e9c62ae76283, type: 3}
   - {fileID: 3697136554101965516, guid: ced1ed7904c29e5459c6256c871f3fa6, type: 3}
   <Guns>k__BackingField:
-  - {fileID: 827890342975937740, guid: 37a01d71e9b387b448da6c80e7c90c7a, type: 3}
-  - {fileID: 827890342975937740, guid: c16f44da35c43c045b367eddbcd1e59a, type: 3}
-  - {fileID: 6014288322611724604, guid: c0c27b841091e2849b51b49ec96c0c73, type: 3}
   - {fileID: 6672543193626275511, guid: c0967d702df221a439ac077aa6a6ec59, type: 3}
-  - {fileID: 4170081986206172789, guid: 95ad2d330b401f041b236d67ed031c5c, type: 3}
   - {fileID: 4916527176359590894, guid: c559902122f92ab46a9fafb85156b9cb, type: 3}
+  - {fileID: 6014288322611724604, guid: c0c27b841091e2849b51b49ec96c0c73, type: 3}
   <Shields>k__BackingField:
   - {fileID: 5771986485392630128, guid: 48ec2c1cdd5391c4ea06176574fddbc9, type: 3}
 --- !u!114 &873085916221255505

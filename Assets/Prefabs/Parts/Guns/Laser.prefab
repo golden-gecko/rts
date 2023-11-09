@@ -93,8 +93,9 @@ GameObject:
   m_Component:
   - component: {fileID: 6358198605777279878}
   - component: {fileID: 2739731983903268192}
+  - component: {fileID: 7626077859535522486}
   m_Layer: 20
-  m_Name: Gun_003
+  m_Name: Laser
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -137,6 +138,34 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.88780516, y: 0.5269147, z: 2.0086164}
   m_Center: {x: 0.00000059604645, y: -0.029538402, z: 0.61829084}
+--- !u!114 &7626077859535522486
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6014288322611724604}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5a3551c68760c3a40898ab67741b2904, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  <Mass>k__BackingField: 10
+  <MissilePrefab>k__BackingField: {fileID: 4056876892418310127, guid: 2cefb862ac51a544a9b2146c2e0ba611, type: 3}
+  <Damage>k__BackingField:
+    <Value>k__BackingField: 10
+  <Range>k__BackingField:
+    <Value>k__BackingField: 10
+  <Reload>k__BackingField:
+    <Current>k__BackingField: 10
+    <Max>k__BackingField: 10
+  <Ammunition>k__BackingField:
+    <Current>k__BackingField: 100
+    <Max>k__BackingField: 100
+  <DamageType>k__BackingField:
+  - <Type>k__BackingField: 1
+    <Ratio>k__BackingField: 1
+  AudioFire: {fileID: 0}
 --- !u!1 &7976834636490177796
 GameObject:
   m_ObjectHideFlags: 0

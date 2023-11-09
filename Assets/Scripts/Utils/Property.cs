@@ -19,7 +19,7 @@ public class Property: ICloneable
     [field: SerializeField]
     public float Value { get; private set; }
 
-    public Dictionary<MyGameObject, float> Factor { get; } = new Dictionary<MyGameObject, float>();
+    public Dictionary<GameObject, float> Factor { get; } = new Dictionary<GameObject, float>();
 
     public float Total { get => Value * (Factor.Count > 0 ? Factor.Max(x => x.Value) : 1.0f); }
 }
