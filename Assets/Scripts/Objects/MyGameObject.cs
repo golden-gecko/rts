@@ -660,14 +660,20 @@ public class MyGameObject : MonoBehaviour
         switch (state)
         {
             case MyGameObjectState.Cursor:
-            case MyGameObjectState.UnderAssembly:
-                Indicators.OnConstruction();
+            case MyGameObjectState.Preview:
+                ShowIndicators = false;
+                ShowEntrance = false;
+                ShowExit = false;
                 break;
 
             case MyGameObjectState.Operational:
                 RemoveConstructionResourceFlags();
 
                 Indicators.OnConstructionEnd();
+                break;
+
+            case MyGameObjectState.UnderAssembly:
+                Indicators.OnConstruction();
                 break;
 
             case MyGameObjectState.UnderConstruction:
@@ -817,25 +823,25 @@ public class MyGameObject : MonoBehaviour
     {
         get
         {
+            Collider[] colliders = Body.GetComponentsInChildren<Collider>();
+
+            if (colliders.Length <= 0)
+            {
+                return Vector3.zero;
+            }
+
+            Vector3 size = Vector3.zero;
+
             Quaternion rotation = Utils.ResetRotation(this);
 
-            Vector3 min = new Vector3(float.MaxValue, float.MaxValue, float.MaxValue);
-            Vector3 max = new Vector3(float.MinValue, float.MinValue, float.MinValue);
-
-            foreach (Collider collider in Body.GetComponentsInChildren<Collider>())
+            foreach (Collider collider in colliders)
             {
-                min.x = Mathf.Min(min.x, collider.bounds.min.x);
-                min.y = Mathf.Min(min.y, collider.bounds.min.y);
-                min.z = Mathf.Min(min.z, collider.bounds.min.z);
-
-                max.x = Mathf.Max(max.x, collider.bounds.max.x);
-                max.y = Mathf.Max(max.y, collider.bounds.max.y);
-                max.z = Mathf.Max(max.z, collider.bounds.max.z);
+                size += collider.bounds.size;
             }
 
             Utils.RestoreRotation(this, rotation);
 
-            return max - min;
+            return size / colliders.Length;
         }
     }
 
@@ -876,7 +882,7 @@ public class MyGameObject : MonoBehaviour
     public bool Selectable { get; private set; } = true;
 
     [field: SerializeField]
-    public Progress Health { get; private set; } = new Progress(100.0f, 100.0f);
+    public Progress Health { get; private set; } = new Progress(100.0f, 100.0f); // TODO: Move to chassis.
 
     [field: SerializeField]
     public float EnableTime { get; private set; } = 2.0f;

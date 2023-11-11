@@ -6,14 +6,22 @@ using System.Reflection;
 using UnityEditor;
 using UnityEditor.SceneManagement;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Tools : EditorWindow
 {
     [MenuItem("Tools/Render")]
     public static void Render()
     {
+        string sceneName = EditorSceneManager.GetActiveScene().name;
+
         EditorSceneManager.SaveCurrentModifiedScenesIfUserWantsTo();
         EditorSceneManager.OpenScene(Path.Join("Assets", "Scenes", "Editor.unity"));
+
+        foreach (string file in Directory.EnumerateFiles(Path.Combine(new string[] { "Assets", "Resources", "Portraits" })))
+        {
+            File.Delete(file);
+        }
 
         Transform setup = GameObject.Find("Setup").transform;
         Transform editor = setup.Find("Editor").transform;
@@ -41,6 +49,8 @@ public class Tools : EditorWindow
 
             DestroyImmediate(instance);
         }
+
+        EditorSceneManager.OpenScene(Path.Join("Assets", "Scenes", string.Format("{0}.unity", sceneName)));
     }
 
     [MenuItem("Tools/Validate")]

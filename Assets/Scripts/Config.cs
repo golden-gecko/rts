@@ -64,6 +64,9 @@ public class Config : MonoBehaviour
     public GameObject Base { get; private set; }
 
     [field: SerializeField]
+    public GameObject BaseGameObject { get; private set; }
+
+    [field: SerializeField]
     public GameObject Indicators { get; private set; }
 
     #region GameObjects

@@ -38,5 +38,8 @@ public class Blueprint : ICloneable
 
 
     public string Name;
+
+    public MyGameObject BaseGameObject;
+
     public List<BlueprintComponent> Parts = new List<BlueprintComponent>();
 }

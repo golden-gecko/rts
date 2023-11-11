@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4036648820349360246}
   - component: {fileID: 6012238081735121923}
-  - component: {fileID: -8988574549346653970}
+  - component: {fileID: -2593494978386240270}
   m_Layer: 20
   m_Name: Small
   m_TagString: Untagged
@@ -55,7 +55,7 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 2.3060522, y: 1.4364077, z: 3.7821326}
   m_Center: {x: 0, y: 0.96316046, z: 0.079346895}
---- !u!114 &-8988574549346653970
+--- !u!114 &-2593494978386240270
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -64,37 +64,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 3697136554101965516}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 28d73f8fbe8af464f8ccdeabaf462443, type: 3}
+  m_Script: {fileID: 11500000, guid: 9457e17311c7b6e49be3978f6559b6fe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <Experience>k__BackingField:
-    <Current>k__BackingField: 0
-    <Max>k__BackingField: 1000
-  <Player>k__BackingField: {fileID: 0}
-  <Enabled>k__BackingField: 1
-  <Gatherable>k__BackingField: 0
-  <Selectable>k__BackingField: 1
   <Health>k__BackingField:
     <Current>k__BackingField: 100
     <Max>k__BackingField: 100
-  <EnableTime>k__BackingField: 2
-  <WaitTime>k__BackingField: 2
-  <DestroyEffect>k__BackingField: {fileID: 100006, guid: bf98fad54e73fb8448b7b1b9ba4fd0b6, type: 3}
-  <Altitude>k__BackingField: -1
-  <Depth>k__BackingField: -1
-  <MapLayers>k__BackingField: 
-  <ShowIndicators>k__BackingField: 1
-  <ExpirationTimer>k__BackingField:
-    <Current>k__BackingField: -1
-    <Max>k__BackingField: -1
-  <SkillsNames>k__BackingField: []
-  <State>k__BackingField: 1
-  <CreateBase>k__BackingField: 0
-  <SnapToGrid>k__BackingField: 0
-  <VisibilityState>k__BackingField: 2
-  <RotateTowardsTarget>k__BackingField: 1
-  <ShowEntrance>k__BackingField: 0
-  <ShowExit>k__BackingField: 0
 --- !u!1 &9126963044014500784
 GameObject:
   m_ObjectHideFlags: 0

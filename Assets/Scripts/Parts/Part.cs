@@ -4,7 +4,7 @@ public class Part : MonoBehaviour
 {
     protected virtual void Awake()
     {
-        Parent = GetComponent<MyGameObject>();
+        Parent = GetComponentInParent<MyGameObject>();
     }
 
     protected virtual void Start()

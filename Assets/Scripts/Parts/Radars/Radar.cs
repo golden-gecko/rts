@@ -89,7 +89,7 @@ public class Radar : Part
     }
 
     [field: SerializeField]
-    public Property Range { get; private set; } = new Property();
+    public Property Range { get; private set; } = new Property(10.0f);
 
     [field: SerializeField]
     public bool Anti { get; private set; } = false;

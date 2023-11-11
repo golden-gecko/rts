@@ -102,7 +102,18 @@ public class Utils
         foreach (BlueprintComponent part in blueprint.Parts)
         {
             GameObject partResource = LoadPart(part.PartType, part.Name);
+
+            if (partResource == null)
+            {
+                continue;
+            }
+
             GameObject partInstance = Object.Instantiate(partResource, position, rotation);
+
+            if (partInstance == null)
+            {
+                continue;
+            }
 
             if (partInstance.TryGetComponent(out MyGameObject myGameObject))
             {

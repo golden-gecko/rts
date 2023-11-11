@@ -4,32 +4,16 @@ using UnityEngine;
 [DisallowMultipleComponent]
 public class Shield : Part
 {
-    protected override void Start()
-    {
-        base.Start();
-
-        if (Mesh != null)
-        {
-            ShieldMesh = Instantiate(Mesh, Parent.Position, Quaternion.identity);
-            ShieldMesh.transform.parent = Parent.transform;
-            ShieldMesh.transform.localScale = new Vector3(Range.Total * 2.0f / Parent.Scale.x, Range.Total * 2.0f / Parent.Scale.y, Range.Total * 2.0f / Parent.Scale.z);
-        }
-    }
-
     protected override void Update()
     {
         base.Update();
 
         if (ResetTime.Update(Time.deltaTime))
         {
-            ShieldMesh.SetActive(true);
-
             Capacity.Add(ChargeRate * Time.deltaTime);
         }
-        else
-        {
-            ShieldMesh.SetActive(false);
-        }
+
+        GetComponent<MeshRenderer>().enabled = Capacity.Current > 0.0f;
     }
 
     public override string GetInfo()
@@ -69,9 +53,6 @@ public class Shield : Part
     }
 
     [field: SerializeField]
-    public GameObject Mesh { get; private set; }
-
-    [field: SerializeField]
     public Property Range { get; private set; } = new Property(1.0f);
 
     [field: SerializeField]
@@ -85,6 +66,4 @@ public class Shield : Part
 
     [field: SerializeField]
     public List<DamageTypeItem> ProtectionType { get; private set; } = new List<DamageTypeItem>();
-
-    private GameObject ShieldMesh { get; set; }
 }

@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.UIElements;
 
@@ -101,10 +102,7 @@ public class MenuEditor : UI_Element
             return;
         }
 
-        foreach (BlueprintComponent i in blueprint.Parts)
-        {
-            Destroy(i.Instance);
-        }
+        DestroyGameObjectFromBlueprint();
 
         blueprint = newBlueprint.Clone() as Blueprint;
 
@@ -256,19 +254,26 @@ public class MenuEditor : UI_Element
         Transform editor = setup.Find("Editor").transform;
         Transform placeholder = editor.Find("Placeholder").transform;
 
-        foreach (BlueprintComponent i in blueprint.Parts)
-        {
-            Destroy(i.Instance);
-        }
+        blueprint.BaseGameObject = CreateBaseGameObject(placeholder);
 
         foreach (BlueprintComponent i in blueprint.Parts)
         {
             if (i.Part == null)
             {
                 i.Part = Utils.LoadPart(i.PartType, i.Name);
+
+                if (i.Part == null)
+                {
+                    continue;
+                }
             }
 
-            i.Instance = Instantiate(i.Part, placeholder);
+            i.Instance = Instantiate(i.Part, blueprint.BaseGameObject.transform);
+
+            if (i.Instance == null)
+            {
+                continue;
+            }
 
             if (i.Instance.TryGetComponent(out MyGameObject myGameObject))
             {
@@ -282,12 +287,28 @@ public class MenuEditor : UI_Element
         SavePosition();
     }
 
+    private void DestroyGameObjectFromBlueprint()
+    {
+        foreach (BlueprintComponent i in blueprint.Parts)
+        {
+            if (i.Instance)
+            {
+                Destroy(i.Instance.gameObject);
+            }
+        }
+
+        if (blueprint.BaseGameObject)
+        {
+            Destroy(blueprint.BaseGameObject.gameObject);
+        }
+    }
+
     private void PositionChassis(Transform parent)
     {
         BlueprintComponent chassis = blueprint.Parts.Find(x => x.PartType == PartType.Chassis);
         BlueprintComponent drive = blueprint.Parts.Find(x => x.PartType == PartType.Drive);
 
-        if (chassis != null && drive != null)
+        if (chassis != null && chassis.Instance != null && drive != null && drive.Instance != null)
         {
             Quaternion rotation = Utils.ResetRotation(parent);
 
@@ -304,7 +325,7 @@ public class MenuEditor : UI_Element
         BlueprintComponent chassis = blueprint.Parts.Find(x => x.PartType == PartType.Chassis);
         BlueprintComponent gun = blueprint.Parts.Find(x => x.PartType == PartType.Gun);
 
-        if (chassis != null && gun != null)
+        if (chassis != null && chassis.Instance != null && gun != null && gun.Instance != null)
         {
             Quaternion rotation = Utils.ResetRotation(parent);
 
@@ -322,17 +343,17 @@ public class MenuEditor : UI_Element
         BlueprintComponent drive = blueprint.Parts.Find(x => x.PartType == PartType.Drive);
         BlueprintComponent gun = blueprint.Parts.Find(x => x.PartType == PartType.Gun);
 
-        if (chassis != null)
+        if (chassis != null && chassis.Instance != null)
         {
             chassis.Position = chassis.Instance.transform.localPosition;
         }
 
-        if (drive != null)
+        if (drive != null && drive.Instance != null)
         {
             drive.Position = drive.Instance.transform.localPosition;
         }
 
-        if (gun != null)
+        if (gun != null && gun.Instance != null)
         {
             gun.Position = gun.Instance.transform.localPosition;
         }
@@ -341,6 +362,15 @@ public class MenuEditor : UI_Element
     private void LoadBlueprints()
     {
         Blueprints.choices = Game.Instance.BlueprintManager.Blueprints.Keys.ToList();
+    }
+
+    private MyGameObject CreateBaseGameObject(Transform parent)
+    {
+        MyGameObject myGameObject = Instantiate(Game.Instance.Config.BaseGameObject, parent).GetComponent<MyGameObject>();
+        
+        myGameObject.SetState(MyGameObjectState.Preview);
+
+        return myGameObject;
     }
 
     [SerializeField]
