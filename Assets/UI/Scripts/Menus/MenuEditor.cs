@@ -241,8 +241,15 @@ public class MenuEditor : UI_Element
 
         listView.bindItem = (VisualElement item, int index) =>
         {
-            item.Q<Label>("Name").text = parts[index].name;
-            item.Q<VisualElement>("Image").style.backgroundImage = new StyleBackground(Utils.LoadPortrait(parts[index].name));
+            if (parts[index])
+            {
+                item.Q<Label>("Name").text = parts[index].name;
+                item.Q<VisualElement>("Image").style.backgroundImage = new StyleBackground(Utils.LoadPortrait(parts[index].name));
+            }
+            else
+            {
+                item.Q<Label>("Name").text = "None";
+            }
         };
 
         listView.itemsSource = parts;
@@ -250,36 +257,13 @@ public class MenuEditor : UI_Element
 
     private void BuildGameObjectFromBlueprint()
     {
+        DestroyGameObjectFromBlueprint();
+
         Transform setup = GameObject.Find("Setup").transform;
         Transform editor = setup.Find("Editor").transform;
         Transform placeholder = editor.Find("Placeholder").transform;
 
-        blueprint.BaseGameObject = CreateBaseGameObject(placeholder);
-
-        foreach (BlueprintComponent i in blueprint.Parts)
-        {
-            if (i.Part == null)
-            {
-                i.Part = Utils.LoadPart(i.PartType, i.Name);
-
-                if (i.Part == null)
-                {
-                    continue;
-                }
-            }
-
-            i.Instance = Instantiate(i.Part, blueprint.BaseGameObject.transform);
-
-            if (i.Instance == null)
-            {
-                continue;
-            }
-
-            if (i.Instance.TryGetComponent(out MyGameObject myGameObject))
-            {
-                myGameObject.SetState(MyGameObjectState.Preview);
-            }
-        }
+        blueprint.BaseGameObject = Utils.CreateGameObject(blueprint, placeholder.transform.position, Quaternion.identity, null, MyGameObjectState.Preview, placeholder);
 
         PositionChassis(placeholder);
         PositionGun(placeholder);
@@ -289,14 +273,6 @@ public class MenuEditor : UI_Element
 
     private void DestroyGameObjectFromBlueprint()
     {
-        foreach (BlueprintComponent i in blueprint.Parts)
-        {
-            if (i.Instance)
-            {
-                Destroy(i.Instance.gameObject);
-            }
-        }
-
         if (blueprint.BaseGameObject)
         {
             Destroy(blueprint.BaseGameObject.gameObject);
@@ -362,15 +338,6 @@ public class MenuEditor : UI_Element
     private void LoadBlueprints()
     {
         Blueprints.choices = Game.Instance.BlueprintManager.Blueprints.Keys.ToList();
-    }
-
-    private MyGameObject CreateBaseGameObject(Transform parent)
-    {
-        MyGameObject myGameObject = Instantiate(Game.Instance.Config.BaseGameObject, parent).GetComponent<MyGameObject>();
-        
-        myGameObject.SetState(MyGameObjectState.Preview);
-
-        return myGameObject;
     }
 
     [SerializeField]
