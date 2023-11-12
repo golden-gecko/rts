@@ -116,6 +116,7 @@ public enum OrderType
 
 public enum PartType
 {
+    Arm = 0,
     Chassis = 1,
     Drive = 2,
     Gun = 3,

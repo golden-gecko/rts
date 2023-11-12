@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[DisallowMultipleComponent, RequireComponent(typeof(Storage))]
+[DisallowMultipleComponent]
 public class Assembler : Part
 {
     protected override void Start()
@@ -10,6 +10,35 @@ public class Assembler : Part
 
         Parent.Orders.AllowOrder(OrderType.Assemble);
         Parent.Orders.AllowOrder(OrderType.Rally);
+
+        UpdateWhitelist();
+
+        Parent.OrderHandlers[OrderType.Assemble] = new OrderHandlerAssemble();
+        Parent.OrderHandlers[OrderType.Rally] = new OrderHandlerRally();
+
+        RallyPoint = Parent.Exit;
+    }
+
+    protected override void Update()
+    {
+        base.Update();
+
+        if (Parent == null || Parent.Player == null)
+        {
+            return;
+        }
+
+        UpdateWhitelist();
+    }
+
+    public override string GetInfo()
+    {
+        return string.Format("Assembler - {0}, Resource Usage: {1}", base.GetInfo(), ResourceUsage);
+    }
+
+    private void UpdateWhitelist()
+    {
+        Parent.Orders.PrefabWhitelist.Clear();
 
         foreach (string prefab in Prefabs)
         {
@@ -20,16 +49,6 @@ public class Assembler : Part
         {
             Parent.Orders.AllowPrefab(prefab);
         }
-
-        Parent.OrderHandlers[OrderType.Assemble] = new OrderHandlerAssemble();
-        Parent.OrderHandlers[OrderType.Rally] = new OrderHandlerRally();
-
-        RallyPoint = Parent.Exit;
-    }
-
-    public override string GetInfo()
-    {
-        return string.Format("Assembler - {0}, Resource Usage: {1}", base.GetInfo(), ResourceUsage);
     }
 
     [field: SerializeField]

@@ -124,26 +124,6 @@ public class Utils
 
         RestoreRotation(parent, r);
 
-        /*
-        if (myGameObject != null && state == MyGameObjectState.Cursor)
-        {
-            foreach (Collider collider in myGameObject.GetComponents<Collider>())
-            {
-                collider.enabled = false;
-            }
-
-            foreach (Part myComponent in myGameObject.GetComponents<Part>())
-            {
-                myComponent.enabled = false;
-            }
-
-            foreach (MyGameObject i in myGameObject.GetComponents<MyGameObject>())
-            {
-                i.enabled = false;
-            }
-        }
-        */
-
         return myGameObject;
     }
 
@@ -187,6 +167,9 @@ public class Utils
     {
         switch (partType)
         {
+            case PartType.Arm:
+                return Game.Instance.Config.Arms.Find(x => x.name == name);
+
             case PartType.Chassis:
                 return Game.Instance.Config.Chassis.Find(x => x.name == name);
 

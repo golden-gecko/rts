@@ -660,10 +660,21 @@ public class MyGameObject : MonoBehaviour
         switch (state)
         {
             case MyGameObjectState.Cursor:
+                ShowIndicators = false;
+                ShowEntrance = false;
+                ShowExit = false;
+
+                EnableColliders(false);
+
+                Indicators.OnConstruction();
+                break;
+
             case MyGameObjectState.Preview:
                 ShowIndicators = false;
                 ShowEntrance = false;
                 ShowExit = false;
+
+                EnableColliders(false);
                 break;
 
             case MyGameObjectState.Operational:
@@ -784,6 +795,14 @@ public class MyGameObject : MonoBehaviour
             Indicators.OnHide();
 
             VisibilityState = MyGameObjectVisibilityState.Hidden;
+        }
+    }
+
+    private void EnableColliders(bool enabled)
+    {
+        foreach (Collider collider in Body.GetComponents<Collider>())
+        {
+            collider.enabled = enabled;
         }
     }
 

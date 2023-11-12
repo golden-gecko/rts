@@ -1,6 +1,6 @@
 using UnityEngine;
 
-[DisallowMultipleComponent, RequireComponent(typeof(Storage))]
+[DisallowMultipleComponent]
 public class Gatherer : Part
 {
     protected override void Awake()

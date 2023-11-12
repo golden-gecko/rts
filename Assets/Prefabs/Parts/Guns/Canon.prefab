@@ -165,7 +165,7 @@ MonoBehaviour:
   <DamageType>k__BackingField:
   - <Type>k__BackingField: 0
     <Ratio>k__BackingField: 1
-  AudioFire: {fileID: 0}
+  AudioFire: {fileID: 8300000, guid: 23d80b5297162e9459fea98d1bec36f4, type: 3}
 --- !u!1 &7586901388558692828
 GameObject:
   m_ObjectHideFlags: 0

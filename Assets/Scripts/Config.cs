@@ -91,6 +91,9 @@ public class Config : MonoBehaviour
 
     #region Parts
     [field: SerializeField]
+    public List<GameObject> Arms { get; private set; } = new List<GameObject>();
+
+    [field: SerializeField]
     public List<GameObject> Chassis { get; private set; } = new List<GameObject>();
 
     [field: SerializeField]

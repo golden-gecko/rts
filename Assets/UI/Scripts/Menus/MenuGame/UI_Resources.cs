@@ -22,8 +22,18 @@ public class UI_Resources : UI_Element
             {
                 continue;
             }
-    
-            if (storage.GetComponent<MyGameObject>().Player != HUD.Instance.ActivePlayer)
+
+            if (storage.TryGetComponent(out MyGameObject myGameObject) == false)
+            {
+                continue;
+            }
+
+            if (myGameObject.State != MyGameObjectState.Operational)
+            {
+                continue;
+            }
+
+            if (myGameObject.Player != HUD.Instance.ActivePlayer)
             {
                 continue;
             }

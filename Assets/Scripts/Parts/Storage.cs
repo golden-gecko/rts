@@ -23,14 +23,19 @@ public class Storage : Part
     {
         base.Update();
 
+        if (Parent == null || Parent.Player == null)
+        {
+            return;
+        }
+
         switch (Parent.State)
         {
             case MyGameObjectState.Operational:
-                CreateResourceFlags(Parent);
+                CreateResourceFlags();
                 break;
 
             default:
-                RemoveResourceFlags(Parent);
+                RemoveResourceFlags();
                 break;
         }
     }
@@ -40,7 +45,7 @@ public class Storage : Part
         return string.Format("Storage - {0}\nResources: {1}", base.GetInfo(), Resources.GetInfo());
     }
 
-    private void CreateResourceFlags(MyGameObject parent)
+    private void CreateResourceFlags()
     {
         foreach (Resource resource in Resources.Items)
         {
@@ -48,11 +53,11 @@ public class Storage : Part
             {
                 if (resource.Full)
                 {
-                    parent.Player.UnregisterConsumer(parent, resource.Name);
+                    Parent.Player.UnregisterConsumer(Parent, resource.Name);
                 }
                 else
                 {
-                    parent.Player.RegisterConsumer(parent, resource.Name, resource.Available, resource.Direction);
+                    Parent.Player.RegisterConsumer(Parent, resource.Name, resource.Available, resource.Direction);
                 }
             }
 
@@ -60,22 +65,22 @@ public class Storage : Part
             {
                 if (resource.Empty)
                 {
-                    parent.Player.UnregisterProducer(parent, resource.Name);
+                    Parent.Player.UnregisterProducer(Parent, resource.Name);
                 }
                 else
                 {
-                    parent.Player.RegisterProducer(parent, resource.Name, resource.Current, resource.Direction);
+                    Parent.Player.RegisterProducer(Parent, resource.Name, resource.Current, resource.Direction);
                 }
             }
         }
     }
 
-    private void RemoveResourceFlags(MyGameObject parent)
+    private void RemoveResourceFlags()
     {
         foreach (string name in Resources.Items.Select(x => x.Name))
         {
-            parent.Player.UnregisterConsumer(parent, name);
-            parent.Player.UnregisterProducer(parent, name);
+            Parent.Player.UnregisterConsumer(Parent, name);
+            Parent.Player.UnregisterProducer(Parent, name);
         }
     }
 

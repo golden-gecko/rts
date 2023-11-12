@@ -6,13 +6,14 @@ using System.Reflection;
 using UnityEditor;
 using UnityEditor.SceneManagement;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 public class Tools : EditorWindow
 {
     [MenuItem("Tools/Render")]
     public static void Render()
     {
+        ClearLog();
+
         string sceneName = EditorSceneManager.GetActiveScene().name;
 
         EditorSceneManager.SaveCurrentModifiedScenesIfUserWantsTo();
@@ -49,6 +50,8 @@ public class Tools : EditorWindow
 
             DestroyImmediate(instance);
         }
+
+        RenderTexture.active = null;
 
         EditorSceneManager.OpenScene(Path.Join("Assets", "Scenes", string.Format("{0}.unity", sceneName)));
     }

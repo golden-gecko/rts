@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using Unity.VisualScripting.Dependencies.Sqlite;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.UIElements;
@@ -22,6 +23,9 @@ public class MenuEditor : UI_Element
 
         ButtonSave = Root.Q<Button>("Save");
         ButtonSave.RegisterCallback<ClickEvent>(x => OnButtonSave());
+
+        PartsArm = Root.Q<ListView>("PartsArm");
+        PartsArm.selectionChanged += (IEnumerable<object> objects) => OnSelectionChanged(PartType.Arm, objects);
 
         PartsChassis = Root.Q<ListView>("PartsChassis");
         PartsChassis.selectionChanged += (IEnumerable<object> objects) => OnSelectionChanged(PartType.Chassis, objects);
@@ -48,6 +52,7 @@ public class MenuEditor : UI_Element
 
     private void Start()
     {
+        CreatePartList(PartsArm, Game.Instance.Config.Arms);
         CreatePartList(PartsChassis, Game.Instance.Config.Chassis);
         CreatePartList(PartsDrive, Game.Instance.Config.Drives);
         CreatePartList(PartsGun, Game.Instance.Config.Guns);
@@ -72,6 +77,7 @@ public class MenuEditor : UI_Element
     {
         UI.Instance.GetComponentInChildren<UI_Commands_Prefabs>().Refresh(); // TODO: Refactor.
 
+        /*
         foreach (Assembler assembler in FindObjectsByType<Assembler>(FindObjectsInactive.Include, FindObjectsSortMode.None)) // TODO: Refactor.
         {
             assembler.Parent.Orders.PrefabWhitelist.Clear();
@@ -86,6 +92,7 @@ public class MenuEditor : UI_Element
                 assembler.Parent.Orders.AllowPrefab(prefab);
             }
         }
+        */
     }
 
     private void OnBlueprintsChange(string name)
@@ -192,17 +199,24 @@ public class MenuEditor : UI_Element
         switch (PartsListVisible)
         {
             case PartType.Drive:
-                PartsListVisible = PartType.Chassis;
+                HideParts();
 
+                PartsListVisible = PartType.Chassis;
                 PartsChassis.style.display = DisplayStyle.Flex;
-                PartsDrive.style.display = DisplayStyle.None;
                 break;
 
             case PartType.Gun:
-                PartsListVisible = PartType.Drive;
+                HideParts();
 
+                PartsListVisible = PartType.Drive;
                 PartsDrive.style.display = DisplayStyle.Flex;
-                PartsGun.style.display = DisplayStyle.None;
+                break;
+
+            case PartType.Arm:
+                HideParts();
+
+                PartsListVisible = PartType.Gun;
+                PartsGun.style.display = DisplayStyle.Flex;
                 break;
         }
     }
@@ -212,19 +226,34 @@ public class MenuEditor : UI_Element
         switch (PartsListVisible)
         {
             case PartType.Chassis:
-                PartsListVisible = PartType.Drive;
+                HideParts();
 
-                PartsChassis.style.display = DisplayStyle.None;
+                PartsListVisible = PartType.Drive;
                 PartsDrive.style.display = DisplayStyle.Flex;
                 break;
 
             case PartType.Drive:
-                PartsListVisible = PartType.Gun;
+                HideParts();
 
-                PartsDrive.style.display = DisplayStyle.None;
+                PartsListVisible = PartType.Gun;
                 PartsGun.style.display = DisplayStyle.Flex;
                 break;
+
+            case PartType.Gun:
+                HideParts();
+
+                PartsListVisible = PartType.Arm;
+                PartsArm.style.display = DisplayStyle.Flex;
+                break;
         }
+    }
+
+    private void HideParts()
+    {
+        PartsArm.style.display = DisplayStyle.None;
+        PartsChassis.style.display = DisplayStyle.None;
+        PartsDrive.style.display = DisplayStyle.None;
+        PartsGun.style.display = DisplayStyle.None;
     }
 
     private void OnButtonClose()
@@ -267,6 +296,7 @@ public class MenuEditor : UI_Element
 
         PositionChassis(placeholder);
         PositionGun(placeholder);
+        PositionArm(placeholder);
 
         SavePosition();
     }
@@ -276,6 +306,26 @@ public class MenuEditor : UI_Element
         if (blueprint.BaseGameObject)
         {
             Destroy(blueprint.BaseGameObject.gameObject);
+        }
+    }
+    private void PositionArm(Transform parent)
+    {
+        BlueprintComponent arm = blueprint.Parts.Find(x => x.PartType == PartType.Arm);
+        BlueprintComponent chassis = blueprint.Parts.Find(x => x.PartType == PartType.Chassis);
+
+        if (arm != null && arm.Instance != null && chassis != null && chassis.Instance != null)
+        {
+            Quaternion rotation = Utils.ResetRotation(parent);
+
+            Collider armCollider = arm.Instance.GetComponent<Collider>();
+            Collider chassisCollider = chassis.Instance.GetComponent<Collider>();
+
+            Vector3 position = arm.Instance.transform.position;
+            position.y = chassisCollider.bounds.min.y + chassisCollider.bounds.extents.y;
+            position.z = chassisCollider.bounds.max.z;
+            arm.Instance.transform.position = position;
+
+            Utils.RestoreRotation(parent, rotation);
         }
     }
 
@@ -288,8 +338,10 @@ public class MenuEditor : UI_Element
         {
             Quaternion rotation = Utils.ResetRotation(parent);
 
+            Collider driveCollider = drive.Instance.GetComponent<Collider>();
+
             Vector3 position = chassis.Instance.transform.position;
-            position.y = drive.Instance.GetComponentInChildren<Collider>().bounds.max.y - drive.Instance.GetComponentInChildren<Collider>().bounds.extents.y;
+            position.y = driveCollider.bounds.min.y + driveCollider.bounds.extents.y;
             chassis.Instance.transform.position = position;
 
             Utils.RestoreRotation(parent, rotation);
@@ -305,8 +357,10 @@ public class MenuEditor : UI_Element
         {
             Quaternion rotation = Utils.ResetRotation(parent);
 
+            Collider chassisCollider = chassis.Instance.GetComponent<Collider>();
+
             Vector3 position = gun.Instance.transform.position;
-            position.y = chassis.Instance.GetComponent<Collider>().bounds.max.y;
+            position.y = chassisCollider.bounds.max.y;
             gun.Instance.transform.position = position;
 
             Utils.RestoreRotation(parent, rotation);
@@ -315,9 +369,15 @@ public class MenuEditor : UI_Element
 
     private void SavePosition()
     {
+        BlueprintComponent arm = blueprint.Parts.Find(x => x.PartType == PartType.Arm);
         BlueprintComponent chassis = blueprint.Parts.Find(x => x.PartType == PartType.Chassis);
         BlueprintComponent drive = blueprint.Parts.Find(x => x.PartType == PartType.Drive);
         BlueprintComponent gun = blueprint.Parts.Find(x => x.PartType == PartType.Gun);
+
+        if (arm != null && arm.Instance != null)
+        {
+            arm.Position = arm.Instance.transform.localPosition;
+        }
 
         if (chassis != null && chassis.Instance != null)
         {
@@ -348,6 +408,7 @@ public class MenuEditor : UI_Element
     private TextField Name;
     private Button ButtonSave;
 
+    private ListView PartsArm;
     private ListView PartsChassis;
     private ListView PartsDrive;
     private ListView PartsGun;
