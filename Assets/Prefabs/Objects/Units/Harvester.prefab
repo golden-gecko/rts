@@ -97,7 +97,10 @@ GameObject:
   - component: {fileID: 7909619183139433276}
   - component: {fileID: 3849041754090864768}
   - component: {fileID: -7296574799590733170}
+  - component: {fileID: 3959808543684666308}
+  - component: {fileID: -2452087884374975942}
   - component: {fileID: 4744879806858303384}
+  - component: {fileID: -5437239669431261021}
   m_Layer: 20
   m_Name: Harvester
   m_TagString: Untagged
@@ -217,6 +220,38 @@ MonoBehaviour:
   - Wall
   - Windtrap
   <ResourceUsage>k__BackingField: 4
+--- !u!114 &3959808543684666308
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1578887994438585109}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 480f2643be9397244bac146d70b54f9f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  <Mass>k__BackingField: 10
+  <Power>k__BackingField:
+    <Value>k__BackingField: 100
+  <Fuel>k__BackingField:
+    <Current>k__BackingField: 100
+    <Max>k__BackingField: 100
+  <FuelUsage>k__BackingField: 1
+--- !u!114 &-2452087884374975942
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1578887994438585109}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c3efa07cae5f028459ac47ef91e2f8f8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  <Mass>k__BackingField: 10
 --- !u!114 &4744879806858303384
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -262,6 +297,18 @@ MonoBehaviour:
       <Max>k__BackingField: 10
       <Name>k__BackingField: Wood
       <Direction>k__BackingField: 0
+--- !u!114 &-5437239669431261021
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1578887994438585109}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 64456d16d88606c42a7ae4d8baa56c6e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1825437508637459598
 GameObject:
   m_ObjectHideFlags: 0

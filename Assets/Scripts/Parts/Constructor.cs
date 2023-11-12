@@ -10,10 +10,7 @@ public class Constructor : Part
 
         Parent.Orders.AllowOrder(OrderType.Construct);
 
-        foreach (string prefab in Prefabs)
-        {
-            Parent.Orders.AllowPrefab(prefab);
-        }
+        UpdateWhitelist();
 
         Parent.OrderHandlers[OrderType.Construct] = new OrderHandlerConstruct();
     }
@@ -21,6 +18,16 @@ public class Constructor : Part
     public override string GetInfo()
     {
         return string.Format("Constructor - {0}, Resource Usage: {1}", base.GetInfo(), ResourceUsage);
+    }
+
+    private void UpdateWhitelist()
+    {
+        Parent.Orders.PrefabWhitelist.Clear();
+
+        foreach (string prefab in Prefabs)
+        {
+            Parent.Orders.AllowPrefab(prefab);
+        }
     }
 
     [field: SerializeField]

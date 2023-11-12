@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2207475100940521903}
   - component: {fileID: 6488472075272048020}
+  - component: {fileID: 1938374264542287180}
   - component: {fileID: 4744879806858303384}
   m_Layer: 20
   m_Name: Transporter
@@ -55,6 +56,22 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1.0440767, y: 0.676771, z: 1.5347965}
   m_Center: {x: -0.0014692545, y: 0.4084439, z: -0.017630339}
+--- !u!114 &1938374264542287180
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1578887994438585109}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9457e17311c7b6e49be3978f6559b6fe, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  <Mass>k__BackingField: 10
+  <Health>k__BackingField:
+    <Current>k__BackingField: 100
+    <Max>k__BackingField: 100
 --- !u!114 &4744879806858303384
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -74,35 +74,21 @@ public class Utils
         myGameObject.SetPlayer(player);
         myGameObject.SetState(state);
 
-        /*
-        if (state == MyGameObjectState.Cursor)
-        {
-            foreach (Collider collider in myGameObject.GetComponents<Collider>())
-            {
-                collider.enabled = false;
-            }
-
-            foreach (Part myComponent in myGameObject.GetComponents<Part>())
-            {
-                myComponent.enabled = false;
-            }
-
-            foreach (MyGameObject i in myGameObject.GetComponents<MyGameObject>())
-            {
-                i.enabled = false;
-            }
-        }
-        */
-
         return myGameObject;
     }
 
     public static MyGameObject CreateGameObject(Blueprint blueprint, Vector3 position, Quaternion rotation, Player player, MyGameObjectState state, Transform parent = null)
     {
-        Quaternion r = ResetRotation(parent);
+        Quaternion rotationFromParent = Quaternion.identity;
+
+        if (parent)
+        {
+            rotationFromParent = ResetRotation(parent);
+        }
 
         MyGameObject myGameObject = Object.Instantiate(Game.Instance.Config.BaseGameObject, position, rotation, parent).GetComponent<MyGameObject>();
 
+        myGameObject.name = blueprint.Name;
         myGameObject.SetPlayer(player);
         myGameObject.SetState(state);
 
@@ -122,46 +108,13 @@ public class Utils
             i.Instance.transform.localPosition = i.Position;
         }
 
-        RestoreRotation(parent, r);
+        if (parent)
+        {
+            RestoreRotation(parent, rotationFromParent);
+        }
 
         return myGameObject;
     }
-
-    /*private void BuildGameObjectFromBlueprint(Transform parent)
-    {
-        MyGameObject myGameObject = Instantiate(Game.Instance.Config.BaseGameObject, parent).GetComponent<MyGameObject>();
-        myGameObject.SetState(MyGameObjectState.Preview);
-
-        foreach (BlueprintComponent i in blueprint.Parts)
-        {
-            if (i.Part == null)
-            {
-                i.Part = Utils.LoadPart(i.PartType, i.Name);
-
-                if (i.Part == null)
-                {
-                    continue;
-                }
-            }
-
-            i.Instance = Instantiate(i.Part, blueprint.BaseGameObject.transform);
-
-            if (i.Instance == null)
-            {
-                continue;
-            }
-
-            if (i.Instance.TryGetComponent(out MyGameObject myGameObject))
-            {
-                myGameObject.SetState(MyGameObjectState.Preview);
-            }
-        }
-
-        PositionChassis(placeholder);
-        PositionGun(placeholder);
-
-        SavePosition();
-    }*/
 
     public static GameObject LoadPart(PartType partType, string name)
     {
