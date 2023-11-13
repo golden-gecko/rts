@@ -119,7 +119,10 @@ public enum PartType
     Arm = 0,
     Chassis = 1,
     Drive = 2,
+    Engine = 4,
     Gun = 3,
+    Shield = 5,
+    Sight = 6,
 }
 
 public enum ResourceDirection

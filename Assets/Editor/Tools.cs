@@ -9,27 +9,6 @@ using UnityEngine;
 
 public class Tools : EditorWindow
 {
-    [MenuItem("Tools/Build", false, 0)]
-    public static void Build()
-    {
-        ClearLog();
-
-        // string sceneName = GetSceneName();
-
-        foreach (Blueprint blueprint in Utils.CreateBlueprints())
-        {
-            MyGameObject myGameObject = Utils.CreateGameObject(blueprint, Vector3.zero, Quaternion.identity, null, MyGameObjectState.Preview);
-
-            Directory.CreateDirectory(Path.Combine(new string[] { "Assets", "Blueprints" }));
-
-            PrefabUtility.SaveAsPrefabAsset(myGameObject.gameObject, Path.Combine(new string[] { "Assets", "Blueprints", blueprint.Name }));
-
-            break;
-        }
-
-        // RestoreScene(sceneName);
-    }
-
     [MenuItem("Tools/Render", false, 1)]
     public static void Render()
     {

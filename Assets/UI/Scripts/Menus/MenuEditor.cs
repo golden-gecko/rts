@@ -31,8 +31,25 @@ public class MenuEditor : UI_Element
         PartsDrive = Root.Q<ListView>("PartsDrive");
         PartsDrive.selectionChanged += (IEnumerable<object> objects) => OnSelectionChanged(PartType.Drive, objects);
 
+        PartsEngine = Root.Q<ListView>("PartsEngine");
+        PartsEngine.selectionChanged += (IEnumerable<object> objects) => OnSelectionChanged(PartType.Engine, objects);
+
         PartsGun = Root.Q<ListView>("PartsGun");
         PartsGun.selectionChanged += (IEnumerable<object> objects) => OnSelectionChanged(PartType.Gun, objects);
+
+        PartsShield = Root.Q<ListView>("PartsShield");
+        PartsShield.selectionChanged += (IEnumerable<object> objects) => OnSelectionChanged(PartType.Shield, objects);
+
+        PartsSight = Root.Q<ListView>("PartsSight");
+        PartsSight.selectionChanged += (IEnumerable<object> objects) => OnSelectionChanged(PartType.Sight, objects);
+
+        VisiblePartsList.Add(PartsChassis);
+        VisiblePartsList.Add(PartsDrive);
+        VisiblePartsList.Add(PartsEngine);
+        VisiblePartsList.Add(PartsGun);
+        VisiblePartsList.Add(PartsArm);
+        VisiblePartsList.Add(PartsShield);
+        VisiblePartsList.Add(PartsSight);
 
         Preview = Root.Q<VisualElement>("Preview");
         Preview.RegisterCallback<MouseEnterEvent>(x => OnMouseEnterEvent());
@@ -53,7 +70,10 @@ public class MenuEditor : UI_Element
         CreatePartList(PartsArm, Game.Instance.Config.Arms);
         CreatePartList(PartsChassis, Game.Instance.Config.Chassis);
         CreatePartList(PartsDrive, Game.Instance.Config.Drives);
+        CreatePartList(PartsEngine, Game.Instance.Config.Engines);
         CreatePartList(PartsGun, Game.Instance.Config.Guns);
+        CreatePartList(PartsShield, Game.Instance.Config.Shields);
+        CreatePartList(PartsSight, Game.Instance.Config.Sights);
 
         LoadBlueprints();
     }
@@ -194,64 +214,26 @@ public class MenuEditor : UI_Element
 
     private void OnButtonPrevious()
     {
-        switch (PartsListVisible)
+        if (VisiblePartsListIndex <= 0)
         {
-            case PartType.Drive:
-                HideParts();
-
-                PartsListVisible = PartType.Chassis;
-                PartsChassis.style.display = DisplayStyle.Flex;
-                break;
-
-            case PartType.Gun:
-                HideParts();
-
-                PartsListVisible = PartType.Drive;
-                PartsDrive.style.display = DisplayStyle.Flex;
-                break;
-
-            case PartType.Arm:
-                HideParts();
-
-                PartsListVisible = PartType.Gun;
-                PartsGun.style.display = DisplayStyle.Flex;
-                break;
+            return;
         }
+
+        VisiblePartsList[VisiblePartsListIndex].style.display = DisplayStyle.None;
+        VisiblePartsListIndex -= 1;
+        VisiblePartsList[VisiblePartsListIndex].style.display = DisplayStyle.Flex;
     }
 
     private void OnButtonNext()
     {
-        switch (PartsListVisible)
+        if (VisiblePartsListIndex >= VisiblePartsList.Count - 1)
         {
-            case PartType.Chassis:
-                HideParts();
-
-                PartsListVisible = PartType.Drive;
-                PartsDrive.style.display = DisplayStyle.Flex;
-                break;
-
-            case PartType.Drive:
-                HideParts();
-
-                PartsListVisible = PartType.Gun;
-                PartsGun.style.display = DisplayStyle.Flex;
-                break;
-
-            case PartType.Gun:
-                HideParts();
-
-                PartsListVisible = PartType.Arm;
-                PartsArm.style.display = DisplayStyle.Flex;
-                break;
+            return;
         }
-    }
 
-    private void HideParts()
-    {
-        PartsArm.style.display = DisplayStyle.None;
-        PartsChassis.style.display = DisplayStyle.None;
-        PartsDrive.style.display = DisplayStyle.None;
-        PartsGun.style.display = DisplayStyle.None;
+        VisiblePartsList[VisiblePartsListIndex].style.display = DisplayStyle.None;
+        VisiblePartsListIndex += 1;
+        VisiblePartsList[VisiblePartsListIndex].style.display = DisplayStyle.Flex;
     }
 
     private void OnButtonClose()
@@ -410,7 +392,10 @@ public class MenuEditor : UI_Element
     private ListView PartsArm;
     private ListView PartsChassis;
     private ListView PartsDrive;
+    private ListView PartsEngine;
     private ListView PartsGun;
+    private ListView PartsShield;
+    private ListView PartsSight;
 
     private VisualElement Preview;
     private bool MouseInside = false;
@@ -419,6 +404,8 @@ public class MenuEditor : UI_Element
     private Button ButtonNext;
     private Button ButtonClose;
 
-    private PartType PartsListVisible = PartType.Chassis;
+    private List<ListView> VisiblePartsList = new List<ListView>();
+    private int VisiblePartsListIndex = 0;
+
     private Blueprint blueprint = new Blueprint();
 }

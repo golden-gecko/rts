@@ -109,7 +109,7 @@ public class Utils
                 }
             }
 
-            i.Instance = Object.Instantiate(i.Part, myGameObject.transform);
+            i.Instance = Object.Instantiate(i.Part, myGameObject.Body.transform);
             i.Instance.transform.localPosition = i.Position;
         }
 
@@ -134,8 +134,17 @@ public class Utils
             case PartType.Drive:
                 return Game.Instance.Config.Drives.Find(x => x.name == name);
 
+            case PartType.Engine:
+                return Game.Instance.Config.Engines.Find(x => x.name == name);
+
             case PartType.Gun:
                 return Game.Instance.Config.Guns.Find(x => x.name == name);
+
+            case PartType.Shield:
+                return Game.Instance.Config.Shields.Find(x => x.name == name);
+
+            case PartType.Sight:
+                return Game.Instance.Config.Sights.Find(x => x.name == name);
         }
 
         return null;

@@ -666,10 +666,7 @@ public class MyGameObject : MonoBehaviour
 
                 EnableColliders(false);
 
-                if (Indicators)
-                {
-                    Indicators.OnConstruction();
-                }
+                Indicators.OnConstruction();
                 break;
 
             case MyGameObjectState.Preview:
@@ -683,26 +680,17 @@ public class MyGameObject : MonoBehaviour
             case MyGameObjectState.Operational:
                 RemoveConstructionResourceFlags();
 
-                if (Indicators)
-                {
-                    Indicators.OnConstructionEnd();
-                }
+                Indicators.OnConstructionEnd();
                 break;
 
             case MyGameObjectState.UnderAssembly:
-                if (Indicators)
-                {
-                    Indicators.OnConstruction();
-                }
+                Indicators.OnConstruction();
                 break;
 
             case MyGameObjectState.UnderConstruction:
                 RaiseConstructionResourceFlags();
 
-                if (Indicators)
-                {
-                    Indicators.OnConstruction();
-                }
+                Indicators.OnConstruction();
                 break;
         }
     }
@@ -854,6 +842,7 @@ public class MyGameObject : MonoBehaviour
     {
         get
         {
+            /*
             Collider[] colliders = Body.GetComponentsInChildren<Collider>();
 
             if (colliders.Length <= 0)
@@ -873,12 +862,40 @@ public class MyGameObject : MonoBehaviour
             Utils.RestoreRotation(this, rotation);
 
             return size / colliders.Length;
+            */
+
+            Collider[] colliders = Body.GetComponentsInChildren<Collider>();
+
+            if (colliders.Length <= 0)
+            {
+                return Vector3.zero;
+            }
+
+            Quaternion rotation = Utils.ResetRotation(this);
+
+            Vector3 min = new Vector3(float.MaxValue, float.MaxValue, float.MaxValue);
+            Vector3 max = new Vector3(float.MinValue, float.MinValue, float.MinValue);
+
+            foreach (Collider collider in colliders)
+            {
+                min.x = Mathf.Min(min.x, collider.bounds.min.x);
+                min.y = Mathf.Min(min.y, collider.bounds.min.y);
+                min.z = Mathf.Min(min.z, collider.bounds.min.z);
+
+                max.x = Mathf.Max(max.x, collider.bounds.max.x);
+                max.y = Mathf.Max(max.y, collider.bounds.max.y);
+                max.z = Mathf.Max(max.z, collider.bounds.max.z);
+            }
+
+            Utils.RestoreRotation(this, rotation);
+
+            return max - min;
         }
     }
 
     public bool Alive { get => Health.Current > 0.0f && (ExpirationTimer.Active == false || ExpirationTimer.Finished == false); }
 
-    public float Mass { get => GetComponents<Part>().Sum(x => x.Mass); }
+    public float Mass { get => GetComponentsInChildren<Part>().Sum(x => x.Mass); }
 
     public bool Constructed { get => ConstructionResources.CurrentSum >= ConstructionResources.MaxSum; }
 

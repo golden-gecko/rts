@@ -791,6 +791,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 76a5bf6bba29a6044b4f5f5973e811e2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Blueprints: []
 --- !u!114 &5927054192065729548
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -868,12 +869,16 @@ MonoBehaviour:
   <Drives>k__BackingField:
   - {fileID: 6014288322611724604, guid: 3a46ffd9342c7f149902e9c62ae76283, type: 3}
   - {fileID: 3697136554101965516, guid: ced1ed7904c29e5459c6256c871f3fa6, type: 3}
+  <Engines>k__BackingField:
+  - {fileID: 2038756865172747879, guid: 492549a845e4ec34d9ec934375fbc152, type: 3}
   <Guns>k__BackingField:
   - {fileID: 6672543193626275511, guid: c0967d702df221a439ac077aa6a6ec59, type: 3}
   - {fileID: 4916527176359590894, guid: c559902122f92ab46a9fafb85156b9cb, type: 3}
   - {fileID: 6014288322611724604, guid: c0c27b841091e2849b51b49ec96c0c73, type: 3}
   <Shields>k__BackingField:
   - {fileID: 5771986485392630128, guid: 48ec2c1cdd5391c4ea06176574fddbc9, type: 3}
+  <Sights>k__BackingField:
+  - {fileID: 2038756865172747879, guid: cbf661917f3727442898d99bead2443a, type: 3}
 --- !u!114 &873085916221255505
 MonoBehaviour:
   m_ObjectHideFlags: 0

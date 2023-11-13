@@ -58,7 +58,7 @@ public class Engine : Part
     [field: SerializeField]
     public float FuelUsage { get; private set; } = 1.0f;
 
-    public float Speed { get => Power.Total / Parent.Mass; }
+    public float Speed { get => Parent.Mass > 0.0f ? Power.Total / Parent.Mass : 0.0f; }
 
     private float DistanceToDrive { get; set; } = 0.0f;
 }

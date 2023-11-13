@@ -37,7 +37,7 @@ public class Game : Singleton<Game>
 
         blueprint = BlueprintManager.Get(name);
 
-        if (blueprint == null)
+        if (blueprint != null)
         {
             myGameObject = null;
 

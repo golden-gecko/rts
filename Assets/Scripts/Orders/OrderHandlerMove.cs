@@ -10,7 +10,7 @@ public class OrderHandlerMove : OrderHandler
         Vector3 position = myGameObject.Position;
 
         float distanceToTarget = GetDistance(myGameObject, ref position, ref target);
-        float distanceToTravel = myGameObject.GetComponent<Engine>().Speed * Time.deltaTime;
+        float distanceToTravel = myGameObject.GetComponentInChildren<Engine>().Speed * Time.deltaTime;
 
         if (myGameObject.MapLayers.Contains(MyGameObjectMapLayer.Air))
         {
@@ -32,14 +32,14 @@ public class OrderHandlerMove : OrderHandler
                 return;
             }
 
-            if (myGameObject.GetComponent<Engine>().CanDrive(distanceToTravel) == false)
+            if (myGameObject.GetComponentInChildren<Engine>().CanDrive(distanceToTravel) == false)
             {
                 myGameObject.Wait(0);
 
                 return;
             }
 
-            myGameObject.GetComponent<Engine>().Drive(distanceToTravel);
+            myGameObject.GetComponentInChildren<Engine>().Drive(distanceToTravel);
             myGameObject.OnMoveHandler(validated);
             myGameObject.Stats.Add(Stats.DistanceDriven, distanceToTravel);
         }
@@ -54,14 +54,14 @@ public class OrderHandlerMove : OrderHandler
                 return;
             }
 
-            if (myGameObject.GetComponent<Engine>().CanDrive(distanceToTarget) == false)
+            if (myGameObject.GetComponentInChildren<Engine>().CanDrive(distanceToTarget) == false)
             {
                 myGameObject.Wait(0);
 
                 return;
             }
 
-            myGameObject.GetComponent<Engine>().Drive(distanceToTarget);
+            myGameObject.GetComponentInChildren<Engine>().Drive(distanceToTarget);
             myGameObject.OnMoveHandler(validated);
             myGameObject.Stats.Add(Stats.DistanceDriven, distanceToTarget);
 

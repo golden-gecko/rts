@@ -67,6 +67,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9457e17311c7b6e49be3978f6559b6fe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  <Mass>k__BackingField: 10
   <Health>k__BackingField:
     <Current>k__BackingField: 100
     <Max>k__BackingField: 100
@@ -82,7 +83,7 @@ GameObject:
   - component: {fileID: 3651856514401725032}
   - component: {fileID: 1502541725769656319}
   m_Layer: 20
-  m_Name: Body
+  m_Name: Chassis
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

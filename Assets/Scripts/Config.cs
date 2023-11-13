@@ -100,9 +100,15 @@ public class Config : MonoBehaviour
     public List<GameObject> Drives { get; private set; } = new List<GameObject>();
 
     [field: SerializeField]
+    public List<GameObject> Engines { get; private set; } = new List<GameObject>();
+
+    [field: SerializeField]
     public List<GameObject> Guns { get; private set; } = new List<GameObject>();
 
     [field: SerializeField]
     public List<GameObject> Shields { get; private set; } = new List<GameObject>();
+
+    [field: SerializeField]
+    public List<GameObject> Sights { get; private set; } = new List<GameObject>();
     #endregion
 }

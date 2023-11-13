@@ -75,7 +75,7 @@ public class Sight : Part
     }
 
     [field: SerializeField]
-    public Property Range { get; private set; } = new Property();
+    public Property Range { get; private set; } = new Property(10.0f);
 
     private MyGameObjectState previousState;
     private bool previousEnabled;

@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 3652317286570132920}
   - component: {fileID: 8385070670217265588}
   m_Layer: 0
-  m_Name: Shield
+  m_Name: Weak
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -68,7 +68,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   <Mass>k__BackingField: 10
-  <Mesh>k__BackingField: {fileID: 0}
   <Range>k__BackingField:
     <Value>k__BackingField: 1
   <Capacity>k__BackingField:
@@ -91,7 +90,7 @@ GameObject:
   - component: {fileID: 4030514819606387723}
   - component: {fileID: 6102866483500558931}
   m_Layer: 0
-  m_Name: Body
+  m_Name: Shield
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 7096478118878921596}
   - component: {fileID: 1149253250113955710}
   m_Layer: 20
-  m_Name: Body
+  m_Name: Chassis
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -150,6 +150,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9457e17311c7b6e49be3978f6559b6fe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  <Mass>k__BackingField: 10
   <Health>k__BackingField:
     <Current>k__BackingField: 150
     <Max>k__BackingField: 150
