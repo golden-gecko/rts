@@ -45,9 +45,9 @@ public class Assembler : Part
             Parent.Orders.AllowPrefab(prefab);
         }
 
-        foreach (string prefab in Game.Instance.BlueprintManager.Blueprints.Keys)
+        foreach (Blueprint blueprint in Game.Instance.BlueprintManager.Blueprints)
         {
-            Parent.Orders.AllowPrefab(prefab);
+            Parent.Orders.AllowPrefab(blueprint.Name);
         }
     }
 

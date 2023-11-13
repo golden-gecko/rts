@@ -1,59 +1,35 @@
 using System.Collections.Generic;
-using System.IO;
 using UnityEngine;
 
 public class BlueprintManager : MonoBehaviour
 {
     private void Awake()
     {
-        LoadBlueprints();
+        Blueprints = Utils.CreateBlueprints();
     }
 
     public Blueprint Get(string name)
     {
-        if (Blueprints.TryGetValue(name, out Blueprint blueprint))
-        {
-            return blueprint;
-        }
-
-        return null;
+        return Blueprints.Find(x => x.Name == name);
     }
 
     public void Save(Blueprint blueprint)
     {
-        Blueprints[blueprint.Name] = blueprint;
+        Delete(blueprint.Name);
+        Blueprints.Add(blueprint);
     }
 
     public void Delete(string name)
     {
-        if (Blueprints.TryGetValue(name, out Blueprint blueprint))
+        Blueprint blueprint = Get(name);
+
+        if (blueprint != null)
         {
             blueprint.Delete();
 
-            Blueprints.Remove(name);
+            Blueprints.Remove(blueprint);
         }
     }
 
-    private void LoadBlueprints()
-    {
-        if (Directory.Exists(Config.Blueprints.Directory) == false)
-        {
-            return;
-        }
-
-        foreach (string file in Directory.EnumerateFiles(Config.Blueprints.Directory))
-        {
-            if (Path.GetExtension(file).ToLower() != ".json")
-            {
-                continue;
-            }
-
-            string json = File.ReadAllText(file);
-            Blueprint blueprint = JsonUtility.FromJson<Blueprint>(json);
-
-            Blueprints[blueprint.Name] = blueprint;
-        }
-    }
-
-    public Dictionary<string, Blueprint> Blueprints = new Dictionary<string, Blueprint>();
+    public List<Blueprint> Blueprints = new List<Blueprint>();
 }

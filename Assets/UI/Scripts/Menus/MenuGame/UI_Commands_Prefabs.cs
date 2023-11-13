@@ -65,7 +65,6 @@ public class UI_Commands_Prefabs : UI_Element
             button.RegisterCallback<ClickEvent>(x => OnConstruct(structure.name));
             button.style.display = DisplayStyle.None;
             button.text = Utils.FormatName(structure.name);
-            button.userData = structure.name;
 
             prefabs.Add(buttonContainer);
             prefabsButtons[structure.name] = button;
@@ -79,24 +78,22 @@ public class UI_Commands_Prefabs : UI_Element
             button.RegisterCallback<ClickEvent>(x => OnAssemble(unit.name));
             button.style.display = DisplayStyle.None;
             button.text = Utils.FormatName(Path.GetFileName(unit.name));
-            button.userData = unit.name;
 
             prefabs.Add(buttonContainer);
             prefabsButtons[unit.name] = button;
         }
 
-        foreach (string blueprint in Game.Instance.BlueprintManager.Blueprints.Keys)
+        foreach (Blueprint blueprint in Game.Instance.BlueprintManager.Blueprints)
         {
             TemplateContainer buttonContainer = templateButton.Instantiate();
             Button button = buttonContainer.Q<Button>();
 
-            button.RegisterCallback<ClickEvent>(x => OnAssemble(blueprint));
+            button.RegisterCallback<ClickEvent>(x => OnAssemble(blueprint.Name));
             button.style.display = DisplayStyle.None;
-            button.text = string.Format("{0} (BP)", Utils.FormatName(Path.GetFileName(blueprint)));
-            button.userData = blueprint;
+            button.text = string.Format("{0} (BP)", Utils.FormatName(Path.GetFileName(blueprint.Name)));
 
             prefabs.Add(buttonContainer);
-            prefabsButtons[blueprint] = button;
+            prefabsButtons[blueprint.Name] = button;
         }
     }
 
@@ -138,7 +135,7 @@ public class UI_Commands_Prefabs : UI_Element
         {
             if (prefabsButtons.TryGetValue(i, out Button button))
             {
-                bool enabled = technologyTree.IsDiscovered(i) || Game.Instance.BlueprintManager.Blueprints.Keys.Contains(i);
+                bool enabled = technologyTree.IsDiscovered(i) || Game.Instance.BlueprintManager.Get(i) != null;
 
                 button.style.display = DisplayStyle.Flex;
                 button.SetEnabled(enabled);

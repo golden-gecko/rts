@@ -78,7 +78,6 @@ public class UI_Commands_Orders : UI_Element
             button.RegisterCallback<ClickEvent>(x => OnOrder(Enum.Parse<OrderType>(i)));
             button.style.display = DisplayStyle.None;
             button.text = Utils.FormatName(i);
-            button.userData = Enum.Parse<OrderType>(i);
 
             orders.Add(buttonContainer);
             ordersButtons[Enum.Parse<OrderType>(i)] = button;

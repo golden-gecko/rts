@@ -666,7 +666,10 @@ public class MyGameObject : MonoBehaviour
 
                 EnableColliders(false);
 
-                Indicators.OnConstruction();
+                if (Indicators)
+                {
+                    Indicators.OnConstruction();
+                }
                 break;
 
             case MyGameObjectState.Preview:
@@ -680,17 +683,26 @@ public class MyGameObject : MonoBehaviour
             case MyGameObjectState.Operational:
                 RemoveConstructionResourceFlags();
 
-                Indicators.OnConstructionEnd();
+                if (Indicators)
+                {
+                    Indicators.OnConstructionEnd();
+                }
                 break;
 
             case MyGameObjectState.UnderAssembly:
-                Indicators.OnConstruction();
+                if (Indicators)
+                {
+                    Indicators.OnConstruction();
+                }
                 break;
 
             case MyGameObjectState.UnderConstruction:
                 RaiseConstructionResourceFlags();
 
-                Indicators.OnConstruction();
+                if (Indicators)
+                {
+                    Indicators.OnConstruction();
+                }
                 break;
         }
     }

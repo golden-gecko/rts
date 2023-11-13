@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
 
@@ -86,7 +87,11 @@ public class Utils
             rotationFromParent = ResetRotation(parent);
         }
 
-        MyGameObject myGameObject = Object.Instantiate(Game.Instance.Config.BaseGameObject, position, rotation, parent).GetComponent<MyGameObject>();
+        // TODO: Refactor. Remove singleton.
+        // Game.Instance.Config.BaseGameObject
+        GameObject baseGameObject = GameObject.Find("Setup").GetComponent<Config>().BaseGameObject;
+
+        MyGameObject myGameObject = Object.Instantiate(baseGameObject, position, rotation, parent).GetComponent<MyGameObject>();
 
         myGameObject.name = blueprint.Name;
         myGameObject.SetPlayer(player);
@@ -347,6 +352,30 @@ public class Utils
         }
 
         return formatted.Trim();
+    }
+    #endregion
+
+    #region Blueprints
+    public static List<Blueprint> CreateBlueprints()
+    {
+        List<Blueprint> blueprints = new List<Blueprint>();
+
+        if (Directory.Exists(Config.Blueprints.Directory) == false)
+        {
+            return blueprints;
+        }
+
+        foreach (string file in Directory.EnumerateFiles(Config.Blueprints.Directory))
+        {
+            if (Path.GetExtension(file).ToLower() != ".json")
+            {
+                continue;
+            }
+
+            blueprints.Add(JsonUtility.FromJson<Blueprint>(File.ReadAllText(file)));
+        }
+
+        return blueprints;
     }
     #endregion
 

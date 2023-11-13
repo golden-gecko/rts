@@ -27,7 +27,6 @@ public class MenuScene : UI_Element
 
             button.RegisterCallback<ClickEvent>(x => OnButtonScene(scene));
             button.text = scene;
-            button.userData = scene;
 
             Menu.Add(container);
         }

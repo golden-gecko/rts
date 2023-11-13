@@ -58,7 +58,6 @@ public class UI_Commands_Recipes : UI_Element
             button.RegisterCallback<ClickEvent>(x => OnRecipe(i));
             button.style.display = DisplayStyle.None;
             button.text = Utils.FormatName(i);
-            button.userData = i;
 
             recipes.Add(buttonContainer);
             recipesButtons[i] = button;

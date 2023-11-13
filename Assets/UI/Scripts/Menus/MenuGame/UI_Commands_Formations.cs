@@ -55,7 +55,6 @@ public class UI_Commands_Formations : UI_Element
             button.RegisterCallback<ClickEvent>(x => OnFormation(Enum.Parse<Formation>(i)));
             button.style.display = DisplayStyle.Flex;
             button.text = Utils.FormatName(i);
-            button.userData = Enum.Parse<Formation>(i);
 
             formations.Add(buttonContainer);
             formationsButtons[Enum.Parse<Formation>(i)] = button;

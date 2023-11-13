@@ -306,6 +306,7 @@ public class MenuEditor : UI_Element
             Destroy(blueprint.BaseGameObject.gameObject);
         }
     }
+
     private void PositionArm(Transform parent)
     {
         BlueprintComponent arm = blueprint.Parts.Find(x => x.PartType == PartType.Arm);
@@ -395,7 +396,7 @@ public class MenuEditor : UI_Element
 
     private void LoadBlueprints()
     {
-        Blueprints.choices = Game.Instance.BlueprintManager.Blueprints.Keys.ToList();
+        Blueprints.choices = Game.Instance.BlueprintManager.Blueprints.Select(x => x.Name).ToList();
     }
 
     [SerializeField]

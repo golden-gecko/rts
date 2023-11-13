@@ -35,7 +35,9 @@ public class Game : Singleton<Game>
             return;
         }
 
-        if (BlueprintManager.Blueprints.TryGetValue(name, out blueprint))
+        blueprint = BlueprintManager.Get(name);
+
+        if (blueprint == null)
         {
             myGameObject = null;
 

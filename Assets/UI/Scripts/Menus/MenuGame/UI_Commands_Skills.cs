@@ -58,7 +58,6 @@ public class UI_Commands_Skills : UI_Element
             button.RegisterCallback<ClickEvent>(x => OnUseSkill(i));
             button.style.display = DisplayStyle.None;
             button.text = Utils.FormatName(i);
-            button.userData = i;
 
             skills.Add(buttonContainer);
             skillsButtons[i] = button;

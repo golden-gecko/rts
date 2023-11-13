@@ -58,7 +58,6 @@ public class UI_Commands_Technologies : UI_Element
             button.RegisterCallback<ClickEvent>(x => OnResearch(i));
             button.style.display = DisplayStyle.None;
             button.text = Utils.FormatName(i);
-            button.userData = i;
 
             technologies.Add(buttonContainer);
             technologiesButtons[i] = button;

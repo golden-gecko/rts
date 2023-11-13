@@ -9,12 +9,33 @@ using UnityEngine;
 
 public class Tools : EditorWindow
 {
-    [MenuItem("Tools/Render")]
+    [MenuItem("Tools/Build", false, 0)]
+    public static void Build()
+    {
+        ClearLog();
+
+        // string sceneName = GetSceneName();
+
+        foreach (Blueprint blueprint in Utils.CreateBlueprints())
+        {
+            MyGameObject myGameObject = Utils.CreateGameObject(blueprint, Vector3.zero, Quaternion.identity, null, MyGameObjectState.Preview);
+
+            Directory.CreateDirectory(Path.Combine(new string[] { "Assets", "Blueprints" }));
+
+            PrefabUtility.SaveAsPrefabAsset(myGameObject.gameObject, Path.Combine(new string[] { "Assets", "Blueprints", blueprint.Name }));
+
+            break;
+        }
+
+        // RestoreScene(sceneName);
+    }
+
+    [MenuItem("Tools/Render", false, 1)]
     public static void Render()
     {
         ClearLog();
 
-        string sceneName = EditorSceneManager.GetActiveScene().name;
+        string sceneName = GetSceneName();
 
         EditorSceneManager.SaveCurrentModifiedScenesIfUserWantsTo();
         EditorSceneManager.OpenScene(Path.Join("Assets", "Scenes", "Editor.unity"));
@@ -53,10 +74,10 @@ public class Tools : EditorWindow
 
         RenderTexture.active = null;
 
-        EditorSceneManager.OpenScene(Path.Join("Assets", "Scenes", string.Format("{0}.unity", sceneName)));
+        RestoreScene(sceneName);
     }
 
-    [MenuItem("Tools/Validate")]
+    [MenuItem("Tools/Validate", false, 2)]
     public static void Validate()
     {
         ClearLog();
@@ -92,6 +113,16 @@ public class Tools : EditorWindow
         MethodInfo method = type.GetMethod("Clear");
 
         method.Invoke(new object(), null);
+    }
+
+    private static string GetSceneName()
+    {
+        return EditorSceneManager.GetActiveScene().name;
+    }
+
+    private static void RestoreScene(string sceneName)
+    {
+        EditorSceneManager.OpenScene(Path.Join("Assets", "Scenes", string.Format("{0}.unity", sceneName)));
     }
 
     private static void ValidateNames(IEnumerable<GameObject> gameObjects)
