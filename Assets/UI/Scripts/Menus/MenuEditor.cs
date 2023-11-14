@@ -1,6 +1,7 @@
+using NUnit.Framework.Constraints;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UIElements;
 
@@ -26,6 +27,9 @@ public class MenuEditor : UI_Element
         Preview = Root.Q<VisualElement>("Preview");
         Preview.RegisterCallback<MouseEnterEvent>(x => OnMouseEnterEvent());
         Preview.RegisterCallback<MouseLeaveEvent>(x => OnMouseLeaveEvent());
+
+        Info = Root.Q<Label>("Info");
+        Info.text = string.Empty;
 
         ButtonPrevious = Root.Q<Button>("Previous");
         ButtonPrevious.RegisterCallback<ClickEvent>(x => OnButtonPrevious());
@@ -171,9 +175,9 @@ public class MenuEditor : UI_Element
             return;
         }
 
-        VisiblePartsList[VisiblePartsListIndex].style.display = DisplayStyle.None;
+        VisiblePartsList[VisiblePartsListIndex].Value.style.display = DisplayStyle.None;
         VisiblePartsListIndex -= 1;
-        VisiblePartsList[VisiblePartsListIndex].style.display = DisplayStyle.Flex;
+        VisiblePartsList[VisiblePartsListIndex].Value.style.display = DisplayStyle.Flex;
     }
 
     private void OnButtonNext()
@@ -183,9 +187,9 @@ public class MenuEditor : UI_Element
             return;
         }
 
-        VisiblePartsList[VisiblePartsListIndex].style.display = DisplayStyle.None;
+        VisiblePartsList[VisiblePartsListIndex].Value.style.display = DisplayStyle.None;
         VisiblePartsListIndex += 1;
-        VisiblePartsList[VisiblePartsListIndex].style.display = DisplayStyle.Flex;
+        VisiblePartsList[VisiblePartsListIndex].Value.style.display = DisplayStyle.Flex;
     }
 
     private void OnButtonClose()
@@ -243,7 +247,7 @@ public class MenuEditor : UI_Element
 
         listView.itemsSource = partsWithNoneOption;
 
-        VisiblePartsList.Add(listView);
+        VisiblePartsList.Add(new KeyValuePair<PartType, ListView>(partType, listView));
     }
 
     private void SaveBlueprint()
@@ -287,6 +291,15 @@ public class MenuEditor : UI_Element
         PositionArm(placeholder);
 
         SavePosition();
+
+        string info = string.Empty;
+
+        foreach (BlueprintComponent i in blueprint.Parts)
+        {
+            info += string.Format("{0}: {1}\n", Enum.GetName(typeof(PartType), i.PartType), i.Name);
+        }
+
+        Info.text = info;
     }
 
     private void DestroyGameObjectFromBlueprint()
@@ -393,6 +406,7 @@ public class MenuEditor : UI_Element
     private Button ButtonSave;
 
     private VisualElement Preview;
+    private Label Info;
     private bool MouseInside = false;
 
     private Button ButtonPrevious;
@@ -401,7 +415,7 @@ public class MenuEditor : UI_Element
 
     private VisualElement DialogOverwrite;
 
-    private List<ListView> VisiblePartsList = new List<ListView>();
+    private List<KeyValuePair<PartType, ListView>> VisiblePartsList = new List<KeyValuePair<PartType, ListView>>();
     private int VisiblePartsListIndex = 0;
 
     private Blueprint blueprint = new Blueprint();
