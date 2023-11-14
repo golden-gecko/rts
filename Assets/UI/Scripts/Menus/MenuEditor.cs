@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UIElements;
 
@@ -22,35 +23,6 @@ public class MenuEditor : UI_Element
         ButtonSave = Root.Q<Button>("Save");
         ButtonSave.RegisterCallback<ClickEvent>(x => OnButtonSave());
 
-        PartsArm = Root.Q<ListView>("PartsArm");
-        PartsArm.selectionChanged += (IEnumerable<object> objects) => OnSelectionChanged(PartType.Arm, objects);
-
-        PartsChassis = Root.Q<ListView>("PartsChassis");
-        PartsChassis.selectionChanged += (IEnumerable<object> objects) => OnSelectionChanged(PartType.Chassis, objects);
-
-        PartsDrive = Root.Q<ListView>("PartsDrive");
-        PartsDrive.selectionChanged += (IEnumerable<object> objects) => OnSelectionChanged(PartType.Drive, objects);
-
-        PartsEngine = Root.Q<ListView>("PartsEngine");
-        PartsEngine.selectionChanged += (IEnumerable<object> objects) => OnSelectionChanged(PartType.Engine, objects);
-
-        PartsGun = Root.Q<ListView>("PartsGun");
-        PartsGun.selectionChanged += (IEnumerable<object> objects) => OnSelectionChanged(PartType.Gun, objects);
-
-        PartsShield = Root.Q<ListView>("PartsShield");
-        PartsShield.selectionChanged += (IEnumerable<object> objects) => OnSelectionChanged(PartType.Shield, objects);
-
-        PartsSight = Root.Q<ListView>("PartsSight");
-        PartsSight.selectionChanged += (IEnumerable<object> objects) => OnSelectionChanged(PartType.Sight, objects);
-
-        VisiblePartsList.Add(PartsChassis);
-        VisiblePartsList.Add(PartsDrive);
-        VisiblePartsList.Add(PartsEngine);
-        VisiblePartsList.Add(PartsGun);
-        VisiblePartsList.Add(PartsArm);
-        VisiblePartsList.Add(PartsShield);
-        VisiblePartsList.Add(PartsSight);
-
         Preview = Root.Q<VisualElement>("Preview");
         Preview.RegisterCallback<MouseEnterEvent>(x => OnMouseEnterEvent());
         Preview.RegisterCallback<MouseLeaveEvent>(x => OnMouseLeaveEvent());
@@ -63,19 +35,24 @@ public class MenuEditor : UI_Element
 
         ButtonClose = Root.Q<Button>("Close");
         ButtonClose.RegisterCallback<ClickEvent>(x => OnButtonClose());
+
+        DialogOverwrite = Root.Q<VisualElement>("DialogOverwrite");
+        DialogOverwrite.Q<Label>("Header").text = "Overwrite blueprint?";
+        DialogOverwrite.Q<Button>("Yes").RegisterCallback<ClickEvent>(x => OnButtonYes());
+        DialogOverwrite.Q<Button>("No").RegisterCallback<ClickEvent>(x => OnButtonNo());
     }
 
     private void Start()
     {
-        CreatePartList(PartsArm, Game.Instance.Config.Arms);
-        CreatePartList(PartsChassis, Game.Instance.Config.Chassis);
-        CreatePartList(PartsDrive, Game.Instance.Config.Drives);
-        CreatePartList(PartsEngine, Game.Instance.Config.Engines);
-        CreatePartList(PartsGun, Game.Instance.Config.Guns);
-        CreatePartList(PartsShield, Game.Instance.Config.Shields);
-        CreatePartList(PartsSight, Game.Instance.Config.Sights);
+        CreateBlueprints();
 
-        LoadBlueprints();
+        CreatePartList("PartsChassis", PartType.Chassis, Game.Instance.Config.Chassis);
+        CreatePartList("PartsDrive", PartType.Drive, Game.Instance.Config.Drives);
+        CreatePartList("PartsEngine", PartType.Engine, Game.Instance.Config.Engines);
+        CreatePartList("PartsGun", PartType.Gun, Game.Instance.Config.Guns);
+        CreatePartList("PartsArm", PartType.Arm, Game.Instance.Config.Arms);
+        CreatePartList("PartsShield", PartType.Shield, Game.Instance.Config.Shields);
+        CreatePartList("PartsSight", PartType.Sight, Game.Instance.Config.Sights);
     }
 
     private void Update()
@@ -94,23 +71,6 @@ public class MenuEditor : UI_Element
     private void Refresh()
     {
         UI.Instance.GetComponentInChildren<UI_Commands_Prefabs>().Refresh(); // TODO: Refactor.
-
-        /*
-        foreach (Assembler assembler in FindObjectsByType<Assembler>(FindObjectsInactive.Include, FindObjectsSortMode.None)) // TODO: Refactor.
-        {
-            assembler.Parent.Orders.PrefabWhitelist.Clear();
-
-            foreach (string prefab in assembler.Prefabs)
-            {
-                assembler.Parent.Orders.AllowPrefab(prefab);
-            }
-
-            foreach (string prefab in Game.Instance.BlueprintManager.Blueprints.Keys)
-            {
-                assembler.Parent.Orders.AllowPrefab(prefab);
-            }
-        }
-        */
     }
 
     private void OnBlueprintsChange(string name)
@@ -161,23 +121,14 @@ public class MenuEditor : UI_Element
             return;
         }
 
-        int index = Blueprints.choices.FindIndex(x => x == name);
-
-        if (index < 0)
+        if (Blueprints.choices.Find(x => x == name) == null)
         {
-            Blueprints.choices.Add(name);
-            Blueprints.choices.Sort();
+            SaveBlueprint();
         }
-
-        Blueprints.index = Blueprints.choices.FindIndex(x => x == name);
-
-        blueprint.Name = name;
-
-        Game.Instance.BlueprintManager.Save(blueprint.Clone() as Blueprint);
-
-        blueprint.Save();
-
-        Refresh();
+        else
+        {
+            DialogOverwrite.style.display = DisplayStyle.Flex;
+        }
     }
 
     private void OnSelectionChanged(PartType partType, IEnumerable<object> objects)
@@ -199,6 +150,7 @@ public class MenuEditor : UI_Element
         blueprint.Parts.Remove(component);
         blueprint.Parts.Add(new BlueprintComponent { PartType = partType, Name = part.name, Part = part });
 
+        DestroyGameObjectFromBlueprint();
         BuildGameObjectFromBlueprint();
     }
 
@@ -241,8 +193,35 @@ public class MenuEditor : UI_Element
         UI.Instance.GoToMenu(MenuType.Game);
     }
 
-    private void CreatePartList(ListView listView, List<GameObject> parts)
+    private void OnButtonYes()
     {
+        SaveBlueprint();
+
+        DialogOverwrite.style.display = DisplayStyle.None;
+    }
+
+    private void OnButtonNo()
+    {
+        DialogOverwrite.style.display = DisplayStyle.None;
+    }
+
+    private void CreateBlueprints()
+    {
+        Blueprints.choices = Game.Instance.BlueprintManager.Blueprints.Select(x => x.Name).ToList();
+    }
+
+    private void CreatePartList(string name, PartType partType, List<GameObject> parts)
+    {
+        List<GameObject> partsWithNoneOption = new List<GameObject>(parts);
+        partsWithNoneOption.Insert(0, null);
+
+        ListView listView = Root.Q<ListView>(name);
+
+        listView.selectionChanged += (IEnumerable<object> objects) =>
+        {
+            OnSelectionChanged(partType, objects);
+        };
+
         listView.makeItem = () =>
         {
             return TemplatePart.Instantiate();
@@ -250,24 +229,53 @@ public class MenuEditor : UI_Element
 
         listView.bindItem = (VisualElement item, int index) =>
         {
-            if (parts[index])
+            if (partsWithNoneOption[index])
             {
-                item.Q<Label>("Name").text = parts[index].name;
-                item.Q<VisualElement>("Image").style.backgroundImage = new StyleBackground(Utils.LoadPortrait(parts[index].name));
+                item.Q<Label>("Name").text = partsWithNoneOption[index].name;
+                item.Q<VisualElement>("Image").style.backgroundImage = new StyleBackground(Utils.GetPortrait(partsWithNoneOption[index].name));
             }
             else
             {
                 item.Q<Label>("Name").text = "None";
+                item.Q<VisualElement>("Image").style.backgroundImage = null;
             }
         };
 
-        listView.itemsSource = parts;
+        listView.itemsSource = partsWithNoneOption;
+
+        VisiblePartsList.Add(listView);
+    }
+
+    private void SaveBlueprint()
+    {
+        string name = Name.text;
+
+        if (name.Length <= 0)
+        {
+            return;
+        }
+
+        int index = Blueprints.choices.FindIndex(x => x == name);
+
+        if (index < 0)
+        {
+            Blueprints.choices.Add(name);
+            Blueprints.choices.Sort();
+        }
+
+        Blueprints.index = Blueprints.choices.FindIndex(x => x == name);
+
+        blueprint.Name = name;
+
+        Game.Instance.BlueprintManager.Save(blueprint.Clone() as Blueprint);
+
+        blueprint.Save();
+
+        Refresh();
     }
 
     private void BuildGameObjectFromBlueprint()
     {
-        DestroyGameObjectFromBlueprint();
-
         Transform setup = GameObject.Find("Setup").transform;
         Transform editor = setup.Find("Editor").transform;
         Transform placeholder = editor.Find("Placeholder").transform;
@@ -376,11 +384,6 @@ public class MenuEditor : UI_Element
         }
     }
 
-    private void LoadBlueprints()
-    {
-        Blueprints.choices = Game.Instance.BlueprintManager.Blueprints.Select(x => x.Name).ToList();
-    }
-
     [SerializeField]
     private VisualTreeAsset TemplatePart;
 
@@ -389,20 +392,14 @@ public class MenuEditor : UI_Element
     private TextField Name;
     private Button ButtonSave;
 
-    private ListView PartsArm;
-    private ListView PartsChassis;
-    private ListView PartsDrive;
-    private ListView PartsEngine;
-    private ListView PartsGun;
-    private ListView PartsShield;
-    private ListView PartsSight;
-
     private VisualElement Preview;
     private bool MouseInside = false;
 
     private Button ButtonPrevious;
     private Button ButtonNext;
     private Button ButtonClose;
+
+    private VisualElement DialogOverwrite;
 
     private List<ListView> VisiblePartsList = new List<ListView>();
     private int VisiblePartsListIndex = 0;

@@ -300,7 +300,7 @@ public class Utils
     #endregion
 
     #region Resources
-    public static Texture2D LoadPortrait(string name)
+    public static Texture2D GetPortrait(string name)
     {
         return Resources.Load<Texture2D>(Path.Join("Portraits", name));
     }

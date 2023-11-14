@@ -4,6 +4,7 @@
 
 .button,
 .dropdown .unity-popup-field__input,
+.part,
 .text {
     border-color: rgba(227, 157, 0, 255);
     border-width: 2px;
@@ -59,4 +60,8 @@
 
 .panel-layers .unity-label {
     min-width: auto;
+}
+
+.part {
+    margin-bottom: 5px;
 }

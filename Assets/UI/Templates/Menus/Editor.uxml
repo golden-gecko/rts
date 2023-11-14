@@ -2,6 +2,7 @@
     <ui:Template name="Header" src="project://database/Assets/UI/Templates/Header.uxml?fileID=9197481963319205126&amp;guid=4431d286fc167324b887444984d2db7a&amp;type=3#Header" />
     <ui:Template name="Buttons_2" src="project://database/Assets/UI/Templates/Buttons_2.uxml?fileID=9197481963319205126&amp;guid=fb0e537cceaba4e4b800757af08e963d&amp;type=3#Buttons_2" />
     <ui:Template name="Buttons_3" src="project://database/Assets/UI/Templates/Buttons_3.uxml?fileID=9197481963319205126&amp;guid=f3aa330e774b18f499a1232825742cc3&amp;type=3#Buttons_3" />
+    <ui:Template name="Dialog_1" src="project://database/Assets/UI/Templates/Dialog_1.uxml?fileID=9197481963319205126&amp;guid=eb4f6665769828d46928bf422e1cf16e&amp;type=3#Dialog_1" />
     <Style src="project://database/Assets/UI/Styles/Style.uss?fileID=7433441132597879392&amp;guid=231d51774ac67094591621cc55974d8c&amp;type=3#Style" />
     <ui:VisualElement class="container background">
         <ui:Instance template="Header" />
@@ -26,4 +27,5 @@
             <ui:Instance template="Buttons_3" />
         </ui:VisualElement>
     </ui:VisualElement>
+    <ui:Instance template="Dialog_1" name="DialogOverwrite" style="display: none; position: absolute; top: 0; left: 0; bottom: 0; right: 0;" />
 </ui:UXML>
