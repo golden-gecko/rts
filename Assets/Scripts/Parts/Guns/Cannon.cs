@@ -12,7 +12,7 @@ public class Cannon : Gun
 
         Reload.Reset();
 
-        GameObject gameObject = Instantiate(MissilePrefab, myGameObject.Center, Quaternion.identity);
+        GameObject gameObject = Instantiate(MissilePrefab, myGameObject.GetComponentInChildren<Gun>().Center, Quaternion.identity);
         Missile missile = gameObject.GetComponent<Missile>();
 
         missile.Damage = Damage.Clone() as Property;

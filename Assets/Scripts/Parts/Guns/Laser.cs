@@ -10,6 +10,8 @@ public class Laser : Gun
             return;
         }
 
+        Debug.Log("Reload: " + Reload.Current);
+
         Reload.Reset();
 
         GameObject gameObject = Instantiate(MissilePrefab, myGameObject.Center, Quaternion.identity);

@@ -43,7 +43,7 @@ public class OrderHandlerAttackObjectGauss : OrderHandler
                 myGameObject.Stats.Inc(Stats.TargetsDestroyed);
             }
 
-            if (Map.Instance.IsVisibleBySight(myGameObject.Position, HUD.Instance.ActivePlayer))
+            if (Map.Instance.IsVisibleBySight(hit.point, HUD.Instance.ActivePlayer))
             {
                 Object.Instantiate(myGameObject.GetComponent<Missile>().HitEffectPrefab, hit.point, Quaternion.identity);
             }
@@ -51,7 +51,7 @@ public class OrderHandlerAttackObjectGauss : OrderHandler
             myGameObject.Stats.Add(Stats.DamageDealt, damageDealt);
         }
 
-        if (Map.Instance.IsVisibleBySight(myGameObject.Position, HUD.Instance.ActivePlayer))
+        if (Map.Instance.IsVisibleBySight(order.TargetGameObject.Position, HUD.Instance.ActivePlayer))
         {
             Object.Instantiate(myGameObject.GetComponent<Missile>().HitEffectPrefab, order.TargetGameObject.Position, Quaternion.identity);
         }

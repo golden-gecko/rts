@@ -823,13 +823,7 @@ public class MyGameObject : MonoBehaviour
         }
     }
 
-    public Vector3 Center
-    {
-        get
-        {
-            return new Vector3(Position.x, Position.y + Size.y / 2.0f, Position.z);
-        }
-    }
+    public Vector3 Center { get => new Vector3(Position.x, Position.y + Size.y / 2.0f, Position.z); }
 
     public Vector3 Direction { get => transform.forward; }
 
@@ -843,28 +837,6 @@ public class MyGameObject : MonoBehaviour
     {
         get
         {
-            /*
-            Collider[] colliders = Body.GetComponentsInChildren<Collider>();
-
-            if (colliders.Length <= 0)
-            {
-                return Vector3.zero;
-            }
-
-            Vector3 size = Vector3.zero;
-
-            Quaternion rotation = Utils.ResetRotation(this);
-
-            foreach (Collider collider in colliders)
-            {
-                size += collider.bounds.size;
-            }
-
-            Utils.RestoreRotation(this, rotation);
-
-            return size / colliders.Length;
-            */
-
             Collider[] colliders = Body.GetComponentsInChildren<Collider>();
 
             if (colliders.Length <= 0)
@@ -906,7 +878,7 @@ public class MyGameObject : MonoBehaviour
         {
             if (TryGetComponent(out PowerPlant powerPlant))
             {
-                return powerPlant.PowerUpTime.Finished; // powerPlant.IsProducer || Map.Instance.IsVisibleByPower(this);
+                return powerPlant.PowerUpTime.Finished; // powerPlant.IsProducer || Map.Instance.IsVisibleByPower(this); // TODO: Check.
             }
 
             return false;
