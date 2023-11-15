@@ -68,10 +68,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9457e17311c7b6e49be3978f6559b6fe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <Mass>k__BackingField: 10
   <Health>k__BackingField:
     <Current>k__BackingField: 100
     <Max>k__BackingField: 100
+  <Mass>k__BackingField: 50
 --- !u!114 &4744879806858303384
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -84,6 +84,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9f7fc2f43637b07428d9ff8d0e38edaa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  <Health>k__BackingField:
+    <Current>k__BackingField: 10
+    <Max>k__BackingField: 10
   <Mass>k__BackingField: 10
   <RaiseResourceFlags>k__BackingField: 1
   <ResourceUsage>k__BackingField: 4

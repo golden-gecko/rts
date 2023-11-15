@@ -19,6 +19,11 @@ public class Gun : Part
     {
         base.Update();
 
+        if (Alive == false)
+        {
+            return;
+        }
+
         Reload.Update(Time.deltaTime);
     }
 
@@ -29,12 +34,12 @@ public class Gun : Part
 
     public bool IsInRange(Vector3 position)
     {
-        return Utils.IsInRange(GetComponent<MyGameObject>().Position, position, Range.Total);
+        return Utils.IsInRange(GetComponentInParent<MyGameObject>().Position, position, Range.Total);
     }
 
     public virtual bool CanFire()
     {
-        return Ammunition.CanDec() && Reload.Finished;
+        return Alive && Ammunition.CanDec() && Reload.Finished;
     }
 
     public virtual void Fire(MyGameObject myGameObject, Vector3 position)

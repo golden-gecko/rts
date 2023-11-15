@@ -27,7 +27,7 @@ public class PowerPlant : Part
     {
         base.Update();
 
-        if (Parent == null || Parent.Player == null)
+        if (Alive == false)
         {
             return;
         }

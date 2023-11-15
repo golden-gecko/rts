@@ -23,7 +23,7 @@ public class Assembler : Part
     {
         base.Update();
 
-        if (Parent == null || Parent.Player == null)
+        if (Parent == null || Parent.Player == null || Health.Empty == false)
         {
             return;
         }

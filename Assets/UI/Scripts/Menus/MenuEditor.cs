@@ -1,4 +1,3 @@
-using NUnit.Framework.Constraints;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -40,10 +39,15 @@ public class MenuEditor : UI_Element
         ButtonClose = Root.Q<Button>("Close");
         ButtonClose.RegisterCallback<ClickEvent>(x => OnButtonClose());
 
+        DialogDelete = Root.Q<VisualElement>("DialogDelete");
+        DialogDelete.Q<Label>("Header").text = "Delete blueprint?";
+        DialogDelete.Q<Button>("Yes").RegisterCallback<ClickEvent>(x => OnButtonDeleteYes());
+        DialogDelete.Q<Button>("No").RegisterCallback<ClickEvent>(x => OnButtonDeleteNo());
+
         DialogOverwrite = Root.Q<VisualElement>("DialogOverwrite");
         DialogOverwrite.Q<Label>("Header").text = "Overwrite blueprint?";
-        DialogOverwrite.Q<Button>("Yes").RegisterCallback<ClickEvent>(x => OnButtonYes());
-        DialogOverwrite.Q<Button>("No").RegisterCallback<ClickEvent>(x => OnButtonNo());
+        DialogOverwrite.Q<Button>("Yes").RegisterCallback<ClickEvent>(x => OnButtonOverwriteYes());
+        DialogOverwrite.Q<Button>("No").RegisterCallback<ClickEvent>(x => OnButtonOverwriteNo());
     }
 
     private void Start()
@@ -93,6 +97,7 @@ public class MenuEditor : UI_Element
 
         DestroyGameObjectFromBlueprint();
 
+        Name.value = newBlueprint.Name;
         blueprint = newBlueprint.Clone() as Blueprint;
 
         BuildGameObjectFromBlueprint();
@@ -100,20 +105,7 @@ public class MenuEditor : UI_Element
 
     private void OnButtonDelete()
     {
-        string name = Blueprints.text;
-
-        if (name.Length <= 0)
-        {
-            return;
-        }
-
-        Blueprints.choices.Remove(name);
-        Blueprints.choices.Sort();
-        Blueprints.index = Blueprints.choices.Count - 1;
-
-        Game.Instance.BlueprintManager.Delete(name);
-
-        Refresh();
+        DialogDelete.style.display = DisplayStyle.Flex;
     }
 
     private void OnButtonSave()
@@ -197,14 +189,39 @@ public class MenuEditor : UI_Element
         UI.Instance.GoToMenu(MenuType.Game);
     }
 
-    private void OnButtonYes()
+    private void OnButtonDeleteYes()
+    {
+        string name = Blueprints.text;
+
+        if (name.Length <= 0)
+        {
+            return;
+        }
+
+        Blueprints.choices.Remove(name);
+        Blueprints.choices.Sort();
+        Blueprints.index = 0;
+
+        Game.Instance.BlueprintManager.Delete(name);
+
+        Refresh();
+
+        DialogDelete.style.display = DisplayStyle.None;
+    }
+
+    private void OnButtonDeleteNo()
+    {
+        DialogDelete.style.display = DisplayStyle.None;
+    }
+
+    private void OnButtonOverwriteYes()
     {
         SaveBlueprint();
 
         DialogOverwrite.style.display = DisplayStyle.None;
     }
 
-    private void OnButtonNo()
+    private void OnButtonOverwriteNo()
     {
         DialogOverwrite.style.display = DisplayStyle.None;
     }
@@ -291,15 +308,7 @@ public class MenuEditor : UI_Element
         PositionArm(placeholder);
 
         SavePosition();
-
-        string info = string.Empty;
-
-        foreach (BlueprintComponent i in blueprint.Parts)
-        {
-            info += string.Format("{0}: {1}\n", Enum.GetName(typeof(PartType), i.PartType), i.Name);
-        }
-
-        Info.text = info;
+        UpdateInfo();
     }
 
     private void DestroyGameObjectFromBlueprint()
@@ -375,6 +384,7 @@ public class MenuEditor : UI_Element
         BlueprintComponent chassis = blueprint.Parts.Find(x => x.PartType == PartType.Chassis);
         BlueprintComponent drive = blueprint.Parts.Find(x => x.PartType == PartType.Drive);
         BlueprintComponent gun = blueprint.Parts.Find(x => x.PartType == PartType.Gun);
+        BlueprintComponent shield = blueprint.Parts.Find(x => x.PartType == PartType.Shield);
 
         if (arm != null && arm.Instance != null)
         {
@@ -395,6 +405,49 @@ public class MenuEditor : UI_Element
         {
             gun.Position = gun.Instance.transform.localPosition;
         }
+
+        if (shield != null && shield.Instance != null)
+        {
+            shield.Position = shield.Instance.transform.localPosition;
+        }
+    }
+
+    private void UpdateInfo()
+    {
+        string info = string.Empty;
+
+        foreach (BlueprintComponent i in blueprint.Parts)
+        {
+            info += string.Format("{0}: {1}\n", Enum.GetName(typeof(PartType), i.PartType), i.Name);
+        }
+
+        info += string.Format("\n\nHealth: {0:0.}", blueprint.BaseGameObject.Health.Max);
+        info += string.Format("\nMass: {0:0.}", blueprint.BaseGameObject.Mass);
+
+        Armour armour = blueprint.BaseGameObject.GetComponentInChildren<Armour>();
+
+        if (armour)
+        {
+            info += string.Format("\n\nArmour: {0:0.}", armour.Value.Max);
+        }
+
+        Engine engine = blueprint.BaseGameObject.GetComponentInChildren<Engine>();
+
+        if (engine)
+        {
+            info += string.Format("\n\nRange: {0:0.}", engine.Fuel.Max / engine.FuelUsage);
+            info += string.Format("\nSpeed: {0:0.}", engine.Speed);
+        }
+
+        Gun gun = blueprint.BaseGameObject.GetComponentInChildren<Gun>();
+
+        if (gun)
+        {
+            info += string.Format("\n\nAttack damage: {0:0.}", gun.Damage.Value);
+            info += string.Format("\nAttack range: {0:0.}", gun.Range.Value);
+        }
+
+        Info.text = info;
     }
 
     [SerializeField]
@@ -414,6 +467,7 @@ public class MenuEditor : UI_Element
     private Button ButtonClose;
 
     private VisualElement DialogOverwrite;
+    private VisualElement DialogDelete;
 
     private List<KeyValuePair<PartType, ListView>> VisiblePartsList = new List<KeyValuePair<PartType, ListView>>();
     private int VisiblePartsListIndex = 0;

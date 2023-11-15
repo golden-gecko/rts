@@ -741,6 +741,7 @@ public class MyGameObject : MonoBehaviour
     private void SetupIndicators()
     {
         Indicators = Instantiate(Game.Instance.Config.Indicators, transform, false).GetComponent<Indicators>();
+        Indicators.name = Game.Instance.Config.Indicators.name;
     }
 
     private void CreateSkills()
@@ -930,9 +931,6 @@ public class MyGameObject : MonoBehaviour
     public bool Selectable { get; private set; } = true;
 
     [field: SerializeField]
-    public Progress Health { get; private set; } = new Progress(100.0f, 100.0f); // TODO: Move to chassis.
-
-    [field: SerializeField]
     public float EnableTime { get; private set; } = 2.0f;
 
     [field: SerializeField]
@@ -979,6 +977,16 @@ public class MyGameObject : MonoBehaviour
 
     [field: SerializeField]
     public bool ShowExit { get; private set; } = false;
+
+    public Progress Health
+    {
+        get
+        {
+            Part[] parts = GetComponentsInChildren<Part>();
+
+            return new Progress(parts.Sum(x => x.Health.Current), parts.Sum(x => x.Health.Max));
+        }
+    }
 
     public Vector3 Position { get => transform.position; set => transform.position = value; }
 

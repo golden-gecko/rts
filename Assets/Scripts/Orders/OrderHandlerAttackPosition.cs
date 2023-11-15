@@ -8,11 +8,11 @@ public class OrderHandlerAttackPosition : OrderHandler
 
         Vector3 position = order.TargetPosition;
 
-        if (myGameObject.GetComponent<Engine>())
+        if (myGameObject.GetComponentInChildren<Engine>())
         {
-            if (myGameObject.GetComponent<Gun>().IsInRange(position) == false)
+            if (myGameObject.GetComponentInChildren<Gun>().IsInRange(position) == false)
             {
-                myGameObject.Move(GetPositionToAttack(myGameObject.Position, position, myGameObject.GetComponent<Gun>().Range.Total), 0);
+                myGameObject.Move(GetPositionToAttack(myGameObject.Position, position, myGameObject.GetComponentInChildren<Gun>().Range.Total), 0);
             }
             else
             {
@@ -21,24 +21,24 @@ public class OrderHandlerAttackPosition : OrderHandler
                     myGameObject.transform.LookAt(new Vector3(position.x, myGameObject.Position.y, position.z));
                 }
 
-                if (myGameObject.GetComponent<Gun>().CanFire())
+                if (myGameObject.GetComponentInChildren<Gun>().CanFire())
                 {
-                    myGameObject.GetComponent<Gun>().Fire(myGameObject, position);
+                    myGameObject.GetComponentInChildren<Gun>().Fire(myGameObject, position);
                 }
             }
         }
         else
         {
-            if (myGameObject.GetComponent<Gun>().IsInRange(position))
+            if (myGameObject.GetComponentInChildren<Gun>().IsInRange(position))
             {
                 if (myGameObject.RotateTowardsTarget)
                 {
                     myGameObject.transform.LookAt(new Vector3(position.x, myGameObject.Position.y, position.z));
                 }
 
-                if (myGameObject.GetComponent<Gun>().CanFire())
+                if (myGameObject.GetComponentInChildren<Gun>().CanFire())
                 {
-                    myGameObject.GetComponent<Gun>().Fire(myGameObject, position);
+                    myGameObject.GetComponentInChildren<Gun>().Fire(myGameObject, position);
                 }
             }
         }

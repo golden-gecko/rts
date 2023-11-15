@@ -21,12 +21,12 @@ public class Radar : Part
     {
         base.Update();
 
-        if (Parent == null)
+        if (Alive == false)
         {
             return;
         }
 
-        if (previousState != Parent.State || previousEnabled != Parent.Enabled || Utils.ToGrid(previousPosition, Config.Map.Scale) != Utils.ToGrid(Parent.Position, Config.Map.Scale))
+        if (previousState != Parent.State || previousEnabled != Parent.Enabled || Utils.ToGrid(previousPosition, Config.Map.Scale) != Utils.ToGrid(Parent.Position, Config.Map.Scale)) // TODO: Add alive state.
         {
             if (previousState == MyGameObjectState.Operational && previousEnabled)
             {

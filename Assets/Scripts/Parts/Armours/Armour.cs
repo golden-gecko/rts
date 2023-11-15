@@ -11,6 +11,11 @@ public class Armour : Part
 
     public float Absorb(DamageType type, float damage)
     {
+        if (Alive == false)
+        {
+            return 0.0f;
+        }
+
         float removed = 0.0f;
 
         foreach (DamageTypeItem i in ProtectionType)

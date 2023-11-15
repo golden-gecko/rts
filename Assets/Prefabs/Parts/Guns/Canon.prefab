@@ -150,6 +150,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3a403fb22d2914049ac162610b2aebf2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  <Health>k__BackingField:
+    <Current>k__BackingField: 20
+    <Max>k__BackingField: 20
   <Mass>k__BackingField: 10
   <MissilePrefab>k__BackingField: {fileID: 3841255586236475405, guid: 86513724c5de2df4da484cb23191a7e5, type: 3}
   <Damage>k__BackingField:

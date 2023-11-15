@@ -110,6 +110,7 @@ public class Utils
             }
 
             i.Instance = Object.Instantiate(i.Part, myGameObject.Body.transform);
+            i.Instance.name = i.Name;
             i.Instance.transform.localPosition = i.Position;
         }
 

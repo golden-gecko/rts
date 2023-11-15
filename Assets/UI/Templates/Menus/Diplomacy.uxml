@@ -5,6 +5,6 @@
     <ui:VisualElement class="container background">
         <ui:Instance template="Header" />
         <ui:VisualElement class="container" />
-        <ui:Instance template="Buttons_1" />
+        <ui:Instance template="Buttons_1" style="margin-top: 10px; margin-right: 10px; margin-bottom: 10px; margin-left: 10px;" />
     </ui:VisualElement>
 </ui:UXML>

@@ -29,5 +29,6 @@
             <ui:Instance template="Buttons_3" />
         </ui:VisualElement>
     </ui:VisualElement>
+    <ui:Instance template="Dialog_1" name="DialogDelete" style="display: none; position: absolute; top: 0; left: 0; bottom: 0; right: 0;" />
     <ui:Instance template="Dialog_1" name="DialogOverwrite" style="display: none; position: absolute; top: 0; left: 0; bottom: 0; right: 0;" />
 </ui:UXML>

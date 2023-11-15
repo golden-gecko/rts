@@ -29,7 +29,7 @@ public class Engine : Part
 
     public bool CanDrive(float distance)
     {
-        return DistanceToDrive > distance || Fuel.CanDec();
+        return Alive && (DistanceToDrive > distance || Fuel.CanDec());
     }
 
     public void Drive(float distance)

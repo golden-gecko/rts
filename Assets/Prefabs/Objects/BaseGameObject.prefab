@@ -80,9 +80,6 @@ MonoBehaviour:
   <Enabled>k__BackingField: 1
   <Gatherable>k__BackingField: 0
   <Selectable>k__BackingField: 1
-  <Health>k__BackingField:
-    <Current>k__BackingField: 100
-    <Max>k__BackingField: 100
   <EnableTime>k__BackingField: 2
   <WaitTime>k__BackingField: 2
   <DestroyEffect>k__BackingField: {fileID: 100006, guid: bf98fad54e73fb8448b7b1b9ba4fd0b6, type: 3}
