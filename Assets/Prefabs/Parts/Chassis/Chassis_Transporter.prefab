@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 1938374264542287180}
   - component: {fileID: 4744879806858303384}
   m_Layer: 20
-  m_Name: Transporter
+  m_Name: Chassis_Transporter
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

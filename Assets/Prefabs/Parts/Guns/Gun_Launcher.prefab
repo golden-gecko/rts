@@ -177,8 +177,9 @@ GameObject:
   m_Component:
   - component: {fileID: 15359412747028086}
   - component: {fileID: 2443782882382279211}
+  - component: {fileID: 6196507036585619970}
   m_Layer: 20
-  m_Name: Gun_002
+  m_Name: Gun_Launcher
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -221,3 +222,36 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1.808871, y: 1.1064924, z: 1.2861922}
   m_Center: {x: -0.0029869378, y: 0.5532462, z: -0.16576499}
+--- !u!114 &6196507036585619970
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 827890342975937740}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ecda5608eea4a56479ada7dabce2d1bd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  <Health>k__BackingField:
+    <Current>k__BackingField: 10
+    <Max>k__BackingField: 10
+  <Mass>k__BackingField: 10
+  <ConstructionResources>k__BackingField:
+    <Items>k__BackingField: []
+  <MissilePrefab>k__BackingField: {fileID: 3841255586236475405, guid: 93bebf80087827f49b9a953289778170, type: 3}
+  <Damage>k__BackingField:
+    <Value>k__BackingField: 30
+  <Range>k__BackingField:
+    <Value>k__BackingField: 100
+  <Reload>k__BackingField:
+    <Current>k__BackingField: 10
+    <Max>k__BackingField: 10
+  <Ammunition>k__BackingField:
+    <Current>k__BackingField: 100
+    <Max>k__BackingField: 100
+  <DamageType>k__BackingField:
+  - <Type>k__BackingField: 0
+    <Ratio>k__BackingField: 1
+  AudioFire: {fileID: 8300000, guid: 23d80b5297162e9459fea98d1bec36f4, type: 3}

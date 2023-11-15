@@ -95,7 +95,7 @@ GameObject:
   - component: {fileID: 2397411990634053245}
   - component: {fileID: 940913917883361322}
   m_Layer: 20
-  m_Name: Medium
+  m_Name: Chassis_Medium
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
