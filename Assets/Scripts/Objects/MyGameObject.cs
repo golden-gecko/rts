@@ -657,6 +657,11 @@ public class MyGameObject : MonoBehaviour
     {
         State = state;
 
+        if (Indicators == null)
+        {
+            return;
+        }
+
         switch (state)
         {
             case MyGameObjectState.Cursor:

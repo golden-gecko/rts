@@ -9,6 +9,21 @@ using UnityEngine;
 
 public class Tools : EditorWindow
 {
+    [MenuItem("Tools/Build", false, 0)]
+    public static void Build()
+    {
+        List<Blueprint> blueprints = Utils.CreateBlueprints();
+
+        foreach (Blueprint blueprint in blueprints)
+        {
+            MyGameObject myGameObject = Utils.CreateGameObject(blueprint, Vector3.zero, Quaternion.identity, null, MyGameObjectState.Operational);
+
+            PrefabUtility.SaveAsPrefabAsset(myGameObject.gameObject, Path.Join(Config.Prefabs.Directory, "Blueprints", string.Format("{0}.prefab", myGameObject.name)));
+
+            DestroyImmediate(myGameObject.gameObject);
+        }
+    }
+
     [MenuItem("Tools/Render", false, 1)]
     public static void Render()
     {

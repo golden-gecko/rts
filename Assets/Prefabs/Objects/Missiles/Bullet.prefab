@@ -98,6 +98,9 @@ MonoBehaviour:
   <RotateTowardsTarget>k__BackingField: 1
   <ShowEntrance>k__BackingField: 0
   <ShowExit>k__BackingField: 0
+  Health:
+    <Current>k__BackingField: 100
+    <Max>k__BackingField: 100
   <FireEffectPrefab>k__BackingField: {fileID: 100002, guid: 3b5e16e5f057f6e4c808bd1f3ae53f7e, type: 3}
   <MoveEffectPrefab>k__BackingField: {fileID: 0}
   <HitEffectPrefab>k__BackingField: {fileID: 100006, guid: 24295e2be01bda1438e5198083b282af, type: 3}
@@ -105,11 +108,7 @@ MonoBehaviour:
     <Value>k__BackingField: 10
   <Range>k__BackingField:
     <Value>k__BackingField: 0
-  <DamageType>k__BackingField:
-  - <Type>k__BackingField: 0
-    <Ratio>k__BackingField: 1
-  - <Type>k__BackingField: 1
-    <Ratio>k__BackingField: 1
+  <DamageType>k__BackingField: []
 --- !u!1 &8178223464893241826
 GameObject:
   m_ObjectHideFlags: 0
@@ -231,15 +230,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3480303163794684978, guid: 54acbb5a4fb34454aa5f7f8b00056833, type: 3}
       propertyPath: m_LocalScale.x
-      value: 33.333336
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3480303163794684978, guid: 54acbb5a4fb34454aa5f7f8b00056833, type: 3}
       propertyPath: m_LocalScale.y
-      value: 33.333336
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3480303163794684978, guid: 54acbb5a4fb34454aa5f7f8b00056833, type: 3}
       propertyPath: m_LocalScale.z
-      value: 10
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3480303163794684978, guid: 54acbb5a4fb34454aa5f7f8b00056833, type: 3}
       propertyPath: m_LocalPosition.x

@@ -87,11 +87,9 @@ public class Utils
             rotationFromParent = ResetRotation(parent);
         }
 
-        // TODO: Refactor. Remove singleton.
+        // TODO: Refactor. Remove Game singleton.
         // Game.Instance.Config.BaseGameObject
-        GameObject baseGameObject = GameObject.Find("Setup").GetComponent<Config>().BaseGameObject;
-
-        MyGameObject myGameObject = Object.Instantiate(baseGameObject, position, rotation, parent).GetComponent<MyGameObject>();
+        MyGameObject myGameObject = Object.Instantiate(GameObject.Find("Setup").GetComponent<Config>().BaseGameObject, position, rotation, parent).GetComponent<MyGameObject>();
 
         myGameObject.name = blueprint.Name;
         myGameObject.SetPlayer(player);
@@ -109,7 +107,7 @@ public class Utils
                 }
             }
 
-            i.Instance = Object.Instantiate(i.Part, myGameObject.Body.transform);
+            i.Instance = Object.Instantiate(i.Part, myGameObject.transform.Find("Body").transform); // TODO: myGameObject.Body.transform
             i.Instance.name = i.Name;
             i.Instance.transform.localPosition = i.Position;
         }
@@ -124,31 +122,35 @@ public class Utils
 
     public static GameObject LoadPart(PartType partType, string name)
     {
+        // TODO: Refactor. Remove Game singleton.
+        // Game.Instance.Config
+        Config config = GameObject.Find("Setup").GetComponent<Config>();
+
         switch (partType)
         {
             case PartType.Chassis:
-                return Game.Instance.Config.Chassis.Find(x => x.name == name);
+                return config.Chassis.Find(x => x.name == name);
 
             case PartType.Constructor:
-                return Game.Instance.Config.Constructors.Find(x => x.name == name);
+                return config.Constructors.Find(x => x.name == name);
 
             case PartType.Drive:
-                return Game.Instance.Config.Drives.Find(x => x.name == name);
+                return config.Drives.Find(x => x.name == name);
 
             case PartType.Engine:
-                return Game.Instance.Config.Engines.Find(x => x.name == name);
+                return config.Engines.Find(x => x.name == name);
 
             case PartType.Gun:
-                return Game.Instance.Config.Guns.Find(x => x.name == name);
+                return config.Guns.Find(x => x.name == name);
 
             case PartType.Shield:
-                return Game.Instance.Config.Shields.Find(x => x.name == name);
+                return config.Shields.Find(x => x.name == name);
 
             case PartType.Sight:
-                return Game.Instance.Config.Sights.Find(x => x.name == name);
+                return config.Sights.Find(x => x.name == name);
 
             case PartType.Storage:
-                return Game.Instance.Config.Storages.Find(x => x.name == name);
+                return config.Storages.Find(x => x.name == name);
         }
 
         return null;
