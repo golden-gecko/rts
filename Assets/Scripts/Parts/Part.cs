@@ -1,6 +1,4 @@
-using System.Drawing;
 using UnityEngine;
-using UnityEngine.UIElements;
 
 public class Part : MonoBehaviour
 {
@@ -27,13 +25,12 @@ public class Part : MonoBehaviour
     }
 
     [field: SerializeField]
-    public Progress Health { get; private set; } = new Progress(10.0f, 10.0f);
-
-    [field: SerializeField]
     public float Mass { get; private set; } = 10.0f;
 
     [field: SerializeField]
     public ResourceContainer ConstructionResources { get; private set; } = new ResourceContainer();
+
+    public Progress Health { get => new Progress(ConstructionResources.CurrentSum, ConstructionResources.MaxSum); }
 
     public MyGameObject Parent { get; private set; }
 

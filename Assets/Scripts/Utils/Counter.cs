@@ -63,10 +63,10 @@ public class Counter
         return string.Format("{0}/{1}", Current, Max);
     }
 
-    [field: SerializeField]
+    [field: SerializeField, Range(0, 1000)]
     public int Current { get; private set; }
 
-    [field: SerializeField]
+    [field: SerializeField, Range(0, 1000)]
     public int Max { get; private set; }
 
     public float Percent { get => (float)Current / (float)Max; }

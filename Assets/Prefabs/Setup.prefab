@@ -876,6 +876,7 @@ MonoBehaviour:
   - {fileID: 6672543193626275511, guid: c0967d702df221a439ac077aa6a6ec59, type: 3}
   - {fileID: 4916527176359590894, guid: c559902122f92ab46a9fafb85156b9cb, type: 3}
   - {fileID: 6014288322611724604, guid: c0c27b841091e2849b51b49ec96c0c73, type: 3}
+  - {fileID: 827890342975937740, guid: c16f44da35c43c045b367eddbcd1e59a, type: 3}
   <Shields>k__BackingField:
   - {fileID: 5771986485392630128, guid: 48ec2c1cdd5391c4ea06176574fddbc9, type: 3}
   <Sights>k__BackingField:

@@ -950,7 +950,9 @@ public class MyGameObject : MonoBehaviour
     [field: SerializeField]
     public bool ShowExit { get; private set; } = false;
 
-    public Progress Health
+    public Progress Health = new Progress(100.0f, 100.0f); // TODO: Remove.
+
+    public Progress Health_new
     {
         get
         {
@@ -974,15 +976,38 @@ public class MyGameObject : MonoBehaviour
     {
         get
         {
-            ResourceContainer constructionResources = new ResourceContainer();
+            Dictionary<string, int> current = new Dictionary<string, int>(); // TODO: Refactor. Optimize. Allow changing Max property.
+            Dictionary<string, int> max = new Dictionary<string, int>();
 
             foreach (Part part in GetComponentsInChildren<Part>())
             {
                 foreach (Resource resource in part.ConstructionResources.Items)
                 {
-                    constructionResources.Init(resource.Name);
-                    constructionResources.Add(resource.Name, resource.Max);
+                    if (current.ContainsKey(resource.Name))
+                    {
+                        current[resource.Name] += resource.Current;
+                    }
+                    else
+                    {
+                        current[resource.Name] = resource.Current;
+                    }
+
+                    if (max.ContainsKey(resource.Name))
+                    {
+                        max[resource.Name] += resource.Max;
+                    }
+                    else
+                    {
+                        max[resource.Name] = resource.Max;
+                    }
                 }
+            }
+
+            ResourceContainer constructionResources = new ResourceContainer();
+
+            foreach (KeyValuePair<string, int> resource in current)
+            {
+                constructionResources.Init(resource.Key, resource.Value, max[resource.Key]);
             }
 
             return constructionResources;

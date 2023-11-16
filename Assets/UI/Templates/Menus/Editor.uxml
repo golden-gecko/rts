@@ -11,6 +11,7 @@
             <ui:Button text="Delete" name="Delete" class="button" style="flex-grow: 1;" />
             <ui:TextField name="Name" class="text" style="flex-grow: 1;" />
             <ui:Button text="Save" name="Save" class="button" style="flex-grow: 1;" />
+            <ui:Button text="New" name="New" class="button" style="flex-grow: 1;" />
         </ui:VisualElement>
         <ui:VisualElement style="flex-direction: row; flex-grow: 10;">
             <ui:ListView name="PartsChassis" fixed-item-height="100" style="flex-grow: 1; margin-top: 10px; margin-right: 10px; margin-bottom: 10px; margin-left: 10px;" />

@@ -6,7 +6,7 @@ public class Config : MonoBehaviour
 {
     public static class Blueprints
     {
-        public static string Directory = Path.Join(Application.persistentDataPath, "Blueprints");
+        public static string Directory = Path.Join(Application.dataPath, "Blueprints");
     }
 
     public static class Camera

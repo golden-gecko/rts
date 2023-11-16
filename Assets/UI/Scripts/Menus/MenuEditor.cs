@@ -23,6 +23,9 @@ public class MenuEditor : UI_Element
         ButtonSave = Root.Q<Button>("Save");
         ButtonSave.RegisterCallback<ClickEvent>(x => OnButtonSave());
 
+        ButtonNew = Root.Q<Button>("New");
+        ButtonNew.RegisterCallback<ClickEvent>(x => OnButtonNew());
+
         Preview = Root.Q<VisualElement>("Preview");
         Preview.RegisterCallback<MouseEnterEvent>(x => OnMouseEnterEvent());
         Preview.RegisterCallback<MouseLeaveEvent>(x => OnMouseLeaveEvent());
@@ -55,7 +58,7 @@ public class MenuEditor : UI_Element
         CreateBlueprints();
 
         CreatePartList("PartsChassis", PartType.Chassis, Game.Instance.Config.Chassis);
-        CreatePartList("PartsStorage", PartType.Chassis, Game.Instance.Config.Storages);
+        CreatePartList("PartsStorage", PartType.Storage, Game.Instance.Config.Storages);
         CreatePartList("PartsDrive", PartType.Drive, Game.Instance.Config.Drives);
         CreatePartList("PartsEngine", PartType.Engine, Game.Instance.Config.Engines);
         CreatePartList("PartsGun", PartType.Gun, Game.Instance.Config.Guns);
@@ -126,6 +129,15 @@ public class MenuEditor : UI_Element
         {
             DialogOverwrite.style.display = DisplayStyle.Flex;
         }
+    }
+
+    private void OnButtonNew()
+    {
+        Blueprints.index = -1;
+        Name.value = string.Empty;
+        Info.text = string.Empty;
+
+        DestroyGameObjectFromBlueprint();
     }
 
     private void OnSelectionChanged(PartType partType, IEnumerable<object> objects)
@@ -460,6 +472,7 @@ public class MenuEditor : UI_Element
     private Button ButtonDelete;
     private TextField Name;
     private Button ButtonSave;
+    private Button ButtonNew;
 
     private VisualElement Preview;
     private Label Info;

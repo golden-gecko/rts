@@ -1,0 +1,62 @@
+{
+    "Name": "Worker",
+    "BaseGameObject": {
+        "instanceID": -374270
+    },
+    "Parts": [
+        {
+            "PartType": 1,
+            "Name": "Chassis_Transporter",
+            "Position": {
+                "x": 0.0,
+                "y": -0.11811065673828125,
+                "z": 0.0
+            }
+        },
+        {
+            "PartType": 7,
+            "Name": "Storage_Small",
+            "Position": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            }
+        },
+        {
+            "PartType": 2,
+            "Name": "Drive_Hover",
+            "Position": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            }
+        },
+        {
+            "PartType": 0,
+            "Name": "Constructor",
+            "Position": {
+                "x": 0.0,
+                "y": 0.29033660888671877,
+                "z": 0.7497678995132446
+            }
+        },
+        {
+            "PartType": 6,
+            "Name": "Sight_Near",
+            "Position": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            }
+        },
+        {
+            "PartType": 4,
+            "Name": "Engine_Big",
+            "Position": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            }
+        }
+    ]
+}
