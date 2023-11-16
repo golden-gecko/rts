@@ -55,10 +55,11 @@ public class MenuEditor : UI_Element
         CreateBlueprints();
 
         CreatePartList("PartsChassis", PartType.Chassis, Game.Instance.Config.Chassis);
+        CreatePartList("PartsStorage", PartType.Chassis, Game.Instance.Config.Storages);
         CreatePartList("PartsDrive", PartType.Drive, Game.Instance.Config.Drives);
         CreatePartList("PartsEngine", PartType.Engine, Game.Instance.Config.Engines);
         CreatePartList("PartsGun", PartType.Gun, Game.Instance.Config.Guns);
-        CreatePartList("PartsArm", PartType.Arm, Game.Instance.Config.Arms);
+        CreatePartList("PartsConstructor", PartType.Constructor, Game.Instance.Config.Constructors);
         CreatePartList("PartsShield", PartType.Shield, Game.Instance.Config.Shields);
         CreatePartList("PartsSight", PartType.Sight, Game.Instance.Config.Sights);
     }
@@ -321,20 +322,20 @@ public class MenuEditor : UI_Element
 
     private void PositionArm(Transform parent)
     {
-        BlueprintComponent arm = blueprint.Parts.Find(x => x.PartType == PartType.Arm);
         BlueprintComponent chassis = blueprint.Parts.Find(x => x.PartType == PartType.Chassis);
+        BlueprintComponent constructor = blueprint.Parts.Find(x => x.PartType == PartType.Constructor);
 
-        if (arm != null && arm.Instance != null && chassis != null && chassis.Instance != null)
+        if (chassis != null && chassis.Instance != null && constructor != null && constructor.Instance != null)
         {
             Quaternion rotation = Utils.ResetRotation(parent);
 
-            Collider armCollider = arm.Instance.GetComponent<Collider>();
+            Collider armCollider = constructor.Instance.GetComponent<Collider>();
             Collider chassisCollider = chassis.Instance.GetComponent<Collider>();
 
-            Vector3 position = arm.Instance.transform.position;
+            Vector3 position = constructor.Instance.transform.position;
             position.y = chassisCollider.bounds.min.y + chassisCollider.bounds.extents.y;
             position.z = chassisCollider.bounds.max.z;
-            arm.Instance.transform.position = position;
+            constructor.Instance.transform.position = position;
 
             Utils.RestoreRotation(parent, rotation);
         }
@@ -380,20 +381,20 @@ public class MenuEditor : UI_Element
 
     private void SavePosition()
     {
-        BlueprintComponent arm = blueprint.Parts.Find(x => x.PartType == PartType.Arm);
         BlueprintComponent chassis = blueprint.Parts.Find(x => x.PartType == PartType.Chassis);
+        BlueprintComponent constructor = blueprint.Parts.Find(x => x.PartType == PartType.Constructor);
         BlueprintComponent drive = blueprint.Parts.Find(x => x.PartType == PartType.Drive);
         BlueprintComponent gun = blueprint.Parts.Find(x => x.PartType == PartType.Gun);
         BlueprintComponent shield = blueprint.Parts.Find(x => x.PartType == PartType.Shield);
 
-        if (arm != null && arm.Instance != null)
-        {
-            arm.Position = arm.Instance.transform.localPosition;
-        }
-
         if (chassis != null && chassis.Instance != null)
         {
             chassis.Position = chassis.Instance.transform.localPosition;
+        }
+
+        if (constructor != null && constructor.Instance != null)
+        {
+            constructor.Position = constructor.Instance.transform.localPosition;
         }
 
         if (drive != null && drive.Instance != null)
@@ -420,6 +421,8 @@ public class MenuEditor : UI_Element
         {
             info += string.Format("{0}: {1}\n", Enum.GetName(typeof(PartType), i.PartType), i.Name);
         }
+
+        info += string.Format("\n\nCost: {0}", blueprint.BaseGameObject.ConstructionResources.GetInfo());
 
         info += string.Format("\n\nHealth: {0:0.}", blueprint.BaseGameObject.Health.Max);
         info += string.Format("\nMass: {0:0.}", blueprint.BaseGameObject.Mass);

@@ -194,7 +194,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 3218208883834863783, guid: 6d7c35a54cb82d54fa4cd11fe0fcbe47, type: 3}
       propertyPath: m_Name
-      value: Missile
+      value: Chassis_Missile
       objectReference: {fileID: 0}
     - target: {fileID: 8319454710834409192, guid: 6d7c35a54cb82d54fa4cd11fe0fcbe47, type: 3}
       propertyPath: m_LocalScale.x

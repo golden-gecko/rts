@@ -154,3 +154,9 @@ MonoBehaviour:
     <Current>k__BackingField: 150
     <Max>k__BackingField: 150
   <Mass>k__BackingField: 30
+  <ConstructionResources>k__BackingField:
+    <Items>k__BackingField:
+    - <Current>k__BackingField: 80
+      <Max>k__BackingField: 80
+      <Name>k__BackingField: Metal
+      <Direction>k__BackingField: 1

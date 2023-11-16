@@ -116,13 +116,14 @@ public enum OrderType
 
 public enum PartType
 {
-    Arm = 0,
     Chassis = 1,
+    Constructor = 0,
     Drive = 2,
     Engine = 4,
     Gun = 3,
     Shield = 5,
     Sight = 6,
+    Storage = 7,
 }
 
 public enum ResourceDirection

@@ -970,7 +970,24 @@ public class MyGameObject : MonoBehaviour
 
     public Stats Stats { get; } = new Stats();
 
-    public ResourceContainer ConstructionResources { get; } = new ResourceContainer();
+    public ResourceContainer ConstructionResources
+    {
+        get
+        {
+            ResourceContainer constructionResources = new ResourceContainer();
+
+            foreach (Part part in GetComponentsInChildren<Part>())
+            {
+                foreach (Resource resource in part.ConstructionResources.Items)
+                {
+                    constructionResources.Init(resource.Name);
+                    constructionResources.Add(resource.Name, resource.Max);
+                }
+            }
+
+            return constructionResources;
+        }
+    }
 
     public MyGameObject Parent { get; private set; }
 

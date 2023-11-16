@@ -72,6 +72,12 @@ MonoBehaviour:
     <Current>k__BackingField: 80
     <Max>k__BackingField: 80
   <Mass>k__BackingField: 10
+  <ConstructionResources>k__BackingField:
+    <Items>k__BackingField:
+    - <Current>k__BackingField: 10
+      <Max>k__BackingField: 10
+      <Name>k__BackingField: Metal
+      <Direction>k__BackingField: 1
   <MapLayers>k__BackingField: 02000000
 --- !u!1 &4486533599880533956
 GameObject:

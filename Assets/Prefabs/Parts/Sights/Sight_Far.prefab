@@ -49,6 +49,14 @@ MonoBehaviour:
     <Max>k__BackingField: 10
   <Mass>k__BackingField: 10
   <ConstructionResources>k__BackingField:
-    <Items>k__BackingField: []
+    <Items>k__BackingField:
+    - <Current>k__BackingField: 10
+      <Max>k__BackingField: 10
+      <Name>k__BackingField: Crystal
+      <Direction>k__BackingField: 1
+    - <Current>k__BackingField: 10
+      <Max>k__BackingField: 10
+      <Name>k__BackingField: Metal
+      <Direction>k__BackingField: 1
   <Range>k__BackingField:
     <Value>k__BackingField: 30

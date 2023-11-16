@@ -91,10 +91,10 @@ public class Config : MonoBehaviour
 
     #region Parts
     [field: SerializeField]
-    public List<GameObject> Arms { get; private set; } = new List<GameObject>();
+    public List<GameObject> Chassis { get; private set; } = new List<GameObject>();
 
     [field: SerializeField]
-    public List<GameObject> Chassis { get; private set; } = new List<GameObject>();
+    public List<GameObject> Constructors { get; private set; } = new List<GameObject>();
 
     [field: SerializeField]
     public List<GameObject> Drives { get; private set; } = new List<GameObject>();
@@ -110,5 +110,8 @@ public class Config : MonoBehaviour
 
     [field: SerializeField]
     public List<GameObject> Sights { get; private set; } = new List<GameObject>();
+
+    [field: SerializeField]
+    public List<GameObject> Storages { get; private set; } = new List<GameObject>();
     #endregion
 }

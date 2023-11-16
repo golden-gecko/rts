@@ -14,10 +14,11 @@
         </ui:VisualElement>
         <ui:VisualElement style="flex-direction: row; flex-grow: 10;">
             <ui:ListView name="PartsChassis" fixed-item-height="100" style="flex-grow: 1; margin-top: 10px; margin-right: 10px; margin-bottom: 10px; margin-left: 10px;" />
+            <ui:ListView name="PartsStorage" fixed-item-height="100" style="flex-grow: 1; margin-top: 10px; margin-right: 10px; margin-bottom: 10px; margin-left: 10px; display: none;" />
             <ui:ListView name="PartsDrive" fixed-item-height="100" style="flex-grow: 1; margin-top: 10px; margin-right: 10px; margin-bottom: 10px; margin-left: 10px; display: none;" />
             <ui:ListView name="PartsEngine" fixed-item-height="100" style="flex-grow: 1; margin-top: 10px; margin-right: 10px; margin-bottom: 10px; margin-left: 10px; display: none;" />
             <ui:ListView name="PartsGun" fixed-item-height="100" style="flex-grow: 1; margin-top: 10px; margin-right: 10px; margin-bottom: 10px; margin-left: 10px; display: none;" />
-            <ui:ListView name="PartsArm" fixed-item-height="100" style="flex-grow: 1; margin-top: 10px; margin-right: 10px; margin-bottom: 10px; margin-left: 10px; display: none;" />
+            <ui:ListView name="PartsConstructor" fixed-item-height="100" style="flex-grow: 1; margin-top: 10px; margin-right: 10px; margin-bottom: 10px; margin-left: 10px; display: none;" />
             <ui:ListView name="PartsSight" fixed-item-height="100" style="flex-grow: 1; margin-top: 10px; margin-right: 10px; margin-bottom: 10px; margin-left: 10px; display: none;" />
             <ui:ListView name="PartsShield" fixed-item-height="100" style="flex-grow: 1; margin-top: 10px; margin-right: 10px; margin-bottom: 10px; margin-left: 10px; display: none;" />
             <ui:VisualElement name="Preview" style="background-image: url(&apos;project://database/Assets/UI/Textures/Preview.renderTexture?fileID=8400000&amp;guid=8a8495d382840e945b0db524eaca0092&amp;type=2#Preview&apos;); -unity-background-scale-mode: scale-and-crop; flex-grow: 2; margin-top: 10px; margin-right: 10px; margin-bottom: 10px; margin-left: 10px;">

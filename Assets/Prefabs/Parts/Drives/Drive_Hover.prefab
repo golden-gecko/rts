@@ -240,6 +240,16 @@ MonoBehaviour:
     <Current>k__BackingField: 100
     <Max>k__BackingField: 100
   <Mass>k__BackingField: 20
+  <ConstructionResources>k__BackingField:
+    <Items>k__BackingField:
+    - <Current>k__BackingField: 10
+      <Max>k__BackingField: 10
+      <Name>k__BackingField: Crystal
+      <Direction>k__BackingField: 1
+    - <Current>k__BackingField: 30
+      <Max>k__BackingField: 30
+      <Name>k__BackingField: Metal
+      <Direction>k__BackingField: 1
   <MapLayers>k__BackingField: 0200000004000000
 --- !u!1 &6031723413405379455
 GameObject:

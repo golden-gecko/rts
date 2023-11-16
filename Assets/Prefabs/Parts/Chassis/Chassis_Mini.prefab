@@ -67,10 +67,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9457e17311c7b6e49be3978f6559b6fe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <Mass>k__BackingField: 10
   <Health>k__BackingField:
     <Current>k__BackingField: 50
     <Max>k__BackingField: 50
+  <Mass>k__BackingField: 10
+  <ConstructionResources>k__BackingField:
+    <Items>k__BackingField:
+    - <Current>k__BackingField: 30
+      <Max>k__BackingField: 30
+      <Name>k__BackingField: Metal
+      <Direction>k__BackingField: 1
 --- !u!1 &8048346109197778976
 GameObject:
   m_ObjectHideFlags: 0

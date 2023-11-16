@@ -859,13 +859,13 @@ MonoBehaviour:
   - {fileID: 4170081986206172789, guid: 8fb2190244191d24b85a422517186272, type: 3}
   - {fileID: 4916527176359590894, guid: ceb46998882ca5e4d8b15b00b6dd5a74, type: 3}
   - {fileID: 7348057453300986480, guid: 9e6ab894155a77546803ba41d8ea1fc4, type: 3}
-  <Arms>k__BackingField:
-  - {fileID: 1578887994438585109, guid: 7bf9b4588e172054c9a42a043a553419, type: 3}
   <Chassis>k__BackingField:
   - {fileID: 1578887994438585109, guid: 74fa73f293cba14429cb6f4746c1e8a6, type: 3}
   - {fileID: 7348057453300986480, guid: 1fb674e9a1183ed47b1377613cd178b7, type: 3}
   - {fileID: 3697136554101965516, guid: 813b937acb3d59343ba72dc319ba5c69, type: 3}
   - {fileID: 6014288322611724604, guid: 728e490b4fd36e74f8ceba444e1f414d, type: 3}
+  <Constructors>k__BackingField:
+  - {fileID: 1578887994438585109, guid: 7bf9b4588e172054c9a42a043a553419, type: 3}
   <Drives>k__BackingField:
   - {fileID: 6014288322611724604, guid: 3a46ffd9342c7f149902e9c62ae76283, type: 3}
   - {fileID: 3697136554101965516, guid: ced1ed7904c29e5459c6256c871f3fa6, type: 3}
@@ -880,6 +880,10 @@ MonoBehaviour:
   - {fileID: 5771986485392630128, guid: 48ec2c1cdd5391c4ea06176574fddbc9, type: 3}
   <Sights>k__BackingField:
   - {fileID: 2038756865172747879, guid: cbf661917f3727442898d99bead2443a, type: 3}
+  - {fileID: 2038756865172747879, guid: c7cb13cb5b5965e4eb46545dbdbd8c2b, type: 3}
+  <Storages>k__BackingField:
+  - {fileID: 3218208883834863783, guid: 0d8523deba6403e4aa04c5206c021d65, type: 3}
+  - {fileID: 3218208883834863783, guid: e60c11ac20ae6a344b2fbb148049039d, type: 3}
 --- !u!114 &873085916221255505
 MonoBehaviour:
   m_ObjectHideFlags: 0

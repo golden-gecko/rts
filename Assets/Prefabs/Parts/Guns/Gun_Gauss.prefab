@@ -154,6 +154,16 @@ MonoBehaviour:
     <Current>k__BackingField: 20
     <Max>k__BackingField: 20
   <Mass>k__BackingField: 10
+  <ConstructionResources>k__BackingField:
+    <Items>k__BackingField:
+    - <Current>k__BackingField: 20
+      <Max>k__BackingField: 20
+      <Name>k__BackingField: Crystal
+      <Direction>k__BackingField: 1
+    - <Current>k__BackingField: 30
+      <Max>k__BackingField: 30
+      <Name>k__BackingField: Metal
+      <Direction>k__BackingField: 1
   <MissilePrefab>k__BackingField: {fileID: 4056876892418310127, guid: 7f568bd701d6ff041ab960a7dd3bc284, type: 3}
   <Damage>k__BackingField:
     <Value>k__BackingField: 10

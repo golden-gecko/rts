@@ -48,6 +48,12 @@ MonoBehaviour:
     <Current>k__BackingField: 100
     <Max>k__BackingField: 100
   <Mass>k__BackingField: 10
+  <ConstructionResources>k__BackingField:
+    <Items>k__BackingField:
+    - <Current>k__BackingField: 50
+      <Max>k__BackingField: 50
+      <Name>k__BackingField: Metal
+      <Direction>k__BackingField: 1
   <Power>k__BackingField:
     <Value>k__BackingField: 400
   <Fuel>k__BackingField:

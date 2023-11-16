@@ -170,9 +170,6 @@ MonoBehaviour:
   <Enabled>k__BackingField: 1
   <Gatherable>k__BackingField: 0
   <Selectable>k__BackingField: 1
-  <Health>k__BackingField:
-    <Current>k__BackingField: 100
-    <Max>k__BackingField: 100
   <EnableTime>k__BackingField: 2
   <WaitTime>k__BackingField: 2
   <DestroyEffect>k__BackingField: {fileID: 100006, guid: bf98fad54e73fb8448b7b1b9ba4fd0b6, type: 3}
@@ -204,7 +201,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b9a00f16555428d49958a19db20e17a2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  <Health>k__BackingField:
+    <Current>k__BackingField: 10
+    <Max>k__BackingField: 10
   <Mass>k__BackingField: 10
+  <ConstructionResources>k__BackingField:
+    <Items>k__BackingField: []
   <Prefabs>k__BackingField:
   - Barracks
   - Factory_Heavy
@@ -232,7 +234,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 480f2643be9397244bac146d70b54f9f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  <Health>k__BackingField:
+    <Current>k__BackingField: 10
+    <Max>k__BackingField: 10
   <Mass>k__BackingField: 10
+  <ConstructionResources>k__BackingField:
+    <Items>k__BackingField: []
   <Power>k__BackingField:
     <Value>k__BackingField: 100
   <Fuel>k__BackingField:
@@ -251,7 +258,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c3efa07cae5f028459ac47ef91e2f8f8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  <Health>k__BackingField:
+    <Current>k__BackingField: 10
+    <Max>k__BackingField: 10
   <Mass>k__BackingField: 10
+  <ConstructionResources>k__BackingField:
+    <Items>k__BackingField: []
 --- !u!114 &4744879806858303384
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -264,7 +276,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9f7fc2f43637b07428d9ff8d0e38edaa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  <Health>k__BackingField:
+    <Current>k__BackingField: 10
+    <Max>k__BackingField: 10
   <Mass>k__BackingField: 10
+  <ConstructionResources>k__BackingField:
+    <Items>k__BackingField: []
   <RaiseResourceFlags>k__BackingField: 1
   <ResourceUsage>k__BackingField: 4
   <Resources>k__BackingField:
@@ -272,31 +289,31 @@ MonoBehaviour:
     - <Current>k__BackingField: 0
       <Max>k__BackingField: 10
       <Name>k__BackingField: Ammunition
-      <Direction>k__BackingField: 0
+      <Direction>k__BackingField: 1
     - <Current>k__BackingField: 0
       <Max>k__BackingField: 10
       <Name>k__BackingField: Coal
-      <Direction>k__BackingField: 0
+      <Direction>k__BackingField: 1
     - <Current>k__BackingField: 0
       <Max>k__BackingField: 10
       <Name>k__BackingField: Crystal
-      <Direction>k__BackingField: 0
+      <Direction>k__BackingField: 1
     - <Current>k__BackingField: 0
       <Max>k__BackingField: 10
       <Name>k__BackingField: Fuel
-      <Direction>k__BackingField: 0
+      <Direction>k__BackingField: 1
     - <Current>k__BackingField: 0
       <Max>k__BackingField: 10
       <Name>k__BackingField: Iron
-      <Direction>k__BackingField: 0
+      <Direction>k__BackingField: 1
     - <Current>k__BackingField: 0
       <Max>k__BackingField: 10
       <Name>k__BackingField: Iron Ore
-      <Direction>k__BackingField: 0
+      <Direction>k__BackingField: 1
     - <Current>k__BackingField: 0
       <Max>k__BackingField: 10
       <Name>k__BackingField: Wood
-      <Direction>k__BackingField: 0
+      <Direction>k__BackingField: 1
 --- !u!114 &-5437239669431261021
 MonoBehaviour:
   m_ObjectHideFlags: 0

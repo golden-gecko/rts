@@ -126,11 +126,11 @@ public class Utils
     {
         switch (partType)
         {
-            case PartType.Arm:
-                return Game.Instance.Config.Arms.Find(x => x.name == name);
-
             case PartType.Chassis:
                 return Game.Instance.Config.Chassis.Find(x => x.name == name);
+
+            case PartType.Constructor:
+                return Game.Instance.Config.Constructors.Find(x => x.name == name);
 
             case PartType.Drive:
                 return Game.Instance.Config.Drives.Find(x => x.name == name);
@@ -146,6 +146,9 @@ public class Utils
 
             case PartType.Sight:
                 return Game.Instance.Config.Sights.Find(x => x.name == name);
+
+            case PartType.Storage:
+                return Game.Instance.Config.Storages.Find(x => x.name == name);
         }
 
         return null;

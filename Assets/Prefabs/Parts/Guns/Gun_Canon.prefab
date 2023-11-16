@@ -154,6 +154,12 @@ MonoBehaviour:
     <Current>k__BackingField: 20
     <Max>k__BackingField: 20
   <Mass>k__BackingField: 10
+  <ConstructionResources>k__BackingField:
+    <Items>k__BackingField:
+    - <Current>k__BackingField: 20
+      <Max>k__BackingField: 20
+      <Name>k__BackingField: Metal
+      <Direction>k__BackingField: 1
   <MissilePrefab>k__BackingField: {fileID: 3841255586236475405, guid: 86513724c5de2df4da484cb23191a7e5, type: 3}
   <Damage>k__BackingField:
     <Value>k__BackingField: 10
