@@ -7,84 +7,9 @@ using UnityEditor;
 using UnityEditor.SceneManagement;
 using UnityEngine;
 
-public class Tools : EditorWindow
+public static class Tools
 {
-    [MenuItem("Tools/Build", false, 0)]
-    public static void Build()
-    {
-        List<Blueprint> blueprints = Utils.CreateBlueprints();
-
-        foreach (Blueprint blueprint in blueprints)
-        {
-            MyGameObject myGameObject = Utils.CreateGameObject(blueprint, Vector3.zero, Quaternion.identity, null, MyGameObjectState.Operational);
-
-            PrefabUtility.SaveAsPrefabAsset(myGameObject.gameObject, Path.Join(Config.Prefabs.Directory, "Blueprints", string.Format("{0}.prefab", myGameObject.name)));
-
-            DestroyImmediate(myGameObject.gameObject);
-        }
-    }
-
-    [MenuItem("Tools/Render", false, 1)]
-    public static void Render()
-    {
-        ClearLog();
-
-        string sceneName = GetSceneName();
-
-        EditorSceneManager.SaveCurrentModifiedScenesIfUserWantsTo();
-        EditorSceneManager.OpenScene(Path.Join("Assets", "Scenes", "Editor.unity"));
-
-        foreach (string file in Directory.EnumerateFiles(Path.Combine(new string[] { "Assets", "Resources", "Portraits" })))
-        {
-            File.Delete(file);
-        }
-
-        Transform setup = GameObject.Find("Setup").transform;
-        Transform editor = setup.Find("Editor").transform;
-        Transform placeholder = editor.Find("Placeholder").transform;
-        Transform cameraTransform = editor.Find("Camera").transform;
-
-        Camera camera = cameraTransform.GetComponent<Camera>();
-
-        Texture2D texture = new Texture2D(camera.targetTexture.width, camera.targetTexture.height, TextureFormat.RGB24, false, false);
-
-        foreach (GameObject gameObject in GetGameObjects())
-        {
-            GameObject instance = Instantiate(gameObject, placeholder);
-
-            camera.Render();
-
-            RenderTexture.active = camera.targetTexture;
-            texture.ReadPixels(new Rect(0, 0, camera.targetTexture.width, camera.targetTexture.height), 0, 0);
-
-            byte[] bytes = texture.EncodeToPNG();
-            string filename = GetPortraitPath(gameObject.name);
-            File.WriteAllBytes(filename, bytes);
-
-            Debug.Log(string.Format("Saving portrait to {0}", filename));
-
-            DestroyImmediate(instance);
-        }
-
-        RenderTexture.active = null;
-
-        RestoreScene(sceneName);
-    }
-
-    [MenuItem("Tools/Validate", false, 2)]
-    public static void Validate()
-    {
-        ClearLog();
-
-        IEnumerable<GameObject> gameObjects = GetGameObjects();
-
-        ValidateNames(gameObjects);
-        ValidateProperties(gameObjects);
-        ValidateStorage(gameObjects);
-        ValidatePhysics(gameObjects);
-    }
-
-    private static IEnumerable<GameObject> GetGameObjects()
+    public static IEnumerable<GameObject> GetGameObjects()
     {
         string[] folders = new string[] { Path.Join("Assets", "Prefabs", "Objects"), Path.Join("Assets", "Prefabs", "Parts") };
         string[] assets = AssetDatabase.FindAssets("t:prefab", folders);
@@ -95,12 +20,12 @@ public class Tools : EditorWindow
         return gameObjects;
     }
 
-    private static string GetPortraitPath(string name)
+    public static string GetPortraitPath(string name)
     {
         return Path.Combine(new string[] { "Assets", "Resources", "Portraits", string.Format("{0}.png", name) });
     }
 
-    private static void ClearLog()
+    public static void ClearLog()
     {
         Assembly assembly = Assembly.GetAssembly(typeof(Editor));
         Type type = assembly.GetType("UnityEditor.LogEntries");
@@ -109,126 +34,13 @@ public class Tools : EditorWindow
         method.Invoke(new object(), null);
     }
 
-    private static string GetSceneName()
+    public static string GetSceneName()
     {
         return EditorSceneManager.GetActiveScene().name;
     }
 
-    private static void RestoreScene(string sceneName)
+    public static void RestoreScene(string sceneName)
     {
         EditorSceneManager.OpenScene(Path.Join("Assets", "Scenes", string.Format("{0}.unity", sceneName)));
-    }
-
-    private static void ValidateNames(IEnumerable<GameObject> gameObjects)
-    {
-        Dictionary<string, int> names = new Dictionary<string, int>();
-
-        foreach (GameObject gameObject in gameObjects)
-        {
-            if (names.TryGetValue(gameObject.name, out int _))
-            {
-                names[gameObject.name] += 1;
-            }
-            else
-            {
-                names[gameObject.name] = 1;
-            }
-        }
-
-        IEnumerable<KeyValuePair<string, int>> duplicates = names.Where(x => x.Value > 1);
-
-        if (duplicates.Count() > 0)
-        {
-            Debug.Log(string.Format("Some game objects have duplicates names: {0}", string.Join(", ", names.Where(x => x.Value > 1))));
-        }
-    }
-
-    private static void ValidateProperties(IEnumerable<GameObject> gameObjects)
-    {
-        foreach (GameObject gameObject in gameObjects)
-        {
-            if (gameObject.TryGetComponent(out MyGameObject myGameObject))
-            {
-                bool isDisaster = myGameObject.TryGetComponent(out Disaster _);
-                bool isMissile = myGameObject.TryGetComponent(out Missile _);
-
-                if (isDisaster == false && isMissile == false && myGameObject.DestroyEffect == null)
-                {
-                    Debug.Log(string.Format("Resource {0} has no destroy effect.", gameObject.name));
-                }
-
-                if ((isDisaster || isMissile) && myGameObject.DestroyEffect != null)
-                {
-                    Debug.Log(string.Format("Resource {0} has destroy effect.", gameObject.name));
-                }
-
-                if (myGameObject.MapLayers.Count <= 0)
-                {
-                    Debug.Log(string.Format("Resource {0} has no map layers.", gameObject.name));
-                }
-
-                foreach (string skill in myGameObject.Skills.Keys)
-                {
-                    if (skill.Length <= 0)
-                    {
-                        Debug.Log(string.Format("Resource {0} has invalid skill name ({1}).", gameObject.name, skill));
-                    }
-                }
-            }
-        }
-    }
-
-    private static void ValidateStorage(IEnumerable<GameObject> gameObjects)
-    {
-        foreach (GameObject gameObject in gameObjects)
-        {
-            foreach (Storage storage in gameObject.GetComponentsInChildren<Storage>())
-            {
-                foreach (Resource resource in storage.Resources.Items)
-                {
-                    if (resource.Name.Length <= 0)
-                    {
-                        Debug.Log(string.Format("Resource {0} has invalid resource name ({1}).", gameObject.name, resource));
-                    }
-
-                    if (resource.Current < 0)
-                    {
-                        Debug.Log(string.Format("Resource {0} has invalid current value ({1}, {2}).", gameObject.name, resource.Name, resource.Current));
-                    }
-
-                    if (resource.Max <= 0)
-                    {
-                        Debug.Log(string.Format("Resource {0} has invalid max value ({1}, {2}).", gameObject.name, resource.Name, resource.Max));
-                    }
-                }
-            }
-        }
-    }
-
-    private static void ValidatePhysics(IEnumerable<GameObject> gameObjects)
-    {
-        foreach (GameObject gameObject in gameObjects)
-        {
-            foreach (Collider collider in gameObject.GetComponentsInChildren<Collider>())
-            {
-                if (collider.isTrigger)
-                {
-                    Debug.Log(string.Format("Resource {0} has collider trigger enabled ({1}).", gameObject.name, collider.isTrigger));
-                }
-            }
-
-            foreach (Rigidbody rigidbody in gameObject.GetComponentsInChildren<Rigidbody>())
-            {
-                if (rigidbody.isKinematic == false)
-                {
-                    Debug.Log(string.Format("Resource {0} is not kinematic ({1}).", gameObject.name, rigidbody.isKinematic));
-                }
-
-                if (rigidbody.useGravity)
-                {
-                    Debug.Log(string.Format("Resource {0} is using gravity ({1}).", gameObject.name, rigidbody.useGravity));
-                }
-            }
-        }
     }
 }
