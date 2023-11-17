@@ -21,7 +21,7 @@ public class OrderHandlerGatherResource : OrderHandler
 
     private void ProcessResource(MyGameObject myGameObject, Order order)
     {
-        MyResource myResource = myGameObject.Player.GetResource(myGameObject, order.Resource);
+        MyGameObject myResource = myGameObject.Player.GetResource(myGameObject, order.Resource);
 
         if (myResource == null)
         {

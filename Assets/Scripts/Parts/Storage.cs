@@ -8,11 +8,15 @@ public class Storage : Part
     {
         base.Awake();
 
+        Parent.Orders.AllowOrder(OrderType.GatherObject);
+        Parent.Orders.AllowOrder(OrderType.GatherResource);
         Parent.Orders.AllowOrder(OrderType.Load);
         Parent.Orders.AllowOrder(OrderType.Stock);
         Parent.Orders.AllowOrder(OrderType.Transport);
         Parent.Orders.AllowOrder(OrderType.Unload);
 
+        Parent.OrderHandlers[OrderType.GatherObject] = new OrderHandlerGatherObject();
+        Parent.OrderHandlers[OrderType.GatherResource] = new OrderHandlerGatherResource();
         Parent.OrderHandlers[OrderType.Load] = new OrderHandlerLoad();
         Parent.OrderHandlers[OrderType.Stock] = new OrderHandlerStock();
         Parent.OrderHandlers[OrderType.Transport] = new OrderHandlerTransport();

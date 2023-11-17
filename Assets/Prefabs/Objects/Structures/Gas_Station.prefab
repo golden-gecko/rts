@@ -12,7 +12,6 @@ GameObject:
   - component: {fileID: 7798810803006657625}
   - component: {fileID: -3162199593519929267}
   - component: {fileID: -8301554509698339432}
-  - component: {fileID: 424665814299938391}
   m_Layer: 20
   m_Name: Gas_Station
   m_TagString: Untagged
@@ -82,9 +81,6 @@ MonoBehaviour:
   <Enabled>k__BackingField: 1
   <Gatherable>k__BackingField: 0
   <Selectable>k__BackingField: 1
-  <Health>k__BackingField:
-    <Current>k__BackingField: 100
-    <Max>k__BackingField: 100
   <EnableTime>k__BackingField: 2
   <WaitTime>k__BackingField: 2
   <DestroyEffect>k__BackingField: {fileID: 100008, guid: 06736895ea0a4ff408d25e6684dce797, type: 3}
@@ -103,6 +99,9 @@ MonoBehaviour:
   <RotateTowardsTarget>k__BackingField: 1
   <ShowEntrance>k__BackingField: 0
   <ShowExit>k__BackingField: 0
+  Health:
+    <Current>k__BackingField: 100
+    <Max>k__BackingField: 100
 --- !u!114 &-8301554509698339432
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -116,6 +115,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   <Mass>k__BackingField: 10
+  <ConstructionResources>k__BackingField:
+    <Items>k__BackingField: []
   <PowerGeneration>k__BackingField:
     <Value>k__BackingField: -1
   <PowerUsage>k__BackingField:
@@ -125,31 +126,6 @@ MonoBehaviour:
   <PowerUpTime>k__BackingField:
     <Current>k__BackingField: 0
     <Max>k__BackingField: 1
---- !u!114 &424665814299938391
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 286350840086188452}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9f7fc2f43637b07428d9ff8d0e38edaa, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  <Mass>k__BackingField: 10
-  <RaiseResourceFlags>k__BackingField: 1
-  <ResourceUsage>k__BackingField: 1
-  <Resources>k__BackingField:
-    <Items>k__BackingField:
-    - <Current>k__BackingField: 0
-      <Max>k__BackingField: 100
-      <Name>k__BackingField: Ammunition
-      <Direction>k__BackingField: 0
-    - <Current>k__BackingField: 0
-      <Max>k__BackingField: 100
-      <Name>k__BackingField: Fuel
-      <Direction>k__BackingField: 0
 --- !u!1 &8255074952223367480
 GameObject:
   m_ObjectHideFlags: 0
@@ -181,7 +157,8 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.4, y: 0.4, z: 0.4}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 6384412230731421931}
   m_Father: {fileID: 626706505030732574}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &4695454739338069065
@@ -255,3 +232,81 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 5, y: 3.6498039, z: 5}
   m_Center: {x: 0, y: 1.8249019, z: 0}
+--- !u!1001 &3165290438476953091
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 1379007583632543966}
+    m_Modifications:
+    - target: {fileID: -1599464701515292584, guid: 72b583262e58a364192a3a7dfd7573d1, type: 3}
+      propertyPath: <Resources>k__BackingField.<Items>k__BackingField.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: -1599464701515292584, guid: 72b583262e58a364192a3a7dfd7573d1, type: 3}
+      propertyPath: <Resources>k__BackingField.<Items>k__BackingField.Array.data[1].<Name>k__BackingField
+      value: Fuel
+      objectReference: {fileID: 0}
+    - target: {fileID: -1599464701515292584, guid: 72b583262e58a364192a3a7dfd7573d1, type: 3}
+      propertyPath: <Resources>k__BackingField.<Items>k__BackingField.Array.data[2].<Name>k__BackingField
+      value: Coal
+      objectReference: {fileID: 0}
+    - target: {fileID: -1599464701515292584, guid: 72b583262e58a364192a3a7dfd7573d1, type: 3}
+      propertyPath: <Resources>k__BackingField.<Items>k__BackingField.Array.data[3].<Name>k__BackingField
+      value: Crystal
+      objectReference: {fileID: 0}
+    - target: {fileID: 3218208883834863783, guid: 72b583262e58a364192a3a7dfd7573d1, type: 3}
+      propertyPath: m_Name
+      value: Storage_Refill
+      objectReference: {fileID: 0}
+    - target: {fileID: 8319454710834409192, guid: 72b583262e58a364192a3a7dfd7573d1, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8319454710834409192, guid: 72b583262e58a364192a3a7dfd7573d1, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8319454710834409192, guid: 72b583262e58a364192a3a7dfd7573d1, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8319454710834409192, guid: 72b583262e58a364192a3a7dfd7573d1, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8319454710834409192, guid: 72b583262e58a364192a3a7dfd7573d1, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8319454710834409192, guid: 72b583262e58a364192a3a7dfd7573d1, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8319454710834409192, guid: 72b583262e58a364192a3a7dfd7573d1, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8319454710834409192, guid: 72b583262e58a364192a3a7dfd7573d1, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8319454710834409192, guid: 72b583262e58a364192a3a7dfd7573d1, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8319454710834409192, guid: 72b583262e58a364192a3a7dfd7573d1, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 72b583262e58a364192a3a7dfd7573d1, type: 3}
+--- !u!4 &6384412230731421931 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 8319454710834409192, guid: 72b583262e58a364192a3a7dfd7573d1, type: 3}
+  m_PrefabInstance: {fileID: 3165290438476953091}
+  m_PrefabAsset: {fileID: 0}

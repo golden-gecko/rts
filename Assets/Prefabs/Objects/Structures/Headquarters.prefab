@@ -11,8 +11,6 @@ GameObject:
   - component: {fileID: 1702014145004635914}
   - component: {fileID: -8651534604779877949}
   - component: {fileID: -6591473423801908206}
-  - component: {fileID: -8510754742537900643}
-  - component: {fileID: -8592949413886164666}
   m_Layer: 20
   m_Name: Headquarters
   m_TagString: Untagged
@@ -103,74 +101,6 @@ MonoBehaviour:
   Health:
     <Current>k__BackingField: 100
     <Max>k__BackingField: 100
---- !u!114 &-8510754742537900643
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2077589293580246448}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9f7fc2f43637b07428d9ff8d0e38edaa, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  <Mass>k__BackingField: 10
-  <ConstructionResources>k__BackingField:
-    <Items>k__BackingField: []
-  <RaiseResourceFlags>k__BackingField: 1
-  <ResourceUsage>k__BackingField: 1
-  <Resources>k__BackingField:
-    <Items>k__BackingField:
-    - <Current>k__BackingField: 50
-      <Max>k__BackingField: 100
-      <Name>k__BackingField: Ammunition
-      <Direction>k__BackingField: 3
-    - <Current>k__BackingField: 50
-      <Max>k__BackingField: 100
-      <Name>k__BackingField: Coal
-      <Direction>k__BackingField: 3
-    - <Current>k__BackingField: 50
-      <Max>k__BackingField: 100
-      <Name>k__BackingField: Crystal
-      <Direction>k__BackingField: 3
-    - <Current>k__BackingField: 50
-      <Max>k__BackingField: 100
-      <Name>k__BackingField: Fuel
-      <Direction>k__BackingField: 3
-    - <Current>k__BackingField: 50
-      <Max>k__BackingField: 100
-      <Name>k__BackingField: Iron
-      <Direction>k__BackingField: 3
-    - <Current>k__BackingField: 50
-      <Max>k__BackingField: 100
-      <Name>k__BackingField: Iron Ore
-      <Direction>k__BackingField: 3
-    - <Current>k__BackingField: 50
-      <Max>k__BackingField: 100
-      <Name>k__BackingField: Water
-      <Direction>k__BackingField: 3
-    - <Current>k__BackingField: 50
-      <Max>k__BackingField: 100
-      <Name>k__BackingField: Wood
-      <Direction>k__BackingField: 3
---- !u!114 &-8592949413886164666
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2077589293580246448}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 79a39b5131237dc428a9b67a3936e144, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  <Mass>k__BackingField: 10
-  <ConstructionResources>k__BackingField:
-    <Items>k__BackingField: []
-  <Range>k__BackingField:
-    <Value>k__BackingField: 0
 --- !u!1 &4020719452692643192
 GameObject:
   m_ObjectHideFlags: 0
@@ -287,6 +217,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 8080248203402185053}
+  - {fileID: 5833580856815599267}
   m_Father: {fileID: 1702014145004635914}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &4849358482865530591
@@ -360,3 +291,65 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 10, y: 7.0085044, z: 10}
   m_Center: {x: 0, y: 3.5042522, z: 0}
+--- !u!1001 &2558511995129106507
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 1320509604547785435}
+    m_Modifications:
+    - target: {fileID: 3218208883834863783, guid: e60c11ac20ae6a344b2fbb148049039d, type: 3}
+      propertyPath: m_Name
+      value: Storage_Big
+      objectReference: {fileID: 0}
+    - target: {fileID: 8319454710834409192, guid: e60c11ac20ae6a344b2fbb148049039d, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8319454710834409192, guid: e60c11ac20ae6a344b2fbb148049039d, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8319454710834409192, guid: e60c11ac20ae6a344b2fbb148049039d, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8319454710834409192, guid: e60c11ac20ae6a344b2fbb148049039d, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8319454710834409192, guid: e60c11ac20ae6a344b2fbb148049039d, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8319454710834409192, guid: e60c11ac20ae6a344b2fbb148049039d, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8319454710834409192, guid: e60c11ac20ae6a344b2fbb148049039d, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8319454710834409192, guid: e60c11ac20ae6a344b2fbb148049039d, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8319454710834409192, guid: e60c11ac20ae6a344b2fbb148049039d, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8319454710834409192, guid: e60c11ac20ae6a344b2fbb148049039d, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: e60c11ac20ae6a344b2fbb148049039d, type: 3}
+--- !u!4 &5833580856815599267 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 8319454710834409192, guid: e60c11ac20ae6a344b2fbb148049039d, type: 3}
+  m_PrefabInstance: {fileID: 2558511995129106507}
+  m_PrefabAsset: {fileID: 0}

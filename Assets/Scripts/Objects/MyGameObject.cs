@@ -955,9 +955,7 @@ public class MyGameObject : MonoBehaviour
     [field: SerializeField]
     public bool ShowExit { get; private set; } = false;
 
-    public Progress Health = new Progress(100.0f, 100.0f); // TODO: Remove.
-
-    public Progress Health_new
+    public Progress Health
     {
         get
         {

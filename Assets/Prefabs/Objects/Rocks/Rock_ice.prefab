@@ -104,7 +104,8 @@ GameObject:
   m_Component:
   - component: {fileID: 2110397422985802957}
   - component: {fileID: 6191029205900872070}
-  - component: {fileID: 4630802311956988434}
+  - component: {fileID: 3575317908176706871}
+  - component: {fileID: -5792657423523881207}
   - component: {fileID: 1917376158693376699}
   m_Layer: 20
   m_Name: Rock_ice
@@ -156,7 +157,7 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!114 &4630802311956988434
+--- !u!114 &3575317908176706871
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -165,7 +166,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 2110397422985802995}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6decc591119130e4d847c5005505a7ae, type: 3}
+  m_Script: {fileID: 11500000, guid: 28d73f8fbe8af464f8ccdeabaf462443, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   <Experience>k__BackingField:
@@ -173,17 +174,14 @@ MonoBehaviour:
     <Max>k__BackingField: 1000
   <Player>k__BackingField: {fileID: 0}
   <Enabled>k__BackingField: 1
-  <Gatherable>k__BackingField: 1
+  <Gatherable>k__BackingField: 0
   <Selectable>k__BackingField: 1
-  <Health>k__BackingField:
-    <Current>k__BackingField: 100
-    <Max>k__BackingField: 100
   <EnableTime>k__BackingField: 2
   <WaitTime>k__BackingField: 2
-  <DestroyEffect>k__BackingField: {fileID: 8579966591951127539, guid: 64e9158e41e34f5418b979dd48171ccb, type: 3}
+  <DestroyEffect>k__BackingField: {fileID: 0}
   <Altitude>k__BackingField: -1
   <Depth>k__BackingField: -1
-  <MapLayers>k__BackingField: 0200000003000000
+  <MapLayers>k__BackingField: 
   <ShowIndicators>k__BackingField: 1
   <ExpirationTimer>k__BackingField:
     <Current>k__BackingField: -1
@@ -191,11 +189,31 @@ MonoBehaviour:
   <SkillsNames>k__BackingField: []
   <State>k__BackingField: 1
   <CreateBase>k__BackingField: 0
-  <SnapToGrid>k__BackingField: 1
+  <SnapToGrid>k__BackingField: 0
   <VisibilityState>k__BackingField: 2
   <RotateTowardsTarget>k__BackingField: 1
   <ShowEntrance>k__BackingField: 0
   <ShowExit>k__BackingField: 0
+--- !u!114 &-5792657423523881207
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2110397422985802995}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 04c420c373cba4547b9469e304a8085f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  <Mass>k__BackingField: 10
+  <ConstructionResources>k__BackingField:
+    <Items>k__BackingField:
+    - <Current>k__BackingField: 100
+      <Max>k__BackingField: 100
+      <Name>k__BackingField: Water
+      <Direction>k__BackingField: 1
+  <MapLayers>k__BackingField: 02000000
 --- !u!114 &1917376158693376699
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -209,6 +227,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   <Mass>k__BackingField: 10
+  <ConstructionResources>k__BackingField:
+    <Items>k__BackingField:
+    - <Current>k__BackingField: 100
+      <Max>k__BackingField: 100
+      <Name>k__BackingField: Water
+      <Direction>k__BackingField: 1
   <RaiseResourceFlags>k__BackingField: 1
   <ResourceUsage>k__BackingField: 1
   <Resources>k__BackingField:

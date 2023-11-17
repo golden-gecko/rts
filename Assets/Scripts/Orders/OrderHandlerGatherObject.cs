@@ -35,7 +35,7 @@ public class OrderHandlerGatherObject : OrderHandler
             return;
         }
 
-        MyResource myResource = order.TargetGameObject.GetComponent<MyResource>();
+        MyGameObject myResource = order.TargetGameObject.GetComponent<MyGameObject>();
 
         if (myResource == null)
         {

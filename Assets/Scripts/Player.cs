@@ -123,12 +123,12 @@ public class Player : MonoBehaviour
         return target;
     }
 
-    public MyResource GetResource(MyGameObject myGameObject, string resource = "")
+    public MyGameObject GetResource(MyGameObject myGameObject, string resource = "")
     {
-        MyResource closest = null;
+        MyGameObject closest = null;
         float distance = float.MaxValue;
 
-        foreach (MyResource myResource in FindObjectsByType<MyResource>(FindObjectsSortMode.None))
+        foreach (MyGameObject myResource in FindObjectsByType<MyGameObject>(FindObjectsSortMode.None))
         {
             if (myResource == myGameObject)
             {
@@ -191,12 +191,12 @@ public class Player : MonoBehaviour
         return closest;
     }
 
-    public MyResource GetResourceToGather(MyGameObject myGameObject, string resource = "", int value = 0) // TODO: Implement.
+    public MyGameObject GetResourceToGather(MyGameObject myGameObject, string resource = "", int value = 0) // TODO: Implement.
     {
-        MyResource closest = null;
+        MyGameObject closest = null;
         float distance = float.MaxValue;
 
-        foreach (MyResource myResource in FindObjectsByType<MyResource>(FindObjectsSortMode.None))
+        foreach (MyGameObject myResource in FindObjectsByType<MyGameObject>(FindObjectsSortMode.None))
         {
             if (myResource == myGameObject)
             {
