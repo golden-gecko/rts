@@ -59,6 +59,8 @@ MeshRenderer:
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 2
   m_RayTraceProcedural: 0
+  m_RayTracingAccelStructBuildFlagsOverride: 0
+  m_RayTracingAccelStructBuildFlags: 1
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -117,6 +119,7 @@ GameObject:
   - component: {fileID: -2394571874624216521}
   - component: {fileID: -1227068406184582067}
   - component: {fileID: 9174737212206109743}
+  - component: {fileID: 2767436903363480601}
   m_Layer: 20
   m_Name: Power_Pole
   m_TagString: Untagged
@@ -186,9 +189,6 @@ MonoBehaviour:
   <Enabled>k__BackingField: 1
   <Gatherable>k__BackingField: 0
   <Selectable>k__BackingField: 1
-  <Health>k__BackingField:
-    <Current>k__BackingField: 100
-    <Max>k__BackingField: 100
   <EnableTime>k__BackingField: 2
   <WaitTime>k__BackingField: 2
   <DestroyEffect>k__BackingField: {fileID: 100008, guid: 06736895ea0a4ff408d25e6684dce797, type: 3}
@@ -220,6 +220,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   <Mass>k__BackingField: 10
+  <ConstructionResources>k__BackingField:
+    <Items>k__BackingField: []
   <PowerGeneration>k__BackingField:
     <Value>k__BackingField: -1
   <PowerUsage>k__BackingField:
@@ -229,3 +231,23 @@ MonoBehaviour:
   <PowerUpTime>k__BackingField:
     <Current>k__BackingField: 0
     <Max>k__BackingField: 1
+--- !u!114 &2767436903363480601
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6146446851295090096}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 04c420c373cba4547b9469e304a8085f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  <Mass>k__BackingField: 10
+  <ConstructionResources>k__BackingField:
+    <Items>k__BackingField:
+    - <Current>k__BackingField: 100
+      <Max>k__BackingField: 100
+      <Name>k__BackingField: Metal
+      <Direction>k__BackingField: 1
+  <MapLayers>k__BackingField: 02000000

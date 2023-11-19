@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+[DisallowMultipleComponent]
 public class Foundation : Part
 {
     protected override void Awake()

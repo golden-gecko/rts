@@ -106,7 +106,6 @@ GameObject:
   - component: {fileID: 7156896463929012391}
   - component: {fileID: -7106989566334034598}
   - component: {fileID: 7621234303222950130}
-  - component: {fileID: 7606065615434037575}
   m_Layer: 20
   m_Name: Coal
   m_TagString: Untagged
@@ -214,33 +213,6 @@ MonoBehaviour:
       <Name>k__BackingField: Coal
       <Direction>k__BackingField: 1
   <MapLayers>k__BackingField: 02000000
---- !u!114 &7606065615434037575
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1649971028671782476}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9f7fc2f43637b07428d9ff8d0e38edaa, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  <Mass>k__BackingField: 10
-  <ConstructionResources>k__BackingField:
-    <Items>k__BackingField:
-    - <Current>k__BackingField: 100
-      <Max>k__BackingField: 100
-      <Name>k__BackingField: Coal
-      <Direction>k__BackingField: 1
-  <RaiseResourceFlags>k__BackingField: 1
-  <ResourceUsage>k__BackingField: 1
-  <Resources>k__BackingField:
-    <Items>k__BackingField:
-    - <Current>k__BackingField: 100
-      <Max>k__BackingField: 100
-      <Name>k__BackingField: Coal
-      <Direction>k__BackingField: 2
 --- !u!1001 &3414493554067806134
 PrefabInstance:
   m_ObjectHideFlags: 0

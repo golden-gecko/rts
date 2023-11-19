@@ -106,7 +106,6 @@ GameObject:
   - component: {fileID: 6191029205900872070}
   - component: {fileID: 3575317908176706871}
   - component: {fileID: -5792657423523881207}
-  - component: {fileID: 1917376158693376699}
   m_Layer: 20
   m_Name: Rock_ice
   m_TagString: Untagged
@@ -214,33 +213,6 @@ MonoBehaviour:
       <Name>k__BackingField: Water
       <Direction>k__BackingField: 1
   <MapLayers>k__BackingField: 02000000
---- !u!114 &1917376158693376699
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2110397422985802995}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9f7fc2f43637b07428d9ff8d0e38edaa, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  <Mass>k__BackingField: 10
-  <ConstructionResources>k__BackingField:
-    <Items>k__BackingField:
-    - <Current>k__BackingField: 100
-      <Max>k__BackingField: 100
-      <Name>k__BackingField: Water
-      <Direction>k__BackingField: 1
-  <RaiseResourceFlags>k__BackingField: 1
-  <ResourceUsage>k__BackingField: 1
-  <Resources>k__BackingField:
-    <Items>k__BackingField:
-    - <Current>k__BackingField: 100
-      <Max>k__BackingField: 100
-      <Name>k__BackingField: Water
-      <Direction>k__BackingField: 2
 --- !u!1001 &2569548985317003227
 PrefabInstance:
   m_ObjectHideFlags: 0

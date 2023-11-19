@@ -11,6 +11,8 @@ GameObject:
   - component: {fileID: 1702014145004635914}
   - component: {fileID: -8651534604779877949}
   - component: {fileID: -6591473423801908206}
+  - component: {fileID: -6881201588257107453}
+  - component: {fileID: 3977297452004550506}
   m_Layer: 20
   m_Name: Headquarters
   m_TagString: Untagged
@@ -85,7 +87,6 @@ MonoBehaviour:
   <DestroyEffect>k__BackingField: {fileID: 100008, guid: 06736895ea0a4ff408d25e6684dce797, type: 3}
   <Altitude>k__BackingField: -1
   <Depth>k__BackingField: -1
-  <MapLayers>k__BackingField: 02000000
   <ShowIndicators>k__BackingField: 1
   <ExpirationTimer>k__BackingField:
     <Current>k__BackingField: -1
@@ -98,9 +99,77 @@ MonoBehaviour:
   <RotateTowardsTarget>k__BackingField: 1
   <ShowEntrance>k__BackingField: 0
   <ShowExit>k__BackingField: 0
-  Health:
-    <Current>k__BackingField: 100
-    <Max>k__BackingField: 100
+--- !u!114 &-6881201588257107453
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2077589293580246448}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 04c420c373cba4547b9469e304a8085f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  <Mass>k__BackingField: 10
+  <ConstructionResources>k__BackingField:
+    <Items>k__BackingField:
+    - <Current>k__BackingField: 100
+      <Max>k__BackingField: 100
+      <Name>k__BackingField: Metal
+      <Direction>k__BackingField: 1
+  <MapLayers>k__BackingField: 02000000
+--- !u!114 &3977297452004550506
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2077589293580246448}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9f7fc2f43637b07428d9ff8d0e38edaa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  <Mass>k__BackingField: 10
+  <ConstructionResources>k__BackingField:
+    <Items>k__BackingField:
+    - <Current>k__BackingField: 30
+      <Max>k__BackingField: 30
+      <Name>k__BackingField: Metal
+      <Direction>k__BackingField: 1
+  <RaiseResourceFlags>k__BackingField: 1
+  <ResourceUsage>k__BackingField: 8
+  <Resources>k__BackingField:
+    <Items>k__BackingField:
+    - <Current>k__BackingField: 0
+      <Max>k__BackingField: 100
+      <Name>k__BackingField: Ammunition
+      <Direction>k__BackingField: 1
+    - <Current>k__BackingField: 0
+      <Max>k__BackingField: 100
+      <Name>k__BackingField: Coal
+      <Direction>k__BackingField: 1
+    - <Current>k__BackingField: 0
+      <Max>k__BackingField: 100
+      <Name>k__BackingField: Crystal
+      <Direction>k__BackingField: 1
+    - <Current>k__BackingField: 0
+      <Max>k__BackingField: 100
+      <Name>k__BackingField: Fuel
+      <Direction>k__BackingField: 1
+    - <Current>k__BackingField: 0
+      <Max>k__BackingField: 100
+      <Name>k__BackingField: Iron
+      <Direction>k__BackingField: 1
+    - <Current>k__BackingField: 0
+      <Max>k__BackingField: 100
+      <Name>k__BackingField: Iron Ore
+      <Direction>k__BackingField: 1
+    - <Current>k__BackingField: 0
+      <Max>k__BackingField: 100
+      <Name>k__BackingField: Wood
+      <Direction>k__BackingField: 1
 --- !u!1 &4020719452692643192
 GameObject:
   m_ObjectHideFlags: 0
@@ -159,6 +228,8 @@ MeshRenderer:
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 2
   m_RayTraceProcedural: 0
+  m_RayTracingAccelStructBuildFlagsOverride: 0
+  m_RayTracingAccelStructBuildFlags: 1
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -217,7 +288,6 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 8080248203402185053}
-  - {fileID: 5833580856815599267}
   m_Father: {fileID: 1702014145004635914}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &4849358482865530591
@@ -245,6 +315,8 @@ MeshRenderer:
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 2
   m_RayTraceProcedural: 0
+  m_RayTracingAccelStructBuildFlagsOverride: 0
+  m_RayTracingAccelStructBuildFlags: 1
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -291,65 +363,3 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 10, y: 7.0085044, z: 10}
   m_Center: {x: 0, y: 3.5042522, z: 0}
---- !u!1001 &2558511995129106507
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 1320509604547785435}
-    m_Modifications:
-    - target: {fileID: 3218208883834863783, guid: e60c11ac20ae6a344b2fbb148049039d, type: 3}
-      propertyPath: m_Name
-      value: Storage_Big
-      objectReference: {fileID: 0}
-    - target: {fileID: 8319454710834409192, guid: e60c11ac20ae6a344b2fbb148049039d, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8319454710834409192, guid: e60c11ac20ae6a344b2fbb148049039d, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8319454710834409192, guid: e60c11ac20ae6a344b2fbb148049039d, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8319454710834409192, guid: e60c11ac20ae6a344b2fbb148049039d, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8319454710834409192, guid: e60c11ac20ae6a344b2fbb148049039d, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8319454710834409192, guid: e60c11ac20ae6a344b2fbb148049039d, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8319454710834409192, guid: e60c11ac20ae6a344b2fbb148049039d, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8319454710834409192, guid: e60c11ac20ae6a344b2fbb148049039d, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8319454710834409192, guid: e60c11ac20ae6a344b2fbb148049039d, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8319454710834409192, guid: e60c11ac20ae6a344b2fbb148049039d, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: e60c11ac20ae6a344b2fbb148049039d, type: 3}
---- !u!4 &5833580856815599267 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 8319454710834409192, guid: e60c11ac20ae6a344b2fbb148049039d, type: 3}
-  m_PrefabInstance: {fileID: 2558511995129106507}
-  m_PrefabAsset: {fileID: 0}

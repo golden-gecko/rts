@@ -922,8 +922,27 @@ public class MyGameObject : MonoBehaviour
     [field: SerializeField]
     public float Depth { get; private set; } = -1.0f;
 
-    [field: SerializeField]
-    public List<MyGameObjectMapLayer> MapLayers { get; private set; } = new List<MyGameObjectMapLayer>();
+    public List<MyGameObjectMapLayer> MapLayers
+    {
+        get
+        {
+            Drive drive = GetComponentInChildren<Drive>();
+
+            if (drive)
+            {
+                return drive.MapLayers;
+            }
+
+            Foundation foundation = GetComponentInChildren<Foundation>();
+
+            if (foundation)
+            {
+                return foundation.MapLayers;
+            }
+
+            return new List<MyGameObjectMapLayer>();
+        }
+    }
 
     [field: SerializeField]
     public bool ShowIndicators { get; private set; } = true;
