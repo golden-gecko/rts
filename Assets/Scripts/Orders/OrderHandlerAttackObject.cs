@@ -26,11 +26,14 @@ public class OrderHandlerAttackObject : OrderHandler
             position = order.TargetGameObject.Center;
         }
 
-        if (myGameObject.GetComponent<Engine>())
+        Engine engine = myGameObject.GetComponentInChildren<Engine>();
+        Gun gun = myGameObject.GetComponentInChildren<Gun>();
+
+        if (engine)
         {
-            if (myGameObject.GetComponent<Gun>().IsInRange(position) == false)
+            if (gun.IsInRange(position) == false)
             {
-                myGameObject.Move(GetPositionToAttack(myGameObject.Position, position, myGameObject.GetComponent<Gun>().Range.Total), 0);
+                myGameObject.Move(GetPositionToAttack(myGameObject.Position, position, gun.Range.Total), 0);
             }
             else
             {
@@ -39,24 +42,24 @@ public class OrderHandlerAttackObject : OrderHandler
                     myGameObject.transform.LookAt(new Vector3(position.x, myGameObject.Position.y, position.z));
                 }
 
-                if (myGameObject.GetComponent<Gun>().CanFire())
+                if (gun.CanFire())
                 {
-                    myGameObject.GetComponent<Gun>().Fire(myGameObject, position);
+                    gun.Fire(myGameObject, position);
                 }
             }
         }
         else
         {
-            if (myGameObject.GetComponent<Gun>().IsInRange(position))
+            if (gun.IsInRange(position))
             {
                 if (myGameObject.RotateTowardsTarget)
                 {
                     myGameObject.transform.LookAt(new Vector3(position.x, myGameObject.Position.y, position.z));
                 }
 
-                if (myGameObject.GetComponent<Gun>().CanFire())
+                if (gun.CanFire())
                 {
-                    myGameObject.GetComponent<Gun>().Fire(myGameObject, position);
+                    gun.Fire(myGameObject, position);
                 }
             }
         }

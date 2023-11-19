@@ -30,6 +30,11 @@ public class ResourceContainer
         return resource != null ? resource.Remove(value) : 0;
     }
 
+    public void RemoveAll()
+    {
+        Items.ForEach(x => x.RemoveAll());
+    }
+
     public void Inc(string name)
     {
         Resource resource = Items.Find(x => x.Name == name);

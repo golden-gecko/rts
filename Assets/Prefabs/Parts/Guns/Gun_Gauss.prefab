@@ -58,6 +58,8 @@ MeshRenderer:
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 2
   m_RayTraceProcedural: 0
+  m_RayTracingAccelStructBuildFlagsOverride: 0
+  m_RayTracingAccelStructBuildFlags: 1
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -150,9 +152,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 32ea1510d8dfaa545ac73f675c4a7db7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <Health>k__BackingField:
-    <Current>k__BackingField: 20
-    <Max>k__BackingField: 20
   <Mass>k__BackingField: 10
   <ConstructionResources>k__BackingField:
     <Items>k__BackingField:
@@ -162,7 +161,7 @@ MonoBehaviour:
       <Direction>k__BackingField: 1
     - <Current>k__BackingField: 30
       <Max>k__BackingField: 30
-      <Name>k__BackingField: Metal
+      <Name>k__BackingField: Iron
       <Direction>k__BackingField: 1
   <MissilePrefab>k__BackingField: {fileID: 4056876892418310127, guid: 7f568bd701d6ff041ab960a7dd3bc284, type: 3}
   <Damage>k__BackingField:
@@ -238,6 +237,8 @@ MeshRenderer:
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 2
   m_RayTraceProcedural: 0
+  m_RayTracingAccelStructBuildFlagsOverride: 0
+  m_RayTracingAccelStructBuildFlags: 1
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:

@@ -44,15 +44,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4248ce16722b7444fac5deb395c690e8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <Health>k__BackingField:
-    <Current>k__BackingField: 10
-    <Max>k__BackingField: 10
   <Mass>k__BackingField: 10
   <ConstructionResources>k__BackingField:
     <Items>k__BackingField:
     - <Current>k__BackingField: 30
       <Max>k__BackingField: 30
-      <Name>k__BackingField: Metal
+      <Name>k__BackingField: Iron
       <Direction>k__BackingField: 1
   <Value>k__BackingField:
     <Current>k__BackingField: 100

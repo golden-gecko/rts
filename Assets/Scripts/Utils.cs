@@ -75,6 +75,17 @@ public class Utils
         myGameObject.SetPlayer(player);
         myGameObject.SetState(state);
 
+        switch (state)
+        {
+            case MyGameObjectState.UnderAssembly:
+            case MyGameObjectState.UnderConstruction:
+                foreach (Part part in myGameObject.GetComponentsInChildren<Part>())
+                {
+                    part.ConstructionResources.RemoveAll();
+                }
+                break;
+        }
+
         return myGameObject;
     }
 

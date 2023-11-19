@@ -261,6 +261,7 @@ GameObject:
   - component: {fileID: 8634215426274996846}
   - component: {fileID: 298609880797962596}
   - component: {fileID: 8340488010583527425}
+  - component: {fileID: -7335580994982814010}
   m_Layer: 20
   m_Name: Tree_03
   m_TagString: Untagged
@@ -328,14 +329,12 @@ MonoBehaviour:
     <Max>k__BackingField: 1000
   <Player>k__BackingField: {fileID: 0}
   <Enabled>k__BackingField: 1
-  <Gatherable>k__BackingField: 1
   <Selectable>k__BackingField: 1
   <EnableTime>k__BackingField: 2
   <WaitTime>k__BackingField: 2
   <DestroyEffect>k__BackingField: {fileID: 7447788123197329209, guid: 063c3ab67c1c6794ea2121d8d9b0116c, type: 3}
   <Altitude>k__BackingField: -1
   <Depth>k__BackingField: -1
-  <MapLayers>k__BackingField: 
   <ShowIndicators>k__BackingField: 1
   <ExpirationTimer>k__BackingField:
     <Current>k__BackingField: -1
@@ -368,3 +367,31 @@ MonoBehaviour:
       <Name>k__BackingField: Wood
       <Direction>k__BackingField: 1
   <MapLayers>k__BackingField: 02000000
+--- !u!114 &-7335580994982814010
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6941765000743290380}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9f7fc2f43637b07428d9ff8d0e38edaa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  <Mass>k__BackingField: 10
+  <ConstructionResources>k__BackingField:
+    <Items>k__BackingField:
+    - <Current>k__BackingField: 30
+      <Max>k__BackingField: 30
+      <Name>k__BackingField: Wood
+      <Direction>k__BackingField: 1
+  <Resources>k__BackingField:
+    <Items>k__BackingField:
+    - <Current>k__BackingField: 30
+      <Max>k__BackingField: 30
+      <Name>k__BackingField: Wood
+      <Direction>k__BackingField: 1
+  <RaiseResourceFlags>k__BackingField: 0
+  <Gatherable>k__BackingField: 1
+  <ResourceUsage>k__BackingField: 1

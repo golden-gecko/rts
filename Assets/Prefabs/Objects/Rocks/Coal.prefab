@@ -106,6 +106,7 @@ GameObject:
   - component: {fileID: 7156896463929012391}
   - component: {fileID: -7106989566334034598}
   - component: {fileID: 7621234303222950130}
+  - component: {fileID: -6761870137296721629}
   m_Layer: 20
   m_Name: Coal
   m_TagString: Untagged
@@ -173,14 +174,12 @@ MonoBehaviour:
     <Max>k__BackingField: 1000
   <Player>k__BackingField: {fileID: 0}
   <Enabled>k__BackingField: 1
-  <Gatherable>k__BackingField: 0
   <Selectable>k__BackingField: 1
   <EnableTime>k__BackingField: 2
   <WaitTime>k__BackingField: 2
   <DestroyEffect>k__BackingField: {fileID: 8579966591951127539, guid: 64e9158e41e34f5418b979dd48171ccb, type: 3}
   <Altitude>k__BackingField: -1
   <Depth>k__BackingField: -1
-  <MapLayers>k__BackingField: 
   <ShowIndicators>k__BackingField: 1
   <ExpirationTimer>k__BackingField:
     <Current>k__BackingField: -1
@@ -213,6 +212,34 @@ MonoBehaviour:
       <Name>k__BackingField: Coal
       <Direction>k__BackingField: 1
   <MapLayers>k__BackingField: 02000000
+--- !u!114 &-6761870137296721629
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1649971028671782476}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9f7fc2f43637b07428d9ff8d0e38edaa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  <Mass>k__BackingField: 10
+  <ConstructionResources>k__BackingField:
+    <Items>k__BackingField:
+    - <Current>k__BackingField: 100
+      <Max>k__BackingField: 100
+      <Name>k__BackingField: Coal
+      <Direction>k__BackingField: 1
+  <Resources>k__BackingField:
+    <Items>k__BackingField:
+    - <Current>k__BackingField: 100
+      <Max>k__BackingField: 100
+      <Name>k__BackingField: Coal
+      <Direction>k__BackingField: 1
+  <RaiseResourceFlags>k__BackingField: 0
+  <Gatherable>k__BackingField: 1
+  <ResourceUsage>k__BackingField: 1
 --- !u!1001 &3414493554067806134
 PrefabInstance:
   m_ObjectHideFlags: 0

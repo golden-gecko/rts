@@ -902,9 +902,6 @@ public class MyGameObject : MonoBehaviour
     public bool Enabled { get; set; } = true;
 
     [field: SerializeField]
-    public bool Gatherable { get; private set; } = false;
-
-    [field: SerializeField]
     public bool Selectable { get; private set; } = true;
 
     [field: SerializeField]

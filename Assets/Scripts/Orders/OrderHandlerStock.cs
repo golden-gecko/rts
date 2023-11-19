@@ -17,7 +17,7 @@ public class OrderHandlerStock : OrderHandler
         {
             source = myGameObject.Player.GetResourceToGather(myGameObject, order.Resource, order.Value);
 
-            if (source != null)
+            if (source == null)
             {
                 Fail(myGameObject);
 

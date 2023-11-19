@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: -4551247160317035928}
   - component: {fileID: 5476825613530035306}
   - component: {fileID: 3612405530224017631}
+  - component: {fileID: 3885410880482562576}
   m_Layer: 20
   m_Name: Refinery
   m_TagString: Untagged
@@ -114,7 +115,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <Mass>k__BackingField: 10
   <ConstructionResources>k__BackingField:
-    <Items>k__BackingField: []
+    <Items>k__BackingField:
+    - <Current>k__BackingField: 10
+      <Max>k__BackingField: 10
+      <Name>k__BackingField: Iron
+      <Direction>k__BackingField: 1
   <Recipes>k__BackingField:
   - Ammunition
   - Fuel
@@ -136,7 +141,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <Mass>k__BackingField: 10
   <ConstructionResources>k__BackingField:
-    <Items>k__BackingField: []
+    <Items>k__BackingField:
+    - <Current>k__BackingField: 10
+      <Max>k__BackingField: 10
+      <Name>k__BackingField: Iron
+      <Direction>k__BackingField: 1
   <PowerGeneration>k__BackingField:
     <Value>k__BackingField: -1
   <PowerUsage>k__BackingField:
@@ -166,6 +175,41 @@ MonoBehaviour:
       <Name>k__BackingField: Metal
       <Direction>k__BackingField: 1
   <MapLayers>k__BackingField: 02000000
+--- !u!114 &3885410880482562576
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3489344766907041493}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9f7fc2f43637b07428d9ff8d0e38edaa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  <Mass>k__BackingField: 10
+  <ConstructionResources>k__BackingField:
+    <Items>k__BackingField: []
+  <RaiseResourceFlags>k__BackingField: 1
+  <ResourceUsage>k__BackingField: 1
+  <Resources>k__BackingField:
+    <Items>k__BackingField:
+    - <Current>k__BackingField: 0
+      <Max>k__BackingField: 100
+      <Name>k__BackingField: Coal
+      <Direction>k__BackingField: 0
+    - <Current>k__BackingField: 0
+      <Max>k__BackingField: 100
+      <Name>k__BackingField: Iron
+      <Direction>k__BackingField: 2
+    - <Current>k__BackingField: 0
+      <Max>k__BackingField: 100
+      <Name>k__BackingField: Iron Ore
+      <Direction>k__BackingField: 0
+    - <Current>k__BackingField: 0
+      <Max>k__BackingField: 100
+      <Name>k__BackingField: Wood
+      <Direction>k__BackingField: 0
 --- !u!1 &6584118895394831751
 GameObject:
   m_ObjectHideFlags: 0

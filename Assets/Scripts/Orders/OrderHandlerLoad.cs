@@ -23,8 +23,8 @@ public class OrderHandlerLoad : OrderHandler
         int valueStart = Mathf.Min(new int[]
             {
                 order.Value,
-                order.SourceGameObject.GetComponent<Storage>().Resources.Current(order.Resource),
-                myGameObject.GetComponent<Storage>().Resources.Available(order.Resource)
+                order.SourceGameObject.GetComponentInChildren<Storage>().Resources.Current(order.Resource),
+                myGameObject.GetComponentInChildren<Storage>().Resources.Available(order.Resource)
             }
         );
 
@@ -37,7 +37,7 @@ public class OrderHandlerLoad : OrderHandler
 
         if (order.Timer == null)
         {
-            order.Timer = new Timer(Mathf.Ceil((float)valueStart / myGameObject.GetComponent<Storage>().ResourceUsage));
+            order.Timer = new Timer(Mathf.Ceil((float)valueStart / (float)myGameObject.GetComponentInChildren<Storage>().ResourceUsage));
         }
 
         if (order.Timer.Update(Time.deltaTime) == false)

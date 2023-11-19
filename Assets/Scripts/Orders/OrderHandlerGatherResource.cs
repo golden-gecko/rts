@@ -30,7 +30,7 @@ public class OrderHandlerGatherResource : OrderHandler
             return;
         }
 
-        int current = myResource.GetComponent<Storage>().Resources.Current(order.Resource);
+        int current = myResource.GetComponentInChildren<Storage>().Resources.Current(order.Resource);
 
         if (current <= 0)
         {

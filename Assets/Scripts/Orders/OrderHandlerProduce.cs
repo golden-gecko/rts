@@ -67,7 +67,7 @@ public class OrderHandlerProduce : OrderHandler
     {
         foreach (Resource i in recipe.ToConsume.Items)
         {
-            if (myGameObject.GetComponent<Storage>().Resources.CanRemove(i.Name, i.Max) == false)
+            if (myGameObject.GetComponentInChildren<Storage>().Resources.CanRemove(i.Name, i.Max) == false)
             {
                 return false;
             }
@@ -75,7 +75,7 @@ public class OrderHandlerProduce : OrderHandler
 
         foreach (Resource i in recipe.ToProduce.Items)
         {
-            if (myGameObject.GetComponent<Storage>().Resources.CanAdd(i.Name, i.Max) == false)
+            if (myGameObject.GetComponentInChildren<Storage>().Resources.CanAdd(i.Name, i.Max) == false)
             {
                 return false;
             }
@@ -88,13 +88,13 @@ public class OrderHandlerProduce : OrderHandler
     {
         foreach (Resource i in recipe.ToConsume.Items)
         {
-            myGameObject.GetComponent<Storage>().Resources.Remove(i.Name, i.Max);
+            myGameObject.GetComponentInChildren<Storage>().Resources.Remove(i.Name, i.Max);
             myGameObject.Stats.Add(Stats.ResourcesUsed, i.Max);
         }
 
         foreach (Resource i in recipe.ToProduce.Items)
         {
-            myGameObject.GetComponent<Storage>().Resources.Add(i.Name, i.Max);
+            myGameObject.GetComponentInChildren<Storage>().Resources.Add(i.Name, i.Max);
             myGameObject.Stats.Add(Stats.ResourcesProduced, i.Max);
         }
     }

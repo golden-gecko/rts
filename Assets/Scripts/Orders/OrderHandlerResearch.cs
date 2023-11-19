@@ -55,7 +55,7 @@ public class OrderHandlerResearch : OrderHandler
     {
         foreach (Resource i in technology.Cost.Items)
         {
-            if (myGameObject.GetComponent<Storage>().Resources.CanRemove(i.Name, i.Max) == false)
+            if (myGameObject.GetComponentInChildren<Storage>().Resources.CanRemove(i.Name, i.Max) == false)
             {
                 return false;
             }
@@ -68,7 +68,7 @@ public class OrderHandlerResearch : OrderHandler
     {
         foreach (Resource i in technology.Cost.Items)
         {
-            myGameObject.GetComponent<Storage>().Resources.Remove(i.Name, i.Max);
+            myGameObject.GetComponentInChildren<Storage>().Resources.Remove(i.Name, i.Max);
             myGameObject.Stats.Add(Stats.ResourcesUsed, i.Max);
         }
     }

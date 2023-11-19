@@ -28,6 +28,11 @@ public class Counter
         return valueToRemove;
     }
 
+    public void RemoveAll()
+    {
+        Current = 0;
+    }
+
     public void Inc()
     {
         Add(1);

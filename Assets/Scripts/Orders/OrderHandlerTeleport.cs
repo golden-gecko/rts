@@ -29,8 +29,8 @@ public class OrderHandlerTeleport : OrderHandler
                 order.Timer = new Timer(order.SourceGameObject.GetComponent<Teleporter>().UsageTime);
             }
 
-            order.SourceGameObject.GetComponent<Teleporter>().Open();
-            order.TargetGameObject.GetComponent<Teleporter>().Open();
+            order.SourceGameObject.GetComponentInChildren<Teleporter>().Open();
+            order.TargetGameObject.GetComponentInChildren<Teleporter>().Open();
 
             order.State = OrderState.Teleport;
         }
@@ -58,8 +58,8 @@ public class OrderHandlerTeleport : OrderHandler
 
         if (order.State == OrderState.Close)
         {
-            order.SourceGameObject.GetComponent<Teleporter>().Close();
-            order.TargetGameObject.GetComponent<Teleporter>().Close();
+            order.SourceGameObject.GetComponentInChildren<Teleporter>().Close();
+            order.TargetGameObject.GetComponentInChildren<Teleporter>().Close();
         }
 
         Success(myGameObject);

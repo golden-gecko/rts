@@ -28,7 +28,7 @@ public class OrderHandlerUnload : OrderHandler
             {
                 order.Value,
                 order.TargetGameObject.ConstructionResources.Available(order.Resource),
-                myGameObject.GetComponent<Storage>().Resources.Current(order.Resource),
+                myGameObject.GetComponentInChildren<Storage>().Resources.Current(order.Resource),
             };
 
             valueStart = Mathf.Min(values);
@@ -38,8 +38,8 @@ public class OrderHandlerUnload : OrderHandler
             int[] values = new int[]
             {
                 order.Value,
-                order.TargetGameObject.GetComponent<Storage>().Resources.Available(order.Resource),
-                myGameObject.GetComponent<Storage>().Resources.Current(order.Resource)
+                order.TargetGameObject.GetComponentInChildren<Storage>().Resources.Available(order.Resource),
+                myGameObject.GetComponentInChildren<Storage>().Resources.Current(order.Resource)
             };
 
             valueStart = Mathf.Min(values);
@@ -70,7 +70,7 @@ public class OrderHandlerUnload : OrderHandler
             {
                 order.Value,
                 order.TargetGameObject.ConstructionResources.Available(order.Resource),
-                myGameObject.GetComponent<Storage>().Resources.Current(order.Resource),
+                myGameObject.GetComponentInChildren<Storage>().Resources.Current(order.Resource),
             };
 
             valueEnd = Mathf.Min(values);
@@ -80,8 +80,8 @@ public class OrderHandlerUnload : OrderHandler
             int[] values = new int[]
             {
                 order.Value,
-                order.TargetGameObject.GetComponent<Storage>().Resources.Available(order.Resource),
-                myGameObject.GetComponent<Storage>().Resources.Current(order.Resource)
+                order.TargetGameObject.GetComponentInChildren<Storage>().Resources.Available(order.Resource),
+                myGameObject.GetComponentInChildren<Storage>().Resources.Current(order.Resource)
             };
 
             valueEnd = Mathf.Min(values);
@@ -106,7 +106,7 @@ public class OrderHandlerUnload : OrderHandler
 
     private void MoveResources(MyGameObject source, MyGameObject target, string resource, int value)
     {
-        source.GetComponent<Storage>().Resources.Remove(resource, value);
+        source.GetComponentInChildren<Storage>().Resources.Remove(resource, value);
 
         if (target.State == MyGameObjectState.UnderConstruction)
         {
@@ -114,7 +114,7 @@ public class OrderHandlerUnload : OrderHandler
         }
         else
         {
-            target.GetComponent<Storage>().Resources.Add(resource, value);
+            target.GetComponentInChildren<Storage>().Resources.Add(resource, value);
         }
     }
 }

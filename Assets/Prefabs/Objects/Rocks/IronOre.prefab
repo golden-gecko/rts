@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 3358071454029328485}
   - component: {fileID: 7648998900883408615}
   - component: {fileID: -7965324161443440513}
+  - component: {fileID: -7107971626321310347}
   m_Layer: 20
   m_Name: IronOre
   m_TagString: Untagged
@@ -79,14 +80,12 @@ MonoBehaviour:
     <Max>k__BackingField: 1000
   <Player>k__BackingField: {fileID: 0}
   <Enabled>k__BackingField: 1
-  <Gatherable>k__BackingField: 0
   <Selectable>k__BackingField: 1
   <EnableTime>k__BackingField: 2
   <WaitTime>k__BackingField: 2
   <DestroyEffect>k__BackingField: {fileID: 8579966591951127539, guid: 64e9158e41e34f5418b979dd48171ccb, type: 3}
   <Altitude>k__BackingField: -1
   <Depth>k__BackingField: -1
-  <MapLayers>k__BackingField: 
   <ShowIndicators>k__BackingField: 1
   <ExpirationTimer>k__BackingField:
     <Current>k__BackingField: -1
@@ -119,6 +118,34 @@ MonoBehaviour:
       <Name>k__BackingField: Iron Ore
       <Direction>k__BackingField: 1
   <MapLayers>k__BackingField: 02000000
+--- !u!114 &-7107971626321310347
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2040145519782903273}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9f7fc2f43637b07428d9ff8d0e38edaa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  <Mass>k__BackingField: 10
+  <ConstructionResources>k__BackingField:
+    <Items>k__BackingField:
+    - <Current>k__BackingField: 100
+      <Max>k__BackingField: 100
+      <Name>k__BackingField: Iron Ore
+      <Direction>k__BackingField: 1
+  <Resources>k__BackingField:
+    <Items>k__BackingField:
+    - <Current>k__BackingField: 100
+      <Max>k__BackingField: 100
+      <Name>k__BackingField: Iron Ore
+      <Direction>k__BackingField: 1
+  <RaiseResourceFlags>k__BackingField: 0
+  <Gatherable>k__BackingField: 1
+  <ResourceUsage>k__BackingField: 1
 --- !u!1 &7246156254199402963
 GameObject:
   m_ObjectHideFlags: 0

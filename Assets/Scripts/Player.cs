@@ -135,12 +135,14 @@ public class Player : MonoBehaviour
                 continue;
             }
 
-            if (myResource.Gatherable == false)
+            Storage storage = myResource.GetComponentInChildren<Storage>();
+
+            if (storage.Gatherable == false)
             {
                 continue;
             }
 
-            if (resource != "" && myResource.GetComponent<Storage>().Resources.Current(resource) <= 0)
+            if (resource.Length > 0 && storage.Resources.Current(resource) <= 0)
             {
                 continue;
             }
@@ -203,7 +205,9 @@ public class Player : MonoBehaviour
                 continue;
             }
 
-            if (myResource.Gatherable == false)
+            Storage storage = myResource.GetComponentInChildren<Storage>();
+
+            if (storage.Gatherable == false)
             {
                 continue;
             }
@@ -217,19 +221,19 @@ public class Player : MonoBehaviour
 
             if (magnitude < distance)
             {
-                MyGameObject storage = null;
+                MyGameObject myStorage = null;
 
-                foreach (Resource i in myResource.GetComponent<Storage>().Resources.Items)
+                foreach (Resource i in myResource.ConstructionResources.Items) // TODO: Check each part.
                 {
-                    storage = myGameObject.Player.GetStorage(myGameObject, i.Name, i.Current);
+                    myStorage = myGameObject.Player.GetStorage(myGameObject, i.Name, i.Current);
 
-                    if (storage != null)
+                    if (myStorage != null)
                     {
                         break;
                     }
                 }
 
-                if (storage == null)
+                if (myStorage == null)
                 {
                     continue;
                 }

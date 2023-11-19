@@ -89,11 +89,14 @@ public class Storage : Part
     }
 
     [field: SerializeField]
+    public ResourceContainer Resources { get; private set; } = new ResourceContainer();
+
+    [field: SerializeField]
     public bool RaiseResourceFlags { get; private set; } = true;
 
     [field: SerializeField]
-    public int ResourceUsage { get; private set; } = 1; // Number of resources loaded or unloaded per second.
+    public bool Gatherable { get; private set; } = false;
 
     [field: SerializeField]
-    public ResourceContainer Resources { get; private set; } = new ResourceContainer();
+    public int ResourceUsage { get; private set; } = 1; // Number of resources loaded or unloaded per second.
 }

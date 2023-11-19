@@ -35,19 +35,10 @@ public class OrderHandlerGatherObject : OrderHandler
             return;
         }
 
-        MyGameObject myResource = order.TargetGameObject.GetComponent<MyGameObject>();
-
-        if (myResource == null)
-        {
-            Fail(myGameObject);
-
-            return;
-        }
-
         MyGameObject storage = null;
         Resource resource = null;
 
-        foreach (Resource i in myResource.GetComponent<Storage>().Resources.Items)
+        foreach (Resource i in order.TargetGameObject.ConstructionResources.Items)
         {
             storage = myGameObject.Player.GetStorage(myGameObject, i.Name, i.Current);
             resource = i;

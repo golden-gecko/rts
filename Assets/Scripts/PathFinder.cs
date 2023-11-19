@@ -108,7 +108,7 @@ public class PathFinder : Singleton<PathFinder>
                 continue;
             }
 
-            if (node.teleporter.Parent.GetComponent<PowerPlant>().PowerUpTime.Finished == false)
+            if (node.teleporter.Parent.GetComponentInChildren<PowerPlant>().PowerUpTime.Finished == false)
             {
                 continue;
             }

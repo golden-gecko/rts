@@ -15,7 +15,7 @@ public class OrderHandlerAssemble : OrderHandler
 
         if (order.Timer == null)
         {
-            order.Timer = new Timer(Mathf.Ceil((float)resourceContainer.MaxSum / myGameObject.GetComponent<Assembler>().ResourceUsage));
+            order.Timer = new Timer(Mathf.Ceil((float)resourceContainer.MaxSum / myGameObject.GetComponentInChildren<Assembler>().ResourceUsage));
         }
 
         if (HaveResources(myGameObject, resourceContainer) == false)
@@ -33,7 +33,7 @@ public class OrderHandlerAssemble : OrderHandler
         MoveResources(myGameObject, resourceContainer);
 
         order.TargetGameObject.SetState(MyGameObjectState.Operational);
-        order.TargetGameObject.Move(myGameObject.GetComponent<Assembler>().RallyPoint, 0);
+        order.TargetGameObject.Move(myGameObject.GetComponentInChildren<Assembler>().RallyPoint, 0);
 
         myGameObject.Stats.Inc(Stats.ObjectsAssembled);
         myGameObject.Stats.Add(Stats.TimeAssembling, order.Timer.Max);
@@ -45,7 +45,7 @@ public class OrderHandlerAssemble : OrderHandler
     {
         foreach (Resource i in resourceContainer.Items)
         {
-            if (myGameObject.GetComponent<Storage>().Resources.CanRemove(i.Name, i.Max) == false)
+            if (myGameObject.GetComponentInChildren<Storage>().Resources.CanRemove(i.Name, i.Max) == false)
             {
                 return false;
             }
@@ -58,7 +58,7 @@ public class OrderHandlerAssemble : OrderHandler
     {
         foreach (Resource i in resourceContainer.Items)
         {
-            myGameObject.GetComponent<Storage>().Resources.Remove(i.Name, i.Max);
+            myGameObject.GetComponentInChildren<Storage>().Resources.Remove(i.Name, i.Max);
             myGameObject.Stats.Add(Stats.ResourcesUsed, i.Max);
         }
     }
