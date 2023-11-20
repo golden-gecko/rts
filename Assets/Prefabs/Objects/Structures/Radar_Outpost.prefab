@@ -190,7 +190,6 @@ MonoBehaviour:
     <Max>k__BackingField: 1000
   <Player>k__BackingField: {fileID: 0}
   <Enabled>k__BackingField: 1
-  <Gatherable>k__BackingField: 0
   <Selectable>k__BackingField: 1
   <EnableTime>k__BackingField: 2
   <WaitTime>k__BackingField: 2
@@ -223,7 +222,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <Mass>k__BackingField: 10
   <ConstructionResources>k__BackingField:
-    <Items>k__BackingField: []
+    <Items>k__BackingField:
+    - <Current>k__BackingField: 10
+      <Max>k__BackingField: 10
+      <Name>k__BackingField: Iron
+      <Direction>k__BackingField: 1
   <PowerGeneration>k__BackingField:
     <Value>k__BackingField: -1
   <PowerUsage>k__BackingField:
@@ -250,7 +253,7 @@ MonoBehaviour:
     <Items>k__BackingField:
     - <Current>k__BackingField: 100
       <Max>k__BackingField: 100
-      <Name>k__BackingField: Metal
+      <Name>k__BackingField: Iron
       <Direction>k__BackingField: 1
   <MapLayers>k__BackingField: 02000000
 --- !u!114 &-6454422185793765907

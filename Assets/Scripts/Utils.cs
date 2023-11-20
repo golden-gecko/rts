@@ -79,10 +79,14 @@ public class Utils
         {
             case MyGameObjectState.UnderAssembly:
             case MyGameObjectState.UnderConstruction:
+                // TODO: TEMP
+                /*
                 foreach (Part part in myGameObject.GetComponentsInChildren<Part>())
                 {
                     part.ConstructionResources.RemoveAll();
                 }
+                */
+                // TEMP
                 break;
         }
 

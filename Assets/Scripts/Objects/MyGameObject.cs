@@ -31,9 +31,46 @@ public class MyGameObject : MonoBehaviour
         OrderHandlers[OrderType.UseSkill] = new OrderHandlerUseSkill();
         OrderHandlers[OrderType.Wait] = new OrderHandlerWait();
 
-        ConstructionResources.Init("Iron", 0, 30, ResourceDirection.In);
-
         Stats.Player = Player;
+
+        // TODO: TEMP
+        Part[] parts = GetComponentsInChildren<Part>();
+        Health = new Progress(parts.Sum(x => x.Health.Current), parts.Sum(x => x.Health.Max));
+        // TEMP
+
+        // TODO: TEMP
+        Dictionary<string, int> current = new Dictionary<string, int>(); // TODO: Refactor. Optimize. Allow changing Max property.
+        Dictionary<string, int> max = new Dictionary<string, int>();
+
+        foreach (Part part in GetComponentsInChildren<Part>())
+        {
+            foreach (Resource resource in part.ConstructionResources.Items)
+            {
+                if (current.ContainsKey(resource.Name))
+                {
+                    current[resource.Name] += resource.Current;
+                }
+                else
+                {
+                    current[resource.Name] = resource.Current;
+                }
+
+                if (max.ContainsKey(resource.Name))
+                {
+                    max[resource.Name] += resource.Max;
+                }
+                else
+                {
+                    max[resource.Name] = resource.Max;
+                }
+            }
+        }
+
+        foreach (KeyValuePair<string, int> resource in current)
+        {
+            ConstructionResources.Init(resource.Key, resource.Value, max[resource.Key]);
+        }
+        // TEMP
     }
 
     protected virtual void Start()
@@ -689,10 +726,14 @@ public class MyGameObject : MonoBehaviour
                 break;
 
             case MyGameObjectState.UnderAssembly:
+                ConstructionResources.RemoveAll();
+
                 Indicators.OnConstruction();
                 break;
 
             case MyGameObjectState.UnderConstruction:
+                ConstructionResources.RemoveAll();
+
                 RaiseConstructionResourceFlags();
 
                 Indicators.OnConstruction();
@@ -971,7 +1012,9 @@ public class MyGameObject : MonoBehaviour
     [field: SerializeField]
     public bool ShowExit { get; private set; } = false;
 
-    public Progress Health
+    [field: SerializeField]
+    public Progress Health { get; private set; } = new Progress();
+    /*
     {
         get
         {
@@ -980,6 +1023,7 @@ public class MyGameObject : MonoBehaviour
             return new Progress(parts.Sum(x => x.Health.Current), parts.Sum(x => x.Health.Max));
         }
     }
+    */
 
     public Vector3 Position { get => transform.position; set => transform.position = value; }
 
@@ -991,7 +1035,9 @@ public class MyGameObject : MonoBehaviour
 
     public Stats Stats { get; } = new Stats();
 
-    public ResourceContainer ConstructionResources
+    [field: SerializeField]
+    public ResourceContainer ConstructionResources { get; private set; } = new ResourceContainer();
+    /*
     {
         get
         {
@@ -1032,6 +1078,7 @@ public class MyGameObject : MonoBehaviour
             return constructionResources;
         }
     }
+    */
 
     public MyGameObject Parent { get; private set; }
 

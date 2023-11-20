@@ -24,7 +24,7 @@ public class OrderHandlerConstruct : OrderHandler
 
         if (order.Timer == null)
         {
-            order.Timer = new Timer(resourceContainer.MaxSum / myGameObject.GetComponentInChildren<Constructor>().ResourceUsage);
+            order.Timer = new Timer(Mathf.Ceil((float)resourceContainer.MaxSum / (float)myGameObject.GetComponentInChildren<Constructor>().ResourceUsage));
         }
 
         if (HaveResources(order, resourceContainer) == false)

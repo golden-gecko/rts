@@ -86,7 +86,12 @@ public class PowerPlant : Part
 
     public override string GetInfo()
     {
-        string info = string.Format("PowerPlant - {0}, Range: {1}", base.GetInfo(), Range.Total);
+        string info = string.Format("PowerPlant - {0}", base.GetInfo());
+
+        if (Range.Total > 0.0f)
+        {
+            info += string.Format(", Range: {0}", Range.Total);
+        }
 
         if (IsConsumer)
         {

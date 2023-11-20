@@ -12,12 +12,39 @@ public class Validator : EditorWindow
 
         IEnumerable<GameObject> gameObjects = Tools.GetGameObjects();
 
+        ValidateConstructionResources(gameObjects);
         ValidateNames(gameObjects);
+        ValidatePhysics(gameObjects);
         ValidateProperties(gameObjects);
         ValidateStorage(gameObjects);
-        ValidatePhysics(gameObjects);
     }
 
+    private static void ValidateConstructionResources(IEnumerable<GameObject> gameObjects)
+    {
+        foreach (GameObject gameObject in gameObjects)
+        {
+            if (gameObject.TryGetComponent(out Part part))
+            {
+                if (part.ConstructionResources.Items.Count <= 0)
+                {
+                    Debug.Log(string.Format("Resource {0} has invalid construction resource count ({1}).", part.name, part.ConstructionResources.Items.Count));
+                }
+
+                foreach (Resource resource in part.ConstructionResources.Items)
+                {
+                    if (resource.Current <= 0)
+                    {
+                        Debug.Log(string.Format("Resource {0} has invalid construction resource current value ({1}).", part.name, part.ConstructionResources.Items.Count));
+                    }
+
+                    if (resource.Max <= 0)
+                    {
+                        Debug.Log(string.Format("Resource {0} has invalid construction resource max value ({1}).", part.name, part.ConstructionResources.Items.Count));
+                    }
+                }
+            }
+        }
+    }
 
     private static void ValidateNames(IEnumerable<GameObject> gameObjects)
     {
@@ -40,6 +67,33 @@ public class Validator : EditorWindow
         if (duplicates.Count() > 0)
         {
             Debug.Log(string.Format("Some game objects have duplicates names: {0}", string.Join(", ", names.Where(x => x.Value > 1))));
+        }
+    }
+
+    private static void ValidatePhysics(IEnumerable<GameObject> gameObjects)
+    {
+        foreach (GameObject gameObject in gameObjects)
+        {
+            foreach (Collider collider in gameObject.GetComponentsInChildren<Collider>())
+            {
+                if (collider.isTrigger)
+                {
+                    Debug.Log(string.Format("Resource {0} has collider trigger enabled ({1}).", gameObject.name, collider.isTrigger));
+                }
+            }
+
+            foreach (Rigidbody rigidbody in gameObject.GetComponentsInChildren<Rigidbody>())
+            {
+                if (rigidbody.isKinematic == false)
+                {
+                    Debug.Log(string.Format("Resource {0} is not kinematic ({1}).", gameObject.name, rigidbody.isKinematic));
+                }
+
+                if (rigidbody.useGravity)
+                {
+                    Debug.Log(string.Format("Resource {0} is using gravity ({1}).", gameObject.name, rigidbody.useGravity));
+                }
+            }
         }
     }
 
@@ -95,33 +149,6 @@ public class Validator : EditorWindow
                     {
                         Debug.Log(string.Format("Resource {0} has invalid max value ({1}, {2}).", gameObject.name, resource.Name, resource.Max));
                     }
-                }
-            }
-        }
-    }
-
-    private static void ValidatePhysics(IEnumerable<GameObject> gameObjects)
-    {
-        foreach (GameObject gameObject in gameObjects)
-        {
-            foreach (Collider collider in gameObject.GetComponentsInChildren<Collider>())
-            {
-                if (collider.isTrigger)
-                {
-                    Debug.Log(string.Format("Resource {0} has collider trigger enabled ({1}).", gameObject.name, collider.isTrigger));
-                }
-            }
-
-            foreach (Rigidbody rigidbody in gameObject.GetComponentsInChildren<Rigidbody>())
-            {
-                if (rigidbody.isKinematic == false)
-                {
-                    Debug.Log(string.Format("Resource {0} is not kinematic ({1}).", gameObject.name, rigidbody.isKinematic));
-                }
-
-                if (rigidbody.useGravity)
-                {
-                    Debug.Log(string.Format("Resource {0} is using gravity ({1}).", gameObject.name, rigidbody.useGravity));
                 }
             }
         }

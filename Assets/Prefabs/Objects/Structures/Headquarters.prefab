@@ -80,7 +80,6 @@ MonoBehaviour:
     <Max>k__BackingField: 1000
   <Player>k__BackingField: {fileID: 0}
   <Enabled>k__BackingField: 1
-  <Gatherable>k__BackingField: 0
   <Selectable>k__BackingField: 1
   <EnableTime>k__BackingField: 2
   <WaitTime>k__BackingField: 2
@@ -99,6 +98,8 @@ MonoBehaviour:
   <RotateTowardsTarget>k__BackingField: 1
   <ShowEntrance>k__BackingField: 0
   <ShowExit>k__BackingField: 0
+  ConstructionResources:
+    <Items>k__BackingField: []
 --- !u!114 &-6881201588257107453
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -116,7 +117,7 @@ MonoBehaviour:
     <Items>k__BackingField:
     - <Current>k__BackingField: 100
       <Max>k__BackingField: 100
-      <Name>k__BackingField: Metal
+      <Name>k__BackingField: Iron
       <Direction>k__BackingField: 1
   <MapLayers>k__BackingField: 02000000
 --- !u!114 &3977297452004550506
@@ -138,38 +139,39 @@ MonoBehaviour:
       <Max>k__BackingField: 30
       <Name>k__BackingField: Metal
       <Direction>k__BackingField: 1
-  <RaiseResourceFlags>k__BackingField: 1
-  <ResourceUsage>k__BackingField: 8
   <Resources>k__BackingField:
     <Items>k__BackingField:
-    - <Current>k__BackingField: 0
+    - <Current>k__BackingField: 50
       <Max>k__BackingField: 100
       <Name>k__BackingField: Ammunition
       <Direction>k__BackingField: 3
-    - <Current>k__BackingField: 0
+    - <Current>k__BackingField: 50
       <Max>k__BackingField: 100
       <Name>k__BackingField: Coal
       <Direction>k__BackingField: 3
-    - <Current>k__BackingField: 0
+    - <Current>k__BackingField: 50
       <Max>k__BackingField: 100
       <Name>k__BackingField: Crystal
       <Direction>k__BackingField: 3
-    - <Current>k__BackingField: 0
+    - <Current>k__BackingField: 50
       <Max>k__BackingField: 100
       <Name>k__BackingField: Fuel
       <Direction>k__BackingField: 3
-    - <Current>k__BackingField: 0
+    - <Current>k__BackingField: 50
       <Max>k__BackingField: 100
       <Name>k__BackingField: Iron
       <Direction>k__BackingField: 3
-    - <Current>k__BackingField: 0
+    - <Current>k__BackingField: 50
       <Max>k__BackingField: 100
       <Name>k__BackingField: Iron Ore
       <Direction>k__BackingField: 3
-    - <Current>k__BackingField: 0
+    - <Current>k__BackingField: 50
       <Max>k__BackingField: 100
       <Name>k__BackingField: Wood
       <Direction>k__BackingField: 3
+  <RaiseResourceFlags>k__BackingField: 1
+  <Gatherable>k__BackingField: 0
+  <ResourceUsage>k__BackingField: 8
 --- !u!1 &4020719452692643192
 GameObject:
   m_ObjectHideFlags: 0

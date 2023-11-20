@@ -59,6 +59,8 @@ MeshRenderer:
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 2
   m_RayTraceProcedural: 0
+  m_RayTracingAccelStructBuildFlagsOverride: 0
+  m_RayTracingAccelStructBuildFlags: 1
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -142,6 +144,8 @@ MeshRenderer:
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 2
   m_RayTraceProcedural: 0
+  m_RayTracingAccelStructBuildFlagsOverride: 0
+  m_RayTracingAccelStructBuildFlags: 1
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -248,17 +252,12 @@ MonoBehaviour:
     <Max>k__BackingField: 1000
   <Player>k__BackingField: {fileID: 0}
   <Enabled>k__BackingField: 1
-  <Gatherable>k__BackingField: 0
   <Selectable>k__BackingField: 1
-  <Health>k__BackingField:
-    <Current>k__BackingField: 100
-    <Max>k__BackingField: 100
   <EnableTime>k__BackingField: 2
   <WaitTime>k__BackingField: 2
   <DestroyEffect>k__BackingField: {fileID: 100006, guid: bf98fad54e73fb8448b7b1b9ba4fd0b6, type: 3}
   <Altitude>k__BackingField: -1
   <Depth>k__BackingField: -1
-  <MapLayers>k__BackingField: 04000000
   <ShowIndicators>k__BackingField: 1
   <ExpirationTimer>k__BackingField:
     <Current>k__BackingField: -1
@@ -284,6 +283,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   <Mass>k__BackingField: 10
+  <ConstructionResources>k__BackingField:
+    <Items>k__BackingField: []
   <MissilePrefab>k__BackingField: {fileID: 3841255586236475405, guid: 86513724c5de2df4da484cb23191a7e5, type: 3}
   <Damage>k__BackingField:
     <Value>k__BackingField: 10
@@ -312,6 +313,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   <Mass>k__BackingField: 10
+  <ConstructionResources>k__BackingField:
+    <Items>k__BackingField: []
   <Power>k__BackingField:
     <Value>k__BackingField: 200
   <Fuel>k__BackingField:
@@ -331,6 +334,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   <Mass>k__BackingField: 10
+  <ConstructionResources>k__BackingField:
+    <Items>k__BackingField: []
   <Range>k__BackingField:
     <Value>k__BackingField: 10
 --- !u!1 &1966768037852259934
@@ -395,6 +400,8 @@ MeshRenderer:
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 2
   m_RayTraceProcedural: 0
+  m_RayTracingAccelStructBuildFlagsOverride: 0
+  m_RayTracingAccelStructBuildFlags: 1
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -499,6 +506,8 @@ MeshRenderer:
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 2
   m_RayTraceProcedural: 0
+  m_RayTracingAccelStructBuildFlagsOverride: 0
+  m_RayTracingAccelStructBuildFlags: 1
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -582,6 +591,8 @@ MeshRenderer:
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 2
   m_RayTraceProcedural: 0
+  m_RayTracingAccelStructBuildFlagsOverride: 0
+  m_RayTracingAccelStructBuildFlags: 1
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -666,6 +677,8 @@ MeshRenderer:
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 2
   m_RayTraceProcedural: 0
+  m_RayTracingAccelStructBuildFlagsOverride: 0
+  m_RayTracingAccelStructBuildFlags: 1
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -750,6 +763,8 @@ MeshRenderer:
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 2
   m_RayTraceProcedural: 0
+  m_RayTracingAccelStructBuildFlagsOverride: 0
+  m_RayTracingAccelStructBuildFlags: 1
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:

@@ -39,7 +39,7 @@ public class OrderHandlerProduce : OrderHandler
     {
         if (order.Timer == null)
         {
-            order.Timer = new Timer(Mathf.Ceil((float)recipe.MaxSum / myGameObject.GetComponent<Producer>().ResourceUsage));
+            order.Timer = new Timer(Mathf.Ceil((float)recipe.MaxSum / (float)myGameObject.GetComponent<Producer>().ResourceUsage));
         }
 
         if (HaveResources(myGameObject, recipe) == false)
