@@ -207,7 +207,7 @@ public class Player : MonoBehaviour
 
             Storage storage = myResource.GetComponentInChildren<Storage>();
 
-            if (storage.Gatherable == false)
+            if (storage == null || storage.Gatherable == false)
             {
                 continue;
             }

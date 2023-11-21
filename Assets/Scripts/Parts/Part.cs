@@ -34,7 +34,7 @@ public class Part : MonoBehaviour
 
     public MyGameObject Parent { get; private set; }
 
-    public bool Alive { get => Parent != null && Parent.Player != null && Health.Empty == false; }
+    public bool Alive { get => /* TODO: Parent != null && Parent.Player != null && */ Health.Empty == false; }
 
     public Vector3 Center { get => new Vector3(Position.x, Position.y + Size.y / 2.0f, Position.z); } 
 

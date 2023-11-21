@@ -12,7 +12,10 @@ public class Producer : Part
 
         Parent.OrderHandlers[OrderType.Idle] = new OrderHandlerIdleProducer();
         Parent.OrderHandlers[OrderType.Produce] = new OrderHandlerProduce();
+    }
 
+    protected override void Start()
+    {
         foreach (string recipe in Recipes)
         {
             Parent.Orders.AllowRecipe(Game.Instance.RecipeManager.Get(recipe));

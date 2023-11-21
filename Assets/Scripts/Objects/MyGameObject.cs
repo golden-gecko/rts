@@ -27,6 +27,7 @@ public class MyGameObject : MonoBehaviour
         OrderHandlers[OrderType.Enable] = new OrderHandlerEnable();
         OrderHandlers[OrderType.GuardObject] = new OrderHandlerGuardObject();
         OrderHandlers[OrderType.GuardPosition] = new OrderHandlerGuardPosition();
+        OrderHandlers[OrderType.Idle] = new OrderHandlerIdle();
         OrderHandlers[OrderType.Stop] = new OrderHandlerStop();
         OrderHandlers[OrderType.UseSkill] = new OrderHandlerUseSkill();
         OrderHandlers[OrderType.Wait] = new OrderHandlerWait();
@@ -398,7 +399,7 @@ public class MyGameObject : MonoBehaviour
             case MyGameObjectState.Operational:
                 info += string.Format("{0}\n\nHP: {1}", name, Health.GetInfo());
 
-                Part[] myComponents = GetComponents<Part>();
+                Part[] myComponents = GetComponentsInChildren<Part>();
 
                 if (myComponents.Length > 0)
                 {

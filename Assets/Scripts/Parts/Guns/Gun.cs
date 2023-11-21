@@ -13,7 +13,6 @@ public class Gun : Part
 
         Parent.OrderHandlers[OrderType.AttackObject] = new OrderHandlerAttackObject();
         Parent.OrderHandlers[OrderType.AttackPosition] = new OrderHandlerAttackPosition();
-        Parent.OrderHandlers[OrderType.Idle] = new OrderHandlerIdleAttacker();
     }
 
     protected override void Update()

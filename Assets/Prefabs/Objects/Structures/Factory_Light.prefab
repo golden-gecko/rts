@@ -465,6 +465,11 @@ MonoBehaviour:
   <RotateTowardsTarget>k__BackingField: 1
   <ShowEntrance>k__BackingField: 0
   <ShowExit>k__BackingField: 0
+  <Health>k__BackingField:
+    <Current>k__BackingField: 0
+    <Max>k__BackingField: 0
+  <ConstructionResources>k__BackingField:
+    <Items>k__BackingField: []
 --- !u!114 &2933446433100080002
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -528,9 +533,9 @@ MonoBehaviour:
   <Mass>k__BackingField: 10
   <ConstructionResources>k__BackingField:
     <Items>k__BackingField:
-    - <Current>k__BackingField: 30
-      <Max>k__BackingField: 30
-      <Name>k__BackingField: Metal
+    - <Current>k__BackingField: 10
+      <Max>k__BackingField: 10
+      <Name>k__BackingField: Iron
       <Direction>k__BackingField: 1
   <Resources>k__BackingField:
     <Items>k__BackingField:
