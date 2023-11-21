@@ -1,7 +1,7 @@
 {
     "Name": "Scout",
     "BaseGameObject": {
-        "instanceID": -262198
+        "instanceID": -70296
     },
     "Parts": [
         {
@@ -9,7 +9,7 @@
             "Name": "Chassis_Mini",
             "Position": {
                 "x": 0.0,
-                "y": -0.0004425048828125,
+                "y": 0.1043243408203125,
                 "z": 0.0
             }
         },
@@ -18,7 +18,7 @@
             "Name": "Drive_Wheel",
             "Position": {
                 "x": 0.0,
-                "y": 0.0,
+                "y": 0.16480255126953126,
                 "z": 0.0
             }
         },
@@ -33,7 +33,7 @@
         },
         {
             "PartType": 6,
-            "Name": "Sight_Near",
+            "Name": "Sight_Far",
             "Position": {
                 "x": 0.0,
                 "y": 0.0,

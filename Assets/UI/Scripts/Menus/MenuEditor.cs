@@ -337,19 +337,21 @@ public class MenuEditor : UI_Element
     {
         BlueprintComponent chassis = blueprint.Parts.Find(x => x.PartType == PartType.Chassis);
         BlueprintComponent constructor = blueprint.Parts.Find(x => x.PartType == PartType.Constructor);
+        BlueprintComponent drive = blueprint.Parts.Find(x => x.PartType == PartType.Drive);
 
-        if (chassis != null && chassis.Instance != null && constructor != null && constructor.Instance != null)
+        if (chassis != null && chassis.Instance != null && constructor != null && constructor.Instance != null && drive != null && drive.Instance != null)
         {
             Quaternion rotation = Utils.ResetRotation(parent);
 
-            Collider armCollider = constructor.Instance.GetComponent<Collider>();
             Collider chassisCollider = chassis.Instance.GetComponent<Collider>();
+            Collider constructorCollider = constructor.Instance.GetComponent<Collider>();
+            Collider driveCollider = drive.Instance.GetComponent<Collider>();
 
             Vector3 position = constructor.Instance.transform.position;
             Vector3 local = constructor.Instance.transform.localPosition;
 
-            position.y = chassisCollider.bounds.min.y + chassisCollider.bounds.extents.y;
-            position.z = chassisCollider.bounds.max.z;
+            local.y = chassisCollider.bounds.extents.y + driveCollider.bounds.extents.y;
+            local.z = chassisCollider.bounds.extents.z;
 
             constructor.Instance.transform.position = position;
             constructor.Instance.transform.localPosition = local;
@@ -367,29 +369,13 @@ public class MenuEditor : UI_Element
         {
             Quaternion rotation = Utils.ResetRotation(parent);
 
-            Collider driveCollider = drive.Instance.GetComponent<Collider>();
             Collider chassisCollider = chassis.Instance.GetComponent<Collider>();
+            Collider driveCollider = drive.Instance.GetComponent<Collider>();
 
             Vector3 position = chassis.Instance.transform.position;
             Vector3 local = chassis.Instance.transform.localPosition;
 
             local.y = position.y - chassisCollider.bounds.min.y + driveCollider.bounds.extents.y;
-
-            chassis.Instance.transform.position = position;
-            chassis.Instance.transform.localPosition = local;
-
-            Utils.RestoreRotation(parent, rotation);
-        }
-        else if (chassis != null && chassis.Instance != null)
-        {
-            Quaternion rotation = Utils.ResetRotation(parent);
-
-            Collider chassisCollider = chassis.Instance.GetComponent<Collider>();
-
-            Vector3 position = chassis.Instance.transform.position;
-            Vector3 local = chassis.Instance.transform.localPosition;
-
-            local.y = position.y - chassisCollider.bounds.min.y;
 
             chassis.Instance.transform.position = position;
             chassis.Instance.transform.localPosition = local;
@@ -423,35 +409,21 @@ public class MenuEditor : UI_Element
     private void PositionGun(Transform parent)
     {
         BlueprintComponent chassis = blueprint.Parts.Find(x => x.PartType == PartType.Chassis);
+        BlueprintComponent drive = blueprint.Parts.Find(x => x.PartType == PartType.Drive);
         BlueprintComponent gun = blueprint.Parts.Find(x => x.PartType == PartType.Gun);
 
-        if (chassis != null && chassis.Instance != null && gun != null && gun.Instance != null)
+        if (chassis != null && chassis.Instance != null && drive != null && drive.Instance != null && gun != null && gun.Instance != null)
         {
             Quaternion rotation = Utils.ResetRotation(parent);
 
             Collider chassisCollider = chassis.Instance.GetComponent<Collider>();
+            Collider driveCollider = drive.Instance.GetComponent<Collider>();
             Collider gunCollider = gun.Instance.GetComponent<Collider>();
 
             Vector3 position = gun.Instance.transform.position;
             Vector3 local = gun.Instance.transform.localPosition;
 
-            local.y = position.y - gunCollider.bounds.min.y;
-
-            gun.Instance.transform.position = position;
-            gun.Instance.transform.localPosition = local;
-
-            Utils.RestoreRotation(parent, rotation);
-        }
-        else if (gun != null && gun.Instance != null)
-        {
-            Quaternion rotation = Utils.ResetRotation(parent);
-
-            Collider gunCollider = gun.Instance.GetComponent<Collider>();
-
-            Vector3 position = gun.Instance.transform.position;
-            Vector3 local = gun.Instance.transform.localPosition;
-
-            local.y = position.y - gunCollider.bounds.min.y;
+            local.y = position.y - gunCollider.bounds.min.y + chassisCollider.bounds.size.y + driveCollider.bounds.extents.y;
 
             gun.Instance.transform.position = position;
             gun.Instance.transform.localPosition = local;
