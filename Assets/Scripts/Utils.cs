@@ -123,7 +123,6 @@ public class Utils
             }
 
             i.Instance = Object.Instantiate(i.Part, myGameObject.transform.Find("Body").transform); // TODO: myGameObject.Body.transform
-            i.Instance.name = i.Name;
             i.Instance.transform.localPosition = i.Position;
         }
 

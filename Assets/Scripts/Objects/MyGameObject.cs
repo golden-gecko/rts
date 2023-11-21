@@ -787,7 +787,6 @@ public class MyGameObject : MonoBehaviour
     private void SetupIndicators()
     {
         Indicators = Instantiate(Game.Instance.Config.Indicators, transform, false).GetComponent<Indicators>();
-        Indicators.name = Game.Instance.Config.Indicators.name;
     }
 
     private void CreateSkills()
