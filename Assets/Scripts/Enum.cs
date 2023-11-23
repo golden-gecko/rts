@@ -24,13 +24,6 @@ public enum Formation
     Wedge = 7,
 }
 
-public enum GameState
-{
-    Game = 0,
-    Editor = 1,
-    Menu = 2,
-}
-
 public enum MenuType
 {
     Diplomacy = 0,

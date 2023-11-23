@@ -75,7 +75,7 @@ public class Config : MonoBehaviour
     public GameObject Indicators { get; private set; }
 
     #region GameObjects
-    [field: SerializeField]
+    [field: SerializeField, Header("Game Objects")]
     public List<GameObject> Disasters { get; private set; } = new List<GameObject>();
 
     [field: SerializeField]
@@ -95,7 +95,7 @@ public class Config : MonoBehaviour
     #endregion
 
     #region Parts
-    [field: SerializeField]
+    [field: SerializeField, Header("Game Objects Parts")]
     public List<GameObject> Chassis { get; private set; } = new List<GameObject>();
 
     [field: SerializeField]

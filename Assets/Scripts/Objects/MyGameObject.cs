@@ -117,10 +117,10 @@ public class MyGameObject : MonoBehaviour
                 break;
 
             case MyGameObjectState.UnderConstruction:
-                if (Alive == false)
+                /* if (Alive == false) TODO: Fix and enable.
                 {
                     Destroy(0);
-                }
+                } */
 
                 RaiseConstructionResourceFlags();
                 break;
@@ -693,6 +693,23 @@ public class MyGameObject : MonoBehaviour
 
     public void SetState(MyGameObjectState state)
     {
+        if (State == MyGameObjectState.UnderConstruction && state == MyGameObjectState.Operational) // TODO: Refactor.
+        {
+            // TODO: TEMP
+            Part[] parts = GetComponentsInChildren<Part>();
+
+            foreach (Part part in parts)
+            {
+                foreach (Resource resource in part.ConstructionResources.Items)
+                {
+                    resource.Add(resource.Max);
+                }
+            }
+
+            Health = new Progress(parts.Sum(x => x.Health.Current), parts.Sum(x => x.Health.Max));
+            // TEMP
+        }
+
         State = state;
 
         if (Indicators == null)
