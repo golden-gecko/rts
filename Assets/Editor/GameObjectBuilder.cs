@@ -3,7 +3,7 @@ using System.IO;
 using UnityEditor;
 using UnityEngine;
 
-public class Builder : EditorWindow
+public class GameObjectBuilder : EditorWindow
 {
     [MenuItem("Tools/Build", false, 1)]
     public static void Build()

@@ -3,7 +3,7 @@ using UnityEditor;
 using UnityEditor.SceneManagement;
 using UnityEngine;
 
-public class ObjectRenderer : EditorWindow
+public class GameObjectRenderer : EditorWindow
 {
     [MenuItem("Tools/Render", false, 2)]
     public static void Render()

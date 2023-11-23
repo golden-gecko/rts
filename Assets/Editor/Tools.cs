@@ -9,7 +9,12 @@ using UnityEngine;
 
 public static class Tools
 {
-    public static IEnumerable<GameObject> GetGameObjects()
+    public static GameObject[] GetGameObjects()
+    {
+        return EditorSceneManager.GetActiveScene().GetRootGameObjects();
+    }
+
+    public static IEnumerable<GameObject> GetPrefabs()
     {
         string[] folders = new string[] { Path.Join("Assets", "Prefabs", "Objects"), Path.Join("Assets", "Prefabs", "Parts") };
         string[] assets = AssetDatabase.FindAssets("t:prefab", folders);

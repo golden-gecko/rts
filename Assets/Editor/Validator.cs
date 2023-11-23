@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using UnityEditor;
+using UnityEditor.SceneManagement;
 using UnityEngine;
 
 public class Validator : EditorWindow
@@ -10,13 +11,17 @@ public class Validator : EditorWindow
     {
         Tools.ClearLog();
 
-        IEnumerable<GameObject> gameObjects = Tools.GetGameObjects();
+        IEnumerable<GameObject> prefabs = Tools.GetPrefabs();
 
-        ValidateConstructionResources(gameObjects);
-        ValidateNames(gameObjects);
-        ValidatePhysics(gameObjects);
-        ValidateProperties(gameObjects);
-        ValidateStorage(gameObjects);
+        ValidateConstructionResources(prefabs);
+        ValidateNames(prefabs);
+        ValidatePhysics(prefabs);
+        ValidateProperties(prefabs);
+        ValidateStorage(prefabs);
+
+        GameObject[] gameObjects = Tools.GetGameObjects();
+
+        ValidateGameObjects(gameObjects);
     }
 
     private static void ValidateConstructionResources(IEnumerable<GameObject> gameObjects)
@@ -41,6 +46,20 @@ public class Validator : EditorWindow
                     {
                         Debug.Log(string.Format("Resource {0} has invalid construction resource max value ({1}).", part.name, part.ConstructionResources.Items.Count));
                     }
+                }
+            }
+        }
+    }
+
+    private static void ValidateGameObjects(GameObject[] gameObjects)
+    {
+        foreach (GameObject gameObject in gameObjects)
+        {
+            if (gameObject.TryGetComponent(out MyGameObject myGameObject))
+            {
+                if (myGameObject.Player == null)
+                {
+                    Debug.Log(string.Format("Game object {0} has no player.", gameObject.name));
                 }
             }
         }
