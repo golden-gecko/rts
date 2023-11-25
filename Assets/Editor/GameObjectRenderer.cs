@@ -29,7 +29,7 @@ public class GameObjectRenderer : EditorWindow
 
         Texture2D texture = new Texture2D(camera.targetTexture.width, camera.targetTexture.height, TextureFormat.RGB24, false, false);
 
-        foreach (GameObject gameObject in Tools.GetGameObjects())
+        foreach (GameObject gameObject in Tools.GetPrefabs())
         {
             GameObject instance = Instantiate(gameObject, placeholder);
 
