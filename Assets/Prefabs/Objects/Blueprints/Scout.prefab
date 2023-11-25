@@ -580,7 +580,7 @@ MonoBehaviour:
   <Fuel>k__BackingField:
     <Current>k__BackingField: 100
     <Max>k__BackingField: 100
-  <FuelUsage>k__BackingField: 1
+  <FuelUsage>k__BackingField: 10
 --- !u!1 &9212729623587495613
 GameObject:
   m_ObjectHideFlags: 0

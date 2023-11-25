@@ -18,7 +18,7 @@ public class GameObjectBuilder : EditorWindow
         {
             MyGameObject myGameObject = Utils.CreateGameObject(blueprint, Vector3.zero, Quaternion.identity, null, MyGameObjectState.Operational);
 
-            PrefabUtility.SaveAsPrefabAsset(myGameObject.gameObject, Path.Join(Config.Prefabs.Directory, "Blueprints", string.Format("{0}.prefab", myGameObject.name)));
+            PrefabUtility.SaveAsPrefabAsset(myGameObject.gameObject, Path.Join(Config.Blueprints.Directory, string.Format("{0}.prefab", myGameObject.name)));
 
             DestroyImmediate(myGameObject.gameObject);
         }

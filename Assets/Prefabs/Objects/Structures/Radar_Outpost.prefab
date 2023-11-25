@@ -208,6 +208,11 @@ MonoBehaviour:
   <RotateTowardsTarget>k__BackingField: 1
   <ShowEntrance>k__BackingField: 0
   <ShowExit>k__BackingField: 0
+  <Health>k__BackingField:
+    <Current>k__BackingField: 0
+    <Max>k__BackingField: 0
+  <ConstructionResources>k__BackingField:
+    <Items>k__BackingField: []
 --- !u!114 &6594992851572917325
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -290,7 +295,7 @@ MonoBehaviour:
   <ConstructionResources>k__BackingField:
     <Items>k__BackingField: []
   <Range>k__BackingField:
-    <Value>k__BackingField: 30
+    <Value>k__BackingField: 10
 --- !u!1 &5866001181412925978
 GameObject:
   m_ObjectHideFlags: 0

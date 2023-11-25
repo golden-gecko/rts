@@ -1,3 +1,5 @@
+using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class Part : MonoBehaviour
@@ -5,6 +7,8 @@ public class Part : MonoBehaviour
     protected virtual void Awake()
     {
         Parent = GetComponentInParent<MyGameObject>();
+
+        GetJoints();
     }
 
     protected virtual void Start()
@@ -24,11 +28,35 @@ public class Part : MonoBehaviour
         return string.Format("Mass: {0:0.}", Mass);
     }
 
+    private void GetJoints()
+    {
+        Transform jointsTransform = transform.Find("Joints");
+
+        if (jointsTransform == null)
+        {
+            return;
+        }
+
+        for (int i = 0; i < jointsTransform.childCount; i++)
+        {
+            Transform child = jointsTransform.GetChild(i);
+
+            if (Enum.TryParse(child.name, false, out PartType partType) == false)
+            {
+                continue;
+            }
+
+            Joints[partType] = child;
+        }
+    }
+
     [field: SerializeField]
     public float Mass { get; private set; } = 10.0f;
 
     [field: SerializeField]
     public ResourceContainer ConstructionResources { get; private set; } = new ResourceContainer();
+
+    public Dictionary<PartType, Transform> Joints = new Dictionary<PartType, Transform>();
 
     public Progress Health { get => new Progress(ConstructionResources.CurrentSum, ConstructionResources.MaxSum); }
 

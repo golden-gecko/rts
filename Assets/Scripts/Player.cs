@@ -159,7 +159,7 @@ public class Player : MonoBehaviour
         return closest;
     }
 
-    public MyGameObject GetStorage(MyGameObject myGameObject, string resource, int value)
+    public MyGameObject GetStorage(MyGameObject myGameObject, string resource, int value) // TODO: Implement.
     {
         MyGameObject closest = null;
         float distance = float.MaxValue;
@@ -172,11 +172,6 @@ public class Player : MonoBehaviour
             }
 
             if (i.Name != resource)
-            {
-                continue;
-            }
-
-            if (i.Value < value)
             {
                 continue;
             }
@@ -223,7 +218,7 @@ public class Player : MonoBehaviour
             {
                 MyGameObject myStorage = null;
 
-                foreach (Resource i in myResource.ConstructionResources.Items) // TODO: Check each part.
+                foreach (Resource i in myResource.GetComponentInChildren<Storage>().Resources.Items) // TODO: Check each part.
                 {
                     myStorage = myGameObject.Player.GetStorage(myGameObject, i.Name, i.Current);
 

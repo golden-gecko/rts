@@ -17,6 +17,11 @@ public class Foundation : Part
         }
     }
 
+    public override string GetInfo()
+    {
+        return string.Format("Foundation - {0}", base.GetInfo());
+    }
+
     [field: SerializeField]
     public List<MyGameObjectMapLayer> MapLayers { get; private set; } = new List<MyGameObjectMapLayer>();
 }

@@ -60,6 +60,11 @@ public class Config : MonoBehaviour
         public static int Size = 512;
     }
 
+    public static class Objects // TODO: Rename.
+    {
+        public static string Directory = Path.Join(Prefabs.Directory, "Objects", "Blueprints");
+    }
+
     public static class Prefabs
     {
         public static string Directory = Path.Join(Application.dataPath, "Prefabs");

@@ -56,4 +56,4 @@ MonoBehaviour:
   <Fuel>k__BackingField:
     <Current>k__BackingField: 200
     <Max>k__BackingField: 200
-  <FuelUsage>k__BackingField: 1
+  <FuelUsage>k__BackingField: 10

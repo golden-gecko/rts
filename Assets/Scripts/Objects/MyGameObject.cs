@@ -828,7 +828,7 @@ public class MyGameObject : MonoBehaviour
     {
         Player active = HUD.Instance.ActivePlayer;
 
-        if (Player == active || Map.Instance.IsVisibleBySight(this.Position, active))
+        if (Player == active || Map.Instance.IsVisibleBySight(Position, active))
         {
             EnableRenderers(true);
 

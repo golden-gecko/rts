@@ -318,8 +318,15 @@ public class MenuEditor : UI_Element
 
         PositionDrive(placeholder);
         PositionChassis(placeholder);
+
+
+        PositionGunOnJoint(placeholder);
+        PositionConstructorOnJoint(placeholder);
+
+        /*
         PositionGun(placeholder);
         PositionConstructor(placeholder);
+        */
 
         SavePosition();
         UpdateInfo();
@@ -355,6 +362,21 @@ public class MenuEditor : UI_Element
 
             constructor.Instance.transform.position = position;
             constructor.Instance.transform.localPosition = local;
+
+            Utils.RestoreRotation(parent, rotation);
+        }
+    }
+
+    private void PositionConstructorOnJoint(Transform parent)
+    {
+        BlueprintComponent chassis = blueprint.Parts.Find(x => x.PartType == PartType.Chassis);
+        BlueprintComponent constructor = blueprint.Parts.Find(x => x.PartType == PartType.Constructor);
+
+        if (chassis != null && chassis.Instance != null && constructor != null && constructor.Instance != null)
+        {
+            Quaternion rotation = Utils.ResetRotation(parent);
+
+            constructor.Instance.transform.position = chassis.Instance.GetComponent<Part>().Joints[PartType.Constructor].transform.position;
 
             Utils.RestoreRotation(parent, rotation);
         }
@@ -427,6 +449,21 @@ public class MenuEditor : UI_Element
 
             gun.Instance.transform.position = position;
             gun.Instance.transform.localPosition = local;
+
+            Utils.RestoreRotation(parent, rotation);
+        }
+    }
+
+    private void PositionGunOnJoint(Transform parent)
+    {
+        BlueprintComponent chassis = blueprint.Parts.Find(x => x.PartType == PartType.Chassis);
+        BlueprintComponent gun = blueprint.Parts.Find(x => x.PartType == PartType.Gun);
+
+        if (chassis != null && chassis.Instance != null && gun != null && gun.Instance != null)
+        {
+            Quaternion rotation = Utils.ResetRotation(parent);
+
+            gun.Instance.transform.position = chassis.Instance.GetComponent<Part>().Joints[PartType.Gun].transform.position;
 
             Utils.RestoreRotation(parent, rotation);
         }
