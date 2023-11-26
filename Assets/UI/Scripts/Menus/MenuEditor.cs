@@ -62,6 +62,7 @@ public class MenuEditor : UI_Element
         CreatePartList("PartsDrive", PartType.Drive, Game.Instance.Config.Drives);
         CreatePartList("PartsEngine", PartType.Engine, Game.Instance.Config.Engines);
         CreatePartList("PartsGun", PartType.Gun, Game.Instance.Config.Guns);
+        CreatePartList("PartsRadar", PartType.Radar, Game.Instance.Config.Radars);
         CreatePartList("PartsConstructor", PartType.Constructor, Game.Instance.Config.Constructors);
         CreatePartList("PartsShield", PartType.Shield, Game.Instance.Config.Shields);
         CreatePartList("PartsSight", PartType.Sight, Game.Instance.Config.Sights);
@@ -69,14 +70,23 @@ public class MenuEditor : UI_Element
 
     private void Update()
     {
-        if (Visible && MouseInside && Input.GetMouseButton(0))
+        if (Visible && MouseInside)
         {
+            // Rotate.
             Transform setup = GameObject.Find("Setup").transform;
             Transform editor = setup.Find("Editor").transform;
             Transform placeholder = editor.Find("Placeholder").transform;
 
-            placeholder.Rotate(Vector3.forward, Input.GetAxis("Mouse Y") * Config.Editor.RotateSpeed, Space.World);
-            placeholder.Rotate(Vector3.down, Input.GetAxis("Mouse X") * Config.Editor.RotateSpeed, Space.World);
+            if (Input.GetMouseButton(0))
+            {
+                placeholder.Rotate(Vector3.forward, Input.GetAxis("Mouse Y") * Config.Editor.RotateSpeed, Space.World);
+                placeholder.Rotate(Vector3.down, Input.GetAxis("Mouse X") * Config.Editor.RotateSpeed, Space.World);
+            }
+
+            // Zoom.
+            Camera camera = editor.Find("Camera").GetComponent<Camera>();
+
+            camera.fieldOfView = Math.Clamp(camera.fieldOfView - Input.GetAxis("Mouse ScrollWheel") * Config.Editor.ZoomSpeed, 1.0f, 90.0f);
         }
     }
 
@@ -319,14 +329,9 @@ public class MenuEditor : UI_Element
         PositionDrive(placeholder);
         PositionChassis(placeholder);
 
-
-        PositionGunOnJoint(placeholder);
         PositionConstructorOnJoint(placeholder);
-
-        /*
-        PositionGun(placeholder);
-        PositionConstructor(placeholder);
-        */
+        PositionGunOnJoint(placeholder);
+        PositionRadarOnJoint(placeholder);
 
         SavePosition();
         UpdateInfo();
@@ -340,33 +345,6 @@ public class MenuEditor : UI_Element
         }
     }
 
-    private void PositionConstructor(Transform parent)
-    {
-        BlueprintComponent chassis = blueprint.Parts.Find(x => x.PartType == PartType.Chassis);
-        BlueprintComponent constructor = blueprint.Parts.Find(x => x.PartType == PartType.Constructor);
-        BlueprintComponent drive = blueprint.Parts.Find(x => x.PartType == PartType.Drive);
-
-        if (chassis != null && chassis.Instance != null && constructor != null && constructor.Instance != null && drive != null && drive.Instance != null)
-        {
-            Quaternion rotation = Utils.ResetRotation(parent);
-
-            Collider chassisCollider = chassis.Instance.GetComponent<Collider>();
-            Collider constructorCollider = constructor.Instance.GetComponent<Collider>();
-            Collider driveCollider = drive.Instance.GetComponent<Collider>();
-
-            Vector3 position = constructor.Instance.transform.position;
-            Vector3 local = constructor.Instance.transform.localPosition;
-
-            local.y = chassisCollider.bounds.extents.y + driveCollider.bounds.extents.y;
-            local.z = chassisCollider.bounds.extents.z;
-
-            constructor.Instance.transform.position = position;
-            constructor.Instance.transform.localPosition = local;
-
-            Utils.RestoreRotation(parent, rotation);
-        }
-    }
-
     private void PositionConstructorOnJoint(Transform parent)
     {
         BlueprintComponent chassis = blueprint.Parts.Find(x => x.PartType == PartType.Chassis);
@@ -376,7 +354,10 @@ public class MenuEditor : UI_Element
         {
             Quaternion rotation = Utils.ResetRotation(parent);
 
-            constructor.Instance.transform.position = chassis.Instance.GetComponent<Part>().Joints[PartType.Constructor].transform.position;
+            if (chassis.Instance.GetComponentInChildren<Part>().Joints.TryGetValue(PartType.Constructor, out Transform transform))
+            {
+                constructor.Instance.transform.position = transform.position;
+            }
 
             Utils.RestoreRotation(parent, rotation);
         }
@@ -391,8 +372,8 @@ public class MenuEditor : UI_Element
         {
             Quaternion rotation = Utils.ResetRotation(parent);
 
-            Collider chassisCollider = chassis.Instance.GetComponent<Collider>();
-            Collider driveCollider = drive.Instance.GetComponent<Collider>();
+            Collider chassisCollider = chassis.Instance.GetComponentInChildren<Collider>();
+            Collider driveCollider = drive.Instance.GetComponentInChildren<Collider>();
 
             Vector3 position = chassis.Instance.transform.position;
             Vector3 local = chassis.Instance.transform.localPosition;
@@ -414,7 +395,7 @@ public class MenuEditor : UI_Element
         {
             Quaternion rotation = Utils.ResetRotation(parent);
 
-            Collider driveCollider = drive.Instance.GetComponent<Collider>();
+            Collider driveCollider = drive.Instance.GetComponentInChildren<Collider>();
 
             Vector3 position = drive.Instance.transform.position;
             Vector3 local = drive.Instance.transform.localPosition;
@@ -423,32 +404,6 @@ public class MenuEditor : UI_Element
 
             drive.Instance.transform.position = position;
             drive.Instance.transform.localPosition = local;
-
-            Utils.RestoreRotation(parent, rotation);
-        }
-    }
-
-    private void PositionGun(Transform parent)
-    {
-        BlueprintComponent chassis = blueprint.Parts.Find(x => x.PartType == PartType.Chassis);
-        BlueprintComponent drive = blueprint.Parts.Find(x => x.PartType == PartType.Drive);
-        BlueprintComponent gun = blueprint.Parts.Find(x => x.PartType == PartType.Gun);
-
-        if (chassis != null && chassis.Instance != null && drive != null && drive.Instance != null && gun != null && gun.Instance != null)
-        {
-            Quaternion rotation = Utils.ResetRotation(parent);
-
-            Collider chassisCollider = chassis.Instance.GetComponent<Collider>();
-            Collider driveCollider = drive.Instance.GetComponent<Collider>();
-            Collider gunCollider = gun.Instance.GetComponent<Collider>();
-
-            Vector3 position = gun.Instance.transform.position;
-            Vector3 local = gun.Instance.transform.localPosition;
-
-            local.y = position.y - gunCollider.bounds.min.y + chassisCollider.bounds.size.y + driveCollider.bounds.extents.y;
-
-            gun.Instance.transform.position = position;
-            gun.Instance.transform.localPosition = local;
 
             Utils.RestoreRotation(parent, rotation);
         }
@@ -463,7 +418,28 @@ public class MenuEditor : UI_Element
         {
             Quaternion rotation = Utils.ResetRotation(parent);
 
-            gun.Instance.transform.position = chassis.Instance.GetComponent<Part>().Joints[PartType.Gun].transform.position;
+            if (chassis.Instance.GetComponentInChildren<Part>().Joints.TryGetValue(PartType.Gun, out Transform transform))
+            {
+                gun.Instance.transform.position = transform.position;
+            }
+
+            Utils.RestoreRotation(parent, rotation);
+        }
+    }
+
+    private void PositionRadarOnJoint(Transform parent)
+    {
+        BlueprintComponent chassis = blueprint.Parts.Find(x => x.PartType == PartType.Chassis);
+        BlueprintComponent radar = blueprint.Parts.Find(x => x.PartType == PartType.Radar);
+
+        if (chassis != null && chassis.Instance != null && radar != null && radar.Instance != null)
+        {
+            Quaternion rotation = Utils.ResetRotation(parent);
+
+            if (chassis.Instance.GetComponentInChildren<Part>().Joints.TryGetValue(PartType.Radar, out Transform transform))
+            {
+                radar.Instance.transform.position = transform.position;
+            }
 
             Utils.RestoreRotation(parent, rotation);
         }
@@ -471,35 +447,12 @@ public class MenuEditor : UI_Element
 
     private void SavePosition()
     {
-        BlueprintComponent chassis = blueprint.Parts.Find(x => x.PartType == PartType.Chassis);
-        BlueprintComponent constructor = blueprint.Parts.Find(x => x.PartType == PartType.Constructor);
-        BlueprintComponent drive = blueprint.Parts.Find(x => x.PartType == PartType.Drive);
-        BlueprintComponent gun = blueprint.Parts.Find(x => x.PartType == PartType.Gun);
-        BlueprintComponent shield = blueprint.Parts.Find(x => x.PartType == PartType.Shield);
-
-        if (chassis != null && chassis.Instance != null)
+        foreach (BlueprintComponent blueprintComponent in blueprint.Parts)
         {
-            chassis.Position = chassis.Instance.transform.localPosition;
-        }
-
-        if (constructor != null && constructor.Instance != null)
-        {
-            constructor.Position = constructor.Instance.transform.localPosition;
-        }
-
-        if (drive != null && drive.Instance != null)
-        {
-            drive.Position = drive.Instance.transform.localPosition;
-        }
-
-        if (gun != null && gun.Instance != null)
-        {
-            gun.Position = gun.Instance.transform.localPosition;
-        }
-
-        if (shield != null && shield.Instance != null)
-        {
-            shield.Position = shield.Instance.transform.localPosition;
+            if (blueprintComponent.Instance)
+            {
+                blueprintComponent.Position = blueprintComponent.Instance.transform.localPosition;
+            }
         }
     }
 

@@ -861,10 +861,13 @@ MonoBehaviour:
   - {fileID: 4916527176359590894, guid: ceb46998882ca5e4d8b15b00b6dd5a74, type: 3}
   - {fileID: 7348057453300986480, guid: 9e6ab894155a77546803ba41d8ea1fc4, type: 3}
   <Chassis>k__BackingField:
-  - {fileID: 1578887994438585109, guid: 74fa73f293cba14429cb6f4746c1e8a6, type: 3}
+  - {fileID: 6014288322611724604, guid: c89aba76fa8e28344bfa92a20da3840c, type: 3}
+  - {fileID: 6014288322611724604, guid: dcbcbc515fc5540499ddfeb40f66a5d0, type: 3}
+  - {fileID: 6014288322611724604, guid: 728e490b4fd36e74f8ceba444e1f414d, type: 3}
   - {fileID: 7348057453300986480, guid: 1fb674e9a1183ed47b1377613cd178b7, type: 3}
   - {fileID: 3697136554101965516, guid: 813b937acb3d59343ba72dc319ba5c69, type: 3}
-  - {fileID: 6014288322611724604, guid: 728e490b4fd36e74f8ceba444e1f414d, type: 3}
+  - {fileID: 6014288322611724604, guid: c4ed414bae5170741870e0db2ffb015b, type: 3}
+  - {fileID: 1578887994438585109, guid: 74fa73f293cba14429cb6f4746c1e8a6, type: 3}
   <Constructors>k__BackingField:
   - {fileID: 1578887994438585109, guid: 7bf9b4588e172054c9a42a043a553419, type: 3}
   <Drives>k__BackingField:
@@ -879,6 +882,8 @@ MonoBehaviour:
   - {fileID: 4916527176359590894, guid: c559902122f92ab46a9fafb85156b9cb, type: 3}
   - {fileID: 6014288322611724604, guid: c0c27b841091e2849b51b49ec96c0c73, type: 3}
   - {fileID: 827890342975937740, guid: c16f44da35c43c045b367eddbcd1e59a, type: 3}
+  <Radars>k__BackingField:
+  - {fileID: 5838947687989452244, guid: 16032341216b60045aaf5aa47543914d, type: 3}
   <Shields>k__BackingField:
   - {fileID: 5771986485392630128, guid: 48ec2c1cdd5391c4ea06176574fddbc9, type: 3}
   <Sights>k__BackingField:

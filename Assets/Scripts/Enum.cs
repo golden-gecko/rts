@@ -114,6 +114,7 @@ public enum PartType
     Drive = 2,
     Engine = 4,
     Gun = 3,
+    Radar = 8,
     Shield = 5,
     Sight = 6,
     Storage = 7,

@@ -38,6 +38,7 @@ public class Config : MonoBehaviour
     public static class Editor
     {
         public static float RotateSpeed = 3.0f;
+        public static float ZoomSpeed = 30.0f;
     }
 
     public static class Formation
@@ -114,6 +115,9 @@ public class Config : MonoBehaviour
 
     [field: SerializeField]
     public List<GameObject> Guns { get; private set; } = new List<GameObject>();
+
+    [field: SerializeField]
+    public List<GameObject> Radars { get; private set; } = new List<GameObject>();
 
     [field: SerializeField]
     public List<GameObject> Shields { get; private set; } = new List<GameObject>();

@@ -157,6 +157,9 @@ public class Utils
             case PartType.Gun:
                 return config.Guns.Find(x => x.name == name);
 
+            case PartType.Radar:
+                return config.Radars.Find(x => x.name == name);
+
             case PartType.Shield:
                 return config.Shields.Find(x => x.name == name);
 

@@ -19,6 +19,7 @@
             <ui:ListView name="PartsDrive" fixed-item-height="100" style="flex-grow: 1; margin-top: 10px; margin-right: 10px; margin-bottom: 10px; margin-left: 10px; display: none;" />
             <ui:ListView name="PartsEngine" fixed-item-height="100" style="flex-grow: 1; margin-top: 10px; margin-right: 10px; margin-bottom: 10px; margin-left: 10px; display: none;" />
             <ui:ListView name="PartsGun" fixed-item-height="100" style="flex-grow: 1; margin-top: 10px; margin-right: 10px; margin-bottom: 10px; margin-left: 10px; display: none;" />
+            <ui:ListView name="PartsRadar" fixed-item-height="100" style="flex-grow: 1; margin-top: 10px; margin-right: 10px; margin-bottom: 10px; margin-left: 10px; display: none;" />
             <ui:ListView name="PartsConstructor" fixed-item-height="100" style="flex-grow: 1; margin-top: 10px; margin-right: 10px; margin-bottom: 10px; margin-left: 10px; display: none;" />
             <ui:ListView name="PartsSight" fixed-item-height="100" style="flex-grow: 1; margin-top: 10px; margin-right: 10px; margin-bottom: 10px; margin-left: 10px; display: none;" />
             <ui:ListView name="PartsShield" fixed-item-height="100" style="flex-grow: 1; margin-top: 10px; margin-right: 10px; margin-bottom: 10px; margin-left: 10px; display: none;" />

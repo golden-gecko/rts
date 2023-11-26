@@ -1,7 +1,7 @@
 {
     "Name": "Scout",
     "BaseGameObject": {
-        "instanceID": -70296
+        "instanceID": -245680
     },
     "Parts": [
         {
@@ -38,6 +38,15 @@
                 "x": 0.0,
                 "y": 0.0,
                 "z": 0.0
+            }
+        },
+        {
+            "PartType": 8,
+            "Name": "Radar",
+            "Position": {
+                "x": 0.0,
+                "y": 0.623321533203125,
+                "z": -0.32899999618530276
             }
         }
     ]
