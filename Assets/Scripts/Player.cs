@@ -241,6 +241,64 @@ public class Player : MonoBehaviour
         return closest;
     }
 
+    public MyGameObject GetResourceToGatherInRange(MyGameObject myGameObject, float range, string resource = "", int value = 0) // TODO: Implement.
+    {
+        MyGameObject closest = null;
+        float distance = float.MaxValue;
+
+        foreach (MyGameObject myResource in FindObjectsByType<MyGameObject>(FindObjectsSortMode.None))
+        {
+            if (myResource == myGameObject)
+            {
+                continue;
+            }
+
+            Storage storage = myResource.GetComponentInChildren<Storage>();
+
+            if (storage == null || storage.Gatherable == false)
+            {
+                continue;
+            }
+
+            if (myResource.VisibilityState != MyGameObjectVisibilityState.Explored && myResource.VisibilityState != MyGameObjectVisibilityState.Visible)
+            {
+                continue;
+            }
+
+            float magnitude = (myGameObject.Position - myResource.Position).magnitude;
+
+            if (magnitude > range)
+            {
+                continue;
+            }
+
+            if (magnitude < distance)
+            {
+                MyGameObject myStorage = null;
+
+                foreach (Resource i in myResource.GetComponentInChildren<Storage>().Resources.Items) // TODO: Check each part.
+                {
+                    myStorage = myGameObject.Player.GetStorage(myGameObject, i.Name, i.Current);
+
+                    if (myStorage != null)
+                    {
+                        break;
+                    }
+                }
+
+                if (myStorage == null)
+                {
+                    continue;
+                }
+
+                closest = myResource;
+                distance = magnitude;
+            }
+        }
+
+        return closest;
+    }
+
     private void Register(ResourceRequestContainer container, MyGameObject myGameObject, string name, int value, ResourceDirection direction)
     {
         container.Add(myGameObject, name, value, direction);

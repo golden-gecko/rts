@@ -21,4 +21,9 @@ public class OrderHandler
         myGameObject.Stats.Inc(Stats.OrdersCompleted);
         myGameObject.Orders.Pop();
     }
+
+    protected void Wait(MyGameObject myGameObject)
+    {
+        myGameObject.Wait(0);
+    }
 }

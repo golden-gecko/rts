@@ -14,7 +14,7 @@
             <ui:Button text="New" name="New" class="button" style="flex-grow: 1;" />
         </ui:VisualElement>
         <ui:VisualElement style="flex-direction: row; flex-grow: 10;">
-            <ui:ListView name="PartsChassis" fixed-item-height="100" style="flex-grow: 1; margin-top: 10px; margin-right: 10px; margin-bottom: 10px; margin-left: 10px;" />
+            <ui:ListView name="PartsChassis" fixed-item-height="150" style="flex-grow: 1; margin-top: 10px; margin-right: 10px; margin-bottom: 10px; margin-left: 10px;" />
             <ui:ListView name="PartsStorage" fixed-item-height="100" style="flex-grow: 1; margin-top: 10px; margin-right: 10px; margin-bottom: 10px; margin-left: 10px; display: none;" />
             <ui:ListView name="PartsDrive" fixed-item-height="100" style="flex-grow: 1; margin-top: 10px; margin-right: 10px; margin-bottom: 10px; margin-left: 10px; display: none;" />
             <ui:ListView name="PartsEngine" fixed-item-height="100" style="flex-grow: 1; margin-top: 10px; margin-right: 10px; margin-bottom: 10px; margin-left: 10px; display: none;" />

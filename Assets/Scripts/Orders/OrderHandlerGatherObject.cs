@@ -1,3 +1,6 @@
+using System.Linq;
+using UnityEditor.SceneManagement;
+
 public class OrderHandlerGatherObject : OrderHandler
 {
     public override void OnExecuteHandler(MyGameObject myGameObject)
@@ -18,12 +21,39 @@ public class OrderHandlerGatherObject : OrderHandler
             return;
         }
 
-        ProcessTargetObject(myGameObject, order);
+        Engine engine = myGameObject.GetComponentInChildren<Engine>();
+
+        if (engine == null)
+        {
+            GatherFromResourceInRange(myGameObject, order);
+        }
+        else
+        {
+            ProcessTargetObject(myGameObject, order);
+        }
     }
 
     protected override bool IsValid(MyGameObject myGameObject, Order order)
     {
         return order.TargetGameObject != null && order.TargetGameObject != myGameObject;
+    }
+
+    private void GatherFromResourceInRange(MyGameObject myGameObject, Order order)
+    {
+        MyGameObject resourceToGather = myGameObject.Player.GetResourceToGatherInRange(myGameObject, myGameObject.GetComponentInChildren<Gatherer>().Range);
+
+        if (resourceToGather == null)
+        {
+            Wait(myGameObject);
+
+            return;
+        }
+
+        Storage targetGameObjectStorage = resourceToGather.GetComponentInChildren<Storage>();
+
+        // TODO: Check if resource can be gathared.
+
+        myGameObject.Load(resourceToGather, targetGameObjectStorage.Resources.Items.First().Name, targetGameObjectStorage.Resources.Items.First().Current); // TODO: Or 1 or ResourceUsage?
     }
 
     private void ProcessTargetObject(MyGameObject myGameObject, Order order)
