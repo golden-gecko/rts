@@ -274,23 +274,6 @@ public class Player : MonoBehaviour
 
             if (magnitude < distance)
             {
-                MyGameObject myStorage = null;
-
-                foreach (Resource i in myResource.GetComponentInChildren<Storage>().Resources.Items) // TODO: Check each part.
-                {
-                    myStorage = myGameObject.Player.GetStorage(myGameObject, i.Name, i.Current);
-
-                    if (myStorage != null)
-                    {
-                        break;
-                    }
-                }
-
-                if (myStorage == null)
-                {
-                    continue;
-                }
-
                 closest = myResource;
                 distance = magnitude;
             }

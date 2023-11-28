@@ -10,7 +10,6 @@ public class Producer : Part
 
         Parent.Orders.AllowOrder(OrderType.Produce);
 
-        Parent.OrderHandlers[OrderType.Idle] = new OrderHandlerIdleProducer();
         Parent.OrderHandlers[OrderType.Produce] = new OrderHandlerProduce();
     }
 

@@ -43,8 +43,9 @@ public class OrderHandlerGatherObject : OrderHandler
         MyGameObject resourceToGather = order.TargetGameObject; // myGameObject.Player.GetResourceToGatherInRange(myGameObject, myGameObject.GetComponentInChildren<Gatherer>().Range);
         Storage targetGameObjectStorage = resourceToGather.GetComponentInChildren<Storage>();
 
-        // TODO: Check if resource can be gathared.
+        // TODO: Check if resource can be gathered.
 
+        myGameObject.Orders.Pop();
         myGameObject.Load(resourceToGather, targetGameObjectStorage.Resources.Items.First().Name, targetGameObjectStorage.Resources.Items.First().Current); // TODO: Or 1 or ResourceUsage?
     }
 

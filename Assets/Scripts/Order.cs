@@ -147,7 +147,7 @@ public class Order
         };
     }
 
-    public static Order Produce(string recipe)
+    public static Order Produce(string recipe = "")
     {
         return new Order
         {
