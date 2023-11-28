@@ -43,39 +43,50 @@ public class OrderHandlerIdle : OrderHandler
     private Order TryWorkerBehaviour(MyGameObject myGameObject)
     {
         Drive drive = myGameObject.GetComponentInChildren<Drive>();
+        Gatherer gatherer = myGameObject.GetComponentInChildren<Gatherer>();
         Storage storage = myGameObject.GetComponentInChildren<Storage>();
 
-        if (drive == null || storage == null)
+        if (drive != null && gatherer != null && storage != null)
         {
-            return null;
+            Order order = myGameObject.Player.GetJob(myGameObject, OrderType.GatherObject);
+
+            if (order != null)
+            {
+                return order;
+            }
         }
-
-        Order order = myGameObject.Player.GetJob(myGameObject, OrderType.Unload);
-
-        if (order != null)
+        else if (drive != null && storage != null)
         {
-            return order;
+            Order order = myGameObject.Player.GetJob(myGameObject, OrderType.Unload);
+
+            if (order != null)
+            {
+                return order;
+            }
+
+            order = myGameObject.Player.GetJob(myGameObject, OrderType.Construct);
+
+            if (order != null)
+            {
+                return order;
+            }
+
+            order = myGameObject.Player.GetJob(myGameObject, OrderType.Transport);
+
+            if (order != null)
+            {
+                return order;
+            }
         }
-
-        order = myGameObject.Player.GetJob(myGameObject, OrderType.Construct);
-
-        if (order != null)
+        else if (gatherer != null && storage != null)
         {
-            return order;
-        }
+            MyGameObject resourceInRange = myGameObject.Player.GetResourceToGatherInRange(myGameObject, myGameObject.GetComponentInChildren<Gatherer>().Range);
+            Order order = Order.GatherObject(resourceInRange);
 
-        order = myGameObject.Player.GetJob(myGameObject, OrderType.Transport);
-
-        if (order != null)
-        {
-            return order;
-        }
-
-        order = myGameObject.Player.GetJob(myGameObject, OrderType.GatherObject);
-
-        if (order != null)
-        {
-            return order;
+            if (order != null)
+            {
+                return order;
+            }
         }
 
         return null;

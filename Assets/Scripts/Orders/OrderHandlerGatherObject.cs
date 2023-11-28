@@ -40,15 +40,7 @@ public class OrderHandlerGatherObject : OrderHandler
 
     private void GatherFromResourceInRange(MyGameObject myGameObject, Order order)
     {
-        MyGameObject resourceToGather = myGameObject.Player.GetResourceToGatherInRange(myGameObject, myGameObject.GetComponentInChildren<Gatherer>().Range);
-
-        if (resourceToGather == null)
-        {
-            Wait(myGameObject);
-
-            return;
-        }
-
+        MyGameObject resourceToGather = order.TargetGameObject; // myGameObject.Player.GetResourceToGatherInRange(myGameObject, myGameObject.GetComponentInChildren<Gatherer>().Range);
         Storage targetGameObjectStorage = resourceToGather.GetComponentInChildren<Storage>();
 
         // TODO: Check if resource can be gathared.
