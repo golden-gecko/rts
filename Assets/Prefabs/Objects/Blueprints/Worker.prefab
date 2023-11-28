@@ -95,7 +95,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8254546865283800246}
   - component: {fileID: 6778816729286978177}
-  m_Layer: 0
+  m_Layer: 20
   m_Name: Engine_Big(Clone)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -112,7 +112,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 2, y: 2, z: 2}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 2291107602955978701}
@@ -581,7 +581,7 @@ GameObject:
   - component: {fileID: 5441906228763770076}
   - component: {fileID: 39357469690262189}
   - component: {fileID: 7421985823823652136}
-  m_Layer: 0
+  m_Layer: 20
   m_Name: Worker
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -733,7 +733,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2291107602955978701}
-  m_Layer: 0
+  m_Layer: 20
   m_Name: Body
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -855,7 +855,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2341309084453302087}
-  m_Layer: 0
+  m_Layer: 20
   m_Name: Joints
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1081,7 +1081,7 @@ GameObject:
   m_Component:
   - component: {fileID: 613953311334883811}
   - component: {fileID: 3534111906012195333}
-  m_Layer: 0
+  m_Layer: 20
   m_Name: Storage_Small(Clone)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1165,7 +1165,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7268726299853698954}
   - component: {fileID: 7061607090185930121}
-  m_Layer: 0
+  m_Layer: 20
   m_Name: Sight_Near(Clone)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1301,6 +1301,7 @@ GameObject:
   - component: {fileID: 4259266291969815654}
   - component: {fileID: 5712657450249209831}
   - component: {fileID: 8739668838648530186}
+  - component: {fileID: 7516367905836457274}
   m_Layer: 20
   m_Name: Constructor(Clone)
   m_TagString: Untagged
@@ -1378,6 +1379,27 @@ MonoBehaviour:
   - Turret_Missile
   - Wall
   - Windtrap
+  <ResourceUsage>k__BackingField: 4
+--- !u!114 &7516367905836457274
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8705163552381086483}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 76a476d75a21eba4cbb5def57a0a5607, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  <Mass>k__BackingField: 10
+  <ConstructionResources>k__BackingField:
+    <Items>k__BackingField:
+    - <Current>k__BackingField: 10
+      <Max>k__BackingField: 10
+      <Name>k__BackingField: Iron
+      <Direction>k__BackingField: 1
+  <Range>k__BackingField: 1
   <ResourceUsage>k__BackingField: 4
 --- !u!1 &8766524165746955395
 GameObject:

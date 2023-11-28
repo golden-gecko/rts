@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 4298674376635483952}
   - component: {fileID: 3652317286570132920}
   - component: {fileID: 8385070670217265588}
-  m_Layer: 0
+  m_Layer: 20
   m_Name: Shield_Weak
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -103,7 +103,7 @@ GameObject:
   - component: {fileID: 3101126176454999387}
   - component: {fileID: 4030514819606387723}
   - component: {fileID: 6102866483500558931}
-  m_Layer: 0
+  m_Layer: 20
   m_Name: Shield
   m_TagString: Untagged
   m_Icon: {fileID: 0}

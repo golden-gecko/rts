@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2542417237946107793}
   - component: {fileID: -607086476200024524}
-  m_Layer: 0
+  m_Layer: 20
   m_Name: PowerPlant_Relay
   m_TagString: Untagged
   m_Icon: {fileID: 0}

@@ -288,7 +288,7 @@ GameObject:
   - component: {fileID: 4312910486350202399}
   - component: {fileID: 1346931704981304494}
   - component: {fileID: 4315526482045434853}
-  m_Layer: 0
+  m_Layer: 20
   m_Name: Scout
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -387,7 +387,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1538357465283252843}
-  m_Layer: 0
+  m_Layer: 20
   m_Name: Body
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -584,7 +584,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4950002990903016376}
-  m_Layer: 0
+  m_Layer: 20
   m_Name: Joints
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -618,7 +618,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6753006928400526899}
   - component: {fileID: 5514593929218805652}
-  m_Layer: 0
+  m_Layer: 20
   m_Name: Sight_Far(Clone)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -926,7 +926,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7348498489378774439}
   - component: {fileID: 832876812719649506}
-  m_Layer: 0
+  m_Layer: 20
   m_Name: Engine_Small(Clone)
   m_TagString: Untagged
   m_Icon: {fileID: 0}

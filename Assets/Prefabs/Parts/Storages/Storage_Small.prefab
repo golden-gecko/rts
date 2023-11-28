@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8319454710834409192}
   - component: {fileID: -1599464701515292584}
-  m_Layer: 0
+  m_Layer: 20
   m_Name: Storage_Small
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -51,8 +51,6 @@ MonoBehaviour:
       <Max>k__BackingField: 10
       <Name>k__BackingField: Iron
       <Direction>k__BackingField: 1
-  <RaiseResourceFlags>k__BackingField: 1
-  <ResourceUsage>k__BackingField: 4
   <Resources>k__BackingField:
     <Items>k__BackingField:
     - <Current>k__BackingField: 0
@@ -83,3 +81,6 @@ MonoBehaviour:
       <Max>k__BackingField: 10
       <Name>k__BackingField: Wood
       <Direction>k__BackingField: 1
+  <RaiseResourceFlags>k__BackingField: 1
+  <Gatherable>k__BackingField: 0
+  <ResourceUsage>k__BackingField: 4

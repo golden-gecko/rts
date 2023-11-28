@@ -62,7 +62,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4269974698220365205}
-  m_Layer: 0
+  m_Layer: 20
   m_Name: Joints
   m_TagString: Untagged
   m_Icon: {fileID: 0}

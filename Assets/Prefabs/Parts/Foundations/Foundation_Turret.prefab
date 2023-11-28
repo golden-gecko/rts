@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 4848310442924528323}
   - component: {fileID: 8135457018398280707}
   - component: {fileID: 404586366513182738}
-  m_Layer: 0
+  m_Layer: 20
   m_Name: Chassis
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -96,7 +96,7 @@ GameObject:
   - component: {fileID: 2685700108657303568}
   - component: {fileID: 1430925650164625582}
   - component: {fileID: 8303675458124707411}
-  m_Layer: 0
+  m_Layer: 20
   m_Name: Foundation_Turret
   m_TagString: Untagged
   m_Icon: {fileID: 0}

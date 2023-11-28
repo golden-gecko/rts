@@ -11,11 +11,11 @@ GameObject:
   - component: {fileID: 5667998593728998499}
   - component: {fileID: 5458535921942390760}
   - component: {fileID: 2774569234079160942}
-  - component: {fileID: 8053088702475202629}
   - component: {fileID: -554336057465286071}
+  - component: {fileID: -4708771878705186039}
   - component: {fileID: 2241562123314845070}
   - component: {fileID: -4381632195129946922}
-  m_Layer: 0
+  m_Layer: 20
   m_Name: Mine
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -105,30 +105,6 @@ MonoBehaviour:
     <Max>k__BackingField: 0
   <ConstructionResources>k__BackingField:
     <Items>k__BackingField: []
---- !u!114 &8053088702475202629
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5035893119255656153}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 26ef1c7f6037537498318d7dd9d37db3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  <Mass>k__BackingField: 10
-  <ConstructionResources>k__BackingField:
-    <Items>k__BackingField: []
-  <PowerGeneration>k__BackingField:
-    <Value>k__BackingField: 0
-  <PowerUsage>k__BackingField:
-    <Value>k__BackingField: 0
-  <Range>k__BackingField:
-    <Value>k__BackingField: 0
-  <PowerUpTime>k__BackingField:
-    <Current>k__BackingField: 0
-    <Max>k__BackingField: 1
 --- !u!114 &-554336057465286071
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -149,6 +125,34 @@ MonoBehaviour:
       <Name>k__BackingField: Iron
       <Direction>k__BackingField: 1
   <MapLayers>k__BackingField: 02000000
+--- !u!114 &-4708771878705186039
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5035893119255656153}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 26ef1c7f6037537498318d7dd9d37db3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  <Mass>k__BackingField: 10
+  <ConstructionResources>k__BackingField:
+    <Items>k__BackingField:
+    - <Current>k__BackingField: 10
+      <Max>k__BackingField: 10
+      <Name>k__BackingField: Iron
+      <Direction>k__BackingField: 1
+  <PowerGeneration>k__BackingField:
+    <Value>k__BackingField: -1
+  <PowerUsage>k__BackingField:
+    <Value>k__BackingField: 10
+  <Range>k__BackingField:
+    <Value>k__BackingField: -1
+  <PowerUpTime>k__BackingField:
+    <Current>k__BackingField: 0
+    <Max>k__BackingField: 1
 --- !u!114 &2241562123314845070
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -163,7 +167,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <Mass>k__BackingField: 10
   <ConstructionResources>k__BackingField:
-    <Items>k__BackingField: []
+    <Items>k__BackingField:
+    - <Current>k__BackingField: 10
+      <Max>k__BackingField: 10
+      <Name>k__BackingField: Iron
+      <Direction>k__BackingField: 1
   <Resources>k__BackingField:
     <Items>k__BackingField:
     - <Current>k__BackingField: 0
@@ -229,7 +237,8 @@ GameObject:
   - component: {fileID: 8538486212132482028}
   - component: {fileID: 2058019362318843519}
   - component: {fileID: 5170920105989601839}
-  m_Layer: 0
+  - component: {fileID: 2126152896277316864}
+  m_Layer: 20
   m_Name: Body
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -303,3 +312,24 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!65 &2126152896277316864
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6853165173923590045}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 5, y: 3.7593634, z: 5}
+  m_Center: {x: 0, y: 1.8796817, z: 0}

@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3480303163794684978}
   - component: {fileID: -5681850423867477458}
-  m_Layer: 0
+  m_Layer: 20
   m_Name: Sight_Near
   m_TagString: Untagged
   m_Icon: {fileID: 0}
