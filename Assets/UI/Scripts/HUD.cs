@@ -8,10 +8,7 @@ public class HUD : Singleton<HUD>
         DragReset();
         DragDraw();
 
-        DiplomacyMenu.Instance.Show(false);
-        GameMenu.Instance.Show(true);
-        MainMenu.Instance.Show(false);
-        SceneMenu.Instance.Show(false);
+        UI.Instance.GoToMenu(MenuType.Game);
     }
 
     private void Update()
@@ -38,9 +35,19 @@ public class HUD : Singleton<HUD>
 
     private void CheckShowMenu()
     {
+        if (Input.GetKeyDown(KeyCode.F8))
+        {
+            UI.Instance.GoToMenu(MenuType.Diplomacy);
+        }
+
+        if (Input.GetKeyDown(KeyCode.F9))
+        {
+            UI.Instance.GoToMenu(MenuType.Editor);
+        }
+
         if (Input.GetKeyDown(KeyCode.F10))
         {
-            UI_Menu.Instance.OnMenu();
+            UI.Instance.GoToMenu(MenuType.Main);
         }
     }
 
@@ -264,8 +271,6 @@ public class HUD : Singleton<HUD>
     {
         switch (Order)
         {
-            // TODO: Implement assemble order.
-
             case OrderType.AttackObject:
                 ActivePlayer.Selection.AttackObject(myGameObject, MyInput.GetShift());
                 break;

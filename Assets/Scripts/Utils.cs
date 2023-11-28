@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+using System.IO;
 using UnityEngine;
 
 public class Utils
@@ -51,7 +53,19 @@ public class Utils
     #region Instantiate
     public static MyGameObject CreateGameObject(string prefab, Vector3 position, Quaternion rotation, Player player, MyGameObjectState state)
     {
-        return CreateGameObject(Resources.Load<MyGameObject>(prefab), position, rotation, player, state);
+        Game.Instance.GetGameObject(prefab, out MyGameObject myGameObject, out Blueprint blueprint);
+
+        if (myGameObject != null)
+        {
+            return CreateGameObject(myGameObject, position, rotation, player, state);
+        }
+
+        if (blueprint != null)
+        {
+            return CreateGameObject(blueprint, position, rotation, player, state);
+        }
+
+        return null;
     }
 
     public static MyGameObject CreateGameObject(MyGameObject resource, Vector3 position, Quaternion rotation, Player player, MyGameObjectState state)
@@ -61,25 +75,102 @@ public class Utils
         myGameObject.SetPlayer(player);
         myGameObject.SetState(state);
 
-        if (state == MyGameObjectState.Cursor)
+        switch (state)
         {
-            foreach (Collider collider in myGameObject.GetComponents<Collider>())
-            {
-                collider.enabled = false;
-            }
-
-            foreach (MyComponent myComponent in myGameObject.GetComponents<MyComponent>())
-            {
-                myComponent.enabled = false;
-            }
-
-            foreach (MyGameObject i in myGameObject.GetComponents<MyGameObject>())
-            {
-                i.enabled = false;
-            }
+            case MyGameObjectState.UnderAssembly:
+            case MyGameObjectState.UnderConstruction:
+                // TODO: TEMP
+                /*
+                foreach (Part part in myGameObject.GetComponentsInChildren<Part>())
+                {
+                    part.ConstructionResources.RemoveAll();
+                }
+                */
+                // TEMP
+                break;
         }
 
         return myGameObject;
+    }
+
+    public static MyGameObject CreateGameObject(Blueprint blueprint, Vector3 position, Quaternion rotation, Player player, MyGameObjectState state, Transform parent = null)
+    {
+        Quaternion rotationFromParent = Quaternion.identity;
+
+        if (parent)
+        {
+            rotationFromParent = ResetRotation(parent);
+        }
+
+        // TODO: Refactor. Remove Game singleton.
+        // Game.Instance.Config.BaseGameObject
+        MyGameObject myGameObject = Object.Instantiate(GameObject.Find("Setup").GetComponent<Config>().BaseGameObject, position, rotation, parent).GetComponent<MyGameObject>();
+
+        myGameObject.name = blueprint.Name;
+        myGameObject.SetPlayer(player);
+        myGameObject.SetState(state);
+
+        foreach (BlueprintComponent i in blueprint.Parts)
+        {
+            if (i.Part == null)
+            {
+                i.Part = LoadPart(i.PartType, i.Name);
+
+                if (i.Part == null)
+                {
+                    continue;
+                }
+            }
+
+            i.Instance = Object.Instantiate(i.Part, myGameObject.transform.Find("Body").transform); // TODO: myGameObject.Body.transform
+            i.Instance.transform.localPosition = i.Position;
+        }
+
+        if (parent)
+        {
+            RestoreRotation(parent, rotationFromParent);
+        }
+
+        return myGameObject;
+    }
+
+    public static GameObject LoadPart(PartType partType, string name)
+    {
+        // TODO: Refactor. Remove Game singleton.
+        // Game.Instance.Config
+        Config config = GameObject.Find("Setup").GetComponent<Config>();
+
+        switch (partType)
+        {
+            case PartType.Chassis:
+                return config.Chassis.Find(x => x.name == name);
+
+            case PartType.Constructor:
+                return config.Constructors.Find(x => x.name == name);
+
+            case PartType.Drive:
+                return config.Drives.Find(x => x.name == name);
+
+            case PartType.Engine:
+                return config.Engines.Find(x => x.name == name);
+
+            case PartType.Gun:
+                return config.Guns.Find(x => x.name == name);
+
+            case PartType.Radar:
+                return config.Radars.Find(x => x.name == name);
+
+            case PartType.Shield:
+                return config.Shields.Find(x => x.name == name);
+
+            case PartType.Sight:
+                return config.Sights.Find(x => x.name == name);
+
+            case PartType.Storage:
+                return config.Storages.Find(x => x.name == name);
+        }
+
+        return null;
     }
     #endregion
 
@@ -231,7 +322,23 @@ public class Utils
     }
     #endregion
 
+    #region Resources
+    public static Texture2D GetPortrait(string name)
+    {
+        return Resources.Load<Texture2D>(Path.Join("Portraits", name));
+    }
+    #endregion
+
     #region Rotation
+    public static Quaternion ResetRotation(Transform transform)
+    {
+        Quaternion rotation = transform.rotation;
+        transform.rotation = Quaternion.identity;
+        Physics.SyncTransforms();
+
+        return rotation;
+    }
+
     public static Quaternion ResetRotation(MyGameObject myGameObject)
     {
         Quaternion rotation = myGameObject.Rotation;
@@ -239,6 +346,12 @@ public class Utils
         Physics.SyncTransforms();
 
         return rotation;
+    }
+
+    public static void RestoreRotation(Transform transform, Quaternion rotation)
+    {
+        transform.rotation = rotation;
+        Physics.SyncTransforms();
     }
 
     public static void RestoreRotation(MyGameObject myGameObject, Quaternion rotation)
@@ -271,6 +384,30 @@ public class Utils
         }
 
         return formatted.Trim();
+    }
+    #endregion
+
+    #region Blueprints
+    public static List<Blueprint> CreateBlueprints()
+    {
+        List<Blueprint> blueprints = new List<Blueprint>();
+
+        if (Directory.Exists(Config.Blueprints.Directory) == false)
+        {
+            return blueprints;
+        }
+
+        foreach (string file in Directory.EnumerateFiles(Config.Blueprints.Directory))
+        {
+            if (Path.GetExtension(file).ToLower() != ".json")
+            {
+                continue;
+            }
+
+            blueprints.Add(JsonUtility.FromJson<Blueprint>(File.ReadAllText(file)));
+        }
+
+        return blueprints;
     }
     #endregion
 

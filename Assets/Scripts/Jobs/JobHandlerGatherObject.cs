@@ -2,7 +2,7 @@ public class JobHandlerGatherObject : JobHandler
 {
     public override Order OnExecute(MyGameObject myGameObject)
     {
-        MyResource myResource = myGameObject.Player.GetResourceToGather(myGameObject);
+        MyGameObject myResource = myGameObject.Player.GetResourceToGather(myGameObject);
 
         if (myResource != null)
         {

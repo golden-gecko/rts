@@ -14,7 +14,7 @@ public class FormationHandlerLine : FormationHandler
         Vector3 direction = (new Vector3(position.x, 0.0f, position.z) - new Vector3(start.x, 0.0f, start.z)).normalized;
         Vector3 cross = Vector3.Cross(Vector3.up, direction).normalized;
 
-        int unitsCount = selectionGroup.Items.Where(x => x.TryGetComponent(out Engine _)).Count();
+        int unitsCount = selectionGroup.Items.Count;
 
         int column = 0;
 

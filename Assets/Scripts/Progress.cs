@@ -58,15 +58,15 @@ public class Progress
         return string.Format("{0:0.}/{1:0.}", Current, Max);
     }
 
-    [field: SerializeField]
+    [field: SerializeField, Range(0.0f, 1000.0f)]
     public float Current { get; private set; }
 
-    [field: SerializeField]
+    [field: SerializeField, Range(0.0f, 1000.0f)]
     public float Max { get; private set; }
 
     public bool Empty { get => Current <= 0.0f; }
 
     public bool Full { get => Current >= Max; }
 
-    public float Percent { get => Current / Max; }
+    public float Percent { get => Max > 0.0f ? Current / Max : 0.0f; }
 }

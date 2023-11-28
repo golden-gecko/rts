@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class MyInput
+public static class MyInput
 {
     public static bool GetControl()
     {

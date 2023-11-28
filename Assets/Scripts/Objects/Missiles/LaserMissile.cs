@@ -10,7 +10,7 @@ public class LaserMissile : Missile
         Orders.AllowOrder(OrderType.AttackObject);
         Orders.AllowOrder(OrderType.AttackPosition);
 
-        OrderHandlers[OrderType.AttackObject] = new OrderHandlerAttackObjectGauss();
-        OrderHandlers[OrderType.AttackPosition] = new OrderHandlerAttackPositionGauss();
+        OrderHandlers[OrderType.AttackObject] = new OrderHandlerAttackObjectLaser();
+        OrderHandlers[OrderType.AttackPosition] = new OrderHandlerAttackPositionLaser();
     }
 }

@@ -1,17 +1,21 @@
 using System.Collections.Generic;
+using UnityEngine;
 
-public class SkillManager : Singleton<SkillManager>
+public class SkillManager : MonoBehaviour
 {
-    protected override void Awake()
+    private void Awake()
     {
-        base.Awake();
-
         CreateSkills();
     }
 
     public Skill Get(string name)
     {
-        return Skills[name].Clone() as Skill;
+        if (Skills.TryGetValue(name, out Skill skill))
+        {
+            return Skills[name].Clone() as Skill;
+        }
+
+        return null;
     }
 
     private void CreateSkills()

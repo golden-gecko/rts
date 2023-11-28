@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class SelectionGroup
@@ -143,8 +144,6 @@ public class SelectionGroup
                 selected.ClearOrders();
             }
 
-            // TODO: Add assembly order.
-
             if (myGameObject.Is(selected, DiplomacyState.Ally) && myGameObject.State == MyGameObjectState.UnderConstruction)
             {
                 selected.Construct(myGameObject);
@@ -157,9 +156,14 @@ public class SelectionGroup
             {
                 selected.AttackObject(myGameObject);
             }
-            else if (myGameObject.Gatherable)
+            else
             {
-                selected.GatherObject(myGameObject);
+                Storage storage = myGameObject.GetComponentInChildren<Storage>();
+
+                if (storage && storage.Gatherable)
+                {
+                    selected.GatherObject(myGameObject);
+                }
             }
         }
     }

@@ -4,13 +4,18 @@ public class RecipeContainer
 {
     public void Add(Recipe recipe)
     {
-        Items[recipe.Name] = recipe;
+        Recipes[recipe.Name] = recipe;
     }
 
     public Recipe Get(string name)
     {
-        return Items[name];
+        if (Recipes.TryGetValue(name, out Recipe recipe))
+        {
+            return recipe;
+        }
+
+        return null;
     }
 
-    public Dictionary<string, Recipe> Items { get; } = new Dictionary<string, Recipe>();
+    public Dictionary<string, Recipe> Recipes { get; } = new Dictionary<string, Recipe>();
 }

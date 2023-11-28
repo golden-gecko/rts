@@ -23,12 +23,9 @@ public class Missile : MyGameObject
     [field: SerializeField]
     public GameObject HitEffectPrefab { get; private set; }
 
-    [field: SerializeField]
     public Property Damage { get; set; } = new Property();
 
-    [field: SerializeField]
     public Property Range { get; set; } = new Property();
 
-    [field: SerializeField]
     public List<DamageTypeItem> DamageType { get; set; } = new List<DamageTypeItem>();
 }

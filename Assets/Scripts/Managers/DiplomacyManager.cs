@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class DiplomacyManager : Singleton<DiplomacyManager>
+public class DiplomacyManager : MonoBehaviour
 {
     private void Start()
     {

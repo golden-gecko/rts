@@ -14,7 +14,7 @@ public class JobHandlerAttackObject : JobHandler
                 continue;
             }
 
-            Gun gun = myGameObject.GetComponent<Gun>();
+            Gun gun = myGameObject.GetComponentInChildren<Gun>();
 
             if (gun == null)
             {

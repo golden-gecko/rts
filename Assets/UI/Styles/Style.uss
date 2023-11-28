@@ -1,16 +1,31 @@
-.button-construct {
-    margin-right: 5px;
-    padding-left: 5px;
-    padding-right: 5px;
-    padding-top: 5px;
-    padding-bottom: 5px;
-    margin-left: 0;
-    margin-top: 0;
-    margin-bottom: 0;
+.background {
+    background-color: rgba(195, 186, 137, 255);
 }
 
-.button-main-menu {
-    min-width: 20%;
+.button,
+.dropdown .unity-popup-field__input,
+.editor-part,
+.text {
+    border-color: rgba(227, 157, 0, 255);
+    border-width: 2px;
+}
+
+.button_,
+.dropdown .unity-popup-field__input,
+.text .unity-text-field__input {
+    background-color: rgba(221, 217, 168, 255);
+}
+
+.button_:hover {
+    background-color: rgba(241, 231, 115, 255);
+}
+
+.dropdown .unity-label {
+    min-width: auto;
+}
+
+.text .unity-text-field__input {
+    border-width: 0;
 }
 
 .button-minimap {
@@ -25,25 +40,33 @@
     height: 80%;
 }
 
-.button-order {
-    padding-left: 5px;
-    padding-right: 5px;
-    padding-top: 5px;
-    padding-bottom: 5px;
-    margin-right: 5px;
-    margin-left: 0;
-    margin-top: 0;
-    margin-bottom: 0;
+.buttons .button {
+    min-width: 100px;
 }
 
-.menu-background {
-    background-color: rgba(0, 0, 0, 0.5);
+.buttons,
+.container,
+.header {
+    flex-grow: 1;
 }
 
-.panel-background {
-    background-color: rgba(0, 128, 0, 0.75);
+.editor-preview-info {
+    font-size: 14px;
+    margin: 10px;
+}
+
+.header .unity-label {
+    font-size: 30px;
+}
+
+.menu .button {
+    padding: 10px;
 }
 
 .panel-layers .unity-label {
     min-width: auto;
+}
+
+.editor-part {
+    margin-bottom: 5px;
 }
