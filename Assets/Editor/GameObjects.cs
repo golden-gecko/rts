@@ -1,11 +1,33 @@
+using System.Collections.Generic;
 using System.IO;
 using UnityEditor;
 using UnityEditor.SceneManagement;
 using UnityEngine;
 
-public class GameObjectRenderer : EditorWindow
+public class GameObjectBuilder : EditorWindow
 {
-    [MenuItem("Tools/Render", false, 2)]
+    [MenuItem("Tools/Build", false, 20)]
+    public static void Build()
+    {
+        Tools.ClearLog();
+
+        string sceneName = Tools.GetSceneName();
+
+        List<Blueprint> blueprints = Utils.CreateBlueprints();
+
+        foreach (Blueprint blueprint in blueprints)
+        {
+            MyGameObject myGameObject = Utils.CreateGameObject(blueprint, Vector3.zero, Quaternion.identity, null, MyGameObjectState.Operational);
+
+            PrefabUtility.SaveAsPrefabAsset(myGameObject.gameObject, Path.Join(Config.Objects.Directory, string.Format("{0}.prefab", myGameObject.name)));
+
+            DestroyImmediate(myGameObject.gameObject);
+        }
+
+        Tools.RestoreScene(sceneName);
+    }
+
+    [MenuItem("Tools/Render", false, 30)]
     public static void Render()
     {
         Tools.ClearLog();
@@ -50,5 +72,24 @@ public class GameObjectRenderer : EditorWindow
         RenderTexture.active = null;
 
         Tools.RestoreScene(sceneName);
+    }
+
+    [MenuItem("Tools/Align", false, 10)]
+    public static void Align()
+    {
+        foreach (GameObject gameObject in Tools.GetGameObjects())
+        {
+            if (gameObject.TryGetComponent(out MyGameObject myGameObject))
+            {
+                myGameObject.Position = Utils.SnapToCenter(myGameObject.Position, Config.Map.Scale);
+
+                if (Utils.RaycastFromTop(myGameObject.Position, out RaycastHit hitInfo, Utils.GetMapMask()))
+                {
+                    myGameObject.Position = hitInfo.point;
+                }
+            }
+        }
+
+        Tools.SaveScene();
     }
 }

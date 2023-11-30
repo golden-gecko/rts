@@ -1,4 +1,6 @@
-public class OrderHandlerGatherObject : OrderHandler
+using System.Linq;
+
+public class OrderHandlerMineObject : OrderHandler
 {
     public override void OnExecuteHandler(MyGameObject myGameObject)
     {
@@ -18,12 +20,32 @@ public class OrderHandlerGatherObject : OrderHandler
             return;
         }
 
-        ProcessTargetObject(myGameObject, order);
+        Engine engine = myGameObject.GetComponentInChildren<Engine>();
+
+        if (engine == null)
+        {
+            GatherFromResourceInRange(myGameObject, order);
+        }
+        else
+        {
+            ProcessTargetObject(myGameObject, order);
+        }
     }
 
     protected override bool IsValid(MyGameObject myGameObject, Order order)
     {
         return order.TargetGameObject != null && order.TargetGameObject != myGameObject;
+    }
+
+    private void GatherFromResourceInRange(MyGameObject myGameObject, Order order)
+    {
+        MyGameObject resourceToGather = order.TargetGameObject; // myGameObject.Player.GetResourceToGatherInRange(myGameObject, myGameObject.GetComponentInChildren<Gatherer>().Range);
+        Storage targetGameObjectStorage = resourceToGather.GetComponentInChildren<Storage>();
+
+        // TODO: Check if resource can be gathered.
+
+        myGameObject.Orders.Pop();
+        myGameObject.Load(resourceToGather, targetGameObjectStorage.Resources.Items.First().Name, targetGameObjectStorage.Resources.Items.First().Current); // TODO: Or 1 or ResourceUsage?
     }
 
     private void ProcessTargetObject(MyGameObject myGameObject, Order order)

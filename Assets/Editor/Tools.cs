@@ -6,6 +6,7 @@ using System.Reflection;
 using UnityEditor;
 using UnityEditor.SceneManagement;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public static class Tools
 {
@@ -47,5 +48,10 @@ public static class Tools
     public static void RestoreScene(string sceneName)
     {
         EditorSceneManager.OpenScene(Path.Join("Assets", "Scenes", string.Format("{0}.unity", sceneName)));
+    }
+
+    public static void SaveScene()
+    {
+        EditorSceneManager.SaveScene(EditorSceneManager.GetActiveScene());
     }
 }

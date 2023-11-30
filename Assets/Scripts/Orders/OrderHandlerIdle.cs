@@ -1,8 +1,13 @@
+using System.Diagnostics.Contracts;
+using UnityEngine;
+
 public class OrderHandlerIdle : OrderHandler
 {
     public override void OnExecuteHandler(MyGameObject myGameObject)
     {
-        Order order = TryAttackerBehaviour(myGameObject);
+        Order order;
+        
+        order = TryAttackerBehaviour(myGameObject);
 
         if (order != null)
         {
@@ -11,7 +16,7 @@ public class OrderHandlerIdle : OrderHandler
             return;
         }
 
-        order = TryProducerBehaviour(myGameObject);
+        order = TryConstructorBehaviour(myGameObject);
 
         if (order != null)
         {
@@ -21,6 +26,24 @@ public class OrderHandlerIdle : OrderHandler
         }
 
         order = TryGathererBehaviour(myGameObject);
+
+        if (order != null)
+        {
+            myGameObject.Orders.Add(order);
+
+            return;
+        }
+
+        order = TryMinerBehaviour(myGameObject);
+
+        if (order != null)
+        {
+            myGameObject.Orders.Add(order);
+
+            return;
+        }
+
+        order = TryProducerBehaviour(myGameObject);
 
         if (order != null)
         {
@@ -43,14 +66,35 @@ public class OrderHandlerIdle : OrderHandler
     {
         Gun gun = myGameObject.GetComponentInChildren<Gun>();
 
-        if (gun != null)
+        if (gun == null)
         {
-            Order order = myGameObject.Player.GetJob(myGameObject, OrderType.AttackObject);
+            return null;
+        }
 
-            if (order != null)
-            {
-                return order;
-            }
+        Order order = myGameObject.Player.GetJob(myGameObject, OrderType.AttackObject);
+
+        if (order != null)
+        {
+            return order;
+        }
+
+        return null;
+    }
+
+    private Order TryConstructorBehaviour(MyGameObject myGameObject)
+    {
+        Constructor constructor = myGameObject.GetComponentInChildren<Constructor>();
+
+        if (constructor == null)
+        {
+            return null;
+        }
+
+        Order order = myGameObject.Player.GetJob(myGameObject, OrderType.Construct);
+
+        if (order != null)
+        {
+            return order;
         }
 
         return null;
@@ -58,22 +102,46 @@ public class OrderHandlerIdle : OrderHandler
 
     private Order TryGathererBehaviour(MyGameObject myGameObject)
     {
-        Drive drive = myGameObject.GetComponentInChildren<Drive>();
-        Gatherer gatherer = myGameObject.GetComponentInChildren<Gatherer>();
+        Engine engine = myGameObject.GetComponentInChildren<Engine>();
         Storage storage = myGameObject.GetComponentInChildren<Storage>();
 
-        if (drive != null && gatherer != null && storage != null)
+        if (engine == null || storage == null)
         {
-            Order order = myGameObject.Player.GetJob(myGameObject, OrderType.GatherObject);
-
-            if (order != null)
-            {
-                return order;
-            }
+            return null;
         }
-        else if (gatherer != null && storage != null)
+
+        Order order = myGameObject.Player.GetJob(myGameObject, OrderType.GatherObject);
+
+        if (order != null)
         {
-            MyGameObject resourceInRange = myGameObject.Player.GetResourceToGatherInRange(myGameObject, myGameObject.GetComponentInChildren<Gatherer>().Range);
+            return order;
+        }
+
+        return null;
+    }
+
+    private Order TryMinerBehaviour(MyGameObject myGameObject)
+    {
+        Miner miner = myGameObject.GetComponentInChildren<Miner>();
+
+        if (miner == null)
+        {
+            return null;
+        }
+
+        Order order = myGameObject.Player.GetJob(myGameObject, OrderType.MineObject);
+
+        if (order != null)
+        {
+            return order;
+        }
+
+        return null;
+
+        /*
+        else if (storage != null)
+        {
+            MyGameObject resourceInRange = myGameObject.Player.GetResourceToGatherInRange(myGameObject, myGameObject.GetComponentInChildren<Miner>().Range);
 
             if (resourceInRange != null)
             {
@@ -85,17 +153,23 @@ public class OrderHandlerIdle : OrderHandler
                 }
             }
         }
-
-        return null;
+        */
     }
 
     private Order TryProducerBehaviour(MyGameObject myGameObject)
     {
         Producer producer = myGameObject.GetComponentInChildren<Producer>();
 
-        if (producer != null)
+        if (producer == null)
         {
-            return Order.Produce("");
+            return null;
+        }
+
+        Order order = Order.Produce();
+
+        if (order != null)
+        {
+            return order;
         }
 
         return null;
@@ -103,31 +177,28 @@ public class OrderHandlerIdle : OrderHandler
 
     private Order TryWorkerBehaviour(MyGameObject myGameObject)
     {
-        Drive drive = myGameObject.GetComponentInChildren<Drive>();
+        Engine engine = myGameObject.GetComponentInChildren<Engine>();
         Storage storage = myGameObject.GetComponentInChildren<Storage>();
 
-        if (drive != null && storage != null)
+        if (engine == null || storage == null)
         {
-            Order order = myGameObject.Player.GetJob(myGameObject, OrderType.Unload);
+            return null;
+        }
 
-            if (order != null)
-            {
-                return order;
-            }
+        Order order;
+        
+        order = myGameObject.Player.GetJob(myGameObject, OrderType.Unload);
 
-            order = myGameObject.Player.GetJob(myGameObject, OrderType.Construct);
+        if (order != null)
+        {
+            return order;
+        }
 
-            if (order != null)
-            {
-                return order;
-            }
+        order = myGameObject.Player.GetJob(myGameObject, OrderType.Transport);
 
-            order = myGameObject.Player.GetJob(myGameObject, OrderType.Transport);
-
-            if (order != null)
-            {
-                return order;
-            }
+        if (order != null)
+        {
+            return order;
         }
 
         return null;

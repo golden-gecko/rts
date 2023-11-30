@@ -354,7 +354,7 @@ public class MenuEditor : UI_Element
         {
             Quaternion rotation = Utils.ResetRotation(parent);
 
-            if (chassis.Instance.GetComponentInChildren<Part>().Joints.TryGetValue(PartType.Constructor, out Transform transform))
+            if (chassis.Instance.GetComponentInChildren<Part>().TryGetJoint(PartType.Constructor, out Transform transform))
             {
                 constructor.Instance.transform.position = transform.position;
             }
@@ -418,7 +418,7 @@ public class MenuEditor : UI_Element
         {
             Quaternion rotation = Utils.ResetRotation(parent);
 
-            if (chassis.Instance.GetComponentInChildren<Part>().Joints.TryGetValue(PartType.Gun, out Transform transform))
+            if (chassis.Instance.GetComponentInChildren<Part>().TryGetJoint(PartType.Gun, out Transform transform))
             {
                 gun.Instance.transform.position = transform.position;
             }
@@ -436,7 +436,7 @@ public class MenuEditor : UI_Element
         {
             Quaternion rotation = Utils.ResetRotation(parent);
 
-            if (chassis.Instance.GetComponentInChildren<Part>().Joints.TryGetValue(PartType.Radar, out Transform transform))
+            if (chassis.Instance.GetComponentInChildren<Part>().TryGetJoint(PartType.Radar, out Transform transform))
             {
                 radar.Instance.transform.position = transform.position;
             }
@@ -468,7 +468,7 @@ public class MenuEditor : UI_Element
         info += string.Format("\n\nCost: {0}", blueprint.BaseGameObject.ConstructionResources.GetInfo());
 
         info += string.Format("\n\nHealth: {0:0.}", blueprint.BaseGameObject.Health.Max);
-        info += string.Format("\nMass: {0:0.}", blueprint.BaseGameObject.Mass);
+        info += string.Format("\nMass: {0}", blueprint.BaseGameObject.Mass);
 
         Armour armour = blueprint.BaseGameObject.GetComponentInChildren<Armour>();
 

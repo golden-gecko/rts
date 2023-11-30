@@ -37,10 +37,7 @@ public class OrderHandlerAttackObject : OrderHandler
             }
             else
             {
-                if (myGameObject.RotateTowardsTarget)
-                {
-                    myGameObject.transform.LookAt(new Vector3(position.x, myGameObject.Position.y, position.z));
-                }
+                myGameObject.GetComponentInChildren<Gun>().transform.LookAt(new Vector3(position.x, myGameObject.Position.y, position.z));
 
                 if (gun.CanFire())
                 {
@@ -52,10 +49,7 @@ public class OrderHandlerAttackObject : OrderHandler
         {
             if (gun.IsInRange(position))
             {
-                if (myGameObject.RotateTowardsTarget)
-                {
-                    myGameObject.transform.LookAt(new Vector3(position.x, myGameObject.Position.y, position.z));
-                }
+                myGameObject.GetComponentInChildren<Gun>().transform.LookAt(new Vector3(position.x, myGameObject.Position.y, position.z));
 
                 if (gun.CanFire())
                 {

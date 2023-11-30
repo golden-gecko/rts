@@ -8,6 +8,16 @@ public class Foundation : Part
     {
         base.Awake();
 
+        InitializeMapLayers();
+    }
+
+    public override string GetInfo()
+    {
+        return string.Format("Foundation - {0}", base.GetInfo());
+    }
+
+    private void InitializeMapLayers()
+    {
         foreach (MyGameObjectMapLayer layer in MapLayers)
         {
             if (Parent.MapLayers.Contains(layer) == false)
@@ -17,11 +27,6 @@ public class Foundation : Part
         }
     }
 
-    public override string GetInfo()
-    {
-        return string.Format("Foundation - {0}", base.GetInfo());
-    }
-
     [field: SerializeField]
-    public List<MyGameObjectMapLayer> MapLayers { get; private set; } = new List<MyGameObjectMapLayer>();
+    public List<MyGameObjectMapLayer> MapLayers { get; private set; } = new List<MyGameObjectMapLayer>(); // TODO: Bake terrain type layer. Add terrain types (solid, dirt, grass, swamp etc.).
 }

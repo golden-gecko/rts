@@ -14,8 +14,8 @@ GameObject:
   - component: {fileID: -554336057465286071}
   - component: {fileID: -4708771878705186039}
   - component: {fileID: 2241562123314845070}
-  - component: {fileID: -4381632195129946922}
   - component: {fileID: 7592391886338650018}
+  - component: {fileID: -2789148311263869881}
   m_Layer: 20
   m_Name: Mine
   m_TagString: Untagged
@@ -98,7 +98,6 @@ MonoBehaviour:
   <CreateBase>k__BackingField: 1
   <SnapToGrid>k__BackingField: 1
   <VisibilityState>k__BackingField: 2
-  <RotateTowardsTarget>k__BackingField: 1
   <ShowEntrance>k__BackingField: 0
   <ShowExit>k__BackingField: 0
   <Health>k__BackingField:
@@ -118,7 +117,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 04c420c373cba4547b9469e304a8085f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <Mass>k__BackingField: 10
   <ConstructionResources>k__BackingField:
     <Items>k__BackingField:
     - <Current>k__BackingField: 100
@@ -138,7 +136,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 26ef1c7f6037537498318d7dd9d37db3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <Mass>k__BackingField: 10
   <ConstructionResources>k__BackingField:
     <Items>k__BackingField:
     - <Current>k__BackingField: 10
@@ -166,7 +163,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9f7fc2f43637b07428d9ff8d0e38edaa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <Mass>k__BackingField: 10
   <ConstructionResources>k__BackingField:
     <Items>k__BackingField:
     - <Current>k__BackingField: 10
@@ -206,27 +202,6 @@ MonoBehaviour:
   <RaiseResourceFlags>k__BackingField: 1
   <Gatherable>k__BackingField: 0
   <ResourceUsage>k__BackingField: 1
---- !u!114 &-4381632195129946922
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5035893119255656153}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 76a476d75a21eba4cbb5def57a0a5607, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  <Mass>k__BackingField: 10
-  <ConstructionResources>k__BackingField:
-    <Items>k__BackingField:
-    - <Current>k__BackingField: 10
-      <Max>k__BackingField: 10
-      <Name>k__BackingField: Iron
-      <Direction>k__BackingField: 1
-  <Range>k__BackingField: 1
-  <ResourceUsage>k__BackingField: 1
 --- !u!114 &7592391886338650018
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -239,7 +214,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 79a39b5131237dc428a9b67a3936e144, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <Mass>k__BackingField: 10
   <ConstructionResources>k__BackingField:
     <Items>k__BackingField:
     - <Current>k__BackingField: 10
@@ -248,6 +222,26 @@ MonoBehaviour:
       <Direction>k__BackingField: 1
   <Range>k__BackingField:
     <Value>k__BackingField: 10
+--- !u!114 &-2789148311263869881
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5035893119255656153}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 69fcd27bd106aac4790c7b41aeef210a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  <ConstructionResources>k__BackingField:
+    <Items>k__BackingField:
+    - <Current>k__BackingField: 10
+      <Max>k__BackingField: 10
+      <Name>k__BackingField: Iron
+      <Direction>k__BackingField: 1
+  <Range>k__BackingField: 4
+  <ResourceUsage>k__BackingField: 2
 --- !u!1 &6853165173923590045
 GameObject:
   m_ObjectHideFlags: 0

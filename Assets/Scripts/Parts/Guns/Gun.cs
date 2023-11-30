@@ -47,9 +47,6 @@ public class Gun : Part
     }
 
     [field: SerializeField]
-    public GameObject MissilePrefab { get; private set; }
-
-    [field: SerializeField]
     public Property Damage { get; private set; } = new Property(10.0f);
 
     [field: SerializeField]
@@ -64,6 +61,9 @@ public class Gun : Part
     [field: SerializeField]
     public List<DamageTypeItem> DamageType { get; private set; } = new List<DamageTypeItem>();
 
+    [field: SerializeField]
+    protected GameObject MissilePrefab { get; private set; }
+
     [SerializeField]
-    protected AudioClip AudioFire; // TODO: Refactor.
+    protected AudioClip AudioFire { get; private set; } // TODO: Refactor.
 }

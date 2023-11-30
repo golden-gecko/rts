@@ -2,7 +2,6 @@ public enum DamageType
 {
     Kinetic = 0,
     Laser = 1,
-    Fire = 2, // TODO: Implement.
 }
 
 public enum DiplomacyState
@@ -88,6 +87,8 @@ public enum OrderType
     GuardObject = 9,
     Idle = 10,
     Load = 11,
+    MineObject = 29,
+    MineResource = 30,
     Move = 12,
     None = 13,
     Patrol = 14,
