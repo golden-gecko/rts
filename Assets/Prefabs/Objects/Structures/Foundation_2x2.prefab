@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 155502969708775752}
   - component: {fileID: 6968462861873028399}
   - component: {fileID: 3004292878939381955}
-  m_Layer: 0
+  m_Layer: 22
   m_Name: Body
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -97,7 +97,7 @@ GameObject:
   - component: {fileID: 6443742671607174820}
   - component: {fileID: 1331778889236634991}
   - component: {fileID: 1233866494130732055}
-  m_Layer: 0
+  m_Layer: 22
   m_Name: Foundation_2x2
   m_TagString: Untagged
   m_Icon: {fileID: 0}

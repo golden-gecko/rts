@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 128468617424915498}
   - component: {fileID: 3199420477188143251}
   - component: {fileID: 439903156936527801}
-  m_Layer: 0
+  m_Layer: 22
   m_Name: Foundation_3x3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -126,7 +126,7 @@ GameObject:
   - component: {fileID: 3776581890550856689}
   - component: {fileID: 3837944970687054775}
   - component: {fileID: 3004117535615289679}
-  m_Layer: 0
+  m_Layer: 22
   m_Name: Body
   m_TagString: Untagged
   m_Icon: {fileID: 0}

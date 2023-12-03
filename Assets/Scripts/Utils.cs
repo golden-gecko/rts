@@ -177,12 +177,12 @@ public class Utils
     #region Mask
     public static int GetGameObjectMask()
     {
-        return LayerMask.GetMask("GameObject");
+        return LayerMask.GetMask("GameObject") | LayerMask.GetMask("Foundation");
     }
 
     public static int GetMapMask()
     {
-        return LayerMask.GetMask("Terrain") | LayerMask.GetMask("Water");
+        return LayerMask.GetMask("Foundation") | LayerMask.GetMask("Terrain") | LayerMask.GetMask("Water");
     }
     #endregion
 
@@ -432,21 +432,21 @@ public class Utils
 
     public static bool IsTerrain(Collision collision)
     {
-        return collision.collider.CompareTag("Terrain");
+        return collision.collider.gameObject.layer == LayerMask.NameToLayer("Foundation") || collision.collider.gameObject.layer == LayerMask.NameToLayer("Terrain");
     }
 
     public static bool IsWater(Collision collision)
     {
-        return collision.collider.CompareTag("Water");
+        return collision.collider.gameObject.layer == LayerMask.NameToLayer("Water");
     }
 
     public static bool IsTerrain(RaycastHit hitInfo)
     {
-        return hitInfo.transform.CompareTag("Terrain");
+        return hitInfo.transform.gameObject.layer == LayerMask.NameToLayer("Foundation") || hitInfo.transform.gameObject.layer == LayerMask.NameToLayer("Terrain");
     }
 
     public static bool IsWater(RaycastHit hitInfo)
     {
-        return hitInfo.transform.CompareTag("Water");
+        return hitInfo.transform.gameObject.layer == LayerMask.NameToLayer("Water");
     }
 }
