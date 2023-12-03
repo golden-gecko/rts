@@ -6,11 +6,21 @@ public class OrderHandlerMove : OrderHandler
     {
         Order order = myGameObject.Orders.First();
 
+        Drive drive = myGameObject.GetComponentInChildren<Drive>();
+        Engine engine = myGameObject.GetComponentInChildren<Engine>();
+
+        if (drive == null && engine == null)
+        {
+            Fail(myGameObject);
+
+            return;
+        }
+
         Vector3 target = order.TargetPosition;
         Vector3 position = myGameObject.Position;
 
         float distanceToTarget = GetDistance(myGameObject, ref position, ref target);
-        float distanceToTravel = myGameObject.GetComponentInChildren<Engine>().Speed * Time.deltaTime;
+        float distanceToTravel = drive.GearRatio * engine.Speed * Time.deltaTime;
 
         if (myGameObject.MapLayers.Contains(MyGameObjectMapLayer.Air))
         {

@@ -133,6 +133,10 @@ public class ResourceContainer
 
     public int MaxSum { get => Items.Sum(x => x.Max); }
 
+    public bool Empty { get => Items.All(x => x.Empty); }
+
+    public bool Full { get => Items.All(x => x.Full); }
+
     public float PercentSum { get => (float)CurrentSum / (float)MaxSum; }
 
     public bool In { get => Items.Any(x => x.In); }

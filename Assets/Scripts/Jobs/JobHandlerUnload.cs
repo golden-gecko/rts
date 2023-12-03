@@ -2,29 +2,31 @@ public class JobHandlerUnload : JobHandler
 {
     public override Order OnExecute(MyGameObject myGameObject)
     {
-        Storage storage = myGameObject.GetComponentInChildren<Storage>();
-
-        if (storage == null)
+        if (myGameObject.Storage == null)
         {
             return null;
         }
 
-        if (storage.Resources.CurrentSum <= 0)
+        if (myGameObject.Storage.Resources.Empty)
         {
             return null;
         }
 
-        foreach (Resource resource in storage.Resources.Items)
+        foreach (Resource resource in myGameObject.Storage.Resources.Items)
         {
-            if (resource.Current > 0)
+            if (resource.Empty)
             {
-                MyGameObject placeToStoreResources = myGameObject.Player.GetStorage(myGameObject, resource.Name, resource.Current);
-
-                if (placeToStoreResources)
-                {
-                    return Order.Unload(placeToStoreResources, resource.Name, resource.Current);
-                }
+                continue;
             }
+
+            MyGameObject placeToStoreResources = myGameObject.Player.GetStorage(myGameObject, resource.Name, resource.Current);
+
+            if (placeToStoreResources == null)
+            {
+                return null;
+            }
+
+            return Order.Unload(placeToStoreResources, Config.Objects.MinDistance, resource.Name, resource.Current);
         }
 
         return null;

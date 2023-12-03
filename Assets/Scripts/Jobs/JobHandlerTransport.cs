@@ -4,7 +4,7 @@ public class JobHandlerTransport : JobHandler
     {
         foreach (ResourceRequest consumer in myGameObject.Player.Consumers.Items)
         {
-            if (consumer.MyGameObject == false)
+            if (consumer.MyGameObject == null)
             {
                 continue;
             }
@@ -16,7 +16,7 @@ public class JobHandlerTransport : JobHandler
 
             foreach (ResourceRequest producer in myGameObject.Player.Producers.Items)
             {
-                if (producer.MyGameObject == false)
+                if (producer.MyGameObject == null)
                 {
                     continue;
                 }

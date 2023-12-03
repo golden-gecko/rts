@@ -240,7 +240,7 @@ MonoBehaviour:
       <Max>k__BackingField: 10
       <Name>k__BackingField: Iron
       <Direction>k__BackingField: 1
-  <Range>k__BackingField: 4
+  <Range>k__BackingField: 8
   <ResourceUsage>k__BackingField: 2
 --- !u!1 &6853165173923590045
 GameObject:

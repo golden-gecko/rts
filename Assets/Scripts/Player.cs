@@ -15,6 +15,7 @@ public class Player : MonoBehaviour
         JobHandlers[OrderType.AttackObject] = new JobHandlerAttackObject();
         JobHandlers[OrderType.Construct] = new JobHandlerConstruct();
         JobHandlers[OrderType.GatherObject] = new JobHandlerGatherObject();
+        JobHandlers[OrderType.MineObject] = new JobHandlerMineObject();
         JobHandlers[OrderType.Transport] = new JobHandlerTransport();
         JobHandlers[OrderType.Unload] = new JobHandlerUnload();
     }

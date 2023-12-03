@@ -11,6 +11,9 @@ public class MyGameObject : MyMonoBehaviour
 
         SetupIndicators();
         SetupBase();
+        SetupConstructionResources();
+        SetupHealth();
+        SetupParts();
 
         Orders.AllowOrder(OrderType.Destroy); // TODO: Move to component.
         Orders.AllowOrder(OrderType.Disable);
@@ -33,9 +36,6 @@ public class MyGameObject : MyMonoBehaviour
         OrderHandlers[OrderType.Wait] = new OrderHandlerWait();
 
         Stats.Player = Player;
-
-        SetupHealth();
-        SetupConstructionResources();
     }
 
     protected virtual void Start()
@@ -214,15 +214,15 @@ public class MyGameObject : MyMonoBehaviour
         Orders.Add(Order.GuardPosition(position));
     }
 
-    public void Load(MyGameObject myGameObject, string resource, int value, int priority = -1)
+    public void Load(MyGameObject myGameObject, float range, string resource, int value, int priority = -1)
     {
         if (0 <= priority && priority < Orders.Count)
         {
-            Orders.Insert(priority, Order.Load(myGameObject, resource, value));
+            Orders.Insert(priority, Order.Load(myGameObject, range, resource, value));
         }
         else
         {
-            Orders.Add(Order.Load(myGameObject, resource, value));
+            Orders.Add(Order.Load(myGameObject, range, resource, value));
         }
     }
 
@@ -311,15 +311,15 @@ public class MyGameObject : MyMonoBehaviour
         Orders.Add(Order.Turn(target));
     }
 
-    public void Unload(MyGameObject myGameObject, string resource, int value, int priority = -1)
+    public void Unload(MyGameObject myGameObject, float range, string resource, int value, int priority = -1)
     {
         if (0 <= priority && priority < Orders.Count)
         {
-            Orders.Insert(priority, Order.Unload(myGameObject, resource, value));
+            Orders.Insert(priority, Order.Unload(myGameObject, range, resource, value));
         }
         else
         {
-            Orders.Add(Order.Unload(myGameObject, resource, value));
+            Orders.Add(Order.Unload(myGameObject, range, resource, value));
         }
     }
 
@@ -758,17 +758,6 @@ public class MyGameObject : MyMonoBehaviour
         Base.transform.localScale = new Vector3(size.x, 0.5f, size.z);
     }
 
-    private void SetupHealth()
-    {
-        Part[] parts = GetComponentsInChildren<Part>();
-        Health = new Progress(parts.Sum(x => x.Health.Current), parts.Sum(x => x.Health.Max));
-    }
-
-    private void SetupIndicators()
-    {
-        Indicators = Instantiate(Game.Instance.Config.Indicators, transform, false).GetComponent<Indicators>();
-    }
-
     private void SetupConstructionResources()
     {
         Dictionary<string, int> current = new Dictionary<string, int>(); // TODO: Refactor. Optimize. Allow changing Max property.
@@ -802,6 +791,31 @@ public class MyGameObject : MyMonoBehaviour
         {
             ConstructionResources.Init(resource.Key, resource.Value, max[resource.Key]);
         }
+    }
+
+    private void SetupHealth()
+    {
+        Part[] parts = GetComponentsInChildren<Part>();
+        Health = new Progress(parts.Sum(x => x.Health.Current), parts.Sum(x => x.Health.Max));
+    }
+
+    private void SetupIndicators()
+    {
+        Indicators = Instantiate(Game.Instance.Config.Indicators, transform, false).GetComponent<Indicators>();
+    }
+
+    private void SetupParts()
+    {
+        Armour = GetComponentInChildren<Armour>();
+        Assembler = GetComponentInChildren<Assembler>();
+        Constructor = GetComponentInChildren<Constructor>();
+        Drive = GetComponentInChildren<Drive>();
+        Engine = GetComponentInChildren<Engine>();
+        Gun = GetComponentInChildren<Gun>();
+        Miner = GetComponentInChildren<Miner>();
+        Producer = GetComponentInChildren<Producer>();
+        Shield = GetComponentInChildren<Shield>();
+        Storage = GetComponentInChildren<Storage>();
     }
 
     private void InitializePosition()
@@ -991,67 +1005,14 @@ public class MyGameObject : MyMonoBehaviour
     [field: SerializeField]
     public bool ShowExit { get; private set; } = false;
 
-    [field: SerializeField]
     public Progress Health { get; private set; } = new Progress();
-    /*
-    {
-        get
-        {
-            Part[] parts = GetComponentsInChildren<Part>();
-
-            return new Progress(parts.Sum(x => x.Health.Current), parts.Sum(x => x.Health.Max));
-        }
-    }
-    */
 
     public OrderContainer Orders { get; } = new OrderContainer();
 
     public Stats Stats { get; } = new Stats();
 
     [field: SerializeField]
-    public ResourceContainer ConstructionResources { get; private set; } = new ResourceContainer();
-    /*
-    {
-        get
-        {
-            Dictionary<string, int> current = new Dictionary<string, int>(); // TODO: Refactor. Optimize. Allow changing Max property.
-            Dictionary<string, int> max = new Dictionary<string, int>();
-
-            foreach (Part part in GetComponentsInChildren<Part>())
-            {
-                foreach (Resource resource in part.ConstructionResources.Items)
-                {
-                    if (current.ContainsKey(resource.Name))
-                    {
-                        current[resource.Name] += resource.Current;
-                    }
-                    else
-                    {
-                        current[resource.Name] = resource.Current;
-                    }
-
-                    if (max.ContainsKey(resource.Name))
-                    {
-                        max[resource.Name] += resource.Max;
-                    }
-                    else
-                    {
-                        max[resource.Name] = resource.Max;
-                    }
-                }
-            }
-
-            ResourceContainer constructionResources = new ResourceContainer();
-
-            foreach (KeyValuePair<string, int> resource in current)
-            {
-                constructionResources.Init(resource.Key, resource.Value, max[resource.Key]);
-            }
-
-            return constructionResources;
-        }
-    }
-    */
+    public ResourceContainer ConstructionResources { get; } = new ResourceContainer();
 
     public MyGameObject Parent { get; private set; }
 
@@ -1070,4 +1031,26 @@ public class MyGameObject : MyMonoBehaviour
     public HashSet<MyGameObject> Workers { get; } = new HashSet<MyGameObject>(); // TODO: Implement workers mechanic.
 
     public HashSet<MyGameObject> Workplaces { get; } = new HashSet<MyGameObject>(); // TODO: Implement workers mechanic.
+
+    #region Parts
+    public Armour Armour { get; private set; }
+
+    public Assembler Assembler { get; private set; }
+
+    public Constructor Constructor { get; private set; }
+
+    public Drive Drive { get; private set; }
+
+    public Engine Engine { get; private set; }
+
+    public Gun Gun { get; private set; }
+
+    public Miner Miner { get; private set; }
+
+    public Producer Producer { get; private set; }
+
+    public Shield Shield { get; private set; }
+
+    public Storage Storage { get; private set; }
+    #endregion
 }

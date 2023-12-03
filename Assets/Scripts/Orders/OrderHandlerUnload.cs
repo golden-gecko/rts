@@ -13,7 +13,7 @@ public class OrderHandlerUnload : OrderHandler
             return;
         }
 
-        if (Utils.IsCloseTo(myGameObject.Position, order.TargetGameObject.Entrance) == false)
+        if (Utils.IsInRange(myGameObject.Position, order.TargetGameObject.Entrance, order.Range) == false)
         {
             myGameObject.Move(order.TargetGameObject.Entrance, 0);
 

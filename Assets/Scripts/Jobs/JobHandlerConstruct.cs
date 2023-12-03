@@ -4,6 +4,11 @@ public class JobHandlerConstruct : JobHandler
 {
     public override Order OnExecute(MyGameObject myGameObject)
     {
+        if (myGameObject.Constructor == null)
+        {
+            return null;
+        }
+
         float minDistance = float.MaxValue;
         MyGameObject closest = null;
 
@@ -28,11 +33,11 @@ public class JobHandlerConstruct : JobHandler
             }
         }
 
-        if (closest != null)
+        if (closest == null)
         {
-            return Order.Construct(closest);
+            return null;
         }
 
-        return null;
+        return Order.Construct(closest);
     }
 }

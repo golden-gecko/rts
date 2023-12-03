@@ -118,14 +118,24 @@ public class Order
         };
     }
 
-    public static Order Load(MyGameObject myGameObject, string resource, int value)
+    public static Order Load(MyGameObject myGameObject, float range, string resource, int value)
     {
         return new Order
         {
             Type = OrderType.Load,
             SourceGameObject = myGameObject,
+            Range = range,
             Resource = resource,
             Value = value,
+        };
+    }
+
+    public static Order MineObject(MyGameObject myGameObject)
+    {
+        return new Order
+        {
+            Type = OrderType.MineObject,
+            TargetGameObject = myGameObject,
         };
     }
 
@@ -225,12 +235,13 @@ public class Order
         };
     }
 
-    public static Order Unload(MyGameObject myGameObject, string resource, int value)
+    public static Order Unload(MyGameObject myGameObject, float range, string resource, int value)
     {
         return new Order
         {
             Type = OrderType.Unload,
             TargetGameObject = myGameObject,
+            Range = range,
             Resource = resource,
             Value = value,
         };
@@ -376,4 +387,6 @@ public class Order
     public List<Vector3Int> Visited { get; set; }
 
     public OrderState State { get; set; } = OrderState.None;
+
+    public float Range { get; private set; } = Config.Objects.MinDistance;
 }
