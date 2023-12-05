@@ -164,6 +164,10 @@ MonoBehaviour:
   - Barracks
   - Factory_Heavy
   - Factory_Light
+  - Foundation_1x1
+  - Foundation_2x2
+  - Foundation_3x3
+  - Foundation_4x4
   - Gas_Station
   - Power_Pole
   - Radar_Outpost

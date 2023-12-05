@@ -95,16 +95,11 @@ MonoBehaviour:
     <Max>k__BackingField: -1
   <SkillsNames>k__BackingField: []
   <State>k__BackingField: 1
-  <CreateBase>k__BackingField: 1
+  <CreateBase>k__BackingField: 0
   <SnapToGrid>k__BackingField: 1
   <VisibilityState>k__BackingField: 2
   <ShowEntrance>k__BackingField: 0
   <ShowExit>k__BackingField: 0
-  <Health>k__BackingField:
-    <Current>k__BackingField: 0
-    <Max>k__BackingField: 0
-  <ConstructionResources>k__BackingField:
-    <Items>k__BackingField: []
 --- !u!114 &-554336057465286071
 MonoBehaviour:
   m_ObjectHideFlags: 0

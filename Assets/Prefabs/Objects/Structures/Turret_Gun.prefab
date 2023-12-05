@@ -93,14 +93,8 @@ MonoBehaviour:
   <CreateBase>k__BackingField: 0
   <SnapToGrid>k__BackingField: 0
   <VisibilityState>k__BackingField: 2
-  <RotateTowardsTarget>k__BackingField: 1
   <ShowEntrance>k__BackingField: 0
   <ShowExit>k__BackingField: 0
-  <Health>k__BackingField:
-    <Current>k__BackingField: 0
-    <Max>k__BackingField: 0
-  <ConstructionResources>k__BackingField:
-    <Items>k__BackingField: []
 --- !u!1 &3823087458095462309
 GameObject:
   m_ObjectHideFlags: 0

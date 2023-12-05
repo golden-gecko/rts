@@ -201,17 +201,11 @@ MonoBehaviour:
     <Max>k__BackingField: -1
   <SkillsNames>k__BackingField: []
   <State>k__BackingField: 1
-  <CreateBase>k__BackingField: 1
+  <CreateBase>k__BackingField: 0
   <SnapToGrid>k__BackingField: 1
   <VisibilityState>k__BackingField: 2
-  <RotateTowardsTarget>k__BackingField: 1
   <ShowEntrance>k__BackingField: 0
   <ShowExit>k__BackingField: 0
-  <Health>k__BackingField:
-    <Current>k__BackingField: 0
-    <Max>k__BackingField: 0
-  <ConstructionResources>k__BackingField:
-    <Items>k__BackingField: []
 --- !u!114 &4576625105702019730
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -224,7 +218,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4d4c46a200faaed4fa9a0dcf28640d4c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <Mass>k__BackingField: 10
   <ConstructionResources>k__BackingField:
     <Items>k__BackingField:
     - <Current>k__BackingField: 10
@@ -259,7 +252,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 26ef1c7f6037537498318d7dd9d37db3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <Mass>k__BackingField: 10
   <ConstructionResources>k__BackingField:
     <Items>k__BackingField:
     - <Current>k__BackingField: 10
@@ -287,7 +279,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 04c420c373cba4547b9469e304a8085f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <Mass>k__BackingField: 10
   <ConstructionResources>k__BackingField:
     <Items>k__BackingField:
     - <Current>k__BackingField: 100
@@ -307,7 +298,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9f7fc2f43637b07428d9ff8d0e38edaa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <Mass>k__BackingField: 10
   <ConstructionResources>k__BackingField:
     <Items>k__BackingField:
     - <Current>k__BackingField: 10

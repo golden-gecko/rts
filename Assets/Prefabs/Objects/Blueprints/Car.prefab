@@ -317,11 +317,6 @@ MonoBehaviour:
   <VisibilityState>k__BackingField: 2
   <ShowEntrance>k__BackingField: 0
   <ShowExit>k__BackingField: 0
-  <Health>k__BackingField:
-    <Current>k__BackingField: 0
-    <Max>k__BackingField: 0
-  <ConstructionResources>k__BackingField:
-    <Items>k__BackingField: []
 --- !u!1 &1991963372790814097
 GameObject:
   m_ObjectHideFlags: 0
@@ -1113,3 +1108,4 @@ MonoBehaviour:
       <Name>k__BackingField: Iron
       <Direction>k__BackingField: 1
   <MapLayers>k__BackingField: 02000000
+  <GearRatio>k__BackingField: 1.25
