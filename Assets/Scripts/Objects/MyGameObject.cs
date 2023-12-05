@@ -743,12 +743,7 @@ public class MyGameObject : MyMonoBehaviour
         }
 
         Vector3 size = Size;
-
-        int x = Utils.MakeOdd(Mathf.CeilToInt(size.x / Config.Map.Scale));
-        int z = Utils.MakeOdd(Mathf.CeilToInt(size.z / Config.Map.Scale));
-
-        size.x = x * Config.Map.Scale;
-        size.z = z * Config.Map.Scale;
+        Vector3 sizeGrid = SizeGrid;
 
         Body.transform.localPosition = new Vector3(0.0f, 0.25f, 0.0f);
 

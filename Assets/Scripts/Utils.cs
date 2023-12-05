@@ -4,6 +4,30 @@ using UnityEngine;
 
 public class Utils
 {
+    #region Blueprints
+    public static List<Blueprint> CreateBlueprints()
+    {
+        List<Blueprint> blueprints = new List<Blueprint>();
+
+        if (Directory.Exists(Config.Blueprints.Directory) == false)
+        {
+            return blueprints;
+        }
+
+        foreach (string file in Directory.EnumerateFiles(Config.Blueprints.Directory))
+        {
+            if (Path.GetExtension(file).ToLower() != ".json")
+            {
+                continue;
+            }
+
+            blueprints.Add(JsonUtility.FromJson<Blueprint>(File.ReadAllText(file)));
+        }
+
+        return blueprints;
+    }
+    #endregion
+
     #region Enum
     public static string[] GetFormationNames()
     {
@@ -255,6 +279,11 @@ public class Utils
         return true;
     }
 
+    public static int MakeEven(int value)
+    {
+        return value % 2 == 0 ? value : value + 1;
+    }
+
     public static int MakeOdd(int value)
     {
         return value % 2 == 0 ? value + 1 : value;
@@ -384,30 +413,6 @@ public class Utils
         }
 
         return formatted.Trim();
-    }
-    #endregion
-
-    #region Blueprints
-    public static List<Blueprint> CreateBlueprints()
-    {
-        List<Blueprint> blueprints = new List<Blueprint>();
-
-        if (Directory.Exists(Config.Blueprints.Directory) == false)
-        {
-            return blueprints;
-        }
-
-        foreach (string file in Directory.EnumerateFiles(Config.Blueprints.Directory))
-        {
-            if (Path.GetExtension(file).ToLower() != ".json")
-            {
-                continue;
-            }
-
-            blueprints.Add(JsonUtility.FromJson<Blueprint>(File.ReadAllText(file)));
-        }
-
-        return blueprints;
     }
     #endregion
 
