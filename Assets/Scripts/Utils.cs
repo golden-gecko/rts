@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class Utils
 {
@@ -49,20 +50,50 @@ public class Utils
     #endregion
 
     #region Grid
+    public static float SnapToCorner(float value, float scale)
+    {
+        return Mathf.Floor(value / scale) * scale;
+    }
+
     public static Vector3 SnapToCorner(Vector3 position, float scale)
     {
-        float x = Mathf.Floor(position.x / scale) * scale;
-        float z = Mathf.Floor(position.z / scale) * scale;
+        return new Vector3(SnapToCorner(position.x, scale), position.y, SnapToCorner(position.z, scale));
+    }
+
+    public static Vector3 SnapToGrid(Vector3 position, Vector3Int sizeGrid, float scale)
+    {
+        float x;
+        float z;
+
+        if (sizeGrid.x % 2 == 0)
+        {
+            x = SnapToCorner(position.x, scale);
+        }
+        else
+        {
+            x = SnapToCenter(position.x, scale);
+        }
+
+        if (sizeGrid.z % 2 == 0)
+        {
+            z = SnapToCorner(position.z, scale);
+        }
+        else
+        {
+            z = SnapToCenter(position.z, scale);
+        }
 
         return new Vector3(x, position.y, z);
     }
 
+    public static float SnapToCenter(float value, float scale)
+    {
+        return Mathf.Floor(value / scale) * scale + scale / 2.0f;
+    }
+
     public static Vector3 SnapToCenter(Vector3 position, float scale)
     {
-        float x = Mathf.Floor(position.x / scale) * scale + scale / 2.0f;
-        float z = Mathf.Floor(position.z / scale) * scale + scale / 2.0f;
-
-        return new Vector3(x, position.y, z);
+        return new Vector3(SnapToCenter(position.x, scale), position.y, SnapToCenter(position.z, scale));
     }
 
     public static Vector3Int ToGrid(Vector3 position, float scale)

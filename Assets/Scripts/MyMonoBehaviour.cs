@@ -47,7 +47,7 @@ public class MyMonoBehaviour : MonoBehaviour
         }
     }
 
-    public Vector3 SizeGrid
+    public Vector3Int SizeGrid
     {
         get
         {
@@ -56,7 +56,7 @@ public class MyMonoBehaviour : MonoBehaviour
             int x = Mathf.CeilToInt(size.x / Config.Map.Scale);
             int z = Mathf.CeilToInt(size.z / Config.Map.Scale);
 
-            return new Vector3(x * Config.Map.Scale, 0, z * Config.Map.Scale);
+            return new Vector3Int(x, 0, z);
         }
     }
 }

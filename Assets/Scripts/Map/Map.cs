@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -627,6 +628,8 @@ public class Map : Singleton<Map>
     {
         RaycastHit[] hits = Utils.RaycastAllFromTop(position, Utils.GetMapMask());
 
+        Array.Sort(hits, (a, b) => a.distance < b.distance ? -1 : 1);
+
         if (hits.Length <= 0)
         {
             validated = Vector3.zero;
@@ -639,6 +642,11 @@ public class Map : Singleton<Map>
 
         foreach (RaycastHit hitInfo in hits)
         {
+            if (hitInfo.transform.gameObject == myGameObject)
+            {
+                continue;
+            }
+
             if (Utils.IsTerrain(hitInfo))
             {
                 terrainPosition = hitInfo.point;

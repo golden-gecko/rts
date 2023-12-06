@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.IO;
 using UnityEditor;
@@ -6,6 +7,36 @@ using UnityEngine;
 
 public class GameObjectBuilder : EditorWindow
 {
+    [MenuItem("Tools/Align", false, 10)]
+    public static void Align()
+    {
+        foreach (GameObject gameObject in Tools.GetGameObjects())
+        {
+            if (gameObject.TryGetComponent(out MyGameObject myGameObject))
+            {
+                myGameObject.Position = Utils.SnapToGrid(myGameObject.Position, myGameObject.SizeGrid, Config.Map.Scale);
+
+                RaycastHit[] hits = Utils.RaycastAllFromTop(myGameObject.Position, Utils.GetMapMask());
+
+                Array.Sort(hits, (a, b) => a.distance < b.distance ? -1 : 1);
+
+                foreach (RaycastHit hitInfo in hits)
+                {
+                    if (hitInfo.transform.gameObject == gameObject)
+                    {
+                        continue;
+                    }
+
+                    myGameObject.Position = hitInfo.point;
+
+                    break;
+                }
+            }
+        }
+
+        Tools.SaveScene();
+    }
+
     [MenuItem("Tools/Build", false, 20)]
     public static void Build()
     {
@@ -72,24 +103,5 @@ public class GameObjectBuilder : EditorWindow
         RenderTexture.active = null;
 
         Tools.RestoreScene(sceneName);
-    }
-
-    [MenuItem("Tools/Align", false, 10)]
-    public static void Align()
-    {
-        foreach (GameObject gameObject in Tools.GetGameObjects())
-        {
-            if (gameObject.TryGetComponent(out MyGameObject myGameObject))
-            {
-                myGameObject.Position = Utils.SnapToCenter(myGameObject.Position, Config.Map.Scale);
-
-                if (Utils.RaycastFromTop(myGameObject.Position, out RaycastHit hitInfo, Utils.GetMapMask()))
-                {
-                    myGameObject.Position = hitInfo.point;
-                }
-            }
-        }
-
-        Tools.SaveScene();
     }
 }

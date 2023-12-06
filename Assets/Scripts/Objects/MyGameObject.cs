@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -526,7 +527,7 @@ public class MyGameObject : MyMonoBehaviour
         {
             if (SnapToGrid)
             {
-                Position = Utils.SnapToCenter(validated, Config.Map.Scale);
+                Position = Utils.SnapToGrid(validated, SizeGrid, Config.Map.Scale);
             }
             else
             {
