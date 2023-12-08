@@ -1,7 +1,9 @@
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class Map : Singleton<Map>
 {
@@ -64,8 +66,10 @@ public class Map : Singleton<Map>
             return;
         }
 
-        Vector3Int positionMinGrid = myGameObject.PositionMinGrid;
-        Vector3Int positionMaxGrid = myGameObject.PositionMaxGrid;
+        float size = Mathf.Max(myGameObject.Size.x, myGameObject.Size.z);
+
+        Vector3Int positionMinGrid = Utils.ToGrid(position - new Vector3(size, 0.0f, size) / 2.0f, Config.Map.Scale);
+        Vector3Int positionMaxGrid = Utils.ToGrid(position + new Vector3(size, 0.0f, size) / 2.0f, Config.Map.Scale);
 
         Texture2D ocupationTexture = Occupation.mainTexture as Texture2D;
 
