@@ -64,25 +64,32 @@ public class Map : Singleton<Map>
             return;
         }
 
-        Vector3Int positionGrid = Utils.ToGrid(position, Config.Map.Scale);
+        Vector3Int positionMinGrid = myGameObject.PositionMinGrid;
+        Vector3Int positionMaxGrid = myGameObject.PositionMaxGrid;
 
-        SetVisible(Cells[positionGrid.x, positionGrid.z].Occupied, myGameObject.Player, value);
+        Texture2D ocupationTexture = Occupation.mainTexture as Texture2D;
 
-        if (HUD.Instance.ActivePlayer == myGameObject.Player)
+        for (int x = positionMinGrid.x; x <= positionMaxGrid.x; x++)
         {
-            Texture2D ocupationTexture = Occupation.mainTexture as Texture2D;
-
-            if (Cells[positionGrid.x, positionGrid.z].Occupied[myGameObject.Player] == 0)
+            for (int z = positionMinGrid.z; z <= positionMaxGrid.z; z++)
             {
-                ocupationTexture.SetPixel(positionGrid.x, positionGrid.z, Config.DataLayer.ColorEmpty);
-            }
-            else
-            {
-                ocupationTexture.SetPixel(positionGrid.x, positionGrid.z, Config.DataLayer.ColorOccupation);
-            }
+                SetVisible(Cells[x, z].Occupied, myGameObject.Player, value);
 
-            ocupationTexture.Apply();
+                if (HUD.Instance.ActivePlayer == myGameObject.Player)
+                {
+                    if (Cells[x, z].Occupied[myGameObject.Player] == 0)
+                    {
+                        ocupationTexture.SetPixel(x, z, Config.DataLayer.ColorEmpty);
+                    }
+                    else
+                    {
+                        ocupationTexture.SetPixel(x, z, Config.DataLayer.ColorOccupation);
+                    }
+                }
+            }
         }
+
+        ocupationTexture.Apply();
     }
 
     public void SetVisibleByRadar(MyGameObject myGameObject, Vector3 position, float range, int value)

@@ -59,4 +59,8 @@ public class MyMonoBehaviour : MonoBehaviour
             return new Vector3Int(x, 0, z);
         }
     }
+
+    public Vector3Int PositionMinGrid { get => Utils.ToGrid(Position - Size / 2.0f, Config.Map.Scale); }
+
+    public Vector3Int PositionMaxGrid { get => Utils.ToGrid(Position + Size / 2.0f, Config.Map.Scale) - new Vector3Int(1, 0, 1); }
 }
