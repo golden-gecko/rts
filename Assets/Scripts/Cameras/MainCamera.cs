@@ -71,7 +71,7 @@ public class MainCamera : MonoBehaviour
 
     private void Rotate()
     {
-        if (Input.GetMouseButton(1))
+        if (Input.GetMouseButton(2))
         {
             Vector3 localEulerAngles = transform.localEulerAngles;
 
