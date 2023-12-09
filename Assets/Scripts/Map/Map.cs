@@ -59,23 +59,18 @@ public class Map : Singleton<Map>
         terrainData.SetHeightsDelayLOD(start.x, start.z, heights);
     }
 
-    public void SetOccupied(MyGameObject myGameObject, Vector3 position, int value)
+    public void SetOccupied(MyGameObject myGameObject, BoundsInt boundsGrid, int value)
     {
         if (myGameObject.Player == null)
         {
             return;
         }
 
-        float size = Mathf.Max(myGameObject.Size.x, myGameObject.Size.z);
-
-        Vector3Int positionMinGrid = Utils.ToGrid(position - new Vector3(size, 0.0f, size) / 2.0f, Config.Map.Scale);
-        Vector3Int positionMaxGrid = Utils.ToGrid(position + new Vector3(size, 0.0f, size) / 2.0f, Config.Map.Scale);
-
         Texture2D ocupationTexture = Occupation.mainTexture as Texture2D;
 
-        for (int x = positionMinGrid.x; x <= positionMaxGrid.x; x++)
+        for (int x = boundsGrid.min.x; x <= boundsGrid.max.x; x++)
         {
-            for (int z = positionMinGrid.z; z <= positionMaxGrid.z; z++)
+            for (int z = boundsGrid.min.z; z <= boundsGrid.max.z; z++)
             {
                 SetVisible(Cells[x, z].Occupied, myGameObject.Player, value);
 

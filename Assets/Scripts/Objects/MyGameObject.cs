@@ -1,7 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
-using UnityEngine.UIElements;
 
 [DisallowMultipleComponent]
 public class MyGameObject : MyMonoBehaviour
@@ -535,12 +534,12 @@ public class MyGameObject : MyMonoBehaviour
             }
         }
 
-        if (Utils.ToGrid(PreviousPosition, Config.Map.Scale) != Utils.ToGrid(Position, Config.Map.Scale))
+        if (PreviousBoundsGrid != BoundsGrid)
         {
-            Map.Instance.SetOccupied(this, PreviousPosition, -1);
-            Map.Instance.SetOccupied(this, Position, 1);
+            Map.Instance.SetOccupied(this, PreviousBoundsGrid, -1);
+            Map.Instance.SetOccupied(this, BoundsGrid, 1);
 
-            PreviousPosition = Position;
+            PreviousBoundsGrid = BoundsGrid;
         }
     }
 
@@ -816,9 +815,9 @@ public class MyGameObject : MyMonoBehaviour
 
     private void InitializePosition()
     {
-        Map.Instance.SetOccupied(this, Position, 1);
+        Map.Instance.SetOccupied(this, BoundsGrid, 1);
 
-        PreviousPosition = Position;
+        PreviousBoundsGrid = BoundsGrid;
     }
 
     private void InitializeSkills()
@@ -1022,7 +1021,7 @@ public class MyGameObject : MyMonoBehaviour
 
     public Indicators Indicators { get; private set; }
 
-    private Vector3 PreviousPosition { get; set; }
+    private BoundsInt PreviousBoundsGrid { get; set; }
 
     public HashSet<MyGameObject> Workers { get; } = new HashSet<MyGameObject>(); // TODO: Implement workers mechanic.
 

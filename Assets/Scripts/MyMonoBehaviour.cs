@@ -2,65 +2,63 @@ using UnityEngine;
 
 public class MyMonoBehaviour : MonoBehaviour
 {
-    public Vector3 Center { get => new Vector3(Position.x, Position.y + Size.y / 2.0f, Position.z); }
+    public Bounds Bounds
+    {
+        get
+        {
+            Quaternion rotation = Utils.ResetRotation(transform);
+
+            Bounds bounds = BoundsOriented;
+
+            Utils.RestoreRotation(transform, rotation);
+
+            return bounds;
+        }
+    }
+
+    public Bounds BoundsOriented
+    {
+        get
+        {
+            Bounds bounds = new Bounds(Position, Vector3.zero);
+
+            foreach (Collider collider in GetComponentsInChildren<Collider>())
+            {
+                bounds.Encapsulate(collider.bounds);
+            }
+
+            return bounds;
+        }
+    }
+
+    public BoundsInt BoundsGrid
+    {
+        get
+        {
+            BoundsInt boundsGrid = new BoundsInt();
+
+            boundsGrid.min = Utils.ToGrid(Bounds.min, Config.Map.Scale);
+            boundsGrid.max = Utils.ToGrid(Bounds.max, Config.Map.Scale);
+
+            return boundsGrid;
+        }
+    }
+
+    public Vector3 Center { get => new Vector3(Position.x, Position.y + Bounds.extents.y, Position.z); }
 
     public Vector3 Direction { get => transform.forward; }
 
     public Vector3 Position { get => transform.position; set => transform.position = value; }
 
-    public float Radius { get => (Size.x + Size.y + Size.z) / 3.0f; } // TODO: Fix. Use max?
+    public Vector3Int PositionGrid { get => Utils.ToGrid(BoundsOriented.min, Config.Map.Scale); }
+
+    public float Radius { get => Mathf.Max(Mathf.Max(Bounds.extents.x, Bounds.extents.y), Bounds.extents.z); }
 
     public Quaternion Rotation { get => transform.rotation; set => transform.rotation = value; }
 
     public Vector3 Scale { get => transform.localScale; }
 
-    public Vector3 Size
-    {
-        get
-        {
-            Collider[] colliders = GetComponentsInChildren<Collider>();
+    public Vector3 Size { get => Bounds.size; }
 
-            if (colliders.Length <= 0)
-            {
-                return Vector3.zero;
-            }
-
-            Quaternion rotation = Utils.ResetRotation(transform);
-
-            Vector3 min = new Vector3(float.MaxValue, float.MaxValue, float.MaxValue);
-            Vector3 max = new Vector3(float.MinValue, float.MinValue, float.MinValue);
-
-            foreach (Collider collider in colliders)
-            {
-                min.x = Mathf.Min(min.x, collider.bounds.min.x);
-                min.y = Mathf.Min(min.y, collider.bounds.min.y);
-                min.z = Mathf.Min(min.z, collider.bounds.min.z);
-
-                max.x = Mathf.Max(max.x, collider.bounds.max.x);
-                max.y = Mathf.Max(max.y, collider.bounds.max.y);
-                max.z = Mathf.Max(max.z, collider.bounds.max.z);
-            }
-
-            Utils.RestoreRotation(transform, rotation);
-
-            return max - min;
-        }
-    }
-
-    public Vector3Int SizeGrid
-    {
-        get
-        {
-            Vector3 size = Size;
-
-            int x = Mathf.CeilToInt(size.x / Config.Map.Scale);
-            int z = Mathf.CeilToInt(size.z / Config.Map.Scale);
-
-            return new Vector3Int(x, 0, z);
-        }
-    }
-
-    public Vector3Int PositionMinGrid { get => Utils.ToGrid(Position - Size / 2.0f, Config.Map.Scale); }
-
-    public Vector3Int PositionMaxGrid { get => Utils.ToGrid(Position + Size / 2.0f, Config.Map.Scale) - new Vector3Int(1, 0, 1); }
+    public Vector3Int SizeGrid { get => Utils.ToGrid(Bounds.size, Config.Map.Scale); }
 }

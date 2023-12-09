@@ -96,12 +96,14 @@ public class Utils
         return new Vector3(SnapToCenter(position.x, scale), position.y, SnapToCenter(position.z, scale));
     }
 
+    public static int ToGrid(float value, float scale)
+    {
+        return Mathf.FloorToInt(value / scale);
+    }
+
     public static Vector3Int ToGrid(Vector3 position, float scale)
     {
-        int x = Mathf.FloorToInt(position.x / scale);
-        int z = Mathf.FloorToInt(position.z / scale);
-
-        return new Vector3Int(x, 0, z);
+        return new Vector3Int(ToGrid(position.x, scale), 0, ToGrid(position.z, scale));
     }
     #endregion
 
