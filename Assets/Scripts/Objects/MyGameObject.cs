@@ -680,8 +680,6 @@ public class MyGameObject : MyMonoBehaviour
                 ShowEntrance = false;
                 ShowExit = false;
 
-                EnableColliders(false);
-
                 Indicators.OnConstruction();
                 break;
 
@@ -689,8 +687,6 @@ public class MyGameObject : MyMonoBehaviour
                 ShowIndicators = false;
                 ShowEntrance = false;
                 ShowExit = false;
-
-                EnableColliders(false);
                 break;
 
             case MyGameObjectState.Operational:
