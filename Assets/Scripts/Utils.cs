@@ -1,7 +1,6 @@
 using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
-using UnityEngine.UIElements;
 
 public class Utils
 {
@@ -60,9 +59,10 @@ public class Utils
         return new Vector3(SnapToCorner(position.x, scale), position.y, SnapToCorner(position.z, scale));
     }
 
-    public static Vector3 SnapToGrid(Vector3 position, Vector3Int sizeGrid, float scale)
+    public static Vector3 SnapToGrid(Vector3 position, Vector3Int sizeGrid, float scale, bool yAxis = false)
     {
         float x;
+        float y;
         float z;
 
         if (sizeGrid.x % 2 == 0)
@@ -74,6 +74,22 @@ public class Utils
             x = SnapToCenter(position.x, scale);
         }
 
+        if (yAxis)
+        {
+            if (sizeGrid.y % 2 == 0)
+            {
+                y = SnapToCorner(position.y, scale);
+            }
+            else
+            {
+                y = SnapToCenter(position.y, scale);
+            }
+        }
+        else
+        {
+            y = position.y;
+        }
+
         if (sizeGrid.z % 2 == 0)
         {
             z = SnapToCorner(position.z, scale);
@@ -83,7 +99,7 @@ public class Utils
             z = SnapToCenter(position.z, scale);
         }
 
-        return new Vector3(x, position.y, z);
+        return new Vector3(x, y, z);
     }
 
     public static float SnapToCenter(float value, float scale)
@@ -363,9 +379,16 @@ public class Utils
         return Raycast(new Ray(new Vector3(position.x, Config.Map.MaxHeight, position.z), Vector3.down), out hitInfo, layerMask);
     }
 
-    public static RaycastHit[] RaycastAllFromTop(Vector3 position, int layerMask = Physics.DefaultRaycastLayers)
+    public static RaycastHit[] RaycastAllFromTop(Vector3 position, int layerMask = Physics.DefaultRaycastLayers, bool sortByDistance = false)
     {
-        return RaycastAll(new Ray(new Vector3(position.x, Config.Map.MaxHeight, position.z), Vector3.down), layerMask);
+        RaycastHit[] hits = RaycastAll(new Ray(new Vector3(position.x, Config.Map.MaxHeight, position.z), Vector3.down), layerMask);
+
+        if (sortByDistance)
+        {
+            System.Array.Sort(hits, (a, b) => a.distance < b.distance ? -1 : 1);
+        }
+
+        return hits;
     }
 
     public static bool Raycast(Ray ray, out RaycastHit hitInfo, int layerMask = Physics.DefaultRaycastLayers)

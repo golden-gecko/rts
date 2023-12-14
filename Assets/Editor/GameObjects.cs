@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using System.IO;
 using UnityEditor;
@@ -10,27 +9,24 @@ public class GameObjectBuilder : EditorWindow
     [MenuItem("Tools/Align", false, 10)]
     public static void Align()
     {
-        foreach (GameObject gameObject in Tools.GetGameObjects())
+        GameObject[] gameObjects = Tools.GetGameObjects();
+
+        System.Array.Sort(gameObjects, (a, b) => a.transform.position.y < b.transform.position.y ? -1 : 1);
+
+        foreach (GameObject gameObject in gameObjects)
         {
-            if (gameObject.TryGetComponent(out MyGameObject myGameObject))
+            if (gameObject.TryGetComponent(out MyGameObject myGameObject) == false)
             {
-                myGameObject.Position = Utils.SnapToGrid(myGameObject.Position, myGameObject.SizeGrid, Config.Map.Scale);
+                continue;
+            }
 
-                RaycastHit[] hits = Utils.RaycastAllFromTop(myGameObject.Position, Utils.GetMapMask());
-
-                Array.Sort(hits, (a, b) => a.distance < b.distance ? -1 : 1);
-
-                foreach (RaycastHit hitInfo in hits)
-                {
-                    if (hitInfo.transform.gameObject == gameObject)
-                    {
-                        continue;
-                    }
-
-                    myGameObject.Position = hitInfo.point;
-
-                    break;
-                }
+            if (gameObject.TryGetComponent(out Foundation _))
+            {
+                AlignGameObject(gameObject, myGameObject, true);
+            }
+            else
+            {
+                AlignGameObject(gameObject, myGameObject);
             }
         }
 
@@ -103,5 +99,22 @@ public class GameObjectBuilder : EditorWindow
         RenderTexture.active = null;
 
         Tools.RestoreScene(sceneName);
+    }
+
+    private static void AlignGameObject(GameObject gameObject, MyGameObject myGameObject, bool yAxis = false)
+    {
+        RaycastHit[] hits = Utils.RaycastAllFromTop(myGameObject.Position, Utils.GetMapMask(), true);
+
+        foreach (RaycastHit hitInfo in hits)
+        {
+            if (hitInfo.transform.gameObject == gameObject)
+            {
+                continue;
+            }
+
+            myGameObject.Position = Utils.SnapToGrid(hitInfo.point, myGameObject.SizeGrid, Config.Map.Scale, yAxis);
+
+            break;
+        }
     }
 }
