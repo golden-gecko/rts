@@ -6,13 +6,29 @@ using UnityEngine;
 [Serializable]
 public class ResourceContainer
 {
-    public void Init(string name, int value = 0, int max = 0, ResourceDirection direction = ResourceDirection.None)
+    public void Init(string name, int current = 0, int max = 0, ResourceDirection direction = ResourceDirection.None)
     {
         Resource resource = Items.Find(x => x.Name == name);
 
         if (resource == null)
         {
-            Items.Add(new Resource(name, value, max, direction));
+            Items.Add(new Resource(name, current, max, direction));
+        }
+    }
+
+    public void Update(string name, int current = 0, int max = 0, ResourceDirection direction = ResourceDirection.None)
+    {
+        Resource resource = Items.Find(x => x.Name == name);
+
+        if (resource == null)
+        {
+            Items.Add(new Resource(name, current, max, direction));
+        }
+        else
+        {
+            resource.Current = current;
+            resource.Max = max;
+            resource.Direction = direction;
         }
     }
 
@@ -124,6 +140,24 @@ public class ResourceContainer
         }
 
         return info;
+    }
+
+    public void Request(Recipe recipe)
+    {
+        foreach (Resource resource in Items)
+        {
+            resource.Direction = ResourceDirection.Out;
+        }
+
+        foreach (Resource resource in recipe.ToConsume.Items)
+        {
+            Update(resource.Name, 0, resource.Max, ResourceDirection.In); // TODO: Add buffer to Max.
+        }
+
+        foreach (Resource resource in recipe.ToProduce.Items)
+        {
+            Update(resource.Name, 0, resource.Max, ResourceDirection.Out); // TODO: Add buffer to Max.
+        }
     }
 
     [field: SerializeField]

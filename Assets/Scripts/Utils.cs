@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
+using static UnityEngine.Tilemaps.TilemapRenderer;
 
 public class Utils
 {
@@ -250,12 +251,17 @@ public class Utils
     #region Mask
     public static int GetGameObjectMask()
     {
-        return LayerMask.GetMask("GameObject") | LayerMask.GetMask("Foundation");
+        return LayerMask.GetMask("Foundation") | LayerMask.GetMask("GameObject");
     }
 
     public static int GetMapMask()
     {
-        return LayerMask.GetMask("Foundation") | LayerMask.GetMask("Terrain") | LayerMask.GetMask("Water");
+        return /* TODO: LayerMask.GetMask("Foundation") | */ LayerMask.GetMask("Terrain") | LayerMask.GetMask("Water");
+    }
+
+    public static int GetTerrainMask()
+    {
+        return /* TODO: LayerMask.GetMask("Foundation") | */ LayerMask.GetMask("Terrain");
     }
     #endregion
 
@@ -379,11 +385,15 @@ public class Utils
         return Raycast(new Ray(new Vector3(position.x, Config.Map.MaxHeight, position.z), Vector3.down), out hitInfo, layerMask);
     }
 
-    public static RaycastHit[] RaycastAllFromTop(Vector3 position, int layerMask = Physics.DefaultRaycastLayers, bool sortByDistance = false)
+    public static RaycastHit[] RaycastAllFromTop(Vector3 position, int layerMask = Physics.DefaultRaycastLayers, RaycastSortOrder sortOrder = RaycastSortOrder.None)
     {
         RaycastHit[] hits = RaycastAll(new Ray(new Vector3(position.x, Config.Map.MaxHeight, position.z), Vector3.down), layerMask);
 
-        if (sortByDistance)
+        if (sortOrder == RaycastSortOrder.Ascending)
+        {
+            System.Array.Sort(hits, (a, b) => a.distance > b.distance ? -1 : 1);
+        }
+        else if (sortOrder == RaycastSortOrder.Descending)
         {
             System.Array.Sort(hits, (a, b) => a.distance < b.distance ? -1 : 1);
         }
@@ -469,6 +479,13 @@ public class Utils
         }
 
         return formatted.Trim();
+    }
+    #endregion
+
+    #region Time
+    public static float GetTimeFromUsage(int sum, int usage)
+    {
+        return Mathf.Ceil((float)sum / (float)usage);
     }
     #endregion
 

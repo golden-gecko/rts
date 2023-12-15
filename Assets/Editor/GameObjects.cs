@@ -9,25 +9,24 @@ public class GameObjectBuilder : EditorWindow
     [MenuItem("Tools/Align", false, 10)]
     public static void Align()
     {
-        GameObject[] gameObjects = Tools.GetGameObjects();
+        MyGameObject[] gameObjects = Tools.GetGameObjects();
 
-        System.Array.Sort(gameObjects, (a, b) => a.transform.position.y < b.transform.position.y ? -1 : 1);
+        // System.Array.Sort(gameObjects, (a, b) => a.transform.position.y < b.transform.position.y ? -1 : 1);
 
-        foreach (GameObject gameObject in gameObjects)
+        foreach (MyGameObject myGameObject in gameObjects)
         {
-            if (gameObject.TryGetComponent(out MyGameObject myGameObject) == false)
+            /* TODO: Fix.
+            if (myGameObject.TryGetComponent(out Foundation _))
             {
-                continue;
-            }
-
-            if (gameObject.TryGetComponent(out Foundation _))
-            {
-                AlignGameObject(gameObject, myGameObject, true);
+                AlignGameObject(myGameObject, true);
             }
             else
             {
-                AlignGameObject(gameObject, myGameObject);
+                AlignGameObject(myGameObject);
             }
+            */
+
+            AlignGameObject(myGameObject);
         }
 
         Tools.SaveScene();
@@ -101,13 +100,13 @@ public class GameObjectBuilder : EditorWindow
         Tools.RestoreScene(sceneName);
     }
 
-    private static void AlignGameObject(GameObject gameObject, MyGameObject myGameObject, bool yAxis = false)
+    private static void AlignGameObject(MyGameObject myGameObject, bool yAxis = false)
     {
-        RaycastHit[] hits = Utils.RaycastAllFromTop(myGameObject.Position, Utils.GetMapMask(), true);
+        RaycastHit[] hits = Utils.RaycastAllFromTop(myGameObject.Position, Utils.GetMapMask(), RaycastSortOrder.Descending);
 
         foreach (RaycastHit hitInfo in hits)
         {
-            if (hitInfo.transform.gameObject == gameObject)
+            if (hitInfo.transform.gameObject == myGameObject)
             {
                 continue;
             }

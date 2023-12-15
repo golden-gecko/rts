@@ -2,9 +2,9 @@ public class OrderHandlerIdle : OrderHandler
 {
     public override void OnExecuteHandler(MyGameObject myGameObject)
     {
-        Order order;
-        
-        order = TryAttackerBehaviour(myGameObject); // TODO: Add priorities.
+        Order order; // TODO: Add priorities.
+
+        order = TryAttackerBehaviour(myGameObject);
 
         if (order != null)
         {
@@ -22,6 +22,7 @@ public class OrderHandlerIdle : OrderHandler
             return;
         }
 
+        /*
         order = TryProducerBehaviour(myGameObject);
 
         if (order != null)
@@ -30,6 +31,7 @@ public class OrderHandlerIdle : OrderHandler
 
             return;
         }
+        */
 
         order = TryWorkerBehaviour(myGameObject);
 

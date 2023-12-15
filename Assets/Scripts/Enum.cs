@@ -121,6 +121,13 @@ public enum PartType
     Storage = 7,
 }
 
+public enum RaycastSortOrder
+{
+    None = 0,
+    Ascending = 1,
+    Descending = 2,
+}
+
 public enum ResourceDirection
 {
     In = 0,

@@ -63,16 +63,16 @@ public class Counter
         return CanRemove(1);
     }
 
-    public string GetInfo()
+    public virtual string GetInfo()
     {
         return string.Format("{0}/{1}", Current, Max);
     }
 
     [field: SerializeField, Range(0, 1000)]
-    public int Current { get; private set; }
+    public int Current { get; set; }
 
     [field: SerializeField, Range(0, 1000)]
-    public int Max { get; private set; }
+    public int Max { get; set; }
 
     public float Percent { get => (float)Current / (float)Max; }
 }
