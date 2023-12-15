@@ -355,7 +355,7 @@ public class MyGameObject : MyMonoBehaviour
 
     public virtual string GetInfo(bool ally)
     {
-        string info = string.Empty;
+        string info = "";
 
         switch (State)
         {
@@ -419,7 +419,7 @@ public class MyGameObject : MyMonoBehaviour
             }
         }
 
-        return string.Empty;
+        return "";
     }
 
     public bool Is(MyGameObject myGameObject, DiplomacyState state)

@@ -2,6 +2,7 @@ public enum DamageType
 {
     Kinetic = 0,
     Laser = 1,
+    Fire = 2, // TODO: Implement.
 }
 
 public enum DiplomacyState

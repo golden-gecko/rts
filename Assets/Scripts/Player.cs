@@ -65,7 +65,12 @@ public class Player : MonoBehaviour
 
     public Order GetJob(MyGameObject myGameObject, OrderType orderType)
     {
-        return JobHandlers.ContainsKey(orderType) ? JobHandlers[orderType].OnExecute(myGameObject) : null;
+        if (JobHandlers.TryGetValue(orderType, out JobHandler handler))
+        {
+            handler.OnExecute(myGameObject);
+        }
+
+        return null;
     }
 
     public void RegisterConsumer(MyGameObject myGameObject, string name, int value, ResourceDirection direction)

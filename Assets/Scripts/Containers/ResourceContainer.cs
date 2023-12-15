@@ -129,7 +129,7 @@ public class ResourceContainer
 
     public string GetInfo()
     {
-        string info = string.Empty;
+        string info = "";
 
         foreach (Resource i in Items)
         {

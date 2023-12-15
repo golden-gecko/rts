@@ -459,7 +459,7 @@ public class Utils
     #region String
     public static string FormatName(string name)
     {
-        string formatted = string.Empty;
+        string formatted = "";
 
         foreach (char c in name)
         {

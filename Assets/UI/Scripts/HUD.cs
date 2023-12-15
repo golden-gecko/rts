@@ -116,7 +116,7 @@ public class HUD : Singleton<HUD>
                         if (MyInput.GetShift() == false)
                         {
                             Order = OrderType.None;
-                            Prefab = string.Empty;
+                            Prefab = "";
                         }
                     }
                 }
@@ -141,7 +141,7 @@ public class HUD : Singleton<HUD>
             else if (MyInput.GetShift() == false)
             {
                 Order = OrderType.None;
-                Prefab = string.Empty;
+                Prefab = "";
             }
         }
 
@@ -459,7 +459,7 @@ public class HUD : Singleton<HUD>
 
     private OrderType order = OrderType.None;
 
-    private string prefab = string.Empty;
+    private string prefab = "";
 
     private Formation formation = Formation.None;
 
