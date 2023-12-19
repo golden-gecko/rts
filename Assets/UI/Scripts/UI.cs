@@ -50,8 +50,8 @@ public class UI : Singleton<UI>
     [SerializeField]   
     private MenuEditor MenuEditor;
 
-    [SerializeField]
-    private MenuGame MenuGame;
+    [field: SerializeField]
+    public MenuGame MenuGame { get; private set; }
 
     [SerializeField]
     private MenuMain MenuMain;

@@ -190,7 +190,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   MenuDiplomacy: {fileID: 1401699316219437682}
   MenuEditor: {fileID: 7986760263871152536}
-  MenuGame: {fileID: 4991799996888453133}
+  <MenuGame>k__BackingField: {fileID: 4991799996888453133}
   MenuMain: {fileID: 3297287063444577657}
   MenuOptions: {fileID: 6260979331421240301}
   MenuScene: {fileID: 1264233122802435426}

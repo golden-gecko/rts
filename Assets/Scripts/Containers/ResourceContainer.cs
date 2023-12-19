@@ -135,7 +135,7 @@ public class ResourceContainer
         {
             if (i.Max > 0)
             {
-                info += string.Format("\n  {0} {1}", i.Name, i.GetInfo());
+                info += string.Format("\n  {0}", i.GetInfo());
             }
         }
 

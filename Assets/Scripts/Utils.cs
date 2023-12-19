@@ -52,7 +52,7 @@ public class Utils
     #region Grid
     public static float SnapToCorner(float value, float scale)
     {
-        return Mathf.Floor(value / scale) * scale;
+        return Mathf.Round(value / scale) * scale;
     }
 
     public static Vector3 SnapToCorner(Vector3 position, float scale)
@@ -105,7 +105,7 @@ public class Utils
 
     public static float SnapToCenter(float value, float scale)
     {
-        return Mathf.Floor(value / scale) * scale + scale / 2.0f;
+        return Mathf.Round(value / scale) * scale + scale / 2.0f;
     }
 
     public static Vector3 SnapToCenter(Vector3 position, float scale)

@@ -4,6 +4,8 @@ public class MenuGame : UI_Element
     {
         base.Awake();
 
+        Log = GetComponent<UI_Log>();
+
         // button = GameMenu.Instance.GetComponent<UIDocument>().rootVisualElement.Q<VisualElement>("Panel_Indicators").Q<Button>("Button");
     }
 
@@ -25,4 +27,6 @@ public class MenuGame : UI_Element
 
     Button button;
     */
+
+    public UI_Log Log { get; private set; }
 }

@@ -24,8 +24,7 @@ public class AchievementContainer
 
             if (i.Check())
             {
-                // TODO: Fix.
-                // UI_Log.Instance.Log(string.Format("Achievement {0} unlocked.", i.Name));
+                UI.Instance.MenuGame.Log.Log(string.Format("Achievement {0} unlocked.", i.Name));
             }
         }
     }

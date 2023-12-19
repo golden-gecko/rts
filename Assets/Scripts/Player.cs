@@ -30,6 +30,8 @@ public class Player : MonoBehaviour
         RemoveEmptyObjectsFromSelection();
 
         Achievements.Update();
+
+        UI.Instance.MenuGame.Log.Log(string.Format("Consumers {0} Producers {1}.", Consumers.Items.Count, Producers.Items.Count));
     }
 
     public void AssignGroup(KeyCode keyCode)
@@ -67,7 +69,7 @@ public class Player : MonoBehaviour
     {
         if (JobHandlers.TryGetValue(orderType, out JobHandler handler))
         {
-            handler.OnExecute(myGameObject);
+            return handler.OnExecute(myGameObject);
         }
 
         return null;
