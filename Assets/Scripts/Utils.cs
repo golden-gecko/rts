@@ -1,7 +1,6 @@
 using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
-using static UnityEngine.Tilemaps.TilemapRenderer;
 
 public class Utils
 {
@@ -115,7 +114,7 @@ public class Utils
 
     public static int ToGrid(float value, float scale)
     {
-        return Mathf.FloorToInt(value / scale);
+        return Mathf.RoundToInt(value / scale);
     }
 
     public static Vector3Int ToGrid(Vector3 position, float scale)

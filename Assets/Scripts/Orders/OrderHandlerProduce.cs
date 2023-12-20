@@ -65,7 +65,7 @@ public class OrderHandlerProduce : OrderHandler
 
         myGameObject.Stats.Add(Stats.TimeProducing, order.Timer.Max);
 
-        Success(myGameObject);
+        Success(myGameObject, false);
 
         return true;
     }

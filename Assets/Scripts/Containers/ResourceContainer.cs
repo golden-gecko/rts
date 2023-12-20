@@ -26,8 +26,8 @@ public class ResourceContainer
         }
         else
         {
-            resource.Current = current;
-            resource.Max = max;
+            resource.Current = Math.Max(resource.Current, current);
+            resource.Max = Math.Max(resource.Max, max);
             resource.Direction = direction;
         }
     }
