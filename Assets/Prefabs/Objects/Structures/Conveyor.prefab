@@ -11,6 +11,9 @@ GameObject:
   - component: {fileID: 3874366897169973366}
   - component: {fileID: 5299468878672266486}
   - component: {fileID: 6483379446818338110}
+  - component: {fileID: -8263019445606474188}
+  - component: {fileID: 1991156862083717147}
+  - component: {fileID: 706504299233200749}
   m_Layer: 0
   m_Name: Conveyor
   m_TagString: Untagged
@@ -95,6 +98,62 @@ MonoBehaviour:
   <VisibilityState>k__BackingField: 2
   <ShowEntrance>k__BackingField: 0
   <ShowExit>k__BackingField: 0
+--- !u!114 &-8263019445606474188
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 96379429587763730}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e4146b5fb23c304e993cb1acd27ffb5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  <ConstructionResources>k__BackingField:
+    <Items>k__BackingField:
+    - <Current>k__BackingField: 10
+      <Max>k__BackingField: 10
+      <Name>k__BackingField: Iron
+      <Direction>k__BackingField: 1
+--- !u!114 &1991156862083717147
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 96379429587763730}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 04c420c373cba4547b9469e304a8085f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  <ConstructionResources>k__BackingField:
+    <Items>k__BackingField:
+    - <Current>k__BackingField: 10
+      <Max>k__BackingField: 10
+      <Name>k__BackingField: Iron
+      <Direction>k__BackingField: 1
+  <MapLayers>k__BackingField: 02000000
+--- !u!114 &706504299233200749
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 96379429587763730}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9f7fc2f43637b07428d9ff8d0e38edaa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  <ConstructionResources>k__BackingField:
+    <Items>k__BackingField: []
+  <Resources>k__BackingField:
+    <Items>k__BackingField: []
+  <RaiseResourceFlags>k__BackingField: 0
+  <Gatherable>k__BackingField: 0
+  <ResourceUsage>k__BackingField: 1
 --- !u!1 &3916108802447076472
 GameObject:
   m_ObjectHideFlags: 0
@@ -124,7 +183,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.9, y: 0.9, z: 0.9}
+  m_LocalScale: {x: 0.9, y: 0.4, z: 0.9}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 7667435794508283612}

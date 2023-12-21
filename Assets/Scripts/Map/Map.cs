@@ -68,9 +68,9 @@ public class Map : Singleton<Map>
 
         Texture2D ocupationTexture = Occupation.mainTexture as Texture2D;
 
-        for (int x = boundsGrid.min.x; x <= boundsGrid.max.x; x++)
+        for (int x = boundsGrid.min.x; x < boundsGrid.max.x; x++)
         {
-            for (int z = boundsGrid.min.z; z <= boundsGrid.max.z; z++)
+            for (int z = boundsGrid.min.z; z < boundsGrid.max.z; z++)
             {
                 SetVisible(Cells[x, z].Occupied, myGameObject.Player, value);
 

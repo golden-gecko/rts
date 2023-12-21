@@ -1,3 +1,11 @@
+public enum ConveyorDiretion
+{
+    Down = 0,
+    Left = 1,
+    Right = 2,
+    Up = 3,
+}
+
 public enum DamageType
 {
     Kinetic = 0,

@@ -104,7 +104,7 @@ public class Utils
 
     public static float SnapToCenter(float value, float scale)
     {
-        return Mathf.Round(value / scale) * scale + scale / 2.0f;
+        return Mathf.Floor(value / scale) * scale + scale / 2.0f;
     }
 
     public static Vector3 SnapToCenter(Vector3 position, float scale)
