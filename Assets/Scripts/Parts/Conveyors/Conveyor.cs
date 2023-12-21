@@ -15,10 +15,24 @@ public class Conveyor : Part
     {
         base.Update();
 
-        MyGameObject input = GetInput();
+        if (Parent.Storage == null)
+        {
+            return;
+        }
+
         MyGameObject output = GetOutput();
 
+        if (output.Storage)
+        {
+            MoveTo(output);
+        }
 
+        MyGameObject input = GetInput();
+
+        if (input.Storage)
+        {
+            MoveFrom(input);
+        }
     }
 
     private void InitializeDirection()
@@ -67,18 +81,7 @@ public class Conveyor : Part
                 return null;
         }
 
-        // TODO: Check index range.
-        if (Map.Instance.Cells[position.x, position.z].Occupied.TryGetValue(Parent.Player, out ValueGameObjects value) == false)
-        {
-            return null;
-        }
-
-        if (value.GameObjects.Count <= 0)
-        {
-            return null;
-        }
-
-        return value.GameObjects.First();
+        return GetGameObject(position);
     }
 
     private MyGameObject GetOutput()
@@ -107,8 +110,12 @@ public class Conveyor : Part
                 return null;
         }
 
-        // TODO: Check index range.
-        if (Map.Instance.Cells[position.x, position.z].Occupied.TryGetValue(Parent.Player, out ValueGameObjects value) == false)
+        return GetGameObject(position);
+    }
+
+    private MyGameObject GetGameObject(Vector3Int position)
+    {
+        if (Map.Instance.Cells[position.x, position.z].Occupied.TryGetValue(Parent.Player, out ValueGameObjects value) == false) // TODO: Check index range.
         {
             return null;
         }
@@ -119,6 +126,37 @@ public class Conveyor : Part
         }
 
         return value.GameObjects.First();
+    }
+
+    private void MoveTo(MyGameObject output)
+    {
+
+    }
+
+    private void MoveFrom(MyGameObject input)
+    {
+        foreach (Resource resource in input.Storage.Resources.Items)
+        {
+            if (resource.In == false)
+            {
+                continue;
+            }
+
+            if (resource.Empty)
+            {
+                continue;
+            }
+
+            if (output.Storage.Resources.CanInc(resource.Name) == false)
+            {
+                continue;
+            }
+
+            resource.Dec();
+            output.Storage.Resources.Inc(resource.Name);
+
+            break;
+        }
     }
 
     public ConveyorDiretion ConveyorDiretion { get; private set; } = ConveyorDiretion.Right;

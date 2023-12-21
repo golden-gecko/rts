@@ -150,7 +150,35 @@ MonoBehaviour:
   <ConstructionResources>k__BackingField:
     <Items>k__BackingField: []
   <Resources>k__BackingField:
-    <Items>k__BackingField: []
+    <Items>k__BackingField:
+    - <Current>k__BackingField: 0
+      <Max>k__BackingField: 1
+      <Name>k__BackingField: Ammunition
+      <Direction>k__BackingField: 3
+    - <Current>k__BackingField: 0
+      <Max>k__BackingField: 1
+      <Name>k__BackingField: Coal
+      <Direction>k__BackingField: 3
+    - <Current>k__BackingField: 0
+      <Max>k__BackingField: 1
+      <Name>k__BackingField: Crystal
+      <Direction>k__BackingField: 3
+    - <Current>k__BackingField: 0
+      <Max>k__BackingField: 1
+      <Name>k__BackingField: Fuel
+      <Direction>k__BackingField: 3
+    - <Current>k__BackingField: 0
+      <Max>k__BackingField: 1
+      <Name>k__BackingField: Iron
+      <Direction>k__BackingField: 3
+    - <Current>k__BackingField: 0
+      <Max>k__BackingField: 1
+      <Name>k__BackingField: Iron Ore
+      <Direction>k__BackingField: 3
+    - <Current>k__BackingField: 0
+      <Max>k__BackingField: 1
+      <Name>k__BackingField: Wood
+      <Direction>k__BackingField: 3
   <RaiseResourceFlags>k__BackingField: 0
   <Gatherable>k__BackingField: 0
   <ResourceUsage>k__BackingField: 1
