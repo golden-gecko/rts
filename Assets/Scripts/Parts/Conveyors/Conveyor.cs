@@ -20,18 +20,25 @@ public class Conveyor : Part
             return;
         }
 
-        MyGameObject output = GetOutput();
-
-        if (output.Storage)
-        {
-            MoveTo(output);
-        }
-
         MyGameObject input = GetInput();
 
         if (input.Storage)
         {
-            MoveFrom(input);
+            Receive(input);
+        }
+
+        if (MoveTimer.Update(Time.deltaTime) == false)
+        {
+            return;
+        }
+
+        MoveTimer.Reset();
+
+        MyGameObject output = GetOutput();
+
+        if (output.Storage)
+        {
+            Send(output);
         }
     }
 
@@ -128,20 +135,36 @@ public class Conveyor : Part
         return value.GameObjects.First();
     }
 
-    private void MoveTo(MyGameObject output)
-    {
-
-    }
-
-    private void MoveFrom(MyGameObject input)
+    private void Receive(MyGameObject input)
     {
         foreach (Resource resource in input.Storage.Resources.Items)
         {
-            if (resource.In == false)
+            if (resource.Out == false)
             {
                 continue;
             }
 
+            if (resource.Empty)
+            {
+                continue;
+            }
+
+            if (Parent.Storage.Resources.CanInc(resource.Name) == false)
+            {
+                continue;
+            }
+
+            resource.Dec();
+            Parent.Storage.Resources.Inc(resource.Name);
+
+            break;
+        }
+    }
+
+    private void Send(MyGameObject output)
+    {
+        foreach (Resource resource in Parent.Storage.Resources.Items)
+        {
             if (resource.Empty)
             {
                 continue;
@@ -159,5 +182,8 @@ public class Conveyor : Part
         }
     }
 
-    public ConveyorDiretion ConveyorDiretion { get; private set; } = ConveyorDiretion.Right;
+    [field: SerializeField]
+    private Timer MoveTimer = new Timer(1.0f);
+
+    private ConveyorDiretion ConveyorDiretion { get; set; } = ConveyorDiretion.Right;
 }
