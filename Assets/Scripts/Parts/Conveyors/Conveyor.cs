@@ -1,3 +1,4 @@
+using System.Linq;
 using UnityEngine;
 
 [DisallowMultipleComponent]
@@ -7,22 +8,21 @@ public class Conveyor : Part
     {
         base.Awake();
 
-        /*
-        Parent.Orders.AllowOrder(OrderType.Explore);
-        Parent.Orders.AllowOrder(OrderType.Follow);
-        Parent.Orders.AllowOrder(OrderType.Move);
-        Parent.Orders.AllowOrder(OrderType.Patrol);
-        Parent.Orders.AllowOrder(OrderType.Teleport);
-        Parent.Orders.AllowOrder(OrderType.Turn);
+        InitializeDirection();
+    }
 
-        Parent.OrderHandlers[OrderType.Explore] = new OrderHandlerExplore();
-        Parent.OrderHandlers[OrderType.Follow] = new OrderHandlerFollow();
-        Parent.OrderHandlers[OrderType.Move] = new OrderHandlerMove();
-        Parent.OrderHandlers[OrderType.Patrol] = new OrderHandlerPatrol();
-        Parent.OrderHandlers[OrderType.Teleport] = new OrderHandlerTeleport();
-        Parent.OrderHandlers[OrderType.Turn] = new OrderHandlerTurn();
-        */
+    protected override void Update()
+    {
+        base.Update();
 
+        MyGameObject input = GetInput();
+        MyGameObject output = GetOutput();
+
+
+    }
+
+    private void InitializeDirection()
+    {
         if (Parent.Direction.x > 0.0)
         {
             ConveyorDiretion = ConveyorDiretion.Down;
@@ -41,23 +41,84 @@ public class Conveyor : Part
         }
     }
 
-    protected override void Update()
-    {
-        base.Update();
-
-        foreach (Resource resource in Parent.Storage.Resources.Items)
-        {
-        }
-    }
-
     private MyGameObject GetInput()
     {
-        return null;
+        Vector3Int position = Parent.PositionGrid;
+
+        switch (ConveyorDiretion)
+        {
+            case ConveyorDiretion.Down:
+                position.x += 1;
+                break;
+
+            case ConveyorDiretion.Up:
+                position.x -= 1;
+                break;
+
+            case ConveyorDiretion.Right:
+                position.z -= 1;
+                break;
+
+            case ConveyorDiretion.Left:
+                position.z += 1;
+                break;
+
+            default:
+                return null;
+        }
+
+        // TODO: Check index range.
+        if (Map.Instance.Cells[position.x, position.z].Occupied.TryGetValue(Parent.Player, out ValueGameObjects value) == false)
+        {
+            return null;
+        }
+
+        if (value.GameObjects.Count <= 0)
+        {
+            return null;
+        }
+
+        return value.GameObjects.First();
     }
 
     private MyGameObject GetOutput()
     {
-        return null;
+        Vector3Int position = Parent.PositionGrid;
+
+        switch (ConveyorDiretion)
+        {
+            case ConveyorDiretion.Down:
+                position.x -= 1;
+                break;
+
+            case ConveyorDiretion.Up:
+                position.x += 1;
+                break;
+
+            case ConveyorDiretion.Right:
+                position.z += 1;
+                break;
+
+            case ConveyorDiretion.Left:
+                position.z -= 1;
+                break;
+
+            default:
+                return null;
+        }
+
+        // TODO: Check index range.
+        if (Map.Instance.Cells[position.x, position.z].Occupied.TryGetValue(Parent.Player, out ValueGameObjects value) == false)
+        {
+            return null;
+        }
+
+        if (value.GameObjects.Count <= 0)
+        {
+            return null;
+        }
+
+        return value.GameObjects.First();
     }
 
     public ConveyorDiretion ConveyorDiretion { get; private set; } = ConveyorDiretion.Right;

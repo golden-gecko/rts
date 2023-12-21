@@ -4,6 +4,7 @@ using System.Drawing;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.UIElements;
+using static Cell;
 
 public class Map : Singleton<Map>
 {
@@ -72,11 +73,11 @@ public class Map : Singleton<Map>
         {
             for (int z = boundsGrid.min.z; z < boundsGrid.max.z; z++)
             {
-                SetVisible(Cells[x, z].Occupied, myGameObject.Player, value);
+                SetVisible(Cells[x, z].Occupied, myGameObject, myGameObject.Player, value);
 
                 if (HUD.Instance.ActivePlayer == myGameObject.Player)
                 {
-                    if (Cells[x, z].Occupied[myGameObject.Player] == 0)
+                    if (Cells[x, z].Occupied[myGameObject.Player].Value == 0)
                     {
                         ocupationTexture.SetPixel(x, z, Config.DataLayer.ColorEmpty);
                     }
@@ -365,7 +366,7 @@ public class Map : Singleton<Map>
 
                 if (value > 0)
                 {
-                    SetVisible(Cells[x, z].Explored, myGameObject.Player, value);
+                    SetVisible(Cells[x, z].Explored, myGameObject, myGameObject.Player, value);
 
                     if (HUD.Instance.ActivePlayer == myGameObject.Player)
                     {
@@ -450,7 +451,7 @@ public class Map : Singleton<Map>
     {
         Vector3Int position = new Vector3Int(Mathf.FloorToInt(myGameObject.Position.x / Config.Map.Scale), 0, Mathf.FloorToInt(myGameObject.Position.z / Config.Map.Scale));
 
-        return Cells[position.x, position.z].Explored.ContainsKey(active) && Cells[position.x, position.z].Explored[active] > 0;
+        return Cells[position.x, position.z].Explored.ContainsKey(active) && Cells[position.x, position.z].Explored[active].Value > 0;
     }
 
     public bool IsVisibleByRadar(MyGameObject myGameObject, Player active)
@@ -802,9 +803,9 @@ public class Map : Singleton<Map>
 
             order.Visited.Add(sector);
 
-            if (Cells[sector.x, sector.z].Explored.TryGetValue(player, out int value))
+            if (Cells[sector.x, sector.z].Explored.TryGetValue(player, out ValueGameObjects value))
             {
-                if (value <= 0)
+                if (value.Value <= 0)
                 {
                     position = new Vector3(sector.x * Config.Map.Scale, 0.0f, sector.z * Config.Map.Scale);
 
@@ -901,6 +902,17 @@ public class Map : Singleton<Map>
         }
     }
 
+    private void ClearLayer(Dictionary<Player, ValueGameObjects> layer)
+    {
+        Player[] players = layer.Keys.ToArray();
+
+        foreach (Player player in players)
+        {
+            layer[player].SetValue(0);
+            layer[player].GameObjects.Clear();
+        }
+    }
+
     private void ClearLayer(Dictionary<Player, float> layer)
     {
         Player[] players = layer.Keys.ToArray();
@@ -928,6 +940,28 @@ public class Map : Singleton<Map>
         else
         {
             layer[player] += value;
+        }
+    }
+
+    private void SetVisible(Dictionary<Player, ValueGameObjects> layer, MyGameObject myGameObject, Player player, int value)
+    {
+        if (layer.ContainsKey(player) == false)
+        {
+            layer[player] = new ValueGameObjects(value);
+            layer[player].GameObjects.Add(myGameObject);
+        }
+        else
+        {
+            layer[player].SetValue(layer[player].Value);
+
+            if (value > 0)
+            {
+                layer[player].GameObjects.Add(myGameObject);
+            }
+            else if (value < 0)
+            {
+                layer[player].GameObjects.Remove(myGameObject);
+            }
         }
     }
 
@@ -967,5 +1001,5 @@ public class Map : Singleton<Map>
     [field: SerializeField]
     public Material PassiveRange { get; private set; }
 
-    private Cell[,] Cells { get; } = new Cell[Config.Map.Size, Config.Map.Size];
+    public Cell[,] Cells { get; } = new Cell[Config.Map.Size, Config.Map.Size];
 }
