@@ -20,25 +20,45 @@ public class Conveyor : Part
             return;
         }
 
-        MyGameObject input = GetInput();
-
-        if (input.Storage)
+        if (Parent.Storage.Resources.Empty)
         {
-            Receive(input);
+            ConveyorState = ConveyorState.Receiving;
+        }
+        else if (MoveTimer.Finished == false)
+        {
+            ConveyorState = ConveyorState.Moving;
+        }
+        else
+        {
+            ConveyorState = ConveyorState.Sending;
         }
 
-        if (MoveTimer.Update(Time.deltaTime) == false)
+        switch (ConveyorState)
         {
-            return;
-        }
+            case ConveyorState.Receiving:
+                MyGameObject input = GetInput();
 
-        MoveTimer.Reset();
+                if (input && input.Storage)
+                {
+                    Receive(input);
+                }
+                break;
 
-        MyGameObject output = GetOutput();
+            case ConveyorState.Moving:
+                MoveTimer.Update(Time.deltaTime);
+                break;
 
-        if (output.Storage)
-        {
-            Send(output);
+            case ConveyorState.Sending:
+                MyGameObject output = GetOutput();
+
+                if (output && output.Storage)
+                {
+                    if (Send(output))
+                    {
+                        MoveTimer.Reset();
+                    }
+                }
+                break;
         }
     }
 
@@ -69,11 +89,11 @@ public class Conveyor : Part
         switch (ConveyorDiretion)
         {
             case ConveyorDiretion.Down:
-                position.x += 1;
+                position.x -= 1;
                 break;
 
             case ConveyorDiretion.Up:
-                position.x -= 1;
+                position.x += 1;
                 break;
 
             case ConveyorDiretion.Right:
@@ -98,11 +118,11 @@ public class Conveyor : Part
         switch (ConveyorDiretion)
         {
             case ConveyorDiretion.Down:
-                position.x -= 1;
+                position.x += 1;
                 break;
 
             case ConveyorDiretion.Up:
-                position.x += 1;
+                position.x -= 1;
                 break;
 
             case ConveyorDiretion.Right:
@@ -135,7 +155,7 @@ public class Conveyor : Part
         return value.GameObjects.First();
     }
 
-    private void Receive(MyGameObject input)
+    private bool Receive(MyGameObject input)
     {
         foreach (Resource resource in input.Storage.Resources.Items)
         {
@@ -157,11 +177,13 @@ public class Conveyor : Part
             resource.Dec();
             Parent.Storage.Resources.Inc(resource.Name);
 
-            break;
+            return true;
         }
+
+        return false;
     }
 
-    private void Send(MyGameObject output)
+    private bool Send(MyGameObject output)
     {
         foreach (Resource resource in Parent.Storage.Resources.Items)
         {
@@ -178,12 +200,18 @@ public class Conveyor : Part
             resource.Dec();
             output.Storage.Resources.Inc(resource.Name);
 
-            break;
+            return true;
         }
+
+        return false;
     }
 
-    [field: SerializeField]
+    [SerializeField]
     private Timer MoveTimer = new Timer(1.0f);
 
-    private ConveyorDiretion ConveyorDiretion { get; set; } = ConveyorDiretion.Right;
+    [SerializeField]
+    private ConveyorDiretion ConveyorDiretion = ConveyorDiretion.Right;
+
+    [SerializeField]
+    private ConveyorState ConveyorState = ConveyorState.Receiving;
 }

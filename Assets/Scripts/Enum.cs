@@ -6,6 +6,13 @@ public enum ConveyorDiretion
     Up = 3,
 }
 
+public enum ConveyorState
+{
+    Receiving = 1,
+    Moving = 2,
+    Sending = 3,
+}
+
 public enum DamageType
 {
     Kinetic = 0,

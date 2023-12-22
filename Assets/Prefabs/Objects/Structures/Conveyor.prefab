@@ -87,7 +87,7 @@ MonoBehaviour:
   <DestroyEffect>k__BackingField: {fileID: 100008, guid: 06736895ea0a4ff408d25e6684dce797, type: 3}
   <Altitude>k__BackingField: -1
   <Depth>k__BackingField: -1
-  <ShowIndicators>k__BackingField: 1
+  <ShowIndicators>k__BackingField: 0
   <ExpirationTimer>k__BackingField:
     <Current>k__BackingField: -1
     <Max>k__BackingField: -1
@@ -116,6 +116,11 @@ MonoBehaviour:
       <Max>k__BackingField: 10
       <Name>k__BackingField: Iron
       <Direction>k__BackingField: 1
+  MoveTimer:
+    <Current>k__BackingField: 0
+    <Max>k__BackingField: 1
+  ConveyorDiretion: 2
+  ConveyorState: 1
 --- !u!114 &1991156862083717147
 MonoBehaviour:
   m_ObjectHideFlags: 0
