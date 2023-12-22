@@ -8,6 +8,8 @@ public class Conveyor : Part
     {
         base.Awake();
 
+        Item = Parent.Body.Find("Item");
+
         InitializeDirection();
     }
 
@@ -60,6 +62,8 @@ public class Conveyor : Part
                 }
                 break;
         }
+
+        Item.gameObject.SetActive(Parent.Storage.Resources.Empty == false);
     }
 
     private void InitializeDirection()
@@ -214,4 +218,6 @@ public class Conveyor : Part
 
     [SerializeField]
     private ConveyorState ConveyorState = ConveyorState.Receiving;
+
+    private Transform Item;
 }
