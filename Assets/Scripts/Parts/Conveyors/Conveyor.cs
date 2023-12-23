@@ -24,17 +24,33 @@ public class Conveyor : Part
 
         if (Parent.Storage.Resources.Empty)
         {
-            ConveyorState = ConveyorState.Receiving;
-        }
-        else if (MoveTimer.Finished == false)
-        {
-            ConveyorState = ConveyorState.Moving;
-        }
-        else
-        {
-            ConveyorState = ConveyorState.Sending;
+            MyGameObject input = GetInput();
+
+            if (input && input.Storage)
+            {
+                Receive(input);
+            }
         }
 
+        if (Parent.Storage.Resources.Empty == false)
+        {
+            MoveTimer.Update(Time.deltaTime);
+        }
+
+        if (Parent.Storage.Resources.Empty == false && MoveTimer.Finished)
+        {
+            MyGameObject output = GetOutput();
+
+            if (output && output.Storage)
+            {
+                if (Send(output))
+                {
+                    MoveTimer.Reset();
+                }
+            }
+        }
+
+        /*
         switch (ConveyorState)
         {
             case ConveyorState.Receiving:
@@ -62,8 +78,16 @@ public class Conveyor : Part
                 }
                 break;
         }
+        */
 
-        Item.gameObject.SetActive(Parent.Storage.Resources.Empty == false);
+        UpdateItemPosition();
+    }
+
+    public void Put(string name, ConveyorDiretion conveyorDiretion)
+    {
+        ConveyorDiretionInput = GetOppositeDirection(conveyorDiretion);
+
+        Parent.Storage.Resources.Inc(name);
     }
 
     private void InitializeDirection()
@@ -71,18 +95,22 @@ public class Conveyor : Part
         if (Parent.Direction.x > 0.0)
         {
             ConveyorDiretion = ConveyorDiretion.Down;
+            ConveyorDiretionInput = ConveyorDiretion.Up;
         }
         else if (Parent.Direction.x < 0.0)
         {
             ConveyorDiretion = ConveyorDiretion.Up;
+            ConveyorDiretionInput = ConveyorDiretion.Down;
         }
         else if (Parent.Direction.z > 0.0)
         {
             ConveyorDiretion = ConveyorDiretion.Right;
+            ConveyorDiretionInput = ConveyorDiretion.Left;
         }
         else if (Parent.Direction.z < 0.0)
         {
             ConveyorDiretion = ConveyorDiretion.Left;
+            ConveyorDiretionInput = ConveyorDiretion.Right;
         }
     }
 
@@ -138,6 +166,7 @@ public class Conveyor : Part
                 break;
 
             default:
+                Debug.Log(string.Format("Invalid conveyor direction: {0}.", ConveyorDiretion));
                 return null;
         }
 
@@ -202,12 +231,208 @@ public class Conveyor : Part
             }
 
             resource.Dec();
-            output.Storage.Resources.Inc(resource.Name);
+
+            if (output.TryGetComponent(out Conveyor conveyor))
+            {
+                conveyor.Put(resource.Name, ConveyorDiretion);
+            }
+            /*
+            else if (output.TryGetComponent(out ConveyorSplitter conveyorSplitter))
+            {
+                conveyorSplitter.Put(resource.Name);
+            }
+            */
+            else
+            {
+                output.Storage.Resources.Inc(resource.Name);
+            }
 
             return true;
         }
 
         return false;
+    }
+
+    private Vector3Int GetDirectionToOuputPosition()
+    {
+        Vector3Int position = Parent.PositionGrid;
+
+        switch (ConveyorDiretion)
+        {
+            case ConveyorDiretion.Down:
+                position.x += 1;
+                break;
+
+            case ConveyorDiretion.Up:
+                position.x -= 1;
+                break;
+
+            case ConveyorDiretion.Right:
+                position.z += 1;
+                break;
+
+            case ConveyorDiretion.Left:
+                position.z -= 1;
+                break;
+
+            default:
+                Debug.Log(string.Format("Invalid conveyor direction: {0}.", ConveyorDiretion));
+                break;
+        }
+
+        return position;
+    }
+
+    private ConveyorDiretion GetOppositeDirection(ConveyorDiretion diretion)
+    {
+        switch (diretion)
+        {
+            case ConveyorDiretion.Down:
+                return ConveyorDiretion.Up;
+
+            case ConveyorDiretion.Up:
+                return ConveyorDiretion.Down;
+
+            case ConveyorDiretion.Right:
+                return ConveyorDiretion.Left;
+
+            case ConveyorDiretion.Left:
+                return ConveyorDiretion.Right;
+
+            default:
+                Debug.Log(string.Format("Invalid conveyor direction: {0}.", ConveyorDiretion));
+                return ConveyorDiretion.Left; // TODO: Correct?
+        }
+    }
+
+    private void UpdateItemPosition()
+    {
+        // TODO: Hack for hiding item.
+        if (Parent.Storage.Resources.Empty)
+        {
+            if (Item.gameObject.activeInHierarchy)
+            {
+                ItemHideFrameTimer += 1;
+
+                if (ItemHideFrameTimer > 2)
+                {
+                    ItemHideFrameTimer = 0;
+
+                    Item.gameObject.SetActive(false);
+                }
+            }
+        }
+        else
+        {
+            ItemHideFrameTimer = 0;
+
+            Item.gameObject.SetActive(true);
+        }       
+        // TODO: Hack end.
+
+        Vector3 position = Item.transform.localPosition;
+
+        position.x = 0.0f;
+        position.z = 0.0f;
+
+        float size = Parent.Size.x;
+        float sizeHalf = Parent.Size.x / 2.0f;
+
+        if (MoveTimer.Percent < 0.5f)
+        {
+            switch (ConveyorDiretionInput)
+            {
+                case ConveyorDiretion.Up:
+                    switch (ConveyorDiretion)
+                    {
+                        case ConveyorDiretion.Up:
+                            position.z = size - size * MoveTimer.Percent - sizeHalf;
+                            break;
+
+                        case ConveyorDiretion.Down:
+                            position.z = size * MoveTimer.Percent - sizeHalf;
+                            break;
+
+                        case ConveyorDiretion.Left:
+                            position.x = size - size * MoveTimer.Percent - sizeHalf;
+                            break;
+
+                        case ConveyorDiretion.Right:
+                            position.x = size * MoveTimer.Percent - sizeHalf;
+                            break;
+                    }
+                    break;
+
+                case ConveyorDiretion.Down:
+                    switch (ConveyorDiretion)
+                    {
+                        case ConveyorDiretion.Up:
+                            position.z = size * MoveTimer.Percent - sizeHalf;
+                            break;
+
+                        case ConveyorDiretion.Down:
+                            position.z = size - size * MoveTimer.Percent - sizeHalf;
+                            break;
+
+                        case ConveyorDiretion.Left:
+                            position.x = size * MoveTimer.Percent - sizeHalf;
+                            break;
+
+                        case ConveyorDiretion.Right:
+                            position.x = size - size * MoveTimer.Percent - sizeHalf;
+                            break;
+                    }
+                    break;
+
+                case ConveyorDiretion.Left:
+                    switch (ConveyorDiretion)
+                    {
+                        case ConveyorDiretion.Up:
+                            position.x = size * MoveTimer.Percent - sizeHalf;
+                            break;
+
+                        case ConveyorDiretion.Down:
+                            position.x = size - size * MoveTimer.Percent - sizeHalf;
+                            break;
+
+                        case ConveyorDiretion.Left:
+                            position.z = size - size * MoveTimer.Percent - sizeHalf;
+                            break;
+
+                        case ConveyorDiretion.Right:
+                            position.z = size * MoveTimer.Percent - sizeHalf;
+                            break;
+                    }
+                    break;
+
+                case ConveyorDiretion.Right:
+                    switch (ConveyorDiretion)
+                    {
+                        case ConveyorDiretion.Up:
+                            position.x = size - size * MoveTimer.Percent - sizeHalf;
+                            break;
+
+                        case ConveyorDiretion.Down:
+                            position.x = size * MoveTimer.Percent - sizeHalf;
+                            break;
+
+                        case ConveyorDiretion.Left:
+                            position.z = size * MoveTimer.Percent - sizeHalf;
+                            break;
+
+                        case ConveyorDiretion.Right:
+                            position.z = size - size * MoveTimer.Percent - sizeHalf;
+                            break;
+                    }
+                    break;
+            }
+        }
+        else
+        {
+            position.z = size * MoveTimer.Percent - sizeHalf;
+        }
+
+        Item.transform.localPosition = position;
     }
 
     [SerializeField]
@@ -217,7 +442,14 @@ public class Conveyor : Part
     private ConveyorDiretion ConveyorDiretion = ConveyorDiretion.Right;
 
     [SerializeField]
-    private ConveyorState ConveyorState = ConveyorState.Receiving;
+    private ConveyorDiretion ConveyorDiretionInput = ConveyorDiretion.Left;
+
+    // [SerializeField]
+    // private ConveyorState ConveyorState = ConveyorState.Receiving;
 
     private Transform Item;
+
+    // TODO: Hack for hiding item.
+    private int ItemHideFrameTimer = 0;
+    // TODO: Hack end.
 }
