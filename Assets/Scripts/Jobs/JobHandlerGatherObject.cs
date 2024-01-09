@@ -4,11 +4,11 @@ public class JobHandlerGatherObject : JobHandler
     {
         MyGameObject myResource = myGameObject.Player.GetResourceToGather(myGameObject);
 
-        if (myResource != null)
+        if (myResource == null)
         {
-            return Order.GatherObject(myResource);
+            return null;
         }
 
-        return null;
+        return Order.GatherObject(myResource);
     }
 }

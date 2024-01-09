@@ -1,7 +1,23 @@
+public enum ConveyorDiretion
+{
+    Down = 0,
+    Left = 1,
+    Right = 2,
+    Up = 3,
+}
+
+public enum ConveyorState
+{
+    Receiving = 1,
+    Moving = 2,
+    Sending = 3,
+}
+
 public enum DamageType
 {
     Kinetic = 0,
     Laser = 1,
+    Fire = 2, // TODO: Implement.
 }
 
 public enum DiplomacyState
@@ -119,6 +135,13 @@ public enum PartType
     Shield = 5,
     Sight = 6,
     Storage = 7,
+}
+
+public enum RaycastSortOrder
+{
+    None = 0,
+    Ascending = 1,
+    Descending = 2,
 }
 
 public enum ResourceDirection

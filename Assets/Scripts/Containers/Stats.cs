@@ -59,7 +59,7 @@ public class Stats
 
     public string GetInfo()
     {
-        string info = string.Empty;
+        string info = "";
 
         foreach (KeyValuePair<string, float> i in Items.OrderBy(x => x.Key))
         {

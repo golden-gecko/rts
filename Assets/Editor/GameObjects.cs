@@ -6,6 +6,32 @@ using UnityEngine;
 
 public class GameObjectBuilder : EditorWindow
 {
+    [MenuItem("Tools/Align", false, 10)]
+    public static void Align()
+    {
+        MyGameObject[] gameObjects = Tools.GetGameObjects();
+
+        // System.Array.Sort(gameObjects, (a, b) => a.transform.position.y < b.transform.position.y ? -1 : 1);
+
+        foreach (MyGameObject myGameObject in gameObjects)
+        {
+            /* TODO: Fix.
+            if (myGameObject.TryGetComponent(out Foundation _))
+            {
+                AlignGameObject(myGameObject, true);
+            }
+            else
+            {
+                AlignGameObject(myGameObject);
+            }
+            */
+
+            AlignGameObject(myGameObject);
+        }
+
+        Tools.SaveScene();
+    }
+
     [MenuItem("Tools/Build", false, 20)]
     public static void Build()
     {
@@ -74,22 +100,20 @@ public class GameObjectBuilder : EditorWindow
         Tools.RestoreScene(sceneName);
     }
 
-    [MenuItem("Tools/Align", false, 10)]
-    public static void Align()
+    private static void AlignGameObject(MyGameObject myGameObject, bool yAxis = false)
     {
-        foreach (GameObject gameObject in Tools.GetGameObjects())
+        RaycastHit[] hits = Utils.RaycastAllFromTop(myGameObject.Position, Utils.GetMapMask(), RaycastSortOrder.Descending);
+
+        foreach (RaycastHit hitInfo in hits)
         {
-            if (gameObject.TryGetComponent(out MyGameObject myGameObject))
+            if (hitInfo.transform.gameObject == myGameObject)
             {
-                myGameObject.Position = Utils.SnapToCenter(myGameObject.Position, Config.Map.Scale);
-
-                if (Utils.RaycastFromTop(myGameObject.Position, out RaycastHit hitInfo, Utils.GetMapMask()))
-                {
-                    myGameObject.Position = hitInfo.point;
-                }
+                continue;
             }
-        }
 
-        Tools.SaveScene();
+            myGameObject.Position = Utils.SnapToGrid(hitInfo.point, myGameObject.SizeGrid, Config.Map.Scale, yAxis);
+
+            break;
+        }
     }
 }

@@ -15,6 +15,7 @@ public class Player : MonoBehaviour
         JobHandlers[OrderType.AttackObject] = new JobHandlerAttackObject();
         JobHandlers[OrderType.Construct] = new JobHandlerConstruct();
         JobHandlers[OrderType.GatherObject] = new JobHandlerGatherObject();
+        JobHandlers[OrderType.MineObject] = new JobHandlerMineObject();
         JobHandlers[OrderType.Transport] = new JobHandlerTransport();
         JobHandlers[OrderType.Unload] = new JobHandlerUnload();
     }
@@ -29,6 +30,8 @@ public class Player : MonoBehaviour
         RemoveEmptyObjectsFromSelection();
 
         Achievements.Update();
+
+        UI.Instance.MenuGame.Log.Log(string.Format("Consumers {0} Producers {1}.", Consumers.Items.Count, Producers.Items.Count));
     }
 
     public void AssignGroup(KeyCode keyCode)
@@ -64,7 +67,12 @@ public class Player : MonoBehaviour
 
     public Order GetJob(MyGameObject myGameObject, OrderType orderType)
     {
-        return JobHandlers.ContainsKey(orderType) ? JobHandlers[orderType].OnExecute(myGameObject) : null;
+        if (JobHandlers.TryGetValue(orderType, out JobHandler handler))
+        {
+            return handler.OnExecute(myGameObject);
+        }
+
+        return null;
     }
 
     public void RegisterConsumer(MyGameObject myGameObject, string name, int value, ResourceDirection direction)

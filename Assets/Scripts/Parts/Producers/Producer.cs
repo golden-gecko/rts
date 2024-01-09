@@ -30,5 +30,8 @@ public class Producer : Part
     public List<string> Recipes { get; private set; } = new List<string>();
 
     [field: SerializeField]
+    public string Recipe { get; private set; }
+
+    [field: SerializeField]
     public int ResourceUsage { get; private set; } = 1; // Number of resources used per second.
 }

@@ -12,9 +12,8 @@ public class OrderHandlerTransport : OrderHandler
         }
 
         myGameObject.Orders.Pop();
-
-        myGameObject.Load(order.SourceGameObject, order.Resource, order.Value, 0);
-        myGameObject.Unload(order.TargetGameObject, order.Resource, order.Value, 1);
+        myGameObject.Load(order.SourceGameObject, 1.0f, order.Resource, order.Value, 0);
+        myGameObject.Unload(order.TargetGameObject, 1.0f, order.Resource, order.Value, 1);
     }
 
     protected override bool IsValid(MyGameObject myGameObject, Order order)

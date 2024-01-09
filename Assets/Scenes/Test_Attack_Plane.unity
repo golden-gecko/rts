@@ -13,7 +13,7 @@ OcclusionCullingSettings:
 --- !u!104 &2
 RenderSettings:
   m_ObjectHideFlags: 0
-  serializedVersion: 9
+  serializedVersion: 10
   m_Fog: 0
   m_FogColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
   m_FogMode: 3
@@ -38,13 +38,12 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44824904, g: 0.49827605, b: 0.5755831, a: 1}
+  m_IndirectSpecularColor: {r: 0, g: 0, b: 0, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 12
-  m_GIWorkflowMode: 1
   m_GISettings:
     serializedVersion: 2
     m_BounceScale: 1
@@ -134,15 +133,15 @@ PrefabInstance:
       objectReference: {fileID: 1489801457}
     - target: {fileID: 1702014145004635914, guid: 61a7c4fca0a2a36409924024a26dbdde, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 298.09998
+      value: 298
       objectReference: {fileID: 0}
     - target: {fileID: 1702014145004635914, guid: 61a7c4fca0a2a36409924024a26dbdde, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 10.043289
+      value: 10.053104
       objectReference: {fileID: 0}
     - target: {fileID: 1702014145004635914, guid: 61a7c4fca0a2a36409924024a26dbdde, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 104.53
+      value: 104
       objectReference: {fileID: 0}
     - target: {fileID: 1702014145004635914, guid: 61a7c4fca0a2a36409924024a26dbdde, type: 3}
       propertyPath: m_LocalRotation.w
@@ -319,15 +318,15 @@ PrefabInstance:
       objectReference: {fileID: 1489801456}
     - target: {fileID: 2611203564661614291, guid: 797049024c95e2f4ca58838b4b979817, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 293.46
+      value: 293
       objectReference: {fileID: 0}
     - target: {fileID: 2611203564661614291, guid: 797049024c95e2f4ca58838b4b979817, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 17.68
+      value: 20.13
       objectReference: {fileID: 0}
     - target: {fileID: 2611203564661614291, guid: 797049024c95e2f4ca58838b4b979817, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 90.49
+      value: 90.5
       objectReference: {fileID: 0}
     - target: {fileID: 2611203564661614291, guid: 797049024c95e2f4ca58838b4b979817, type: 3}
       propertyPath: m_LocalRotation.w

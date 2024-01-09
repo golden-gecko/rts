@@ -664,11 +664,6 @@ MonoBehaviour:
   <VisibilityState>k__BackingField: 2
   <ShowEntrance>k__BackingField: 0
   <ShowExit>k__BackingField: 0
-  <Health>k__BackingField:
-    <Current>k__BackingField: 0
-    <Max>k__BackingField: 0
-  <ConstructionResources>k__BackingField:
-    <Items>k__BackingField: []
 --- !u!1 &5477754909829243648
 GameObject:
   m_ObjectHideFlags: 0
@@ -1284,6 +1279,7 @@ MonoBehaviour:
       <Name>k__BackingField: Iron
       <Direction>k__BackingField: 1
   <MapLayers>k__BackingField: 0200000004000000
+  <GearRatio>k__BackingField: 0.75
 --- !u!1 &8705163552381086483
 GameObject:
   m_ObjectHideFlags: 0
@@ -1361,6 +1357,10 @@ MonoBehaviour:
   - Barracks
   - Factory_Heavy
   - Factory_Light
+  - Foundation_1x1
+  - Foundation_2x2
+  - Foundation_3x3
+  - Foundation_4x4
   - Gas_Station
   - Power_Pole
   - Radar_Outpost

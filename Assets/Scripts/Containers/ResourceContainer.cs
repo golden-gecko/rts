@@ -6,13 +6,29 @@ using UnityEngine;
 [Serializable]
 public class ResourceContainer
 {
-    public void Init(string name, int value = 0, int max = 0, ResourceDirection direction = ResourceDirection.None)
+    public void Init(string name, int current = 0, int max = 0, ResourceDirection direction = ResourceDirection.None)
     {
         Resource resource = Items.Find(x => x.Name == name);
 
         if (resource == null)
         {
-            Items.Add(new Resource(name, value, max, direction));
+            Items.Add(new Resource(name, current, max, direction));
+        }
+    }
+
+    public void Update(string name, int current = 0, int max = 0, ResourceDirection direction = ResourceDirection.None)
+    {
+        Resource resource = Items.Find(x => x.Name == name);
+
+        if (resource == null)
+        {
+            Items.Add(new Resource(name, current, max, direction));
+        }
+        else
+        {
+            resource.Current = Math.Max(resource.Current, current);
+            resource.Max = Math.Max(resource.Max, max);
+            resource.Direction = direction;
         }
     }
 
@@ -113,17 +129,35 @@ public class ResourceContainer
 
     public string GetInfo()
     {
-        string info = string.Empty;
+        string info = "";
 
         foreach (Resource i in Items)
         {
             if (i.Max > 0)
             {
-                info += string.Format("\n  {0} {1}", i.Name, i.GetInfo());
+                info += string.Format("\n  {0}", i.GetInfo());
             }
         }
 
         return info;
+    }
+
+    public void Request(Recipe recipe)
+    {
+        foreach (Resource resource in Items)
+        {
+            resource.Direction = ResourceDirection.Out;
+        }
+
+        foreach (Resource resource in recipe.ToConsume.Items)
+        {
+            Update(resource.Name, 0, resource.Max, ResourceDirection.In); // TODO: Add buffer to Max.
+        }
+
+        foreach (Resource resource in recipe.ToProduce.Items)
+        {
+            Update(resource.Name, 0, resource.Max, ResourceDirection.Out); // TODO: Add buffer to Max.
+        }
     }
 
     [field: SerializeField]
@@ -132,6 +166,10 @@ public class ResourceContainer
     public int CurrentSum { get => Items.Sum(x => x.Current); }
 
     public int MaxSum { get => Items.Sum(x => x.Max); }
+
+    public bool Empty { get => Items.All(x => x.Empty); }
+
+    public bool Full { get => Items.All(x => x.Full); }
 
     public float PercentSum { get => (float)CurrentSum / (float)MaxSum; }
 

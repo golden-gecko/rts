@@ -240,7 +240,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1b5884c0f9f7fcd4c9b6b555f1071c8f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <Mass>k__BackingField: 20
   <ConstructionResources>k__BackingField:
     <Items>k__BackingField:
     - <Current>k__BackingField: 10
@@ -252,6 +251,7 @@ MonoBehaviour:
       <Name>k__BackingField: Iron
       <Direction>k__BackingField: 1
   <MapLayers>k__BackingField: 0200000004000000
+  <GearRatio>k__BackingField: 0.75
 --- !u!1 &6031723413405379455
 GameObject:
   m_ObjectHideFlags: 0

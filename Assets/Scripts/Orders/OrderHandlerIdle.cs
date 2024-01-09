@@ -1,12 +1,9 @@
-using System.Diagnostics.Contracts;
-using UnityEngine;
-
 public class OrderHandlerIdle : OrderHandler
 {
     public override void OnExecuteHandler(MyGameObject myGameObject)
     {
-        Order order;
-        
+        Order order; // TODO: Add priorities.
+
         order = TryAttackerBehaviour(myGameObject);
 
         if (order != null)
@@ -25,6 +22,26 @@ public class OrderHandlerIdle : OrderHandler
             return;
         }
 
+        /*
+        order = TryProducerBehaviour(myGameObject);
+
+        if (order != null)
+        {
+            myGameObject.Orders.Add(order);
+
+            return;
+        }
+        */
+
+        order = TryWorkerBehaviour(myGameObject);
+
+        if (order != null)
+        {
+            myGameObject.Orders.Add(order);
+
+            return;
+        }
+
         order = TryGathererBehaviour(myGameObject);
 
         if (order != null)
@@ -35,24 +52,6 @@ public class OrderHandlerIdle : OrderHandler
         }
 
         order = TryMinerBehaviour(myGameObject);
-
-        if (order != null)
-        {
-            myGameObject.Orders.Add(order);
-
-            return;
-        }
-
-        order = TryProducerBehaviour(myGameObject);
-
-        if (order != null)
-        {
-            myGameObject.Orders.Add(order);
-
-            return;
-        }
-
-        order = TryWorkerBehaviour(myGameObject);
 
         if (order != null)
         {
@@ -137,23 +136,6 @@ public class OrderHandlerIdle : OrderHandler
         }
 
         return null;
-
-        /*
-        else if (storage != null)
-        {
-            MyGameObject resourceInRange = myGameObject.Player.GetResourceToGatherInRange(myGameObject, myGameObject.GetComponentInChildren<Miner>().Range);
-
-            if (resourceInRange != null)
-            {
-                Order order = Order.GatherObject(resourceInRange);
-
-                if (order != null)
-                {
-                    return order;
-                }
-            }
-        }
-        */
     }
 
     private Order TryProducerBehaviour(MyGameObject myGameObject)
