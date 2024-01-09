@@ -45,20 +45,20 @@ public class UI : Singleton<UI>
     }
 
     [SerializeField]
-    private MenuDiplomacy MenuDiplomacy;
+    public MenuDiplomacy MenuDiplomacy { get; private set; }
 
-    [SerializeField]   
-    private MenuEditor MenuEditor;
+    [SerializeField]
+    public MenuEditor MenuEditor { get; private set; }
 
     [field: SerializeField]
     public MenuGame MenuGame { get; private set; }
 
     [SerializeField]
-    private MenuMain MenuMain;
+    public MenuMain MenuMain { get; private set; }
 
     [SerializeField]
-    private MenuOptions MenuOptions;
+    public MenuOptions MenuOptions { get; private set; }
 
     [SerializeField]
-    private MenuScene MenuScene;
+    public MenuScene MenuScene { get; private set; }
 }
