@@ -44,21 +44,21 @@ public class UI : Singleton<UI>
         MenuScene.Show(false);
     }
 
-    [SerializeField]
+    [field: SerializeField]
     public MenuDiplomacy MenuDiplomacy { get; private set; }
 
-    [SerializeField]
+    [field: SerializeField]
     public MenuEditor MenuEditor { get; private set; }
 
     [field: SerializeField]
     public MenuGame MenuGame { get; private set; }
 
-    [SerializeField]
+    [field: SerializeField]
     public MenuMain MenuMain { get; private set; }
 
-    [SerializeField]
+    [field: SerializeField]
     public MenuOptions MenuOptions { get; private set; }
 
-    [SerializeField]
+    [field: SerializeField]
     public MenuScene MenuScene { get; private set; }
 }
