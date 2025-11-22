@@ -16,7 +16,7 @@ public class MyGameObject : MonoBehaviour
         selection = visual.transform.Find("Selection");
         trace = visual.transform.Find("Trace");
 
-        Orders.AllowOrder(OrderType.Destroy); // TODO: Move order whitelist to component.
+        Orders.AllowOrder(OrderType.Destroy); // TODO: Move to component.
         Orders.AllowOrder(OrderType.Disable);
         Orders.AllowOrder(OrderType.Enable);
         Orders.AllowOrder(OrderType.Idle);
@@ -24,7 +24,7 @@ public class MyGameObject : MonoBehaviour
         Orders.AllowOrder(OrderType.Stop);
         Orders.AllowOrder(OrderType.Wait);
 
-        OrderHandlers[OrderType.Destroy] = new OrderHandlerDestroy();
+        OrderHandlers[OrderType.Destroy] = new OrderHandlerDestroy(); // TODO: Move to component.
         OrderHandlers[OrderType.Disable] = new OrderHandlerDisable();
         OrderHandlers[OrderType.Enable] = new OrderHandlerEnable();
         OrderHandlers[OrderType.Stop] = new OrderHandlerStop();
@@ -58,7 +58,7 @@ public class MyGameObject : MonoBehaviour
 
         if (Alive == false)
         {
-            Destroy(0);
+            OnDestroy_();
         }
 
         if (Working)
@@ -342,6 +342,8 @@ public class MyGameObject : MonoBehaviour
 
     public virtual string GetInfo(bool ally)
     {
+        ally = true; // TODO: Remove.
+
         string info = string.Empty;
 
         switch (State)

@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class OrderHandlerAttackUnit : OrderHandler
+public class OrderHandlerAttack : OrderHandler
 {
     public override void OnExecute(MyGameObject myGameObject)
     {
@@ -34,17 +34,36 @@ public class OrderHandlerAttackUnit : OrderHandler
             position = order.TargetPosition;
         }
 
-        if (myGameObject.GetComponent<Gun>().IsInRange(position) == false)
+        if (myGameObject.GetComponent<Engine>())
         {
-            myGameObject.Move(GetPositionToAttack(myGameObject.Position, position, myGameObject.GetComponent<Gun>().Range), 0);
+            if (myGameObject.GetComponent<Gun>().IsInRange(position) == false)
+            {
+                myGameObject.Move(GetPositionToAttack(myGameObject.Position, position, myGameObject.GetComponent<Gun>().Range), 0);
+            }
+            else
+            {
+                myGameObject.transform.LookAt(new Vector3(position.x, myGameObject.Position.y, position.z));
+
+                if (myGameObject.GetComponent<Gun>().CanFire())
+                {
+                    myGameObject.GetComponent<Gun>().Fire(myGameObject, position);
+                }
+            }
         }
         else
         {
-            myGameObject.transform.LookAt(new Vector3(position.x, myGameObject.Position.y, position.z));
-
-            if (myGameObject.GetComponent<Gun>().CanFire())
+            if (myGameObject.GetComponent<Gun>().IsInRange(position) == false)
             {
-                myGameObject.GetComponent<Gun>().Fire(myGameObject, position);
+                // TODO: Maybe try to target to different object.
+            }
+            else
+            {
+                myGameObject.transform.LookAt(new Vector3(position.x, myGameObject.Position.y, position.z));
+
+                if (myGameObject.GetComponent<Gun>().CanFire())
+                {
+                    myGameObject.GetComponent<Gun>().Fire(myGameObject, position);
+                }
             }
         }
     }

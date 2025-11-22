@@ -8,6 +8,7 @@ public class Producer : MyComponent
 
         GetComponent<MyGameObject>().Orders.AllowOrder(OrderType.Produce);
 
+        GetComponent<MyGameObject>().OrderHandlers[OrderType.Idle] = new OrderHandlerIdleProducer();
         GetComponent<MyGameObject>().OrderHandlers[OrderType.Produce] = new OrderHandlerProduce();
     }
 
