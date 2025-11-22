@@ -223,6 +223,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   <Mass>k__BackingField: 10
+  RaiseResourceFlags: 0
   <ResourceUsage>k__BackingField: 4
   <Resources>k__BackingField:
     <Items>k__BackingField:

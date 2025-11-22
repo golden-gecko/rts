@@ -80,7 +80,6 @@ public class MyGameObject : MonoBehaviour
             {
                 case MyGameObjectState.Operational:
                     ProcessOrders();
-                    RaiseResourceFlags();
                     break;
 
                 case MyGameObjectState.UnderConstruction:
@@ -92,7 +91,6 @@ public class MyGameObject : MonoBehaviour
         }
         else
         {
-            RemoveResourceFlags();
             RemoveConstructionResourceFlags();
         }
 
@@ -624,58 +622,6 @@ public class MyGameObject : MonoBehaviour
         else if (OrderHandlers.ContainsKey(OrderType.Idle))
         {
             OrderHandlers[OrderType.Idle].OnExecute(this);
-        }
-    }
-
-    private void RaiseResourceFlags()
-    {
-        if (GetComponent<Storage>() == null)
-        {
-            return;
-        }
-
-        foreach (Resource resource in GetComponent<Storage>().Resources.Items)
-        {
-            if (resource.Direction == ResourceDirection.Both || resource.Direction == ResourceDirection.In)
-            {
-                if (resource.Full)
-                {
-                    Player.UnregisterConsumer(this, resource.Name);
-                }
-                else
-                {
-                    Player.RegisterConsumer(this, resource.Name, resource.Capacity);
-                }
-            }
-
-            if (resource.Direction == ResourceDirection.Both || resource.Direction == ResourceDirection.Out)
-            {
-                if (resource.Empty)
-                {
-                    Player.UnregisterProducer(this, resource.Name);
-                }
-                else
-                {
-                    Player.RegisterProducer(this, resource.Name, resource.Storage);
-                }
-            }
-        }
-    }
-
-    private void RemoveResourceFlags()
-    {
-        Storage storage = GetComponent<Storage>();
-
-        if (storage == null)
-        {
-            return;
-        }
-
-        foreach (string name in storage.Resources.Items.Select(x => x.Name))
-        {
-            Player.UnregisterConsumer(this, name);
-            Player.UnregisterProducer(this, name);
-
         }
     }
 

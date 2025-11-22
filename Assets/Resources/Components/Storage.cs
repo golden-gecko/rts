@@ -1,3 +1,4 @@
+using System.Linq;
 using UnityEngine;
 
 public class Storage : MyComponent
@@ -15,10 +16,82 @@ public class Storage : MyComponent
         GetComponent<MyGameObject>().OrderHandlers[OrderType.Unload] = new OrderHandlerUnload();
     }
 
+    protected override void Update()
+    {
+        base.Update();
+
+        MyGameObject parent = GetComponent<MyGameObject>();
+
+        if (parent.Working && RaiseResourceFlags)
+        {
+            CreateResourceFlags(parent);
+        }
+        else
+        {
+            RemoveResourceFlags(parent);
+        }
+    }
+
     public override string GetInfo()
     {
         return string.Format("{0}\nResources: {1}", base.GetInfo(), Resources.GetInfo());
     }
+
+    private void CreateResourceFlags(MyGameObject parent)
+    {
+        if (GetComponent<Storage>() == null)
+        {
+            return;
+        }
+
+        foreach (Resource resource in GetComponent<Storage>().Resources.Items)
+        {
+            if (resource.Direction == ResourceDirection.Both || resource.Direction == ResourceDirection.In)
+            {
+                if (resource.Full)
+                {
+                    parent.Player.UnregisterConsumer(parent, resource.Name);
+                }
+                else
+                {
+                    parent.Player.RegisterConsumer(parent, resource.Name, resource.Capacity);
+                }
+            }
+
+            if (resource.Direction == ResourceDirection.Both || resource.Direction == ResourceDirection.Out)
+            {
+                if (resource.Empty)
+                {
+                    parent.Player.UnregisterProducer(parent, resource.Name);
+                }
+                else
+                {
+                    parent.Player.RegisterProducer(parent, resource.Name, resource.Storage);
+                }
+            }
+        }
+    }
+
+    private void RemoveResourceFlags(MyGameObject parent)
+    {
+        Storage storage = GetComponent<Storage>();
+
+        if (storage == null)
+        {
+            return;
+        }
+
+        foreach (string name in storage.Resources.Items.Select(x => x.Name))
+        {
+            parent.Player.UnregisterConsumer(parent, name);
+            parent.Player.UnregisterProducer(parent, name);
+
+        }
+    }
+
+
+    [field: SerializeField]
+    public bool RaiseResourceFlags = true;
 
     [field: SerializeField]
     public int ResourceUsage { get; set; } = 1;
