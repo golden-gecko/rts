@@ -8,8 +8,10 @@ public class SelectionGroup
     {
         FormationHandlers[Formation.None] = new FormationHandlerNone();
         FormationHandlers[Formation.Column] = new FormationHandlerColumn();
+        FormationHandlers[Formation.Diamond] = new FormationHandlerDiamond();
         FormationHandlers[Formation.Line] = new FormationHandlerLine();
         FormationHandlers[Formation.Square] = new FormationHandlerSquare();
+        FormationHandlers[Formation.Triangle] = new FormationHandlerTriangle();
         FormationHandlers[Formation.Wedge] = new FormationHandlerWedge();
     }
 
