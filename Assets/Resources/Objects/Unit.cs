@@ -12,7 +12,7 @@ public class Unit : MyGameObject
         OrderHandlers[OrderType.Attack] = new OrderHandlerAttackUnit();
         OrderHandlers[OrderType.Idle] = new OrderHandlerIdleAttacker();
 
-        Armour = new Armour(this, "Armour", 12.0f);
+        Armour = new Armour(this, "Armour", 1.0f, 12.0f);
 
         Health = 50.0f;
         MaxHealth = 50.0f;

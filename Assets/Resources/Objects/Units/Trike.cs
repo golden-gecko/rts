@@ -6,9 +6,9 @@ public class Trike : Unit
 
         Orders.AllowOrder(OrderType.Attack);
 
-        Engine = new Engine(this, "Diesel", 12.0f);
+        Engine = new Engine(this, "Diesel", 1.0f, 12.0f);
 
-        Gun = new Laser(this, "Laser", 2.0f, 4.0f, 2.0f);
+        Gun = new Laser(this, "Laser", 1.0f, 2.0f, 4.0f, 2.0f);
         Gun.MissilePrefab = "Objects/Missiles/Laser";
     }
 }

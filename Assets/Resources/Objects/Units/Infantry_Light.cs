@@ -6,9 +6,9 @@ public class Infantry_Light : Unit
 
         Orders.AllowOrder(OrderType.Attack);
 
-        Engine = new Engine(this, "Diesel", 2.0f);
+        Engine = new Engine(this, "Diesel", 1.0f, 2.0f);
 
-        Gun = new Cannon(this, "Cannon", 1.0f, 3.0f, 1.0f);
+        Gun = new Cannon(this, "Cannon", 1.0f, 1.0f, 3.0f, 1.0f);
         Gun.MissilePrefab = "Objects/Missiles/Bullet";
     }
 }

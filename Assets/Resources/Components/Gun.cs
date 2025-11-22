@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class Gun : MyComponent
 {
-    public Gun(MyGameObject parent, string name, float damage, float range, float reload) : base(parent, name)
+    public Gun(MyGameObject parent, string name, float mass, float damage, float range, float reload) : base(parent, name, mass)
     {
         Damage = damage;
         Range = range;

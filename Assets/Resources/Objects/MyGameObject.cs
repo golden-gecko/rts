@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class MyGameObject : MonoBehaviour
@@ -546,6 +547,31 @@ public class MyGameObject : MonoBehaviour
     public Vector3 Size { get => GetComponent<Collider>().bounds.size; }
 
     public bool Alive { get => Health > 0.0f; }
+
+    public float Mass
+    {
+        get
+        {
+            float mass = 0.0f;
+
+            if (Armour != null)
+            {
+                mass += Armour.Mass;
+            }
+
+            if (Engine != null)
+            {
+                mass += Engine.Mass;
+            }
+
+            if (Gun != null)
+            {
+                mass += Gun.Mass;
+            }
+
+            return mass;
+        }
+    }
 
     [field: SerializeField]
     public Player Player;
