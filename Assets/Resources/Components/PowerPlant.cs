@@ -150,7 +150,7 @@ public class PowerPlant : MyComponent
     public Property Range { get; private set; } = new Property();
 
     [field: SerializeField]
-    public Timer PowerUpTime { get; private set; } = new Timer(0.0f, 1.0f); // TODO: Implement.
+    public Timer PowerUpTime { get; private set; } = new Timer(0.0f, 1.0f);
 
     public bool PowerUpStatus { get; private set; } = false;
 

@@ -16,7 +16,8 @@ public class FormationHandlerLine : FormationHandler
 
         int unitsCount = selectionGroup.Items.Where(x => x.TryGetComponent(out Engine _)).Count();
 
-        float column = 0.0f;
+        int column = 0;
+
         float columnOffset = (unitsCount % 2 == 0) ? (unitsCount / 2.0f * Config.Formation.Spacing - Config.Formation.Spacing / 2.0f) : ((unitsCount - 1) / 2.0f * Config.Formation.Spacing);
 
         foreach (MyGameObject selected in selectionGroup.Items)
@@ -26,7 +27,7 @@ public class FormationHandlerLine : FormationHandler
                 selected.ClearOrders();
             }
 
-            Vector3 positionInFormation = new Vector3(0.0f, 0.0f, column - columnOffset);
+            Vector3 positionInFormation = new Vector3(0.0f, 0.0f, column * Config.Formation.Spacing - columnOffset);
 
             float angle = Utils.Angle(cross);
 
@@ -34,7 +35,7 @@ public class FormationHandlerLine : FormationHandler
 
             selected.Move(position + positionInFormation);
 
-            column += Config.Formation.Spacing;
+            column += 1;
         }
     }
 }

@@ -1,4 +1,3 @@
-using System.Linq;
 using UnityEngine;
 
 public class FormationHandlerColumn : FormationHandler
@@ -14,9 +13,7 @@ public class FormationHandlerColumn : FormationHandler
         Vector3 direction = (new Vector3(position.x, 0.0f, position.z) - new Vector3(start.x, 0.0f, start.z)).normalized;
         Vector3 cross = Vector3.Cross(Vector3.up, direction).normalized;
 
-        int unitsCount = selectionGroup.Items.Where(x => x.TryGetComponent(out Engine _)).Count();
-
-        float row = 0.0f;
+        int row = 0;
 
         foreach (MyGameObject selected in selectionGroup.Items)
         {
@@ -25,7 +22,7 @@ public class FormationHandlerColumn : FormationHandler
                 selected.ClearOrders();
             }
 
-            Vector3 positionInFormation = new Vector3(row, 0.0f, 0.0f);
+            Vector3 positionInFormation = new Vector3(row * Config.Formation.Spacing, 0.0f, 0.0f);
 
             float angle = Utils.Angle(cross);
 
@@ -33,7 +30,7 @@ public class FormationHandlerColumn : FormationHandler
 
             selected.Move(position + positionInFormation);
 
-            row += Config.Formation.Spacing;
+            row += 1;
         }
     }
 }

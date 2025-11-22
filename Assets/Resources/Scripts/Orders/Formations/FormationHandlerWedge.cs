@@ -14,12 +14,11 @@ public class FormationHandlerWedge : FormationHandler
         Vector3 direction = (new Vector3(position.x, 0.0f, position.z) - new Vector3(start.x, 0.0f, start.z)).normalized;
         Vector3 cross = Vector3.Cross(Vector3.up, direction).normalized;
 
-        int unitsCount = selectionGroup.Items.Where(x => x.TryGetComponent(out Engine _)).Count();
+        int column = 0;
+        int columnMax = 1;
+        int row = 0;
 
-        float column = 0.0f;
-        float columnMax = Config.Formation.Spacing;
         float columnOffset = 0.0f;
-        float row = 0.0f;
 
         foreach (MyGameObject selected in selectionGroup.Items)
         {
@@ -28,7 +27,7 @@ public class FormationHandlerWedge : FormationHandler
                 selected.ClearOrders();
             }
 
-            Vector3 positionInFormation = new Vector3(row, 0.0f, column - columnOffset);
+            Vector3 positionInFormation = new Vector3(row * Config.Formation.Spacing, 0.0f, column * Config.Formation.Spacing - columnOffset);
 
             float angle = Utils.Angle(cross);
 
@@ -36,14 +35,15 @@ public class FormationHandlerWedge : FormationHandler
 
             selected.Move(position + positionInFormation);
 
-            column += Config.Formation.Spacing;
+            column += 1;
 
-            if (column >= columnMax) // TODO: Is it correct (floating errors)?
+            if (column >= columnMax)
             {
-                column = 0.0f;
-                columnMax += Config.Formation.Spacing * 2.0f;
+                column = 0;
+                columnMax += 2;
+                row += 1;
+
                 columnOffset += Config.Formation.Spacing;
-                row += Config.Formation.Spacing;
             }
         }
     }

@@ -121,6 +121,41 @@ public class SelectionGroup
 
     }
 
+    public void Default(Vector3 position, bool append = false)
+    {
+        Move(position, HUD.Instance.Formation, append);
+    }
+
+    public void Default(MyGameObject myGameObject, bool append = false)
+    {
+        foreach (MyGameObject selected in Items)
+        {
+            if (append == false)
+            {
+                selected.ClearOrders();
+            }
+
+            // TODO: Add assembly order.
+
+            if (myGameObject.Is(selected, DiplomacyState.Ally) && myGameObject.State == MyGameObjectState.UnderConstruction)
+            {
+                selected.Construct(myGameObject);
+            }
+            else if (myGameObject.Is(selected, DiplomacyState.Ally))
+            {
+                selected.Follow(myGameObject);
+            }
+            else if (myGameObject.Is(selected, DiplomacyState.Enemy))
+            {
+                selected.Attack(myGameObject);
+            }
+            else if (myGameObject.Gatherable)
+            {
+                selected.Gather(myGameObject);
+            }
+        }
+    }
+
     public void Destroy(bool append = false)
     {
         foreach (MyGameObject selected in Items)

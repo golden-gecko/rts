@@ -516,7 +516,7 @@ public class Indicators : MonoBehaviour
     {
         Vector3 scale = myGameObject.Scale;
 
-        if (HUD.Instance.ActivePlayer.TechnologyTree.IsDiscovered("Radar 2")) // TODO: Is ActivePlayer correct here?
+        if (HUD.Instance.ActivePlayer.TechnologyTree.IsDiscovered("Radar 2"))
         {
             float radius = myGameObject.Radius;
 
