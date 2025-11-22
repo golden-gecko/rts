@@ -1,12 +1,19 @@
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Assertions;
 
 public class Player : MonoBehaviour
 {
-    protected virtual void Awake()
+    public Order CreataAttackJob(MyGameObject myGameObject)
     {
-        Assert.IsNotNull(Selection);
+        foreach (MyGameObject target in GameObject.FindObjectsByType<MyGameObject>(FindObjectsSortMode.None)) // TODO: Optimize.
+        {
+            if (myGameObject.IsInRange(target.Position, myGameObject.MissileRangeMin, myGameObject.MissileRangeMax) && myGameObject.IsEnemy(target)) // TODO: Create IsInAttackRange method.
+            {
+                return Order.Attack(target);
+            }
+        }
+
+        return null;
     }
 
     public Order CreateOrderConstruction(MyGameObject myGameObject)
@@ -60,10 +67,10 @@ public class Player : MonoBehaviour
         return null;
     }
 
+    [SerializeField]
+    public Sprite Selection;
+
     public ConsumerProducerContainer Consumers { get; } = new ConsumerProducerContainer();
 
     public ConsumerProducerContainer Producers { get; } = new ConsumerProducerContainer();
-
-    [SerializeField]
-    public Sprite Selection;
 }
