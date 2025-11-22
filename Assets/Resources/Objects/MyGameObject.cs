@@ -6,6 +6,7 @@ public class MyGameObject : MonoBehaviour
 {
     protected virtual void Awake()
     {
+        body = transform.Find("Body");
         visual = transform.Find("Visual");
 
         rangeGun = visual.transform.Find("Range_Gun");
@@ -125,7 +126,7 @@ public class MyGameObject : MonoBehaviour
 
         if (Player == active || Map.Instance.IsVisibleBySight(this, active))
         {
-            foreach (Renderer renderer in GetComponentsInChildren<Renderer>(true))
+            foreach (Renderer renderer in body.GetComponentsInChildren<Renderer>(true))
             {
                 renderer.enabled = true;
             }
@@ -134,13 +135,8 @@ public class MyGameObject : MonoBehaviour
         }
         else if (Map.Instance.IsVisibleByRadar(this, active))
         {
-            foreach (Renderer renderer in GetComponentsInChildren<Renderer>(true))
+            foreach (Renderer renderer in body.GetComponentsInChildren<Renderer>(true))
             {
-                if (renderer.GetType() == typeof(SpriteRenderer) || renderer.name.Equals("Trace")) // TODO: Move meshes to child object to avoid this type check.
-                {
-                    continue;
-                }
-
                 renderer.enabled = false;
             }
 
@@ -148,13 +144,8 @@ public class MyGameObject : MonoBehaviour
         }
         else
         {
-            foreach (Renderer renderer in GetComponentsInChildren<Renderer>(true))
+            foreach (Renderer renderer in body.GetComponentsInChildren<Renderer>(true))
             {
-                if (renderer.GetType() == typeof(SpriteRenderer) || renderer.name.Equals("Trace")) // TODO: Move meshes to child object to avoid this type check.
-                {
-                    continue;
-                }
-
                 renderer.enabled = false;
             }
 
@@ -843,6 +834,7 @@ public class MyGameObject : MonoBehaviour
 
     public Dictionary<OrderType, OrderHandler> OrderHandlers { get; } = new Dictionary<OrderType, OrderHandler>();
 
+    private Transform body;
     private Transform visual;
     private Transform rangeGun;
     private Transform rangePower;
