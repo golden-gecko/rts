@@ -439,19 +439,19 @@ public class MyGameObject : MonoBehaviour
 
     public Vector3 Position { get => transform.position; set => transform.position = value; }
 
-    public OrderContainer Orders { get; private set; } = new();
+    public OrderContainer Orders { get; private set; } = new OrderContainer();
 
-    public ResourceContainer Resources { get; private set; } = new();
+    public ResourceContainer Resources { get; private set; } = new ResourceContainer();
 
-    public RecipeContainer Recipes { get; private set; } = new();
+    public RecipeContainer Recipes { get; private set; } = new RecipeContainer();
 
-    public Stats Stats { get; private set; } = new();
+    public Stats Stats { get; private set; } = new Stats();
 
     public MyGameObjectState State { get; set; } = MyGameObjectState.Operational;
 
-    public ResourceContainer ConstructionResources { get; private set; } = new();
+    public ResourceContainer ConstructionResources { get; private set; } = new ResourceContainer();
 
-    public RecipeContainer ConstructionRecipies { get; private set; } = new();
+    public RecipeContainer ConstructionRecipies { get; private set; } = new RecipeContainer();
 
     public Vector3 RallyPoint { get; set; }
     
@@ -459,5 +459,5 @@ public class MyGameObject : MonoBehaviour
 
     public MyGameObject Parent { get; set; }
 
-    protected Dictionary<OrderType, IOrderHandler> OrderHandlers { get; set; } = new();
+    protected Dictionary<OrderType, IOrderHandler> OrderHandlers { get; set; } = new Dictionary<OrderType, IOrderHandler>();
 }

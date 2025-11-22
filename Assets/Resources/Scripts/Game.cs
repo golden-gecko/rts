@@ -61,7 +61,7 @@ public class Game : MonoBehaviour
         }
     }
 
-    public ConsumerProducerContainer Consumers { get; private set; } = new();
+    public ConsumerProducerContainer Consumers { get; private set; } = new ConsumerProducerContainer();
 
-    public ConsumerProducerContainer Producers { get; private set; } = new();
+    public ConsumerProducerContainer Producers { get; private set; } = new ConsumerProducerContainer();
 }

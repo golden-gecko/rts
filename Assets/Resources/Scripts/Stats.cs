@@ -39,5 +39,5 @@ public class Stats
         return info;
     }
 
-    public Dictionary<string, float> Items { get; } = new();
+    public Dictionary<string, float> Items { get; } = new Dictionary<string, float>();
 }

@@ -12,7 +12,7 @@ public class Recipe
         ToProduce.Add(new RecipeComponent(name, count));
     }
 
-    public List<RecipeComponent> ToConsume { get; } = new();
+    public List<RecipeComponent> ToConsume { get; } = new List<RecipeComponent>();
 
-    public List<RecipeComponent> ToProduce { get; } = new();
+    public List<RecipeComponent> ToProduce { get; } = new List<RecipeComponent>();
 }

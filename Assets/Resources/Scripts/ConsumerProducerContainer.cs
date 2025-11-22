@@ -37,5 +37,5 @@ public class ConsumerProducerContainer
 
     public int Count { get => Items.Count; }
 
-    public List<ConsumerProducerRequest> Items { get; } = new();
+    public List<ConsumerProducerRequest> Items { get; } = new List<ConsumerProducerRequest>();
 }

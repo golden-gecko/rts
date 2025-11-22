@@ -30,13 +30,13 @@ Transform:
   m_Children:
   - {fileID: 7359210976734422354}
   - {fileID: 3652143678690515872}
-  - {fileID: 887420577939289056}
   - {fileID: 3035191719622506708}
   - {fileID: 647298350279045416}
   - {fileID: 5921029331395794445}
   - {fileID: 2371413764660629525}
   - {fileID: 5883116449520934048}
   - {fileID: 5076375745524075944}
+  - {fileID: 887420577939289056}
   - {fileID: 6996950668965491668}
   - {fileID: 8274690133156711252}
   m_Father: {fileID: 0}
@@ -400,7 +400,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9157527263714706475, guid: a417d7add2d029849a031c80e442f443, type: 3}
       propertyPath: m_Name
-      value: FreeCamera
+      value: MainCamera
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

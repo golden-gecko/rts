@@ -7,5 +7,5 @@ public class RecipeContainer
         Items.Add(recipe);
     }
 
-    public List<Recipe> Items { get; } = new();
+    public List<Recipe> Items { get; } = new List<Recipe>();
 }
