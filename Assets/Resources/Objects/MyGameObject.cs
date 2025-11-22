@@ -476,11 +476,11 @@ public class MyGameObject : MonoBehaviour
 
                 if (capacity > 0)
                 {
-                    Game.Instance.RegisterConsumer(this, resource.Name, capacity);
+                    Player.RegisterConsumer(this, resource.Name, capacity);
                 }
                 else
                 {
-                    Game.Instance.UnregisterConsumer(this, resource.Name);
+                    Player.UnregisterConsumer(this, resource.Name);
                 }
             }
         }
@@ -496,11 +496,11 @@ public class MyGameObject : MonoBehaviour
 
                 if (capacity > 0)
                 {
-                    Game.Instance.RegisterConsumer(this, resource.Name, capacity);
+                    Player.RegisterConsumer(this, resource.Name, capacity);
                 }
                 else
                 {
-                    Game.Instance.UnregisterConsumer(this, resource.Name);
+                    Player.UnregisterConsumer(this, resource.Name);
                 }
             }
 
@@ -510,11 +510,11 @@ public class MyGameObject : MonoBehaviour
 
                 if (storage > 0)
                 {
-                    Game.Instance.RegisterProducer(this, resource.Name, storage);
+                    Player.RegisterProducer(this, resource.Name, storage);
                 }
                 else
                 {
-                    Game.Instance.UnregisterProducer(this, resource.Name);
+                    Player.UnregisterProducer(this, resource.Name);
                 }
             }
         }

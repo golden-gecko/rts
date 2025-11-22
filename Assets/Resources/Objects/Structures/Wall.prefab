@@ -121,13 +121,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   <Player>k__BackingField: {fileID: 0}
+  <Gatherable>k__BackingField: 0
+  <Selectable>k__BackingField: 1
   <Health>k__BackingField: 300
   <HealthMax>k__BackingField: 300
   <VisibilityRange>k__BackingField: 10
-  <GatherTime>k__BackingField: 2
   <LoadTime>k__BackingField: 2
-  <ProduceTime>k__BackingField: 2
   <WaitTime>k__BackingField: 2
+  <DestroyEffect>k__BackingField: Effects/Structures/WFX_ExplosiveSmokeGround Big
 --- !u!114 &-309273742846007426
 MonoBehaviour:
   m_ObjectHideFlags: 0

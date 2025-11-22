@@ -290,15 +290,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   <Player>k__BackingField: {fileID: 0}
+  <Gatherable>k__BackingField: 0
+  <Selectable>k__BackingField: 1
   <Health>k__BackingField: 100
   <HealthMax>k__BackingField: 100
   <VisibilityRange>k__BackingField: 10
-  <ConstructionTime>k__BackingField: 10
-  <GatherTime>k__BackingField: 2
   <LoadTime>k__BackingField: 2
-  <ProduceTime>k__BackingField: 2
-  <ResearchTime>k__BackingField: 2
   <WaitTime>k__BackingField: 2
+  <DestroyEffect>k__BackingField: Effects/Structures/WFX_ExplosiveSmokeGround Big
 --- !u!114 &-1034757096108681396
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -330,6 +329,7 @@ MonoBehaviour:
   <Damage>k__BackingField: 7
   <Range>k__BackingField: 5
   <MissilePrefab>k__BackingField: Objects/Missiles/Rocket
+  <HitEffectPrefab>k__BackingField: 
 --- !u!1001 &4586973340312065434
 PrefabInstance:
   m_ObjectHideFlags: 0

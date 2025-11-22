@@ -61,6 +61,113 @@ public class Player : MonoBehaviour
         Diplomacy[player] = state;
     }
 
+    public Order CreateOrderConstruction(MyGameObject myGameObject)
+    {
+        float minDistance = float.MaxValue;
+        MyGameObject closest = null;
+
+        foreach (MyGameObject underConstruction in GameObject.FindObjectsByType<MyGameObject>(FindObjectsSortMode.None))
+        {
+            if (underConstruction.State != MyGameObjectState.UnderConstruction)
+            {
+                continue;
+            }
+
+            if (myGameObject.Is(underConstruction, DiplomacyState.Ally) == false)
+            {
+                continue;
+            }
+
+            float distance = myGameObject.DistanceTo(underConstruction);
+
+            if (distance < minDistance)
+            {
+                minDistance = distance;
+                closest = underConstruction;
+            }
+        }
+
+        if (closest != null)
+        {
+            return Order.Construct(closest, myGameObject.GetComponent<Constructor>().ResourceUsage);
+        }
+
+        return null;
+    }
+
+    public Order CreateOrderGather(MyGameObject myGameObject)
+    {
+        // TODO: Find storage for resource.
+        // TODO: Return closest object.
+        foreach (MyResource producer in GameObject.FindObjectsByType<MyResource>(FindObjectsSortMode.None))
+        {
+            return Order.Gather(producer);
+        }
+
+        return null;
+    }
+
+    public Order CreateOrderTransport(MyGameObject myGameObject)
+    {
+        foreach (ConsumerProducerRequest consumer in Consumers.Items) // TODO: Return closest object.
+        {
+            foreach (ConsumerProducerRequest producer in Producers.Items) // TODO: Return closest object.
+            {
+                if (producer.MyGameObject == consumer.MyGameObject)
+                {
+                    continue;
+                }
+
+                if (producer.Name != consumer.Name)
+                {
+                    continue;
+                }
+
+                Dictionary<string, int> resources = new Dictionary<string, int>()
+                {
+                    { producer.Name, producer.Value },
+                };
+
+                Consumers.MoveToEnd();
+                Producers.MoveToEnd();
+
+                return Order.Transport(producer.MyGameObject, consumer.MyGameObject, resources, myGameObject.LoadTime);
+            }
+        }
+
+        return null;
+    }
+
+    public void RegisterConsumer(MyGameObject myGameObject, string name, int value)
+    {
+        Register(Consumers, myGameObject, name, value);
+    }
+
+    public void UnregisterConsumer(MyGameObject myGameObject, string name)
+    {
+        Unregister(Consumers, myGameObject, name);
+    }
+
+    public void RegisterProducer(MyGameObject myGameObject, string name, int value)
+    {
+        Register(Producers, myGameObject, name, value);
+    }
+
+    public void UnregisterProducer(MyGameObject myGameObject, string name)
+    {
+        Unregister(Producers, myGameObject, name);
+    }
+
+    private void Register(ConsumerProducerContainer container, MyGameObject myGameObject, string name, int value)
+    {
+        container.Add(myGameObject, name, value);
+    }
+
+    private void Unregister(ConsumerProducerContainer container, MyGameObject myGameObject, string name)
+    {
+        container.Remove(myGameObject, name);
+    }
+
     [field: SerializeField]
     public Sprite SelectionSprite { get; set; }
 
@@ -75,4 +182,8 @@ public class Player : MonoBehaviour
     public AchievementContainer Achievements { get; } = new AchievementContainer();
 
     public Stats Stats { get; } = new Stats();
+
+    public ConsumerProducerContainer Consumers { get; } = new ConsumerProducerContainer();
+
+    public ConsumerProducerContainer Producers { get; } = new ConsumerProducerContainer();
 }

@@ -15,6 +15,8 @@ public class Game : MonoBehaviour
         {
             Instance = this;
         }
+
+        DisasterTime.Max = DisasterFrequencyInSeconds;
     }
 
     protected void Start()
@@ -22,14 +24,6 @@ public class Game : MonoBehaviour
         Player cpu = GameObject.Find("CPU").GetComponent<Player>();
         Player gaia = GameObject.Find("Gaia").GetComponent<Player>();
         Player human = GameObject.Find("Human").GetComponent<Player>();
-
-        Consumers[cpu] = new ConsumerProducerContainer();
-        Consumers[gaia] = new ConsumerProducerContainer();
-        Consumers[human] = new ConsumerProducerContainer();
-
-        Producers[cpu] = new ConsumerProducerContainer();
-        Producers[gaia] = new ConsumerProducerContainer();
-        Producers[human] = new ConsumerProducerContainer();
 
         cpu.SetDiplomacy(cpu, DiplomacyState.Ally);
         cpu.SetDiplomacy(gaia, DiplomacyState.Neutral);
@@ -42,6 +36,11 @@ public class Game : MonoBehaviour
         human.SetDiplomacy(cpu, DiplomacyState.Enemy);
         human.SetDiplomacy(gaia, DiplomacyState.Neutral);
         human.SetDiplomacy(human, DiplomacyState.Ally);
+    }
+
+    protected void Update()
+    {
+        CreateDisaster();
     }
 
     public Order CreataAttackJob(MyGameObject myGameObject)
@@ -83,118 +82,6 @@ public class Game : MonoBehaviour
         return null;
     }
 
-    public Order CreateOrderConstruction(MyGameObject myGameObject)
-    {
-        float minDistance = float.MaxValue;
-        MyGameObject closest = null;
-
-        foreach (MyGameObject underConstruction in GameObject.FindObjectsByType<MyGameObject>(FindObjectsSortMode.None))
-        {
-            if (underConstruction.State != MyGameObjectState.UnderConstruction)
-            {
-                continue;
-            }
-
-            if (myGameObject.Is(underConstruction, DiplomacyState.Ally) == false)
-            {
-                continue;
-            }
-
-            float distance = myGameObject.DistanceTo(underConstruction);
-
-            if (distance < minDistance)
-            {
-                minDistance = distance;
-                closest = underConstruction;
-            }
-        }
-
-        if (closest != null)
-        {
-            return Order.Construct(closest, myGameObject.GetComponent<Constructor>().ResourceUsage);
-        }
-
-        return null;
-    }
-
-    public Order CreateOrderGather(MyGameObject myGameObject)
-    {
-        // TODO: Find storage for resource.
-        // TODO: Return closest object.
-        foreach (MyResource producer in GameObject.FindObjectsByType<MyResource>(FindObjectsSortMode.None))
-        {
-            return Order.Gather(producer);
-        }
-
-        return null;
-    }
-
-    public Order CreateOrderTransport(MyGameObject myGameObject)
-    {
-        foreach (ConsumerProducerRequest consumer in Consumers[myGameObject.Player].Items) // TODO: Return closest object.
-        {
-            foreach (ConsumerProducerRequest producer in Producers[myGameObject.Player].Items) // TODO: Return closest object.
-            {
-                if (producer.MyGameObject == consumer.MyGameObject)
-                {
-                    continue;
-                }
-
-                if (producer.Name != consumer.Name)
-                {
-                    continue;
-                }
-
-                Dictionary<string, int> resources = new Dictionary<string, int>()
-                {
-                    { producer.Name, producer.Value },
-                };
-
-                Consumers[myGameObject.Player].MoveToEnd();
-                Producers[myGameObject.Player].MoveToEnd();
-
-                return Order.Transport(producer.MyGameObject, consumer.MyGameObject, resources, myGameObject.LoadTime);
-            }
-        }
-
-        return null;
-    }
-
-    public void RegisterConsumer(MyGameObject myGameObject, string name, int value)
-    {
-        Register(Consumers, myGameObject, name, value);
-    }
-
-    public void UnregisterConsumer(MyGameObject myGameObject, string name)
-    {
-        Unregister(Consumers, myGameObject, name);
-    }
-
-    public void RegisterProducer(MyGameObject myGameObject, string name, int value)
-    {
-        Register(Producers, myGameObject, name, value);
-    }
-
-    public void UnregisterProducer(MyGameObject myGameObject, string name)
-    {
-        Unregister(Producers, myGameObject, name);
-    }
-
-    private Player[] GetPlayers()
-    {
-        return GameObject.Find("Players").GetComponentsInChildren<Player>();
-    }
-
-    private void Register(Dictionary<Player, ConsumerProducerContainer> container, MyGameObject myGameObject, string name, int value)
-    {
-        container[myGameObject.Player].Add(myGameObject, name, value);
-    }
-
-    private void Unregister(Dictionary<Player, ConsumerProducerContainer> container, MyGameObject myGameObject, string name)
-    {
-        container[myGameObject.Player].Remove(myGameObject, name);
-    }
-
     public MyGameObject CreateGameObject(string prefab, Vector3 position, Player player, MyGameObjectState state)
     {
         MyGameObject resource = Resources.Load<MyGameObject>(prefab);
@@ -224,7 +111,33 @@ public class Game : MonoBehaviour
         return myGameObject;
     }
 
-    public Dictionary<Player, ConsumerProducerContainer> Consumers { get; } = new Dictionary<Player, ConsumerProducerContainer>();
+    private void CreateDisaster()
+    {
+        if (DisasterTime.Update(Time.deltaTime))
+        {
+            DisasterTime.Reset();
 
-    public Dictionary<Player, ConsumerProducerContainer> Producers { get; } = new Dictionary<Player, ConsumerProducerContainer>();
+            // TODO: Put this somewhere.
+            List<string> _disasters = new List<string>()
+            {
+                "Objects/Disasters/Fire",
+                "Objects/Disasters/Meteor",
+                "Objects/Disasters/Tornado",
+            };
+
+            int index = Random.Range(0, _disasters.Count);
+
+            CreateGameObject(_disasters[1], new Vector3(300.41f, 0.0f, 132.32f), GetGaiaPlayer(), MyGameObjectState.Operational);
+        }
+    }
+
+    private Player GetGaiaPlayer()
+    {
+        return GameObject.Find("Gaia").GetComponent<Player>();
+    }
+
+    [field: SerializeField]
+    public float DisasterFrequencyInSeconds = 120.0f;
+
+    private Timer DisasterTime = new Timer();
 }

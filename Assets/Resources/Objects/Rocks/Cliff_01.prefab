@@ -127,7 +127,7 @@ MonoBehaviour:
   <VisibilityRange>k__BackingField: 10
   <LoadTime>k__BackingField: 2
   <WaitTime>k__BackingField: 2
-  <DestroyEffect>k__BackingField: Effects/FX_Dig
+  <DestroyEffect>k__BackingField: Effects/Resources/FX_Dig
 --- !u!1001 &1758263620163903742
 PrefabInstance:
   m_ObjectHideFlags: 0
