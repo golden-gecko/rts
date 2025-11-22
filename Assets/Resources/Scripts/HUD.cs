@@ -606,8 +606,6 @@ public class HUD : MonoBehaviour
 
     private Vector2 endPosition = Vector2.zero;
 
-    private OrderType order = OrderType.None;
-
     private string prefab = string.Empty;
 
     private Rect selectionBox;
