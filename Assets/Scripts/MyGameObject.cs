@@ -11,9 +11,16 @@ public enum MyGameObjectState
 
 public class MyGameObject : MonoBehaviour
 {
-    protected virtual void Start()
+    protected virtual void Awake()
     {
+        // TODO: Move initialization of other objects to Awake method.
+
         Orders = new OrderContainer();
+        Orders.AllowOrder(OrderType.Destroy);
+        Orders.AllowOrder(OrderType.Idle);
+        Orders.AllowOrder(OrderType.Stop);
+        Orders.AllowOrder(OrderType.Wait);
+
         Resources = new ResourceContainer();
         Recipes = new RecipeContainer();
         Stats = new Stats();
@@ -22,6 +29,7 @@ public class MyGameObject : MonoBehaviour
         {
             { OrderType.Attack, OnOrderAttack },
             { OrderType.Construct, OnOrderConstruct },
+            { OrderType.Destroy, OnOrderDestroy },
             { OrderType.Follow, OnOrderFollow },
             { OrderType.Guard, OnOrderGuard },
             { OrderType.Idle, OnOrderIdle },
@@ -30,16 +38,13 @@ public class MyGameObject : MonoBehaviour
             { OrderType.Patrol, OnOrderPatrol },
             { OrderType.Produce, OnOrderProduce },
             { OrderType.Rally, OnOrderRally },
+            { OrderType.Repair, OnOrderRepair },
             { OrderType.Research, OnOrderResearch },
             { OrderType.Stop, OnOrderStop },
             { OrderType.Transport, OnOrderTransport },
             { OrderType.Unload, OnOrderUnload },
             { OrderType.Wait, OnOrderWait },
         };
-
-        Orders.AllowOrder(OrderType.Idle);
-        Orders.AllowOrder(OrderType.Stop);
-        Orders.AllowOrder(OrderType.Wait);
 
         ConstructionResources = new ResourceContainer();
         ConstructionResources.Add("Metal", 0, 30);
@@ -51,12 +56,20 @@ public class MyGameObject : MonoBehaviour
         r1.Consume("Metal", 0);
 
         ConstructionRecipies.Add(r1);
+    }
 
+    protected virtual void Start()
+    {
         RallyPoint = Exit;
     }
 
     protected virtual void Update()
     {
+        if (Health <= 0.0f)
+        {
+            Destroy(0);
+        }
+
         switch (State)
         {
             case MyGameObjectState.Operational:
@@ -73,6 +86,14 @@ public class MyGameObject : MonoBehaviour
         }
 
         AlignPositionToTerrain();
+        Reload();
+    }
+
+    public void OnDamage(float damage)
+    {
+        Health -= damage;
+
+        Stats.Add(Stats.DamageTaken, damage);
     }
 
     public bool IsConstructed()
@@ -116,6 +137,18 @@ public class MyGameObject : MonoBehaviour
     public void Construct(string prefab, PrefabConstructionType prefabConstructionType, Vector3 target)
     {
         Orders.Add(new Order(OrderType.Construct, prefab, prefabConstructionType, target, ConstructionTime));
+    }
+
+    public void Destroy(int priority = -1)
+    {
+        if (0 <= priority && priority < Orders.Count)
+        {
+            Orders.Insert(priority, new Order(OrderType.Destroy));
+        }
+        else
+        {
+            Orders.Add(new Order(OrderType.Destroy));
+        }
     }
 
     public void Guard(Vector3 target)
@@ -206,7 +239,6 @@ public class MyGameObject : MonoBehaviour
 
     public void Wait(int priority = -1)
     {
-        // TODO: Test.
         if (0 <= priority && priority < Orders.Count)
         {
             Orders.Insert(priority, new Order(OrderType.Wait, WaitTime)); 
@@ -217,8 +249,56 @@ public class MyGameObject : MonoBehaviour
         }
     }
 
+    private Vector3 GetPositionToAttack(Vector3 target)
+    {
+        Vector3 direction = target - Position;
+
+        direction.Normalize();
+
+        return target - direction * MissileRangeMax * 0.9f;
+    }
+
     protected virtual void OnOrderAttack()
     {
+        Order order = Orders.First();
+
+        Vector3 position;
+
+        if (order.TargetGameObject == null)
+        {
+            position = order.TargetPosition;
+        }
+        else
+        {
+            position = order.TargetGameObject.Position;
+        }
+
+        if (IsCloseTo(position, MissileRangeMax) == false) // TODO: Test by adding visual debug.
+        {
+            Move(GetPositionToAttack(position), 0); // TODO: Test by adding visual debug.
+        }
+        else
+        {
+            transform.LookAt(new Vector3(position.x, Position.y, position.z));
+
+            if (ReloadTimer.Finished)
+            {
+                MyGameObject resource = UnityEngine.Resources.Load<MyGameObject>(MissilePrefab); // TODO: Remove name conflict.
+                MyGameObject missile = Instantiate<MyGameObject>(resource, Position, Quaternion.identity);
+
+                missile.Parent = this;
+                missile.Player = Player;
+
+                missile.Move(position);
+                missile.Destroy();
+
+                ReloadTimer.Reset();
+
+                Orders.MoveToEnd();
+
+                Stats.Add(Stats.MissilesFired, 1);
+            }
+        }
     }
 
     protected virtual void OnOrderConstruct()
@@ -296,6 +376,16 @@ public class MyGameObject : MonoBehaviour
 
                 break;
         }
+    }
+
+    protected virtual void OnOrderDestroy()
+    {
+        Object resource = UnityEngine.Resources.Load("Effects/WFXMR_ExplosiveSmoke"); // TODO: Remove name conflict.
+        Object effect = Instantiate(resource, Position, Quaternion.identity);
+
+        GameObject.Destroy(gameObject);
+
+        Orders.Pop();
     }
 
     protected virtual void OnOrderFollow()
@@ -518,6 +608,10 @@ public class MyGameObject : MonoBehaviour
         Orders.Pop();
     }
 
+    protected virtual void OnOrderRepair()
+    {
+    }
+
     protected virtual void OnOrderResearch()
     {
     }
@@ -649,11 +743,16 @@ public class MyGameObject : MonoBehaviour
                 return string.Format("ID: {0}\nName: {1}\nResources:{2}", GetInstanceID(), name, ConstructionResources.GetInfo());
         }
 
-        string info = string.Format("ID: {0}\nName: {1}\nHP: {2}", GetInstanceID(), name, Health);
+        string info = string.Format("ID: {0}\nName: {1}\nHP: {2:0.}/{3:0.}", GetInstanceID(), name, Health, MaxHealth);
 
         if (Speed > 0)
         {
-            info += string.Format("\nSpeed: {0}", Speed);
+            info += string.Format("\nSpeed: {0:0.}", Speed);
+        }
+
+        if (ReloadTimer != null)
+        {
+            info += string.Format("\nReload: {0:0.}/{1:0.}", ReloadTimer.Value, ReloadTimer.Max);
         }
 
         info += string.Format("\nResources:{0}\nOrders: {1}\nStats: {2}", Resources.GetInfo(), Orders.GetInfo(), Stats.GetInfo());
@@ -777,15 +876,23 @@ public class MyGameObject : MonoBehaviour
         }
     }
 
-    public bool IsCloseTo(Vector3 position)
+    protected bool IsCloseTo(Vector3 position, float radius = 1.0f)
     {
-        var a = position;
-        var b = transform.position;
+        Vector3 a = position;
+        Vector3 b = transform.position;
 
-        a.y = 0;
-        b.y = 0;
+        a.y = 0.0f;
+        b.y = 0.0f;
 
-        return (b - a).magnitude < 1;
+        return (b - a).magnitude < radius;
+    }
+
+    protected void Reload()
+    {
+        if (ReloadTimer != null)
+        {
+            ReloadTimer.Update(Time.deltaTime);
+        }
     }
 
     public Vector3 Entrance
@@ -818,20 +925,28 @@ public class MyGameObject : MonoBehaviour
 
     public RecipeContainer Recipes { get; private set; }
 
+    [field: SerializeField]
     public float ConstructionTime { get; protected set; } = 10;
 
+    [field: SerializeField]
     public float Health { get; protected set; } = 100;
 
+    [field: SerializeField]
     public float MaxHealth { get; protected set; } = 100;
 
+    [field: SerializeField]
     public float LoadTime { get; protected set; } = 2;
 
+    [field: SerializeField]
     public float ProduceTime { get; protected set; } = 4;
 
+    [field: SerializeField]
     public float Speed { get; protected set; } = 0;
 
+    [field: SerializeField]
     public float UnloadTime { get; protected set; } = 2;
 
+    [field: SerializeField]
     public float WaitTime { get; protected set; } = 2;
 
     public Stats Stats { get; private set; }
@@ -843,4 +958,24 @@ public class MyGameObject : MonoBehaviour
     public RecipeContainer ConstructionRecipies { get; private set; }
 
     public Vector3 RallyPoint { get; protected set; }
+
+    [field: SerializeField]
+    public Player Player { get; set; }
+    
+    [field: SerializeField]
+    public float Damage { get; protected set; } = 0;
+
+    [field: SerializeField]
+    public string MissilePrefab { get; protected set; }
+
+    [field: SerializeField]
+    public float MissileRangeMax { get; protected set; } = 0;
+
+    [field: SerializeField]
+    public float MissileRangeMin { get; protected set; } = 0; // TODO: Implement.
+
+    public Timer ReloadTimer { get; protected set; }
+
+    [field: SerializeField]
+    public MyGameObject Parent { get; protected set; }
 }
