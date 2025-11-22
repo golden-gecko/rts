@@ -32,7 +32,7 @@ public class Player : MonoBehaviour
     {
         if (SelectionGroups.ContainsKey(keyCode))
         {
-            SelectionGroups[keyCode].Items = new HashSet<MyGameObject>(Selection.Items);
+            SelectionGroups[keyCode].Replace(Selection.Items);
         }
     }
 

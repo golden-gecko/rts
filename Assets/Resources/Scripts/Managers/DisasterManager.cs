@@ -55,13 +55,13 @@ public class DisasterManager : Singleton<DisasterManager>
     }
 
     [field: SerializeField]
-    public Player Player { get; set; }
+    public Player Player { get; private set; }
 
     [field: SerializeField]
-    public float DisasterDirection { get; set; } = 200.0f;
+    public float DisasterDirection { get; private set; } = 200.0f;
 
     [field: SerializeField]
-    public float DisasterRange { get; set; } = 20.0f;
+    public float DisasterRange { get; private set; } = 20.0f;
 
-    private Dictionary<Disaster, Timer> DisasterTimer = new Dictionary<Disaster, Timer>();
+    private Dictionary<Disaster, Timer> DisasterTimer { get; } = new Dictionary<Disaster, Timer>();
 }

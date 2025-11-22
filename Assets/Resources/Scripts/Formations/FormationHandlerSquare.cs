@@ -36,6 +36,7 @@ public class FormationHandlerSquare : FormationHandler
             positionInFormation = Quaternion.Euler(0.0f, angle, 0.0f) * positionInFormation;
 
             selected.Move(position + positionInFormation);
+            selected.Turn(position + positionInFormation + direction);
 
             column += 1;
 
