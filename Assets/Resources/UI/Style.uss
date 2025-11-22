@@ -39,3 +39,7 @@
     padding-bottom: 4px;
     height: 80%;
 }
+
+.menu-background {
+    background-color: rgba(0, 0, 0, 0.5);
+}

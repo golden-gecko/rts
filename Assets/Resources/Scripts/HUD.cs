@@ -5,6 +5,48 @@ using UnityEngine.UIElements;
 
 public class HUD : MonoBehaviour
 {
+    public static HUD Instance { get; private set; }
+
+    private void Awake()
+    {
+        if (Instance != null && Instance != this)
+        {
+            Destroy(this);
+        }
+        else
+        {
+            Instance = this;
+        }
+    }
+
+    private void Start()
+    {
+        ResetVisual();
+        DrawVisual();
+        DrawSelection();
+    }
+
+    private void Update()
+    {
+        HashSet<MyGameObject> destroyed = new HashSet<MyGameObject>();
+
+        foreach (MyGameObject selected in Selected)
+        {
+            if (selected == null)
+            {
+                destroyed.Add(selected);
+            }
+        }
+
+        foreach (MyGameObject x in destroyed)
+        {
+            Selected.Remove(x);
+        }
+
+        UpdateMouse();
+        UpdateKeyboard();
+    }
+
     public void Assemble(string prefab)
     {
         foreach (MyGameObject selected in Selected)
@@ -27,11 +69,6 @@ public class HUD : MonoBehaviour
         {
             selected.Stop();
         }
-    }
-
-    private void Awake()
-    {
-        Selected = new List<MyGameObject>();
     }
 
     private void Construct(Vector3 position)
@@ -258,54 +295,15 @@ public class HUD : MonoBehaviour
         }
     }
 
-    private void Start()
-    {
-        ResetVisual();
-        DrawVisual();
-        DrawSelection();
-    }
-
-    private void Update()
-    {
-        HashSet<MyGameObject> destroyed = new HashSet<MyGameObject>();
-
-        foreach (MyGameObject selected in Selected)
-        {
-            if (selected == null)
-            {
-                destroyed.Add(selected);
-            }
-        }
-
-        foreach (MyGameObject x in destroyed)
-        {
-            Selected.Remove(x);
-        }
-
-        UpdateMouse();
-        UpdateKeyboard();
-    }
-
     private void UpdateKeyboard()
     {
-        if (Input.GetKey(KeyCode.Escape))
+        if (Input.GetKeyDown(KeyCode.Escape))
         {
             Application.Quit();
         }
-
-        if (Input.GetKeyDown(KeyCode.F10))
+        else if (Input.GetKeyDown(KeyCode.F10))
         {
-            GameObject canvas = GameObject.Find("Canvas");
-
-            foreach (UIDocument i in canvas.GetComponentsInChildren<UIDocument>(true))
-            {
-                if (i.name == "MainMenu")
-                {
-                    i.enabled = !i.enabled;
-
-                    break;
-                }
-            }
+            MainMenu.Instance.gameObject.SetActive(!MainMenu.Instance.gameObject.activeInHierarchy);
         }
     }
 
@@ -485,7 +483,8 @@ public class HUD : MonoBehaviour
     }
 
     public PrefabConstructionType PrefabConstructionType { get; set; }
-    public List<MyGameObject> Selected { get; private set; }
+
+    public List<MyGameObject> Selected { get; } = new List<MyGameObject>();
 
     public RectTransform boxVisual;
 

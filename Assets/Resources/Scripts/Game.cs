@@ -5,6 +5,18 @@ public class Game : MonoBehaviour
 {
     public static Game Instance { get; private set; }
 
+    private void Awake()
+    {
+        if (Instance != null && Instance != this)
+        {
+            Destroy(this);
+        }
+        else
+        {
+            Instance = this;
+        }
+    }
+
     public Order CreateOrderConstruction(MyGameObject myGameObject)
     {
         foreach (MyGameObject underConstruction in GameObject.FindObjectsByType<MyGameObject>(FindObjectsSortMode.None)) // TODO: Not very efficient. Refactor into raycast.
@@ -47,18 +59,6 @@ public class Game : MonoBehaviour
         }
 
         return null;
-    }
-
-    private void Awake()
-    {
-        if (Instance != null && Instance != this)
-        {
-            Destroy(this);
-        }
-        else
-        {
-            Instance = this;
-        }
     }
 
     public ConsumerProducerContainer Consumers { get; private set; } = new ConsumerProducerContainer();

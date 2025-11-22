@@ -49,7 +49,7 @@ public class OrderHandlerLoad : IOrderHandler
                 myGameObject.Orders.Pop();
                 myGameObject.Stats.Add(Stats.OrdersFailed, 1);
 
-                GameObject.Find("Canvas").GetComponentInChildren<InGameMenuController>().Log("Failed to execute load order");
+                GameObject.Find("Canvas").GetComponentInChildren<GameMenu>().Log("Failed to execute load order");
             }
         }
     }

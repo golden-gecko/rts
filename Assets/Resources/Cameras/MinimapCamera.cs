@@ -7,7 +7,7 @@ public class MinimapCamera : MonoBehaviour
     {
         cameraComponent = GetComponent<Camera>();
 
-        UIDocument uiDocument = InGameMenuController.Instance.GetComponent<UIDocument>();
+        UIDocument uiDocument = GameMenu.Instance.GetComponent<UIDocument>();
         VisualElement rootVisualElement = uiDocument.rootVisualElement;
 
         centerOnMainCamera = rootVisualElement.Q<Button>("CenterOnMainCamera");

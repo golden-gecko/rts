@@ -4,9 +4,9 @@ using System.IO;
 using UnityEngine;
 using UnityEngine.UIElements;
 
-public class InGameMenuController : MonoBehaviour
+public class GameMenu : MonoBehaviour
 {
-    public static InGameMenuController Instance { get; private set; }
+    public static GameMenu Instance { get; private set; }
 
     private void Awake()
     {
@@ -17,6 +17,60 @@ public class InGameMenuController : MonoBehaviour
         else
         {
             Instance = this;
+        }
+    }
+
+    private void Start()
+    {
+        UIDocument uiDocument = GetComponent<UIDocument>();
+        VisualElement rootVisualElement = uiDocument.rootVisualElement;
+
+        bottomPanel = rootVisualElement.Q<VisualElement>("BottomPanel");
+        infoPanel = rootVisualElement.Q<VisualElement>("InfoPanel");
+
+        log = rootVisualElement.Q<Label>("Log");
+
+        order = rootVisualElement.Q<Label>("Order");
+        prefab = rootVisualElement.Q<Label>("Prefab");
+        selected = rootVisualElement.Q<Label>("Selected");
+        info = rootVisualElement.Q<Label>("Info");
+
+        orders = rootVisualElement.Q<VisualElement>("OrderList");
+        prefabs = rootVisualElement.Q<VisualElement>("PrefabList");
+
+        CreateOrders();
+        CreatePrefabs();
+
+        Log("");
+    }
+
+    private void Update()
+    {
+        order.text = "Order: " + HUD.Instance.Order.ToString();
+        prefab.text = "Prefab: " + HUD.Instance.Prefab;
+        selected.text = "Selected: " + HUD.Instance.Selected.Count;
+
+        if (HUD.Instance.Selected.Count > 0 && HUD.Instance.Selected[0] != null)
+        {
+            info.text = HUD.Instance.Selected[0].GetInfo();
+        }
+        else
+        {
+            info.text = string.Empty;
+        }
+
+        UpdateOrders();
+        UpdatePrefabs();
+
+        if (HUD.Instance.Selected.Count > 0)
+        {
+            bottomPanel.style.display = DisplayStyle.Flex;
+            infoPanel.style.display = DisplayStyle.Flex;
+        }
+        else
+        {
+            bottomPanel.style.display = DisplayStyle.None;
+            infoPanel.style.display = DisplayStyle.None;
         }
     }
 
@@ -111,85 +165,26 @@ public class InGameMenuController : MonoBehaviour
 
     private void OnAssemble(string prefab)
     {
-        hud.Assemble(prefab);
+        HUD.Instance.Assemble(prefab);
     }
 
     private void OnConstruct(string prefab)
     {
-        hud.Order = OrderType.Construct;
-        hud.Prefab = prefab;
+        HUD.Instance.Order = OrderType.Construct;
+        HUD.Instance.Prefab = prefab;
     }
 
     private void OnOrder(OrderType orderType)
     {
-        hud.Order = orderType;
-        hud.Prefab = string.Empty;
-    }
-
-    private void Start()
-    {
-        hud = GameObject.FindGameObjectWithTag("HUD").GetComponent<HUD>();
-
-        UIDocument uiDocument = GetComponent<UIDocument>();
-        VisualElement rootVisualElement = uiDocument.rootVisualElement;
-
-        bottomPanel = rootVisualElement.Q<VisualElement>("BottomPanel");
-        infoPanel = rootVisualElement.Q<VisualElement>("InfoPanel");
-
-        log = rootVisualElement.Q<Label>("Log");
-
-        order = rootVisualElement.Q<Label>("Order");
-        prefab = rootVisualElement.Q<Label>("Prefab");
-        selected = rootVisualElement.Q<Label>("Selected");
-        info = rootVisualElement.Q<Label>("Info");
-
-        orders = rootVisualElement.Q<VisualElement>("OrderList");
-        prefabs = rootVisualElement.Q<VisualElement>("PrefabList");
-
-        ordersButtons = new Dictionary<OrderType, Button>();
-        prefabsButtons = new Dictionary<string, Button>();
-
-        CreateOrders();
-        CreatePrefabs();
-
-        Log("");
-    }
-
-    private void Update()
-    {
-        order.text = "Order: " + hud.Order.ToString();
-        prefab.text = "Prefab: " + hud.Prefab;
-        selected.text = "Selected: " + hud.Selected.Count;
-
-        if (hud.Selected.Count > 0 && hud.Selected[0] != null)
-        {
-            info.text = hud.Selected[0].GetInfo();
-        }
-        else
-        {
-            info.text = string.Empty;
-        }
-
-        UpdateOrders();
-        UpdatePrefabs();
-
-        if (hud.Selected.Count > 0)
-        {
-            bottomPanel.style.display = DisplayStyle.Flex;
-            infoPanel.style.display = DisplayStyle.Flex;
-        }
-        else
-        {
-            bottomPanel.style.display = DisplayStyle.None;
-            infoPanel.style.display = DisplayStyle.None;
-        }
+        HUD.Instance.Order = orderType;
+        HUD.Instance.Prefab = string.Empty;
     }
 
     private void UpdateOrders()
     {
         HashSet<OrderType> whitelist = new HashSet<OrderType>();
 
-        foreach (MyGameObject selected in hud.Selected)
+        foreach (MyGameObject selected in HUD.Instance.Selected)
         {
             if (selected.State != MyGameObjectState.Operational)
             {
@@ -217,7 +212,7 @@ public class InGameMenuController : MonoBehaviour
     {
         HashSet<string> whitelist = new HashSet<string>();
 
-        foreach (MyGameObject selected in hud.Selected)
+        foreach (MyGameObject selected in HUD.Instance.Selected)
         {
             if (selected.State != MyGameObjectState.Operational)
             {
@@ -244,9 +239,8 @@ public class InGameMenuController : MonoBehaviour
         }
     }
 
-    public VisualTreeAsset templateButton;
-
-    private HUD hud;
+    [SerializeField]
+    private VisualTreeAsset templateButton;
 
     private VisualElement bottomPanel;
     private VisualElement infoPanel;
@@ -261,6 +255,6 @@ public class InGameMenuController : MonoBehaviour
     private VisualElement orders;
     private VisualElement prefabs;
 
-    private Dictionary<OrderType, Button> ordersButtons;
-    private Dictionary<string, Button> prefabsButtons;
+    private Dictionary<OrderType, Button> ordersButtons = new Dictionary<OrderType, Button>();
+    private Dictionary<string, Button> prefabsButtons = new Dictionary<string, Button>();
 }
