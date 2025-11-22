@@ -451,10 +451,25 @@ public class MyGameObject : MonoBehaviour
         Position = position;
     }
 
-    public void OnRepair(float value)
+    public float OnRepair(float health)
     {
-        // TODO: Repair health, armour and shield.
-        // Stats.Add(Stats.DamageRepaired, Health.Add(value));
+        float healthLeft = health;
+
+        healthLeft -= Health.Add(healthLeft);
+
+        if (TryGetComponent(out Armour armour))
+        {
+            healthLeft -= armour.Repair(healthLeft);
+        }
+
+        if (TryGetComponent(out Shield shield))
+        {
+            healthLeft -= shield.Repair(healthLeft);
+        }
+
+        Stats.Add(Stats.DamageRepaired, health - healthLeft);
+
+        return health - healthLeft;
     }
 
     public void Select(bool status)
@@ -679,6 +694,7 @@ public class MyGameObject : MonoBehaviour
         foreach (string skillName in SkillsNames)
         {
             Skills[skillName] = SkillManager.Instance.Get(skillName).Clone() as Skill;
+            Skills[skillName].Start(this);
         }
     }
 
@@ -748,35 +764,15 @@ public class MyGameObject : MonoBehaviour
     {
         get
         {
-            // TODO: Fix center of an object.
-
-            /*
-            Collider[] colliders = GetComponentsInChildren<Collider>();
-
-            if (colliders.Length <= 0)
-            {
-                return Vector3.zero;
-            }
-
-            Vector3 center = Vector3.zero;
-
-            foreach (Collider collider in colliders)
-            {
-                center += collider.bounds.center;
-            }
-
-            return center / colliders.Length;
-            */
-
             return new Vector3(Position.x, Position.y + Size.y / 2.0f, Position.z);
         }
     }
 
     public Vector3 Direction { get => transform.forward; }
 
-    public Vector3 Entrance { get => Position + new Vector3(Direction.x * Size.x, Direction.y * Size.y, Direction.z * Size.z); }
+    public Vector3 Entrance { get => new Vector3(Position.x + Direction.x * Size.x, Position.y, Position.z + Direction.z * Size.z); }
 
-    public Vector3 Exit { get => Position - new Vector3(Direction.x * Size.x, Direction.y * Size.y, Direction.z * Size.z); }
+    public Vector3 Exit { get => new Vector3(Position.x - Direction.x * Size.x, Position.y, Position.z - Direction.z * Size.z); }
 
     public float Radius { get => (Size.x + Size.y + Size.z) / 3.0f; }
 

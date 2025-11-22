@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using UnityEngine;
 
 public class PassiveIncreasePower : Skill
@@ -13,40 +12,39 @@ public class PassiveIncreasePower : Skill
         Value = value;
     }
 
+    public override void Start(MyGameObject myGameObject)
+    {
+        base.Start(myGameObject);
+
+        if (myGameObject.State == MyGameObjectState.Operational && myGameObject.Enabled)
+        {
+            PowerUp(myGameObject, myGameObject.Position);
+        }
+
+        previousState = myGameObject.State;
+        previousEnabled = myGameObject.Enabled;
+        previousPosition = myGameObject.Position;
+    }
+
     public override void Update(MyGameObject myGameObject)
     {
         base.Update(myGameObject);
 
-        foreach (MyGameObject target in targets)
+        if (previousState != myGameObject.State || previousEnabled != myGameObject.Enabled || Utils.ToGrid(previousPosition, Config.Map.Scale) != Utils.ToGrid(myGameObject.Position, Config.Map.Scale))
         {
-            if (target == null)
+            if (previousState == MyGameObjectState.Operational && previousEnabled)
             {
-                continue;
+                PowerDown(myGameObject, previousPosition);
             }
 
-            if (target.TryGetComponent(out Engine engine))
+            if (myGameObject.State == MyGameObjectState.Operational && myGameObject.Enabled)
             {
-                engine.Power.Factor.Remove(myGameObject);
-            }
-        }
-
-        targets.Clear();
-
-        foreach (RaycastHit hitInfo in Utils.SphereCastAll(myGameObject.Position, Range, Utils.GetGameObjectMask()))
-        {
-            MyGameObject target = Utils.GetGameObject(hitInfo);
-
-            if (target.Is(myGameObject, DiplomacyState.Ally) == false)
-            {
-                continue;
+                PowerUp(myGameObject, myGameObject.Position);
             }
 
-            if (target.TryGetComponent(out Engine engine))
-            {
-                engine.Power.Factor.Add(myGameObject, Value);
-            }
-
-            targets.Add(target);
+            previousState = myGameObject.State;
+            previousEnabled = myGameObject.Enabled;
+            previousPosition = myGameObject.Position;
         }
     }
 
@@ -54,31 +52,24 @@ public class PassiveIncreasePower : Skill
     {
         base.OnDestroy(myGameObject);
 
-        foreach (MyGameObject target in targets)
+        if (previousState == MyGameObjectState.Operational && previousEnabled)
         {
-            if (target == null)
-            {
-                continue;
-            }
-
-            if (target.TryGetComponent(out Gun gun))
-            {
-                gun.Range.Factor.Remove(myGameObject);
-            }
-
-            if (target.TryGetComponent(out Radar radar))
-            {
-                radar.Range.Factor.Remove(myGameObject);
-            }
-
-            if (target.TryGetComponent(out Sight sight))
-            {
-                sight.Range.Factor.Remove(myGameObject);
-            }
+            PowerDown(myGameObject, previousPosition);
         }
+    }
+    private void PowerUp(MyGameObject myGameObject, Vector3 position)
+    {
+        Map.Instance.VisibleByPassivePower(myGameObject, position, Range, Value);
+    }
+
+    private void PowerDown(MyGameObject myGameObject, Vector3 position)
+    {
+        Map.Instance.VisibleByPassivePower(myGameObject, position, Range, -Value);
     }
 
     public float Value { get; } = 0.0f;
 
-    private HashSet<MyGameObject> targets = new HashSet<MyGameObject>();
+    private MyGameObjectState previousState;
+    private bool previousEnabled;
+    private Vector3 previousPosition;
 }

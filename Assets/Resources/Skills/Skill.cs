@@ -17,6 +17,10 @@ public class Skill : ICloneable
         Passive = passive;
     }
 
+    public virtual void Start(MyGameObject myGameObject)
+    {
+    }
+
     public virtual void Update(MyGameObject myGameObject)
     {
         Cooldown.Update(Time.deltaTime);

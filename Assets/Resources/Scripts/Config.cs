@@ -6,6 +6,8 @@ public class Config
     public class Asset
     {
         public static string Disasters { get; } = Path.Join("Objects", "Disasters");
+        public static string Plants { get; } = Path.Join("Objects", "Plants");
+        public static string Rocks { get; } = Path.Join("Objects", "Rocks");
         public static string Structures { get; } = Path.Join("Objects", "Structures");
         public static string Units { get; } = Path.Join("Objects", "Units");
     }
@@ -42,6 +44,9 @@ public class Config
         public static Color DataLayerColorPowerRelay { get; } = new Color(1.0f, 1.0f, 0.5f, 0.25f);
         public static Color DataLayerColorRadar { get; } = new Color(0.0f, 0.0f, 1.0f, 0.25f);
         public static Color DataLayerColorSight { get; } = new Color(0.0f, 1.0f, 0.0f, 0.25f);
+        public static Color DataLayerColorPassiveDamage { get; } = new Color(1.0f, 0.0f, 0.5f, 0.25f);
+        public static Color DataLayerColorPassivePower { get; } = new Color(1.0f, 0.0f, 0.5f, 0.25f);
+        public static Color DataLayerColorPassiveRange { get; } = new Color(1.0f, 0.0f, 0.5f, 0.25f);
         public static Color DataLayerColorEmpty { get; } = new Color(0.0f, 0.0f, 0.0f, 0.0f);
         public static float MaxHeight { get; } = 2000.0f;
         public static float Scale { get; } = 1.0f;

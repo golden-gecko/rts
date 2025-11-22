@@ -17,6 +17,10 @@ public class UI_Layers : UI_Element<UI_Layers>
         radar = panel.Q<Toggle>("Radar");
         sight = panel.Q<Toggle>("Sight");
 
+        passiveDamage = panel.Q<Toggle>("PassiveDamage");
+        passivePower = panel.Q<Toggle>("PassivePower");
+        passiveRange = panel.Q<Toggle>("PassiveRange");
+
         grid.RegisterValueChangedCallback(OnToggleGrid);
         range.RegisterValueChangedCallback(OnToggleRange);
 
@@ -25,6 +29,10 @@ public class UI_Layers : UI_Element<UI_Layers>
         power.RegisterValueChangedCallback(OnTogglePower);
         radar.RegisterValueChangedCallback(OnToggleRadar);
         sight.RegisterValueChangedCallback(OnToggleSight);
+
+        passiveDamage.RegisterValueChangedCallback(OnPassiveDamageToggle);
+        passivePower.RegisterValueChangedCallback(OnPassivePowerToggle);
+        passiveRange.RegisterValueChangedCallback(OnPassiveRangeToggle);
     }
 
     private void OnToggleGrid(ChangeEvent<bool> evt)
@@ -48,6 +56,9 @@ public class UI_Layers : UI_Element<UI_Layers>
             Disable(power);
             Disable(radar);
             Disable(sight);
+            Disable(passiveDamage);
+            Disable(passivePower);
+            Disable(passiveRange);
         }
 
         Set();
@@ -61,6 +72,9 @@ public class UI_Layers : UI_Element<UI_Layers>
             Disable(power);
             Disable(radar);
             Disable(sight);
+            Disable(passiveDamage);
+            Disable(passivePower);
+            Disable(passiveRange);
         }
 
         Set();
@@ -74,6 +88,9 @@ public class UI_Layers : UI_Element<UI_Layers>
             Disable(exploration);
             Disable(radar);
             Disable(sight);
+            Disable(passiveDamage);
+            Disable(passivePower);
+            Disable(passiveRange);
         }
 
         Set();
@@ -87,6 +104,9 @@ public class UI_Layers : UI_Element<UI_Layers>
             Disable(exploration);
             Disable(power);
             Disable(sight);
+            Disable(passiveDamage);
+            Disable(passivePower);
+            Disable(passiveRange);
         }
 
         Set();
@@ -100,6 +120,57 @@ public class UI_Layers : UI_Element<UI_Layers>
             Disable(exploration);
             Disable(power);
             Disable(radar);
+            Disable(passiveDamage);
+            Disable(passivePower);
+            Disable(passiveRange);
+        }
+
+        Set();
+    }
+
+    private void OnPassiveDamageToggle(ChangeEvent<bool> evt)
+    {
+        if (evt.newValue)
+        {
+            Disable(occupation);
+            Disable(exploration);
+            Disable(power);
+            Disable(radar);
+            Disable(sight);
+            Disable(passivePower);
+            Disable(passiveRange);
+        }
+
+        Set();
+    }
+
+    private void OnPassivePowerToggle(ChangeEvent<bool> evt)
+    {
+        if (evt.newValue)
+        {
+            Disable(occupation);
+            Disable(exploration);
+            Disable(power);
+            Disable(radar);
+            Disable(sight);
+            Disable(passiveDamage);
+            Disable(passiveRange);
+        }
+
+        Set();
+    }
+
+    private void OnPassiveRangeToggle(ChangeEvent<bool> evt)
+    {
+        if (evt.newValue)
+        {
+            Disable(occupation);
+            Disable(exploration);
+            Disable(power);
+            Disable(radar);
+            Disable(sight);
+            Disable(passiveDamage);
+            Disable(passivePower);
         }
 
         Set();
@@ -137,6 +208,18 @@ public class UI_Layers : UI_Element<UI_Layers>
         {
             projector.material = Map.Instance.Sight;
         }
+        else if (passiveDamage.value)
+        {
+            projector.material = Map.Instance.PassiveDamage;
+        }
+        else if (passivePower.value)
+        {
+            projector.material = Map.Instance.PassivePower;
+        }
+        else if (passiveRange.value)
+        {
+            projector.material = Map.Instance.PassiveRange;
+        }
         else
         {
             projector.material = null;
@@ -153,4 +236,8 @@ public class UI_Layers : UI_Element<UI_Layers>
     private Toggle power;
     private Toggle radar;
     private Toggle sight;
+
+    private Toggle passiveDamage;
+    private Toggle passivePower;
+    private Toggle passiveRange;
 }

@@ -26,7 +26,7 @@ public class Disaster : MyGameObject
         }
     }
 
-    protected override void OnTriggerEnter(Collider other)
+    protected override void OnTriggerEnter(Collider other) // TODO: Replace with OnCollisionEnter.
     {
         base.OnTriggerEnter(other);
 
