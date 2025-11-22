@@ -6,24 +6,13 @@ public class Radar : MyComponent
     {
         base.Start();
 
-        MyGameObject parent = GetComponent<MyGameObject>();
+        previousState = parent.State;
+        previousEnabled = parent.Enabled;
+        previousPosition = parent.Position;
 
-        PreviousEnabled = parent.Enabled;
-        PreviousPosition = parent.Position;
-        PreviousPositionInt = Utils.ToGrid(parent.Position, Config.Map.VisibilityScale);
-
-        if (parent.Enabled == false)
+        if (parent.State == MyGameObjectState.Operational && parent.Enabled)
         {
-            return;
-        }
-
-        if (Anti)
-        {
-            Map.Instance.SetVisibleByAntiRadar(parent, parent.Position, Range.Total, 1);
-        }
-        else
-        {
-            Map.Instance.SetVisibleByRadar(parent, parent.Position, Range.Total, 1);
+            PowerUp(parent.Position);
         }
     }
 
@@ -31,53 +20,21 @@ public class Radar : MyComponent
     {
         base.Update();
 
-        MyGameObject parent = GetComponent<MyGameObject>();
-
-        Vector3Int CurrentPositionInt = Utils.ToGrid(parent.Position, Config.Map.VisibilityScale);
-
-        if (PreviousEnabled != parent.Enabled)
+        if (previousState != parent.State || previousEnabled != parent.Enabled || Utils.ToGrid(previousPosition, Config.Map.VisibilityScale) != Utils.ToGrid(parent.Position, Config.Map.VisibilityScale))
         {
-            if (parent.Enabled)
+            if (previousState == MyGameObjectState.Operational && previousEnabled)
             {
-                if (Anti)
-                {
-                    Map.Instance.SetVisibleByAntiRadar(parent, parent.Position, Range.Total, 1);
-                }
-                else
-                {
-                    Map.Instance.SetVisibleByRadar(parent, parent.Position, Range.Total, 1);
-                }
-            }
-            else
-            {
-                if (Anti)
-                {
-                    Map.Instance.SetVisibleByAntiRadar(parent, parent.Position, Range.Total, -1);
-                }
-                else
-                {
-                    Map.Instance.SetVisibleByRadar(parent, parent.Position, Range.Total, -1);
-                }
+                PowerDown(previousPosition);
             }
 
-            PreviousEnabled = parent.Enabled;
-        }
-
-        if (PreviousPositionInt != CurrentPositionInt)
-        {
-            if (Anti)
+            if (parent.State == MyGameObjectState.Operational && parent.Enabled)
             {
-                Map.Instance.SetVisibleByAntiRadar(parent, PreviousPosition, Range.Total, -1);
-                Map.Instance.SetVisibleByAntiRadar(parent, parent.Position, Range.Total, 1);
-            }
-            else
-            {
-                Map.Instance.SetVisibleByRadar(parent, PreviousPosition, Range.Total, -1);
-                Map.Instance.SetVisibleByRadar(parent, parent.Position, Range.Total, 1);
+                PowerUp(parent.Position);
             }
 
-            PreviousPosition = parent.Position;
-            PreviousPositionInt = CurrentPositionInt;
+            previousState = parent.State;
+            previousEnabled = parent.Enabled;
+            previousPosition = parent.Position;
         }
     }
 
@@ -90,18 +47,9 @@ public class Radar : MyComponent
     {
         base.OnDestroy_();
 
-        MyGameObject parent = GetComponent<MyGameObject>();
-
-        if (parent.Enabled)
+        if (previousState == MyGameObjectState.Operational || previousEnabled)
         {
-            if (Anti)
-            {
-                Map.Instance.SetVisibleByAntiRadar(parent, parent.Position, Range.Total, -1);
-            }
-            else
-            {
-                Map.Instance.SetVisibleByRadar(parent, parent.Position, Range.Total, -1);
-            }
+            PowerDown(previousPosition);
         }
     }
 
@@ -110,13 +58,37 @@ public class Radar : MyComponent
         return Utils.IsInRange(GetComponent<MyGameObject>().Position, position, Range.Total);
     }
 
+    private void PowerUp(Vector3 position)
+    {
+        if (Anti)
+        {
+            Map.Instance.SetVisibleByAntiRadar(parent, position, Range.Total, 1);
+        }
+        else
+        {
+            Map.Instance.SetVisibleByRadar(parent, position, Range.Total, 1);
+        }
+    }
+
+    private void PowerDown(Vector3 position)
+    {
+        if (Anti)
+        {
+            Map.Instance.SetVisibleByAntiRadar(parent, position, Range.Total, -1);
+        }
+        else
+        {
+            Map.Instance.SetVisibleByRadar(parent, position, Range.Total, -1);
+        }
+    }
+
     [field: SerializeField]
     public Property Range { get; set; } = new Property();
 
     [field: SerializeField]
     public bool Anti { get; set; } = false;
 
-    private bool PreviousEnabled = true;
-    private Vector3 PreviousPosition = new Vector3();
-    private Vector3Int PreviousPositionInt = new Vector3Int();
+    private MyGameObjectState previousState;
+    private bool previousEnabled;
+    private Vector3 previousPosition;
 }

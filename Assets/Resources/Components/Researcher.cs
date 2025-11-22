@@ -8,8 +8,6 @@ public class Researcher : MyComponent
     {
         base.Awake();
 
-        MyGameObject parent = GetComponent<MyGameObject>();
-
         parent.Orders.AllowOrder(OrderType.Research);
 
         foreach (string technology in Technologies)

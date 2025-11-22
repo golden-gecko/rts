@@ -6,8 +6,6 @@ public class Gun : MyComponent
     {
         base.Awake();
 
-        MyGameObject parent = GetComponent<MyGameObject>();
-
         parent.Orders.AllowOrder(OrderType.Attack);
 
         parent.OrderHandlers[OrderType.Attack] = new OrderHandlerAttack();
@@ -17,8 +15,6 @@ public class Gun : MyComponent
     protected override void Update()
     {
         base.Update();
-
-        MyGameObject parent = GetComponent<MyGameObject>();
 
         if (parent.Working == false)
         {

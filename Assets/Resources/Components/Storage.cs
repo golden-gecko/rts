@@ -7,8 +7,6 @@ public class Storage : MyComponent
     {
         base.Awake();
 
-        MyGameObject parent = GetComponent<MyGameObject>();
-
         parent.Orders.AllowOrder(OrderType.Load);
         parent.Orders.AllowOrder(OrderType.Stock);
         parent.Orders.AllowOrder(OrderType.Transport);
@@ -26,8 +24,6 @@ public class Storage : MyComponent
     protected override void Update()
     {
         base.Update();
-
-        MyGameObject parent = GetComponent<MyGameObject>();
 
         switch (parent.State)
         {

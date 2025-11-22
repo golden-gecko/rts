@@ -6,50 +6,35 @@ public class Sight : MyComponent
     {
         base.Start();
 
-        MyGameObject parent = GetComponent<MyGameObject>();
+        previousState = parent.State;
+        previousEnabled = parent.Enabled;
+        previousPosition = parent.Position;
 
-        PreviousEnabled = parent.Enabled;
-        PreviousPosition = parent.Position;
-        PreviousPositionInt = Utils.ToGrid(parent.Position, Config.Map.VisibilityScale);
-
-        if (parent.Enabled == false)
+        if (parent.State == MyGameObjectState.Operational && parent.Enabled)
         {
-            return;
+            PowerUp(parent.Position);
         }
-
-        Map.Instance.SetVisibleBySight(parent, parent.Position, Range.Total, 1);
     }
 
     protected override void Update()
     {
         base.Update();
 
-        MyGameObject parent = GetComponent<MyGameObject>();
-
-        Vector3Int CurrentPositionInt = Utils.ToGrid(parent.Position, Config.Map.VisibilityScale);
-
-        if (PreviousEnabled != parent.Enabled)
+        if (previousState != parent.State || previousEnabled != parent.Enabled || Utils.ToGrid(previousPosition, Config.Map.VisibilityScale) != Utils.ToGrid(parent.Position, Config.Map.VisibilityScale))
         {
-            if (parent.Enabled)
+            if (previousState == MyGameObjectState.Operational && previousEnabled)
             {
-                Map.Instance.SetVisibleBySight(parent, parent.Position, Range.Total, 1);
-            }
-            else
-            {
-                Map.Instance.SetVisibleBySight(parent, parent.Position, Range.Total, -1);
+                PowerDown(previousPosition);
             }
 
+            if (parent.State == MyGameObjectState.Operational && parent.Enabled)
+            {
+                PowerUp(parent.Position);
+            }
 
-            PreviousEnabled = parent.Enabled;
-        }
-
-        if (PreviousPositionInt != CurrentPositionInt)
-        {
-            Map.Instance.SetVisibleBySight(parent, PreviousPosition, Range.Total, -1);
-            Map.Instance.SetVisibleBySight(parent, parent.Position, Range.Total, 1);
-
-            PreviousPosition = parent.Position;
-            PreviousPositionInt = CurrentPositionInt;
+            previousState = parent.State;
+            previousEnabled = parent.Enabled;
+            previousPosition = parent.Position;
         }
     }
 
@@ -62,11 +47,9 @@ public class Sight : MyComponent
     {
         base.OnDestroy_();
 
-        MyGameObject parent = GetComponent<MyGameObject>();
-
-        if (parent.Enabled)
+        if (previousState == MyGameObjectState.Operational || previousEnabled)
         {
-            Map.Instance.SetVisibleBySight(parent, parent.Position, Range.Total, -1);
+            PowerDown(previousPosition);
         }
     }
 
@@ -75,10 +58,20 @@ public class Sight : MyComponent
         return Utils.IsInRange(GetComponent<MyGameObject>().Position, position, Range.Total);
     }
 
+    private void PowerUp(Vector3 position)
+    {
+        Map.Instance.SetVisibleBySight(parent, position, Range.Total, 1);
+    }
+
+    private void PowerDown(Vector3 position)
+    {
+        Map.Instance.SetVisibleBySight(parent, position, Range.Total, -1);
+    }
+
     [field: SerializeField]
     public Property Range { get; set; } = new Property();
 
-    private bool PreviousEnabled = true;
-    private Vector3 PreviousPosition = new Vector3();
-    private Vector3Int PreviousPositionInt = new Vector3Int();
+    private MyGameObjectState previousState;
+    private bool previousEnabled;
+    private Vector3 previousPosition;
 }

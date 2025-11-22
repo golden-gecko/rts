@@ -9,11 +9,12 @@
             <ui:Label tabindex="-1" name="Value" text="Coal: 50, Wood: 80" style="padding-top: 0; padding-right: 0; padding-bottom: 0; padding-left: 0; margin-top: 8px; margin-right: 8px; margin-bottom: 8px; margin-left: 8px;" />
         </ui:VisualElement>
         <ui:VisualElement name="Panel_Layers" class="panel-background panel-layers" style="flex-direction: row; top: 2%; justify-content: flex-end;">
-            <ui:Toggle label="Grid" focusable="false" name="Grid" />
-            <ui:Toggle label="Exploration" name="Exploration" focusable="false" />
-            <ui:Toggle label="Power" name="Power" focusable="false" />
-            <ui:Toggle label="Radar" name="Radar" focusable="false" />
-            <ui:Toggle label="Sight" name="Sight" focusable="false" />
+            <ui:Toggle label="Grid" focusable="false" name="Grid" style="flex-direction: row-reverse; align-items: center;" />
+            <ui:Toggle label="Exploration" name="Exploration" focusable="false" style="flex-direction: row-reverse; align-items: center;" />
+            <ui:Toggle label="Power" name="Power" focusable="false" style="flex-direction: row-reverse; align-items: center;" />
+            <ui:Toggle label="Power Relay" name="PowerRelay" focusable="false" style="flex-direction: row-reverse; align-items: center;" />
+            <ui:Toggle label="Radar" name="Radar" focusable="false" style="flex-direction: row-reverse; align-items: center;" />
+            <ui:Toggle label="Sight" name="Sight" focusable="false" style="flex-direction: row-reverse; align-items: center;" />
         </ui:VisualElement>
     </ui:VisualElement>
     <ui:VisualElement name="Panel_Menu" class="panel-background" style="position: absolute; top: 0; right: 0;">
