@@ -143,6 +143,7 @@ MonoBehaviour:
   <ExpirationTimer>k__BackingField:
     <Current>k__BackingField: -1
     <Max>k__BackingField: -1
+  <SkillsNames>k__BackingField: []
 --- !u!114 &-2905457588045225651
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -163,7 +164,7 @@ MonoBehaviour:
     - <Current>k__BackingField: 40
       <Max>k__BackingField: 40
       <Name>k__BackingField: Wood
-      <Direction>k__BackingField: 1
+      <Direction>k__BackingField: 2
 --- !u!1 &3780405923354106176
 GameObject:
   m_ObjectHideFlags: 0

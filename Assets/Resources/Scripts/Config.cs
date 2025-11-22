@@ -17,6 +17,8 @@ public class Config
     public static List<string> Recipies = new List<string>() { "Metal using coal", "Metal using wood" };
     public static List<string> Skills = new List<string>() { "Damage", "Repair" };
 
+    public static bool SnapToGrid = true;
+
     public static float TerrainConstructionScale = 2.0f;
     public static float TerrainVisibilityScale = 2.0f;
     public static int TerrainVisibilitySize = 250;

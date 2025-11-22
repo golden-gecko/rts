@@ -13,6 +13,7 @@ public enum MyGameObjectMapLayer
     Water,
 
     Missile, // TODO: Remove.
+    None, // TODO: Sort.
 }
 
 public enum MyGameObjectState

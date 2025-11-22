@@ -1,6 +1,6 @@
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.UIElements;
 
 public class HUD : MonoBehaviour
 {
@@ -27,21 +27,6 @@ public class HUD : MonoBehaviour
 
     void Update()
     {
-        HashSet<MyGameObject> destroyed = new HashSet<MyGameObject>();
-
-        foreach (MyGameObject selected in ActivePlayer.Selected)
-        {
-            if (selected == null)
-            {
-                destroyed.Add(selected);
-            }
-        }
-
-        foreach (MyGameObject myGameObject in destroyed)
-        {
-            ActivePlayer.Selected.Remove(myGameObject);
-        }
-
         UpdateMouse();
         UpdateKeyboard();
     }
@@ -194,7 +179,7 @@ public class HUD : MonoBehaviour
         }
     }
 
-    private void Construct(Vector3 position)
+    private void Construct()
     {
         if (ActivePlayer.Selected.Count > 0)
         {
@@ -206,7 +191,7 @@ public class HUD : MonoBehaviour
                     selected.Orders.Clear();
                 }
 
-                selected.Construct(prefab, position, Cursor.Rotation);
+                selected.Construct(Prefab, Cursor.Position, Cursor.Rotation);
             }
         }
     }
@@ -269,16 +254,16 @@ public class HUD : MonoBehaviour
                     selected.Guard(position);
                     break;
 
+                case OrderType.Move:
+                    selected.Move(position);
+                    break;
+
                 case OrderType.Patrol:
                     selected.Patrol(position);
                     break;
 
                 case OrderType.Rally:
-                    selected.Rally(position, 0);
-                    break;
-
-                default:
-                    selected.Move(position);
+                    selected.Rally(position);
                     break;
             }
         }
@@ -296,6 +281,8 @@ public class HUD : MonoBehaviour
 
             switch (Order)
             {
+                // case OrderType.Assemble: // TODO: Implement.
+
                 case OrderType.Attack:
                     selected.Attack(myGameObject);
                     break;
@@ -315,21 +302,6 @@ public class HUD : MonoBehaviour
                 case OrderType.Follow:
                     selected.Follow(myGameObject);
                     break;
-
-                default:
-                    if (myGameObject.Is(selected, DiplomacyState.Ally))
-                    {
-                        selected.Follow(myGameObject);
-                    }
-                    else if (myGameObject.Is(selected, DiplomacyState.Enemy))
-                    {
-                        selected.Attack(myGameObject);
-                    }
-                    else if (myGameObject.Gatherable)
-                    {
-                        selected.Gather(myGameObject);
-                    }
-                    break;
             }
         }
     }
@@ -341,31 +313,42 @@ public class HUD : MonoBehaviour
 
     private bool ProcessOrder()
     {
-        RaycastHit hitInfo;
-
         if (Order == OrderType.Construct)
         {
-            if (MouseToRaycast(out hitInfo, LayerMask.GetMask("Terrain") | LayerMask.GetMask("Water")))
+            if (Cursor.HasCorrectPosition())
             {
-                if (Cursor.HasCorrectPosition())
-                {
-                    Construct(hitInfo.point);
+                Construct();
 
-                    return true;
-                }
+                return true;
             }
         }
         else
         {
+            RaycastHit hitInfo;
+
             if (MouseToRaycast(out hitInfo))
             {
-                if (Map.Instance.IsTerrain(hitInfo) || Map.Instance.IsWater(hitInfo))
+                if (Utils.IsTerrain(hitInfo) || Utils.IsWater(hitInfo))
                 {
-                    IssueOrder(hitInfo.point);
+                    if (Order == OrderType.None)
+                    {
+                        IssueOrderDefault(hitInfo.point);
+                    }
+                    else
+                    {
+                        IssueOrder(hitInfo.point);
+                    }
                 }
                 else
                 {
-                    IssueOrder(hitInfo.transform.GetComponentInParent<MyGameObject>());
+                    if (Order == OrderType.None)
+                    {
+                        IssueOrderDefault(hitInfo.transform.GetComponentInParent<MyGameObject>());
+                    }
+                    else
+                    {
+                        IssueOrder(hitInfo.transform.GetComponentInParent<MyGameObject>());
+                    }
                 }
 
                 return true;
@@ -375,17 +358,57 @@ public class HUD : MonoBehaviour
         return false;
     }
 
+    private void IssueOrderDefault(Vector3 position)
+    {
+        foreach (MyGameObject selected in ActivePlayer.Selected)
+        {
+            if (IsShift() == false)
+            {
+                selected.Stats.Add(Stats.OrdersCancelled, selected.Orders.Count);
+                selected.Orders.Clear();
+            }
+
+            selected.Move(position);
+        }
+    }
+
+    private void IssueOrderDefault(MyGameObject myGameObject)
+    {
+        foreach (MyGameObject selected in ActivePlayer.Selected)
+        {
+            if (IsShift() == false)
+            {
+                selected.Stats.Add(Stats.OrdersCancelled, selected.Orders.Count);
+                selected.Orders.Clear();
+            }
+
+            if (myGameObject.Is(selected, DiplomacyState.Ally))
+            {
+                selected.Follow(myGameObject);
+            }
+            else if (myGameObject.Is(selected, DiplomacyState.Enemy))
+            {
+                selected.Attack(myGameObject);
+            }
+            else if (myGameObject.Gatherable)
+            {
+                selected.Gather(myGameObject);
+            }
+        }
+    }
+
     private void ProcessSelection()
     {
         RaycastHit hitInfo;
 
         if (MouseToRaycast(out hitInfo))
         {
-            if (hitInfo.transform.CompareTag("Terrain"))
+            if (IsShift() == false)
             {
-                Select(null);
+                SelectionClear();
             }
-            else
+
+            if (Utils.IsTerrain(hitInfo) == false && Utils.IsWater(hitInfo) == false)
             {
                 Select(hitInfo.transform.GetComponentInParent<MyGameObject>());
             }
@@ -398,46 +421,50 @@ public class HUD : MonoBehaviour
         endPosition = Vector2.zero;
     }
 
-    private void Select(MyGameObject myGameObject)
+    public void Select(MyGameObject myGameObject)
     {
-        if (IsShift() == false)
+        if (myGameObject == null)
         {
-            foreach (MyGameObject selected in ActivePlayer.Selected)
-            {
-                selected.Select(false);
-            }
-
-            ActivePlayer.Selected.Clear();
+            return;
         }
 
-        if (myGameObject != null && myGameObject.Player == ActivePlayer)
+        if (myGameObject.Player != ActivePlayer)
         {
-            if (myGameObject.Selectable)
-            {
-                if (IsShift() && ActivePlayer.Selected.Contains(myGameObject))
-                {
-                    myGameObject.Select(false);
-                    ActivePlayer.Selected.Remove(myGameObject);
-                }
-                else
-                {
-                    myGameObject.Select(true);
-                    ActivePlayer.Selected.Add(myGameObject);
-                }
-            }
+            return;
         }
+
+        if (myGameObject.Selectable == false)
+        {
+            return;
+        }
+
+        if (IsShift() && ActivePlayer.Selected.Contains(myGameObject))
+        {
+            myGameObject.Select(false);
+            ActivePlayer.Selected.Remove(myGameObject);
+        }
+        else
+        {
+            myGameObject.Select(true);
+            ActivePlayer.Selected.Add(myGameObject);
+        }
+    }
+
+    public void SelectionClear()
+    {
+        foreach (MyGameObject selected in ActivePlayer.Selected)
+        {
+            selected.Select(false);
+        }
+
+        ActivePlayer.Selected.Clear();
     }
 
     private void SelectUnitInBox()
     {
         if (IsShift() == false)
         {
-            foreach (MyGameObject selected in ActivePlayer.Selected)
-            {
-                selected.Select(false);
-            }
-
-            ActivePlayer.Selected.Clear();
+            SelectionClear();
         }
 
         foreach (MyGameObject myGameObject in FindObjectsByType<MyGameObject>(FindObjectsSortMode.None)) // TODO: Not very efficient. Refactor into raycast.
@@ -449,31 +476,28 @@ public class HUD : MonoBehaviour
                 continue;
             }
 
-            if (myGameObject.Player != ActivePlayer)
-            {
-                continue;
-            }
-
-            if (myGameObject.Selectable == false)
-            {
-                continue;
-            }
-
-            myGameObject.Select(true);
-
-            ActivePlayer.Selected.Add(myGameObject);
+            Select(myGameObject);
         }
     }
 
     private void UpdateKeyboard()
     {
-        // Close application.
+        CheckCloseApplication();
+        CheckShowMenu();
+        CheckGroupCreate();
+        CheckGroupActivate();
+    }
+
+    private void CheckCloseApplication()
+    {
         if (Input.GetKeyDown(KeyCode.Escape))
         {
             Application.Quit();
         }
-        
-        // Show menu.
+    }
+
+    private void CheckShowMenu()
+    {
         if (Input.GetKeyDown(KeyCode.F10))
         {
             if (MainMenu.Instance.gameObject.activeInHierarchy || SceneMenu.Instance.gameObject.activeInHierarchy)
@@ -486,8 +510,10 @@ public class HUD : MonoBehaviour
                 MainMenu.Instance.gameObject.SetActive(true);
             }
         }
+    }
 
-        // Create selection groups.
+    private void CheckGroupCreate()
+    {
         for (KeyCode i = KeyCode.Alpha0; i < KeyCode.Alpha9; i++)
         {
             if (IsControl() && Input.GetKeyDown(i))
@@ -495,34 +521,15 @@ public class HUD : MonoBehaviour
                 ActivePlayer.AssignGroup(i);
             }
         }
+    }
 
-        // Activate selection groups.
+    private void CheckGroupActivate()
+    {
         for (KeyCode i = KeyCode.Alpha0; i < KeyCode.Alpha9; i++)
         {
             if (Input.GetKeyDown(i))
             {
                 ActivePlayer.SelectGroup(i);
-            }
-        }
-
-        // Change players.
-        if (IsControl() && IsShift())
-        {
-            Player cpu = GameObject.Find("CPU").GetComponent<Player>();
-            Player gaia = GameObject.Find("Gaia").GetComponent<Player>();
-            Player human = GameObject.Find("Human").GetComponent<Player>();
-
-            if (Input.GetKeyDown(KeyCode.F1))
-            {
-                HUD.Instance.ActivePlayer = human;
-            }
-            else if (Input.GetKeyDown(KeyCode.F2))
-            {
-                HUD.Instance.ActivePlayer = cpu;
-            }
-            else if (Input.GetKeyDown(KeyCode.F3))
-            {
-                HUD.Instance.ActivePlayer = gaia;
             }
         }
     }
@@ -646,8 +653,19 @@ public class HUD : MonoBehaviour
 
         if (Cursor != null)
         {
-            Cursor.transform.position
-                = Map.Instance.StructurePositionHandler.GetPosition(Camera.main.ScreenPointToRay(Input.mousePosition), LayerMask.GetMask("Terrain") | LayerMask.GetMask("Water"));
+            Vector3 position;
+
+            if (Map.Instance.MouseToPosition(out position, out _))
+            {
+                if (Config.SnapToGrid)
+                {
+                    Cursor.transform.position = Utils.SnapToGrid(position);
+                }
+                else
+                {
+                    Cursor.transform.position = position;
+                }
+            }
 
             if (Cursor.HasCorrectPosition())
             {
@@ -678,7 +696,20 @@ public class HUD : MonoBehaviour
 
     private MyGameObject Cursor { get; set; }
 
-    public OrderType Order { get; set; }
+    public OrderType Order
+    {
+        get
+        {
+            return order;
+        }
+
+        set
+        {
+            order = value;
+
+            MyCursor.Instance.Set(order);
+        }
+    }
 
     public string Prefab
     {
@@ -713,6 +744,8 @@ public class HUD : MonoBehaviour
     private bool drag = false;
 
     private Vector2 endPosition = Vector2.zero;
+
+    private OrderType order = OrderType.None;
 
     private string prefab = string.Empty;
 

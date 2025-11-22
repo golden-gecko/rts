@@ -1,3 +1,4 @@
+using UnityEditor.PackageManager;
 using UnityEngine;
 
 public class Utils
@@ -56,5 +57,25 @@ public class Utils
         float magnitude = (b - a).magnitude;
 
         return rangeMin <= magnitude && magnitude <= rangeMax;
+    }
+
+    public static bool IsTerrain(RaycastHit hit)
+    {
+        return hit.transform.CompareTag("Terrain");
+    }
+
+    public static bool IsWater(RaycastHit hit)
+    {
+        return hit.transform.CompareTag("Water");
+    }
+
+    public static Vector3 SnapToGrid(Vector3 position)
+    {
+        float scale = Config.TerrainConstructionScale;
+
+        float x = Mathf.Floor(position.x / scale) * scale + scale / 2.0f;
+        float z = Mathf.Floor(position.z / scale) * scale + scale / 2.0f;
+
+        return new Vector3(x, position.y, z);
     }
 }
