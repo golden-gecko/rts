@@ -42,7 +42,7 @@ public class MyGameObject : MonoBehaviour
         OrderHandlers[OrderType.UseSkill] = new OrderHandlerUseSkill();
         OrderHandlers[OrderType.Wait] = new OrderHandlerWait();
 
-        ConstructionResources.Add("Iron", 0, 30);
+        ConstructionResources.Add("Iron", 0, 30, ResourceDirection.In);
 
         Recipe r1 = new Recipe("Iron");
 
@@ -378,13 +378,6 @@ public class MyGameObject : MonoBehaviour
                     }
                 }
 
-                string resources = Resources.GetInfo();
-
-                if (resources.Length > 0)
-                {
-                    info += string.Format("\nResources:{0}", resources);
-                }
-
                 if (ally)
                 {
                     string orders = Orders.GetInfo();
@@ -524,7 +517,7 @@ public class MyGameObject : MonoBehaviour
     {
         foreach (KeyValuePair<string, int> i in resources)
         {
-            source.Resources.Remove(i.Key, i.Value);
+            source.GetComponent<Storage>().Resources.Remove(i.Key, i.Value);
 
             if (target.State == MyGameObjectState.UnderConstruction)
             {
@@ -532,7 +525,7 @@ public class MyGameObject : MonoBehaviour
             }
             else
             {
-                target.Resources.Add(i.Key, i.Value);
+                target.GetComponent<Storage>().Resources.Add(i.Key, i.Value);
             }
         }
     }
@@ -644,33 +637,34 @@ public class MyGameObject : MonoBehaviour
 
     private void RaiseResourceFlags()
     {
-        foreach (Recipe recipe in Recipes.Items.Values)
+        if (GetComponent<Storage>() == null)
         {
-            foreach (Resource resource in recipe.ToConsume.Items.Values)
-            {
-                int capacity = Resources.Capacity(resource.Name);
+            return;
+        }
 
-                if (capacity > 0)
-                {
-                    Player.RegisterConsumer(this, resource.Name, capacity);
-                }
-                else
+        foreach (Resource resource in GetComponent<Storage>().Resources.Items.Values)
+        {
+            if (resource.Direction == ResourceDirection.Both || resource.Direction == ResourceDirection.In)
+            {
+                if (resource.Full)
                 {
                     Player.UnregisterConsumer(this, resource.Name);
                 }
+                else
+                {
+                    Player.RegisterConsumer(this, resource.Name, resource.Capacity);
+                }
             }
 
-            foreach (Resource resource in recipe.ToProduce.Items.Values)
+            if (resource.Direction == ResourceDirection.Both || resource.Direction == ResourceDirection.Out)
             {
-                int storage = Resources.Storage(resource.Name);
-
-                if (storage > 0)
+                if (resource.Empty)
                 {
-                    Player.RegisterProducer(this, resource.Name, storage);
+                    Player.UnregisterProducer(this, resource.Name);
                 }
                 else
                 {
-                    Player.UnregisterProducer(this, resource.Name);
+                    Player.RegisterProducer(this, resource.Name, resource.Storage);
                 }
             }
         }
@@ -818,10 +812,6 @@ public class MyGameObject : MonoBehaviour
     public Vector3 Scale { get => transform.localScale; }
 
     public OrderContainer Orders { get; } = new OrderContainer();
-
-    public ResourceContainer Resources { get; } = new ResourceContainer();
-
-    public RecipeContainer Recipes { get; } = new RecipeContainer();
 
     public Stats Stats { get; } = new Stats();
 

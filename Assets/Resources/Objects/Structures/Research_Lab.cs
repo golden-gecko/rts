@@ -14,12 +14,6 @@ public class Research_Lab : Structure
         Orders.AllowTechnology("Static_Defences");
         Orders.AllowTechnology("Stationary_Defences");
 
-        Resources.Add("Crystal", 0, 100);
-
-        Recipe r1 = new Recipe("Crystal");
-
-        r1.Consumes("Crystal", 0);
-
-        Recipes.Add(r1);
+        GetComponent<Storage>().Resources.Add("Crystal", 0, 100, ResourceDirection.In);
     }
 }

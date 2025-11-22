@@ -7,14 +7,9 @@ public class ConsumerProducerRequest
         Value = value;
     }
 
-    public void Set(int value)
-    {
-        Value = value;
-    }
-
     public MyGameObject MyGameObject { get; }
 
     public string Name { get; }
 
-    public int Value { get; private set; }
+    public int Value { get; set; }
 }

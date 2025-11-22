@@ -4,12 +4,6 @@ public class Coal : MyResource
     {
         base.Awake();
 
-        Resources.Add("Coal", 100, 100);
-
-        Recipe r1 = new Recipe("Coal");
-
-        r1.Produces("Coal", 0);
-
-        Recipes.Add(r1);
+        GetComponent<Storage>().Resources.Add("Coal", 100, 100, ResourceDirection.Out);
     }
 }

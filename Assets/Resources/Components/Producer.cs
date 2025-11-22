@@ -9,4 +9,6 @@ public class Producer : MyComponent
 
     [field: SerializeField]
     public int ResourceUsage { get; set; } = 1;
+
+    public RecipeContainer Recipes { get; } = new RecipeContainer();
 }

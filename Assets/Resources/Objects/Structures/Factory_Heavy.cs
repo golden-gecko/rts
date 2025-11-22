@@ -12,12 +12,6 @@ public class Factory_Heavy : Structure
         Orders.AllowPrefab(Path.Combine(Config.DirectoryUnits, "Tank_Combat"));
         Orders.AllowPrefab(Path.Combine(Config.DirectoryUnits, "Tank_Missile"));
 
-        Resources.Add("Iron", 0, 40);
-
-        Recipe r1 = new Recipe("Iron");
-
-        r1.Consumes("Iron", 0);
-
-        Recipes.Add(r1);
+        GetComponent<Storage>().Resources.Add("Iron", 0, 40, ResourceDirection.In);
     }
 }

@@ -56,3 +56,11 @@ public enum PositionHandlerType
     Ship,
     Vehicle,
 }
+
+public enum ResourceDirection
+{
+    Both,
+    In,
+    None,
+    Out
+}

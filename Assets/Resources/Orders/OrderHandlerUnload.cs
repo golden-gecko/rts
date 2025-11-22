@@ -32,7 +32,7 @@ public class OrderHandlerUnload : IOrderHandler
         {
             if (order.TargetGameObject.State == MyGameObjectState.UnderConstruction)
             {
-                int value = Mathf.Min(new int[] { i.Value, myGameObject.Resources.Storage(i.Key), order.TargetGameObject.ConstructionResources.Capacity(i.Key) });
+                int value = Mathf.Min(new int[] { i.Value, myGameObject.GetComponent<Storage>().Resources.Storage(i.Key), order.TargetGameObject.ConstructionResources.Capacity(i.Key) });
 
                 if (value > 0)
                 {
@@ -43,7 +43,7 @@ public class OrderHandlerUnload : IOrderHandler
             }
             else
             {
-                int value = Mathf.Min(new int[] { i.Value, myGameObject.Resources.Storage(i.Key), order.TargetGameObject.Resources.Capacity(i.Key) });
+                int value = Mathf.Min(new int[] { i.Value, myGameObject.GetComponent<Storage>().Resources.Storage(i.Key), order.TargetGameObject.GetComponent<Storage>().Resources.Capacity(i.Key) });
 
                 if (value > 0)
                 {
