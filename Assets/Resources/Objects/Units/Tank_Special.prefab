@@ -228,6 +228,7 @@ MonoBehaviour:
   <WaitTime>k__BackingField: 2
   <DestroyEffect>k__BackingField: {fileID: 100006, guid: bf98fad54e73fb8448b7b1b9ba4fd0b6, type: 3}
   <Altitude>k__BackingField: -1
+  <Depth>k__BackingField: -1
   <MapLayers>k__BackingField: 02000000
   <ShowIndicators>k__BackingField: 1
   <ShowOrders>k__BackingField: 1
@@ -241,7 +242,7 @@ MonoBehaviour:
   - PassiveIncreaseDamage
   - PassiveIncreasePower
   - PassiveIncreaseRange
-  <State>k__BackingField: 2
+  <State>k__BackingField: 1
 --- !u!114 &5524956404379026895
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -56,9 +56,9 @@ public class OrderHandlerProduce : OrderHandler
 
         MoveResources(myGameObject, recipe);
 
-        myGameObject.Stats.Inc(Stats.OrdersCompleted);
         myGameObject.Stats.Add(Stats.TimeProducing, order.Timer.Max);
-        myGameObject.Orders.Pop();
+
+        Success(myGameObject);
 
         return true;
     }

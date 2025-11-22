@@ -5,13 +5,25 @@ public enum DiplomacyState
     Neutral,
 }
 
+/*
+ * Supported combinations:
+ * - Air (missiles),
+ * - Hover (planes),
+ * - Submerged (submarines),
+ * - Terrain (vehicles),
+ * - Terrain and Underwater (vehicles),
+ * - Terrain and Water (amphibious vehicles or hovercrafts),
+ * - Water (ships).
+ */
 public enum MyGameObjectMapLayer
 {
-    Air,
-    None,
-    Terrain,
-    Underwater,
-    Water,
+    Air = 0,
+    Hover = 5,
+    None = 1,
+    Submerged = 6, // TODO: Implement submarines.
+    Terrain = 2,
+    Underwater = 3, // TODO: Rename (for vehicles driving on terrain underwater).
+    Water = 4,
 }
 
 public enum MyGameObjectVisibilityState
@@ -24,7 +36,6 @@ public enum MyGameObjectVisibilityState
 public enum MyGameObjectState
 {
     Cursor,
-    Destroyed,
     Operational,
     UnderAssembly,
     UnderConstruction,

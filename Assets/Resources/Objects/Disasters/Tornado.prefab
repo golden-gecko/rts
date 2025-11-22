@@ -139,7 +139,8 @@ MonoBehaviour:
   <EnableTime>k__BackingField: 2
   <WaitTime>k__BackingField: 0
   <DestroyEffect>k__BackingField: {fileID: 0}
-  <Altitude>k__BackingField: 0
+  <Altitude>k__BackingField: -1
+  <Depth>k__BackingField: -1
   <MapLayers>k__BackingField: 0200000004000000
   <ShowIndicators>k__BackingField: 0
   <ShowOrders>k__BackingField: 0
@@ -149,6 +150,7 @@ MonoBehaviour:
     <Current>k__BackingField: -1
     <Max>k__BackingField: -1
   <SkillsNames>k__BackingField: []
+  <State>k__BackingField: 1
   FrequencyInSecondsMin: 120
   FrequencyInSecondsMax: 180
   <Damage>k__BackingField: 0
@@ -166,7 +168,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   <Mass>k__BackingField: 10
-  <Power>k__BackingField: 1
+  <Power>k__BackingField:
+    <Value>k__BackingField: 100
   <FuelUsage>k__BackingField: 1
 --- !u!1001 &6022657693085951150
 PrefabInstance:

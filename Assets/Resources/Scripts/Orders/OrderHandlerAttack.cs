@@ -19,8 +19,7 @@ public class OrderHandlerAttack : OrderHandler
         {
             if (order.TargetGameObject == null)
             {
-                myGameObject.Stats.Inc(Stats.OrdersCompleted);
-                myGameObject.Orders.Pop();
+                Success(myGameObject); // TODO: Sucess or fail?
 
                 return;
             }

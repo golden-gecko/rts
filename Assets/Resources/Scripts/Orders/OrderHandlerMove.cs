@@ -2,20 +2,12 @@ using UnityEngine;
 
 public class OrderHandlerMove : OrderHandler
 {
-    public float GetDistance(MyGameObject myGameObject, Vector3 a, Vector3 b)
+    public float GetDistance(MyGameObject myGameObject, ref Vector3 a, ref Vector3 b)
     {
-        if (myGameObject.MapLayers.Contains(MyGameObjectMapLayer.Air))
+        if (myGameObject.MapLayers.Contains(MyGameObjectMapLayer.Air) == false)
         {
-            if (myGameObject.Altitude > 0)
-            {
-                a.y = myGameObject.Altitude;
-                b.y = myGameObject.Altitude;
-            }
-        }
-        else
-        {
-            a.y = 0;
-            b.y = 0;
+            a.y = 0.0f;
+            b.y = 0.0f;
         }
 
         return (a - b).magnitude;
@@ -28,10 +20,17 @@ public class OrderHandlerMove : OrderHandler
         Vector3 target = order.TargetPosition;
         Vector3 position = myGameObject.Position;
 
-        float distanceToTarget = GetDistance(myGameObject, position, target);
+        float distanceToTarget = GetDistance(myGameObject, ref position, ref target);
         float distanceToTravel = myGameObject.GetComponent<Engine>().Speed * Time.deltaTime;
 
-        myGameObject.transform.LookAt(new Vector3(target.x, myGameObject.Position.y, target.z));
+        if (myGameObject.MapLayers.Contains(MyGameObjectMapLayer.Air))
+        {
+            myGameObject.transform.LookAt(target);
+        }
+        else
+        {
+            myGameObject.transform.LookAt(new Vector3(target.x, myGameObject.Position.y, target.z));
+        }
 
         if (distanceToTarget > distanceToTravel)
         {
@@ -76,8 +75,8 @@ public class OrderHandlerMove : OrderHandler
             myGameObject.GetComponent<Engine>().Drive(distanceToTarget);
             myGameObject.OnMove(validated);
             myGameObject.Stats.Add(Stats.DistanceDriven, distanceToTarget);
-            myGameObject.Stats.Inc(Stats.OrdersCompleted);
-            myGameObject.Orders.Pop();
+
+            Success(myGameObject);
         }
     }
 }

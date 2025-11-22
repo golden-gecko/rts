@@ -112,7 +112,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.2, y: 0.2, z: 0.2}
+  m_LocalScale: {x: 0.4, y: 0.4, z: 0.4}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 4005311559285770666}
@@ -334,6 +334,7 @@ MonoBehaviour:
   <WaitTime>k__BackingField: 2
   <DestroyEffect>k__BackingField: {fileID: 100006, guid: bf98fad54e73fb8448b7b1b9ba4fd0b6, type: 3}
   <Altitude>k__BackingField: -1
+  <Depth>k__BackingField: -1
   <MapLayers>k__BackingField: 02000000
   <ShowIndicators>k__BackingField: 1
   <ShowOrders>k__BackingField: 1
@@ -343,7 +344,7 @@ MonoBehaviour:
     <Current>k__BackingField: -1
     <Max>k__BackingField: -1
   <SkillsNames>k__BackingField: []
-  <State>k__BackingField: 2
+  <State>k__BackingField: 1
 --- !u!114 &-2369591204685981222
 MonoBehaviour:
   m_ObjectHideFlags: 0

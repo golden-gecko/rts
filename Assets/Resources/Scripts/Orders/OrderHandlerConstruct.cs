@@ -53,10 +53,10 @@ public class OrderHandlerConstruct : OrderHandler
 
         order.TargetGameObject.SetState(MyGameObjectState.Operational);
 
-        myGameObject.Stats.Inc(Stats.OrdersCompleted);
         myGameObject.Stats.Inc(Stats.ObjectsConstructed);
         myGameObject.Stats.Add(Stats.TimeConstructing, order.Timer.Max);
-        myGameObject.Orders.Pop();
+
+        Success(myGameObject);
     }
 
     private bool HaveResources(Order order, ResourceContainer resourceContainer)

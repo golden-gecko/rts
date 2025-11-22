@@ -164,6 +164,7 @@ MonoBehaviour:
   <WaitTime>k__BackingField: 2
   <DestroyEffect>k__BackingField: {fileID: 100008, guid: 06736895ea0a4ff408d25e6684dce797, type: 3}
   <Altitude>k__BackingField: -1
+  <Depth>k__BackingField: -1
   <MapLayers>k__BackingField: 02000000
   <ShowIndicators>k__BackingField: 1
   <ShowOrders>k__BackingField: 1
@@ -173,6 +174,7 @@ MonoBehaviour:
     <Current>k__BackingField: -1
     <Max>k__BackingField: -1
   <SkillsNames>k__BackingField: []
+  <State>k__BackingField: 1
 --- !u!114 &-3398923562818593755
 MonoBehaviour:
   m_ObjectHideFlags: 0

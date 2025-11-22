@@ -191,10 +191,7 @@ public class Map : MonoBehaviour
             }
         }
 
-        bool air = myGameObject.MapLayers.Contains(MyGameObjectMapLayer.Air);
-        bool terrain = myGameObject.MapLayers.Contains(MyGameObjectMapLayer.Terrain);
         bool underwater = myGameObject.MapLayers.Contains(MyGameObjectMapLayer.Underwater);
-        bool water = myGameObject.MapLayers.Contains(MyGameObjectMapLayer.Water);
 
         if (terrainPosition.y > waterPosition.y)
         {
@@ -286,10 +283,7 @@ public class Map : MonoBehaviour
             }
         }
 
-        bool air = myGameObject.MapLayers.Contains(MyGameObjectMapLayer.Air);
-        bool terrain = myGameObject.MapLayers.Contains(MyGameObjectMapLayer.Terrain);
         bool underwater = myGameObject.MapLayers.Contains(MyGameObjectMapLayer.Underwater);
-        bool water = myGameObject.MapLayers.Contains(MyGameObjectMapLayer.Water);
 
         if (terrainPosition.y > waterPosition.y)
         {
@@ -340,20 +334,22 @@ public class Map : MonoBehaviour
         }
 
         bool air = myGameObject.MapLayers.Contains(MyGameObjectMapLayer.Air);
+        bool hover = myGameObject.MapLayers.Contains(MyGameObjectMapLayer.Hover);
+        bool submerged = myGameObject.MapLayers.Contains(MyGameObjectMapLayer.Submerged);
         bool terrain = myGameObject.MapLayers.Contains(MyGameObjectMapLayer.Terrain);
         bool underwater = myGameObject.MapLayers.Contains(MyGameObjectMapLayer.Underwater);
         bool water = myGameObject.MapLayers.Contains(MyGameObjectMapLayer.Water);
 
-        // Any position in air (missiles).
-        if (air && myGameObject.Altitude < 0)
+        // Any position in air).
+        if (air)
         {
             validated = position;
 
             return true;
         }
 
-        // Position in air above terrain or water (planes).
-        if (air)
+        // Position in air above terrain or water).
+        if (hover)
         {
             if (terrainPosition.y > waterPosition.y)
             {
@@ -367,7 +363,24 @@ public class Map : MonoBehaviour
             return true;
         }
 
-        // Position on terrain or underwater (workers).
+        // Position under water surface.
+        if (submerged)
+        {
+            if (terrainPosition.y > waterPosition.y)
+            {
+                validated = Vector3.zero;
+
+                return false;
+            }
+            else
+            {
+                validated = new Vector3(waterPosition.x, waterPosition.y - myGameObject.Depth, waterPosition.z);
+
+                return true;
+            }
+        }
+
+        // Position on terrain or underwater.
         if (terrain && underwater)
         {
             validated = new Vector3(terrainPosition.x, terrainPosition.y, terrainPosition.z);
@@ -375,7 +388,7 @@ public class Map : MonoBehaviour
             return true;
         }
 
-        // Position on terrain or water (amphibian).
+        // Position on terrain or water.
         if (terrain && water)
         {
             if (terrainPosition.y > waterPosition.y)
