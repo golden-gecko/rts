@@ -275,6 +275,14 @@ public class GameMenu : Menu
                 HUD.Instance.Destroy();
                 break;
 
+            case OrderType.Disable:
+                HUD.Instance.Disable();
+                break;
+
+            case OrderType.Enable:
+                HUD.Instance.Enable();
+                break;
+
             case OrderType.Explore:
                 HUD.Instance.Explore();
                 break;
