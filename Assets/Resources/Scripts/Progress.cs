@@ -59,5 +59,9 @@ public class Progress
     [field: SerializeField]
     public float Max { get; private set; }
 
+    public bool Empty { get => Current <= 0.0f; }
+
+    public bool Full { get => Current >= Max; }
+
     public float Percent { get => Current / Max; }
 }

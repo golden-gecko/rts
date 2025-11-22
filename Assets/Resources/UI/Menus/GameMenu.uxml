@@ -1,38 +1,78 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" editor-extension-mode="False">
     <ui:Template name="Button" src="project://database/Assets/Resources/UI/Templates/ButtonOrder.uxml?fileID=9197481963319205126&amp;guid=a3fb7fe5ff2f5a5498b9a348c95d0ca1&amp;type=3#ButtonOrder" />
-    <Style src="project://database/Assets/Resources/UI/Style.uss?fileID=7433441132597879392&amp;guid=231d51774ac67094591621cc55974d8c&amp;type=3#Style" />
-    <ui:VisualElement name="LogPanel" class="panel-background" style="position: absolute; left: 0; top: 0; right: 15%;">
-        <ui:Label tabindex="-1" display-tooltip-when-elided="true" name="Log" />
-    </ui:VisualElement>
-    <ui:VisualElement name="BottomPanel" class="panel-background" style="flex-grow: 1; position: absolute; left: 25%; right: 25%; bottom: 0; padding-left: 5px; padding-top: 5px;">
-        <ui:VisualElement name="OrderList" style="flex-grow: 1; background-color: rgba(0, 0, 0, 0); align-items: flex-start; justify-content: flex-start; flex-direction: row;">
-            <ui:Instance template="Button" name="Button" />
+    <Style src="project://database/Assets/Resources/UI/Styles/Style.uss?fileID=7433441132597879392&amp;guid=231d51774ac67094591621cc55974d8c&amp;type=3#Style" />
+    <ui:VisualElement name="Container" picking-mode="Ignore" style="flex-grow: 1; position: absolute; top: 0; right: 0; left: 0; bottom: 0;">
+        <ui:VisualElement name="Panel_Log" class="panel-background">
+            <ui:Label tabindex="-1" display-tooltip-when-elided="true" name="Value" text="Unit destroyed" style="padding-top: 0; padding-right: 0; padding-bottom: 0; padding-left: 0; margin-top: 8px; margin-right: 8px; margin-bottom: 8px; margin-left: 8px;" />
         </ui:VisualElement>
-        <ui:VisualElement name="PrefabList" style="flex-grow: 1; background-color: rgba(0, 0, 0, 0); flex-direction: row; align-items: flex-start;">
-            <ui:Instance template="Button" name="Button" />
+        <ui:VisualElement name="Panel_Resources" class="panel-background" style="top: 1%;">
+            <ui:Label tabindex="-1" name="Value" text="Coal: 50, Wood: 80" style="padding-top: 0; padding-right: 0; padding-bottom: 0; padding-left: 0; margin-top: 8px; margin-right: 8px; margin-bottom: 8px; margin-left: 8px;" />
         </ui:VisualElement>
-        <ui:VisualElement name="TechnologyList" style="flex-grow: 1; background-color: rgba(0, 0, 0, 0); flex-direction: row; align-items: flex-start;">
-            <ui:Instance template="Button" name="Button" />
-        </ui:VisualElement>
-        <ui:VisualElement name="RecipeList" style="flex-grow: 1; background-color: rgba(0, 0, 0, 0); flex-direction: row; align-items: flex-start;">
-            <ui:Instance template="Button" name="Button" />
-        </ui:VisualElement>
-        <ui:VisualElement name="Skills" style="flex-grow: 1; background-color: rgba(0, 0, 0, 0); flex-direction: row; align-items: flex-start;">
-            <ui:Instance template="Button" name="Button" />
+        <ui:VisualElement name="Panel_Layers" class="panel-background panel-layers" style="flex-direction: row; top: 2%; justify-content: flex-end;">
+            <ui:Toggle label="Grid" focusable="false" name="Grid" />
+            <ui:Toggle label="Exploration" name="Exploration" focusable="false" />
+            <ui:Toggle label="Power" name="Power" focusable="false" />
+            <ui:Toggle label="Radar" name="Radar" focusable="false" />
+            <ui:Toggle label="Sight" name="Sight" focusable="false" />
         </ui:VisualElement>
     </ui:VisualElement>
-    <ui:VisualElement name="InfoPanel" class="panel-background" style="flex-grow: 1; left: 0; top: auto; right: 80%; position: absolute; bottom: 0;">
-        <ui:Label tabindex="-1" name="Info" />
+    <ui:VisualElement name="Panel_Menu" class="panel-background" style="position: absolute; top: 0; right: 0;">
+        <ui:Button text="Menu (F10)" name="Menu" style="padding-top: 2px; padding-right: 2px; padding-bottom: 2px; padding-left: 2px; margin-top: 4px; margin-right: 4px; margin-bottom: 4px; margin-left: 4px;" />
     </ui:VisualElement>
-    <ui:VisualElement name="Minimap" class="panel-background" style="flex-grow: 1; right: 0; bottom: 0; top: 60%; left: 80%; position: absolute; flex-direction: column;">
-        <ui:VisualElement name="Controls" style="background-color: rgba(0, 0, 0, 0); justify-content: flex-start; align-items: flex-start; align-self: auto; flex-direction: row; flex-grow: 1; position: absolute; top: 0; right: 0; bottom: 90%; left: 0;">
-            <ui:Button text="+" display-tooltip-when-elided="true" name="ZoomIn" class="button-minimap" />
-            <ui:Button text="-" display-tooltip-when-elided="true" name="ZoomOut" class="button-minimap" />
-            <ui:Button text="Center" display-tooltip-when-elided="true" name="CenterOnMainCamera" class="button-minimap" />
+    <ui:VisualElement name="Container" picking-mode="Ignore" style="flex-grow: 1; bottom: 0; left: 0; top: 0; right: 80%; position: absolute; align-items: flex-start; justify-content: flex-end; flex-direction: column;">
+        <ui:VisualElement name="Panel_Orders" class="panel-background" style="margin-bottom: 8px;">
+            <ui:Label tabindex="-1" text="Move" display-tooltip-when-elided="true" name="Value" style="padding-top: 0; padding-right: 0; padding-bottom: 0; padding-left: 0; margin-top: 8px; margin-right: 8px; margin-bottom: 8px; margin-left: 8px;" />
         </ui:VisualElement>
-        <ui:VisualElement name="Image" style="background-color: rgba(0, 0, 0, 0); background-image: resource(&apos;Materials/Minimap&apos;); flex-grow: 40; position: absolute; left: 0; right: 0; bottom: 0; top: 10%;" />
+        <ui:VisualElement name="Panel_Info" class="panel-background">
+            <ui:Label tabindex="-1" name="Value" text="Game Object" style="padding-top: 0; padding-right: 0; padding-bottom: 0; padding-left: 0; margin-top: 8px; margin-right: 8px; margin-bottom: 8px; margin-left: 8px;" />
+        </ui:VisualElement>
     </ui:VisualElement>
-    <ui:VisualElement name="Menu" class="panel-background" style="position: absolute; left: 90%; top: 0; right: 0;">
-        <ui:Button text="Menu (F10)" display-tooltip-when-elided="true" name="Menu" style="margin-left: 5px; margin-right: 5px; margin-top: 5px; margin-bottom: 5px; padding-left: 0; padding-right: 0; padding-top: 0; padding-bottom: 0;" />
+    <ui:VisualElement name="Panel_Commands" class="panel-background" style="position: absolute; left: 25%; right: 25%; bottom: 0; padding-left: 5px; padding-top: 5px; flex-grow: 1; flex-direction: column; top: 75%; padding-right: 5px; padding-bottom: 5px;">
+        <ui:VisualElement name="Container" style="flex-direction: row; flex-grow: 1;">
+            <ui:Label tabindex="-1" text="Orders" display-tooltip-when-elided="true" style="width: 20%;" />
+            <ui:VisualElement name="List_Orders" style="flex-grow: 1; flex-direction: row; align-items: flex-start; align-self: center;">
+                <ui:Instance template="Button" name="Button" />
+                <ui:Instance template="Button" name="Button" />
+                <ui:Instance template="Button" name="Button" />
+                <ui:Instance template="Button" name="Button" />
+            </ui:VisualElement>
+        </ui:VisualElement>
+        <ui:VisualElement name="Container" style="flex-grow: 1; flex-direction: row;">
+            <ui:Label tabindex="-1" text="Prefabs" display-tooltip-when-elided="true" style="width: 20%;" />
+            <ui:VisualElement name="List_Prefabs" style="flex-grow: 1; flex-direction: row; align-items: flex-start; align-self: center;">
+                <ui:Instance template="Button" name="Button" />
+                <ui:Instance template="Button" name="Button" />
+            </ui:VisualElement>
+        </ui:VisualElement>
+        <ui:VisualElement name="Container" style="flex-grow: 1; flex-direction: row;">
+            <ui:Label tabindex="-1" text="Recipes" display-tooltip-when-elided="true" style="width: 20%;" />
+            <ui:VisualElement name="List_Recipes" style="flex-grow: 1; flex-direction: row; align-items: flex-start; align-self: center;">
+                <ui:Instance template="Button" name="Button" />
+            </ui:VisualElement>
+        </ui:VisualElement>
+        <ui:VisualElement name="Container" style="flex-grow: 1; flex-direction: row;">
+            <ui:Label tabindex="-1" text="Skills" display-tooltip-when-elided="true" style="width: 20%;" />
+            <ui:VisualElement name="List_Skills" style="flex-grow: 1; flex-direction: row; align-items: flex-start; align-self: center;">
+                <ui:Instance template="Button" name="Button" />
+                <ui:Instance template="Button" name="Button" />
+                <ui:Instance template="Button" name="Button" />
+                <ui:Instance template="Button" name="Button" />
+                <ui:Instance template="Button" name="Button" />
+            </ui:VisualElement>
+        </ui:VisualElement>
+        <ui:VisualElement name="Container" style="flex-grow: 1; flex-direction: row;">
+            <ui:Label tabindex="-1" text="Technologies" display-tooltip-when-elided="true" style="width: 20%;" />
+            <ui:VisualElement name="List_Technologies" style="flex-grow: 1; flex-direction: row; align-items: flex-start; align-self: center;">
+                <ui:Instance template="Button" name="Button" />
+            </ui:VisualElement>
+        </ui:VisualElement>
+    </ui:VisualElement>
+    <ui:VisualElement name="Panel_Minimap" class="panel-background" style="flex-grow: 1; right: 0; bottom: 0; top: 75%; left: 80%; position: absolute; flex-direction: column;">
+        <ui:VisualElement name="Image" style="background-image: resource(&apos;Maps/Minimap&apos;); top: 0; left: 0; right: 100%; bottom: 100%; flex-grow: 1;" />
+        <ui:VisualElement name="Controls" style="position: absolute; top: 0; right: 0; bottom: auto; left: 0; flex-direction: row;">
+            <ui:Button text="+" display-tooltip-when-elided="true" name="ZoomIn" class="button-minimap" style="flex-shrink: 1; flex-grow: 1;" />
+            <ui:Button text="-" display-tooltip-when-elided="true" name="ZoomOut" class="button-minimap" style="flex-shrink: 1; flex-grow: 1;" />
+            <ui:Button text="Center (On)" display-tooltip-when-elided="true" name="CenterOnMainCamera" class="button-minimap" style="flex-shrink: 1; flex-grow: 1;" />
+        </ui:VisualElement>
     </ui:VisualElement>
 </ui:UXML>

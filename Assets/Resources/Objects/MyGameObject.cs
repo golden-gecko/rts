@@ -9,6 +9,27 @@ public class MyGameObject : MonoBehaviour
         Body = transform.Find("Body");
         Indicators = Instantiate(Resources.Load<Indicators>("Indicators"), transform, false);
 
+        if (CreateBase)
+        {
+            Vector3 size = Size;
+
+            int x = Mathf.CeilToInt(size.x / Config.Map.VisibilityScale);
+            int z = Mathf.CeilToInt(size.z / Config.Map.VisibilityScale);
+
+            x = Utils.MakeOdd(x);
+            z = Utils.MakeOdd(z);
+
+            size.x = x * Config.Map.VisibilityScale;
+            size.z = z * Config.Map.VisibilityScale;
+
+            Body.transform.localPosition = new Vector3(0.0f, 0.5f, 0.0f);
+
+            Base = Instantiate(Resources.Load<GameObject>("Base"), transform, false);
+            Base.transform.localScale = new Vector3(size.x, 1.0f, size.z);
+
+            Indicators.transform.localPosition = new Vector3(0.0f, 0.5f, 0.0f);
+        }
+
         Orders.AllowOrder(OrderType.Destroy); // TODO: Move to component.
         Orders.AllowOrder(OrderType.Disable);
         Orders.AllowOrder(OrderType.Enable);
@@ -297,18 +318,13 @@ public class MyGameObject : MonoBehaviour
         switch (State)
         {
             case MyGameObjectState.Operational:
-                info += string.Format("ID: {0}\nName: {1}", GetInstanceID(), name);
-
-                if (Health.Max > 0.0f)
-                {
-                    info += string.Format("\nHP: {0}", Health.GetInfo());
-                }
+                info += string.Format("{0}\n\nHP: {1}", name, Health.GetInfo());
 
                 MyComponent[] myComponents = GetComponents<MyComponent>();
 
                 if (myComponents.Length > 0)
                 {
-                    info += "\nComponents:";
+                    info += "\n\nComponents:";
 
                     foreach (MyComponent myComponent in myComponents)
                     {
@@ -318,17 +334,11 @@ public class MyGameObject : MonoBehaviour
 
                 if (ally)
                 {
-                    string orders = Orders.GetInfo();
                     string stats = Stats.GetInfo();
-
-                    if (orders.Length > 0)
-                    {
-                        info += string.Format("\nOrders: {0}", orders);
-                    }
 
                     if (stats.Length > 0)
                     {
-                        info += string.Format("\nStats: {0}", stats);
+                        info += string.Format("\n\nStats: {0}", stats);
                     }
 
                     if (Skills.Count > 0)
@@ -348,11 +358,25 @@ public class MyGameObject : MonoBehaviour
 
             case MyGameObjectState.UnderAssembly:
             case MyGameObjectState.UnderConstruction:
-                info += string.Format("ID: {0}\nName: {1}\nResources:{2}", GetInstanceID(), name, ConstructionResources.GetInfo());
+                info += string.Format("{0}\n\nResources: {1}", name, ConstructionResources.GetInfo());
                 break;
         }
 
         return info;
+    }
+
+    public virtual string GetInfoOrders(bool ally)
+    {
+        if (ally)
+        {
+            switch (State)
+            {
+                case MyGameObjectState.Operational:
+                    return Orders.GetInfo();
+            }
+        }
+
+        return string.Empty;
     }
 
     public bool Is(MyGameObject myGameObject, DiplomacyState state)
@@ -393,6 +417,11 @@ public class MyGameObject : MonoBehaviour
             Instantiate(DestroyEffect, Position, Quaternion.identity);
         }
 
+        foreach (MyComponent myComponent in GetComponents<MyComponent>())
+        {
+            myComponent.OnDestroy_();
+        }
+
         foreach (Skill skill in Skills.Values)
         {
             skill.OnDestroy(this);
@@ -428,11 +457,16 @@ public class MyGameObject : MonoBehaviour
 
     protected virtual void UpdatePosition()
     {
-        Vector3 validated;
-
-        if (Map.Instance.ValidatePosition(this, Position, out validated))
+        if (Map.Instance.ValidatePosition(this, Position, out Vector3 validated))
         {
-            Position = validated;
+            if (SnapToGrid)
+            {
+                Position = Utils.SnapToCenter(validated, Config.Map.ConstructionScale);
+            }
+            else
+            {
+                Position = validated;
+            }
         }
     }
 
@@ -612,6 +646,14 @@ public class MyGameObject : MonoBehaviour
                 renderer.enabled = true;
             }
 
+            if (Base != null)
+            {
+                foreach (Renderer renderer in Base.GetComponentsInChildren<Renderer>(true))
+                {
+                    renderer.enabled = true;
+                }
+            }
+
             Indicators.GetComponent<Indicators>().OnShow();
 
             VisibilityState = MyGameObjectVisibilityState.Visible;
@@ -621,6 +663,14 @@ public class MyGameObject : MonoBehaviour
             foreach (Renderer renderer in Body.GetComponentsInChildren<Renderer>(true))
             {
                 renderer.enabled = false;
+            }
+
+            if (Base != null)
+            {
+                foreach (Renderer renderer in Base.GetComponentsInChildren<Renderer>(true))
+                {
+                    renderer.enabled = false;
+                }
             }
 
             Indicators.GetComponent<Indicators>().OnRadar();
@@ -634,6 +684,14 @@ public class MyGameObject : MonoBehaviour
                 renderer.enabled = false;
             }
 
+            if (Base != null)
+            {
+                foreach (Renderer renderer in Base.GetComponentsInChildren<Renderer>(true))
+                {
+                    renderer.enabled = false;
+                }
+            }
+
             Indicators.GetComponent<Indicators>().OnHide();
 
             VisibilityState = MyGameObjectVisibilityState.Explored;
@@ -643,6 +701,14 @@ public class MyGameObject : MonoBehaviour
             foreach (Renderer renderer in Body.GetComponentsInChildren<Renderer>(true))
             {
                 renderer.enabled = false;
+            }
+
+            if (Base != null)
+            {
+                foreach (Renderer renderer in Base.GetComponentsInChildren<Renderer>(true))
+                {
+                    renderer.enabled = false;
+                }
             }
 
             Indicators.GetComponent<Indicators>().OnHide();
@@ -719,7 +785,7 @@ public class MyGameObject : MonoBehaviour
 
     public bool Constructed { get => ConstructionResources.CurrentSum == ConstructionResources.MaxSum; }
 
-    public bool Powered { get => Map.Instance.IsVisibleByPower(this, HUD.Instance.ActivePlayer); }
+    public bool Powered { get => Map.Instance.IsVisibleByPower(this); }
 
     public bool Working { get => Enabled && (Powerable == false || Powered); }
 
@@ -763,9 +829,6 @@ public class MyGameObject : MonoBehaviour
     public bool ShowIndicators { get; set; } = true;
 
     [field: SerializeField]
-    public bool ShowOrders { get; set; } = true;
-
-    [field: SerializeField]
     public bool ShowEntrance { get; set; } = true;
 
     [field: SerializeField]
@@ -779,6 +842,12 @@ public class MyGameObject : MonoBehaviour
 
     [field: SerializeField]
     public MyGameObjectState State { get; private set; } = MyGameObjectState.Operational;
+
+    [field: SerializeField]
+    private bool CreateBase { get; set; } = false;
+
+    [field: SerializeField]
+    private bool SnapToGrid { get; set; } = false;
 
     public Vector3 Position { get => transform.position; set => transform.position = value; }
 
@@ -798,9 +867,11 @@ public class MyGameObject : MonoBehaviour
 
     public Dictionary<OrderType, OrderHandler> OrderHandlers { get; } = new Dictionary<OrderType, OrderHandler>();
 
+    public MyGameObjectVisibilityState VisibilityState { get; private set; } = MyGameObjectVisibilityState.Visible;
+
     public Transform Body { get; private set; }
 
-    public Indicators Indicators { get; private set; }
+    public GameObject Base { get; private set; }
 
-    public MyGameObjectVisibilityState VisibilityState { get; private set; } = MyGameObjectVisibilityState.Visible;
+    public Indicators Indicators { get; private set; }
 }

@@ -24,7 +24,7 @@ public class OrderHandlerResearch : OrderHandler
 
         if (order.Timer == null)
         {
-            order.Timer = new Timer(technology.MaxSum / myGameObject.GetComponent<Researcher>().ResourceUsage);
+            order.Timer = new Timer(Mathf.Ceil((float)technology.MaxSum / myGameObject.GetComponent<Researcher>().ResourceUsage));
         }
 
         if (HaveResources(myGameObject, technology) == false)

@@ -168,7 +168,6 @@ MonoBehaviour:
   <Depth>k__BackingField: -1
   <MapLayers>k__BackingField: 02000000
   <ShowIndicators>k__BackingField: 1
-  <ShowOrders>k__BackingField: 1
   <ShowEntrance>k__BackingField: 0
   <ShowExit>k__BackingField: 0
   <ExpirationTimer>k__BackingField:
@@ -176,6 +175,8 @@ MonoBehaviour:
     <Max>k__BackingField: -1
   <SkillsNames>k__BackingField: []
   <State>k__BackingField: 1
+  <CreateBase>k__BackingField: 1
+  <SnapToGrid>k__BackingField: 1
 --- !u!114 &9033325699283123535
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -206,7 +207,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <Mass>k__BackingField: 10
   <Range>k__BackingField:
-    <Value>k__BackingField: 0
+    <Value>k__BackingField: 10
 --- !u!1 &5866001181412925978
 GameObject:
   m_ObjectHideFlags: 0

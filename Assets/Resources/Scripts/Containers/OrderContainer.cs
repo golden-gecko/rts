@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 
 public class OrderContainer
 {
@@ -47,14 +48,7 @@ public class OrderContainer
 
     public string GetInfo()
     {
-        string info = string.Empty;
-
-        foreach (Order order in Items)
-        {
-            info += string.Format("\n  {0}", order.GetInfo());
-        }
-
-        return info;
+        return string.Join("\n", Items.Select(x => x.GetInfo()));
     }
 
     public void Insert(int index, Order item)

@@ -121,21 +121,11 @@ public class ResourceContainer
         return info;
     }
 
-    public int CurrentSum
-    {
-        get
-        {
-            return Items.Sum(x => x.Current);
-        }
-    }
+    public int CurrentSum { get => Items.Sum(x => x.Current); }
 
-    public int MaxSum
-    {
-        get
-        {
-            return Items.Sum(x => x.Max);
-        }
-    }
+    public int MaxSum { get => Items.Sum(x => x.Max); }
+
+    public float PercentSum { get => (float)CurrentSum / (float)MaxSum; }
 
     public bool In { get => Items.Any(x => x.In); }
 

@@ -1,11 +1,11 @@
 using UnityEngine;
 using UnityEngine.UIElements;
 
-public class MainMenu : MonoBehaviour
+public class MainMenu : Menu
 {
     public static MainMenu Instance { get; private set; }
 
-    void Awake()
+    protected override void Awake()
     {
         if (Instance != null && Instance != this)
         {
@@ -15,33 +15,41 @@ public class MainMenu : MonoBehaviour
         {
             Instance = this;
         }
-    }
 
-    void OnEnable()
-    {
-        GetButton("Continue").RegisterCallback<ClickEvent>(ev => OnButtonContinue());
-        GetButton("New").RegisterCallback<ClickEvent>(ev => OnButtonNew());
-        GetButton("Quit").RegisterCallback<ClickEvent>(ev => OnButtonQuit());
+        base.Awake();
+
+        buttonContinue = GetButton("Continue");
+        buttonContinue.RegisterCallback<ClickEvent>(ev => OnButtonContinue());
+
+        buttonNew = GetButton("New");
+        buttonNew.RegisterCallback<ClickEvent>(ev => OnButtonNew());
+
+        buttonQuit = GetButton("Quit");
+        buttonQuit.RegisterCallback<ClickEvent>(ev => OnButtonQuit());
     }
 
     private Button GetButton(string name)
     {
-        return GetComponent<UIDocument>().rootVisualElement.Q<Button>(name);
+        return root.Q<Button>(name);
     }
 
     private void OnButtonContinue()
     {
-        gameObject.SetActive(false);
+        UI_Menu.Instance.OnMenu();
     }
 
     private void OnButtonNew()
     {
-        gameObject.SetActive(false);
-        SceneMenu.Instance.gameObject.SetActive(true);
+        Show(false);
+        SceneMenu.Instance.Show(true);
     }
 
     private void OnButtonQuit()
     {
         Application.Quit();
     }
+
+    private Button buttonContinue;
+    private Button buttonNew;
+    private Button buttonQuit;
 }
