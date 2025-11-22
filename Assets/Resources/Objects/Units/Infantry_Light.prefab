@@ -393,7 +393,7 @@ MonoBehaviour:
     <Current>k__BackingField: 100
     <Max>k__BackingField: 100
   <Reload>k__BackingField:
-    <Current>k__BackingField: 0
+    <Current>k__BackingField: 2
     <Max>k__BackingField: 2
 --- !u!114 &5963572498318276875
 MonoBehaviour:

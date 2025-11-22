@@ -10,6 +10,12 @@ public class Timer
         Max = max;
     }
 
+    public Timer(float current, float max)
+    {
+        Current = current;
+        Max = max;
+    }
+
     public bool Update(float time)
     {
         Current += time;
