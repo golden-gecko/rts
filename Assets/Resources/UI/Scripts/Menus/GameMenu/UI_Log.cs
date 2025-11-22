@@ -6,7 +6,7 @@ public class UI_Log : UI_Element<UI_Log>
     {
         base.Awake();
 
-        panel = root.Q<VisualElement>("Panel_Log");
+        panel = Root.Q<VisualElement>("Panel_Log");
         value = panel.Q<Label>("Value");
 
         Log("");

@@ -27,4 +27,9 @@ public class Laser : Gun
 
         myGameObject.Stats.Inc(Stats.MissilesFired);
     }
+
+    public override string GetInfo()
+    {
+        return string.Format("Laser - {0}", base.GetInfo());
+    }
 }

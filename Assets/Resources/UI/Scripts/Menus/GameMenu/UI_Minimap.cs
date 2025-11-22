@@ -7,7 +7,7 @@ public class UI_Minimap : UI_Element<UI_Minimap>
     {
         base.Awake();
 
-        panel = root.Q<VisualElement>("Panel_Minimap");
+        panel = Root.Q<VisualElement>("Panel_Minimap");
 
         centerOnMainCamera = panel.Q<Button>("CenterOnMainCamera");
         centerOnMainCamera.RegisterCallback<ClickEvent>(ev => OnCenterOnMainCamera());
@@ -19,7 +19,7 @@ public class UI_Minimap : UI_Element<UI_Minimap>
         zoomOut.RegisterCallback<ClickEvent>(ev => OnZoomOut());
     }
 
-    void Update()
+    private void Update()
     {
         if (CenterOnMainCamera)
         {

@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class DiplomacyManager : Singleton<DiplomacyManager>
 {
-    void Start()
+    private void Start()
     {
         Player cpu = GameObject.Find("CPU").GetComponent<Player>();
         Player gaia = GameObject.Find("Gaia").GetComponent<Player>();

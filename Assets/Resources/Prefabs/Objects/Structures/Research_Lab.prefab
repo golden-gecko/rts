@@ -204,6 +204,8 @@ MonoBehaviour:
   <SnapToGrid>k__BackingField: 1
   <VisibilityState>k__BackingField: 2
   <RotateTowardsTarget>k__BackingField: 1
+  ShowEntrance: 0
+  ShowExit: 0
 --- !u!114 &4576625105702019730
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -217,18 +219,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   <Mass>k__BackingField: 10
-  Technologies:
+  <Technologies>k__BackingField:
   - Colonization
   - Electricity
+  - Flight
   - Heavy_Industry
   - Infantry
   - Laser
-  - Radar 1
-  - Radar 2
-  - Radar 3
+  - Radar_1
+  - Radar_2
+  - Radar_3
   - Space_Travels
+  - Spaceport
   - Static_Defences
   - Stationary_Defences
+  - Submarines
   <ResourceUsage>k__BackingField: 4
 --- !u!114 &-3540461504229549173
 MonoBehaviour:

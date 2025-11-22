@@ -28,11 +28,11 @@ public class JobHandlerConstruct : JobHandler
             }
         }
 
-        if (closest == null)
+        if (closest != null)
         {
-            return null;
+            return Order.Construct(closest);
         }
 
-        return Order.Construct(closest);
+        return null;
     }
 }

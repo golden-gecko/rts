@@ -66,5 +66,5 @@ public class AchievementContainer
 
     public Player Player { get; set; }
 
-    public List<Achievement> Achievements = new List<Achievement>();
+    public List<Achievement> Achievements { get; } = new List<Achievement>();
 }

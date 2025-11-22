@@ -1,12 +1,12 @@
 using UnityEngine;
 
 [DisallowMultipleComponent]
-public class BehaviourWorker : MonoBehaviour
+public class BehaviourWorker : Behaviour
 {
-    void Awake()
+    protected override void Awake()
     {
-        MyGameObject parent = GetComponent<MyGameObject>();
+        base.Awake();
 
-        parent.OrderHandlers[OrderType.Idle] = new OrderHandlerIdleWorker();
+        Parent.OrderHandlers[OrderType.Idle] = new OrderHandlerIdleWorker();
     }
 }

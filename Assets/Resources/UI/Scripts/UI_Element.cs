@@ -7,17 +7,17 @@ public class UI_Element<T> : Singleton<T> where T : Component
     {
         base.Awake();
 
-        document = GetComponent<UIDocument>();
-        root = document.rootVisualElement;
+        Document = GetComponent<UIDocument>();
+        Root = Document.rootVisualElement;
     }
 
     public void Show(bool value)
     {
-        root.visible = value;
+        Root.visible = value;
     }
 
-    public bool Visible { get => root.visible; }
+    public bool Visible { get => Root.visible; }
 
-    protected UIDocument document { get; private set; }
-    protected VisualElement root { get; private set; }
+    protected UIDocument Document;
+    protected VisualElement Root;
 }

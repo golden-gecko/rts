@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class Cursor3D : Singleton<Cursor3D>
 {
-    void Update()
+    private void Update()
     {
         if (GameObject == null)
         {

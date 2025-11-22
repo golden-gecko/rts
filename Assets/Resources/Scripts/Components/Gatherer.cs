@@ -16,6 +16,6 @@ public class Gatherer : MyComponent
 
     public override string GetInfo()
     {
-        return string.Format("Gatherer");
+        return string.Format("Gatherer - {0}", base.GetInfo());
     }
 }

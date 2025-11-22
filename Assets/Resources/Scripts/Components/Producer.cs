@@ -21,7 +21,7 @@ public class Producer : MyComponent
 
     public override string GetInfo()
     {
-        return string.Format("Producer: {0}, Resource Usage: {1}", base.GetInfo(), ResourceUsage);
+        return string.Format("Producer - {0}, Resource Usage: {1}", base.GetInfo(), ResourceUsage);
     }
 
     [field: SerializeField]

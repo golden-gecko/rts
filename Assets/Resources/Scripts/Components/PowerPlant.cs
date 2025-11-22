@@ -23,8 +23,6 @@ public class PowerPlant : MyComponent
         previousProducerConnected = (IsProducer || IsProducerConnected);
     }
 
-    private bool PowerUpTimeActive = false;
-
     protected override void Update()
     {
         base.Update();
@@ -88,11 +86,11 @@ public class PowerPlant : MyComponent
 
     public override string GetInfo()
     {
-        string info = string.Format("PowerPlant: {0}\n  Range: {1}", base.GetInfo(), Range.Total);
+        string info = string.Format("PowerPlant - {0}, Range: {1}", base.GetInfo(), Range.Total);
 
         if (IsConsumer)
         {
-            info += string.Format("\n  Efficiency: {0:0.}%", Efficiency * 100.0f);
+            info += string.Format(", Efficiency: {0:0.}%", Efficiency * 100.0f);
         }
 
         return info;
@@ -318,6 +316,8 @@ public class PowerPlant : MyComponent
     public float Efficiency { get => PowerUsageNetworkTotal > 0.0f ? Math.Min(PowerGenerationNetworkTotal / PowerUsageNetworkTotal, 1.0f) : 0.0f; }
 
     private HashSet<PowerPlant> Connections { get; } = new HashSet<PowerPlant>();
+
+    private bool PowerUpTimeActive { get; set; } = false;
 
     private MyGameObjectState previousState;
     private bool previousEnabled;

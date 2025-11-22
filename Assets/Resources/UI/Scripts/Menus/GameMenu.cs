@@ -8,7 +8,7 @@ public class GameMenu : UI_Element<GameMenu>
     }
 
     /*
-    void Update()
+    private void Update()
     {
         if (HUD.Instance.ActivePlayer.Selection.Items.Count > 0)
         {

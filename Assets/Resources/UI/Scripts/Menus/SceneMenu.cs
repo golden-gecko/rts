@@ -9,7 +9,7 @@ public class SceneMenu : UI_Element<SceneMenu>
     {
         base.Awake();
 
-        menu = root.Q<VisualElement>("Menu");
+        menu = Root.Q<VisualElement>("Menu");
 
         int sceneCount = SceneManager.sceneCountInBuildSettings;
         string[] scenes = new string[sceneCount];

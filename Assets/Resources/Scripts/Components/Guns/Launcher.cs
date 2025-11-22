@@ -29,4 +29,9 @@ public class Launcher : Gun
 
         myGameObject.Stats.Inc(Stats.MissilesFired);
     }
+
+    public override string GetInfo()
+    {
+        return string.Format("Launcher - {0}", base.GetInfo());
+    }
 }

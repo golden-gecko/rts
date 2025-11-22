@@ -24,12 +24,12 @@ public class Engine : MyComponent
 
     public override string GetInfo()
     {
-        return string.Format("{0}, Power: {1:0.}, Fuel: {2}/{3} Speed: {4:0.}", base.GetInfo(), Power.Total, Fuel.GetInfo(), FuelUsage, Speed);
+        return string.Format("Engine - {0}, Power: {1:0.}, Fuel: {2}/{3} Speed: {4:0.}", base.GetInfo(), Power.Total, Fuel.GetInfo(), FuelUsage, Speed);
     }
 
     public bool CanDrive(float distance)
     {
-        return distanceToDrive > distance || Fuel.CanDec();
+        return DistanceToDrive > distance || Fuel.CanDec();
     }
 
     public void Drive(float distance)
@@ -39,26 +39,26 @@ public class Engine : MyComponent
             return;
         }
 
-        if (distance > distanceToDrive)
+        if (distance > DistanceToDrive)
         {
             Fuel.Dec();
 
-            distanceToDrive += FuelUsage;
+            DistanceToDrive += FuelUsage;
         }
 
-        distanceToDrive -= distance;
+        DistanceToDrive -= distance;
     }
 
     [field: SerializeField]
     public Property Power { get; private set; } = new Property(100.0f);
 
     [field: SerializeField]
-    public Counter Fuel { get; } = new Counter(100, 100);
+    public Counter Fuel { get; private set; } = new Counter(100, 100);
 
     [field: SerializeField]
     public float FuelUsage { get; private set; } = 1.0f;
 
     public float Speed { get => Power.Total / Parent.Mass; }
 
-    private float distanceToDrive = 0.0f;
+    private float DistanceToDrive { get; set; } = 0.0f;
 }

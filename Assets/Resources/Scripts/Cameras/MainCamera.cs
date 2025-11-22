@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class MainCamera : MonoBehaviour
 {
-    protected void Update()
+    private void Update()
     {
         Translate();
         Rotate();
@@ -92,11 +92,11 @@ public class MainCamera : MonoBehaviour
         }
     }
 
-    public Vector3 Position { get => transform.position; set => transform.position = value; }
-
     [field: SerializeField]
     public Vector3 Speed { get; private set; } = new Vector3(10.0f, 10.0f, 10.0f);
 
     [field: SerializeField]
     public Vector2 Sensitivity { get; private set; } = new Vector2(3.0f, 3.0f);
+
+    public Vector3 Position { get => transform.position; set => transform.position = value; }
 }

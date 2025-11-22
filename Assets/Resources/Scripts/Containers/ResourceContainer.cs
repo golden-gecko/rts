@@ -121,6 +121,9 @@ public class ResourceContainer
         return info;
     }
 
+    [field: SerializeField]
+    public List<Resource> Items { get; set; } = new List<Resource>();
+
     public int CurrentSum { get => Items.Sum(x => x.Current); }
 
     public int MaxSum { get => Items.Sum(x => x.Max); }
@@ -130,7 +133,4 @@ public class ResourceContainer
     public bool In { get => Items.Any(x => x.In); }
 
     public bool Out { get => Items.Any(x => x.Out); }
-
-    [field: SerializeField]
-    public List<Resource> Items { get; set; } = new List<Resource>();
 }

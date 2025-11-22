@@ -10,7 +10,7 @@ public class UI_Commands : UI_Element<UI_Commands>
     {
         base.Awake();
 
-        panel = root.Q<VisualElement>("Panel_Commands");
+        panel = Root.Q<VisualElement>("Panel_Commands");
 
         formations = panel.Q<VisualElement>("List_Formations");
         orders = panel.Q<VisualElement>("List_Orders");
@@ -20,7 +20,7 @@ public class UI_Commands : UI_Element<UI_Commands>
         technologies = panel.Q<VisualElement>("List_Technologies");
     }
 
-    void Start()
+    private void Start()
     {
         CreateFormations();
         CreateOrders();
@@ -30,7 +30,7 @@ public class UI_Commands : UI_Element<UI_Commands>
         CreateTechnologies();
     }
 
-    void Update()
+    private void Update()
     {
         Player activePlayer = HUD.Instance.ActivePlayer;
         MyGameObject hovered = HUD.Instance.Hovered;

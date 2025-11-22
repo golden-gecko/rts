@@ -25,7 +25,7 @@ public class Assembler : MyComponent
 
     public override string GetInfo()
     {
-        return string.Format("Assembler: {0}, Resource Usage: {1}", base.GetInfo(), ResourceUsage);
+        return string.Format("Assembler - {0}, Resource Usage: {1}", base.GetInfo(), ResourceUsage);
     }
 
     [field: SerializeField]

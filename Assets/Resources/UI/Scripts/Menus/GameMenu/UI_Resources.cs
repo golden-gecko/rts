@@ -8,11 +8,11 @@ public class UI_Resources : UI_Element<UI_Resources>
     {
         base.Awake();
 
-        panel = root.Q<VisualElement>("Panel_Resources");
+        panel = Root.Q<VisualElement>("Panel_Resources");
         value = panel.Q<Label>("Value");
     }
 
-    void Update()
+    private void Update()
     {
         ResourceContainer resourceCotainer = new ResourceContainer();
 
