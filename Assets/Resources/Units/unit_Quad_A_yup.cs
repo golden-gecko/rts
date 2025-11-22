@@ -8,7 +8,6 @@ public class unit_Quad_A_yup : Unit
 
         Speed = 12.0f;
         MissilePrefab = "Missiles/Bullet";
-        MissileRangeMax = 20.0f;
         ReloadTimer = new Timer(3.0f);
     }
 }
