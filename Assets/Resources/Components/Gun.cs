@@ -16,11 +16,6 @@ public class Gun : MyComponent
     {
         base.Update();
 
-        if (Parent.Working == false) // TODO: OK?
-        {
-            return;
-        }
-
         Reload.Update(Time.deltaTime);
     }
 
