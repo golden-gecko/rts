@@ -6,7 +6,7 @@ public class struct_Factory_Heavy_A_yup : MyGameObject
 
         Orders.AllowOrder(OrderType.Construct);
 
-        Orders.AllowPrefab("Prefabs/Buildings/unit_Tank_Combat_A_yup");
-        Orders.AllowPrefab("Prefabs/Buildings/unit_Tank_Missile_A_yup");
+        Orders.AllowPrefab("Prefabs/Vehicles/unit_Tank_Combat_A_yup");
+        Orders.AllowPrefab("Prefabs/Vehicles/unit_Tank_Missile_A_yup");
     }
 }

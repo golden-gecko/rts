@@ -29,7 +29,5 @@ public class struct_Refinery_A_yup : MyGameObject
     protected override void OnOrderIdle()
     {
         Produce();
-
-        Orders.Pop();
     }
 }

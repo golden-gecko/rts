@@ -52,7 +52,7 @@ public class MyGameObject : MonoBehaviour
         }
         else
         {
-            Idle();
+            OnOrderIdle();
         }
 
         // Set position to terrain.

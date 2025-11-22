@@ -89,6 +89,8 @@ public class HUD : MonoBehaviour
             {
                 Order = OrderType.None;
             }
+
+            ProcessOrder();
         }
     }
 
@@ -213,6 +215,7 @@ public class HUD : MonoBehaviour
 
     void Construct(Vector3 position)
     {
+        /*
         var prefabs = new Dictionary<string, string>()
         {
             { "HeavyFactory", "Prefabs/Buildings/struct_Factory_Heavy_A_yup" },
@@ -223,10 +226,11 @@ public class HUD : MonoBehaviour
             { "Refinery", "Prefabs/Buildings/struct_Refinery_A_yup" },
             { "ResearchLab", "Prefabs/Buildings/struct_Research_Lab_A_yup" },
         };
+        */
 
-        var resource = Resources.Load<MyGameObject>(prefabs[Prefab]);
+        var resource = Resources.Load<MyGameObject>(Prefab);
 
-        Instantiate(resource, position, Quaternion.identity);
+        Instantiate<MyGameObject>(resource, position, Quaternion.identity);
     }
 
     void IssueOrder(Vector3 position)

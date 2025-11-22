@@ -9,12 +9,7 @@ public class InGameMenuController : MonoBehaviour
 {
     void Start()
     {
-        var gameObject = GameObject.FindGameObjectWithTag("HUD");
-
-        if (gameObject)
-        {
-            hud = gameObject.GetComponent<HUD>();
-        }
+        hud = GameObject.FindGameObjectWithTag("HUD").GetComponent<HUD>();
 
         var uiDocument = GetComponent<UIDocument>();
         var rootVisualElement = uiDocument.rootVisualElement;
@@ -49,33 +44,30 @@ public class InGameMenuController : MonoBehaviour
             info.text = string.Empty;
         }
 
-        var orderWhitelist = new HashSet<OrderType>();
-
-        foreach (var i in hud.Selected)
-        {
-            orderWhitelist.UnionWith(i.Orders.OrderWhitelist);
-        }
-
-        foreach (var i in ordersButtons)
-        {
-            i.Value.style.display = DisplayStyle.None;
-        }
-
-        foreach (var i in orderWhitelist)
-        {
-            if (ordersButtons.ContainsKey(i))
-            {
-                ordersButtons[i].style.display = DisplayStyle.Flex;
-            }
-        }
+        UpdateOrders();
+        UpdatePrefabs();
     }
 
     void CreateOrders()
     {
+        var forbiddenInUI = new List<OrderType>()
+        {
+            OrderType.Construct,
+            OrderType.Destroy,
+            OrderType.Idle,
+            OrderType.None,
+            OrderType.Produce,
+        };
+
         orders.Clear();
 
         foreach (var i in Enum.GetNames(typeof(OrderType)))
         {
+            if (forbiddenInUI.Contains(Enum.Parse<OrderType>(i)))
+            {
+                continue;
+            }
+
             var buttonContainer = templateButton.Instantiate();
             var button = buttonContainer.Q<Button>();
 
@@ -95,20 +87,74 @@ public class InGameMenuController : MonoBehaviour
 
         foreach (var i in AssetDatabase.GetAllAssetPaths())
         {
-            if (i.Contains("Assets/Resources/"))
+            if (i.Contains("Assets/Resources/") == false)
             {
-                var buttonContainer = templateButton.Instantiate();
-                var button = buttonContainer.Q<Button>();
-                var prefabPath = i.Replace("Assets/Resources/", "").Replace(".prefab", "");
-                var resource = Resources.Load<MyGameObject>(prefabPath);
+                continue;
+            }
 
-                button.RegisterCallback<ClickEvent>(ev => OnConstruct(i));
-                button.style.display = DisplayStyle.None;
-                button.text = Path.GetFileName(i).Replace(".prefab", "");
-                button.userData = prefabPath;
+            if (i.Contains(".prefab") == false)
+            {
+                continue;
+            }
 
-                prefabs.Add(buttonContainer);
-                prefabsButtons[prefabPath] = button;
+
+            var buttonContainer = templateButton.Instantiate();
+            var button = buttonContainer.Q<Button>();
+            var prefabPath = i.Replace("Assets/Resources/", "").Replace(".prefab", "");
+            var resource = Resources.Load<MyGameObject>(prefabPath);
+
+            button.RegisterCallback<ClickEvent>(ev => OnConstruct(prefabPath));
+            button.style.display = DisplayStyle.None;
+            button.text = Path.GetFileName(i).Replace(".prefab", "");
+            button.userData = prefabPath;
+
+            prefabs.Add(buttonContainer);
+            prefabsButtons[prefabPath] = button;
+        }
+    }
+
+    void UpdateOrders()
+    {
+        var whitelist = new HashSet<OrderType>();
+
+        foreach (var i in hud.Selected)
+        {
+            whitelist.UnionWith(i.Orders.OrderWhitelist);
+        }
+
+        foreach (var i in ordersButtons)
+        {
+            i.Value.style.display = DisplayStyle.None;
+        }
+
+        foreach (var i in whitelist)
+        {
+            if (ordersButtons.ContainsKey(i))
+            {
+                ordersButtons[i].style.display = DisplayStyle.Flex;
+            }
+        }
+    }
+
+    void UpdatePrefabs()
+    {
+        var whitelist = new HashSet<string>();
+
+        foreach (var i in hud.Selected)
+        {
+            whitelist.UnionWith(i.Orders.PrefabWhitelist);
+        }
+
+        foreach (var i in prefabsButtons)
+        {
+            i.Value.style.display = DisplayStyle.None;
+        }
+
+        foreach (var i in whitelist)
+        {
+            if (prefabsButtons.ContainsKey(i))
+            {
+                prefabsButtons[i].style.display = DisplayStyle.Flex;
             }
         }
     }
