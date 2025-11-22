@@ -339,8 +339,6 @@ public class MyGameObject : MonoBehaviour
                         {
                             Resources.Add(i.Name, i.Count);
                         }
-
-                        break;
                     }
 
                     order.Timer.Reset();
@@ -348,6 +346,7 @@ public class MyGameObject : MonoBehaviour
                     Orders.MoveToEnd();
 
                     Stats.Add(Stats.OrdersExecuted, 1);
+                    Stats.Add(Stats.TimeProducing, order.Timer.Max);
                 }
             }
         }
@@ -440,8 +439,6 @@ public class MyGameObject : MonoBehaviour
 
         order.Timer.Update(Time.deltaTime);
 
-        Stats.Add(Stats.TimeWaited, Time.deltaTime);
-
         if (order.Timer.Finished)
         {
             order.Timer.Reset();
@@ -449,6 +446,7 @@ public class MyGameObject : MonoBehaviour
             Orders.Pop();
 
             Stats.Add(Stats.OrdersExecuted, 1);
+            Stats.Add(Stats.TimeWaiting, order.Timer.Max);
         }
     }
 
