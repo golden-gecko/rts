@@ -61,6 +61,7 @@ MonoBehaviour:
   <TimeToLive>k__BackingField: -1
   <Altitude>k__BackingField: 0
   <MapLayers>k__BackingField: 01000000
+  ShowIndicators: 1
   <PowerUsage>k__BackingField: 1
 --- !u!114 &-8510754742537900643
 MonoBehaviour:
@@ -80,6 +81,10 @@ MonoBehaviour:
     <Items>k__BackingField:
     - <Current>k__BackingField: 100
       <Max>k__BackingField: 100
+      <Name>k__BackingField: Ammunition
+      <Direction>k__BackingField: 0
+    - <Current>k__BackingField: 100
+      <Max>k__BackingField: 100
       <Name>k__BackingField: Coal
       <Direction>k__BackingField: 0
     - <Current>k__BackingField: 100
@@ -89,6 +94,10 @@ MonoBehaviour:
     - <Current>k__BackingField: 100
       <Max>k__BackingField: 100
       <Name>k__BackingField: Iron
+      <Direction>k__BackingField: 0
+    - <Current>k__BackingField: 100
+      <Max>k__BackingField: 100
+      <Name>k__BackingField: Fuel
       <Direction>k__BackingField: 0
     - <Current>k__BackingField: 100
       <Max>k__BackingField: 100
@@ -210,7 +219,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.4, y: 0.4, z: 0.4}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 8080248203402185053}

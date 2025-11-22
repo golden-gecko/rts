@@ -4,7 +4,7 @@ public class OrderHandlerGuard : OrderHandler
     {
         Order order = myGameObject.Orders.First();
 
-        if (IsValid(order) == false)
+        if (IsValid(myGameObject, order) == false)
         {
             Fail(myGameObject);
 
@@ -21,8 +21,8 @@ public class OrderHandlerGuard : OrderHandler
         }
     }
 
-    protected override bool IsValid(Order order)
+    protected override bool IsValid(MyGameObject myGameObject, Order order)
     {
-        return order.IsTargetGameObject == false || (order.IsTargetGameObject == true && order.TargetGameObject != null);
+        return order.IsTargetGameObject == false || (order.IsTargetGameObject == true && order.TargetGameObject != null && order.TargetGameObject != myGameObject);
     }
 }

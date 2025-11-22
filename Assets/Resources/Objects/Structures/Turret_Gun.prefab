@@ -230,6 +230,7 @@ MonoBehaviour:
   <TimeToLive>k__BackingField: -1
   <Altitude>k__BackingField: 0
   <MapLayers>k__BackingField: 01000000
+  ShowIndicators: 1
   <PowerUsage>k__BackingField: 1
 --- !u!114 &7435805196623170354
 MonoBehaviour:
@@ -294,7 +295,7 @@ GameObject:
   - component: {fileID: 4382534857105040284}
   - component: {fileID: 5163949914082394355}
   - component: {fileID: 8757677930614654595}
-  - component: {fileID: 7522650605407488761}
+  - component: {fileID: 6797052728804380173}
   m_Layer: 0
   m_Name: Body
   m_TagString: Untagged
@@ -368,7 +369,7 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!65 &7522650605407488761
+--- !u!65 &6797052728804380173
 BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -383,12 +384,12 @@ BoxCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 5, y: 4.2000003, z: 5}
-  m_Center: {x: 0.00000011920929, y: 2.1000001, z: 0}
+  m_Size: {x: 5, y: 7.8469887, z: 5}
+  m_Center: {x: 0, y: 3.9234943, z: 0}
 --- !u!1001 &8194033786116080603
 PrefabInstance:
   m_ObjectHideFlags: 0

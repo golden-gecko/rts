@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class Shield : MyComponent
+public class Shield : MyComponent // TODO: Shield puts health bar in wrong position.
 {
     protected override void Start()
     {

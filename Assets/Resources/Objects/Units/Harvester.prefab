@@ -150,6 +150,7 @@ MonoBehaviour:
   <TimeToLive>k__BackingField: -1
   <Altitude>k__BackingField: 0
   <MapLayers>k__BackingField: 01000000
+  ShowIndicators: 1
 --- !u!114 &-7296574799590733170
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -227,11 +228,19 @@ MonoBehaviour:
     <Items>k__BackingField:
     - <Current>k__BackingField: 0
       <Max>k__BackingField: 10
+      <Name>k__BackingField: Ammunition
+      <Direction>k__BackingField: 0
+    - <Current>k__BackingField: 0
+      <Max>k__BackingField: 10
       <Name>k__BackingField: Coal
       <Direction>k__BackingField: 0
     - <Current>k__BackingField: 0
       <Max>k__BackingField: 10
       <Name>k__BackingField: Crystal
+      <Direction>k__BackingField: 0
+    - <Current>k__BackingField: 0
+      <Max>k__BackingField: 10
+      <Name>k__BackingField: Fuel
       <Direction>k__BackingField: 0
     - <Current>k__BackingField: 0
       <Max>k__BackingField: 10
@@ -1525,8 +1534,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 5.1180763, y: 3.1238492, z: 7.151764}
-  m_Center: {x: 0.00073873997, y: 1.8617672, z: 0.14592445}
+  m_Size: {x: 9.537862, y: 3.7197752, z: 10.725993}
+  m_Center: {x: -0.12341112, y: 1.8121066, z: 1.9330353}
 --- !u!1 &6787344600218465056
 GameObject:
   m_ObjectHideFlags: 0

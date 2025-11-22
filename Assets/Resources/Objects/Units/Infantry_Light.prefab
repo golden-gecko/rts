@@ -188,8 +188,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.82702863, y: 1.2635179, z: 0.27449083}
-  m_Center: {x: -0.00000014901161, y: 0.8544016, z: -0.000000007450581}
+  m_Size: {x: 1.1379915, y: 2.3219862, z: 0.27449083}
+  m_Center: {x: 0.0059797056, y: 1.1922742, z: -0.000000009313226}
 --- !u!1 &5060743893917572568
 GameObject:
   m_ObjectHideFlags: 0
@@ -338,6 +338,7 @@ MonoBehaviour:
   <TimeToLive>k__BackingField: -1
   <Altitude>k__BackingField: 0
   <MapLayers>k__BackingField: 01000000
+  ShowIndicators: 1
 --- !u!114 &-3274248660476900476
 MonoBehaviour:
   m_ObjectHideFlags: 0
