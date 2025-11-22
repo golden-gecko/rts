@@ -1,4 +1,4 @@
-public class unit_Quad_A_yup : MyGameObject
+public class unit_Tank_Missile_A_yup : MyGameObject
 {
     protected override void Start()
     {
