@@ -258,7 +258,7 @@ public class GameMenu : Menu
                 prefabsButtons[i].style.display = DisplayStyle.Flex;
                 prefabsButtons[i].SetEnabled(
                     HUD.Instance.ActivePlayer.TechnologyTree.IsUnlocked(
-                        i.Replace("Objects/Structures/", "").Replace("Objects/Units/", "")
+                        Path.GetFileName(i)
                     )
                 );
             }
