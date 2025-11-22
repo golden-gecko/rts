@@ -19,6 +19,7 @@ public class MyGameObject : MonoBehaviour
         OrderHandlers[OrderType.Assemble] = new OrderHandlerAssemble();
         OrderHandlers[OrderType.Construct] = new OrderHandlerConstruct();
         OrderHandlers[OrderType.Destroy] = new OrderHandlerDestroy();
+        OrderHandlers[OrderType.Explore] = new OrderHandlerExplore();
         OrderHandlers[OrderType.Follow] = new OrderHandlerFollow();
         OrderHandlers[OrderType.Guard] = new OrderHandlerGuard();
         OrderHandlers[OrderType.Load] = new OrderHandlerLoad();
@@ -34,7 +35,7 @@ public class MyGameObject : MonoBehaviour
 
         ConstructionResources.Add("Metal", 0, 30);
 
-        Recipe r1 = new Recipe();
+        Recipe r1 = new Recipe("Metal");
 
         r1.Consume("Metal", 0);
 
@@ -148,9 +149,9 @@ public class MyGameObject : MonoBehaviour
         Orders.Add(Order.Patrol(position));
     }
 
-    public void Produce()
+    public void Produce(string recipe = "")
     {
-        Orders.Add(Order.Produce(ProduceTime));
+        Orders.Add(Order.Produce(recipe, ProduceTime));
     }
 
     public void Rally(Vector3 target, int priority = -1)
@@ -399,9 +400,9 @@ public class MyGameObject : MonoBehaviour
 
     private void RaiseConstructionResourceFlags()
     {
-        foreach (Recipe recipe in ConstructionRecipies.Items)
+        foreach (KeyValuePair<string, Recipe> recipe in ConstructionRecipies.Items)
         {
-            foreach (RecipeComponent resource in recipe.ToConsume)
+            foreach (RecipeComponent resource in recipe.Value.ToConsume)
             {
                 int capacity = ConstructionResources.Capacity(resource.Name);
 
@@ -419,9 +420,9 @@ public class MyGameObject : MonoBehaviour
 
     private void RaiseResourceFlags()
     {
-        foreach (Recipe recipe in Recipes.Items)
+        foreach (KeyValuePair<string, Recipe> recipe in Recipes.Items)
         {
-            foreach (RecipeComponent resource in recipe.ToConsume)
+            foreach (RecipeComponent resource in recipe.Value.ToConsume)
             {
                 int capacity = Resources.Capacity(resource.Name);
 
@@ -435,7 +436,7 @@ public class MyGameObject : MonoBehaviour
                 }
             }
 
-            foreach (RecipeComponent resource in recipe.ToProduce)
+            foreach (RecipeComponent resource in recipe.Value.ToProduce)
             {
                 int storage = Resources.Storage(resource.Name);
 
@@ -466,6 +467,13 @@ public class MyGameObject : MonoBehaviour
             return true;
         }
     }
+
+    public float DistanceTo(MyGameObject myGameObject)
+    {
+        return (Position - myGameObject.Position).magnitude;
+    }
+
+    public Vector3 Center { get => GetComponent<Collider>().bounds.center; }
 
     public Vector3 Entrance { get => new Vector3(transform.position.x, transform.position.y, transform.position.z + Size.z * 0.75f); }
 

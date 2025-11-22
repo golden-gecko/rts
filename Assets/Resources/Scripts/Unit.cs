@@ -10,7 +10,6 @@ public class Unit : MyGameObject
         Orders.AllowOrder(OrderType.Patrol);
         
         OrderHandlers[OrderType.Attack] = new OrderHandlerAttackUnit();
-        OrderHandlers[OrderType.Explore] = new OrderHandlerExplore();
         OrderHandlers[OrderType.Idle] = new OrderHandlerIdleAttacker();
 
         Damage = 10.0f;

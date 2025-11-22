@@ -10,7 +10,7 @@ public class Headquarters : Structure
         Resources.Add("Metal Ore", 200, 200);
         Resources.Add("Wood", 100, 200);
 
-        Recipe r1 = new Recipe();
+        Recipe r1 = new Recipe("Storage");
 
         r1.Consume("Coal", 0);
         r1.Consume("Crystal", 0);

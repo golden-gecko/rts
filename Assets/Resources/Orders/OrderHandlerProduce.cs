@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class OrderHandlerProduce : IOrderHandler
@@ -6,62 +7,87 @@ public class OrderHandlerProduce : IOrderHandler
     {
         Order order = myGameObject.Orders.First();
 
-        foreach (Recipe recipe in myGameObject.Recipes.Items)
+        if (order.Recipe.Length > 0)
         {
-            // Have all resources to consume.
-            bool toConsume = true;
-
-            foreach (RecipeComponent i in recipe.ToConsume)
+            if (myGameObject.Recipes.Items.ContainsKey(order.Recipe))
             {
-                if (myGameObject.Resources.CanRemove(i.Name, i.Count) == false)
-                {
-                    toConsume = false;
-                    break;
-                }
+                Produce(myGameObject, order, myGameObject.Recipes.Items[order.Recipe]);
             }
-
-            // Have all resources to produce.
-            bool toProduce = true;
-
-            foreach (RecipeComponent i in recipe.ToProduce)
+            else
             {
-                if (myGameObject.Resources.CanAdd(i.Name, i.Count) == false)
-                {
-                    toProduce = false;
-                    break;
-                }
+                myGameObject.Orders.Pop();
+                myGameObject.Stats.Add(Stats.OrdersFailed, 1);
             }
-
-            // Produce new resources.
-            if (toConsume && toProduce)
+        }
+        else
+        {
+            foreach (KeyValuePair<string, Recipe> recipe in myGameObject.Recipes.Items)
             {
-                order.Timer.Update(Time.deltaTime);
-
-                if (order.Timer.Finished)
+                if (Produce(myGameObject, order, recipe.Value))
                 {
-                    if (toConsume && toProduce)
-                    {
-                        foreach (RecipeComponent i in recipe.ToConsume)
-                        {
-                            myGameObject.Resources.Remove(i.Name, i.Count);
-                        }
-
-                        foreach (RecipeComponent i in recipe.ToProduce)
-                        {
-                            myGameObject.Resources.Add(i.Name, i.Count);
-
-                            myGameObject.Stats.Add(Stats.ResourcesProduced, i.Count);
-                        }
-                    }
-
-                    order.Timer.Reset();
-
-                    myGameObject.Orders.MoveToEnd();
-
-                    myGameObject.Stats.Add(Stats.OrdersExecuted, 1);
-                    myGameObject.Stats.Add(Stats.TimeProducing, order.Timer.Max);
+                    break;
                 }
             }
         }
+    }
+
+    private bool Produce(MyGameObject myGameObject, Order order, Recipe recipe)
+    {
+        // Have storage to consume.
+        bool toConsume = true;
+
+        foreach (RecipeComponent i in recipe.ToConsume)
+        {
+            if (myGameObject.Resources.CanRemove(i.Name, i.Count) == false)
+            {
+                toConsume = false;
+                break;
+            }
+        }
+
+        // Have capacity to produce.
+        bool toProduce = true;
+
+        foreach (RecipeComponent i in recipe.ToProduce)
+        {
+            if (myGameObject.Resources.CanAdd(i.Name, i.Count) == false)
+            {
+                toProduce = false;
+                break;
+            }
+        }
+
+        if (toConsume == false || toProduce == false)
+        {
+            return false;
+        }
+
+        // Produce new resources.
+        order.Timer.Update(Time.deltaTime);
+
+        if (order.Timer.Finished)
+        {
+            foreach (RecipeComponent i in recipe.ToConsume)
+            {
+                myGameObject.Resources.Remove(i.Name, i.Count);
+            }
+
+            foreach (RecipeComponent i in recipe.ToProduce)
+            {
+                myGameObject.Resources.Add(i.Name, i.Count);
+
+                myGameObject.Stats.Add(Stats.ResourcesProduced, i.Count);
+            }
+
+            order.Timer.Reset();
+
+            // myGameObject.Orders.MoveToEnd();
+            myGameObject.Orders.Pop();
+
+            myGameObject.Stats.Add(Stats.OrdersExecuted, 1);
+            myGameObject.Stats.Add(Stats.TimeProducing, order.Timer.Max);
+        }
+
+        return true;
     }
 }
