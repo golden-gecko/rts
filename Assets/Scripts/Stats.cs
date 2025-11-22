@@ -5,7 +5,9 @@ public class Stats
     public static string DistanceDriven = "Distance Driven";
     public static string OrdersExecuted = "Orders Executed";
     public static string OrdersFailed = "Orders Failed";
+    public static string ResourcesProduced = "Resources Produced";
     public static string ResourcesTransported = "Resources Transported";
+    public static string TimeConstructing = "Time Constructing";
     public static string TimeProducing = "Time Producing";
     public static string TimeWaiting = "Time Waiting";
 

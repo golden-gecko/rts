@@ -1,13 +1,19 @@
 using System.Collections;
 using System.Collections.Generic;
 
+public enum PrefabConstructionType
+{
+    Structure,
+    Unit,
+}
+
 public class OrderContainer : IEnumerable<Order>
 {
     public OrderContainer()
     {
         Items = new List<Order>();
         OrderWhitelist = new HashSet<OrderType>();
-        PrefabWhitelist = new HashSet<string>();
+        PrefabWhitelist = new Dictionary<string, PrefabConstructionType>();
     }
 
     public void Add(Order item)
@@ -20,9 +26,9 @@ public class OrderContainer : IEnumerable<Order>
         OrderWhitelist.Add(item);
     }
 
-    public void AllowPrefab(string item)
+    public void AllowPrefab(string item, PrefabConstructionType prefabConstructionType)
     {
-        PrefabWhitelist.Add(item);
+        PrefabWhitelist[item] = prefabConstructionType;
     }
 
     public bool Contains(OrderType item)
@@ -87,7 +93,7 @@ public class OrderContainer : IEnumerable<Order>
 
     public HashSet<OrderType> OrderWhitelist { get; }
 
-    public HashSet<string> PrefabWhitelist { get; }
+    public Dictionary<string, PrefabConstructionType> PrefabWhitelist { get; }
 
     public int Count { get => Items.Count; }
 }

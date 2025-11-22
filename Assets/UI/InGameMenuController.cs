@@ -33,6 +33,8 @@ public class InGameMenuController : MonoBehaviour
 
         CreateOrders();
         CreatePrefabs();
+
+        Log("");
     }
 
     void Update()
@@ -135,14 +137,19 @@ public class InGameMenuController : MonoBehaviour
     {
         var whitelist = new HashSet<OrderType>();
 
-        foreach (var i in hud.Selected)
+        foreach (var selected in hud.Selected)
         {
-            whitelist.UnionWith(i.Orders.OrderWhitelist);
+            if (selected.State != MyGameObjectState.Operational)
+            {
+                continue;
+            }
+
+            whitelist.UnionWith(selected.Orders.OrderWhitelist);
         }
 
-        foreach (var i in ordersButtons)
+        foreach (var button in ordersButtons)
         {
-            i.Value.style.display = DisplayStyle.None;
+            button.Value.style.display = DisplayStyle.None;
         }
 
         foreach (var i in whitelist)
@@ -156,23 +163,31 @@ public class InGameMenuController : MonoBehaviour
 
     void UpdatePrefabs()
     {
-        var whitelist = new HashSet<string>();
+        var whitelist = new Dictionary<string, PrefabConstructionType>();
 
-        foreach (var i in hud.Selected)
+        foreach (var selected in hud.Selected)
         {
-            whitelist.UnionWith(i.Orders.PrefabWhitelist);
+            if (selected.State != MyGameObjectState.Operational)
+            {
+                continue;
+            }
+
+            foreach (var prefab in selected.Orders.PrefabWhitelist)
+            {
+                whitelist[prefab.Key] = prefab.Value;
+            }
         }
 
-        foreach (var i in prefabsButtons)
+        foreach (var button in prefabsButtons)
         {
-            i.Value.style.display = DisplayStyle.None;
+            button.Value.style.display = DisplayStyle.None;
         }
 
         foreach (var i in whitelist)
         {
-            if (prefabsButtons.ContainsKey(i))
+            if (prefabsButtons.ContainsKey(i.Key))
             {
-                prefabsButtons[i].style.display = DisplayStyle.Flex;
+                prefabsButtons[i.Key].style.display = DisplayStyle.Flex;
             }
         }
     }

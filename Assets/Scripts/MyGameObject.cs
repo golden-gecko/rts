@@ -1,6 +1,15 @@
 using System.Collections.Generic;
+using Unity.VisualScripting;
+using UnityEditor.Build;
 using UnityEngine;
 using UnityEngine.Events;
+using static UnityEngine.GraphicsBuffer;
+
+public enum MyGameObjectState
+{
+    Operational,
+    UnderConstruction,
+}
 
 public class MyGameObject : MonoBehaviour
 {
@@ -10,6 +19,7 @@ public class MyGameObject : MonoBehaviour
         Resources = new ResourceContainer();
         Recipes = new RecipeContainer();
         Stats = new Stats();
+        ConstructionQueue = new List<MyGameObject>();
 
         OrderHandlers = new Dictionary<OrderType, UnityAction>()
         {
@@ -33,13 +43,46 @@ public class MyGameObject : MonoBehaviour
         Orders.AllowOrder(OrderType.Idle);
         Orders.AllowOrder(OrderType.Stop);
         Orders.AllowOrder(OrderType.Wait);
+
+        ConstructionResources = new ResourceContainer();
+        ConstructionResources.Add("Metal", 0, 30);
+
+        ConstructionRecipies = new RecipeContainer();
+
+        var r1 = new Recipe();
+
+        r1.Consume("Metal", 0);
+
+        ConstructionRecipies.Add(r1);
     }
 
     protected virtual void Update()
     {
-        ProcessOrders();
-        AlignPositionToTerrain();
-        RaiseResourceFlags();
+        switch (State)
+        {
+            case MyGameObjectState.Operational:
+                ProcessOrders();
+                AlignPositionToTerrain();
+                RaiseResourceFlags();
+                break;
+
+            case MyGameObjectState.UnderConstruction:
+                RaiseConstructionResourceFlags();
+                break;
+        }
+    }
+
+    public bool IsConstructed()
+    {
+        foreach (var i in ConstructionResources)
+        {
+            if (i.Value.Value < i.Value.Max)
+            {
+                return false;
+            }
+        }
+
+        return true;
     }
 
     public void Select(bool status)
@@ -62,6 +105,11 @@ public class MyGameObject : MonoBehaviour
         Orders.Add(new Order(OrderType.Attack, target));
     }
 
+    public void Construct(MyGameObject target, PrefabConstructionType prefabConstructionType)
+    {
+        Orders.Add(new Order(OrderType.Construct, target, prefabConstructionType, ConstructionTime));
+    }
+
     public void Guard(Vector3 target)
     {
         Orders.Add(new Order(OrderType.Guard, target));
@@ -82,14 +130,30 @@ public class MyGameObject : MonoBehaviour
         Orders.Add(new Order(OrderType.Load, target, resources, LoadTime, 3));
     }
 
-    public void Move(Vector3 target)
+    public void Move(Vector3 target, int priority = -1)
     {
-        Orders.Add(new Order(OrderType.Move, target));
+        // TODO: Test.
+        if (0 <= priority && priority < Orders.Count)
+        {
+            Orders.Insert(priority, new Order(OrderType.Move, target, priority));
+        }
+        else
+        {
+            Orders.Add(new Order(OrderType.Move, target, priority));
+        }
     }
 
-    public void Move(MyGameObject target)
+    public void Move(MyGameObject target, int priority = -1)
     {
-        Orders.Add(new Order(OrderType.Move, target));
+        // TODO: Test.
+        if (0 <= priority && priority < Orders.Count)
+        {
+            Orders.Insert(priority, new Order(OrderType.Move, target, priority));
+        }
+        else
+        {
+            Orders.Add(new Order(OrderType.Move, target, priority));
+        }
     }
 
     public void Patrol(Vector3 target)
@@ -338,6 +402,8 @@ public class MyGameObject : MonoBehaviour
                         foreach (var i in recipe.ToProduce)
                         {
                             Resources.Add(i.Name, i.Count);
+
+                            Stats.Add(Stats.ResourcesProduced, i.Count);
                         }
                     }
 
@@ -394,13 +460,27 @@ public class MyGameObject : MonoBehaviour
 
         foreach (var i in order.Resources)
         {
-            var value = Mathf.Min(new int[] { i.Value, Resources.Storage(i.Key), order.TargetGameObject.Resources.Capacity(i.Key) });
-
-            if (value > 0)
+            if (order.TargetGameObject.State == MyGameObjectState.UnderConstruction)
             {
-                resources[i.Key] = value;
+                var value = Mathf.Min(new int[] { i.Value, Resources.Storage(i.Key), order.TargetGameObject.ConstructionResources.Capacity(i.Key) });
 
-                Stats.Add(Stats.ResourcesTransported, value);
+                if (value > 0)
+                {
+                    resources[i.Key] = value;
+
+                    Stats.Add(Stats.ResourcesTransported, value);
+                }
+            }
+            else
+            {
+                var value = Mathf.Min(new int[] { i.Value, Resources.Storage(i.Key), order.TargetGameObject.Resources.Capacity(i.Key) });
+
+                if (value > 0)
+                {
+                    resources[i.Key] = value;
+
+                    Stats.Add(Stats.ResourcesTransported, value);
+                }
             }
         }
 
@@ -466,6 +546,13 @@ public class MyGameObject : MonoBehaviour
 
     public string GetInfo()
     {
+        switch (State)
+        {
+            case MyGameObjectState.UnderConstruction:
+                return string.Format("ID: {0}\nName: {1}\nResources:{2}",
+                    GetInstanceID(), name, ConstructionResources.GetInfo());
+        }
+
         return string.Format("ID: {0}\nName: {1}\nHP: {2}\nSpeed: {3}\nResources:{4}\nOrders: {5}\nStats: {6}",
             GetInstanceID(), name, Health, Speed, Resources.GetInfo(), Orders.GetInfo(), Stats.GetInfo());
     }
@@ -475,7 +562,15 @@ public class MyGameObject : MonoBehaviour
         foreach (var i in resources)
         {
             source.Resources.Remove(i.Key, i.Value);
-            target.Resources.Add(i.Key, i.Value);
+
+            if (target.State == MyGameObjectState.UnderConstruction)
+            {
+                target.ConstructionResources.Add(i.Key, i.Value);
+            }
+            else
+            {
+                target.Resources.Add(i.Key, i.Value);
+            }
         }
     }
 
@@ -539,16 +634,51 @@ public class MyGameObject : MonoBehaviour
         }
     }
 
+    void RaiseConstructionResourceFlags()
+    {
+        var game = GameObject.Find("Game").GetComponent<Game>();
+
+        foreach (var recipe in ConstructionRecipies)
+        {
+            foreach (var resource in recipe.ToConsume)
+            {
+                var capacity = ConstructionResources.Capacity(resource.Name);
+
+                if (capacity > 0)
+                {
+                    game.Consumers.Add(this, resource.Name, capacity);
+                }
+                else
+                {
+                    game.Consumers.Remove(this, resource.Name);
+                }
+            }
+        }
+    }
+
+    public bool IsCloseTo(Vector3 position)
+    {
+        var a = position;
+        var b = transform.position;
+
+        a.y = 0;
+        b.y = 0;
+
+        return (b - a).magnitude < 1;
+    }
+
     public Vector3 Entrance
     {
         get
         {
             var size = GetComponent<Collider>().bounds.size;
 
-            return new Vector3(transform.position.x, transform.position.y, transform.position.z + size.x * 0.75f);
+            return new Vector3(transform.position.x, transform.position.y, transform.position.z + size.z * 0.75f);
         }
     }
-     
+
+    public Vector3 Position { get => transform.position; }
+
     public OrderContainer Orders { get; private set; }
 
     public Dictionary<OrderType, UnityAction> OrderHandlers { get; private set; }
@@ -556,6 +686,8 @@ public class MyGameObject : MonoBehaviour
     public ResourceContainer Resources { get; private set; }
 
     public RecipeContainer Recipes { get; private set; }
+
+    public float ConstructionTime { get; protected set; } = 10;
 
     public float Health { get; protected set; } = 100;
 
@@ -572,4 +704,12 @@ public class MyGameObject : MonoBehaviour
     public float WaitTime { get; protected set; } = 2;
 
     public Stats Stats { get; private set; }
+
+    public MyGameObjectState State { get; set; } = MyGameObjectState.Operational;
+
+    public ResourceContainer ConstructionResources { get; private set; }
+
+    public RecipeContainer ConstructionRecipies { get; private set; }
+
+    public List<MyGameObject> ConstructionQueue { get; private set; }
 }
