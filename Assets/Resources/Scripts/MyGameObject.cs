@@ -90,9 +90,9 @@ public class MyGameObject : MonoBehaviour
         Orders.Add(Order.Attack(target));
     }
 
-    public void Construct(string prefab, Vector3 position)
+    public void Construct(string prefab, MyGameObject myGameObject)
     {
-        Orders.Add(Order.Construct(prefab, position, ConstructionTime));
+        Orders.Add(Order.Construct(prefab, myGameObject, ConstructionTime));
     }
 
     public void Destroy(int priority = -1)
@@ -349,10 +349,7 @@ public class MyGameObject : MonoBehaviour
 
     public void UpdateSelection()
     {
-        if (Player) // TODO: Fix.
-        {
-            selection.GetComponent<SpriteRenderer>().sprite = Player.SelectionSprite;
-        }
+        selection.GetComponent<SpriteRenderer>().sprite = Player.SelectionSprite;
     }
 
     private void Reload()
@@ -475,9 +472,9 @@ public class MyGameObject : MonoBehaviour
 
     public Vector3 Center { get => GetComponent<Collider>().bounds.center; }
 
-    public Vector3 Entrance { get => new Vector3(transform.position.x, transform.position.y, transform.position.z + Size.z * 0.75f); }
+    public Vector3 Entrance { get => Position + new Vector3(0.0f, 0.0f, Size.z + 1.0f); }
 
-    public Vector3 Exit { get => new Vector3(transform.position.x, transform.position.y, transform.position.z - Size.z * 0.75f); }
+    public Vector3 Exit { get => Position - new Vector3(0.0f, 0.0f, Size.z + 1.0f); }
 
     public Vector3 Size { get => GetComponent<Collider>().bounds.size; }
 

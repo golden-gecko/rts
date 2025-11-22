@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UIElements;
 using static UnityEngine.GraphicsBuffer;
 
 public class Game : MonoBehaviour
@@ -112,7 +113,7 @@ public class Game : MonoBehaviour
 
         if (closest != null)
         {
-            return Order.Construct(closest, myGameObject.ConstructionTime);
+            return null; // Order.Construct(closest, myGameObject.ConstructionTime);
         }
 
         return null;
@@ -206,6 +207,18 @@ public class Game : MonoBehaviour
         {
             container[myGameObject.Player].Remove(myGameObject, name);
         }
+    }
+
+    public MyGameObject CreateGameObject(string prefab, Vector3 position, Player player, MyGameObjectState state)
+    {
+        MyGameObject resource = Resources.Load<MyGameObject>(prefab);
+
+        MyGameObject myGameObject = Object.Instantiate<MyGameObject>(resource, position, Quaternion.identity);
+        myGameObject.Player = player;
+        myGameObject.State = state;
+        myGameObject.UpdateSelection(); // TODO: Remove.
+
+        return myGameObject;
     }
 
     public Dictionary<Player, ConsumerProducerContainer> Consumers { get; } = new Dictionary<Player, ConsumerProducerContainer>();

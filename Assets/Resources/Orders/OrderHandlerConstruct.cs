@@ -6,18 +6,15 @@ public class OrderHandlerConstruct : IOrderHandler
     {
         Order order = myGameObject.Orders.First();
 
-        if (myGameObject.IsCloseTo(order.TargetPosition + new Vector3(0, 0, 1)) == false)
+        if (order.TargetGameObject == null)
         {
-            myGameObject.Move(order.TargetPosition + new Vector3(0, 0, 1), 0); // TODO: Add offset based on object size.
-        }
-        else if (order.TargetGameObject == null)
-        {
-            MyGameObject resource = Resources.Load<MyGameObject>(order.Prefab);
+            myGameObject.Orders.Pop();
 
-            order.TargetGameObject = Object.Instantiate<MyGameObject>(resource, order.TargetPosition, Quaternion.identity);
-            order.TargetGameObject.Player = myGameObject.Player;
-            order.TargetGameObject.State = MyGameObjectState.UnderConstruction;
-            order.TargetGameObject.UpdateSelection(); // TODO: Remove.
+            myGameObject.Stats.Add(Stats.OrdersFailed, 1);
+        }
+        else if (myGameObject.IsCloseTo(order.TargetGameObject.Entrance) == false)
+        {
+            myGameObject.Move(order.TargetGameObject.Entrance, 0);
         }
         else if (order.TargetGameObject.Constructed)
         {
