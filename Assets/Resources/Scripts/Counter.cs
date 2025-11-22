@@ -51,6 +51,11 @@ public class Counter
         Current = 0;
     }
 
+    public string GetInfo()
+    {
+        return string.Format("{0}/{1}", Current, Max);
+    }
+
     public int Current { get; private set; }
 
     public int Max { get; set; } // TODO: Hide setter.

@@ -299,7 +299,7 @@ MonoBehaviour:
   <VisibilityRange>k__BackingField: 10
   <LoadTime>k__BackingField: 2
   <WaitTime>k__BackingField: 2
-  <DestroyEffect>k__BackingField: 
+  <DestroyEffect>k__BackingField: {fileID: 100006, guid: 7c442b9b6852b8a4f93306f3d154d471, type: 3}
   <Altitude>k__BackingField: 0
   <MapLayers>k__BackingField: 01000000
 --- !u!114 &-7318105187754308936
@@ -331,8 +331,9 @@ MonoBehaviour:
   <Mass>k__BackingField: 30
   <Damage>k__BackingField: 4
   <Range>k__BackingField: 30
-  <MissilePrefab>k__BackingField: Objects/Missiles/Rocket
-  <HitEffectPrefab>k__BackingField: 
+  <CooldownTime>k__BackingField: 10
+  <MissilePrefab>k__BackingField: {fileID: 3841255586236475405, guid: 86513724c5de2df4da484cb23191a7e5, type: 3}
+  <HitEffectPrefab>k__BackingField: {fileID: 0}
 --- !u!1 &7849862756731187484
 GameObject:
   m_ObjectHideFlags: 0

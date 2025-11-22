@@ -237,24 +237,34 @@ public class Order
             info += string.Format(" ({0})", Prefab);
         }
 
-        if (Technology != null)
-        {
-            info += string.Format(" ({0})", Technology);
-        }
-
         if (Recipe != null)
         {
             info += string.Format(" ({0})", Recipe);
         }
 
+        if (Resource != null)
+        {
+            info += string.Format(" ({0})", Resource);
+        }
+
+        if (Skill != null)
+        {
+            info += string.Format(" ({0})", Skill);
+        }
+
+        if (Technology != null)
+        {
+            info += string.Format(" ({0})", Technology);
+        }
+
         if (Timer != null)
         {
-            info += string.Format(" {0:0.}/{1}", Timer.Current, Timer.Max);
+            info += string.Format(" {0}", Timer.GetInfo());
         }
 
         if (Retries.Max > 0)
         {
-            info += string.Format(" {0}/{1}", Retries, Retries.Max);
+            info += string.Format(" {0}", Retries.GetInfo());
         }
 
         return info;

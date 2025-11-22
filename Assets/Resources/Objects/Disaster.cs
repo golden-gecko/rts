@@ -80,7 +80,7 @@ public class Disaster : MyGameObject
 
     public override string GetInfo(bool ally)
     {
-        return base.GetInfo(ally) + string.Format("\nDamage: {0:0.}\nDamage Per Second: {1:0.}\nTime: {2:0.}/{3:0.}", Damage, DamagePerSecond, LiveTimer.Current, LiveTimer.Max);
+        return base.GetInfo(ally) + string.Format("\nDamage: {0:0.}\nDamage Per Second: {1:0.}\nTime: {2}", Damage, DamagePerSecond, LiveTimer.GetInfo());
     }
 
     [field: SerializeField]

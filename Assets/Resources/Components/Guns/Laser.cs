@@ -5,7 +5,6 @@ public class Laser : Gun
     public override void Fire(MyGameObject myGameObject, Vector3 position)
     {
         // TODO: Create missile prefab.
-        // TODO: Pass range from gun.
         RaycastHit[] hits = Physics.RaycastAll(new Ray(myGameObject.Center, position - myGameObject.Center), Config.RaycastMaxDistance);
 
         MyGameObject closest = null;
@@ -41,7 +40,7 @@ public class Laser : Gun
 
         if (closest == null)
         {
-            Instantiate(Resources.Load(HitEffectPrefab), position, Quaternion.identity);
+            Instantiate(HitEffectPrefab, position, Quaternion.identity);
         }
         else
         {
@@ -52,7 +51,7 @@ public class Laser : Gun
                 myGameObject.Stats.Inc(Stats.TargetsDestroyed);
             }
 
-            Instantiate(Resources.Load(HitEffectPrefab), hitPoint, Quaternion.identity);
+            Instantiate(HitEffectPrefab, hitPoint, Quaternion.identity);
 
             myGameObject.Stats.Add(Stats.DamageDealt, damageDealt);
         }

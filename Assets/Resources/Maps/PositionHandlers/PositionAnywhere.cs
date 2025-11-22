@@ -6,7 +6,7 @@ public class PositionAnywhere : ITerrainPosition
     {
         RaycastHit hitInfo;
 
-        if (Physics.Raycast(ray, out hitInfo, Config.RaycastMaxDistance, LayerMask.GetMask("Terrain")) == false)
+        if (Physics.Raycast(ray, out hitInfo, Config.TerrainMaxHeight, LayerMask.GetMask("Terrain")) == false)
         {
             return Vector3.zero;
         }

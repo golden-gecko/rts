@@ -10,4 +10,8 @@ public class Resource : Counter
     public int Capacity { get => Max - Current; }
 
     public int Storage { get => Current; }
+
+    public bool Empty { get => Capacity <= 0; }
+
+    public bool Full { get => Current >= Max; }
 }
