@@ -1,1 +1,3 @@
-# Unity Demo
+# RTS
+
+Simple RTS game.
