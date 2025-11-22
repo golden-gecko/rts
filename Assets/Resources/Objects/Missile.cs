@@ -7,6 +7,8 @@ public class Missile : MyGameObject
         base.Awake();
 
         Orders.AllowOrder(OrderType.Move);
+
+        OrderHandlers[OrderType.Move] = new OrderHandlerMoveMissile();
     }
 
     protected override void OnTriggerEnter(Collider other)
@@ -30,6 +32,10 @@ public class Missile : MyGameObject
 
             Destroy();
         }
+    }
+
+    protected override void UpdatePosition()
+    {
     }
 
     [field: SerializeField]
