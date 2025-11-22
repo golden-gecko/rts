@@ -11,7 +11,5 @@ public class OrderHandlerExplore : OrderHandler
 
         myGameObject.Move(new Vector3(x, 0.0f, z)); // TODO: Replace random with move towards unexplored sectors.
         myGameObject.Wait();
-
-        myGameObject.Orders.MoveToEnd();
     }
 }

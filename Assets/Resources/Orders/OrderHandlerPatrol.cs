@@ -6,7 +6,5 @@ public class OrderHandlerPatrol : OrderHandler
 
         myGameObject.Move(order.TargetPosition);
         myGameObject.Move(myGameObject.Position);
-
-        myGameObject.Orders.MoveToEnd();
     }
 }
