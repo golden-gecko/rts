@@ -28,43 +28,35 @@ public class Engine : MyComponent
         return string.Format("{0}, Power: {1:0.}, Fuel: {2}/{3}/{4} Speed: {5:0.}", base.GetInfo(), Power, storage.Resources.Current("Fuel"), storage.Resources.Max("Fuel"), FuelUsage, Speed);
     }
 
-    public bool CanDrive(float distance) // TODO: This will make unit move a bit when fuel is depleted. Remove fuel first and then move.
+    public bool CanDrive(float distance)
     {
-        if (distanceDriven + distance < DistancePerUnit)
-        {
-            return true;
-        }
-
-        return GetComponent<Storage>().Resources.CanRemove("Fuel", 1);
+        return distanceToDrive > distance || GetComponent<Storage>().Resources.CanDec("Fuel");
     }
 
-    public void Drive(float distance) // TODO: This will make unit move a bit when fuel is depleted. Remove fuel first and then move.
+    public void Drive(float distance)
     {
         if (CanDrive(distance) == false)
         {
             return;
         }
 
-        distanceDriven += distance;
-
-        if (distanceDriven > DistancePerUnit)
+        if (distance > distanceToDrive)
         {
-            int unitsUsed = Mathf.FloorToInt(distanceDriven / DistancePerUnit);
+            GetComponent<Storage>().Resources.Dec("Fuel");
 
-            GetComponent<Storage>().Resources.Remove("Fuel", unitsUsed);
-
-            distanceDriven -= unitsUsed * DistancePerUnit;
+            distanceToDrive += FuelUsage;
         }
+
+        distanceToDrive -= distance;
     }
 
     [field: SerializeField]
     public float Power { get; set; } = 50.0f;
+
     [field: SerializeField]
     public float FuelUsage { get; set; } = 1.0f;
 
     public float Speed { get => Power / GetComponent<MyGameObject>().Mass; }
 
-    private float DistancePerUnit { get => 1.0f / FuelUsage; }
-
-    private float distanceDriven = 0.0f;
+    private float distanceToDrive = 0.0f;
 }
