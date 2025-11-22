@@ -4,7 +4,10 @@ public class OrderHandlerFollow : IOrderHandler
     {
         Order order = myGameObject.Orders.First();
 
-        myGameObject.Move(order.TargetGameObject);
+        if (myGameObject.IsCloseTo(order.TargetGameObject.Position) == false)
+        {
+            myGameObject.Move(order.TargetGameObject.Position);
+        }
 
         myGameObject.Orders.MoveToEnd();
     }

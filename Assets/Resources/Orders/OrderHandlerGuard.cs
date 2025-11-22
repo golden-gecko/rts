@@ -10,7 +10,7 @@ public class OrderHandlerGuard : IOrderHandler
         }
         else
         {
-            myGameObject.Move(order.TargetGameObject);
+            myGameObject.Follow(order.TargetGameObject);
         }
 
         myGameObject.Orders.MoveToEnd();

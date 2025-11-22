@@ -1,147 +1,119 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class MyGameObject : MonoBehaviour
 {
-    public void OnDamage(float damage)
+    public void Assemble(string prefab)
     {
-        Health -= damage;
-
-        Stats.Add(Stats.DamageTaken, damage);
+        Orders.Add(Order.Assemble(prefab, ConstructionTime));
     }
 
-    public void Select(bool status)
+    public void Attack(Vector3 position)
     {
-        transform.Find("Selection")?.gameObject.SetActive(status);
-    }
-
-    public void Attack(Vector3 target)
-    {
-        Orders.Add(new Order(OrderType.Attack, target));
+        Orders.Add(Order.Attack(position));
     }
 
     public void Attack(MyGameObject target)
     {
-        Orders.Add(new Order(OrderType.Attack, target));
+        Orders.Add(Order.Attack(target));
     }
 
-    public void Construct(string prefab, PrefabConstructionType prefabConstructionType)
+    public void Construct(string prefab, Vector3 position)
     {
-        Orders.Add(new Order(OrderType.Construct, prefab, prefabConstructionType, ConstructionTime));
-    }
-
-    public void Construct(string prefab, PrefabConstructionType prefabConstructionType, Vector3 target)
-    {
-        Orders.Add(new Order(OrderType.Construct, prefab, prefabConstructionType, target, ConstructionTime));
+        Orders.Add(Order.Construct(prefab, position, ConstructionTime));
     }
 
     public void Destroy(int priority = -1)
     {
         if (0 <= priority && priority < Orders.Count)
         {
-            Orders.Insert(priority, new Order(OrderType.Destroy));
+            Orders.Insert(priority, Order.Destroy());
         }
         else
         {
-            Orders.Add(new Order(OrderType.Destroy));
+            Orders.Add(Order.Destroy());
         }
     }
 
-    public void Guard(Vector3 target)
+    public void Follow(MyGameObject myGameObject)
     {
-        Orders.Add(new Order(OrderType.Guard, target));
+        Orders.Add(Order.Follow(myGameObject));
     }
 
-    public void Guard(MyGameObject target)
+    public void Guard(Vector3 position)
     {
-        Orders.Add(new Order(OrderType.Guard, target));
+        Orders.Add(Order.Guard(position));
     }
 
-    public void Idle()
+    public void Guard(MyGameObject myGameObject)
     {
-        Orders.Add(new Order(OrderType.Idle));
+        Orders.Add(Order.Guard(myGameObject));
     }
 
     public void Load(MyGameObject target, Dictionary<string, int> resources)
     {
-        Orders.Add(new Order(OrderType.Load, target, resources, LoadTime, 3));
+        Orders.Add(Order.Load(target, resources, LoadTime));
     }
 
-    public void Move(Vector3 target, int priority = -1)
+    public void Move(Vector3 position, int priority = -1)
     {
         if (0 <= priority && priority < Orders.Count)
         {
-            Orders.Insert(priority, new Order(OrderType.Move, target, priority));
+            Orders.Insert(priority, Order.Move(position));
         }
         else
         {
-            Orders.Add(new Order(OrderType.Move, target, priority));
+            Orders.Add(Order.Move(position));
         }
     }
 
-    public void Move(MyGameObject target, int priority = -1)
+    public void Patrol(Vector3 position)
     {
-        if (0 <= priority && priority < Orders.Count)
-        {
-            Orders.Insert(priority, new Order(OrderType.Move, target, priority));
-        }
-        else
-        {
-            Orders.Add(new Order(OrderType.Move, target, priority));
-        }
+        Orders.Add(Order.Patrol(position));
     }
 
-    public void Patrol(Vector3 target)
+    public void Produce()
     {
-        Orders.Add(new Order(OrderType.Patrol, target));
-    }
-
-    public void Patrol(MyGameObject target)
-    {
-        Orders.Add(new Order(OrderType.Patrol, target));
+        Orders.Add(Order.Produce(ProduceTime));
     }
 
     public void Rally(Vector3 target, int priority = -1)
     {
         if (0 <= priority && priority < Orders.Count)
         {
-            Orders.Insert(priority, new Order(OrderType.Rally, target));
+            Orders.Insert(priority, Order.Rally(target));
         }
         else
         {
-            Orders.Add(new Order(OrderType.Rally, target));
+            Orders.Add(Order.Rally(target));
         }
-    }
-
-    public void Produce()
-    {
-        Orders.Add(new Order(OrderType.Produce, ProduceTime));
     }
 
     public void Stop()
     {
-        Orders.Insert(0, new Order(OrderType.Stop));
+        Orders.Insert(0, Order.Stop());
     }
 
-    public void Transport(MyGameObject source, MyGameObject target, Dictionary<string, int> resources)
+    public void Transport(MyGameObject sourceGameObject, MyGameObject targetGameObject, Dictionary<string, int> resources)
     {
-        Orders.Add(new Order(OrderType.Transport, source, target, resources));
+        Orders.Add(Order.Transport(sourceGameObject, targetGameObject, resources, LoadTime));
     }
 
     public void Unload(MyGameObject target, Dictionary<string, int> resources)
     {
-        Orders.Add(new Order(OrderType.Unload, target, resources, UnloadTime, 3));
+        Orders.Add(Order.Unload(target, resources, LoadTime));
     }
 
     public void Wait(int priority = -1)
     {
         if (0 <= priority && priority < Orders.Count)
         {
-            Orders.Insert(priority, new Order(OrderType.Wait, WaitTime));
+            Orders.Insert(priority, Order.Wait(WaitTime));
         }
         else
         {
-            Orders.Add(new Order(OrderType.Wait, WaitTime));
+            Orders.Add(Order.Wait(WaitTime));
         }
     }
 
@@ -163,12 +135,34 @@ public class MyGameObject : MonoBehaviour
 
         if (ReloadTimer != null)
         {
-            info += string.Format("\nReload: {0:0.}/{1:0.}", ReloadTimer.Value, ReloadTimer.Max);
+            info += string.Format("\nReload: {0:0.}/{1:0.}", ReloadTimer.Current, ReloadTimer.Max);
         }
 
         info += string.Format("\nResources:{0}\nOrders: {1}\nStats: {2}", Resources.GetInfo(), Orders.GetInfo(), Stats.GetInfo());
 
         return info;
+    }
+
+    public bool IsAlly(MyGameObject myGameObject)
+    {
+        return myGameObject.Player == Player;
+    }
+
+    public bool IsEnemy(MyGameObject myGameObject)
+    {
+        return myGameObject.Player != Player;
+    }
+
+    public void OnDamage(float damage)
+    {
+        Health -= damage;
+
+        Stats.Add(Stats.DamageTaken, damage);
+    }
+
+    public void Select(bool status)
+    {
+        transform.Find("Selection")?.gameObject.SetActive(status);
     }
 
     public void MoveResources(MyGameObject source, MyGameObject target, Dictionary<string, int> resources)
@@ -365,7 +359,7 @@ public class MyGameObject : MonoBehaviour
         {
             foreach (KeyValuePair<string, Resource> i in ConstructionResources.Items)
             {
-                if (i.Value.Value < i.Value.Max)
+                if (i.Value.Current < i.Value.Max)
                 {
                     return false;
                 }
@@ -381,7 +375,7 @@ public class MyGameObject : MonoBehaviour
 
     public Vector3 Size { get => GetComponent<Collider>().bounds.size; }
 
-    public bool Alive { get => Health <= 0.0f; }
+    public bool Alive { get => Health > 0.0f; }
 
     [field: SerializeField]
     public Player Player { get; set; }
@@ -399,8 +393,6 @@ public class MyGameObject : MonoBehaviour
     public float ProduceTime { get; protected set; } = 10.0f;
 
     public float Speed { get; protected set; } = 10.0f;
-
-    public float UnloadTime { get; protected set; } = 10.0f;
 
     public float WaitTime { get; protected set; } = 10.0f;
 

@@ -15,10 +15,10 @@ public class InGameMenuController : MonoBehaviour
     {
         List<OrderType> forbiddenInUI = new List<OrderType>()
         {
+            OrderType.Assemble,
             OrderType.Construct,
             OrderType.Idle,
             OrderType.None,
-            OrderType.Produce,
         };
 
         orders.Clear();
@@ -86,21 +86,20 @@ public class InGameMenuController : MonoBehaviour
         }
     }
 
+    private void OnAssemble(string prefab, PrefabConstructionType prefabConstructionType)
+    {
+        hud.Order = OrderType.Assemble;
+        hud.PrefabConstructionType = prefabConstructionType; // TODO: Put both into class. Order is important.
+        hud.Prefab = prefab;
+
+        hud.Assemble();
+    }
+
     private void OnConstruct(string prefab, PrefabConstructionType prefabConstructionType)
     {
         hud.Order = OrderType.Construct;
         hud.PrefabConstructionType = prefabConstructionType; // TODO: Put both into class. Order is important.
         hud.Prefab = prefab;
-
-        switch (prefabConstructionType)
-        {
-            case PrefabConstructionType.Structure:
-                break;
-
-            case PrefabConstructionType.Unit:
-                hud.ConstructUnit();
-                break;
-        }
     }
 
     private void OnOrder(OrderType orderType)

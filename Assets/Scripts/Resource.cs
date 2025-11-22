@@ -1,55 +1,19 @@
-public class Resource
+public class Resource : Counter
 {
-    public Resource(string name, int value, int max)
+    public Resource(string name, int value, int max) : base(value, max)
     {
         Name = name;
-        Value = value;
-        Max = max;
-    }
-
-    public void Add(int value)
-    {
-        Value += value;
-
-        if (Value > Max)
-        {
-            Value = Max;
-        }
-    }
-
-    public bool CanAdd(int value)
-    {
-        return Value + value <= Max;
-    }
-
-    public bool CanRemove(int value)
-    {
-        return Value - value >= 0;
     }
 
     public int Capacity()
     {
-        return Max - Value;
-    }
-
-    public void Remove(int value)
-    {
-        Value -= value;
-
-        if (Value < 0)
-        {
-            Value = 0;
-        }
+        return Max - Current;
     }
 
     public int Storage()
     {
-        return Value;
+        return Current;
     }
 
     public string Name { get; }
-
-    public int Value { get; private set; }
-
-    public int Max { get; set; } // TODO: Hide setter.
 }

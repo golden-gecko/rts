@@ -20,7 +20,7 @@ public class OrderHandlerLoad : IOrderHandler
 
         foreach (KeyValuePair<string, int> i in order.Resources)
         {
-            int value = Mathf.Min(new int[] { i.Value, order.TargetGameObject.Resources.Storage(i.Key), myGameObject.Resources.Capacity(i.Key) });
+            int value = Mathf.Min(new int[] { i.Value, order.SourceGameObject.Resources.Storage(i.Key), myGameObject.Resources.Capacity(i.Key) });
 
             if (value > 0)
             {
@@ -31,7 +31,7 @@ public class OrderHandlerLoad : IOrderHandler
         // Move resources or wait for them.
         if (resources.Count > 0)
         {
-            myGameObject.MoveResources(order.TargetGameObject, myGameObject, resources);
+            myGameObject.MoveResources(order.SourceGameObject, myGameObject, resources);
             myGameObject.Orders.Pop();
             myGameObject.Stats.Add(Stats.OrdersExecuted, 1);
         }

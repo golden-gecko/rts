@@ -6,17 +6,8 @@ public class OrderHandlerMove : IOrderHandler
     {
         Order order = myGameObject.Orders.First();
 
-        Vector3 target;
+        Vector3 target = order.TargetPosition;
         Vector3 position = myGameObject.Position;
-
-        if (order.TargetGameObject != null)
-        {
-            target = order.TargetGameObject.Entrance;
-        }
-        else
-        {
-            target = order.TargetPosition;
-        }
 
         target.y = 0;
         position.y = 0;
