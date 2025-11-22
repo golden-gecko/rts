@@ -1,21 +1,9 @@
-using System.Collections.Generic;
 using UnityEngine;
 
 public class RecipeManager : MonoBehaviour
 {
-    public static RecipeManager Instance { get; private set; }
-
     protected void Awake()
     {
-        if (Instance != null && Instance != this)
-        {
-            Destroy(this);
-        }
-        else
-        {
-            Instance = this;
-        }
-
         CreateRecipes();
     }
 

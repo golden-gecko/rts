@@ -3,7 +3,7 @@ using UnityEngine.UIElements;
 
 public class MinimapCamera : MonoBehaviour
 {
-    protected void Start()
+    void Start()
     {
         cameraComponent = GetComponent<Camera>();
 
@@ -20,7 +20,7 @@ public class MinimapCamera : MonoBehaviour
         zoomOut.RegisterCallback<ClickEvent>(ev => OnZoomOut());
     }
 
-    protected void Update()
+    void Update()
     {
         if (CenterOnMainCamera)
         {

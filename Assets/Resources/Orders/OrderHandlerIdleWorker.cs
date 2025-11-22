@@ -4,7 +4,7 @@ public class OrderHandlerIdleWorker : OrderHandler
     {
         myGameObject.Orders.Add(Order.Wait());
 
-        Order order = myGameObject.Player.CreateOrderUnload(myGameObject);
+        Order order = myGameObject.Player.GetJob(myGameObject, OrderType.Unload);
 
         if (order != null)
         {
@@ -13,7 +13,7 @@ public class OrderHandlerIdleWorker : OrderHandler
             return;
         }
 
-        order = myGameObject.Player.CreateOrderTransport(myGameObject);
+        order = myGameObject.Player.GetJob(myGameObject, OrderType.Transport);
 
         if (order != null)
         {
@@ -22,7 +22,7 @@ public class OrderHandlerIdleWorker : OrderHandler
             return;
         }
 
-        order = myGameObject.Player.CreateOrderGather(myGameObject);
+        order = myGameObject.Player.GetJob(myGameObject, OrderType.Gather);
 
         if (order != null)
         {
@@ -31,7 +31,7 @@ public class OrderHandlerIdleWorker : OrderHandler
             return;
         }
 
-        order = myGameObject.Player.CreateOrderConstruction(myGameObject);
+        order = myGameObject.Player.GetJob(myGameObject, OrderType.Construct);
 
         if (order != null)
         {

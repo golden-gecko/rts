@@ -1,10 +1,11 @@
-public class ConsumerProducerRequest
+public class ResourceRequest
 {
-    public ConsumerProducerRequest(MyGameObject myGameObject, string name, int value)
+    public ResourceRequest(MyGameObject myGameObject, string name, int value, ResourceDirection direction)
     {
         MyGameObject = myGameObject;
         Name = name;
         Value = value;
+        Direction = direction;
     }
 
     public MyGameObject MyGameObject { get; }
@@ -12,4 +13,6 @@ public class ConsumerProducerRequest
     public string Name { get; }
 
     public int Value { get; set; }
+
+    public ResourceDirection Direction { get; set; }
 }

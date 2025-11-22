@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class OrderHandlerMoveMissile: OrderHandler
+public class OrderHandlerMoveMissile: OrderHandler // TODO: Merge into one move handler.
 {
     public override void OnExecute(MyGameObject myGameObject)
     {

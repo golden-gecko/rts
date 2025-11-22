@@ -18,6 +18,11 @@ public class Timer
 
     public bool Update(float time)
     {
+        if (Active == false)
+        {
+            return false;
+        }
+
         Current += time;
 
         if (Current > Max)
@@ -43,6 +48,8 @@ public class Timer
 
     [field: SerializeField]
     public float Max { get; set; }
+
+    public bool Active { get => Max > 0.0f; }
 
     public bool Finished { get => Current >= Max; }
 }

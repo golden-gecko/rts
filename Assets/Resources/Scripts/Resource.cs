@@ -24,7 +24,7 @@ public class Resource : Counter
 
     public bool Full { get => Current >= Max; }
 
-    public bool In { get => Direction == ResourceDirection.Both || Direction == ResourceDirection.In; }
+    public bool In { get => Direction == ResourceDirection.In || Direction == ResourceDirection.Store; }
 
-    public bool Out{ get => Direction == ResourceDirection.Both || Direction == ResourceDirection.Out; }
+    public bool Out { get => Direction == ResourceDirection.Out || Direction == ResourceDirection.Store; }
 }

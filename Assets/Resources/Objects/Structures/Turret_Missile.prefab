@@ -145,10 +145,12 @@ MonoBehaviour:
   <EnableTime>k__BackingField: 2
   <WaitTime>k__BackingField: 2
   <DestroyEffect>k__BackingField: {fileID: 100008, guid: 06736895ea0a4ff408d25e6684dce797, type: 3}
-  <TimeToLive>k__BackingField: -1
   <Altitude>k__BackingField: 0
   <MapLayers>k__BackingField: 01000000
   ShowIndicators: 1
+  <ExpirationTimer>k__BackingField:
+    <Current>k__BackingField: -1
+    <Max>k__BackingField: -1
   <PowerUsage>k__BackingField: 1
 --- !u!114 &-1034757096108681396
 MonoBehaviour:
@@ -215,7 +217,11 @@ MonoBehaviour:
   RaiseResourceFlags: 1
   <ResourceUsage>k__BackingField: 1
   <Resources>k__BackingField:
-    <Items>k__BackingField: []
+    <Items>k__BackingField:
+    - <Current>k__BackingField: 0
+      <Max>k__BackingField: 100
+      <Name>k__BackingField: Ammunition
+      <Direction>k__BackingField: 1
 --- !u!1 &7390409134103154321
 GameObject:
   m_ObjectHideFlags: 0

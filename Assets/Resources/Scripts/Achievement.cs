@@ -9,9 +9,9 @@ public class Achievement
         Handler = handler;
     }
 
-    public void Check()
+    public bool Check()
     {
-        Completed = Handler();
+        return Completed = Handler();
     }
 
     public string Name { get; }

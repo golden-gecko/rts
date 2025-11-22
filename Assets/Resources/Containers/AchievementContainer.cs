@@ -22,9 +22,7 @@ public class AchievementContainer
                 continue;
             }
 
-            i.Check();
-
-            if (i.Completed)
+            if (i.Check())
             {
                 GameMenu.Instance.Log(string.Format("Achievement {0} unlocked.", i.Name));
             }

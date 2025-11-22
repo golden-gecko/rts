@@ -6,7 +6,7 @@ public class HUD : MonoBehaviour
 {
     public static HUD Instance { get; private set; }
 
-    protected void Awake()
+    void Awake()
     {
         if (Instance != null && Instance != this)
         {
@@ -18,14 +18,14 @@ public class HUD : MonoBehaviour
         }
     }
 
-    protected void Start()
+    void Start()
     {
         ResetVisual();
         DrawVisual();
         DrawSelection();
     }
 
-    protected void Update()
+    void Update()
     {
         HashSet<MyGameObject> destroyed = new HashSet<MyGameObject>();
 
@@ -678,7 +678,7 @@ public class HUD : MonoBehaviour
 
             if (prefab.Equals(string.Empty) == false)
             {
-                Cursor = Game.Instance.CreateGameObject(Prefab, Vector3.zero, null, MyGameObjectState.Cursor);
+                Cursor = Utils.CreateGameObject(Prefab, Vector3.zero, null, MyGameObjectState.Cursor);
                 Cursor.GetComponentInChildren<Indicators>().OnUnderConstruction();
             }
         }

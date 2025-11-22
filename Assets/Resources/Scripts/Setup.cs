@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class SetupLevel : MonoBehaviour
+public class Setup : MonoBehaviour
 {
     void Start()
     {

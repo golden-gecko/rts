@@ -171,7 +171,7 @@ PrefabInstance:
     - target: {fileID: 2051932864789683470, guid: 574a1e8e85e755940b7fc595e9675a88, type: 3}
       propertyPath: <Player>k__BackingField
       value: 
-      objectReference: {fileID: 261081117239525528}
+      objectReference: {fileID: 1306179968}
     - target: {fileID: 6941765000743290380, guid: 574a1e8e85e755940b7fc595e9675a88, type: 3}
       propertyPath: m_Name
       value: Tree_0008
@@ -192,7 +192,7 @@ PrefabInstance:
     - target: {fileID: -2050113657392743181, guid: db55b7ec92afd89458b89889e498a3a7, type: 3}
       propertyPath: <Player>k__BackingField
       value: 
-      objectReference: {fileID: 261081117239525528}
+      objectReference: {fileID: 1306179968}
     - target: {fileID: 1649971028671782476, guid: db55b7ec92afd89458b89889e498a3a7, type: 3}
       propertyPath: m_Name
       value: Coal
@@ -253,7 +253,7 @@ PrefabInstance:
     - target: {fileID: 3389001138081196498, guid: 08ce1d492a8b66e429f719032407aaf8, type: 3}
       propertyPath: <Player>k__BackingField
       value: 
-      objectReference: {fileID: 261081117239525528}
+      objectReference: {fileID: 1306179968}
     - target: {fileID: 9069115365609054727, guid: 08ce1d492a8b66e429f719032407aaf8, type: 3}
       propertyPath: m_LocalPosition.x
       value: 288.13885
@@ -367,7 +367,7 @@ PrefabInstance:
     - target: {fileID: -2539914635945987237, guid: 85251ca15e5c69c49b6d707d6e616399, type: 3}
       propertyPath: <Player>k__BackingField
       value: 
-      objectReference: {fileID: 261081117239525528}
+      objectReference: {fileID: 1306179968}
     - target: {fileID: 4661435515762455780, guid: 85251ca15e5c69c49b6d707d6e616399, type: 3}
       propertyPath: m_Name
       value: Tree_0006
@@ -428,7 +428,7 @@ PrefabInstance:
     - target: {fileID: -2050113657392743181, guid: db55b7ec92afd89458b89889e498a3a7, type: 3}
       propertyPath: <Player>k__BackingField
       value: 
-      objectReference: {fileID: 261081117239525528}
+      objectReference: {fileID: 1306179968}
     - target: {fileID: 1649971028671782476, guid: db55b7ec92afd89458b89889e498a3a7, type: 3}
       propertyPath: m_Name
       value: Coal_0001
@@ -489,7 +489,7 @@ PrefabInstance:
     - target: {fileID: -2539914635945987237, guid: 85251ca15e5c69c49b6d707d6e616399, type: 3}
       propertyPath: <Player>k__BackingField
       value: 
-      objectReference: {fileID: 261081117239525528}
+      objectReference: {fileID: 1306179968}
     - target: {fileID: 4661435515762455780, guid: 85251ca15e5c69c49b6d707d6e616399, type: 3}
       propertyPath: m_Name
       value: Tree_0002
@@ -555,7 +555,7 @@ PrefabInstance:
     - target: {fileID: -2182117504668185234, guid: 7bf9b4588e172054c9a42a043a553419, type: 3}
       propertyPath: <Player>k__BackingField
       value: 
-      objectReference: {fileID: 2041081731}
+      objectReference: {fileID: 261081117239525528}
     - target: {fileID: 1578887994438585109, guid: 7bf9b4588e172054c9a42a043a553419, type: 3}
       propertyPath: m_Name
       value: Harvester
@@ -660,7 +660,7 @@ PrefabInstance:
     - target: {fileID: 3596096606319695428, guid: e574ac9f96f69fe408f996d73dd9f5dc, type: 3}
       propertyPath: <Player>k__BackingField
       value: 
-      objectReference: {fileID: 261081117239525528}
+      objectReference: {fileID: 1306179968}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -721,7 +721,7 @@ PrefabInstance:
     - target: {fileID: 7277517748932437183, guid: 61a7c4fca0a2a36409924024a26dbdde, type: 3}
       propertyPath: <Player>k__BackingField
       value: 
-      objectReference: {fileID: 2041081731}
+      objectReference: {fileID: 261081117239525528}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -738,7 +738,7 @@ PrefabInstance:
     - target: {fileID: -1134350671883856829, guid: 0724eebae05d77a4f9efb0701d38dc78, type: 3}
       propertyPath: <Player>k__BackingField
       value: 
-      objectReference: {fileID: 261081117239525528}
+      objectReference: {fileID: 1306179968}
     - target: {fileID: 2040145519782903273, guid: 0724eebae05d77a4f9efb0701d38dc78, type: 3}
       propertyPath: m_Name
       value: IronOre_0002
@@ -788,6 +788,17 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0724eebae05d77a4f9efb0701d38dc78, type: 3}
+--- !u!114 &1306179968 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5026949370379153494, guid: 838528c30748ad1409e28e3a543244c6, type: 3}
+  m_PrefabInstance: {fileID: 261081117239525525}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cea68fef326733b43bf02e1527062e10, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1367008773
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -799,7 +810,7 @@ PrefabInstance:
     - target: {fileID: -1134350671883856829, guid: 0724eebae05d77a4f9efb0701d38dc78, type: 3}
       propertyPath: <Player>k__BackingField
       value: 
-      objectReference: {fileID: 261081117239525528}
+      objectReference: {fileID: 1306179968}
     - target: {fileID: 2040145519782903273, guid: 0724eebae05d77a4f9efb0701d38dc78, type: 3}
       propertyPath: m_Name
       value: IronOre
@@ -900,7 +911,7 @@ PrefabInstance:
     - target: {fileID: 2051932864789683470, guid: 574a1e8e85e755940b7fc595e9675a88, type: 3}
       propertyPath: <Player>k__BackingField
       value: 
-      objectReference: {fileID: 261081117239525528}
+      objectReference: {fileID: 1306179968}
     - target: {fileID: 6941765000743290380, guid: 574a1e8e85e755940b7fc595e9675a88, type: 3}
       propertyPath: m_Name
       value: Tree_0003
@@ -921,7 +932,7 @@ PrefabInstance:
     - target: {fileID: -1134350671883856829, guid: 0724eebae05d77a4f9efb0701d38dc78, type: 3}
       propertyPath: <Player>k__BackingField
       value: 
-      objectReference: {fileID: 261081117239525528}
+      objectReference: {fileID: 1306179968}
     - target: {fileID: 2040145519782903273, guid: 0724eebae05d77a4f9efb0701d38dc78, type: 3}
       propertyPath: m_Name
       value: IronOre_0001
@@ -982,7 +993,7 @@ PrefabInstance:
     - target: {fileID: -9074478250652064254, guid: 9b1b6d56c457fee4c9e8d5a341317e2a, type: 3}
       propertyPath: <Player>k__BackingField
       value: 
-      objectReference: {fileID: 261081117239525528}
+      objectReference: {fileID: 1306179968}
     - target: {fileID: 1231909215900800693, guid: 9b1b6d56c457fee4c9e8d5a341317e2a, type: 3}
       propertyPath: m_Name
       value: Crystal
@@ -1043,7 +1054,7 @@ PrefabInstance:
     - target: {fileID: 3389001138081196498, guid: 08ce1d492a8b66e429f719032407aaf8, type: 3}
       propertyPath: <Player>k__BackingField
       value: 
-      objectReference: {fileID: 261081117239525528}
+      objectReference: {fileID: 1306179968}
     - target: {fileID: 9069115365609054727, guid: 08ce1d492a8b66e429f719032407aaf8, type: 3}
       propertyPath: m_LocalPosition.x
       value: 296.75613
@@ -1148,7 +1159,7 @@ PrefabInstance:
     - target: {fileID: 4171174803530865029, guid: 2611ed8fbff91a64aa42f06d5f9cdf23, type: 3}
       propertyPath: <Player>k__BackingField
       value: 
-      objectReference: {fileID: 261081117239525528}
+      objectReference: {fileID: 1306179968}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1209,7 +1220,7 @@ PrefabInstance:
     - target: {fileID: 4171174803530865029, guid: 2611ed8fbff91a64aa42f06d5f9cdf23, type: 3}
       propertyPath: <Player>k__BackingField
       value: 
-      objectReference: {fileID: 261081117239525528}
+      objectReference: {fileID: 1306179968}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1270,23 +1281,12 @@ PrefabInstance:
     - target: {fileID: 3596096606319695428, guid: e574ac9f96f69fe408f996d73dd9f5dc, type: 3}
       propertyPath: <Player>k__BackingField
       value: 
-      objectReference: {fileID: 261081117239525528}
+      objectReference: {fileID: 1306179968}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e574ac9f96f69fe408f996d73dd9f5dc, type: 3}
---- !u!114 &2041081731 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 1874948758393139739, guid: 838528c30748ad1409e28e3a543244c6, type: 3}
-  m_PrefabInstance: {fileID: 261081117239525525}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e13f3e3b21b38b64faad841f9d3fad32, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &261081117239525525
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1302,7 +1302,7 @@ PrefabInstance:
     - target: {fileID: 529670637529471827, guid: 838528c30748ad1409e28e3a543244c6, type: 3}
       propertyPath: ActivePlayer
       value: 
-      objectReference: {fileID: 2041081731}
+      objectReference: {fileID: 261081117239525528}
     - target: {fileID: 1016367653328774682, guid: 838528c30748ad1409e28e3a543244c6, type: 3}
       propertyPath: m_RootOrder
       value: 0
@@ -1390,13 +1390,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
 --- !u!114 &261081117239525528 stripped
 MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 4400650134584828628, guid: 838528c30748ad1409e28e3a543244c6, type: 3}
+  m_CorrespondingSourceObject: {fileID: 4880484019323439521, guid: 838528c30748ad1409e28e3a543244c6, type: 3}
   m_PrefabInstance: {fileID: 261081117239525525}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: baea9d914df95914dbf0c76ff885d270, type: 3}
+  m_Script: {fileID: 11500000, guid: cea68fef326733b43bf02e1527062e10, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1660057539 &9223372036854775807

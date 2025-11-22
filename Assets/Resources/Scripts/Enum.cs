@@ -53,9 +53,8 @@ public enum OrderType
 
 public enum ResourceDirection
 {
-    Both,
     In,
     None,
     Out,
-    Store, // TODO: Implement as lower priority then In or Out and remove Both.
+    Store,
 }

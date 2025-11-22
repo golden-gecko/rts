@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 
 public class Player : MonoBehaviour
@@ -14,6 +13,11 @@ public class Player : MonoBehaviour
         }
 
         Achievements.Player = this;
+
+        jobHandlers[OrderType.Construct] = new JobHandlerConstruct();
+        jobHandlers[OrderType.Gather] = new JobHandlerGather();
+        jobHandlers[OrderType.Transport] = new JobHandlerTransport();
+        jobHandlers[OrderType.Unload] = new JobHandlerUnload();
     }
 
     protected virtual void Update()
@@ -62,145 +66,14 @@ public class Player : MonoBehaviour
         Diplomacy[player] = state;
     }
 
-    public Order CreateOrderConstruction(MyGameObject myGameObject)
+    public Order GetJob(MyGameObject myGameObject, OrderType orderType)
     {
-        float minDistance = float.MaxValue;
-        MyGameObject closest = null;
-
-        foreach (MyGameObject underConstruction in FindObjectsByType<MyGameObject>(FindObjectsSortMode.None))
-        {
-            if (underConstruction.State != MyGameObjectState.UnderConstruction)
-            {
-                continue;
-            }
-
-            if (myGameObject.Is(underConstruction, DiplomacyState.Ally) == false)
-            {
-                continue;
-            }
-
-            float distance = myGameObject.DistanceTo(underConstruction);
-
-            if (distance < minDistance)
-            {
-                minDistance = distance;
-                closest = underConstruction;
-            }
-        }
-
-        if (closest == null)
-        {
-            return null;
-        }
-
-        return Order.Construct(closest);
+        return jobHandlers.ContainsKey(orderType) ? jobHandlers[orderType].OnExecute(myGameObject) : null;
     }
 
-    public Order CreateOrderGather(MyGameObject myGameObject)
+    public void RegisterConsumer(MyGameObject myGameObject, string name, int value, ResourceDirection direction)
     {
-        MyResource closest = null;
-        float distance = float.MaxValue;
-
-        foreach (MyResource myResource in FindObjectsByType<MyResource>(FindObjectsSortMode.None))
-        {
-            if (myResource.Working == false)
-            {
-                continue;
-            }
-
-            if (myResource == myGameObject)
-            {
-                continue;
-            }
-
-            float magnitude = (myGameObject.Position - myResource.Position).magnitude;
-
-            if (magnitude < distance)
-            {
-                if (GetStorage(myGameObject, myResource) == null)
-                {
-                    continue;
-                }
-
-                closest = myResource;
-                distance = magnitude;
-            }
-        }
-
-        if (closest == null)
-        {
-            return null;
-        }
-
-        return Order.Gather(closest);
-    }
-
-    public Order CreateOrderTransport(MyGameObject myGameObject)
-    {
-        foreach (ConsumerProducerRequest consumer in Consumers.Items) // TODO: Return closest object.
-        {
-            if (consumer.MyGameObject == false)
-            {
-                continue;
-            }
-
-            if (consumer.MyGameObject == myGameObject)
-            {
-                continue;
-            }
-
-            foreach (ConsumerProducerRequest producer in Producers.Items) // TODO: Return closest object.
-            {
-                if (producer.MyGameObject == false)
-                {
-                    continue;
-                }
-
-                if (producer.MyGameObject == myGameObject)
-                {
-                    continue;
-                }
-
-                if (producer.MyGameObject == consumer.MyGameObject)
-                {
-                    continue;
-                }
-
-                if (producer.Name != consumer.Name)
-                {
-                    continue;
-                }
-
-                Consumers.MoveToEnd();
-                Producers.MoveToEnd();
-
-                return Order.Transport(producer.MyGameObject, consumer.MyGameObject, producer.Name, producer.Value);
-            }
-        }
-
-        return null;
-    }
-
-    public Order CreateOrderUnload(MyGameObject myGameObject)
-    {
-        Storage storage = myGameObject.GetComponent<Storage>();
-
-        if (storage == null)
-        {
-            return null;
-        }
-
-        if (storage.Resources.Sum <= 0)
-        {
-            return null;
-        }
-
-        return null;
-    }
-
-    public void RegisterConsumer(MyGameObject myGameObject, string name, int value)
-    {
-        Register(Consumers, myGameObject, name, value);
+        Register(Consumers, myGameObject, name, value, direction);
     }
 
     public void UnregisterConsumer(MyGameObject myGameObject, string name)
@@ -208,9 +81,9 @@ public class Player : MonoBehaviour
         Unregister(Consumers, myGameObject, name);
     }
 
-    public void RegisterProducer(MyGameObject myGameObject, string name, int value)
+    public void RegisterProducer(MyGameObject myGameObject, string name, int value, ResourceDirection direction)
     {
-        Register(Producers, myGameObject, name, value);
+        Register(Producers, myGameObject, name, value, direction);
     }
 
     public void UnregisterProducer(MyGameObject myGameObject, string name)
@@ -218,63 +91,21 @@ public class Player : MonoBehaviour
         Unregister(Producers, myGameObject, name);
     }
 
-    private void Register(ConsumerProducerContainer container, MyGameObject myGameObject, string name, int value)
+    private void Register(ResourceRequestContainer container, MyGameObject myGameObject, string name, int value, ResourceDirection direction)
     {
-        container.Add(myGameObject, name, value);
+        container.Add(myGameObject, name, value, direction);
     }
 
-    private void Unregister(ConsumerProducerContainer container, MyGameObject myGameObject, string name)
+    private void Unregister(ResourceRequestContainer container, MyGameObject myGameObject, string name)
     {
         container.Remove(myGameObject, name);
     }
 
-    private MyGameObject GetStorage(MyGameObject myGameObject, MyResource myResource)
-    {
-        MyGameObject closest = null;
-        float distance = float.MaxValue;
-
-        foreach (Storage storage in Object.FindObjectsByType<Storage>(FindObjectsSortMode.None))
-        {
-            MyGameObject parent = storage.GetComponent<MyGameObject>();
-
-            if (parent == null)
-            {
-                continue;
-            }
-
-            if (parent == myGameObject)
-            {
-                continue;
-            }
-
-            if (parent == myResource)
-            {
-                continue;
-            }
-
-            string[] resourcesFromStorage = myResource.GetComponent<Storage>().Resources.Items.Where(x => x.Out && x.Empty == false).Select(x => x.Name).ToArray();
-            string[] resourcesFromCapacity = storage.Resources.Items.Where(x => x.In && x.Full == false).Select(x => x.Name).ToArray();
-            string[] match = resourcesFromStorage.Intersect(resourcesFromCapacity).ToArray();
-
-            if (match.Length <= 0)
-            {
-                continue;
-            }
-
-            float magnitude = (myGameObject.Position - parent.Position).magnitude;
-
-            if (magnitude < distance)
-            {
-                closest = parent;
-                distance = magnitude;
-            }
-        }
-
-        return closest;
-    }
-
     [field: SerializeField]
     public Sprite SelectionSprite { get; set; }
+
+    [field: SerializeField]
+    public string Name { get; set; }
 
     public HashSet<MyGameObject> Selected { get; } = new HashSet<MyGameObject>();
 
@@ -288,7 +119,9 @@ public class Player : MonoBehaviour
 
     public Stats Stats { get; } = new Stats();
 
-    public ConsumerProducerContainer Consumers { get; } = new ConsumerProducerContainer();
+    public ResourceRequestContainer Consumers { get; } = new ResourceRequestContainer();
 
-    public ConsumerProducerContainer Producers { get; } = new ConsumerProducerContainer();
+    public ResourceRequestContainer Producers { get; } = new ResourceRequestContainer();
+
+    private Dictionary<OrderType, JobHandler> jobHandlers = new Dictionary<OrderType, JobHandler>();
 }
