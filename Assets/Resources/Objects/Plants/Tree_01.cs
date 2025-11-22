@@ -4,7 +4,7 @@ public class Tree_01 : MyGameObject
     {
         base.Awake();
 
-        Resources.Add("Wood", 40, 40);
+        Resources.Add("Wood", 10, 10);
 
         Recipe r1 = new Recipe();
 
