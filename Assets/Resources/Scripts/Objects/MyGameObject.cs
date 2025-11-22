@@ -81,6 +81,8 @@ public class MyGameObject : MonoBehaviour
         UpdatePosition();
         UpdateSkills();
         UpdateVisibility();
+
+        Experience.Set(Stats.Get(Stats.DamageDealt) * 0.1f + Stats.Get(Stats.TargetsDestroyed));
     }
 
     protected virtual void OnCollisionEnter(Collision collision)
@@ -368,6 +370,7 @@ public class MyGameObject : MonoBehaviour
                         }
                     }
 
+                    info += string.Format("\nExperience: {0}", Experience.GetInfo());
                     info += string.Format("\nPowered: {0}", Powered);
                     info += string.Format("\nWorking: {0}", Working);
                 }
@@ -836,46 +839,49 @@ public class MyGameObject : MonoBehaviour
     public bool Working { get => Enabled && State == MyGameObjectState.Operational && (TryGetComponent(out PowerPlant _) == false || Powered); }
 
     [field: SerializeField]
+    public Progress Experience { get; private set; } = new Progress(0.0f, 1000.0f);
+
+    [field: SerializeField]
     public Player Player { get; private set; }
 
     [field: SerializeField]
     public bool Enabled { get; set; } = true;
 
     [field: SerializeField]
-    public bool Gatherable { get; set; } = false;
+    public bool Gatherable { get; private set; } = false;
 
     [field: SerializeField]
-    public bool Selectable { get; set; } = true;
+    public bool Selectable { get; private set; } = true;
 
     [field: SerializeField]
-    public Progress Health { get; set; } = new Progress(100.0f, 100.0f);
+    public Progress Health { get; private set; } = new Progress(100.0f, 100.0f);
 
     [field: SerializeField]
-    public float EnableTime { get; set; } = 2.0f;
+    public float EnableTime { get; private set; } = 2.0f;
 
     [field: SerializeField]
-    public float WaitTime { get; set; } = 2.0f;
+    public float WaitTime { get; private set; } = 2.0f;
 
     [field: SerializeField]
-    public GameObject DestroyEffect { get; set; }
+    public GameObject DestroyEffect { get; private set; }
 
     [field: SerializeField]
-    public float Altitude { get; set; } = -1.0f;
+    public float Altitude { get; private set; } = -1.0f;
 
     [field: SerializeField]
-    public float Depth { get; set; } = -1.0f;
+    public float Depth { get; private set; } = -1.0f;
 
     [field: SerializeField]
-    public List<MyGameObjectMapLayer> MapLayers { get; set; } = new List<MyGameObjectMapLayer>();
+    public List<MyGameObjectMapLayer> MapLayers { get; private set; } = new List<MyGameObjectMapLayer>();
 
     [field: SerializeField]
-    public bool ShowIndicators { get; set; } = true;
+    public bool ShowIndicators { get; private set; } = true;
 
     [field: SerializeField]
-    public Timer ExpirationTimer { get; set; } = new Timer(-1.0f, -1.0f);
+    public Timer ExpirationTimer { get; private set; } = new Timer(-1.0f, -1.0f);
 
     [field: SerializeField]
-    public List<string> SkillsNames { get; set; } = new List<string>();
+    public List<string> SkillsNames { get; private set; } = new List<string>();
 
     [field: SerializeField]
     public MyGameObjectState State { get; private set; } = MyGameObjectState.Operational;
