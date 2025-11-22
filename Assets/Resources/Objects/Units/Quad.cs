@@ -6,9 +6,9 @@ public class Quad : Unit
 
         Orders.AllowOrder(OrderType.Attack);
 
-        Engine = new Engine("Diesel", 8.0f);
+        Engine = new Engine(this, "Diesel", 8.0f);
 
-        Gun = new Cannon("Cannon", 2.0f, 6.0f, 3.0f);
+        Gun = new Cannon(this, "Cannon", 2.0f, 6.0f, 3.0f);
         Gun.MissilePrefab = "Objects/Missiles/Rocket";
     }
 }

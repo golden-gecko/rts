@@ -232,14 +232,24 @@ public class MyGameObject : MonoBehaviour
                     info += string.Format("\nHP: {0:0.}/{1:0.}", Health, MaxHealth);
                 }
 
+                if (Armour != null || Engine != null || Gun != null) // TODO: Create component list.
+                {
+                    info += "\nComponents:";
+                }
+
+                if (Armour != null)
+                {
+                    info += string.Format("\n  {0}", Armour.GetInfo());
+                }
+
                 if (Engine != null)
                 {
-                    info += string.Format("\n{0}", Engine.GetInfo());
+                    info += string.Format("\n  {0}", Engine.GetInfo());
                 }
 
                 if (Gun != null)
                 {
-                    info += string.Format("\n{0}", Gun.GetInfo());
+                    info += string.Format("\n  {0}", Gun.GetInfo());
                 }
 
                 string resources = Resources.GetInfo();
@@ -305,11 +315,29 @@ public class MyGameObject : MonoBehaviour
         return Player.IsEnemy(player);
     }
 
-    public void OnDamage(float value)
+    public float OnDamage(float value)
     {
-        Health = Mathf.Clamp(Health - value, 0.0f, MaxHealth);
+        float damageToDeal;
+        float damageDealt = 0.0f;
+        float damageLeft = value;
 
-        Stats.Add(Stats.DamageTaken, value);
+        if (Armour != null)
+        {
+            damageToDeal = Mathf.Min(damageLeft, Armour.Value);
+            damageDealt += damageToDeal;
+            damageLeft -= damageToDeal;
+
+            Armour.Value = Mathf.Clamp(Armour.Value - damageToDeal, 0.0f, Armour.ValueMax);
+        }
+
+        damageToDeal = Mathf.Min(damageLeft, Health);
+        damageDealt += damageToDeal;
+
+        Health = Mathf.Clamp(Health - damageToDeal, 0.0f, MaxHealth);
+
+        Stats.Add(Stats.DamageTaken, damageDealt);
+
+        return damageDealt;
     }
 
     public void OnRepair(float value)
@@ -324,8 +352,11 @@ public class MyGameObject : MonoBehaviour
         Vector3 scale = transform.localScale;
         Vector3 size = GetComponent<BoxCollider>().size;
 
-        rangeMissile.gameObject.SetActive(status);
-        rangeMissile.localScale = new Vector3(Gun.Range * 2.0f / scale.x, Gun.Range * 2.0f / scale.z, 1.0f);
+        if (Gun != null)
+        {
+            rangeMissile.gameObject.SetActive(status);
+            rangeMissile.localScale = new Vector3(Gun.Range * 2.0f / scale.x, Gun.Range * 2.0f / scale.z, 1.0f);
+        }
 
         rangeVisibility.gameObject.SetActive(status);
         rangeVisibility.localScale = new Vector3(VisibilityRange * 2.0f / scale.x, VisibilityRange * 2.0f / scale.z, 1.0f);
@@ -525,7 +556,7 @@ public class MyGameObject : MonoBehaviour
 
     public float MaxHealth { get; protected set; } = 10.0f;
 
-    public float GatherTime { get; protected set; } = 2.0f;
+    public float GatherTime { get; protected set; } = 2.0f; // TODO: Implement as Gather order.
 
     public float LoadTime { get; protected set; } = 2.0f;
 
@@ -558,6 +589,8 @@ public class MyGameObject : MonoBehaviour
     public MyGameObject Parent { get; set; }
 
     public Dictionary<string, Skill> Skills { get; protected set; } = new Dictionary<string, Skill>();
+
+    public Armour Armour { get; protected set; } // TODO: Move to component list.
 
     public Engine Engine { get; protected set; } // TODO: Move to component list.
 

@@ -1,21 +1,14 @@
-public class Engine
+public class Engine : MyComponent
 {
-    public Engine(string name, float speed)
+    public Engine(MyGameObject parent, string name, float speed) : base(parent, name)
     {
-        Name = name;
         Speed = speed;
     }
 
-    public virtual void Update()
+    public override string GetInfo()
     {
+        return string.Format("Name: {0}, Speed: {1:0.}", Name, Speed);
     }
-
-    public virtual string GetInfo()
-    {
-        return string.Format("Name: {0}, Speed: {0:0.}", Name, Speed);
-    }
-
-    public string Name { get; }
 
     public float Speed { get; }
 }
