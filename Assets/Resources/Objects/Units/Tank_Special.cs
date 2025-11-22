@@ -1,4 +1,4 @@
-public class Tank_Special : Unit
+public class Tank_Special : Vehicle
 {
     protected override void Awake()
     {

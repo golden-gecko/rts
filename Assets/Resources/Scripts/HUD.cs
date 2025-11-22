@@ -299,14 +299,14 @@ public class HUD : MonoBehaviour
         {
             if (Order == OrderType.Construct)
             {
-                if (hitInfo.transform.CompareTag("Terrain"))
+                if (hitInfo.transform.CompareTag("Terrain") || hitInfo.transform.CompareTag("Water")) // TODO: Hardcoded.
                 {
-                    Construct(hitInfo.point);
+                    Construct(hitInfo.point); // TODO: Check if objects is allowed to build on selected layer.
                 }
             }
             else
             {
-                if (hitInfo.transform.CompareTag("Terrain"))
+                if (hitInfo.transform.CompareTag("Terrain") || hitInfo.transform.CompareTag("Water")) // TODO: Hardcoded.
                 {
                     IssueOrder(hitInfo.point);
                 }
@@ -480,7 +480,6 @@ public class HUD : MonoBehaviour
         return Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift);
     }
 
-
     private void UpdateMouse()
     {
         if (Input.GetMouseButtonDown(0))
@@ -637,8 +636,6 @@ public class HUD : MonoBehaviour
     public Player ActivePlayer;
 
     public RectTransform boxVisual;
-
-    public PrefabConstructionType PrefabConstructionType { get; set; }
 
     public MyGameObject Hovered { get; private set; }
 

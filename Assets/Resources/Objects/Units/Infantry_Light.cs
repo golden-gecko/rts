@@ -1,4 +1,4 @@
-public class Infantry_Light : Unit
+public class Infantry_Light : Vehicle
 {
     protected override void Awake()
     {
