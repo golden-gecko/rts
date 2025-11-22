@@ -39,9 +39,11 @@ public class GameMenu : MonoBehaviour
 
         orders = rootVisualElement.Q<VisualElement>("OrderList");
         prefabs = rootVisualElement.Q<VisualElement>("PrefabList");
+        technologies = rootVisualElement.Q<VisualElement>("TechnologyList");
 
         CreateOrders();
         CreatePrefabs();
+        CreateTechnologies();
 
         Log("");
     }
@@ -63,6 +65,7 @@ public class GameMenu : MonoBehaviour
 
         UpdateOrders();
         UpdatePrefabs();
+        UpdateTechnologies();
 
         if (HUD.Instance.Selected.Count > 0)
         {
@@ -157,11 +160,30 @@ public class GameMenu : MonoBehaviour
             }
 
             button.style.display = DisplayStyle.None;
-            button.text = Path.GetFileName(i.Key).Replace("struct_", "").Replace("unit_", "").Replace("_A_yup", "").Replace("_B_yup", "").Replace("_", " ");
+            button.text = Path.GetFileName(i.Key).Replace("struct_", "").Replace("unit_", "").Replace("_A_yup", "").Replace("_B_yup", "").Replace("_", " "); // TODO: Rename prefabs.
             button.userData = i;
 
             prefabs.Add(buttonContainer);
             prefabsButtons[i.Key] = button;
+        }
+    }
+
+    private void CreateTechnologies()
+    {
+        technologies.Clear();
+
+        foreach (KeyValuePair<string, Technology> i in HUD.Instance.ActivePlayer.TechnologyTree.Technologies)
+        {
+            TemplateContainer buttonContainer = templateButton.Instantiate();
+            Button button = buttonContainer.Q<Button>();
+
+            button.RegisterCallback<ClickEvent>(ev => OnResearch(i.Key));
+            button.style.display = DisplayStyle.None;
+            button.text = i.Key;
+            button.userData = i.Key;
+
+            technologies.Add(buttonContainer);
+            technologiesButtons[i.Key] = button;
         }
     }
 
@@ -174,6 +196,7 @@ public class GameMenu : MonoBehaviour
     {
         HUD.Instance.Order = OrderType.Construct;
         HUD.Instance.Prefab = prefab;
+        HUD.Instance.Technology = string.Empty;
     }
 
     private void OnMenu()
@@ -184,6 +207,16 @@ public class GameMenu : MonoBehaviour
     private void OnOrder(OrderType orderType)
     {
         HUD.Instance.Order = orderType;
+        HUD.Instance.Prefab = string.Empty;
+        HUD.Instance.Technology = string.Empty;
+
+    }
+
+    private void OnResearch(string technology)
+    {
+        HUD.Instance.Technology = technology; // TODO: Order is important. Fix that.
+
+        HUD.Instance.Order = OrderType.Research;
         HUD.Instance.Prefab = string.Empty;
     }
 
@@ -211,6 +244,7 @@ public class GameMenu : MonoBehaviour
             if (ordersButtons.ContainsKey(i))
             {
                 ordersButtons[i].style.display = DisplayStyle.Flex;
+                ordersButtons[i].SetEnabled(true);
             }
         }
     }
@@ -241,7 +275,53 @@ public class GameMenu : MonoBehaviour
         {
             if (prefabsButtons.ContainsKey(i))
             {
-                prefabsButtons[i].style.display = DisplayStyle.Flex;
+                string technologyName = i.Replace("Objects/Structures/", "").Replace("Objects/Units/", "");
+
+                if (HUD.Instance.ActivePlayer.TechnologyTree.IsUnlocked(technologyName))
+                {
+                    prefabsButtons[i].style.display = DisplayStyle.Flex;
+                    prefabsButtons[i].SetEnabled(true);
+                }
+            }
+        }
+    }
+
+    private void UpdateTechnologies()
+    {
+        HashSet<string> whitelist = new HashSet<string>();
+
+        foreach (MyGameObject selected in HUD.Instance.Selected)
+        {
+            if (selected.State != MyGameObjectState.Operational)
+            {
+                continue;
+            }
+
+            foreach (string prefab in selected.Orders.TechnologyWhitelist)
+            {
+                whitelist.Add(prefab);
+            }
+        }
+
+        foreach (KeyValuePair<string, Button> button in technologiesButtons)
+        {
+            button.Value.style.display = DisplayStyle.None;
+        }
+
+        foreach (string i in whitelist)
+        {
+            if (technologiesButtons.ContainsKey(i))
+            {
+                technologiesButtons[i].style.display = DisplayStyle.Flex;
+
+                if (HUD.Instance.ActivePlayer.TechnologyTree.IsUnlocked(i))
+                {
+                    technologiesButtons[i].SetEnabled(false);
+                }
+                else
+                {
+                    technologiesButtons[i].SetEnabled(true);
+                }
             }
         }
     }
@@ -261,7 +341,9 @@ public class GameMenu : MonoBehaviour
 
     private VisualElement orders;
     private VisualElement prefabs;
+    private VisualElement technologies;
 
     private Dictionary<OrderType, Button> ordersButtons = new Dictionary<OrderType, Button>();
     private Dictionary<string, Button> prefabsButtons = new Dictionary<string, Button>();
+    private Dictionary<string, Button> technologiesButtons = new Dictionary<string, Button>();
 }

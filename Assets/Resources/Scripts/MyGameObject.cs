@@ -170,6 +170,11 @@ public class MyGameObject : MonoBehaviour
         }
     }
 
+    public void Research(string technology)
+    {
+        Orders.Add(Order.Research(technology, ResearchTime));
+    }
+
     public void Stop()
     {
         Orders.Insert(0, Order.Stop());
@@ -451,6 +456,8 @@ public class MyGameObject : MonoBehaviour
     public float LoadTime { get; protected set; } = 10.0f;
 
     public float ProduceTime { get; protected set; } = 10.0f;
+
+    public float ResearchTime { get; protected set; } = 10.0f;
 
     public float Speed { get; protected set; } = 10.0f;
 

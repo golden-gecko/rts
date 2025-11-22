@@ -59,6 +59,11 @@ public class HUD : MonoBehaviour
     {
         foreach (MyGameObject selected in Selected)
         {
+            if (IsMulti() == false)
+            {
+                selected.Orders.Clear();
+            }
+
             selected.Destroy();
         }
     }
@@ -67,7 +72,25 @@ public class HUD : MonoBehaviour
     {
         foreach (MyGameObject selected in Selected)
         {
+            if (IsMulti() == false)
+            {
+                selected.Orders.Clear();
+            }
+
             selected.Explore();
+        }
+    }
+
+    public void Research()
+    {
+        foreach (MyGameObject selected in Selected)
+        {
+            if (IsMulti() == false)
+            {
+                selected.Orders.Clear();
+            }
+
+            selected.Research(Technology);
         }
     }
 
@@ -75,6 +98,11 @@ public class HUD : MonoBehaviour
     {
         foreach (MyGameObject selected in Selected)
         {
+            if (IsMulti() == false)
+            {
+                selected.Orders.Clear();
+            }
+
             selected.Stop();
         }
     }
@@ -83,6 +111,11 @@ public class HUD : MonoBehaviour
     {
         foreach (MyGameObject selected in Selected)
         {
+            if (IsMulti() == false)
+            {
+                selected.Orders.Clear();
+            }
+
             selected.Wait();
         }
     }
@@ -457,6 +490,11 @@ public class HUD : MonoBehaviour
                     Explore();
                     break;
 
+                case OrderType.Research:
+                    order = OrderType.None;
+                    Research();
+                    break;
+
                 case OrderType.Stop:
                     order = OrderType.None;
                     Stop();
@@ -516,11 +554,15 @@ public class HUD : MonoBehaviour
         }
     }
 
+    public Player ActivePlayer;
+
+    public RectTransform boxVisual;
+
+    public string Technology { get; set; }
+
     public PrefabConstructionType PrefabConstructionType { get; set; }
 
     public List<MyGameObject> Selected { get; } = new List<MyGameObject>();
-
-    public RectTransform boxVisual;
 
     private bool drag = false;
 

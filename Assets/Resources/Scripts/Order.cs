@@ -144,11 +144,13 @@ public class Order
         };
     }
 
-    public static Order Research() // TODO: Add research name.
+    public static Order Research(string technology, float time)
     {
         return new Order
         {
             Type = OrderType.Research,
+            Technology = technology,
+            Timer = new Timer(time),
         };
     }
 
@@ -250,4 +252,6 @@ public class Order
     public Timer Timer { get; private set; }
 
     public OrderType Type { get; private set; }
+
+    public string Technology { get; private set; }
 }
