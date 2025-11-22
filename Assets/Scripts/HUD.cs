@@ -21,6 +21,7 @@ public class HUD : MonoBehaviour
                 {
                     foreach (var gameObject in Selected)
                     {
+                        gameObject.Stop();
                         gameObject.Move(hitInfo.point);
                     }
                 }

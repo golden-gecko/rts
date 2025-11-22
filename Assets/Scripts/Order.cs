@@ -2,10 +2,12 @@ using UnityEngine;
 
 public enum OrderType
 {
-    Extract = 0,
-    Idle    = 1,
-    Move    = 2,
-    Stop    = 3,
+    Guard,
+    Idle,
+    Move,
+    Patrol,
+    Produce,
+    Stop,
 }
 
 public class Order
