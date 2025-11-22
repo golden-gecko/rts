@@ -21,14 +21,9 @@ public class Player : MonoBehaviour
         }
     }
 
-    public bool IsAlly(Player player)
+    public bool Is(Player player, DiplomacyState state)
     {
-        return Diplomacy[player] == DiplomacyState.Ally;
-    }
-
-    public bool IsEnemy(Player player)
-    {
-        return Diplomacy[player] == DiplomacyState.Enemy;
+        return Diplomacy[player] == state;
     }
 
     public void SelectGroup(KeyCode keyCode)

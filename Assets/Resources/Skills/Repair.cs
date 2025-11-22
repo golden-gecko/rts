@@ -12,7 +12,7 @@ public class Repair : Skill
     {
         foreach (MyGameObject target in GameObject.FindObjectsByType<MyGameObject>(FindObjectsSortMode.None))
         {
-            if (target.IsAlly(myGameObject) == false)
+            if (target.Is(myGameObject, DiplomacyState.Ally) == false)
             {
                 continue;
             }
@@ -25,7 +25,7 @@ public class Repair : Skill
             target.OnRepair(Value);
         }
 
-        Object.Instantiate(Resources.Load(Effect), myGameObject.Position, Quaternion.identity); // TODO: Move effect name to configuration.
+        Object.Instantiate(Resources.Load(Effect), myGameObject.Position, Quaternion.identity);
     }
 
     public float Value { get; } = 0.0f;

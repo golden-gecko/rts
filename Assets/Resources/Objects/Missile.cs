@@ -13,7 +13,7 @@ public class Missile : MyGameObject
     {
         MyGameObject myGameObject = collider.GetComponentInParent<MyGameObject>(); // TODO: Add collision with terrain.
 
-        if (myGameObject != null && myGameObject.IsAlly(this) == false && myGameObject.GetComponent<Missile>() == false)
+        if (myGameObject != null && myGameObject.Is(this, DiplomacyState.Ally) == false && myGameObject.GetComponent<Missile>() == false)
         {
             float damageDealt = myGameObject.OnDamage(Damage);
 

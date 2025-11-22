@@ -4,9 +4,9 @@ public class Producer : MyComponent
 {
     public override string GetInfo()
     {
-        return string.Format("{0}, Produce Time: {1:0.}", base.GetInfo(), ProduceTime);
+        return string.Format("{0}, Resource Usage: {1}", base.GetInfo(), ResourceUsage);
     }
 
     [field: SerializeField]
-    public float ProduceTime { get; set; } = 2.0f; // TODO: Replace with rate (resource per second).
+    public int ResourceUsage { get; set; } = 1;
 }

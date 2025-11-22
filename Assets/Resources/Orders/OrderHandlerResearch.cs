@@ -19,7 +19,14 @@ public class OrderHandlerResearch : IOrderHandler
             return;
         }
 
-        if (CanMoveResource(myGameObject, order, myGameObject.Player.TechnologyTree.Technologies[order.Technology]) == false)
+        Technology technology = myGameObject.Player.TechnologyTree.Technologies[order.Technology];
+
+        if (order.Timer == null)
+        {
+            order.Timer = new Timer(technology.Total / order.ResourceUsage);
+        }
+
+        if (HaveResources(myGameObject, technology) == false)
         {
             myGameObject.Wait(0);
 
@@ -33,22 +40,17 @@ public class OrderHandlerResearch : IOrderHandler
 
         order.Timer.Reset();
 
-        MoveResource(myGameObject, order, myGameObject.Player.TechnologyTree.Technologies[order.Technology]);
+        MoveResources(myGameObject, technology);
 
-        if (myGameObject.Player.TechnologyTree.Technologies[order.Technology].Researched)
-        {
-            myGameObject.Player.TechnologyTree.Unlock(order.Technology);
-            myGameObject.Orders.Pop();
-        }
+        myGameObject.Player.TechnologyTree.Unlock(order.Technology);
+        myGameObject.Orders.Pop();
     }
 
-    private bool CanMoveResource(MyGameObject myGameObject, Order order, Technology technology)
+    private bool HaveResources(MyGameObject myGameObject, Technology technology)
     {
-        foreach (Resource resource in technology.Cost.Items.Values)
+        foreach (Resource i in technology.Cost.Items.Values)
         {
-            int resouceToMove = Mathf.Min(new int[] { order.ResourceUsage, resource.Capacity, myGameObject.Resources.Storage(resource.Name) });
-
-            if (resouceToMove <= 0)
+            if (myGameObject.Resources.CanRemove(i.Name, i.Max) == false)
             {
                 return false;
             }
@@ -57,23 +59,12 @@ public class OrderHandlerResearch : IOrderHandler
         return true;
     }
 
-    private void MoveResource(MyGameObject myGameObject, Order order, Technology technology)
+    private void MoveResources(MyGameObject myGameObject, Technology technology)
     {
-        foreach (Resource resource in technology.Cost.Items.Values)
+        foreach (Resource i in technology.Cost.Items.Values)
         {
-            int resouceToMove = Mathf.Min(new int[] { order.ResourceUsage, resource.Capacity, myGameObject.Resources.Storage(resource.Name) });
-
-            if (resouceToMove <= 0)
-            {
-                continue;
-            }
-
-            resource.Add(resouceToMove);
-
-            myGameObject.Resources.Remove(resource.Name, resouceToMove);
-            myGameObject.Stats.Add(Stats.ResourcesUsed, resouceToMove);
-
-            break;
+            myGameObject.Resources.Remove(i.Name, i.Max);
+            myGameObject.Stats.Add(Stats.ResourcesProduced, i.Max);
         }
     }
 }

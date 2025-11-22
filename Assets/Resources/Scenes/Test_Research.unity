@@ -67,9 +67,6 @@ LightmapSettings:
     m_LightmapParameters: {fileID: 0}
     m_LightmapsBakeMode: 1
     m_TextureCompression: 1
-    m_FinalGather: 0
-    m_FinalGatherFiltering: 1
-    m_FinalGatherRayCount: 256
     m_ReflectionCompression: 2
     m_MixedBakeMode: 2
     m_BakeBackend: 1
@@ -305,10 +302,6 @@ PrefabInstance:
       propertyPath: <Player>k__BackingField
       value: 
       objectReference: {fileID: 450540954}
-    - target: {fileID: 4576625105702019730, guid: 542c111a9f30e3541a642356c50b03f2, type: 3}
-      propertyPath: <ResourceUsage>k__BackingField
-      value: 3
-      objectReference: {fileID: 0}
     - target: {fileID: 6093475309484964639, guid: 542c111a9f30e3541a642356c50b03f2, type: 3}
       propertyPath: m_Name
       value: Research_Lab
@@ -319,7 +312,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6907271885525262757, guid: 542c111a9f30e3541a642356c50b03f2, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 300.70074
+      value: 304.4
       objectReference: {fileID: 0}
     - target: {fileID: 6907271885525262757, guid: 542c111a9f30e3541a642356c50b03f2, type: 3}
       propertyPath: m_LocalPosition.y
@@ -327,7 +320,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6907271885525262757, guid: 542c111a9f30e3541a642356c50b03f2, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 134.06717
+      value: 132.13
       objectReference: {fileID: 0}
     - target: {fileID: 6907271885525262757, guid: 542c111a9f30e3541a642356c50b03f2, type: 3}
       propertyPath: m_LocalRotation.w
@@ -457,7 +450,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2207475100940521903, guid: 7bf9b4588e172054c9a42a043a553419, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 306.48
+      value: 304.4
       objectReference: {fileID: 0}
     - target: {fileID: 2207475100940521903, guid: 7bf9b4588e172054c9a42a043a553419, type: 3}
       propertyPath: m_LocalPosition.y
@@ -465,7 +458,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2207475100940521903, guid: 7bf9b4588e172054c9a42a043a553419, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 135.96
+      value: 136.4
       objectReference: {fileID: 0}
     - target: {fileID: 2207475100940521903, guid: 7bf9b4588e172054c9a42a043a553419, type: 3}
       propertyPath: m_LocalRotation.w

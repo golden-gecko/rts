@@ -16,13 +16,13 @@ public class Refinery : Structure
         Recipe r1 = new Recipe("Metal using coal");
         Recipe r2 = new Recipe("Metal using wood");
 
-        r1.Consume("Coal", 2);
-        r1.Consume("Metal Ore", 1);
-        r1.Produce("Metal", 1);
+        r1.Consumes("Coal", 2);
+        r1.Consumes("Metal Ore", 1);
+        r1.Produces("Metal", 1);
 
-        r2.Consume("Metal Ore", 1);
-        r2.Consume("Wood", 4);
-        r2.Produce("Metal", 1);
+        r2.Consumes("Metal Ore", 1);
+        r2.Consumes("Wood", 4);
+        r2.Produces("Metal", 1);
 
         Recipes.Add(r1);
         Recipes.Add(r2);

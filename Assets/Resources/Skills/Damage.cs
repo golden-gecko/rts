@@ -12,7 +12,7 @@ public class Damage : Skill
     {
         foreach (MyGameObject target in GameObject.FindObjectsByType<MyGameObject>(FindObjectsSortMode.None))
         {
-            if (target.IsAlly(myGameObject))
+            if (target.Is(myGameObject, DiplomacyState.Ally))
             {
                 continue;
             }

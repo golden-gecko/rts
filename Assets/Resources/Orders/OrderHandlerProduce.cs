@@ -1,4 +1,4 @@
-using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class OrderHandlerProduce : IOrderHandler
@@ -12,85 +12,83 @@ public class OrderHandlerProduce : IOrderHandler
     {
         Order order = myGameObject.Orders.First();
 
-        if (order.Recipe.Length > 0)
+        if (order.Recipe.Length <= 0)
         {
-            if (myGameObject.Recipes.Items.ContainsKey(order.Recipe))
-            {
-                Produce(myGameObject, order, myGameObject.Recipes.Items[order.Recipe]);
-            }
-            else
-            {
-                myGameObject.Stats.Add(Stats.OrdersFailed, 1);
-                myGameObject.Orders.Pop();
-            }
+            order.Recipe = myGameObject.Recipes.Items.First().Key; // TODO: Check if game object contains recipes.
         }
-        else
+
+        if (myGameObject.Recipes.Items.ContainsKey(order.Recipe) == false)
         {
-            foreach (Recipe recipe in myGameObject.Recipes.Items.Values)
-            {
-                if (Produce(myGameObject, order, recipe))
-                {
-                    break;
-                }
-            }
+            myGameObject.Stats.Add(Stats.OrdersFailed, 1);
+            myGameObject.Orders.Pop();
         }
+
+        Produce(myGameObject, order, myGameObject.Recipes.Items[order.Recipe]);
     }
 
     private bool Produce(MyGameObject myGameObject, Order order, Recipe recipe)
     {
-        // Have storage to consume.
-        bool toConsume = true;
-
-        foreach (RecipeComponent i in recipe.ToConsume)
+        if (order.Timer == null)
         {
-            if (myGameObject.Resources.CanRemove(i.Name, i.Count) == false)
-            {
-                toConsume = false;
-                break;
-            }
+            order.Timer = new Timer(recipe.Total / order.ResourceUsage);
         }
 
-        // Have capacity to produce.
-        bool toProduce = true;
-
-        foreach (RecipeComponent i in recipe.ToProduce)
+        if (HaveResources(myGameObject, recipe) == false)
         {
-            if (myGameObject.Resources.CanAdd(i.Name, i.Count) == false)
-            {
-                toProduce = false;
-                break;
-            }
+            myGameObject.Wait(0);
+
+            return false;
         }
 
-        if (toConsume == false || toProduce == false)
+        if (order.Timer.Update(Time.deltaTime) == false)
         {
             return false;
         }
 
-        // Produce new resources.
-        order.Timer.Update(Time.deltaTime);
+        order.Timer.Reset();
 
-        if (order.Timer.Finished)
+        MoveResources(myGameObject, recipe);
+
+        myGameObject.Stats.Add(Stats.OrdersExecuted, 1);
+        myGameObject.Stats.Add(Stats.TimeProducing, order.Timer.Max);
+        myGameObject.Orders.Pop();
+
+        return true;
+    }
+
+    private bool HaveResources(MyGameObject myGameObject, Recipe recipe)
+    {
+        foreach (Resource i in recipe.ToConsume.Items.Values)
         {
-            foreach (RecipeComponent i in recipe.ToConsume)
+            if (myGameObject.Resources.CanRemove(i.Name, i.Max) == false)
             {
-                myGameObject.Resources.Remove(i.Name, i.Count);
+                return false;
             }
+        }
 
-            foreach (RecipeComponent i in recipe.ToProduce)
+        foreach (Resource i in recipe.ToProduce.Items.Values)
+        {
+            if (myGameObject.Resources.CanAdd(i.Name, i.Max) == false)
             {
-                myGameObject.Resources.Add(i.Name, i.Count);
-
-                myGameObject.Stats.Add(Stats.ResourcesProduced, i.Count);
+                return false;
             }
-
-            order.Timer.Reset();
-
-            myGameObject.Stats.Add(Stats.OrdersExecuted, 1);
-            myGameObject.Stats.Add(Stats.TimeProducing, order.Timer.Max);
-            myGameObject.Orders.Pop();
         }
 
         return true;
+    }
+
+    private void MoveResources(MyGameObject myGameObject, Recipe recipe)
+    {
+        foreach (Resource i in recipe.ToConsume.Items.Values)
+        {
+            myGameObject.Resources.Remove(i.Name, i.Max);
+            myGameObject.Stats.Add(Stats.ResourcesProduced, i.Max);
+        }
+
+        foreach (Resource i in recipe.ToProduce.Items.Values)
+        {
+            myGameObject.Resources.Add(i.Name, i.Max);
+            myGameObject.Stats.Add(Stats.ResourcesProduced, i.Max);
+        }
     }
 }
