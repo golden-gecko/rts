@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.IO;
 using UnityEngine;
 
 public class Game : MonoBehaviour
@@ -16,7 +17,12 @@ public class Game : MonoBehaviour
             Instance = this;
         }
 
-        DisasterTime.Max = DisasterFrequencyInSeconds;
+        Disaster[] disasters = Resources.LoadAll<Disaster>(Config.DirectoryDisasters);
+
+        foreach (Disaster disaster in disasters)
+        {
+            DisasterTimer[disaster] = new Timer(Random.Range(disaster.FrequencyInSecondsMin, disaster.FrequencyInSecondsMax));
+        }
     }
 
     protected void Start()
@@ -84,8 +90,12 @@ public class Game : MonoBehaviour
 
     public MyGameObject CreateGameObject(string prefab, Vector3 position, Player player, MyGameObjectState state)
     {
-        MyGameObject resource = Resources.Load<MyGameObject>(prefab);
-        MyGameObject myGameObject = Object.Instantiate<MyGameObject>(resource, position, Quaternion.identity);
+        return CreateGameObject(Resources.Load<MyGameObject>(prefab), position, player, state);
+    }
+
+    public MyGameObject CreateGameObject(MyGameObject resource, Vector3 position, Player player, MyGameObjectState state)
+    {
+        MyGameObject myGameObject = Object.Instantiate<MyGameObject>(resource, position, resource.transform.rotation);
 
         myGameObject.SetPlayer(player);
         myGameObject.State = state;
@@ -113,31 +123,34 @@ public class Game : MonoBehaviour
 
     private void CreateDisaster()
     {
-        /*if (DisasterTime.Update(Time.deltaTime))
+        foreach (KeyValuePair<Disaster, Timer> i in DisasterTimer)
         {
-            DisasterTime.Reset();
-
-            // TODO: Put this somewhere.
-            List<string> _disasters = new List<string>()
+            if (i.Value.Update(Time.deltaTime) == false)
             {
-                "Objects/Disasters/Fire",
-                "Objects/Disasters/Meteor",
-                "Objects/Disasters/Tornado",
-            };
+                continue;
+            }
 
-            int index = Random.Range(0, _disasters.Count);
+            i.Value.Reset();
+            i.Value.Max = Random.Range(i.Key.FrequencyInSecondsMin, i.Key.FrequencyInSecondsMax);
 
-            CreateGameObject(_disasters[1], new Vector3(300.41f, 0.0f, 132.32f), GetGaiaPlayer(), MyGameObjectState.Operational);
-        }*/
+            CreateGameObject(i.Key, GetDisasterPosition(), GetGaiaPlayer(), MyGameObjectState.Operational);
+        }
+    }
+
+    private Vector3 GetDisasterPosition()
+    {
+        Vector3 cameraPosition = Camera.main.transform.position;
+
+        cameraPosition.x += Random.Range(-20.0f, 20.0f);
+        cameraPosition.z += Random.Range(-20.0f, 20.0f);
+
+        return Map.Instance.UnitPositionHandler.GetPosition(cameraPosition);
     }
 
     private Player GetGaiaPlayer()
     {
-        return GameObject.Find("Gaia").GetComponent<Player>();
+        return GameObject.Find("Gaia").GetComponent<Player>(); // TODO: Hardcoded.
     }
 
-    [field: SerializeField]
-    public float DisasterFrequencyInSeconds = 120.0f;
-
-    private Timer DisasterTime = new Timer();
+    private Dictionary<Disaster, Timer> DisasterTimer = new Dictionary<Disaster, Timer>();
 }

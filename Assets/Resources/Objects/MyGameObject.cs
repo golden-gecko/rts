@@ -78,6 +78,18 @@ public class MyGameObject : MonoBehaviour
         UpdateSkills();
     }
 
+    protected virtual void OnTriggerEnter(Collider other)
+    {
+    }
+
+    protected virtual void OnTriggerStay(Collider other)
+    {
+    }
+
+    protected virtual void OnTriggerExit(Collider other)
+    {
+    }
+
     protected void UpdateSkills()
     {
         foreach (Skill skill in Skills.Values)
@@ -239,7 +251,7 @@ public class MyGameObject : MonoBehaviour
         }
     }
 
-    public string GetInfo(bool ally)
+    public virtual string GetInfo(bool ally)
     {
         string info = string.Empty;
 
@@ -346,7 +358,11 @@ public class MyGameObject : MonoBehaviour
     }
     public void OnDestroy_() // TODO: Rename.
     {
-        Instantiate(UnityEngine.Resources.Load(DestroyEffect), Position, Quaternion.identity);
+        if (DestroyEffect != null && DestroyEffect.Length > 0)
+        {
+            Instantiate(UnityEngine.Resources.Load(DestroyEffect), Position, Quaternion.identity);
+        }
+
         Destroy(gameObject);
     }
 
@@ -548,13 +564,45 @@ public class MyGameObject : MonoBehaviour
         UpdateSelection();
     }
 
-    public Vector3 Center { get => GetComponent<Collider>().bounds.center; }
+    public Vector3 Center
+    {
+        get
+        {
+            if (GetComponent<Collider>() != null)
+            {
+                return GetComponent<Collider>().bounds.center;
+            }
+
+            if (GetComponentInChildren<Collider>() != null) // TODO: Check if there are more than one.
+            {
+                return GetComponentInChildren<Collider>().bounds.center;
+            }
+
+            return Vector3.zero;
+        }
+    }
 
     public Vector3 Entrance { get => Position + new Vector3(0.0f, 0.0f, Size.z + 1.0f); }
 
     public Vector3 Exit { get => Position - new Vector3(0.0f, 0.0f, Size.z + 1.0f); }
 
-    public Vector3 Size { get => GetComponent<Collider>().bounds.size; }
+    public Vector3 Size
+    {
+        get 
+        {
+            if (GetComponent<Collider>() != null)
+            {
+                return GetComponent<Collider>().bounds.size;
+            }
+
+            if (GetComponentInChildren<Collider>() != null) // TODO: Check if there are more than one.
+            {
+                return GetComponentInChildren<Collider>().bounds.size;
+            }
+
+            return Vector3.zero;
+        } 
+    }
 
     public bool Alive { get => Health > 0.0f; }
 

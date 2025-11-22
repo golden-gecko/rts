@@ -7,7 +7,7 @@ public class TechnologyTree
     public void Load()
     {
         // Load structures.
-        MyGameObject[] structures = Resources.LoadAll<MyGameObject>("Objects/Structures");
+        MyGameObject[] structures = Resources.LoadAll<MyGameObject>(Config.DirectoryStructures);
 
         foreach (MyGameObject myGameObject in structures)
         {
@@ -15,7 +15,7 @@ public class TechnologyTree
         }
 
         // Load units.
-        MyGameObject[] units = Resources.LoadAll<MyGameObject>("Objects/Units");
+        MyGameObject[] units = Resources.LoadAll<MyGameObject>(Config.DirectoryUnits);
 
         foreach (MyGameObject myGameObject in units)
         {
