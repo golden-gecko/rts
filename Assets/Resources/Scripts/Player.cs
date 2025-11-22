@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
-    private void Awake()
+    protected virtual void Awake()
     {
         TechnologyTree.Load();
 
@@ -31,13 +31,15 @@ public class Player : MonoBehaviour
                 {
                     myGameObject.Select(false);
                 }
+
+                Selected.Clear();
             }
 
-            Selected = new HashSet<MyGameObject>(Groups[keyCode]);
-
-            foreach (MyGameObject myGameObject in Selected)
+            foreach (MyGameObject myGameObject in Groups[keyCode])
             {
                 myGameObject.Select(true);
+
+                Selected.Add(myGameObject);
             }
         }
     }
@@ -45,7 +47,9 @@ public class Player : MonoBehaviour
     [SerializeField]
     public Sprite SelectionSprite;
 
-    public HashSet<MyGameObject> Selected { get; private set; } = new HashSet<MyGameObject>();
+    public bool Gatherable { get; protected set; } = false;
+
+    public HashSet<MyGameObject> Selected { get; } = new HashSet<MyGameObject>();
 
     public Dictionary<KeyCode, HashSet<MyGameObject>> Groups { get; } = new Dictionary<KeyCode, HashSet<MyGameObject>>();
 
