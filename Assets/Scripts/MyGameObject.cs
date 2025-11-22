@@ -1,7 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
-using static UnityEngine.GraphicsBuffer;
 
 public class MyGameObject : MonoBehaviour
 {
@@ -46,11 +45,10 @@ public class MyGameObject : MonoBehaviour
         }
         else
         {
-            Idle();
+            // Idle();
         }
     }
 
-    #region Orders
     public void Idle()
     {
         Orders.Add(new Order(OrderType.Idle));
@@ -85,7 +83,7 @@ public class MyGameObject : MonoBehaviour
 
     public void Produce()
     {
-        // TODO: Make it virtual and take timer value from object.
+        // TODO: Take timer value from object.
         Orders.Add(new Order(OrderType.Produce, 3));
     }
 
@@ -103,9 +101,7 @@ public class MyGameObject : MonoBehaviour
     {
         Orders.Add(new Order(OrderType.Unload, target, resources));
     }
-    #endregion
 
-    #region Handlers
     protected virtual void OnOrderIdle()
     {
     }
@@ -154,35 +150,32 @@ public class MyGameObject : MonoBehaviour
     protected virtual void OnOrderMove()
     {
         var order = Orders.First();
+
         Vector3 target;
+        Vector3 position = transform.position;
 
         if (order.TargetGameObject != null)
         {
-            target = order.TargetGameObject.transform.position;
+            target = order.TargetGameObject.Entrance;
         }
         else
         {
             target = order.TargetPosition;
         }
 
+        target.y = 0;
+        position.y = 0;
+
         var distanceToTarget = (target - transform.position).magnitude;
-        var distanceToTravel = 10 * Time.deltaTime;
+        var distanceToTravel = Speed * Time.deltaTime;
 
         if (distanceToTarget > distanceToTravel)
         {
-            var direction = target - transform.position;
-            direction.y = 0;
-            direction.Normalize();
-
             transform.LookAt(target);
             transform.Translate(Vector3.forward * distanceToTravel);
         }
         else
         {
-            var direction = target - transform.position;
-            direction.y = 0;
-            direction.Normalize();
-
             transform.LookAt(target);
             transform.position = target;
 
@@ -312,7 +305,16 @@ public class MyGameObject : MonoBehaviour
 
         Orders.Pop();
     }
-    #endregion
+
+    public Vector3 Entrance
+    {
+        get
+        {
+            var size = GetComponent<Collider>().bounds.size;
+
+            return new Vector3(transform.position.x, transform.position.y, transform.position.z + size.x * 0.75f);
+        }
+    }
 
     public OrderContainer Orders { get; private set; }
 
@@ -321,4 +323,8 @@ public class MyGameObject : MonoBehaviour
     public ResourceContainer Resources { get; private set; }
 
     public List<Recipe> Recipes { get; private set; }
+
+    public float Health { get; } = 100;
+
+    public float Speed { get; } = 10;
 }
