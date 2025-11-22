@@ -736,15 +736,15 @@ PrefabInstance:
       objectReference: {fileID: 261081117239525528}
     - target: {fileID: 1702014145004635914, guid: 61a7c4fca0a2a36409924024a26dbdde, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 299.8879
+      value: 300
       objectReference: {fileID: 0}
     - target: {fileID: 1702014145004635914, guid: 61a7c4fca0a2a36409924024a26dbdde, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 10.146952
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 1702014145004635914, guid: 61a7c4fca0a2a36409924024a26dbdde, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 103.08037
+      value: 100
       objectReference: {fileID: 0}
     - target: {fileID: 1702014145004635914, guid: 61a7c4fca0a2a36409924024a26dbdde, type: 3}
       propertyPath: m_LocalRotation.w
@@ -1417,10 +1417,6 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 1016367653328774682, guid: 838528c30748ad1409e28e3a543244c6, type: 3}
-      propertyPath: m_RootOrder
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1016367653328774682, guid: 838528c30748ad1409e28e3a543244c6, type: 3}
       propertyPath: m_LocalPosition.z
       value: -0.05166626
       objectReference: {fileID: 0}
@@ -1436,76 +1432,12 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 1104453597228002752, guid: 838528c30748ad1409e28e3a543244c6, type: 3}
-      propertyPath: m_Enabled
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1874948758393139739, guid: 838528c30748ad1409e28e3a543244c6, type: 3}
-      propertyPath: SelectionSprite
-      value: 
-      objectReference: {fileID: 21300000, guid: 3419bed9750072842897c04a90dc90e7, type: 3}
-    - target: {fileID: 3216390920405479871, guid: 838528c30748ad1409e28e3a543244c6, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4651843294058532779, guid: 838528c30748ad1409e28e3a543244c6, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4703427129416132906, guid: 838528c30748ad1409e28e3a543244c6, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4771283690470332358, guid: 838528c30748ad1409e28e3a543244c6, type: 3}
-      propertyPath: m_Enabled
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4785110659018959346, guid: 838528c30748ad1409e28e3a543244c6, type: 3}
-      propertyPath: m_Enabled
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 4885079203805521602, guid: 838528c30748ad1409e28e3a543244c6, type: 3}
       propertyPath: m_Name
       value: Setup
       objectReference: {fileID: 0}
-    - target: {fileID: 4887735223889457049, guid: 838528c30748ad1409e28e3a543244c6, type: 3}
-      propertyPath: <CursorAssemble>k__BackingField
-      value: 
-      objectReference: {fileID: 2800000, guid: a51b5507f808ef741b4b8d931446dcf2, type: 3}
-    - target: {fileID: 7233029928211121440, guid: 838528c30748ad1409e28e3a543244c6, type: 3}
-      propertyPath: m_Enabled
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 7443654836005963256, guid: 838528c30748ad1409e28e3a543244c6, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 7552484158215349312, guid: 838528c30748ad1409e28e3a543244c6, type: 3}
-      propertyPath: SelectionSprite
-      value: 
-      objectReference: {fileID: 21300000, guid: 59c35cb9ac54c2240876224407509478, type: 3}
-    - target: {fileID: 8274690133156711252, guid: 838528c30748ad1409e28e3a543244c6, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 45
-      objectReference: {fileID: 0}
-    - target: {fileID: 8287268935677405822, guid: 838528c30748ad1409e28e3a543244c6, type: 3}
-      propertyPath: field of view
-      value: 107.4
-      objectReference: {fileID: 0}
-    - target: {fileID: 8287268935677405822, guid: 838528c30748ad1409e28e3a543244c6, type: 3}
-      propertyPath: m_FOVAxisMode
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8729379247423149133, guid: 838528c30748ad1409e28e3a543244c6, type: 3}
-      propertyPath: SelectionSprite
-      value: 
-      objectReference: {fileID: 21300000, guid: 1841cd3def226a749ad666a6152d2cc8, type: 3}
-    m_RemovedComponents:
-    - {fileID: 3580768856924153551, guid: 838528c30748ad1409e28e3a543244c6, type: 3}
-    - {fileID: 117974251609430779, guid: 838528c30748ad1409e28e3a543244c6, type: 3}
-    - {fileID: 910538487316295332, guid: 838528c30748ad1409e28e3a543244c6, type: 3}
-    m_RemovedGameObjects:
-    - {fileID: 2543591127373794835, guid: 838528c30748ad1409e28e3a543244c6, type: 3}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 838528c30748ad1409e28e3a543244c6, type: 3}

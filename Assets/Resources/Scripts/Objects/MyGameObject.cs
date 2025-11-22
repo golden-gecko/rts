@@ -893,10 +893,10 @@ public class MyGameObject : MonoBehaviour
     public bool RotateTowardsTarget { get; private set; } = true;
 
     [field: SerializeField]
-    public bool ShowEntrance = false;
+    public bool ShowEntrance { get; private set; } = false;
 
     [field: SerializeField]
-    public bool ShowExit = false;
+    public bool ShowExit { get; private set; } = false;
 
     public Vector3 Position { get => transform.position; set => transform.position = value; }
 

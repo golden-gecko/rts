@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -17,26 +16,44 @@ public class Map : Singleton<Map>
             }
         }
 
-        Clear();
+        SetupLayers();
+        SetupTerrain();
+    }
 
-        /*
+    public void Damage(Vector3 position, float range, float damage)
+    {
         Terrain terrain = transform.Find("Terrain").GetComponent<Terrain>();
         TerrainData terrainData = terrain.terrainData;
 
-        Terrain.activeTerrain = Instantiate(terrainData);
+        Vector3Int start = Utils.ToGrid(new Vector3(position.x - range, 0.0f, position.z - range), Config.Map.Scale);
+        Vector3Int end = Utils.ToGrid(new Vector3(position.x + range, 0.0f, position.z + range), Config.Map.Scale);
 
-        float[,] heights = terrainData.GetHeights(0, 0, 10, 10);
+        Vector3Int center = Utils.ToGrid(position, Config.Map.Scale);
+        int radius = Mathf.FloorToInt(range / Config.Map.Scale);
 
-        for (int x = 0; x < 10; x++)
+        float[,] heights = terrainData.GetHeights(start.x, start.z, end.x - start.x, end.z - start.z);
+
+        for (int x = 0; x < end.x - start.x; x++)
         {
-            for (int z = 0; z < 10; z++)
+            for (int z = 0; z < end.z - start.z; z++)
             {
-                heights[x, z] = 20.0f;
+                if (Utils.IsPointInRect(x, z, Config.Map.Size) == false)
+                {
+                    continue;
+                }
+
+                if (Utils.IsPointInCircle(start.x + x, start.z + z, center, radius) == false)
+                {
+                    continue;
+                }
+
+                float magnitude = (new Vector3Int(center.x, 0, center.z) - new Vector3Int(start.x + x, 0, start.z + z)).magnitude;
+
+                heights[x, z] -= damage * (1.0f - magnitude / range) * Config.Map.DamageFactor;
             }
         }
 
-        terrainData.SetHeightsDelayLOD(0, 0, heights);
-        */
+        terrainData.SetHeightsDelayLOD(start.x, start.z, heights);
     }
 
     public void SetOccupied(MyGameObject myGameObject, Vector3 position, int value)
@@ -768,74 +785,23 @@ public class Map : Singleton<Map>
         return false;
     }
 
-    private void Clear()
+    private void SetupLayers()
     {
         for (int x = 0; x < Config.Map.Size; x++)
         {
             for (int z = 0; z < Config.Map.Size; z++)
             {
-                Player[] players00 = Cells[x, z].Occupied.Keys.ToArray();
+                ClearLayer(Cells[x, z].Occupied);
+                ClearLayer(Cells[x, z].Explored);
 
-                foreach (Player player in players00)
-                {
-                    Cells[x, z].Occupied[player] = 0;
-                }
+                ClearLayer(Cells[x, z].VisibleByRadar);
+                ClearLayer(Cells[x, z].VisibleByAntiRadar);
+                ClearLayer(Cells[x, z].VisibleBySight);
+                ClearLayer(Cells[x, z].VisibleByPower);
 
-                Player[] players0 = Cells[x, z].Explored.Keys.ToArray();
-
-                foreach (Player player in players0)
-                {
-                    Cells[x, z].Explored[player] = 0;
-                }
-
-                Player[] players1 = Cells[x, z].VisibleByRadar.Keys.ToArray();
-
-                foreach (Player player in players1)
-                {
-                    Cells[x, z].VisibleByRadar[player] = 0;
-                }
-
-                Player[] players2 = Cells[x, z].VisibleByAntiRadar.Keys.ToArray();
-
-                foreach (Player player in players2)
-                {
-                    Cells[x, z].VisibleByAntiRadar[player] = 0;
-                }
-
-                Player[] players3 = Cells[x, z].VisibleBySight.Keys.ToArray();
-
-                foreach (Player player in players3)
-                {
-                    Cells[x, z].VisibleBySight[player] = 0;
-                }
-
-                Player[] players4 = Cells[x, z].VisibleByPower.Keys.ToArray();
-
-                foreach (Player player in players4)
-                {
-                    Cells[x, z].VisibleByPower[player] = 0;
-                }
-
-                Player[] players5 = Cells[x, z].VisibleByPassiveDamage.Keys.ToArray();
-
-                foreach (Player player in players5)
-                {
-                    Cells[x, z].VisibleByPassiveDamage[player] = 0;
-                }
-
-                Player[] players6 = Cells[x, z].VisibleByPassivePower.Keys.ToArray();
-
-                foreach (Player player in players6)
-                {
-                    Cells[x, z].VisibleByPassivePower[player] = 0;
-                }
-
-                Player[] players7 = Cells[x, z].VisibleByPassiveRange.Keys.ToArray();
-
-                foreach (Player player in players7)
-                {
-                    Cells[x, z].VisibleByPassiveRange[player] = 0;
-                }
+                ClearLayer(Cells[x, z].VisibleByPassiveDamage);
+                ClearLayer(Cells[x, z].VisibleByPassivePower);
+                ClearLayer(Cells[x, z].VisibleByPassiveRange);
             }
         }
 
@@ -849,12 +815,43 @@ public class Map : Singleton<Map>
         ClearTexture(PassiveRange.mainTexture as Texture2D);
     }
 
+    private void SetupTerrain()
+    {
+        Terrain terrain = transform.Find("Terrain").GetComponent<Terrain>();
+        TerrainCollider terrainCollider = transform.Find("Terrain").GetComponent<TerrainCollider>();
+
+        TerrainData terrainData = terrain.terrainData;
+        TerrainData terrainDataCopy = TerrainDataCloner.Clone(terrainData);
+
+        terrain.terrainData = terrainDataCopy;
+        terrainCollider.terrainData = terrainDataCopy;
+    }
+
+    private void ClearLayer(Dictionary<Player, int> layer)
+    {
+        Player[] players = layer.Keys.ToArray();
+
+        foreach (Player player in players)
+        {
+            layer[player] = 0;
+        }
+    }
+
+    private void ClearLayer(Dictionary<Player, float> layer)
+    {
+        Player[] players = layer.Keys.ToArray();
+
+        foreach (Player player in players)
+        {
+            layer[player] = 0.0f;
+        }
+    }
+
     private void ClearTexture(Texture2D texture)
     {
-        Color[] colors = new Color[texture.width * texture.height];
-        Array.Fill(colors, new Color(1.0f, 1.0f, 1.0f, 0.0f));
+        Color32[] colors = Utils.CreateColorArray(texture.width, texture.height, 255, 255, 255, 0);
 
-        texture.SetPixels(0, 0, texture.width, texture.height, colors);
+        texture.SetPixels32(0, 0, texture.width, texture.height, colors);
         texture.Apply();
     }
 

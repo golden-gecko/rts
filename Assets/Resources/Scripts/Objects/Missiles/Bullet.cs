@@ -56,6 +56,8 @@ public class Bullet : Missile
             Instantiate(HitEffectPrefab, Position, Quaternion.identity);
         }
 
+        Map.Instance.Damage(position, 1.0f, Damage.Total); // TODO: Add damage range.
+
         Destroy(0);
     }
 }

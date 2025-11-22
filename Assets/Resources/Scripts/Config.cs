@@ -38,6 +38,7 @@ public class Config
     public class Map
     {
         public static float ConstructionScale { get; } = 1.0f;
+        public static float DamageFactor { get; } = 0.0002f;
         public static Color DataLayerColorOccupation { get; } = new Color(1.0f, 1.0f, 1.0f, 0.25f);
         public static Color DataLayerColorExploration { get; } = new Color(1.0f, 1.0f, 1.0f, 0.25f);
         public static Color DataLayerColorPower { get; } = new Color(1.0f, 1.0f, 0.0f, 0.25f);

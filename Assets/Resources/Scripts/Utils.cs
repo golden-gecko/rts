@@ -274,6 +274,15 @@ public class Utils
     }
     #endregion
 
+    public static Color32[] CreateColorArray(int width, int height, byte r, byte g, byte b, byte a)
+    {
+        Color32[] colors = new Color32[width * height];
+
+        System.Array.Fill(colors, new Color32(r, g, b, a));
+
+        return colors;
+    }
+
     public static MyGameObject GetGameObject(Collision collision)
     {
         return collision.collider.GetComponentInParent<MyGameObject>();
