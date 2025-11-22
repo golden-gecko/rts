@@ -4,11 +4,11 @@ public class unit_Harvester_A_yup : MyGameObject
     {
         base.Start();
 
-        Orders.Allow(OrderType.Load);
-        Orders.Allow(OrderType.Move);
-        Orders.Allow(OrderType.Patrol);
-        Orders.Allow(OrderType.Unload);
-        Orders.Allow(OrderType.Transport);
+        Orders.AllowOrder(OrderType.Load);
+        Orders.AllowOrder(OrderType.Move);
+        Orders.AllowOrder(OrderType.Patrol);
+        Orders.AllowOrder(OrderType.Unload);
+        Orders.AllowOrder(OrderType.Transport);
 
         Resources.Add("Coal", 0, 20);
         Resources.Add("Metal", 0, 20);

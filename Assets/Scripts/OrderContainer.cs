@@ -1,14 +1,13 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using Unity.VisualScripting;
 
 public class OrderContainer
 {
     public OrderContainer()
     {
         Items = new List<Order>();
-        Whitelist = new HashSet<OrderType>();
+        OrderWhitelist = new HashSet<OrderType>();
+        PrefabWhitelist = new HashSet<string>();
     }
 
     public void Add(Order item)
@@ -16,14 +15,19 @@ public class OrderContainer
         Items.Add(item);
     }
 
-    public void Allow(OrderType item)
+    public void AllowOrder(OrderType item)
     {
-        Whitelist.Add(item);
+        OrderWhitelist.Add(item);
+    }
+
+    public void AllowPrefab(string item)
+    {
+        PrefabWhitelist.Add(item);
     }
 
     public bool Contains(OrderType item)
     {
-        return Whitelist.Contains(item);
+        return OrderWhitelist.Contains(item);
     }
 
     public void Clear()
@@ -49,14 +53,19 @@ public class OrderContainer
 
     public string GetInfo()
     {
-        var info = "";
+        var info = string.Empty;
 
         foreach (var i in Items)
         {
             info += i.GetInfo() + ", ";
         }
 
-        return info.Substring(0, info.Length - 2);
+        if (info.Length > 2)
+        {
+            info = info.Substring(0, info.Length - 2);
+        }
+
+        return info;
     }
 
     public void Pop()
@@ -66,7 +75,9 @@ public class OrderContainer
 
     public List<Order> Items { get; }
 
-    public HashSet<OrderType> Whitelist { get; }
+    public HashSet<OrderType> OrderWhitelist { get; }
+
+    public HashSet<string> PrefabWhitelist { get; }
 
     public int Count { get => Items.Count; }
 }

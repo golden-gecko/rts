@@ -52,7 +52,7 @@ public class ResourceContainer
 
     public string GetInfo()
     {
-        var info = "";
+        var info = string.Empty;
 
         foreach (var i in Items)
         {

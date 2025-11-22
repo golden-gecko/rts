@@ -13,6 +13,7 @@ public enum OrderType
     Load,
     Patrol,
     Produce,
+    Rally,
     Research,
     Stop,
     Transport,
@@ -61,6 +62,11 @@ public class Order
 
     public string GetInfo()
     {
+        if (Timer == null)
+        {
+            return string.Format("{0}", Type.ToString());
+        }
+
         return string.Format("{0} ({1:0.}/{2})", Type.ToString(), Timer.Value, Timer.Max);
     }
 

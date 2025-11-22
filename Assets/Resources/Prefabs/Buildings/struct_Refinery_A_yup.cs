@@ -4,7 +4,7 @@ public class struct_Refinery_A_yup : MyGameObject
     {
         base.Start();
 
-        Orders.Allow(OrderType.Produce);
+        Orders.AllowOrder(OrderType.Produce);
 
         Resources.Add("Coal", 10, 300);
         Resources.Add("Metal Ore", 100, 100);
