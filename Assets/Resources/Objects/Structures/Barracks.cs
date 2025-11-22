@@ -6,7 +6,7 @@ public class Barracks : Structure
     {
         base.Awake();
 
-        Orders.AllowOrder(OrderType.Assemble);
+        Orders.AllowOrder(OrderType.Assemble); // TODO: Move to component.
         Orders.AllowOrder(OrderType.Rally);
 
         Orders.AllowPrefab(Path.Combine(Config.DirectoryUnits, "Infantry_Light"));

@@ -6,8 +6,6 @@ public class Missile : MyGameObject
     {
         base.Awake();
 
-        Orders.AllowOrder(OrderType.Move);
-
         OrderHandlers[OrderType.Move] = new OrderHandlerMoveMissile();
     }
 

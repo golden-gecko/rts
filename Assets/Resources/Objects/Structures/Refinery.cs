@@ -4,8 +4,6 @@ public class Refinery : Structure
     {
         base.Awake();
 
-        Orders.AllowOrder(OrderType.Produce);
-
         OrderHandlers[OrderType.Idle] = new OrderHandlerIdleProducer();
 
         GetComponent<Storage>().Resources.Add("Coal", 0, 60, ResourceDirection.In);

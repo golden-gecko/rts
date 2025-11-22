@@ -4,8 +4,6 @@ public class Turret : Structure
     {
         base.Awake();
 
-        Orders.AllowOrder(OrderType.Attack);
-
         OrderHandlers[OrderType.Attack] = new OrderHandlerAttackTurret();
         OrderHandlers[OrderType.Idle] = new OrderHandlerIdleAttacker();
     }

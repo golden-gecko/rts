@@ -6,6 +6,8 @@ public class Gun : MyComponent
     {
         base.Awake();
 
+        GetComponent<MyGameObject>().Orders.AllowOrder(OrderType.Attack);
+
         Reload.Max = CooldownTime;
     }
 

@@ -4,8 +4,6 @@ public class Research_Lab : Structure
     {
         base.Awake();
 
-        Orders.AllowOrder(OrderType.Research);
-
         Orders.AllowTechnology("Colonization");
         Orders.AllowTechnology("Infantry");
         Orders.AllowTechnology("Heavy_Industry");
