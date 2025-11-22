@@ -350,6 +350,11 @@ public class MyGameObject : MonoBehaviour
 
     public void Select(bool status)
     {
+        if (Selectable == false)
+        {
+            return;
+        }
+
         Vector3 scale = transform.localScale;
         Vector3 size = GetComponent<BoxCollider>().size;
 
@@ -567,6 +572,9 @@ public class MyGameObject : MonoBehaviour
 
     [field: SerializeField]
     public Player Player { get; set; }
+
+    [field: SerializeField]
+    public bool Selectable { get; set; } = true;
 
     [field: SerializeField]
     public float Health { get; set; } = 100.0f;

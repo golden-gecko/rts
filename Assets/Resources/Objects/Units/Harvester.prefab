@@ -135,8 +135,6 @@ MonoBehaviour:
   <VisibilityRange>k__BackingField: 10
   <GatherTime>k__BackingField: 2
   <LoadTime>k__BackingField: 2
-  <ProduceTime>k__BackingField: 2
-  <ResearchTime>k__BackingField: 2
   <WaitTime>k__BackingField: 2
 --- !u!114 &-7296574799590733170
 MonoBehaviour:
@@ -165,7 +163,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   <Mass>k__BackingField: 10
-  <Power>k__BackingField: 4
+  <Power>k__BackingField: 50
 --- !u!1 &2488149496584009299
 GameObject:
   m_ObjectHideFlags: 0

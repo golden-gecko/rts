@@ -149,14 +149,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   <Player>k__BackingField: {fileID: 0}
+  <Selectable>k__BackingField: 0
   <Health>k__BackingField: 1
   <HealthMax>k__BackingField: 1
-  <VisibilityRange>k__BackingField: 10
-  <ConstructionTime>k__BackingField: 10
+  <VisibilityRange>k__BackingField: 0
   <GatherTime>k__BackingField: 2
   <LoadTime>k__BackingField: 2
-  <ProduceTime>k__BackingField: 2
-  <ResearchTime>k__BackingField: 2
   <WaitTime>k__BackingField: 2
 --- !u!114 &-467504021311989082
 MonoBehaviour:

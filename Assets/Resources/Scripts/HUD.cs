@@ -342,15 +342,18 @@ public class HUD : MonoBehaviour
 
         if (myGameObject != null && myGameObject.Player == ActivePlayer)
         {
-            if (IsShift() && ActivePlayer.Selected.Contains(myGameObject))
+            if (myGameObject.Selectable)
             {
-                myGameObject.Select(false);
-                ActivePlayer.Selected.Remove(myGameObject);
-            }
-            else
-            {
-                myGameObject.Select(true);
-                ActivePlayer.Selected.Add(myGameObject);
+                if (IsShift() && ActivePlayer.Selected.Contains(myGameObject))
+                {
+                    myGameObject.Select(false);
+                    ActivePlayer.Selected.Remove(myGameObject);
+                }
+                else
+                {
+                    myGameObject.Select(true);
+                    ActivePlayer.Selected.Add(myGameObject);
+                }
             }
         }
     }
@@ -371,15 +374,24 @@ public class HUD : MonoBehaviour
         {
             Vector3 screenPosition = Camera.main.WorldToScreenPoint(myGameObject.Position);
 
-            if (selectionBox.Contains(screenPosition))
+            if (selectionBox.Contains(screenPosition) == false)
             {
-                if (myGameObject.Player == ActivePlayer)
-                {
-                    myGameObject.Select(true);
-
-                    ActivePlayer.Selected.Add(myGameObject);
-                }
+                continue;
             }
+
+            if (myGameObject.Player != ActivePlayer)
+            {
+                continue;
+            }
+
+            if (myGameObject.Selectable == false)
+            {
+                continue;
+            }
+
+            myGameObject.Select(true);
+
+            ActivePlayer.Selected.Add(myGameObject);
         }
     }
 
