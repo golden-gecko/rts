@@ -127,7 +127,7 @@ public class Player : MonoBehaviour
 
         foreach (MyResource myResource in FindObjectsByType<MyResource>(FindObjectsSortMode.None))
         {
-            if (myResource.Working == false)
+            if (myResource.Operational == false)
             {
                 continue;
             }

@@ -505,7 +505,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4885079203805521602}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 156c90d9e21d8594bb630ff152fe2785, type: 3}
   m_Name: 
@@ -837,7 +837,7 @@ MonoBehaviour:
   <CursorGuard>k__BackingField: {fileID: 2800000, guid: c8e79f28e5c2f3b4eaec0c398104bb09, type: 3}
   <CursorLoad>k__BackingField: {fileID: 2800000, guid: a577fdb2cadffe046a9507f06299760b, type: 3}
   <CursorMove>k__BackingField: {fileID: 2800000, guid: e3ef9f2923945cc478ca579788b600e8, type: 3}
-  <CursorNone>k__BackingField: {fileID: 2800000, guid: 1dd8503434121a74cb6940256bad447e, type: 3}
+  <CursorNone>k__BackingField: {fileID: 0}
   <CursorPatrol>k__BackingField: {fileID: 2800000, guid: e3ef9f2923945cc478ca579788b600e8, type: 3}
   <CursorProduce>k__BackingField: {fileID: 2800000, guid: 830bd5e270cb3fd45bfdccdf5a5ebc9a, type: 3}
   <CursorRally>k__BackingField: {fileID: 2800000, guid: e3ef9f2923945cc478ca579788b600e8, type: 3}

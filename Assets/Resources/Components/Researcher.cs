@@ -8,14 +8,14 @@ public class Researcher : MyComponent
     {
         base.Awake();
 
-        parent.Orders.AllowOrder(OrderType.Research);
+        Parent.Orders.AllowOrder(OrderType.Research);
 
         foreach (string technology in Technologies)
         {
-            parent.Orders.AllowTechnology(technology);
+            Parent.Orders.AllowTechnology(technology);
         }
 
-        parent.OrderHandlers[OrderType.Research] = new OrderHandlerResearch();
+        Parent.OrderHandlers[OrderType.Research] = new OrderHandlerResearch();
     }
 
     public override string GetInfo()
