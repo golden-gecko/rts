@@ -1,7 +1,5 @@
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.UIElements;
 
 public class MyGameObject : MonoBehaviour
 {
@@ -334,8 +332,6 @@ public class MyGameObject : MonoBehaviour
 
     private void RaiseConstructionResourceFlags()
     {
-        Game game = GameObject.Find("Game").GetComponent<Game>();
-
         foreach (Recipe recipe in ConstructionRecipies.Items)
         {
             foreach (RecipeComponent resource in recipe.ToConsume)
@@ -344,11 +340,11 @@ public class MyGameObject : MonoBehaviour
 
                 if (capacity > 0)
                 {
-                    game.Consumers.Add(this, resource.Name, capacity);
+                    Player.Consumers.Add(this, resource.Name, capacity);
                 }
                 else
                 {
-                    game.Consumers.Remove(this, resource.Name);
+                    Player.Consumers.Remove(this, resource.Name);
                 }
             }
         }
@@ -364,11 +360,11 @@ public class MyGameObject : MonoBehaviour
 
                 if (capacity > 0)
                 {
-                    Game.Instance.Consumers.Add(this, resource.Name, capacity);
+                    Player.Consumers.Add(this, resource.Name, capacity);
                 }
                 else
                 {
-                    Game.Instance.Consumers.Remove(this, resource.Name);
+                    Player.Consumers.Remove(this, resource.Name);
                 }
             }
 
@@ -378,11 +374,11 @@ public class MyGameObject : MonoBehaviour
 
                 if (storage > 0)
                 {
-                    Game.Instance.Producers.Add(this, resource.Name, storage);
+                    Player.Producers.Add(this, resource.Name, storage);
                 }
                 else
                 {
-                    Game.Instance.Producers.Remove(this, resource.Name);
+                    Player.Producers.Remove(this, resource.Name);
                 }
             }
         }

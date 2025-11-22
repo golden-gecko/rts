@@ -1,4 +1,4 @@
-public class OrderHandlerIdleProduce : IOrderHandler
+public class OrderHandlerIdleProducer : IOrderHandler
 {
     public void OnExecute(MyGameObject myGameObject)
     {

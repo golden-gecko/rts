@@ -15,6 +15,7 @@ public class OrderHandlerConstruct : IOrderHandler
             MyGameObject resource = Resources.Load<MyGameObject>(order.Prefab);
 
             order.TargetGameObject = Object.Instantiate<MyGameObject>(resource, order.TargetPosition, Quaternion.identity);
+            order.TargetGameObject.Player = myGameObject.Player;
             order.TargetGameObject.State = MyGameObjectState.UnderConstruction;
         }
         else if (order.TargetGameObject.Constructed)
