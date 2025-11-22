@@ -430,7 +430,7 @@ MonoBehaviour:
   <Mass>k__BackingField: 10
   <Damage>k__BackingField: 10
   <Range>k__BackingField: 8
-  <MissilePrefab>k__BackingField: Objects/Missiles/Rocket
+  <MissilePrefab>k__BackingField: 
   <HitEffectPrefab>k__BackingField: Effects/Guns/CFXR3 Hit Electric C (Air)
 --- !u!1 &6251104923141368689
 GameObject:

@@ -84,8 +84,8 @@ MonoBehaviour:
   <WaitTime>k__BackingField: 0
   <DestroyEffect>k__BackingField: 
   <Altitude>k__BackingField: 0
-  FrequencyInSecondsMin: 100
-  FrequencyInSecondsMax: 200
+  FrequencyInSecondsMin: 120
+  FrequencyInSecondsMax: 180
   <Damage>k__BackingField: 20
   <DamagePerSecond>k__BackingField: 0
   TimeToLive: 20
