@@ -7,6 +7,7 @@ public class SelectionGroup
     public SelectionGroup()
     {
         FormationHandlers[Formation.None] = new FormationHandlerNone();
+        FormationHandlers[Formation.Arrow] = new FormationHandlerArrow();
         FormationHandlers[Formation.Column] = new FormationHandlerColumn();
         FormationHandlers[Formation.Diamond] = new FormationHandlerDiamond();
         FormationHandlers[Formation.Line] = new FormationHandlerLine();
