@@ -1,14 +1,12 @@
-using UnityEngine;
 using UnityEngine.UIElements;
 
-public class UI_Info : MonoBehaviour
+public class UI_Info : UI_Element<UI_Info>
 {
-    void Awake()
+    protected override void Awake()
     {
-        UIDocument uiDocument = GetComponent<UIDocument>();
-        VisualElement rootVisualElement = uiDocument.rootVisualElement;
+        base.Awake();
 
-        panel = rootVisualElement.Q<VisualElement>("Panel_Info");
+        panel = root.Q<VisualElement>("Panel_Info");
         value = panel.Q<Label>("Value");
     }
 

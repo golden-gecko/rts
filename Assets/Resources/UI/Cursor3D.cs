@@ -1,21 +1,7 @@
 using UnityEngine;
 
-public class Cursor3D : MonoBehaviour
+public class Cursor3D : Singleton<Cursor3D>
 {
-    public static Cursor3D Instance { get; private set; }
-
-    void Awake()
-    {
-        if (Instance != null && Instance != this)
-        {
-            Destroy(this);
-        }
-        else
-        {
-            Instance = this;
-        }
-    }
-
     void Update()
     {
         if (GameObject == null)

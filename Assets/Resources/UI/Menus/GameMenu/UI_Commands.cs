@@ -1,18 +1,16 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UIElements;
 
-public class UI_Commands : MonoBehaviour
+public class UI_Commands : UI_Element<UI_Commands>
 {
-    void Awake()
+    protected override void Awake()
     {
-        UIDocument uiDocument = GetComponent<UIDocument>();
-        VisualElement rootVisualElement = uiDocument.rootVisualElement;
+        base.Awake();
 
-        panel = rootVisualElement.Q<VisualElement>("Panel_Commands");
+        panel = root.Q<VisualElement>("Panel_Commands");
 
         formations = panel.Q<VisualElement>("List_Formations");
         orders = panel.Q<VisualElement>("List_Orders");

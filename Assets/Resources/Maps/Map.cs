@@ -3,20 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-public class Map : MonoBehaviour
+public class Map : Singleton<Map>
 {
-    public static Map Instance { get; private set; }
-
-    void Awake()
+    protected override void Awake()
     {
-        if (Instance != null && Instance != this)
-        {
-            Destroy(this);
-        }
-        else
-        {
-            Instance = this;
-        }
+        base.Awake();
 
         for (int x = 0; x < Config.Map.VisibilitySize; x++)
         {

@@ -1,20 +1,10 @@
 using System.Collections.Generic;
-using UnityEngine;
 
-public class SkillManager : MonoBehaviour
+public class SkillManager : Singleton<SkillManager>
 {
-    public static SkillManager Instance { get; private set; }
-
-    void Awake()
+    protected override void Awake()
     {
-        if (Instance != null && Instance != this)
-        {
-            Destroy(this);
-        }
-        else
-        {
-            Instance = this;
-        }
+        base.Awake();
 
         CreateSkills();
     }

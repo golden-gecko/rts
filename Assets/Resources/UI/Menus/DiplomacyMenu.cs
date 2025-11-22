@@ -1,18 +1,3 @@
-public class DiplomacyMenu : Menu
+public class DiplomacyMenu : UI_Element<DiplomacyMenu>
 {
-    public static DiplomacyMenu Instance { get; private set; }
-
-    protected override void Awake()
-    {
-        if (Instance != null && Instance != this)
-        {
-            Destroy(this);
-        }
-        else
-        {
-            Instance = this;
-        }
-
-        base.Awake();
-    }
 }
