@@ -49,32 +49,4 @@ public class OrderHandlerAttackTurret : IOrderHandler
             }
         }
     }
-
-    private Vector3 GetPositionToAttack(Vector3 position, Vector3 target, float missileRangeMin, float missileRangeMax)
-    {
-        Vector3 a = position;
-        Vector3 b = target;
-
-        a.y = 0.0f;
-        b.y = 0.0f;
-
-        Vector3 direction = b - a;
-        float magnitude = direction.magnitude;
-
-        if (magnitude < missileRangeMin)
-        {
-            direction.Normalize();
-
-            return position - direction;
-        }
-        
-        if (magnitude > missileRangeMax)
-        {
-            direction.Normalize();
-
-            return position + direction;
-        }
-
-        return position;
-    }
 }
