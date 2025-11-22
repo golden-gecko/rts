@@ -136,6 +136,14 @@ PrefabInstance:
       propertyPath: <Player>k__BackingField
       value: 
       objectReference: {fileID: 1795770219}
+    - target: {fileID: 4576625105702019730, guid: 542c111a9f30e3541a642356c50b03f2, type: 3}
+      propertyPath: Technologies.Array.size
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 4576625105702019730, guid: 542c111a9f30e3541a642356c50b03f2, type: 3}
+      propertyPath: 'Technologies.Array.data[8]'
+      value: Electricity
+      objectReference: {fileID: 0}
     - target: {fileID: 6093475309484964639, guid: 542c111a9f30e3541a642356c50b03f2, type: 3}
       propertyPath: m_Name
       value: Research_Lab

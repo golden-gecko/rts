@@ -460,7 +460,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <Mass>k__BackingField: 10
   <Power>k__BackingField:
-    <Base>k__BackingField: 100
+    <Value>k__BackingField: 100
   <FuelUsage>k__BackingField: 10
 --- !u!114 &5594974671478860173
 MonoBehaviour:
@@ -477,9 +477,9 @@ MonoBehaviour:
   <Mass>k__BackingField: 10
   <MissilePrefab>k__BackingField: {fileID: 4056876892418310127, guid: 7f568bd701d6ff041ab960a7dd3bc284, type: 3}
   <Damage>k__BackingField:
-    <Base>k__BackingField: 10
+    <Value>k__BackingField: 10
   <Range>k__BackingField:
-    <Base>k__BackingField: 10
+    <Value>k__BackingField: 8
   <Reload>k__BackingField:
     <Current>k__BackingField: 8
     <Max>k__BackingField: 8
@@ -497,7 +497,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <Mass>k__BackingField: 10
   <Range>k__BackingField:
-    <Base>k__BackingField: 10
+    <Value>k__BackingField: 10
 --- !u!1 &6031723413405379455
 GameObject:
   m_ObjectHideFlags: 0

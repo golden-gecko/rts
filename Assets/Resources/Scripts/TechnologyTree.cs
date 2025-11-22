@@ -97,12 +97,9 @@ public class TechnologyTree
     {
         if (Technologies.TryGetValue(name, out Technology technology))
         {
-            foreach (string requirement in technology.Requirements)
+            if (AreRequirementsDiscovered(technology) == false)
             {
-                if (Technologies.Values.Any(x => x.Name == requirement && x.Discovered) == false)
-                {
-                    return false;
-                }
+                return false;
             }
 
             return technology.Discovered;
@@ -115,12 +112,9 @@ public class TechnologyTree
     {
         if (Technologies.TryGetValue(name, out Technology technology))
         {
-            foreach (string requirement in technology.Requirements)
+            if (AreRequirementsDiscovered(technology) == false)
             {
-                if (Technologies.Values.Any(x => x.Name == requirement && x.Discovered) == false)
-                {
-                    return false;
-                }
+                return false;
             }
 
             return technology.Discovered == false;
@@ -135,6 +129,19 @@ public class TechnologyTree
         {
             technology.Discovered = true;
         }
+    }
+
+    private bool AreRequirementsDiscovered(Technology technology)
+    {
+        foreach (string requirement in technology.Requirements)
+        {
+            if (Technologies.Values.Any(x => x.Name == requirement && x.Discovered) == false)
+            {
+                return false;
+            }
+        }
+
+        return true;
     }
 
     public Dictionary<string, Technology> Technologies { get; } = new Dictionary<string, Technology>();

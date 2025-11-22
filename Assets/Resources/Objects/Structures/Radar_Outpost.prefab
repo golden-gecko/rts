@@ -174,6 +174,7 @@ MonoBehaviour:
     <Current>k__BackingField: -1
     <Max>k__BackingField: -1
   <SkillsNames>k__BackingField: []
+  <State>k__BackingField: 2
 --- !u!114 &9033325699283123535
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -187,7 +188,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   <Mass>k__BackingField: 10
-  <Range>k__BackingField: 30
+  <Range>k__BackingField:
+    <Value>k__BackingField: 20
   <Anti>k__BackingField: 0
 --- !u!114 &5196037313112179487
 MonoBehaviour:
@@ -202,7 +204,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   <Mass>k__BackingField: 10
-  <Range>k__BackingField: 10
+  <Range>k__BackingField:
+    <Value>k__BackingField: 0
 --- !u!1 &5866001181412925978
 GameObject:
   m_ObjectHideFlags: 0
