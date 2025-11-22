@@ -1,3 +1,4 @@
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class OrderHandlerAttackTurret : OrderHandler
@@ -34,11 +35,11 @@ public class OrderHandlerAttackTurret : OrderHandler
             position = order.TargetPosition;
         }
 
-        if (myGameObject.IsInAttackRange(position))
+        if (myGameObject.GetComponent<Gun>().IsInRange(position))
         {
             myGameObject.transform.LookAt(new Vector3(position.x, myGameObject.Position.y, position.z));
 
-            if (myGameObject.GetComponent<Gun>().Reload.Finished)
+            if (myGameObject.GetComponent<Gun>().Reload.Finished) // TODO: Use CanFire method.
             {
                 myGameObject.GetComponent<Gun>().Fire(myGameObject, position);
             }

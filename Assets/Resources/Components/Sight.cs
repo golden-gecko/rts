@@ -66,6 +66,11 @@ public class Sight : MyComponent
         return string.Format("{0}, Range: {1:0.}", base.GetInfo(), Range);
     }
 
+    public bool IsInRange(Vector3 position)
+    {
+        return Utils.IsInRange(GetComponent<MyGameObject>().Position, position, Range);
+    }
+
     [field: SerializeField]
     public float Range { get; set; } = 10.0f;
 

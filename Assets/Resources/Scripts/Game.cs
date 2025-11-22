@@ -60,7 +60,14 @@ public class Game : MonoBehaviour
                 continue;
             }
 
-            if (myGameObject.IsInAttackRange(target.Position) == false)
+            Gun gun = myGameObject.GetComponent<Gun>();
+
+            if (gun == null)
+            {
+                continue;
+            }
+
+            if (gun.IsInRange(target.Position) == false)
             {
                 continue;
             }
