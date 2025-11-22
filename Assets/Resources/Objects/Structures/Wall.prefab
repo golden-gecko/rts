@@ -163,12 +163,13 @@ MonoBehaviour:
   <EnableTime>k__BackingField: 2
   <WaitTime>k__BackingField: 2
   <DestroyEffect>k__BackingField: {fileID: 100008, guid: 06736895ea0a4ff408d25e6684dce797, type: 3}
-  <Altitude>k__BackingField: 0
-  <MapLayers>k__BackingField: 01000000
+  <Altitude>k__BackingField: -1
+  <MapLayers>k__BackingField: 02000000
   ShowIndicators: 1
   <ExpirationTimer>k__BackingField:
     <Current>k__BackingField: -1
     <Max>k__BackingField: -1
+  <SkillsNames>k__BackingField: []
 --- !u!114 &-309273742846007426
 MonoBehaviour:
   m_ObjectHideFlags: 0

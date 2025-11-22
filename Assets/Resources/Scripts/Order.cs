@@ -273,11 +273,6 @@ public class Order
             info += string.Format(" {0}", Timer.GetInfo());
         }
 
-        if (Retries.Max > 0)
-        {
-            info += string.Format(" {0}", Retries.GetInfo());
-        }
-
         return info;
     }
 
@@ -295,16 +290,7 @@ public class Order
         }
     }
 
-    public void Retry()
-    {
-        Retries.Inc();
-    }
-
-    public bool CanRetry { get => Retries.Current < Retries.Max; }
-
     public bool IsTargetGameObject { get; private set; } // TODO: Get rid of this. Maybe add a new order type.
-
-    public Counter Retries { get; private set; } = new Counter();
 
     public MyGameObject SourceGameObject { get; private set; }
 

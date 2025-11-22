@@ -1,19 +1,21 @@
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class Player : MonoBehaviour
 {
     protected virtual void Awake()
     {
-        TechnologyTree.Load();
-
-        for (KeyCode i = KeyCode.Alpha0; i < KeyCode.Alpha9; i++)
+        for (KeyCode i = KeyCode.Alpha0; i <= KeyCode.Alpha9; i++)
         {
-            Groups[i] = new HashSet<MyGameObject>();
+            SelectionGroups[i] = new SelectionGroup();
         }
+
+        TechnologyTree.Load();
 
         Achievements.Player = this;
 
+        jobHandlers[OrderType.Attack] = new JobHandlerAttack();
         jobHandlers[OrderType.Construct] = new JobHandlerConstruct();
         jobHandlers[OrderType.Gather] = new JobHandlerGather();
         jobHandlers[OrderType.Transport] = new JobHandlerTransport();
@@ -29,9 +31,9 @@ public class Player : MonoBehaviour
 
     public void AssignGroup(KeyCode keyCode)
     {
-        if (Groups.ContainsKey(keyCode))
+        if (SelectionGroups.ContainsKey(keyCode))
         {
-            Groups[keyCode] = new HashSet<MyGameObject>(Selected);
+            SelectionGroups[keyCode].Items = new HashSet<MyGameObject>(Selection.Items);
         }
     }
 
@@ -40,19 +42,16 @@ public class Player : MonoBehaviour
         return Diplomacy[player] == state;
     }
 
-    public void SelectGroup(KeyCode keyCode)
+    public void SelectGroup(KeyCode keyCode, bool append)
     {
-        if (Groups.ContainsKey(keyCode))
+        if (append == false)
         {
-            if (HUD.Instance.IsShift() == false)
-            {
-                HUD.Instance.SelectionClear();
-            }
+            Selection.Clear();
+        }
 
-            foreach (MyGameObject myGameObject in Groups[keyCode])
-            {
-                HUD.Instance.Select(myGameObject);
-            }
+        if (SelectionGroups.ContainsKey(keyCode))
+        {
+            Selection.Add(SelectionGroups[keyCode].Items);
         }
     }
 
@@ -86,6 +85,140 @@ public class Player : MonoBehaviour
         Unregister(Producers, myGameObject, name);
     }
 
+    public MyResource GetResource(MyGameObject myGameObject, string resource = "")
+    {
+        MyResource closest = null;
+        float distance = float.MaxValue;
+
+        foreach (MyResource myResource in Object.FindObjectsByType<MyResource>(FindObjectsSortMode.None))
+        {
+            if (myResource.Working == false)
+            {
+                continue;
+            }
+
+            if (myResource == myGameObject)
+            {
+                continue;
+            }
+
+            if (myResource.Gatherable == false)
+            {
+                continue;
+            }
+
+            if (resource != "" && myResource.GetComponent<Storage>().Resources.Storage(resource) <= 0)
+            {
+                continue;
+            }
+
+            float magnitude = (myGameObject.Position - myResource.Position).magnitude;
+
+            if (magnitude < distance)
+            {
+                closest = myResource;
+                distance = magnitude;
+            }
+        }
+
+        return closest;
+    }
+
+    public MyGameObject GetStorage(MyGameObject myGameObject, Resource resource)
+    {
+        MyGameObject closest = null;
+        float distance = float.MaxValue;
+
+        foreach (Storage storage in Object.FindObjectsByType<Storage>(FindObjectsSortMode.None))
+        {
+            MyGameObject parent = storage.GetComponent<MyGameObject>();
+
+            if (parent == null)
+            {
+                continue;
+            }
+
+            if (parent.Working == false)
+            {
+                continue;
+            }
+
+            if (parent == myGameObject)
+            {
+                continue;
+            }
+
+            string[] resourcesFromStorage = new string[] { resource.Name };
+            string[] resourcesFromCapacity = storage.Resources.Items.Where(x => x.In && x.Full == false).Select(x => x.Name).ToArray();
+            string[] match = resourcesFromStorage.Intersect(resourcesFromCapacity).ToArray();
+
+            if (match.Length <= 0)
+            {
+                continue;
+            }
+
+            float magnitude = (myGameObject.Position - parent.Position).magnitude;
+
+            if (magnitude < distance)
+            {
+                closest = parent;
+                distance = magnitude;
+            }
+        }
+
+        return closest;
+    }
+
+    public MyGameObject GetStorage(MyGameObject myGameObject, MyResource myResource)
+    {
+        MyGameObject closest = null;
+        float distance = float.MaxValue;
+
+        foreach (Storage storage in Object.FindObjectsByType<Storage>(FindObjectsSortMode.None))
+        {
+            MyGameObject parent = storage.GetComponent<MyGameObject>();
+
+            if (parent == null)
+            {
+                continue;
+            }
+
+            if (parent.Working == false)
+            {
+                continue;
+            }
+
+            if (parent == myGameObject)
+            {
+                continue;
+            }
+
+            if (parent == myResource)
+            {
+                continue;
+            }
+
+            string[] resourcesFromStorage = myResource.GetComponent<Storage>().Resources.Items.Where(x => x.Out && x.Empty == false).Select(x => x.Name).ToArray();
+            string[] resourcesFromCapacity = storage.Resources.Items.Where(x => x.In && x.Full == false).Select(x => x.Name).ToArray();
+            string[] match = resourcesFromStorage.Intersect(resourcesFromCapacity).ToArray();
+
+            if (match.Length <= 0)
+            {
+                continue;
+            }
+
+            float magnitude = (myGameObject.Position - parent.Position).magnitude;
+
+            if (magnitude < distance)
+            {
+                closest = parent;
+                distance = magnitude;
+            }
+        }
+
+        return closest;
+    }
+
     private void Register(ResourceRequestContainer container, MyGameObject myGameObject, string name, int value, ResourceDirection direction)
     {
         container.Add(myGameObject, name, value, direction);
@@ -98,11 +231,11 @@ public class Player : MonoBehaviour
 
     private void RemoveEmptyObjectsFromSelection()
     {
-        Selected.RemoveWhere(x => x == null);
+        Selection.RemoveEmpty();
 
-        foreach (HashSet<MyGameObject> group in Groups.Values)
+        foreach (SelectionGroup group in SelectionGroups.Values)
         {
-            group.RemoveWhere(x => x == null);
+            group.RemoveEmpty();
         }
     }
 
@@ -112,9 +245,9 @@ public class Player : MonoBehaviour
     [field: SerializeField]
     public string Name { get; set; }
 
-    public HashSet<MyGameObject> Selected { get; } = new HashSet<MyGameObject>();
+    public SelectionGroup Selection { get; } = new SelectionGroup();
 
-    public Dictionary<KeyCode, HashSet<MyGameObject>> Groups { get; } = new Dictionary<KeyCode, HashSet<MyGameObject>>();
+    public Dictionary<KeyCode, SelectionGroup> SelectionGroups { get; } = new Dictionary<KeyCode, SelectionGroup>();
 
     public TechnologyTree TechnologyTree { get; } = new TechnologyTree();
 

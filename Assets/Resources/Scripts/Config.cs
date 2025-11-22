@@ -6,6 +6,8 @@ public class Config
     public static float CameraMinHeight = 2.0f;
     public static float CameraMaxHeight = 100.0f;
 
+    public static float CursorRotateStep = 45.0f;
+
     public static string DirectoryDisasters = Path.Join("Objects", "Disasters");
     public static string DirectoryStructures = Path.Join("Objects", "Structures");
     public static string DirectoryUnits = Path.Join("Objects", "Units");

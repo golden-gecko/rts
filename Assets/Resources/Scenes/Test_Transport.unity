@@ -382,7 +382,7 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: -8510754742537900643, guid: 61a7c4fca0a2a36409924024a26dbdde, type: 3}
-      propertyPath: <Resources>k__BackingField.<Items>k__BackingField.Array.data[6].<Current>k__BackingField
+      propertyPath: <Resources>k__BackingField.<Items>k__BackingField.Array.data[1].<Current>k__BackingField
       value: 50
       objectReference: {fileID: 0}
     - target: {fileID: -6591473423801908206, guid: 61a7c4fca0a2a36409924024a26dbdde, type: 3}
@@ -391,7 +391,7 @@ PrefabInstance:
       objectReference: {fileID: 261081117239525528}
     - target: {fileID: 1702014145004635914, guid: 61a7c4fca0a2a36409924024a26dbdde, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 292.55
+      value: 292.92
       objectReference: {fileID: 0}
     - target: {fileID: 1702014145004635914, guid: 61a7c4fca0a2a36409924024a26dbdde, type: 3}
       propertyPath: m_LocalPosition.y
@@ -399,7 +399,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1702014145004635914, guid: 61a7c4fca0a2a36409924024a26dbdde, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 95.78
+      value: 95.49
       objectReference: {fileID: 0}
     - target: {fileID: 1702014145004635914, guid: 61a7c4fca0a2a36409924024a26dbdde, type: 3}
       propertyPath: m_LocalRotation.w
@@ -451,7 +451,7 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: -8510754742537900643, guid: 61a7c4fca0a2a36409924024a26dbdde, type: 3}
-      propertyPath: <Resources>k__BackingField.<Items>k__BackingField.Array.data[6].<Current>k__BackingField
+      propertyPath: <Resources>k__BackingField.<Items>k__BackingField.Array.data[1].<Current>k__BackingField
       value: 50
       objectReference: {fileID: 0}
     - target: {fileID: -6591473423801908206, guid: 61a7c4fca0a2a36409924024a26dbdde, type: 3}

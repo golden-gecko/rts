@@ -2,14 +2,7 @@ public class OrderHandlerIdleAttacker : OrderHandler
 {
     public override void OnExecute(MyGameObject myGameObject)
     {
-        Order order;
-
-        if (myGameObject.GetComponent<Gun>() == null)
-        {
-            return;
-        }
-
-        order = Game.Instance.CreateAttackJob(myGameObject);
+        Order order = myGameObject.Player.GetJob(myGameObject, OrderType.Attack);
 
         if (order == null)
         {

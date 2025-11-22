@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class BehaviourWorker : MonoBehaviour // TODO: Create behaviour handlers.
+public class BehaviourWorker : MonoBehaviour
 {
     void Awake()
     {
