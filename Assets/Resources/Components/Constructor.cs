@@ -17,5 +17,5 @@ public class Constructor : MyComponent
     }
 
     [field: SerializeField]
-    public int ResourceUsage { get; set; } = 2;
+    public int ResourceUsage { get; set; } = 1;
 }

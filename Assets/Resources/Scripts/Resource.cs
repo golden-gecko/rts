@@ -1,3 +1,7 @@
+using System;
+using UnityEngine;
+
+[Serializable]
 public class Resource : Counter
 {
     public Resource(string name, int current = 0, int max = 0, ResourceDirection direction = ResourceDirection.None) : base(current, max)
@@ -6,9 +10,11 @@ public class Resource : Counter
         Direction = direction;
     }
 
-    public string Name { get; }
+    [field: SerializeField]
+    public string Name { get; private set; }
 
-    public ResourceDirection Direction { get; }
+    [field: SerializeField]
+    public ResourceDirection Direction { get; private set; }
 
     public int Capacity { get => Max - Current; }
 

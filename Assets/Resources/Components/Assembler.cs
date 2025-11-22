@@ -21,7 +21,7 @@ public class Assembler : MyComponent
     }
 
     [field: SerializeField]
-    public int ResourceUsage { get; set; } = 2;
+    public int ResourceUsage { get; set; } = 1;
 
     [field: SerializeField]
     public Vector3 RallyPoint { get; set; }

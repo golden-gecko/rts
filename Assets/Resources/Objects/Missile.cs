@@ -2,13 +2,6 @@ using UnityEngine;
 
 public class Missile : MyGameObject
 {
-    protected override void Awake()
-    {
-        base.Awake();
-
-        OrderHandlers[OrderType.Move] = new OrderHandlerMoveMissile();
-    }
-
     protected override void Start()
     {
         base.Start();
@@ -17,10 +10,6 @@ public class Missile : MyGameObject
         {
             Instantiate(FireEffectPrefab, Position, Quaternion.identity);
         }
-    }
-
-    protected override void UpdatePosition()
-    {
     }
 
     [field: SerializeField]

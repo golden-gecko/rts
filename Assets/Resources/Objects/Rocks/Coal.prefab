@@ -103,7 +103,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1649971028671782482}
-  - component: {fileID: -8015369115718869466}
+  - component: {fileID: -2050113657392743181}
   - component: {fileID: -2746926710343751413}
   m_Layer: 0
   m_Name: Coal
@@ -129,7 +129,7 @@ Transform:
   - {fileID: 1534957183245928396}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &-8015369115718869466
+--- !u!114 &-2050113657392743181
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -138,7 +138,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1649971028671782476}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e71d1097e319d8e4f9882aab798e8afc, type: 3}
+  m_Script: {fileID: 11500000, guid: 6decc591119130e4d847c5005505a7ae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   <Player>k__BackingField: {fileID: 0}
@@ -146,14 +146,15 @@ MonoBehaviour:
   <Powerable>k__BackingField: 0
   <Gatherable>k__BackingField: 1
   <Selectable>k__BackingField: 1
-  <Health>k__BackingField: 40
-  <HealthMax>k__BackingField: 40
+  <Health>k__BackingField:
+    <Current>k__BackingField: 100
+    <Max>k__BackingField: 100
   <EnableTime>k__BackingField: 2
   <WaitTime>k__BackingField: 2
-  <DestroyEffect>k__BackingField: {fileID: 8579966591951127539, guid: 64e9158e41e34f5418b979dd48171ccb, type: 3}
+  <DestroyEffect>k__BackingField: {fileID: 0}
   <TimeToLive>k__BackingField: -1
   <Altitude>k__BackingField: 0
-  <MapLayers>k__BackingField: 010000000200000003000000
+  <MapLayers>k__BackingField: 
 --- !u!114 &-2746926710343751413
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -168,6 +169,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <Mass>k__BackingField: 10
   <ResourceUsage>k__BackingField: 1
+  <Resources>k__BackingField:
+    <Items>k__BackingField:
+    - <Current>k__BackingField: 200
+      <Max>k__BackingField: 200
+      <Name>k__BackingField: Coal
+      <Direction>k__BackingField: 3
 --- !u!1001 &253625457856833662
 PrefabInstance:
   m_ObjectHideFlags: 0

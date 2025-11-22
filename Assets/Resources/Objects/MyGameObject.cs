@@ -349,9 +349,9 @@ public class MyGameObject : MonoBehaviour
             case MyGameObjectState.Operational:
                 info += string.Format("ID: {0}\nName: {1}", GetInstanceID(), name);
 
-                if (HealthMax > 0.0f)
+                if (Health.Max > 0.0f)
                 {
-                    info += string.Format("\nHP: {0:0.}/{1:0.}", Health, HealthMax);
+                    info += string.Format("\nHP: {0}", Health.GetInfo());
                 }
 
                 MyComponent[] myComponents = GetComponents<MyComponent>();
@@ -419,38 +419,25 @@ public class MyGameObject : MonoBehaviour
         return Player.Is(player, state);
     }
 
-    public float OnDamage(float value)
+    public float OnDamage(float damage)
     {
-        float damageToDeal;
-        float damageDealt = 0.0f;
-        float damageLeft = value;
+        float damageLeft = damage;
 
-        Shield shield = GetComponent<Shield>();
-
-        if (shield != null)
+        foreach (Shield shield in GetComponents<Shield>())
         {
-            damageLeft = damageLeft * shield.Power / 100.0f;
+            damageLeft -= shield.Absorb(damageLeft);
         }
 
-        Armour armour = GetComponent<Armour>();
-
-        if (armour != null)
+        foreach (Armour armour in GetComponents<Armour>())
         {
-            damageToDeal = Mathf.Min(damageLeft, armour.Value);
-            damageDealt += damageToDeal;
-            damageLeft -= damageToDeal;
-
-            armour.Value = Mathf.Clamp(armour.Value - damageToDeal, 0.0f, armour.ValueMax);
+            damageLeft -= armour.Absorb(damageLeft);
         }
 
-        damageToDeal = Mathf.Min(damageLeft, Health);
-        damageDealt += damageToDeal;
+        damageLeft -= Health.Remove(damageLeft);
 
-        Health = Mathf.Clamp(Health - damageToDeal, 0.0f, HealthMax);
+        Stats.Add(Stats.DamageTaken, damage - damageLeft);
 
-        Stats.Add(Stats.DamageTaken, damageDealt);
-
-        return damageDealt;
+        return damage - damageLeft;
     }
 
     public virtual void OnDestroy_() // TODO: Name collision with GameObject.OnDestroy.
@@ -465,9 +452,7 @@ public class MyGameObject : MonoBehaviour
 
     public void OnRepair(float value)
     {
-        Health = Mathf.Clamp(Health + value, 0.0f, HealthMax);
-
-        Stats.Add(Stats.DamageRepaired, value);
+        Stats.Add(Stats.DamageRepaired, Health.Add(value));
     }
 
     public void Select(bool status)
@@ -570,7 +555,7 @@ public class MyGameObject : MonoBehaviour
             return;
         }
 
-        foreach (Resource resource in GetComponent<Storage>().Resources.Items.Values)
+        foreach (Resource resource in GetComponent<Storage>().Resources.Items)
         {
             if (resource.Direction == ResourceDirection.Both || resource.Direction == ResourceDirection.In)
             {
@@ -607,7 +592,7 @@ public class MyGameObject : MonoBehaviour
             return;
         }
 
-        foreach (string name in storage.Resources.Items.Keys)
+        foreach (string name in storage.Resources.Items.Select(x => x.Name))
         {
             Player.UnregisterConsumer(this, name);
             Player.UnregisterProducer(this, name);
@@ -617,7 +602,7 @@ public class MyGameObject : MonoBehaviour
 
     private void RaiseConstructionResourceFlags()
     {
-        foreach (Resource resource in ConstructionResources.Items.Values)
+        foreach (Resource resource in ConstructionResources.Items)
         {
             if (resource.Direction == ResourceDirection.Both || resource.Direction == ResourceDirection.In)
             {
@@ -647,7 +632,7 @@ public class MyGameObject : MonoBehaviour
 
     private void RemoveConstructionResourceFlags()
     {
-        foreach (string name in ConstructionResources.Items.Keys)
+        foreach (string name in ConstructionResources.Items.Select(x => x.Name))
         {
             Player.UnregisterConsumer(this, name);
             Player.UnregisterProducer(this, name);
@@ -723,7 +708,7 @@ public class MyGameObject : MonoBehaviour
         }
     }
 
-    public bool Alive { get => Health > 0.0f && (TimeToLive < 0.0f || LiveTimer.Finished == false); }
+    public bool Alive { get => Health.Current > 0.0f && (TimeToLive < 0.0f || LiveTimer.Finished == false); }
 
     public float Mass
     {
@@ -753,10 +738,7 @@ public class MyGameObject : MonoBehaviour
     public bool Selectable { get; set; } = true;
 
     [field: SerializeField]
-    public float Health { get; set; } = 100.0f;
-
-    [field: SerializeField]
-    public float HealthMax { get; set; } = 100.0f;
+    public Progress Health { get; set; } = new Progress(100.0f, 100.0f);
 
     [field: SerializeField]
     public float EnableTime { get; set; } = 2.0f;

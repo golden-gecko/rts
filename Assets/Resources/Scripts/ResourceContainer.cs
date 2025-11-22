@@ -1,81 +1,100 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using UnityEngine;
 
+[Serializable]
 public class ResourceContainer
 {
     public void Add(string name, int value)
     {
-        if (Items.ContainsKey(name))
+        Resource resource = Items.Find(x => x.Name == name);
+
+        if (resource != null)
         {
-            Items[name].Add(value);
+            resource.Add(value);
         }
         else
         {
-            Items.Add(name, new Resource(name, value));
+            Items.Add(new Resource(name, value));
         }
     }
 
     public void Add(string name, int value, int max) // TODO: Max is ignored on second call.
     {
-        if (Items.ContainsKey(name))
+        Resource resource = Items.Find(x => x.Name == name);
+
+        if (resource != null)
         {
-            Items[name].Add(value);
+            resource.Add(value);
         }
         else
         {
-            Items.Add(name, new Resource(name, value, max));
+            Items.Add(new Resource(name, value, max));
         }
     }
 
     public void Add(string name, int value, int max, ResourceDirection direction) // TODO: Max is ignored on second call.
     {
-        if (Items.ContainsKey(name))
+        Resource resource = Items.Find(x => x.Name == name);
+
+        if (resource != null)
         {
-            Items[name].Add(value);
+            resource.Add(value);
         }
         else
         {
-            Items.Add(name, new Resource(name, value, max, direction));
+            Items.Add(new Resource(name, value, max, direction));
         }
     }
 
     public void Remove(string name, int value)
     {
-        if (Items.ContainsKey(name))
+        Resource resource = Items.Find(x => x.Name == name);
+
+        if (resource != null)
         {
-            Items[name].Remove(value);
+            resource.Remove(value);
         }
     }
 
     public bool CanAdd(string name, int value)
     {
-        return Items.ContainsKey(name) && Items[name].CanAdd(value);
+        Resource resource = Items.Find(x => x.Name == name);
+
+        return resource != null && resource.CanAdd(value);
     }
 
     public bool CanRemove(string name, int value)
     {
-        return Items.ContainsKey(name) && Items[name].CanRemove(value);
+        Resource resource = Items.Find(x => x.Name == name);
+
+        return resource != null && resource.CanRemove(value);
     }
 
     public int Capacity(string name)
     {
-        return Items.ContainsKey(name) ? Items[name].Capacity : 0;
+        Resource resource = Items.Find(x => x.Name == name);
+
+        return resource != null ? resource.Capacity : 0;
     }
 
     public int Storage(string name)
     {
-        return Items.ContainsKey(name) ? Items[name].Storage : 0;
+        Resource resource = Items.Find(x => x.Name == name);
+
+        return resource != null ? resource.Storage : 0;
     }
 
     public string GetInfo()
     {
         string info = string.Empty;
 
-        foreach (KeyValuePair<string, Resource> i in Items)
+        foreach (Resource i in Items)
         {
-            if (i.Value.Max > 0)
+            if (i.Max > 0)
             {
-                info += string.Format("\n  {0} {1}", i.Key, i.Value.GetInfo());
+                info += string.Format("\n  {0} {1}", i.Name, i.GetInfo());
             }
         }
 
@@ -86,9 +105,10 @@ public class ResourceContainer
     {
         get
         {
-            return Items.Values.Sum(x => x.Storage);
+            return Items.Sum(x => x.Storage);
         }
     }
 
-    public Dictionary<string, Resource> Items { get; } = new Dictionary<string, Resource>();
+    [field: SerializeField]
+    public List<Resource> Items { get; set; } = new List<Resource>();
 }

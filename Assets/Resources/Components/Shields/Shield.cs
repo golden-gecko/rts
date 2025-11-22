@@ -21,6 +21,11 @@ public class Shield : MyComponent
         return string.Format("{0}, Range: {1:0.}, Power: {2:0.}", base.GetInfo(), Range, Power);
     }
 
+    public float Absorb(float damage)
+    {
+        return damage * Power / 100.0f;
+    }
+
     [field: SerializeField]
     public GameObject Mesh { get; set; }
 

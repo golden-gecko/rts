@@ -10,7 +10,5 @@ public class Factory_Light : Structure
         Orders.AllowPrefab(Path.Combine(Config.DirectoryUnits, "Harvester"));
         Orders.AllowPrefab(Path.Combine(Config.DirectoryUnits, "Quad"));
         Orders.AllowPrefab(Path.Combine(Config.DirectoryUnits, "Trike"));
-
-        GetComponent<Storage>().Resources.Add("Iron", 0, 40, ResourceDirection.In);
     }
 }

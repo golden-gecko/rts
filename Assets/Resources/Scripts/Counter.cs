@@ -1,3 +1,7 @@
+using System;
+using UnityEngine;
+
+[Serializable]
 public class Counter
 {
     public Counter(int current = 0, int max = 0)
@@ -46,12 +50,24 @@ public class Counter
         return Current - current >= 0;
     }
 
+    public bool CanInc()
+    {
+        return CanAdd(1);
+    }
+
+    public bool CanDec()
+    {
+        return CanRemove(1);
+    }
+
     public string GetInfo()
     {
         return string.Format("{0}/{1}", Current, Max);
     }
 
+    [field: SerializeField]
     public int Current { get; private set; }
 
-    public int Max { get; set; } // TODO: Hide setter.
+    [field: SerializeField]
+    public int Max { get; private set; }
 }

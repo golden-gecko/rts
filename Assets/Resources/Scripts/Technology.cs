@@ -29,7 +29,7 @@ public class Technology
         {
             int sum = 0;
 
-            foreach (Resource i in Cost.Items.Values)
+            foreach (Resource i in Cost.Items)
             {
                 sum += i.Max;
             }
@@ -42,7 +42,7 @@ public class Technology
     {
         get
         {
-            foreach (Resource resource in Cost.Items.Values)
+            foreach (Resource resource in Cost.Items)
             {
                 if (resource.Capacity > 0)
                 {

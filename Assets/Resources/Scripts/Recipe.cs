@@ -23,7 +23,7 @@ public class Recipe
     {
         get
         {
-            return ToConsume.Items.Values.Sum(x => x.Max) + ToProduce.Items.Values.Sum(x => x.Max);
+            return ToConsume.Items.Sum(x => x.Max) + ToProduce.Items.Sum(x => x.Max);
         }
     }
 
