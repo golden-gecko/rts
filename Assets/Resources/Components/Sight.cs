@@ -63,7 +63,7 @@ public class Sight : MyComponent
 
     public override string GetInfo()
     {
-        return string.Format("{0}, Range: {1:0.}", base.GetInfo(), Range);
+        return string.Format("Sight: {0}, Range: {1:0.}", base.GetInfo(), Range);
     }
 
     public bool IsInRange(Vector3 position)

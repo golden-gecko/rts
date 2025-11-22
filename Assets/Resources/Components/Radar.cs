@@ -91,7 +91,7 @@ public class Radar : MyComponent
 
     public override string GetInfo()
     {
-        return string.Format("{0}, Range: {1:0.}, Anti: {2}", base.GetInfo(), Range, Anti);
+        return string.Format("Radar: {0}, Range: {1:0.}, Anti: {2}", base.GetInfo(), Range, Anti);
     }
 
     public bool IsInRange(Vector3 position)

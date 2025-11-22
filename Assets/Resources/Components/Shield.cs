@@ -25,7 +25,7 @@ public class Shield : MyComponent // TODO: Shield puts health bar in wrong posit
 
     public override string GetInfo()
     {
-        return string.Format("{0}, Range: {1:0.}, Power: {2:0.}", base.GetInfo(), Range, Power);
+        return string.Format("Shield: {0}, Range: {1:0.}, Power: {2:0.}", base.GetInfo(), Range, Power);
     }
 
     public float Absorb(float damage)

@@ -206,7 +206,7 @@ public class HUD : MonoBehaviour
                     selected.Orders.Clear();
                 }
 
-                selected.Construct(prefab, position);
+                selected.Construct(prefab, position, Cursor.Rotation);
             }
         }
     }
@@ -339,7 +339,7 @@ public class HUD : MonoBehaviour
         return Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out hitInfo, Config.RaycastMaxDistance, layerMask);
     }
 
-    private void ProcessOrder()
+    private bool ProcessOrder()
     {
         RaycastHit hitInfo;
 
@@ -347,7 +347,12 @@ public class HUD : MonoBehaviour
         {
             if (MouseToRaycast(out hitInfo, LayerMask.GetMask("Terrain") | LayerMask.GetMask("Water")))
             {
-                Construct(hitInfo.point); // TODO: Check if objects is allowed to build on selected layer.
+                if (Cursor.HasCorrectPosition())
+                {
+                    Construct(hitInfo.point);
+
+                    return true;
+                }
             }
         }
         else
@@ -362,8 +367,12 @@ public class HUD : MonoBehaviour
                 {
                     IssueOrder(hitInfo.transform.GetComponentInParent<MyGameObject>());
                 }
+
+                return true;
             }
         }
+
+        return false;
     }
 
     private void ProcessSelection()
@@ -582,12 +591,13 @@ public class HUD : MonoBehaviour
                 }
                 else
                 {
-                    ProcessOrder();
-
-                    if (IsShift() == false)
+                    if (ProcessOrder())
                     {
-                        Order = OrderType.None;
-                        Prefab = string.Empty;
+                        if (IsShift() == false)
+                        {
+                            Order = OrderType.None;
+                            Prefab = string.Empty;
+                        }
                     }
                 }
             }
@@ -636,7 +646,17 @@ public class HUD : MonoBehaviour
 
         if (Cursor != null)
         {
-            Cursor.transform.position = Map.Instance.StructurePositionHandler.GetPosition(Camera.main.ScreenPointToRay(Input.mousePosition));
+            Cursor.transform.position
+                = Map.Instance.StructurePositionHandler.GetPosition(Camera.main.ScreenPointToRay(Input.mousePosition), LayerMask.GetMask("Terrain") | LayerMask.GetMask("Water"));
+
+            if (Cursor.HasCorrectPosition())
+            {
+                Cursor.GetComponentInChildren<Indicators>().OnErrorEnd();
+            }
+            else
+            {
+                Cursor.GetComponentInChildren<Indicators>().OnError();
+            }
         }
 
         HoverOverObjects();
@@ -678,8 +698,8 @@ public class HUD : MonoBehaviour
 
             if (prefab.Equals(string.Empty) == false)
             {
-                Cursor = Utils.CreateGameObject(Prefab, Vector3.zero, null, MyGameObjectState.Cursor);
-                Cursor.GetComponentInChildren<Indicators>().OnUnderConstruction();
+                Cursor = Utils.CreateGameObject(Prefab, Vector3.zero, Quaternion.identity, null, MyGameObjectState.Cursor);
+                Cursor.GetComponentInChildren<Indicators>().OnConstruction();
             }
         }
     }

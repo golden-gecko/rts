@@ -155,7 +155,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <Player>k__BackingField: {fileID: 0}
   <Enabled>k__BackingField: 1
-  <Powerable>k__BackingField: 0
+  <Powerable>k__BackingField: 1
   <Gatherable>k__BackingField: 0
   <Selectable>k__BackingField: 1
   <Health>k__BackingField:
@@ -170,6 +170,7 @@ MonoBehaviour:
   <ExpirationTimer>k__BackingField:
     <Current>k__BackingField: -1
     <Max>k__BackingField: -1
+  <SkillsNames>k__BackingField: []
 --- !u!114 &4576625105702019730
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -187,7 +188,8 @@ MonoBehaviour:
   - Colonization
   - Infantry
   - Heavy_Industry
-  - Radar
+  - Radar 1
+  - Radar 2
   - Space_Travels
   - Static_Defences
   - Stationary_Defences

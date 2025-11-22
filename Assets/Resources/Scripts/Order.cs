@@ -30,12 +30,13 @@ public class Order
         };
     }
 
-    public static Order Construct(string prefab, Vector3 position)
+    public static Order Construct(string prefab, Vector3 position, Quaternion rotation)
     {
         return new Order
         {
             Type = OrderType.Construct,
             TargetPosition = position,
+            TargetRotation = rotation,
             Prefab = prefab,
         };
     }
@@ -242,27 +243,27 @@ public class Order
     {
         string info = string.Format("{0}", Type.ToString());
 
-        if (Prefab != null)
+        if (Prefab != null && Prefab.Length > 0)
         {
             info += string.Format(" ({0})", Prefab);
         }
 
-        if (Recipe != null)
+        if (Recipe != null && Recipe.Length > 0)
         {
             info += string.Format(" ({0})", Recipe);
         }
 
-        if (Resource != null)
+        if (Resource != null && Resource.Length > 0)
         {
             info += string.Format(" ({0})", Resource);
         }
 
-        if (Skill != null)
+        if (Skill != null && Skill.Length > 0)
         {
             info += string.Format(" ({0})", Skill);
         }
 
-        if (Technology != null)
+        if (Technology != null && Technology.Length > 0)
         {
             info += string.Format(" ({0})", Technology);
         }
@@ -310,6 +311,8 @@ public class Order
     public MyGameObject TargetGameObject { get; set; } // TODO: Hide setter. Destroy when order is cancelled (add Cancel method).
 
     public Vector3 TargetPosition { get; set; } // TODO: Hide setter.
+
+    public Quaternion TargetRotation { get; private set; }
 
     public Timer Timer { get; set; } // TODO: Hide setter.
 

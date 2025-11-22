@@ -203,7 +203,7 @@ public class GameMenu : MonoBehaviour
     {
         recipes.Clear();
 
-        foreach (string i in Config.Recipies)
+        foreach (string i in Game.Instance.GetComponent<RecipeManager>().Recipes.Items.Keys)
         {
             TemplateContainer buttonContainer = templateButton.Instantiate();
             Button button = buttonContainer.Q<Button>();
@@ -438,10 +438,7 @@ public class GameMenu : MonoBehaviour
         {
             if (hovered.State == MyGameObjectState.Operational)
             {
-                if (hovered.GetComponent<Producer>() != null)
-                {
-                    whitelist = new HashSet<string>(hovered.GetComponent<Producer>().Recipes.Items.Keys);
-                }
+                whitelist = new HashSet<string>(hovered.Orders.RecipeWhitelist.Items.Keys);
             }
         }
         else
@@ -458,7 +455,7 @@ public class GameMenu : MonoBehaviour
                     continue;
                 }
 
-                foreach (string recipe in selected.GetComponent<Producer>().Recipes.Items.Keys)
+                foreach (string recipe in selected.Orders.RecipeWhitelist.Items.Keys)
                 {
                     whitelist.Add(recipe);
                 }

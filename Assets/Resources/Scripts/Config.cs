@@ -10,6 +10,8 @@ public class Config
     public static string DirectoryStructures = Path.Join("Objects", "Structures");
     public static string DirectoryUnits = Path.Join("Objects", "Units");
 
+    public static float IndicatorMargin = 1.1f;
+
     public static float RaycastMaxDistance = 5000.0f;
 
     public static List<string> Recipies = new List<string>() { "Metal using coal", "Metal using wood" };

@@ -2,11 +2,11 @@ using UnityEngine;
 
 public class WaterPositionCenterGrid : ITerrainPosition
 {
-    public Vector3 GetPosition(Ray ray)
+    public Vector3 GetPosition(Ray ray, int layerMask = Physics.DefaultRaycastLayers)
     {
         RaycastHit hitInfo;
 
-        if (Physics.Raycast(ray, out hitInfo, Config.RaycastMaxDistance, LayerMask.GetMask("Water")) == false)
+        if (Physics.Raycast(ray, out hitInfo, Config.RaycastMaxDistance, layerMask) == false)
         {
             return Vector3.zero;
         }
@@ -19,8 +19,8 @@ public class WaterPositionCenterGrid : ITerrainPosition
         return new Vector3(x, hitInfo.point.y, z);
     }
 
-    public Vector3 GetPosition(Vector3 position)
+    public Vector3 GetPosition(Vector3 position, int layerMask = Physics.DefaultRaycastLayers)
     {
-        return GetPosition(new Ray(position + Vector3.up * Config.TerrainMaxHeight, Vector3.down));
+        return GetPosition(new Ray(position + Vector3.up * Config.TerrainMaxHeight, Vector3.down), layerMask);
     }
 }

@@ -22,21 +22,28 @@ public class RecipeManager : MonoBehaviour
 
         Recipe r2 = new Recipe("Iron");
         // <=
-        r2.Consumes("Coal", 2);
-        r2.Consumes("Iron Ore", 1);
+        r2.Consumes("Coal", 4);
+        r2.Consumes("Iron Ore", 2);
         // =>
         r2.Produces("Iron", 1);
 
         Recipe r3 = new Recipe("Fuel");
         // <=
-        r3.Consumes("Crude Oil", 1);
+        r3.Consumes("Oil", 2);
         // =>
         r3.Produces("Fuel", 1);
+
+        Recipe r4 = new Recipe("Plastic");
+        // <=
+        r4.Consumes("Oil", 2);
+        // =>
+        r4.Produces("Part", 1);
 
         Recipes.Add(r1);
         Recipes.Add(r2);
         Recipes.Add(r3);
+        Recipes.Add(r4);
     }
 
-    private RecipeContainer Recipes = new RecipeContainer();
+    public RecipeContainer Recipes { get; } = new RecipeContainer();
 }
