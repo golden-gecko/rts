@@ -582,6 +582,21 @@ public class HUD : MonoBehaviour
             }
         }
 
+        if (Input.GetAxis("Mouse ScrollWheel") > 0.0f)
+        {
+            if (Order == OrderType.Construct)
+            {
+                Cursor.transform.Rotate(Vector3.up, 45.0f);
+            }
+        }
+        else if (Input.GetAxis("Mouse ScrollWheel") < 0.0f)
+        {
+            if (Order == OrderType.Construct)
+            {
+                Cursor.transform.Rotate(Vector3.down, 45.0f);
+            }
+        }
+
         if (Cursor != null)
         {
             Cursor.transform.position = Map.Instance.StructurePositionHandler.GetPosition(Camera.main.ScreenPointToRay(Input.mousePosition));
