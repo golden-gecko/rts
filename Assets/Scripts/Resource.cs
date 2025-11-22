@@ -6,6 +6,11 @@ public class Resource
         Value = value;
     }
 
+    public void Add(float value)
+    {
+        Value += value;
+    }
+
     public string Name { get; }
-    public float Value { get; set; }
+    public float Value { get; private set; }
 }

@@ -8,16 +8,14 @@ public class struct_Refinery_A_yup : MyGameObject
 
         Orders.Allow(OrderType.Produce);
 
+        Resources.Add("Metal Ore", new Resource("Metal Ore", 100));
         Resources.Add("Metal", new Resource("Metal", 0));
-        Resources.Add("Wood", new Resource("Wood", 0));
-
     }
 
-    protected override void Update()
+    protected override void OnIdleOrder()
     {
-        base.Update();
+        Produce();
 
-        Resources["Metal"].Value += 2 * Time.deltaTime;
-        Resources["Wood"].Value += 8 * Time.deltaTime;
+        Orders.Pop();
     }
 }
