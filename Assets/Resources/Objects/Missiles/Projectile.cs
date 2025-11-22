@@ -4,7 +4,7 @@ public class Projectile : Missile
 {
     protected override void OnCollisionEnter(Collision collision)
     {
-        MyGameObject myGameObject = Utils.GetGameObject(collision.collider);
+        MyGameObject myGameObject = Utils.GetGameObject(collision);
 
         if (myGameObject != null)
         {

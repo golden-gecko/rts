@@ -38,7 +38,7 @@ public class PPFXMeteor : MonoBehaviour {
 		StartCoroutine(Move());
 	} 
 	
-	
+
 	IEnumerator Move () {
 		
 		//quarter up emission rate during flight

@@ -92,8 +92,8 @@ MonoBehaviour:
     <Max>k__BackingField: -1
   <SkillsNames>k__BackingField: []
   <State>k__BackingField: 1
-  <CreateBase>k__BackingField: 0
-  <SnapToGrid>k__BackingField: 0
+  <CreateBase>k__BackingField: 1
+  <SnapToGrid>k__BackingField: 1
   <VisibilityState>k__BackingField: 2
 --- !u!1 &5357928085654594938
 GameObject:
@@ -124,7 +124,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.8, y: 0.8, z: 0.8}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 970409583821205617}

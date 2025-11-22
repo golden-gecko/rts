@@ -25,11 +25,9 @@ public class Disaster : MyGameObject
         }
     }
 
-    protected override void OnTriggerEnter(Collider other) // TODO: Replace with OnCollisionEnter.
+    protected override void OnCollisionEnter(Collision collision)
     {
-        base.OnTriggerEnter(other);
-
-        MyGameObject myGameObject = other.GetComponentInParent<MyGameObject>();
+        MyGameObject myGameObject = Utils.GetGameObject(collision);
 
         if (myGameObject == null)
         {
@@ -49,11 +47,9 @@ public class Disaster : MyGameObject
         }
     }
 
-    protected override void OnTriggerExit(Collider other)
+    protected override void OnCollisionExit(Collision collision)
     {
-        base.OnTriggerStay(other);
-
-        MyGameObject myGameObject = other.GetComponentInParent<MyGameObject>();
+        MyGameObject myGameObject = Utils.GetGameObject(collision);
 
         if (myGameObject == null)
         {
@@ -75,7 +71,7 @@ public class Disaster : MyGameObject
     public float FrequencyInSecondsMax = 180.0f;
 
     [field: SerializeField]
-    public float Damage { get; set; } = 20.0f;
+    public float Damage { get; set; } = 10.0f;
 
     [field: SerializeField]
     public float DamagePerSecond { get; set; } = 10.0f;
