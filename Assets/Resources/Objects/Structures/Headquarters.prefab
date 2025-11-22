@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 1702014145004635914}
   - component: {fileID: 7277517748932437183}
   - component: {fileID: -8510754742537900643}
+  - component: {fileID: -8592949413886164666}
   m_Layer: 0
   m_Name: Headquarters
   m_TagString: Untagged
@@ -76,6 +77,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   <Mass>k__BackingField: 10
+  RaiseResourceFlags: 1
   <ResourceUsage>k__BackingField: 1
   <Resources>k__BackingField:
     <Items>k__BackingField:
@@ -107,6 +109,20 @@ MonoBehaviour:
       <Max>k__BackingField: 100
       <Name>k__BackingField: Wood
       <Direction>k__BackingField: 0
+--- !u!114 &-8592949413886164666
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2077589293580246448}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 79a39b5131237dc428a9b67a3936e144, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  <Mass>k__BackingField: 10
+  <Range>k__BackingField: 20
 --- !u!1 &4020719452692643192
 GameObject:
   m_ObjectHideFlags: 0
