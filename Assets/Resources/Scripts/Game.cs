@@ -31,28 +31,24 @@ public class Game : MonoBehaviour
         Producers[gaia] = new ConsumerProducerContainer();
         Producers[human] = new ConsumerProducerContainer();
 
-        Diplomacy[cpu] = new Dictionary<Player, DiplomacyState>();
-        Diplomacy[gaia] = new Dictionary<Player, DiplomacyState>();
-        Diplomacy[human] = new Dictionary<Player, DiplomacyState>();
+        cpu.SetDiplomacy(cpu, DiplomacyState.Ally);
+        cpu.SetDiplomacy(gaia, DiplomacyState.Neutral);
+        cpu.SetDiplomacy(human, DiplomacyState.Enemy);
 
-        Diplomacy[cpu][cpu] = DiplomacyState.Ally;
-        Diplomacy[cpu][gaia] = DiplomacyState.Neutral;
-        Diplomacy[cpu][human] = DiplomacyState.Enemy;
+        gaia.SetDiplomacy(cpu, DiplomacyState.Neutral);
+        gaia.SetDiplomacy(gaia, DiplomacyState.Neutral);
+        gaia.SetDiplomacy(human, DiplomacyState.Neutral);
 
-        Diplomacy[gaia][cpu] = DiplomacyState.Neutral;
-        Diplomacy[gaia][gaia] = DiplomacyState.Ally;
-        Diplomacy[gaia][human] = DiplomacyState.Neutral;
-
-        Diplomacy[human][cpu] = DiplomacyState.Enemy;
-        Diplomacy[human][gaia] = DiplomacyState.Neutral;
-        Diplomacy[human][human] = DiplomacyState.Ally;
+        human.SetDiplomacy(cpu, DiplomacyState.Enemy);
+        human.SetDiplomacy(gaia, DiplomacyState.Neutral);
+        human.SetDiplomacy(human, DiplomacyState.Ally);
     }
 
     public Order CreataAttackJob(MyGameObject myGameObject)
     {
         foreach (MyGameObject target in GameObject.FindObjectsByType<MyGameObject>(FindObjectsSortMode.None)) // TODO: Optimize.
         {
-            if (myGameObject.IsInAttackRange(target.Position) && myGameObject.IsEnemy(target))
+            if (myGameObject.IsInAttackRange(target.Position) && myGameObject.IsEnemy(target) && target.GetComponent<Missile>() == null) // TODO: Better way of checking object type?
             {
                 return Order.Attack(target);
             }
@@ -183,6 +179,4 @@ public class Game : MonoBehaviour
     public Dictionary<Player, ConsumerProducerContainer> Consumers { get; } = new Dictionary<Player, ConsumerProducerContainer>();
 
     public Dictionary<Player, ConsumerProducerContainer> Producers { get; } = new Dictionary<Player, ConsumerProducerContainer>();
-
-    public Dictionary<Player, Dictionary<Player, DiplomacyState>> Diplomacy { get; } = new Dictionary<Player, Dictionary<Player, DiplomacyState>>();
 }

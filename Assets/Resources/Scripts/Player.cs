@@ -21,6 +21,16 @@ public class Player : MonoBehaviour
         }
     }
 
+    public bool IsAlly(Player player)
+    {
+        return Diplomacy[player] == DiplomacyState.Ally;
+    }
+
+    public bool IsEnemy(Player player)
+    {
+        return Diplomacy[player] == DiplomacyState.Enemy;
+    }
+
     public void SelectGroup(KeyCode keyCode)
     {
         if (Groups.ContainsKey(keyCode))
@@ -44,6 +54,11 @@ public class Player : MonoBehaviour
         }
     }
 
+    public void SetDiplomacy(Player player, DiplomacyState state)
+    {
+        Diplomacy[player] = state;
+    }
+
     [SerializeField]
     public Sprite SelectionSprite;
 
@@ -54,4 +69,6 @@ public class Player : MonoBehaviour
     public Dictionary<KeyCode, HashSet<MyGameObject>> Groups { get; } = new Dictionary<KeyCode, HashSet<MyGameObject>>();
 
     public TechnologyTree TechnologyTree { get; } = new TechnologyTree();
+
+    public Dictionary<Player, DiplomacyState> Diplomacy { get; } = new Dictionary<Player, DiplomacyState>();
 }
