@@ -6,7 +6,8 @@ public class Grav_Light : Unit
 
         Orders.AllowOrder(OrderType.Attack);
 
-        Speed = 8.0f;
+        Engine = new Engine("Diesel", 8.0f);
+
         Gun = new Gauss("Gauss", 10.0f, 10.0f, 2.0f);
         Gun.MissilePrefab = "Objects/Missiles/Gauss";
     }

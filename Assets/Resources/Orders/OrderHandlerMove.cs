@@ -13,7 +13,7 @@ public class OrderHandlerMove : IOrderHandler
         position.y = 0;
 
         float distanceToTarget = (target - position).magnitude;
-        float distanceToTravel = myGameObject.Speed * Time.deltaTime;
+        float distanceToTravel = myGameObject.Engine.Speed * Time.deltaTime;
 
         if (distanceToTarget > distanceToTravel)
         {
