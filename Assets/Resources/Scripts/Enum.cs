@@ -51,19 +51,11 @@ public enum OrderType
     Wait,
 }
 
-public enum PositionHandlerType
-{
-    Camera,
-    Plane,
-    Structure,
-    Ship,
-    Vehicle,
-}
-
 public enum ResourceDirection
 {
     Both,
     In,
     None,
-    Out
+    Out,
+    Store, // TODO: Implement as lower priority then In or Out and remove Both.
 }

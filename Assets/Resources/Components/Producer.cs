@@ -7,10 +7,12 @@ public class Producer : MyComponent
     {
         base.Awake();
 
-        GetComponent<MyGameObject>().Orders.AllowOrder(OrderType.Produce);
+        MyGameObject parent = GetComponent<MyGameObject>();
 
-        GetComponent<MyGameObject>().OrderHandlers[OrderType.Idle] = new OrderHandlerIdleProducer();
-        GetComponent<MyGameObject>().OrderHandlers[OrderType.Produce] = new OrderHandlerProduce();
+        parent.Orders.AllowOrder(OrderType.Produce);
+
+        parent.OrderHandlers[OrderType.Idle] = new OrderHandlerIdleProducer();
+        parent.OrderHandlers[OrderType.Produce] = new OrderHandlerProduce();
     }
 
     public override string GetInfo()
@@ -19,7 +21,7 @@ public class Producer : MyComponent
     }
 
     [field: SerializeField]
-    public int ResourceUsage { get; set; } = 1;
+    public int ResourceUsage { get; set; } = 1; // Number of resources used per second.
 
     public RecipeContainer Recipes { get; } = new RecipeContainer();
 }

@@ -23,20 +23,7 @@ public class Technology
 
     public ResourceContainer Cost { get; } = new ResourceContainer();
 
-    public int Total
-    {
-        get
-        {
-            int sum = 0;
-
-            foreach (Resource i in Cost.Items)
-            {
-                sum += i.Max;
-            }
-
-            return sum;
-        }
-    }
+    public int Total { get => Cost.Sum; }
 
     public bool Researched
     {
@@ -56,5 +43,5 @@ public class Technology
 
     public bool Unlocked { get; set; } = false;
 
-    public HashSet<string> Unlocks { get; set; } = new HashSet<string>();
+    public HashSet<string> Unlocks { get; } = new HashSet<string>();
 }

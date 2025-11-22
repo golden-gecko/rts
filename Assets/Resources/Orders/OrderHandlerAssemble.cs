@@ -10,13 +10,15 @@ public class OrderHandlerAssemble : OrderHandler
         if (order.TargetGameObject == null)
         {
             order.TargetGameObject = Game.Instance.CreateGameObject(order.Prefab, myGameObject.Exit, myGameObject.Player, MyGameObjectState.UnderAssembly);
+            order.TargetGameObject.GetComponentInChildren<Indicators>().OnUnderConstruction();
+            order.TargetGameObject.RaiseConstructionResourceFlags();
         }
 
         Recipe recipe = order.TargetGameObject.ConstructionRecipies.Items.First().Value;
 
         if (order.Timer == null)
         {
-            order.Timer = new Timer(recipe.Sum / myGameObject.GetComponent<Constructor>().ResourceUsage);
+            order.Timer = new Timer(recipe.Sum / myGameObject.GetComponent<Assembler>().ResourceUsage);
         }
 
         if (HaveResources(myGameObject, recipe) == false)
@@ -35,6 +37,8 @@ public class OrderHandlerAssemble : OrderHandler
 
         order.TargetGameObject.State = MyGameObjectState.Operational;
         order.TargetGameObject.Move(myGameObject.GetComponent<Assembler>().RallyPoint, 0);
+        order.TargetGameObject.GetComponentInChildren<Indicators>().OnConstructionCompleted();
+        order.TargetGameObject.RemoveConstructionResourceFlags();
 
         myGameObject.Stats.Inc(Stats.OrdersCompleted);
         myGameObject.Stats.Inc(Stats.ObjectsAssembled);

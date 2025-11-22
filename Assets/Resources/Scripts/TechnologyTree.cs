@@ -23,28 +23,28 @@ public class TechnologyTree
 
         // Create technologies to research.
         Technologies["Colonization"] = new Technology("Colonization", new HashSet<string> { "Factory_Light", "Harvester", "Headquarters", "Quad", "Refinery", "Research_Lab", "Trike" });
-        Technologies["Colonization"].Cost.Add("Crystal", 0, 20, ResourceDirection.In);
+        Technologies["Colonization"].Cost.Init("Crystal", 0, 20, ResourceDirection.In);
 
         Technologies["Infantry"] = new Technology("Infantry", new HashSet<string> { "Barracks", "Infantry_Light" });
-        Technologies["Infantry"].Cost.Add("Crystal", 0, 20, ResourceDirection.In);
+        Technologies["Infantry"].Cost.Init("Crystal", 0, 20, ResourceDirection.In);
 
         Technologies["Heavy_Industry"] = new Technology("Heavy_Industry", new HashSet<string> { "Factory_Heavy", "Tank_Missile" });
-        Technologies["Heavy_Industry"].Cost.Add("Crystal", 0, 20, ResourceDirection.In);
+        Technologies["Heavy_Industry"].Cost.Init("Crystal", 0, 20, ResourceDirection.In);
 
         Technologies["Laser"] = new Technology("Laser", new HashSet<string> { "Grav_Light", "Tank_Combat" });
-        Technologies["Laser"].Cost.Add("Crystal", 0, 20, ResourceDirection.In);
+        Technologies["Laser"].Cost.Init("Crystal", 0, 20, ResourceDirection.In);
 
         Technologies["Radar"] = new Technology("Radar", new HashSet<string> { "Radar_Outpost" });
-        Technologies["Radar"].Cost.Add("Crystal", 0, 20, ResourceDirection.In);
+        Technologies["Radar"].Cost.Init("Crystal", 0, 20, ResourceDirection.In);
 
         Technologies["Space_Travels"] = new Technology("Space_Travels", new HashSet<string> { "Spaceport" });
-        Technologies["Space_Travels"].Cost.Add("Crystal", 0, 20, ResourceDirection.In);
+        Technologies["Space_Travels"].Cost.Init("Crystal", 0, 20, ResourceDirection.In);
 
         Technologies["Static_Defences"] = new Technology("Static_Defences", new HashSet<string> { "Wall" });
-        Technologies["Static_Defences"].Cost.Add("Crystal", 0, 20, ResourceDirection.In);
+        Technologies["Static_Defences"].Cost.Init("Crystal", 0, 20, ResourceDirection.In);
 
         Technologies["Stationary_Defences"] = new Technology("Stationary_Defences", new HashSet<string> { "Turret_Gun", "Turret_Missile" });
-        Technologies["Stationary_Defences"].Cost.Add("Crystal", 0, 20, ResourceDirection.In);
+        Technologies["Stationary_Defences"].Cost.Init("Crystal", 0, 20, ResourceDirection.In);
 
         // Unlock starting technologies.
         Unlock("Colonization");
