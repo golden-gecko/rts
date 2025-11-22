@@ -199,28 +199,56 @@ public class MyGameObject : MonoBehaviour
 
     public string GetInfo(bool ally)
     {
+        string info = string.Empty;
+
         switch (State)
         {
+            case MyGameObjectState.Operational:
+                info += string.Format("ID: {0}\nName: {1}", GetInstanceID(), name);
+
+                if (MaxHealth > 0.0f)
+                {
+                    info += string.Format("\nHP: {0:0.}/{1:0.}", Health, MaxHealth);
+                }
+
+                if (Speed > 0.0f)
+                {
+                    info += string.Format("\nSpeed: {0:0.}", Speed);
+                }
+
+                if (ReloadTimer != null)
+                {
+                    info += string.Format("\nReload: {0:0.}/{1:0.}", ReloadTimer.Current, ReloadTimer.Max);
+                }
+
+                string resources = Resources.GetInfo();
+
+                if (resources.Length > 0)
+                {
+                    info += string.Format("\nResources:{0}", resources);
+                }
+
+                if (ally)
+                {
+                    string orders = Orders.GetInfo();
+                    string stats = Stats.GetInfo();
+
+                    if (orders.Length > 0)
+                    {
+                        info += string.Format("\nOrders: {0}", orders);
+                    }
+
+                    if (stats.Length > 0)
+                    {
+                        info += string.Format("\nStats: {0}", stats);
+                    }
+                }
+                break;
+
             case MyGameObjectState.UnderAssembly:
             case MyGameObjectState.UnderConstruction:
-                return string.Format("ID: {0}\nName: {1}\nResources:{2}", GetInstanceID(), name, ConstructionResources.GetInfo());
-        }
-
-        string info = string.Format("ID: {0}\nName: {1}\nHP: {2:0.}/{3:0.}", GetInstanceID(), name, Health, MaxHealth);
-
-        if (Speed > 0)
-        {
-            info += string.Format("\nSpeed: {0:0.}", Speed);
-        }
-
-        if (ReloadTimer != null)
-        {
-            info += string.Format("\nReload: {0:0.}/{1:0.}", ReloadTimer.Current, ReloadTimer.Max);
-        }
-
-        if (ally)
-        {
-            info += string.Format("\nResources:{0}\nOrders: {1}\nStats: {2}", Resources.GetInfo(), Orders.GetInfo(), Stats.GetInfo());
+                info += string.Format("ID: {0}\nName: {1}\nResources:{2}", GetInstanceID(), name, ConstructionResources.GetInfo());
+                break;
         }
 
         return info;
