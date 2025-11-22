@@ -12,9 +12,7 @@ public class Unit : MyGameObject
         OrderHandlers[OrderType.Attack] = new OrderHandlerAttackUnit();
         OrderHandlers[OrderType.Idle] = new OrderHandlerIdleAttacker();
 
-        Damage = 10.0f;
         Health = 50.0f;
         MaxHealth = 50.0f;
-        MissileRange = 5.0f;
     }
 }

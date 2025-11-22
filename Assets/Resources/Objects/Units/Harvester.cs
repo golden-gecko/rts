@@ -29,7 +29,6 @@ public class Harvester : Unit
         Resources.Add("Wood", 0, 10);
 
         LoadTime = 2.0f;
-        MissileRange = 0.0f;
         Speed = 4.0f;
     }
 }

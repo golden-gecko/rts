@@ -6,7 +6,6 @@ public class Plant : MyGameObject
     {
         base.Awake();
 
-        MissileRange = 0.0f;
         VisibilityRange = 0.0f;
     }
 
