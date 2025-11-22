@@ -1,7 +1,8 @@
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 
-public class OrderContainer
+public class OrderContainer : IEnumerable<Order>
 {
     public OrderContainer()
     {
@@ -51,6 +52,11 @@ public class OrderContainer
         Pop();
     }
 
+    public IEnumerator<Order> GetEnumerator()
+    {
+        return Items.GetEnumerator();
+    }
+
     public string GetInfo()
     {
         var info = string.Empty;
@@ -71,6 +77,11 @@ public class OrderContainer
     public void Pop()
     {
         Items.RemoveAt(0);
+    }
+
+    IEnumerator IEnumerable.GetEnumerator()
+    {
+        return GetEnumerator();
     }
 
     public List<Order> Items { get; }

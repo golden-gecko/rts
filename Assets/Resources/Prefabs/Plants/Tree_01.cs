@@ -4,6 +4,12 @@ public class Tree_01 : MyGameObject
     {
         base.Start();
 
-        Resources.Add("Wood", 20, 20);
+        Resources.Add("Wood", 40, 40);
+
+        var r1 = new Recipe();
+
+        r1.Produce("Wood", 0);
+
+        Recipes.Add(r1);
     }
 }

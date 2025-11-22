@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using UnityEditor.PackageManager;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -8,7 +9,7 @@ public class MyGameObject : MonoBehaviour
     {
         Orders = new OrderContainer();
         Resources = new ResourceContainer();
-        Recipes = new List<Recipe>();
+        Recipes = new RecipeContainer();
 
         OrderHandlers = new Dictionary<OrderType, UnityAction>()
         {
@@ -34,38 +35,9 @@ public class MyGameObject : MonoBehaviour
 
     protected virtual void Update()
     {
-        if (Orders.Count > 0)
-        {
-            var order = Orders.First();
-
-            if (Orders.Contains(order.Type))
-            {
-                if (OrderHandlers.ContainsKey(order.Type))
-                {
-                    OrderHandlers[order.Type]();
-                }
-            }
-            else
-            {
-                Orders.Pop();
-            }
-        }
-        else
-        {
-            OnOrderIdle();
-        }
-
-        // Set position to terrain.
-        var hitInfo = new RaycastHit();
-        var ray = new Ray(transform.position + new Vector3(0, 1000, 0), Vector3.down);
-
-        if (Physics.Raycast(ray, out hitInfo, 2000, LayerMask.GetMask("Terrain")))
-        {
-            if (hitInfo.transform.tag == "Terrain")
-            {
-                transform.position = new Vector3(transform.position.x, hitInfo.point.y, transform.position.z);
-            }
-        }
+        ProcessOrders();
+        AlignPositionToTerrain();
+        RaiseResourceFlags();
     }
 
     public void Select(bool status)
@@ -283,57 +255,60 @@ public class MyGameObject : MonoBehaviour
     {
         var order = Orders.First();
 
-        order.Timer.Update(Time.deltaTime);
-
-        if (order.Timer.Finished)
+        foreach (var recipe in Recipes)
         {
-            foreach (var recipe in Recipes)
+            // Have all resources to consume.
+            bool toConsume = true;
+
+            foreach (var i in recipe.ToConsume)
             {
-                // Have all resources to consume.
-                bool toConsume = true;
-
-                foreach (var i in recipe.ToConsume)
+                if (Resources.CanRemove(i.Name, i.Count) == false)
                 {
-                    if (Resources.CanRemove(i.Name, i.Count) == false)
-                    {
-                        toConsume = false;
-                        break;
-                    }
-                }
-
-                // Have all resources to produce.
-                bool toProduce = true;
-
-                foreach (var i in recipe.ToProduce)
-                {
-                    if (Resources.CanAdd(i.Name, i.Count) == false)
-                    {
-                        toProduce = false;
-                        break;
-                    }
-                }
-
-                // Produce new resources.
-                if (toConsume && toProduce)
-                {
-                    foreach (var i in recipe.ToConsume)
-                    {
-                        Resources.Remove(i.Name, i.Count);
-                    }
-
-                    foreach (var i in recipe.ToProduce)
-                    {
-                        Resources.Add(i.Name, i.Count);
-                    }
-
+                    toConsume = false;
                     break;
                 }
             }
 
-            order.Timer.Reset();
-        }
+            // Have all resources to produce.
+            bool toProduce = true;
 
-        Orders.MoveToEnd();
+            foreach (var i in recipe.ToProduce)
+            {
+                if (Resources.CanAdd(i.Name, i.Count) == false)
+                {
+                    toProduce = false;
+                    break;
+                }
+            }
+
+            // Produce new resources.
+            if (toConsume && toProduce)
+            {
+                order.Timer.Update(Time.deltaTime);
+
+                if (order.Timer.Finished)
+                {
+                    if (toConsume && toProduce)
+                    {
+                        foreach (var i in recipe.ToConsume)
+                        {
+                            Resources.Remove(i.Name, i.Count);
+                        }
+
+                        foreach (var i in recipe.ToProduce)
+                        {
+                            Resources.Add(i.Name, i.Count);
+                        }
+
+                        break;
+                    }
+
+                    order.Timer.Reset();
+
+                    Orders.MoveToEnd();
+                }
+            }
+        }
     }
 
     protected virtual void OnOrderRally()
@@ -404,6 +379,20 @@ public class MyGameObject : MonoBehaviour
         Orders.Pop();
     }
 
+    void AlignPositionToTerrain()
+    {
+        var hitInfo = new RaycastHit();
+        var ray = new Ray(transform.position + new Vector3(0, 1000, 0), Vector3.down);
+
+        if (Physics.Raycast(ray, out hitInfo, 2000, LayerMask.GetMask("Terrain")))
+        {
+            if (hitInfo.transform.tag == "Terrain")
+            {
+                transform.position = new Vector3(transform.position.x, hitInfo.point.y, transform.position.z);
+            }
+        }
+    }
+
     public string GetInfo()
     {
         return string.Format("ID: {0}\nName: {1}\nHP: {2}\nSpeed: {3}\nResources:{4}\nOrders: {5}", GetInstanceID(), name, Health, Speed, Resources.GetInfo(), Orders.GetInfo());
@@ -415,6 +404,37 @@ public class MyGameObject : MonoBehaviour
         {
             source.Resources.Remove(i.Key, i.Value);
             target.Resources.Add(i.Key, i.Value);
+        }
+    }
+
+    void ProcessOrders()
+    {
+        if (Orders.Count > 0)
+        {
+            var order = Orders.First();
+
+            if (Orders.Contains(order.Type))
+            {
+                if (OrderHandlers.ContainsKey(order.Type))
+                {
+                    OrderHandlers[order.Type]();
+                }
+            }
+            else
+            {
+                Orders.Pop();
+            }
+        }
+        else
+        {
+            OnOrderIdle();
+        }
+    }
+
+    void RaiseResourceFlags()
+    {
+        foreach (var i in Resources)
+        {
         }
     }
 
@@ -434,7 +454,7 @@ public class MyGameObject : MonoBehaviour
 
     public ResourceContainer Resources { get; private set; }
 
-    public List<Recipe> Recipes { get; private set; }
+    public RecipeContainer Recipes { get; private set; }
 
     public float Health { get; protected set; } = 100;
 
