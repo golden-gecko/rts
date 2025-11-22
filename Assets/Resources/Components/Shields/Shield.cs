@@ -33,17 +33,17 @@ public class Shield : MyComponent // TODO: Shield puts health bar in wrong posit
     }
 
     [field: SerializeField]
-    public GameObject Mesh { get; set; }
+    public GameObject Mesh { get; private set; }
 
     [field: SerializeField]
-    public Property Range { get; set; } = new Property();
+    public Property Range { get; private set; } = new Property();
 
     [field: SerializeField]
-    public Progress Capacity { get; set; } = new Progress(100.0f, 100.0f);
+    public Progress Capacity { get; private set; } = new Progress(100.0f, 100.0f);
 
     [field: SerializeField]
-    public float Power { get; set; } = 0.2f; // From 0.0 to 1.0 (0.0 - no damage is absorbed, 1.0 - all damage is absorbed).
+    public float Power { get; private set; } = 0.2f; // From 0.0 to 1.0 (0.0 - no damage is absorbed, 1.0 - all damage is absorbed).
 
     [field: SerializeField]
-    public float ChargeRate { get; set; } = 0.1f;
+    public float ChargeRate { get; private set; } = 0.1f;
 }

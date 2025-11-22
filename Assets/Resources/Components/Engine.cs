@@ -47,13 +47,13 @@ public class Engine : MyComponent
     }
 
     [field: SerializeField]
-    public Property Power { get; set; } = new Property(100.0f);
+    public Property Power { get; private set; } = new Property(100.0f);
 
     [field: SerializeField]
     public Counter Fuel { get; } = new Counter(100, 100);
 
     [field: SerializeField]
-    public float FuelUsage { get; set; } = 1.0f;
+    public float FuelUsage { get; private set; } = 1.0f;
 
     public float Speed { get => Power.Total / GetComponent<MyGameObject>().Mass; }
 

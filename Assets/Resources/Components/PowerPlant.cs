@@ -252,7 +252,7 @@ public class PowerPlant : MyComponent
         }
     }
 
-    public float Efficiency { get => Math.Min(PowerGenerationNetworkTotal / PowerUsageNetworkTotal, 1.0f); }
+    public float Efficiency { get => PowerUsageNetworkTotal > 0.0f ? Math.Min(PowerGenerationNetworkTotal / PowerUsageNetworkTotal, 1.0f) : 0.0f; }
 
     private HashSet<PowerPlant> Connections { get; } = new HashSet<PowerPlant>();
 

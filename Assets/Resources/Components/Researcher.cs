@@ -27,5 +27,5 @@ public class Researcher : MyComponent
     public List<string> Technologies = new List<string>();
 
     [field: SerializeField]
-    public int ResourceUsage { get; set; } = 1; // Number of resources used per second.
+    public int ResourceUsage { get; private set; } = 1; // Number of resources used per second.
 }

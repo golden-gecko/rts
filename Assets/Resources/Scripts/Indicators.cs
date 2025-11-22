@@ -50,8 +50,9 @@ public class Indicators : MonoBehaviour
 
         construction = transform.Find("Construction");
         error = transform.Find("Error");
+        exploration = transform.Find("Exploration");
+        radar = transform.Find("Radar");
         selection = transform.Find("Selection");
-        trace = transform.Find("Trace");
     }
 
     void Update()
@@ -70,8 +71,9 @@ public class Indicators : MonoBehaviour
 
             UpdateConstruction(myGameObject);
             UpdateError(myGameObject);
+            UpdateExploration(myGameObject);
+            UpdateRadar(myGameObject);
             UpdateSelection(myGameObject);
-            UpdateTrace(myGameObject);
         }
         else
         {
@@ -107,6 +109,11 @@ public class Indicators : MonoBehaviour
         error.gameObject.SetActive(false);
     }
 
+    public void OnExploration()
+    {
+        exploration.gameObject.SetActive(true);
+    }
+
     public void OnHide()
     {
         bar.gameObject.SetActive(false);
@@ -114,7 +121,8 @@ public class Indicators : MonoBehaviour
         range.gameObject.SetActive(false);
 
         construction.gameObject.SetActive(false);
-        trace.gameObject.SetActive(false);
+        exploration.gameObject.SetActive(false);
+        radar.gameObject.SetActive(false);
     }
 
     public void OnPlayerChange(Player player)
@@ -142,7 +150,8 @@ public class Indicators : MonoBehaviour
         range.gameObject.SetActive(false);
 
         construction.gameObject.SetActive(false);
-        trace.gameObject.SetActive(true);
+        exploration.gameObject.SetActive(false);
+        radar.gameObject.SetActive(true);
     }
 
     public void OnSelect(bool status)
@@ -174,7 +183,8 @@ public class Indicators : MonoBehaviour
                     icon.gameObject.SetActive(true);
                 }
 
-                trace.gameObject.SetActive(false);
+                exploration.gameObject.SetActive(false);
+                radar.gameObject.SetActive(false);
                 break;
         }
     }
@@ -474,7 +484,7 @@ public class Indicators : MonoBehaviour
         Vector3 size = myGameObject.Size;
 
         construction.transform.localPosition = new Vector3(0.0f, size.y * 0.5f, 0.0f);
-        construction.transform.localScale = size; // * Config.Indicator.Margin;
+        construction.transform.localScale = size;
     }
 
     private void UpdateError(MyGameObject myGameObject)
@@ -482,17 +492,18 @@ public class Indicators : MonoBehaviour
         Vector3 size = myGameObject.Size;
 
         error.transform.localPosition = new Vector3(0.0f, size.y * 0.5f, 0.0f);
-        error.transform.localScale = size; // * Config.Indicator.Margin;
+        error.transform.localScale = size;
     }
 
-    private void UpdateSelection(MyGameObject myGameObject)
+    private void UpdateExploration(MyGameObject myGameObject)
     {
         Vector3 size = myGameObject.Size;
 
-        selection.localScale = new Vector3(size.x * Config.Indicator.Margin, size.z * Config.Indicator.Margin, 1.0f);
+        exploration.transform.localPosition = new Vector3(0.0f, size.y * 0.5f, 0.0f);
+        exploration.transform.localScale = size;
     }
 
-    private void UpdateTrace(MyGameObject myGameObject)
+    private void UpdateRadar(MyGameObject myGameObject)
     {
         Vector3 scale = myGameObject.Scale;
 
@@ -500,14 +511,21 @@ public class Indicators : MonoBehaviour
         {
             float radius = myGameObject.Radius;
 
-            trace.localScale = new Vector3(radius / scale.x, radius / scale.y, radius / scale.z);
+            radar.localScale = new Vector3(radius / scale.x, radius / scale.y, radius / scale.z);
         }
         else
         {
             float radius = 1.0f;
 
-            trace.localScale = new Vector3(radius / scale.x, radius / scale.y, radius / scale.z);
+            radar.localScale = new Vector3(radius / scale.x, radius / scale.y, radius / scale.z);
         }
+    }
+
+    private void UpdateSelection(MyGameObject myGameObject)
+    {
+        Vector3 size = myGameObject.Size;
+
+        selection.localScale = new Vector3(size.x * Config.Indicator.Margin, size.z * Config.Indicator.Margin, 1.0f);
     }
 
     private Transform bar;
@@ -548,6 +566,7 @@ public class Indicators : MonoBehaviour
 
     private Transform construction;
     private Transform error;
+    private Transform exploration;
+    private Transform radar;
     private Transform selection;
-    private Transform trace;
 }

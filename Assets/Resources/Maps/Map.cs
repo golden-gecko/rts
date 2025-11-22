@@ -619,5 +619,5 @@ public class Map : MonoBehaviour
     [field: SerializeField]
     public Material Sight { get; private set; }
 
-    private Cell[,] Cells { get; set; } = new Cell[Config.Map.VisibilitySize, Config.Map.VisibilitySize];
+    private Cell[,] Cells { get; } = new Cell[Config.Map.VisibilitySize, Config.Map.VisibilitySize];
 }

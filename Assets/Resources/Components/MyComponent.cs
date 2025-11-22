@@ -25,7 +25,7 @@ public class MyComponent : MonoBehaviour
     }
 
     [field: SerializeField]
-    public float Mass { get; set; } = 10.0f;
+    public float Mass { get; private set; } = 10.0f;
 
     public MyGameObject Parent { get; private set; }
 }

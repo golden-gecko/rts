@@ -13,5 +13,5 @@ public class Armour : MyComponent
     }
 
     [field: SerializeField]
-    public Progress Value { get; set; } = new Progress(100.0f, 100.0f);
+    public Progress Value { get; private set; } = new Progress(100.0f, 100.0f);
 }

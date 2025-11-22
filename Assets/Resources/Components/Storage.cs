@@ -78,16 +78,15 @@ public class Storage : MyComponent
         {
             parent.Player.UnregisterConsumer(parent, name);
             parent.Player.UnregisterProducer(parent, name);
-
         }
     }
 
     [field: SerializeField]
-    public bool RaiseResourceFlags = true;
+    public bool RaiseResourceFlags { get; private set; } = true;
 
     [field: SerializeField]
-    public int ResourceUsage { get; set; } = 1; // Number of resources loaded or unloaded per second.
+    public int ResourceUsage { get; private set; } = 1; // Number of resources loaded or unloaded per second.
 
     [field: SerializeField]
-    public ResourceContainer Resources { get; set; } = new ResourceContainer();
+    public ResourceContainer Resources { get; private set; } = new ResourceContainer();
 }

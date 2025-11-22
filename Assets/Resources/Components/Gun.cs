@@ -44,16 +44,16 @@ public class Gun : MyComponent
     }
 
     [field: SerializeField]
-    public GameObject MissilePrefab { get; set; }
+    public GameObject MissilePrefab { get; private set; }
 
     [field: SerializeField]
     public Property Damage { get; private set; } = new Property();
 
     [field: SerializeField]
-    public Property Range { get; set; } = new Property();
+    public Property Range { get; private set; } = new Property();
 
     [field: SerializeField]
-    public Timer Reload { get; set; } = new Timer(10.0f, 10.0f);
+    public Timer Reload { get; private set; } = new Timer(10.0f, 10.0f);
 
     [field: SerializeField]
     public Counter Ammunition { get; } = new Counter(100, 100);
