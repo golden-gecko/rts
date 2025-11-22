@@ -1,15 +1,16 @@
 using UnityEngine;
 
-public class Factory : MonoBehaviour
+public class Factory : MyGameObject
 {
     void Start()
     {
+        Metal = 0;
     }
 
     void Update()
     {
-        metal += 10 * Time.deltaTime;
+        Metal += 10 * Time.deltaTime;
     }
 
-    private float metal = 0;
+    public float Metal { get; set; }
 }
