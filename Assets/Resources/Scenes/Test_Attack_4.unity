@@ -131,7 +131,7 @@ PrefabInstance:
     - target: {fileID: -8454387037832977894, guid: 3a78786306fb3e64c943434c0935d749, type: 3}
       propertyPath: <Player>k__BackingField
       value: 
-      objectReference: {fileID: 1055936001}
+      objectReference: {fileID: 0}
     - target: {fileID: 8207018530083979936, guid: 3a78786306fb3e64c943434c0935d749, type: 3}
       propertyPath: m_LocalPosition.x
       value: 290.56
@@ -297,23 +297,12 @@ PrefabInstance:
     - target: {fileID: 6081305851261072058, guid: b6ba41d8b212c1c4baec81b0ae9b1d54, type: 3}
       propertyPath: <Player>k__BackingField
       value: 
-      objectReference: {fileID: 1489801456}
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b6ba41d8b212c1c4baec81b0ae9b1d54, type: 3}
---- !u!114 &1055936001 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 1874948758393139739, guid: 838528c30748ad1409e28e3a543244c6, type: 3}
-  m_PrefabInstance: {fileID: 1489801453}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e13f3e3b21b38b64faad841f9d3fad32, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &1489801453
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -322,14 +311,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 529670637529471827, guid: 838528c30748ad1409e28e3a543244c6, type: 3}
-      propertyPath: boxVisual
-      value: 
-      objectReference: {fileID: 1489801457}
-    - target: {fileID: 529670637529471827, guid: 838528c30748ad1409e28e3a543244c6, type: 3}
-      propertyPath: ActivePlayer
-      value: 
-      objectReference: {fileID: 1055936001}
     - target: {fileID: 1016367653328774682, guid: 838528c30748ad1409e28e3a543244c6, type: 3}
       propertyPath: m_RootOrder
       value: 0
@@ -375,22 +356,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 234ea24eefe46b8418a6564aeda77fe9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &1489801456 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 8729379247423149133, guid: 838528c30748ad1409e28e3a543244c6, type: 3}
-  m_PrefabInstance: {fileID: 1489801453}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 73e12c02f166a184582ff42b3f73a89b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!224 &1489801457 stripped
-RectTransform:
-  m_CorrespondingSourceObject: {fileID: 105550648329484035, guid: 838528c30748ad1409e28e3a543244c6, type: 3}
-  m_PrefabInstance: {fileID: 1489801453}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1861568109
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -402,7 +367,7 @@ PrefabInstance:
     - target: {fileID: -4568054685063148124, guid: eded832657e136542a403b188149892c, type: 3}
       propertyPath: <Player>k__BackingField
       value: 
-      objectReference: {fileID: 1055936001}
+      objectReference: {fileID: 0}
     - target: {fileID: 6239037674919067970, guid: eded832657e136542a403b188149892c, type: 3}
       propertyPath: m_Name
       value: Turret_Gun

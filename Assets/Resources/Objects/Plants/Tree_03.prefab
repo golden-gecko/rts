@@ -303,10 +303,12 @@ MonoBehaviour:
   <EnableTime>k__BackingField: 2
   <WaitTime>k__BackingField: 2
   <DestroyEffect>k__BackingField: {fileID: 0}
-  <TimeToLive>k__BackingField: -1
   <Altitude>k__BackingField: 0
-  <MapLayers>k__BackingField: 
+  <MapLayers>k__BackingField: 01000000
   ShowIndicators: 1
+  <ExpirationTimer>k__BackingField:
+    <Current>k__BackingField: -1
+    <Max>k__BackingField: -1
 --- !u!114 &-6307738924472288667
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -327,7 +329,7 @@ MonoBehaviour:
     - <Current>k__BackingField: 30
       <Max>k__BackingField: 30
       <Name>k__BackingField: Wood
-      <Direction>k__BackingField: 3
+      <Direction>k__BackingField: 1
 --- !u!1001 &8042095479320321300
 PrefabInstance:
   m_ObjectHideFlags: 0

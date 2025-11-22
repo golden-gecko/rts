@@ -162,10 +162,12 @@ MonoBehaviour:
   <EnableTime>k__BackingField: 2
   <WaitTime>k__BackingField: 2
   <DestroyEffect>k__BackingField: {fileID: 0}
-  <TimeToLive>k__BackingField: -1
   <Altitude>k__BackingField: 0
-  <MapLayers>k__BackingField: 
+  <MapLayers>k__BackingField: 01000000
   ShowIndicators: 1
+  <ExpirationTimer>k__BackingField:
+    <Current>k__BackingField: -1
+    <Max>k__BackingField: -1
 --- !u!1001 &4747281436893749279
 PrefabInstance:
   m_ObjectHideFlags: 0

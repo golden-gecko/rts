@@ -18,7 +18,7 @@ public class OrderHandlerAssemble : OrderHandler
 
         if (order.Timer == null)
         {
-            order.Timer = new Timer(recipe.Sum / myGameObject.GetComponent<Assembler>().ResourceUsage);
+            order.Timer = new Timer(recipe.MaxSum / myGameObject.GetComponent<Assembler>().ResourceUsage);
         }
 
         if (HaveResources(myGameObject, recipe) == false)

@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+using System.IO;
 using UnityEngine;
 
 [RequireComponent(typeof(Storage))]
@@ -11,6 +13,11 @@ public class Constructor : MyComponent
 
         parent.Orders.AllowOrder(OrderType.Construct);
 
+        foreach (string prefab in Prefabs)
+        {
+            parent.Orders.AllowPrefab(Path.Join(Config.DirectoryStructures, prefab));
+        }
+
         parent.OrderHandlers[OrderType.Construct] = new OrderHandlerConstruct();
     }
 
@@ -18,6 +25,9 @@ public class Constructor : MyComponent
     {
         return string.Format("{0}, Resource Usage: {1}", base.GetInfo(), ResourceUsage);
     }
+
+    [field: SerializeField]
+    public List<string> Prefabs { get; set; } = new List<string>();
 
     [field: SerializeField]
     public int ResourceUsage { get; set; } = 1; // Number of resources used per second.

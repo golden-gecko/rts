@@ -368,12 +368,11 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6358198605777279878}
-  - component: {fileID: -7357819664460573625}
+  - component: {fileID: 1355083128508716010}
   - component: {fileID: -6238200333199777406}
   - component: {fileID: 5874275229390842670}
   - component: {fileID: 5594974671478860173}
   - component: {fileID: 1711648457831509688}
-  - component: {fileID: 1355060217967378662}
   m_Layer: 0
   m_Name: Grav_Light
   m_TagString: Untagged
@@ -398,7 +397,7 @@ Transform:
   - {fileID: 5267905540470058037}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &-7357819664460573625
+--- !u!114 &1355083128508716010
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -407,7 +406,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 6014288322611724604}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ff576ca62fc74de43bfa7240f5a4cfb2, type: 3}
+  m_Script: {fileID: 11500000, guid: 28d73f8fbe8af464f8ccdeabaf462443, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   <Player>k__BackingField: {fileID: 0}
@@ -420,7 +419,7 @@ MonoBehaviour:
     <Max>k__BackingField: 100
   <EnableTime>k__BackingField: 2
   <WaitTime>k__BackingField: 2
-  <DestroyEffect>k__BackingField: {fileID: 100006, guid: 7c442b9b6852b8a4f93306f3d154d471, type: 3}
+  <DestroyEffect>k__BackingField: {fileID: 100006, guid: bf98fad54e73fb8448b7b1b9ba4fd0b6, type: 3}
   <Altitude>k__BackingField: 0
   <MapLayers>k__BackingField: 01000000
   ShowIndicators: 1
@@ -441,8 +440,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <Mass>k__BackingField: 10
   <Value>k__BackingField:
-    <Current>k__BackingField: 10
-    <Max>k__BackingField: 10
+    <Current>k__BackingField: 100
+    <Max>k__BackingField: 100
 --- !u!114 &5874275229390842670
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -491,31 +490,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <Mass>k__BackingField: 10
   <Range>k__BackingField: 10
---- !u!114 &1355060217967378662
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6014288322611724604}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9f7fc2f43637b07428d9ff8d0e38edaa, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  <Mass>k__BackingField: 10
-  RaiseResourceFlags: 0
-  <ResourceUsage>k__BackingField: 1
-  <Resources>k__BackingField:
-    <Items>k__BackingField:
-    - <Current>k__BackingField: 0
-      <Max>k__BackingField: 100
-      <Name>k__BackingField: Ammunition
-      <Direction>k__BackingField: 1
-    - <Current>k__BackingField: 0
-      <Max>k__BackingField: 100
-      <Name>k__BackingField: Fuel
-      <Direction>k__BackingField: 1
 --- !u!1 &6031723413405379455
 GameObject:
   m_ObjectHideFlags: 0

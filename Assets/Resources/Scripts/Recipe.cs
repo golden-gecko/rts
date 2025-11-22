@@ -19,7 +19,7 @@ public class Recipe
 
     public string Name { get; }
 
-    public int Sum { get => ToConsume.Items.Sum(x => x.Max) + ToProduce.Items.Sum(x => x.Max); }
+    public int MaxSum { get => ToConsume.Items.Sum(x => x.Max) + ToProduce.Items.Sum(x => x.Max); }
 
     public ResourceContainer ToConsume { get; } = new ResourceContainer();
 

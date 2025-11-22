@@ -128,11 +128,19 @@ public class ResourceContainer
         return info;
     }
 
-    public int Sum
+    public int StorageSum
     {
         get
         {
             return Items.Sum(x => x.Storage);
+        }
+    }
+
+    public int MaxSum
+    {
+        get
+        {
+            return Items.Sum(x => x.Max);
         }
     }
 

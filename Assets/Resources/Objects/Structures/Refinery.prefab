@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4262503358762097775}
-  - component: {fileID: 7504040638762096776}
+  - component: {fileID: -7676102801510571420}
   - component: {fileID: -4551247160317035928}
   - component: {fileID: -8543086153947244168}
   m_Layer: 0
@@ -36,7 +36,7 @@ Transform:
   - {fileID: 5087519312465961641}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &7504040638762096776
+--- !u!114 &-7676102801510571420
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -45,12 +45,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 3489344766907041493}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 55882a302a85f3e4caf7123b48f11e3c, type: 3}
+  m_Script: {fileID: 11500000, guid: 28d73f8fbe8af464f8ccdeabaf462443, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   <Player>k__BackingField: {fileID: 0}
   <Enabled>k__BackingField: 1
-  <Powerable>k__BackingField: 1
+  <Powerable>k__BackingField: 0
   <Gatherable>k__BackingField: 0
   <Selectable>k__BackingField: 1
   <Health>k__BackingField:
@@ -65,7 +65,6 @@ MonoBehaviour:
   <ExpirationTimer>k__BackingField:
     <Current>k__BackingField: -1
     <Max>k__BackingField: -1
-  <PowerUsage>k__BackingField: 1
 --- !u!114 &-4551247160317035928
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -79,6 +78,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   <Mass>k__BackingField: 10
+  <RecipesNames>k__BackingField:
+  - Charcoal
+  - Fuel
+  - Iron
   <ResourceUsage>k__BackingField: 1
 --- !u!114 &-8543086153947244168
 MonoBehaviour:
@@ -108,6 +111,10 @@ MonoBehaviour:
     - <Current>k__BackingField: 0
       <Max>k__BackingField: 100
       <Name>k__BackingField: Iron Ore
+      <Direction>k__BackingField: 0
+    - <Current>k__BackingField: 0
+      <Max>k__BackingField: 100
+      <Name>k__BackingField: Wood
       <Direction>k__BackingField: 0
 --- !u!1 &6584118895394831751
 GameObject:

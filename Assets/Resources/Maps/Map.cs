@@ -5,7 +5,7 @@ public class Map : MonoBehaviour
 {
     public static Map Instance { get; private set; }
 
-    protected void Awake()
+    void Awake()
     {
         if (Instance != null && Instance != this)
         {

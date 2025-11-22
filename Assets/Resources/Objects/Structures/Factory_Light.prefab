@@ -366,7 +366,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7263823035188942402}
-  - component: {fileID: 855856442431241174}
+  - component: {fileID: -3752629039536107593}
   - component: {fileID: 7764472481935986510}
   - component: {fileID: 418980675449498400}
   m_Layer: 0
@@ -393,7 +393,7 @@ Transform:
   - {fileID: 3831779494737727184}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &855856442431241174
+--- !u!114 &-3752629039536107593
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -402,12 +402,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 8035996494400900344}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 422399f355b302b48b6c6f824de17310, type: 3}
+  m_Script: {fileID: 11500000, guid: 28d73f8fbe8af464f8ccdeabaf462443, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   <Player>k__BackingField: {fileID: 0}
   <Enabled>k__BackingField: 1
-  <Powerable>k__BackingField: 1
+  <Powerable>k__BackingField: 0
   <Gatherable>k__BackingField: 0
   <Selectable>k__BackingField: 1
   <Health>k__BackingField:
@@ -422,7 +422,6 @@ MonoBehaviour:
   <ExpirationTimer>k__BackingField:
     <Current>k__BackingField: -1
     <Max>k__BackingField: -1
-  <PowerUsage>k__BackingField: 1
 --- !u!114 &7764472481935986510
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -436,6 +435,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   <Mass>k__BackingField: 10
+  <Prefabs>k__BackingField:
+  - Grav_Light
+  - Harvester
+  - Quad
+  - Trike
   <ResourceUsage>k__BackingField: 2
   <RallyPoint>k__BackingField: {x: 0, y: 0, z: 0}
 --- !u!114 &418980675449498400

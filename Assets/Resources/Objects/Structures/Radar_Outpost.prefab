@@ -115,8 +115,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6504265835304142702}
-  - component: {fileID: 1102883837138704583}
-  - component: {fileID: 6175888824097214427}
+  - component: {fileID: 6136798559353269400}
   - component: {fileID: 5196037313112179487}
   m_Layer: 0
   m_Name: Radar_Outpost
@@ -142,7 +141,7 @@ Transform:
   - {fileID: 4687760567939623609}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1102883837138704583
+--- !u!114 &6136798559353269400
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -151,12 +150,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 5838947687989452244}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 75a105c4038956f4fa092c098697e490, type: 3}
+  m_Script: {fileID: 11500000, guid: 28d73f8fbe8af464f8ccdeabaf462443, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   <Player>k__BackingField: {fileID: 0}
   <Enabled>k__BackingField: 1
-  <Powerable>k__BackingField: 1
+  <Powerable>k__BackingField: 0
   <Gatherable>k__BackingField: 0
   <Selectable>k__BackingField: 1
   <Health>k__BackingField:
@@ -165,26 +164,12 @@ MonoBehaviour:
   <EnableTime>k__BackingField: 2
   <WaitTime>k__BackingField: 2
   <DestroyEffect>k__BackingField: {fileID: 100008, guid: 06736895ea0a4ff408d25e6684dce797, type: 3}
-  <TimeToLive>k__BackingField: -1
   <Altitude>k__BackingField: 0
   <MapLayers>k__BackingField: 01000000
   ShowIndicators: 1
-  <PowerUsage>k__BackingField: 1
---- !u!114 &6175888824097214427
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5838947687989452244}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0e14426d1d972e847bab0e3e66e78bcf, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  <Mass>k__BackingField: 10
-  <Range>k__BackingField: 30
-  <Anti>k__BackingField: 0
+  <ExpirationTimer>k__BackingField:
+    <Current>k__BackingField: -1
+    <Max>k__BackingField: -1
 --- !u!114 &5196037313112179487
 MonoBehaviour:
   m_ObjectHideFlags: 0

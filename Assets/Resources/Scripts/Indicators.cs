@@ -35,7 +35,6 @@ public class Indicators : MonoBehaviour
         bar.transform.LookAt(Camera.main.transform.position);
         bar.transform.Rotate(0.0f, 180.0f, 0.0f);
 
-        Storage storage = myGameObject.GetComponent<Storage>(); // TODO: Add support for multiple components.
 
         // Update armour.
         Armour armour = myGameObject.GetComponent<Armour>();
@@ -51,9 +50,11 @@ public class Indicators : MonoBehaviour
         }
 
         // Update ammunition.
-        if (storage != null)
+        Gun gun = myGameObject.GetComponent<Gun>(); // TODO: Add support for multiple components.
+
+        if (gun != null)
         {
-            barAmmunition.fillAmount = storage.Resources.Percent("Ammunition");
+            barAmmunition.fillAmount = gun.Ammunition.Percent;
             barAmmunition.gameObject.SetActive(true);
         }
         else
@@ -62,9 +63,11 @@ public class Indicators : MonoBehaviour
         }
 
         // Update fuel.
-        if (storage != null)
+        Engine engine = myGameObject.GetComponent<Engine>(); // TODO: Add support for multiple components.
+
+        if (engine != null)
         {
-            barFuel.fillAmount = storage.Resources.Percent("Fuel");
+            barFuel.fillAmount = engine.Fuel.Percent;
             barFuel.gameObject.SetActive(true);
         }
         else
