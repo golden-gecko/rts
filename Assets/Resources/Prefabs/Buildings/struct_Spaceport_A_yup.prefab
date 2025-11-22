@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 219273952898286167}
   - component: {fileID: 2661613320149104285}
   - component: {fileID: 2406117398479601904}
-  - component: {fileID: 3238146411990552862}
+  - component: {fileID: 3365978049829374156}
   m_Layer: 0
   m_Name: struct_Spaceport_A_yup
   m_TagString: Untagged
@@ -106,7 +106,7 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 15.000001, y: 8.089302, z: 10.000002}
   m_Center: {x: 0, y: 4.044651, z: 0}
---- !u!114 &3238146411990552862
+--- !u!114 &3365978049829374156
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

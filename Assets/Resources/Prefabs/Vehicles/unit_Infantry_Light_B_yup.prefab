@@ -262,7 +262,7 @@ GameObject:
   - component: {fileID: 5238706308051086769}
   - component: {fileID: 8022996608837441915}
   - component: {fileID: -5267757734042168109}
-  - component: {fileID: 2861938857484470400}
+  - component: {fileID: 8265667187964065338}
   m_Layer: 0
   m_Name: unit_Infantry_Light_B_yup
   m_TagString: Untagged
@@ -358,7 +358,7 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.82702863, y: 1.2635179, z: 0.27449083}
   m_Center: {x: -0.00000014901161, y: 0.8544016, z: -0.000000007450581}
---- !u!114 &2861938857484470400
+--- !u!114 &8265667187964065338
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

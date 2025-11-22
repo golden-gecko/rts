@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UIElements;
 
@@ -94,42 +95,42 @@ public class InGameMenuController : MonoBehaviour
         prefabs.Clear();
 
         // TODO: AssetDatabase does not work outside editor.
-        var prefabList = new List<string>()
+        var prefabList = new Dictionary<string, PrefabConstructionType>()
         {
-            "Prefabs/Buildings/struct_Barracks_A_yup",
-            "Prefabs/Buildings/struct_Factory_Heavy_A_yup",
-            "Prefabs/Buildings/struct_Factory_Light_A_yup",
-            "Prefabs/Buildings/struct_Headquarters_A_yup",
-            "Prefabs/Buildings/struct_Misc_Building_B_yup",
-            "Prefabs/Buildings/struct_Radar_Outpost_A_yup",
-            "Prefabs/Buildings/struct_Refinery_A_yup",
-            "Prefabs/Buildings/struct_Research_Lab_A_yup",
-            "Prefabs/Buildings/struct_Spaceport_A_yup",
-            "Prefabs/Buildings/struct_Turret_Gun_A_yup",
-            "Prefabs/Buildings/struct_Turret_Missile_A_yup",
-            "Prefabs/Buildings/struct_Wall_A_yup",
-            "Prefabs/Vehicles/unit_Grav_Light_A_yup",
-            "Prefabs/Vehicles/unit_Harvester_A_yup",
-            "Prefabs/Vehicles/unit_Infantry_Light_B_yup",
-            "Prefabs/Vehicles/unit_Quad_A_yup",
-            "Prefabs/Vehicles/unit_Tank_Combat_A_yup",
-            "Prefabs/Vehicles/unit_Tank_Missile_A_yup",
-            "Prefabs/Vehicles/unit_Trike_A_yup",
+            { "Prefabs/Buildings/struct_Barracks_A_yup", PrefabConstructionType.Structure },
+            { "Prefabs/Buildings/struct_Factory_Heavy_A_yup", PrefabConstructionType.Structure },
+            { "Prefabs/Buildings/struct_Factory_Light_A_yup", PrefabConstructionType.Structure },
+            { "Prefabs/Buildings/struct_Headquarters_A_yup", PrefabConstructionType.Structure },
+            { "Prefabs/Buildings/struct_Misc_Building_B_yup", PrefabConstructionType.Structure },
+            { "Prefabs/Buildings/struct_Radar_Outpost_A_yup", PrefabConstructionType.Structure },
+            { "Prefabs/Buildings/struct_Refinery_A_yup", PrefabConstructionType.Structure },
+            { "Prefabs/Buildings/struct_Research_Lab_A_yup", PrefabConstructionType.Structure },
+            { "Prefabs/Buildings/struct_Spaceport_A_yup", PrefabConstructionType.Structure },
+            { "Prefabs/Buildings/struct_Turret_Gun_A_yup", PrefabConstructionType.Structure },
+            { "Prefabs/Buildings/struct_Turret_Missile_A_yup", PrefabConstructionType.Structure },
+            { "Prefabs/Buildings/struct_Wall_A_yup", PrefabConstructionType.Structure },
+            { "Prefabs/Vehicles/unit_Grav_Light_A_yup", PrefabConstructionType.Unit },
+            { "Prefabs/Vehicles/unit_Harvester_A_yup", PrefabConstructionType.Unit },
+            { "Prefabs/Vehicles/unit_Infantry_Light_B_yup", PrefabConstructionType.Unit },
+            { "Prefabs/Vehicles/unit_Quad_A_yup", PrefabConstructionType.Unit },
+            { "Prefabs/Vehicles/unit_Tank_Combat_A_yup", PrefabConstructionType.Unit },
+            { "Prefabs/Vehicles/unit_Tank_Missile_A_yup", PrefabConstructionType.Unit },
+            { "Prefabs/Vehicles/unit_Trike_A_yup", PrefabConstructionType.Unit },
         };
 
         foreach (var i in prefabList)
         {
             var buttonContainer = templateButton.Instantiate();
             var button = buttonContainer.Q<Button>();
-            var resource = Resources.Load<MyGameObject>(i);
+            var resource = Resources.Load<MyGameObject>(i.Key);
 
-            button.RegisterCallback<ClickEvent>(ev => OnConstruct(i));
+            button.RegisterCallback<ClickEvent>(ev => OnConstruct(i.Key, i.Value));
             button.style.display = DisplayStyle.None;
-            button.text = Path.GetFileName(i).Replace("struct_", "").Replace("unit_", "").Replace("_A_yup", "").Replace("_B_yup", "").Replace("_", " ");
+            button.text = Path.GetFileName(i.Key).Replace("struct_", "").Replace("unit_", "").Replace("_A_yup", "").Replace("_B_yup", "").Replace("_", " ");
             button.userData = i;
 
             prefabs.Add(buttonContainer);
-            prefabsButtons[i] = button;
+            prefabsButtons[i.Key] = button;
         }
     }
 
@@ -163,7 +164,7 @@ public class InGameMenuController : MonoBehaviour
 
     void UpdatePrefabs()
     {
-        var whitelist = new Dictionary<string, PrefabConstructionType>();
+        var whitelist = new HashSet<string>();
 
         foreach (var selected in hud.Selected)
         {
@@ -174,7 +175,7 @@ public class InGameMenuController : MonoBehaviour
 
             foreach (var prefab in selected.Orders.PrefabWhitelist)
             {
-                whitelist[prefab.Key] = prefab.Value;
+                whitelist.Add(prefab);
             }
         }
 
@@ -185,17 +186,28 @@ public class InGameMenuController : MonoBehaviour
 
         foreach (var i in whitelist)
         {
-            if (prefabsButtons.ContainsKey(i.Key))
+            if (prefabsButtons.ContainsKey(i))
             {
-                prefabsButtons[i.Key].style.display = DisplayStyle.Flex;
+                prefabsButtons[i].style.display = DisplayStyle.Flex;
             }
         }
     }
 
-    void OnConstruct(string prefab)
+    void OnConstruct(string prefab, PrefabConstructionType prefabConstructionType)
     {
         hud.Order = OrderType.Construct;
+        hud.PrefabConstructionType = prefabConstructionType; // TODO: Put both into class. Order is important.
         hud.Prefab = prefab;
+
+        switch (prefabConstructionType)
+        {
+            case PrefabConstructionType.Structure:
+                break;
+
+            case PrefabConstructionType.Unit:
+                hud.ConstructUnit();
+                break;
+        }
     }
 
     void OnOrder(OrderType orderType)
@@ -220,5 +232,4 @@ public class InGameMenuController : MonoBehaviour
 
     Dictionary<OrderType, Button> ordersButtons;
     Dictionary<string, Button> prefabsButtons;
-
 }

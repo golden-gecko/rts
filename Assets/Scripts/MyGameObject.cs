@@ -1,13 +1,12 @@
 using System.Collections.Generic;
 using Unity.VisualScripting;
-using UnityEditor.Build;
 using UnityEngine;
 using UnityEngine.Events;
-using static UnityEngine.GraphicsBuffer;
 
 public enum MyGameObjectState
 {
     Operational,
+    UnderAssembly,
     UnderConstruction,
 }
 
@@ -19,7 +18,6 @@ public class MyGameObject : MonoBehaviour
         Resources = new ResourceContainer();
         Recipes = new RecipeContainer();
         Stats = new Stats();
-        ConstructionQueue = new List<MyGameObject>();
 
         OrderHandlers = new Dictionary<OrderType, UnityAction>()
         {
@@ -66,6 +64,9 @@ public class MyGameObject : MonoBehaviour
                 RaiseResourceFlags();
                 break;
 
+            case MyGameObjectState.UnderAssembly:
+                break;
+
             case MyGameObjectState.UnderConstruction:
                 RaiseConstructionResourceFlags();
                 break;
@@ -105,9 +106,14 @@ public class MyGameObject : MonoBehaviour
         Orders.Add(new Order(OrderType.Attack, target));
     }
 
-    public void Construct(MyGameObject target, PrefabConstructionType prefabConstructionType)
+    public void Construct(string prefab, PrefabConstructionType prefabConstructionType)
     {
-        Orders.Add(new Order(OrderType.Construct, target, prefabConstructionType, ConstructionTime));
+        Orders.Add(new Order(OrderType.Construct, prefab, prefabConstructionType, ConstructionTime));
+    }
+
+    public void Construct(string prefab, PrefabConstructionType prefabConstructionType, Vector3 target)
+    {
+        Orders.Add(new Order(OrderType.Construct, prefab, prefabConstructionType, target, ConstructionTime));
     }
 
     public void Guard(Vector3 target)
@@ -205,6 +211,78 @@ public class MyGameObject : MonoBehaviour
 
     protected virtual void OnOrderConstruct()
     {
+        var order = Orders.First();
+
+        switch (order.PrefabConstructionType)
+        {
+            case PrefabConstructionType.Structure:
+                if (IsCloseTo(order.TargetPosition + new Vector3(0, 0, 1)) == false)
+                {
+                    Move(order.TargetPosition + new Vector3(0, 0, 1), 0); // TODO: Add offset based on object size.
+                }
+                else if (order.TargetGameObject == null)
+                {
+                    var resource = UnityEngine.Resources.Load<MyGameObject>(order.Prefab); // TODO: Remove name conflict.
+
+                    order.TargetGameObject = Instantiate<MyGameObject>(resource, order.TargetPosition, Quaternion.identity);
+                    order.TargetGameObject.State = MyGameObjectState.UnderConstruction;
+                }
+                else if (order.TargetGameObject.IsConstructed())
+                {
+                    order.Timer.Update(Time.deltaTime);
+
+                    if (order.Timer.Finished)
+                    {
+                        order.TargetGameObject.State = MyGameObjectState.Operational;
+                        order.Timer.Reset();
+
+                        Orders.Pop();
+
+                        Stats.Add(Stats.OrdersExecuted, 1);
+                        Stats.Add(Stats.TimeConstructing, order.Timer.Max);
+                    }
+                }
+                else
+                {
+                    Wait(0);
+                }
+
+                break;
+
+            case PrefabConstructionType.Unit:
+                if (order.TargetGameObject == null)
+                {
+                    var resource = UnityEngine.Resources.Load<MyGameObject>(order.Prefab); // TODO: Remove name conflict.
+
+                    order.TargetGameObject = Instantiate<MyGameObject>(resource, Exit, Quaternion.identity);
+                    order.TargetGameObject.State = MyGameObjectState.UnderAssembly;
+                }
+                else if (order.TargetGameObject.IsConstructed() == false)
+                {
+                    MoveResourcesToUnit(order);
+                }
+                else if (order.TargetGameObject.IsConstructed())
+                {
+                    order.Timer.Update(Time.deltaTime);
+
+                    if (order.Timer.Finished)
+                    {
+                        order.TargetGameObject.State = MyGameObjectState.Operational;
+                        order.Timer.Reset();
+
+                        Orders.Pop();
+
+                        Stats.Add(Stats.OrdersExecuted, 1);
+                        Stats.Add(Stats.TimeConstructing, order.Timer.Max);
+                    }
+                }
+                else
+                {
+                    Wait(0);
+                }
+
+                break;
+        }
     }
 
     protected virtual void OnOrderFollow()
@@ -525,7 +603,7 @@ public class MyGameObject : MonoBehaviour
 
             Orders.Pop();
 
-            Stats.Add(Stats.OrdersExecuted, 1);
+            // Stats.Add(Stats.OrdersExecuted, 1); // TODO: Should we count wait as order?
             Stats.Add(Stats.TimeWaiting, order.Timer.Max);
         }
     }
@@ -656,6 +734,23 @@ public class MyGameObject : MonoBehaviour
         }
     }
 
+    void MoveResourcesToUnit(Order order)
+    {
+        foreach (var i in order.TargetGameObject.ConstructionResources)
+        {
+            var capacity = i.Value.Capacity();
+            var storage = Resources.Storage(i.Key);
+
+            var value = Mathf.Min(new int[] { capacity, storage });
+
+            if (value > 0)
+            {
+                Resources.Remove(i.Key, value);
+                i.Value.Add(value);
+            }
+        }
+    }
+
     public bool IsCloseTo(Vector3 position)
     {
         var a = position;
@@ -674,6 +769,16 @@ public class MyGameObject : MonoBehaviour
             var size = GetComponent<Collider>().bounds.size;
 
             return new Vector3(transform.position.x, transform.position.y, transform.position.z + size.z * 0.75f);
+        }
+    }
+
+    public Vector3 Exit
+    {
+        get
+        {
+            var size = GetComponent<Collider>().bounds.size;
+
+            return new Vector3(transform.position.x, transform.position.y, transform.position.z - size.z * 0.75f);
         }
     }
 
@@ -710,6 +815,4 @@ public class MyGameObject : MonoBehaviour
     public ResourceContainer ConstructionResources { get; private set; }
 
     public RecipeContainer ConstructionRecipies { get; private set; }
-
-    public List<MyGameObject> ConstructionQueue { get; private set; }
 }

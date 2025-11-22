@@ -1,3 +1,5 @@
+using UnityEngine;
+
 public class unit_Infantry_Light_B_yup : MyGameObject
 {
     protected override void Start()
