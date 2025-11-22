@@ -19,6 +19,7 @@ public class InGameMenuController : MonoBehaviour
         order = rootVisualElement.Q<Label>("Order");
         prefab = rootVisualElement.Q<Label>("Prefab");
         selected = rootVisualElement.Q<Label>("Selected");
+        info = rootVisualElement.Q<Label>("Info");
 
         var construct = rootVisualElement.Q<Button>("Construct");
         var follow = rootVisualElement.Q<Button>("Follow");
@@ -62,6 +63,15 @@ public class InGameMenuController : MonoBehaviour
         order.text = "Order: " + hud.Order.ToString();
         prefab.text = "Prefab: " + hud.Prefab;
         selected.text = "Selected: " + hud.Selected.Count;
+
+        if (hud.Selected.Count > 0)
+        {
+            info.text = hud.Selected[0].GetInfo();
+        }
+        else
+        {
+            info.text = "";
+        }
     }
 
     void OnConstruct(string prefab)
@@ -79,6 +89,7 @@ public class InGameMenuController : MonoBehaviour
     Label order;
     Label prefab;
     Label selected;
+    Label info;
 
     HUD hud;
 }

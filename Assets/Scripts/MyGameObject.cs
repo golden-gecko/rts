@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
@@ -51,6 +52,7 @@ public class MyGameObject : MonoBehaviour
         }
         else
         {
+            // TODO: Enable.
             // Idle();
         }
     }
@@ -111,7 +113,7 @@ public class MyGameObject : MonoBehaviour
 
     public void Stop()
     {
-        Orders.Add(new Order(OrderType.Stop));
+        Orders.Insert(0, new Order(OrderType.Stop));
     }
 
     public void Transport(MyGameObject source, MyGameObject target, Dictionary<string, int> resources)
@@ -375,6 +377,11 @@ public class MyGameObject : MonoBehaviour
         Orders.Pop();
     }
 
+    public string GetInfo()
+    {
+        return String.Format("ID: {0}\nName: {1}\nHP: {2}\nSpeed: {3}", GetInstanceID(), name, Health, Speed);
+    }
+
     void MoveResources(MyGameObject source, MyGameObject target, Dictionary<string, int> resources)
     {
         foreach (var i in resources)
@@ -402,7 +409,7 @@ public class MyGameObject : MonoBehaviour
 
     public List<Recipe> Recipes { get; private set; }
 
-    public float Health { get; } = 100;
+    public float Health { get; protected set; } = 100;
 
-    public float Speed { get; } = 10;
+    public float Speed { get; protected set; } = 10;
 }

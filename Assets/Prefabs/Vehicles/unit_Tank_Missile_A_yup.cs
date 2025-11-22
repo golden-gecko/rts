@@ -7,5 +7,7 @@ public class unit_Tank_Missile_A_yup : MyGameObject
         Orders.Allow(OrderType.Attack);
         Orders.Allow(OrderType.Move);
         Orders.Allow(OrderType.Patrol);
+
+        Speed = 6;
     }
 }

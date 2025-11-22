@@ -2,14 +2,6 @@ using UnityEngine;
 
 public class FreeCamera : MonoBehaviour
 {
-    void Start()
-    {
-        if (GetComponent<Rigidbody>())
-        {
-            GetComponent<Rigidbody>().freezeRotation = true;
-        }
-    }
-
     void Update()
     {
         Translate();
@@ -18,15 +10,15 @@ public class FreeCamera : MonoBehaviour
 
     void Translate()
     {
-        var direction = new Vector3(0, 0, 0);
+        var direction = Vector3.zero;
 
-        if (Input.GetKey(KeyCode.W))
+        if (Input.GetKey(KeyCode.D))
         {
-            direction.z = Speed.z;
+            direction.x = Speed.x;
         }
-        else if (Input.GetKey(KeyCode.S))
+        else if (Input.GetKey(KeyCode.A))
         {
-            direction.z = -Speed.z;
+            direction.x = -Speed.x;
         }
 
         if (Input.GetKey(KeyCode.Q))
@@ -38,13 +30,13 @@ public class FreeCamera : MonoBehaviour
             direction.y = -Speed.y;
         }
 
-        if (Input.GetKey(KeyCode.D))
+        if (Input.GetKey(KeyCode.W))
         {
-            direction.x = Speed.x;
+            direction.z = Speed.z;
         }
-        else if (Input.GetKey(KeyCode.A))
+        else if (Input.GetKey(KeyCode.S))
         {
-            direction.x = -Speed.x;
+            direction.z = -Speed.z;
         }
 
         transform.Translate(direction * Time.deltaTime);
@@ -54,16 +46,16 @@ public class FreeCamera : MonoBehaviour
     {
         if (Input.GetMouseButton(2))
         {
-            Rotation.x = transform.localEulerAngles.y + Input.GetAxis("Mouse X") * Sensitivity.x;
-            Rotation.y += Input.GetAxis("Mouse Y") * Sensitivity.y;
+            var localEulerAngles = transform.localEulerAngles;
 
-            transform.localEulerAngles = new Vector3(-Rotation.y, Rotation.x, 0);
+            localEulerAngles.x -= Input.GetAxis("Mouse Y") * Sensitivity.x;
+            localEulerAngles.y += Input.GetAxis("Mouse X") * Sensitivity.y;
+
+            transform.localEulerAngles = localEulerAngles;
         }
     }
 
-    Vector3 Speed { get; } = new Vector3(10, 10, 10);
+    Vector3 Speed = new Vector3(10, 10, 10);
 
-    Vector2 Rotation = new Vector2(0, 0);
-
-    Vector2 Sensitivity { get; } = new Vector2(3, 3);
+    Vector2 Sensitivity = new Vector2(3, 3);
 }
