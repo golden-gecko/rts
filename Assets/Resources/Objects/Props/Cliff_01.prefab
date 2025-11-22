@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 7670644527354623450}
   - component: {fileID: 5591058165502624016}
   - component: {fileID: 393392741263230499}
+  - component: {fileID: -4426931651826566218}
   m_Layer: 0
   m_Name: Cliff_01
   m_TagString: Untagged
@@ -106,6 +107,30 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 9.483938, y: 10, z: 12.798578}
   m_Center: {x: 0, y: 5, z: 0.0000026226044}
+--- !u!114 &-4426931651826566218
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6239616025386246341}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8c29fd8b7893b2b439b8894f6ff752cc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  <Player>k__BackingField: {fileID: 0}
+  <Enabled>k__BackingField: 1
+  <Gatherable>k__BackingField: 0
+  <Selectable>k__BackingField: 1
+  <Health>k__BackingField: 100
+  <HealthMax>k__BackingField: 100
+  <EnableTime>k__BackingField: 2
+  <LoadTime>k__BackingField: 2
+  <WaitTime>k__BackingField: 2
+  <DestroyEffect>k__BackingField: {fileID: 0}
+  <Altitude>k__BackingField: 0
+  <MapLayers>k__BackingField: 
 --- !u!1001 &1758263620163903742
 PrefabInstance:
   m_ObjectHideFlags: 0
