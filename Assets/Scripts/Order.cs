@@ -5,6 +5,7 @@ public enum OrderType
 {
     Attack,
     Construct,
+    Follow,
     Guard,
     Idle,
     Move,

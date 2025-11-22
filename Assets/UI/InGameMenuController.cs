@@ -1,3 +1,4 @@
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.UIElements;
 
@@ -15,6 +16,13 @@ public class InGameMenuController : MonoBehaviour
         var uiDocument = GetComponent<UIDocument>();
         var rootVisualElement = uiDocument.rootVisualElement;
 
+        order = rootVisualElement.Q<Label>("Order");
+        prefab = rootVisualElement.Q<Label>("Prefab");
+        selected = rootVisualElement.Q<Label>("Selected");
+
+        var construct = rootVisualElement.Q<Button>("Construct");
+        var follow = rootVisualElement.Q<Button>("Follow");
+        var guard = rootVisualElement.Q<Button>("Guard");
         var load = rootVisualElement.Q<Button>("Load");
         var move = rootVisualElement.Q<Button>("Move");
         var patrol = rootVisualElement.Q<Button>("Patrol");
@@ -30,6 +38,9 @@ public class InGameMenuController : MonoBehaviour
         var researchLab = rootVisualElement.Q<Button>("ResearchLab");
         var storage = rootVisualElement.Q<Button>("Storage");
 
+        construct.RegisterCallback<ClickEvent>(ev => OnOrder(OrderType.Construct));
+        follow.RegisterCallback<ClickEvent>(ev => OnOrder(OrderType.Follow));
+        guard.RegisterCallback<ClickEvent>(ev => OnOrder(OrderType.Guard));
         load.RegisterCallback<ClickEvent>(ev => OnOrder(OrderType.Load));
         move.RegisterCallback<ClickEvent>(ev => OnOrder(OrderType.Move));
         patrol.RegisterCallback<ClickEvent>(ev => OnOrder(OrderType.Patrol));
@@ -46,23 +57,28 @@ public class InGameMenuController : MonoBehaviour
         storage.RegisterCallback<ClickEvent>(ev => OnConstruct("Storage"));
     }
 
-    void OnConstruct(string blueprint)
+    void Update()
+    {
+        order.text = "Order: " + hud.Order.ToString();
+        prefab.text = "Prefab: " + hud.Prefab;
+        selected.text = "Selected: " + hud.Selected.Count;
+    }
+
+    void OnConstruct(string prefab)
     {
         hud.Order = OrderType.Construct;
-        hud.Blueprint = blueprint;
+        hud.Prefab = prefab;
     }
 
     void OnOrder(OrderType orderType)
     {
-        if (orderType == OrderType.Stop)
-        {
-            hud.Stop();
-        }
-        else
-        {
-            hud.Order = OrderType.Load;
-        }
+        hud.Order = orderType;
+        hud.Prefab = string.Empty;
     }
+
+    Label order;
+    Label prefab;
+    Label selected;
 
     HUD hud;
 }
