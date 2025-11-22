@@ -4,6 +4,13 @@ public class Cannon : Gun
 {
     public override void Fire(MyGameObject myGameObject, Vector3 position)
     {
+        if (CanFire() == false)
+        {
+            myGameObject.Wait(0);
+
+            return;
+        }
+
         GameObject gameObject = Instantiate(MissilePrefab, myGameObject.Center, Quaternion.identity);
         Missile missile = gameObject.GetComponent<Missile>();
 
@@ -12,6 +19,10 @@ public class Cannon : Gun
 
         missile.Move(position);
         missile.Destroy();
+
+        Ammunition -= 1;
+
+        myGameObject.Stats.Inc(Stats.MissilesFired);
 
         Reload.Reset();
     }

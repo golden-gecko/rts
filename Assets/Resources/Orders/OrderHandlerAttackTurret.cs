@@ -41,8 +41,6 @@ public class OrderHandlerAttackTurret : OrderHandler
             if (myGameObject.GetComponent<Gun>().Reload.Finished)
             {
                 myGameObject.GetComponent<Gun>().Fire(myGameObject, position);
-                myGameObject.Orders.MoveToEnd();
-                myGameObject.Stats.Inc(Stats.MissilesFired);
             }
         }
     }

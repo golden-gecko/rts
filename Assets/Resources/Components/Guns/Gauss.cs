@@ -4,6 +4,13 @@ public class Gauss : Gun
 {
     public override void Fire(MyGameObject myGameObject, Vector3 position)
     {
+        if (CanFire() == false)
+        {
+            myGameObject.Wait(0);
+
+            return;
+        }
+
         GameObject gameObject = Instantiate(MissilePrefab, myGameObject.Center, Quaternion.identity);
         Missile missile = gameObject.GetComponent<Missile>();
 
@@ -15,6 +22,10 @@ public class Gauss : Gun
 
         missile.Wait();
         missile.Destroy();
+
+        Ammunition -= 1;
+
+        myGameObject.Stats.Inc(Stats.MissilesFired);
 
         Reload.Reset();
     }

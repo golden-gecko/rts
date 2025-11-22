@@ -27,7 +27,12 @@ public class Gun : MyComponent
 
     public override string GetInfo()
     {
-        return string.Format("{0}, Reload: {1}", base.GetInfo(), Reload.GetInfo());
+        return string.Format("{0}, Reload: {1} Ammunition: {2}/{3}", base.GetInfo(), Reload.GetInfo(), Ammunition, AmmunitionMax);
+    }
+
+    public virtual bool CanFire()
+    {
+        return Ammunition > 0; // TODO: Add cooldown timer here.
     }
 
     public virtual void Fire(MyGameObject myGameObject, Vector3 position)
@@ -45,6 +50,12 @@ public class Gun : MyComponent
 
     [field: SerializeField]
     public GameObject MissilePrefab { get; set; }
+
+    [field: SerializeField]
+    public int Ammunition { get; set; } = 100;
+    
+    [field: SerializeField]
+    public int AmmunitionMax { get; set; } = 100;
 
     public Timer Reload { get; } = new Timer();
 }
