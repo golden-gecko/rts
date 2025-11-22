@@ -1,15 +1,15 @@
-public class OrderHandlerIdleWorker : IOrderHandler
+public class OrderHandlerIdleWorker : OrderHandler
 {
-    public bool IsValid(Order order)
+    public override void OnExecute(MyGameObject myGameObject)
     {
-        return true;
-    }
+        Order order = myGameObject.Player.CreateOrderUnload(myGameObject);
 
-    public void OnExecute(MyGameObject myGameObject)
-    {
-        Order order;
-        
-        // TODO: Find unload job.
+        if (order != null)
+        {
+            myGameObject.Orders.Add(order);
+
+            return;
+        }
 
         order = myGameObject.Player.CreateOrderTransport(myGameObject);
 
@@ -38,6 +38,6 @@ public class OrderHandlerIdleWorker : IOrderHandler
             return;
         }
 
-        myGameObject.Orders.Add(Order.Wait(myGameObject.WaitTime));
+        myGameObject.Orders.Add(Order.Wait());
     }
 }

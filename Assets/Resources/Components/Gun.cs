@@ -13,7 +13,11 @@ public class Gun : MyComponent
 
     protected override void Update()
     {
-        if (GetComponent<MyGameObject>().Enabled == false)
+        base.Update();
+
+        MyGameObject parent = GetComponent<MyGameObject>();
+
+        if (parent.Working == false)
         {
             return;
         }

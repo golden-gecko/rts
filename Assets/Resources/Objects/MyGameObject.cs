@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class MyGameObject : MonoBehaviour
@@ -8,12 +9,13 @@ public class MyGameObject : MonoBehaviour
         visual = transform.Find("Visual");
 
         rangeGun = visual.transform.Find("Range_Gun");
+        rangePower = visual.transform.Find("Range_Power");
         rangeRadar = visual.transform.Find("Range_Radar");
         rangeSight = visual.transform.Find("Range_Sight");
         selection = visual.transform.Find("Selection");
         trace = visual.transform.Find("Trace");
 
-        Orders.AllowOrder(OrderType.Destroy); // TODO: Move to component.
+        Orders.AllowOrder(OrderType.Destroy); // TODO: Move order whitelist to component.
         Orders.AllowOrder(OrderType.Disable);
         Orders.AllowOrder(OrderType.Enable);
         Orders.AllowOrder(OrderType.Idle);
@@ -21,42 +23,22 @@ public class MyGameObject : MonoBehaviour
         Orders.AllowOrder(OrderType.Stop);
         Orders.AllowOrder(OrderType.Wait);
 
-        OrderHandlers[OrderType.Assemble] = new OrderHandlerAssemble();
-        OrderHandlers[OrderType.Construct] = new OrderHandlerConstruct();
         OrderHandlers[OrderType.Destroy] = new OrderHandlerDestroy();
         OrderHandlers[OrderType.Disable] = new OrderHandlerDisable();
         OrderHandlers[OrderType.Enable] = new OrderHandlerEnable();
-        OrderHandlers[OrderType.Explore] = new OrderHandlerExplore();
-        OrderHandlers[OrderType.Follow] = new OrderHandlerFollow();
-        OrderHandlers[OrderType.Gather] = new OrderHandlerGather();
-        OrderHandlers[OrderType.Guard] = new OrderHandlerGuard();
-        OrderHandlers[OrderType.Load] = new OrderHandlerLoad();
-        OrderHandlers[OrderType.Move] = new OrderHandlerMove();
-        OrderHandlers[OrderType.Patrol] = new OrderHandlerPatrol();
-        OrderHandlers[OrderType.Produce] = new OrderHandlerProduce();
-        OrderHandlers[OrderType.Rally] = new OrderHandlerRally();
-        OrderHandlers[OrderType.Research] = new OrderHandlerResearch();
         OrderHandlers[OrderType.Stop] = new OrderHandlerStop();
-        OrderHandlers[OrderType.Transport] = new OrderHandlerTransport();
-        OrderHandlers[OrderType.Unload] = new OrderHandlerUnload();
         OrderHandlers[OrderType.UseSkill] = new OrderHandlerUseSkill();
         OrderHandlers[OrderType.Wait] = new OrderHandlerWait();
 
         ConstructionResources.Add("Iron", 0, 30, ResourceDirection.In);
 
-        Recipe r1 = new Recipe("Iron");
-
+        Recipe r1 = new Recipe("Iron"); // TODO: Remove.
         r1.Consumes("Iron", 30);
-
         ConstructionRecipies.Add(r1);
 
-        foreach (Player player in GameObject.Find("Players").GetComponentsInChildren<Player>(true))
-        {
-            VisibleByRadar[player] = new HashSet<MyGameObject>();
-            VisibleBySight[player] = new HashSet<MyGameObject>();
-        }
-
         LiveTimer.Max = TimeToLive;
+
+        Stats.Player = Player;
     }
 
     protected virtual void Start()
@@ -78,28 +60,31 @@ public class MyGameObject : MonoBehaviour
             Destroy(0);
         }
 
-        switch (State)
+        if (Working)
         {
-            case MyGameObjectState.Operational:
-                if (Enabled)
-                {
+            switch (State)
+            {
+                case MyGameObjectState.Operational:
                     ProcessOrders();
-                    RaiseResourceFlags(); // TODO: Remove flags when disabled.
-                }
-                break;
+                    RaiseResourceFlags();
+                    break;
 
-            case MyGameObjectState.UnderAssembly:
-                break;
+                case MyGameObjectState.UnderAssembly:
+                    break;
 
-            case MyGameObjectState.UnderConstruction:
-                if (Enabled)
-                {
-                    RaiseConstructionResourceFlags(); // TODO: Remove flags when disabled.
-                }
-                break;
+                case MyGameObjectState.UnderConstruction:
+                    RaiseConstructionResourceFlags();
+                    break;
+            }
+
+            UpdateSkills();
+        }
+        else
+        {
+            RemoveResourceFlags();
+            RemoveConstructionResourceFlags();
         }
 
-        UpdateSkills();
         UpdateSelectionPosition();
         UpdateVisibility();
     }
@@ -129,6 +114,7 @@ public class MyGameObject : MonoBehaviour
         Vector3 position = Map.Instance.CameraPositionHandler.GetPosition(Position);
 
         rangeGun.position = position;
+        rangePower.position = position;
         rangeRadar.position = position;
         rangeSight.position = position;
     }
@@ -177,7 +163,7 @@ public class MyGameObject : MonoBehaviour
     }
     public void Assemble(string prefab)
     {
-        Orders.Add(Order.Assemble(prefab, GetComponent<Constructor>().ResourceUsage));
+        Orders.Add(Order.Assemble(prefab));
     }
 
     public void Attack(Vector3 position)
@@ -185,14 +171,19 @@ public class MyGameObject : MonoBehaviour
         Orders.Add(Order.Attack(position));
     }
 
-    public void Attack(MyGameObject target)
+    public void Attack(MyGameObject myGameObject)
     {
-        Orders.Add(Order.Attack(target));
+        Orders.Add(Order.Attack(myGameObject));
+    }
+
+    public void Construct(MyGameObject myGameObject)
+    {
+        Orders.Add(Order.Construct(myGameObject));
     }
 
     public void Construct(string prefab, Vector3 position)
     {
-        Orders.Add(Order.Construct(prefab, position, GetComponent<Constructor>().ResourceUsage));
+        Orders.Add(Order.Construct(prefab, position));
     }
 
     public void Destroy(int priority = -1)
@@ -211,11 +202,11 @@ public class MyGameObject : MonoBehaviour
     {
         if (0 <= priority && priority < Orders.Count)
         {
-            Orders.Insert(priority, Order.Disable(EnableTime));
+            Orders.Insert(priority, Order.Disable());
         }
         else
         {
-            Orders.Add(Order.Disable(EnableTime));
+            Orders.Add(Order.Disable());
         }
     }
 
@@ -223,11 +214,11 @@ public class MyGameObject : MonoBehaviour
     {
         if (0 <= priority && priority < Orders.Count)
         {
-            Orders.Insert(priority, Order.Enable(EnableTime));
+            Orders.Insert(priority, Order.Enable());
         }
         else
         {
-            Orders.Add(Order.Enable(EnableTime));
+            Orders.Add(Order.Enable());
         }
     }
 
@@ -239,6 +230,11 @@ public class MyGameObject : MonoBehaviour
     public void Follow(MyGameObject myGameObject)
     {
         Orders.Add(Order.Follow(myGameObject));
+    }
+
+    public void Gather(MyGameObject myGameObject)
+    {
+        Orders.Add(Order.Gather(myGameObject));
     }
 
     public void Gather(string resource = "")
@@ -256,15 +252,15 @@ public class MyGameObject : MonoBehaviour
         Orders.Add(Order.Guard(myGameObject));
     }
 
-    public void Load(MyGameObject target, Dictionary<string, int> resources, int priority = -1)
+    public void Load(MyGameObject myGameObject, string resource, int value, int priority = -1)
     {
         if (0 <= priority && priority < Orders.Count)
         {
-            Orders.Insert(priority, Order.Load(target, resources, LoadTime));
+            Orders.Insert(priority, Order.Load(myGameObject, resource, value));
         }
         else
         {
-            Orders.Add(Order.Load(target, resources, LoadTime));
+            Orders.Add(Order.Load(myGameObject, resource, value));
         }
     }
 
@@ -287,7 +283,7 @@ public class MyGameObject : MonoBehaviour
 
     public void Produce(string recipe = "")
     {
-        Orders.Add(Order.Produce(recipe, GetComponent<Producer>().ResourceUsage));
+        Orders.Add(Order.Produce(recipe));
     }
 
     public void Rally(Vector3 target, int priority = -1)
@@ -304,7 +300,7 @@ public class MyGameObject : MonoBehaviour
 
     public void Research(string technology)
     {
-        Orders.Add(Order.Research(technology, GetComponent<Researcher>().ResourceUsage));
+        Orders.Add(Order.Research(technology));
     }
 
     public void Stop()
@@ -312,29 +308,30 @@ public class MyGameObject : MonoBehaviour
         Orders.Insert(0, Order.Stop());
     }
 
-    public void Transport(MyGameObject sourceGameObject, MyGameObject targetGameObject, Dictionary<string, int> resources, int priority = -1)
+    public void Transport(MyGameObject sourceGameObject, MyGameObject targetGameObject, string resource, int value, int priority = -1)
     {
         if (0 <= priority && priority < Orders.Count)
         {
-            Orders.Insert(priority, Order.Transport(sourceGameObject, targetGameObject, resources, LoadTime));
+            Orders.Insert(priority, Order.Transport(sourceGameObject, targetGameObject, resource, value));
         }
         else
         {
-            Orders.Add(Order.Transport(sourceGameObject, targetGameObject, resources, LoadTime));
+            Orders.Add(Order.Transport(sourceGameObject, targetGameObject, resource, value));
         }
     }
 
-    public void Unload(MyGameObject target, Dictionary<string, int> resources, int priority = -1)
+    public void Unload(MyGameObject myGameObject, string resource, int value, int priority = -1)
     {
         if (0 <= priority && priority < Orders.Count)
         {
-            Orders.Insert(priority, Order.Unload(target, resources, LoadTime));
+            Orders.Insert(priority, Order.Unload(myGameObject, resource, value));
         }
         else
         {
-            Orders.Add(Order.Unload(target, resources, LoadTime));
+            Orders.Add(Order.Unload(myGameObject, resource, value));
         }
     }
+
     public void UseSkill(string skill)
     {
         Orders.Add(Order.UseSkill(skill));
@@ -344,11 +341,11 @@ public class MyGameObject : MonoBehaviour
     {
         if (0 <= priority && priority < Orders.Count)
         {
-            Orders.Insert(priority, Order.Wait(WaitTime));
+            Orders.Insert(priority, Order.Wait());
         }
         else
         {
-            Orders.Add(Order.Wait(WaitTime));
+            Orders.Add(Order.Wait());
         }
     }
 
@@ -402,6 +399,13 @@ public class MyGameObject : MonoBehaviour
                             info += string.Format("\n  {0}", skill.GetInfo());
                         }
                     }
+
+                    info += string.Format("\nEnabled: {0}", Enabled);
+                    info += string.Format("\nGatherable: {0}", Gatherable);
+                    info += string.Format("\nPowerable: {0}", Powerable);
+                    info += string.Format("\nSelectable: {0}", Selectable);
+                    info += string.Format("\nPowered: {0}", Powered);
+                    info += string.Format("\nWorking: {0}", Working);
                 }
                 break;
 
@@ -493,6 +497,14 @@ public class MyGameObject : MonoBehaviour
             rangeGun.localScale = new Vector3(gun.Range * 2.0f / scale.x, gun.Range * 2.0f / scale.z, 1.0f);
         }
 
+        PowerPlant powerPlant = GetComponent<PowerPlant>();
+
+        if (powerPlant != null)
+        {
+            rangePower.gameObject.SetActive(status);
+            rangePower.localScale = new Vector3(powerPlant.Range * 2.0f / scale.x, powerPlant.Range * 2.0f / scale.z, 1.0f);
+        }
+
         Radar radar = GetComponent<Radar>();
 
         if (radar != null)
@@ -511,23 +523,6 @@ public class MyGameObject : MonoBehaviour
 
         selection.gameObject.SetActive(status);
         selection.localScale = new Vector3(size.x * 1.1f, size.z * 1.1f, 1.0f);
-    }
-
-    public void MoveResources(MyGameObject source, MyGameObject target, Dictionary<string, int> resources)
-    {
-        foreach (KeyValuePair<string, int> i in resources)
-        {
-            source.GetComponent<Storage>().Resources.Remove(i.Key, i.Value);
-
-            if (target.State == MyGameObjectState.UnderConstruction)
-            {
-                target.ConstructionResources.Add(i.Key, i.Value);
-            }
-            else
-            {
-                target.GetComponent<Storage>().Resources.Add(i.Key, i.Value);
-            }
-        }
     }
 
     public bool IsCloseTo(Vector3 position)
@@ -615,26 +610,6 @@ public class MyGameObject : MonoBehaviour
         }
     }
 
-    private void RaiseConstructionResourceFlags()
-    {
-        foreach (Recipe recipe in ConstructionRecipies.Items.Values)
-        {
-            foreach (Resource resource in recipe.ToConsume.Items.Values)
-            {
-                int capacity = ConstructionResources.Capacity(resource.Name);
-
-                if (capacity > 0)
-                {
-                    Player.RegisterConsumer(this, resource.Name, capacity);
-                }
-                else
-                {
-                    Player.UnregisterConsumer(this, resource.Name);
-                }
-            }
-        }
-    }
-
     private void RaiseResourceFlags()
     {
         if (GetComponent<Storage>() == null)
@@ -670,19 +645,60 @@ public class MyGameObject : MonoBehaviour
         }
     }
 
-    public bool Constructed
+    private void RemoveResourceFlags()
     {
-        get
+        Storage storage = GetComponent<Storage>();
+
+        if (storage == null)
         {
-            foreach (Resource resource in ConstructionResources.Items.Values)
+            return;
+        }
+
+        foreach (string name in storage.Resources.Items.Keys)
+        {
+            Player.UnregisterConsumer(this, name);
+            Player.UnregisterProducer(this, name);
+
+        }
+    }
+
+    private void RaiseConstructionResourceFlags()
+    {
+        foreach (Resource resource in ConstructionResources.Items.Values)
+        {
+            if (resource.Direction == ResourceDirection.Both || resource.Direction == ResourceDirection.In)
             {
-                if (resource.Full == false)
+                if (resource.Full)
                 {
-                    return false;
+                    Player.UnregisterConsumer(this, resource.Name);
+                }
+                else
+                {
+                    Player.RegisterConsumer(this, resource.Name, resource.Capacity);
                 }
             }
 
-            return true;
+            if (resource.Direction == ResourceDirection.Both || resource.Direction == ResourceDirection.Out)
+            {
+                if (resource.Empty)
+                {
+                    Player.UnregisterProducer(this, resource.Name);
+                }
+                else
+                {
+                    Player.RegisterProducer(this, resource.Name, resource.Storage);
+                }
+            }
+        }
+    }
+
+    private void RemoveConstructionResourceFlags()
+    {
+        foreach (string name in ConstructionResources.Items.Keys)
+        {
+            Player.UnregisterConsumer(this, name);
+            Player.UnregisterProducer(this, name);
+
         }
     }
 
@@ -694,6 +710,7 @@ public class MyGameObject : MonoBehaviour
     public void SetPlayer(Player player)
     {
         Player = player;
+        Stats.Player = player;
 
         UpdateSelection();
     }
@@ -720,9 +737,11 @@ public class MyGameObject : MonoBehaviour
         }
     }
 
-    public Vector3 Entrance { get => Position + new Vector3(0.0f, 0.0f, Size.z + 1.0f); }
+    public Vector3 Direction { get => transform.forward; }
 
-    public Vector3 Exit { get => Position - new Vector3(0.0f, 0.0f, Size.z + 1.0f); }
+    public Vector3 Entrance { get => Position + new Vector3(Direction.x * Size.x, Direction.y * Size.y, Direction.z * Size.z); }
+
+    public Vector3 Exit { get => Position - new Vector3(Direction.x * Size.x, Direction.y * Size.y, Direction.z * Size.z); }
 
     public float Radius
     {
@@ -748,7 +767,7 @@ public class MyGameObject : MonoBehaviour
             }
 
             return size;
-        } 
+        }
     }
 
     public bool Alive { get => Health > 0.0f && (TimeToLive < 0.0f || LiveTimer.Finished == false); }
@@ -757,22 +776,22 @@ public class MyGameObject : MonoBehaviour
     {
         get
         {
-            float mass = 0.0f;
-
-            foreach (MyComponent i in GetComponents<MyComponent>())
-            {
-                mass += i.Mass;
-            }
-
-            return mass;
+            return GetComponents<MyComponent>().Sum(x => x.Mass);
         }
     }
+
+    public bool Powered { get => Map.Instance.IsVisibleByPower(this, HUD.Instance.ActivePlayer); }
+
+    public bool Working { get => Enabled && (Powerable == false || Powered); }
 
     [field: SerializeField]
     public Player Player { get; set; }
 
     [field: SerializeField]
     public bool Enabled { get; set; } = true;
+
+    [field: SerializeField]
+    public bool Powerable { get; set; } = false;
 
     [field: SerializeField]
     public bool Gatherable { get; set; } = false;
@@ -790,22 +809,19 @@ public class MyGameObject : MonoBehaviour
     public float EnableTime { get; set; } = 2.0f;
 
     [field: SerializeField]
-    public float LoadTime { get; set; } = 2.0f;
-
-    [field: SerializeField]
     public float WaitTime { get; set; } = 2.0f;
 
     [field: SerializeField]
     public GameObject DestroyEffect { get; set; }
 
     [field: SerializeField]
-    public float TimeToLive { get; set; } = 0.0f;
+    public float TimeToLive { get; set; } = -1.0f;
 
     [field: SerializeField]
     public float Altitude { get; set; } = 0.0f;
 
     [field: SerializeField]
-    public List<MyGameObjectMapLayer> MapLayers { get; set; } = new List<MyGameObjectMapLayer>(); // TODO: Replace with HashSet.
+    public List<MyGameObjectMapLayer> MapLayers { get; set; } = new List<MyGameObjectMapLayer>();
 
     public Vector3 Position { get => transform.position; set => transform.position = value; }
 
@@ -819,20 +835,17 @@ public class MyGameObject : MonoBehaviour
 
     public ResourceContainer ConstructionResources { get; } = new ResourceContainer();
 
-    public RecipeContainer ConstructionRecipies { get; } = new RecipeContainer();
+    public RecipeContainer ConstructionRecipies { get; } = new RecipeContainer(); // TODO: Remove.
 
     public MyGameObject Parent { get; set; } // TODO: Hide setter.
 
     public Dictionary<string, Skill> Skills { get; } = new Dictionary<string, Skill>();
 
-    public Dictionary<Player, HashSet<MyGameObject>> VisibleByRadar { get; set; } = new Dictionary<Player, HashSet<MyGameObject>>();
-
-    public Dictionary<Player, HashSet<MyGameObject>> VisibleBySight { get; set; } = new Dictionary<Player, HashSet<MyGameObject>>();
-
-    protected Dictionary<OrderType, IOrderHandler> OrderHandlers { get; } = new Dictionary<OrderType, IOrderHandler>();
+    public Dictionary<OrderType, OrderHandler> OrderHandlers { get; } = new Dictionary<OrderType, OrderHandler>();
 
     private Transform visual;
     private Transform rangeGun;
+    private Transform rangePower;
     private Transform rangeRadar;
     private Transform rangeSight;
     private Transform selection;

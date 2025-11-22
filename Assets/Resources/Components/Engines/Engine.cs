@@ -11,6 +11,12 @@ public class Engine : MyComponent
         GetComponent<MyGameObject>().Orders.AllowOrder(OrderType.Guard);
         GetComponent<MyGameObject>().Orders.AllowOrder(OrderType.Move);
         GetComponent<MyGameObject>().Orders.AllowOrder(OrderType.Patrol);
+
+        GetComponent<MyGameObject>().OrderHandlers[OrderType.Explore] = new OrderHandlerExplore();
+        GetComponent<MyGameObject>().OrderHandlers[OrderType.Follow] = new OrderHandlerFollow();
+        GetComponent<MyGameObject>().OrderHandlers[OrderType.Guard] = new OrderHandlerGuard();
+        GetComponent<MyGameObject>().OrderHandlers[OrderType.Move] = new OrderHandlerMove();
+        GetComponent<MyGameObject>().OrderHandlers[OrderType.Patrol] = new OrderHandlerPatrol();
     }
 
     public override string GetInfo()

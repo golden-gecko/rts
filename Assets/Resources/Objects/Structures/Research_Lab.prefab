@@ -123,17 +123,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <Player>k__BackingField: {fileID: 0}
   <Enabled>k__BackingField: 1
+  <Powerable>k__BackingField: 1
   <Gatherable>k__BackingField: 0
   <Selectable>k__BackingField: 1
   <Health>k__BackingField: 50
   <HealthMax>k__BackingField: 50
   <EnableTime>k__BackingField: 2
-  <LoadTime>k__BackingField: 2
   <WaitTime>k__BackingField: 2
   <DestroyEffect>k__BackingField: {fileID: 100008, guid: 06736895ea0a4ff408d25e6684dce797, type: 3}
   <TimeToLive>k__BackingField: -1
   <Altitude>k__BackingField: 0
   <MapLayers>k__BackingField: 01000000
+  <PowerUsage>k__BackingField: 1
 --- !u!114 &4576625105702019730
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -161,6 +162,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   <Mass>k__BackingField: 10
+  <ResourceUsage>k__BackingField: 1
 --- !u!1001 &5585880272078454421
 PrefabInstance:
   m_ObjectHideFlags: 0

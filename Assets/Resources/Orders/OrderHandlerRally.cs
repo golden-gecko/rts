@@ -1,15 +1,10 @@
-public class OrderHandlerRally : IOrderHandler
+public class OrderHandlerRally : OrderHandler
 {
-    public bool IsValid(Order order)
-    {
-        return true;
-    }
-
-    public void OnExecute(MyGameObject myGameObject)
+    public override void OnExecute(MyGameObject myGameObject)
     {
         Order order = myGameObject.Orders.First();
 
-        myGameObject.GetComponent<Constructor>().RallyPoint = order.TargetPosition;
+        myGameObject.GetComponent<Assembler>().RallyPoint = order.TargetPosition;
         myGameObject.Orders.Pop();
     }
 }

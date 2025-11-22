@@ -143,7 +143,7 @@ public class Game : MonoBehaviour
         position.x += Random.Range(-Config.DisasterRange, Config.DisasterRange);
         position.z += Random.Range(-Config.DisasterRange, Config.DisasterRange);
 
-        return Map.Instance.ValidatePosition(position);
+        return position;
     }
 
     private Player GetGaiaPlayer()
