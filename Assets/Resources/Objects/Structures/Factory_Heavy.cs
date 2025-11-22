@@ -1,3 +1,5 @@
+using System.IO;
+
 public class Factory_Heavy : Structure
 {
     protected override void Awake()
@@ -7,8 +9,8 @@ public class Factory_Heavy : Structure
         Orders.AllowOrder(OrderType.Assemble);
         Orders.AllowOrder(OrderType.Rally);
 
-        Orders.AllowPrefab("Objects/Units/Tank_Combat");
-        Orders.AllowPrefab("Objects/Units/Tank_Missile");
+        Orders.AllowPrefab(Path.Combine(Config.DirectoryUnits, "Tank_Combat"));
+        Orders.AllowPrefab(Path.Combine(Config.DirectoryUnits, "Tank_Missile"));
 
         Resources.Add("Iron", 0, 40);
 

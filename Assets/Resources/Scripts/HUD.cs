@@ -60,6 +60,7 @@ public class HUD : MonoBehaviour
         {
             if (IsShift() == false)
             {
+                selected.Stats.Add(Stats.OrdersCancelled, selected.Orders.Count);
                 selected.Orders.Clear();
             }
 
@@ -73,6 +74,7 @@ public class HUD : MonoBehaviour
         {
             if (IsShift() == false)
             {
+                selected.Stats.Add(Stats.OrdersCancelled, selected.Orders.Count);
                 selected.Orders.Clear();
             }
 
@@ -86,6 +88,7 @@ public class HUD : MonoBehaviour
         {
             if (IsShift() == false)
             {
+                selected.Stats.Add(Stats.OrdersCancelled, selected.Orders.Count);
                 selected.Orders.Clear();
             }
 
@@ -99,6 +102,7 @@ public class HUD : MonoBehaviour
         {
             if (IsShift() == false)
             {
+                selected.Stats.Add(Stats.OrdersCancelled, selected.Orders.Count);
                 selected.Orders.Clear();
             }
 
@@ -112,6 +116,7 @@ public class HUD : MonoBehaviour
         {
             if (IsShift() == false)
             {
+                selected.Stats.Add(Stats.OrdersCancelled, selected.Orders.Count);
                 selected.Orders.Clear();
             }
 
@@ -125,6 +130,7 @@ public class HUD : MonoBehaviour
         {
             if (IsShift() == false)
             {
+                selected.Stats.Add(Stats.OrdersCancelled, selected.Orders.Count);
                 selected.Orders.Clear();
             }
 
@@ -138,6 +144,7 @@ public class HUD : MonoBehaviour
         {
             if (IsShift() == false)
             {
+                selected.Stats.Add(Stats.OrdersCancelled, selected.Orders.Count);
                 selected.Orders.Clear();
             }
 
@@ -151,6 +158,7 @@ public class HUD : MonoBehaviour
         {
             if (IsShift() == false)
             {
+                selected.Stats.Add(Stats.OrdersCancelled, selected.Orders.Count);
                 selected.Orders.Clear();
             }
 
@@ -166,6 +174,7 @@ public class HUD : MonoBehaviour
             {
                 if (IsShift() == false)
                 {
+                    selected.Stats.Add(Stats.OrdersCancelled, selected.Orders.Count);
                     selected.Orders.Clear();
                 }
 
@@ -218,6 +227,7 @@ public class HUD : MonoBehaviour
         {
             if (IsShift() == false)
             {
+                selected.Stats.Add(Stats.OrdersCancelled, selected.Orders.Count);
                 selected.Orders.Clear();
             }
 
@@ -252,6 +262,7 @@ public class HUD : MonoBehaviour
         {
             if (IsShift() == false)
             {
+                selected.Stats.Add(Stats.OrdersCancelled, selected.Orders.Count);
                 selected.Orders.Clear();
             }
 

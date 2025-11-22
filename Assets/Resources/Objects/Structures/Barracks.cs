@@ -1,3 +1,5 @@
+using System.IO;
+
 public class Barracks : Structure
 {
     protected override void Awake()
@@ -7,7 +9,7 @@ public class Barracks : Structure
         Orders.AllowOrder(OrderType.Assemble);
         Orders.AllowOrder(OrderType.Rally);
 
-        Orders.AllowPrefab("Objects/Units/Infantry_Light");
+        Orders.AllowPrefab(Path.Combine(Config.DirectoryUnits, "Infantry_Light"));
 
         Resources.Add("Iron", 0, 40);
 

@@ -1,3 +1,5 @@
+using System.IO;
+
 public class Harvester : Vehicle
 {
     protected override void Awake()
@@ -10,16 +12,16 @@ public class Harvester : Vehicle
         Orders.AllowOrder(OrderType.Unload);
         Orders.AllowOrder(OrderType.Transport);
 
-        Orders.AllowPrefab("Objects/Structures/Barracks");
-        Orders.AllowPrefab("Objects/Structures/Factory_Heavy");
-        Orders.AllowPrefab("Objects/Structures/Factory_Light");
-        Orders.AllowPrefab("Objects/Structures/Radar_Outpost");
-        Orders.AllowPrefab("Objects/Structures/Refinery");
-        Orders.AllowPrefab("Objects/Structures/Research_Lab");
-        Orders.AllowPrefab("Objects/Structures/Spaceport");
-        Orders.AllowPrefab("Objects/Structures/Turret_Gun");
-        Orders.AllowPrefab("Objects/Structures/Turret_Missile");
-        Orders.AllowPrefab("Objects/Structures/Wall");
+        Orders.AllowPrefab(Path.Combine(Config.DirectoryStructures, "Barracks"));
+        Orders.AllowPrefab(Path.Combine(Config.DirectoryStructures, "Factory_Heavy"));
+        Orders.AllowPrefab(Path.Combine(Config.DirectoryStructures, "Factory_Light"));
+        Orders.AllowPrefab(Path.Combine(Config.DirectoryStructures, "Radar_Outpost"));
+        Orders.AllowPrefab(Path.Combine(Config.DirectoryStructures, "Refinery"));
+        Orders.AllowPrefab(Path.Combine(Config.DirectoryStructures, "Research_Lab"));
+        Orders.AllowPrefab(Path.Combine(Config.DirectoryStructures, "Spaceport"));
+        Orders.AllowPrefab(Path.Combine(Config.DirectoryStructures, "Turret_Gun"));
+        Orders.AllowPrefab(Path.Combine(Config.DirectoryStructures, "Turret_Missile"));
+        Orders.AllowPrefab(Path.Combine(Config.DirectoryStructures, "Wall"));
 
         OrderHandlers[OrderType.Idle] = new OrderHandlerIdleWorker();
 
