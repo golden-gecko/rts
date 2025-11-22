@@ -10,10 +10,7 @@ public class Researcher : Part
 
         Parent.Orders.AllowOrder(OrderType.Research);
 
-        foreach (string technology in Technologies)
-        {
-            Parent.Orders.AllowTechnology(technology);
-        }
+        UpdateWhitelist();
 
         Parent.OrderHandlers[OrderType.Research] = new OrderHandlerResearch();
     }
@@ -21,6 +18,16 @@ public class Researcher : Part
     public override string GetInfo()
     {
         return string.Format("Researcher - {0}, Resource Usage: {1}", base.GetInfo(), ResourceUsage);
+    }
+
+    private void UpdateWhitelist()
+    {
+        Parent.Orders.TechnologyWhitelist.Clear();
+
+        foreach (string technology in Technologies)
+        {
+            Parent.Orders.AllowTechnology(technology);
+        }
     }
 
     [field: SerializeField]

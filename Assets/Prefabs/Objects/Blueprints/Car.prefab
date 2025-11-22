@@ -216,7 +216,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9457e17311c7b6e49be3978f6559b6fe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <Mass>k__BackingField: 10
   <ConstructionResources>k__BackingField:
     <Items>k__BackingField:
     - <Current>k__BackingField: 30
@@ -316,7 +315,6 @@ MonoBehaviour:
   <CreateBase>k__BackingField: 0
   <SnapToGrid>k__BackingField: 0
   <VisibilityState>k__BackingField: 2
-  <RotateTowardsTarget>k__BackingField: 1
   <ShowEntrance>k__BackingField: 0
   <ShowExit>k__BackingField: 0
   <Health>k__BackingField:
@@ -510,7 +508,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5a3551c68760c3a40898ab67741b2904, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <Mass>k__BackingField: 10
   <ConstructionResources>k__BackingField:
     <Items>k__BackingField:
     - <Current>k__BackingField: 10
@@ -521,7 +518,6 @@ MonoBehaviour:
       <Max>k__BackingField: 20
       <Name>k__BackingField: Iron
       <Direction>k__BackingField: 1
-  <MissilePrefab>k__BackingField: {fileID: 4056876892418310127, guid: 2cefb862ac51a544a9b2146c2e0ba611, type: 3}
   <Damage>k__BackingField:
     <Value>k__BackingField: 10
   <Range>k__BackingField:
@@ -535,7 +531,7 @@ MonoBehaviour:
   <DamageType>k__BackingField:
   - <Type>k__BackingField: 1
     <Ratio>k__BackingField: 1
-  AudioFire: {fileID: 8300000, guid: 380a61624a607f042ab5e96218f37633, type: 3}
+  <MissilePrefab>k__BackingField: {fileID: 4056876892418310127, guid: 2cefb862ac51a544a9b2146c2e0ba611, type: 3}
 --- !u!1 &3959480233522545920
 GameObject:
   m_ObjectHideFlags: 0
@@ -580,7 +576,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 79a39b5131237dc428a9b67a3936e144, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <Mass>k__BackingField: 10
   <ConstructionResources>k__BackingField:
     <Items>k__BackingField:
     - <Current>k__BackingField: 10
@@ -839,7 +834,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 480f2643be9397244bac146d70b54f9f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <Mass>k__BackingField: 10
   <ConstructionResources>k__BackingField:
     <Items>k__BackingField:
     - <Current>k__BackingField: 20
@@ -1112,7 +1106,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f88ea3708e1fcf146b11f633a47cfeec, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <Mass>k__BackingField: 10
   <ConstructionResources>k__BackingField:
     <Items>k__BackingField:
     - <Current>k__BackingField: 20

@@ -732,11 +732,11 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1016367653328774682}
-  - component: {fileID: 7420683324593439658}
   - component: {fileID: 1750897161232383559}
   - component: {fileID: 5927054192065729548}
   - component: {fileID: 873085916221255505}
   - component: {fileID: 5440007449397948649}
+  - component: {fileID: 7420683324593439658}
   - component: {fileID: 2149643044942977690}
   - component: {fileID: 1058525939304119323}
   - component: {fileID: 8668941104546947929}
@@ -769,18 +769,6 @@ Transform:
   - {fileID: 8589857658123335874}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &7420683324593439658
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4885079203805521602}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3417253441e46164bb3a6febc0668252, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &1750897161232383559
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -919,6 +907,18 @@ MonoBehaviour:
   <Player>k__BackingField: {fileID: 5026949370379153494}
   <DisasterDirection>k__BackingField: 200
   <DisasterRange>k__BackingField: 20
+--- !u!114 &7420683324593439658
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4885079203805521602}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3417253441e46164bb3a6febc0668252, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &2149643044942977690
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1710,7 +1710,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 6252956672336896765, guid: 7193002665813b540ba7257fb9ba605d, type: 3}
       propertyPath: m_Name
-      value: MinimapCamera
+      value: Minimap
       objectReference: {fileID: 0}
     - target: {fileID: 8350530467748327393, guid: 7193002665813b540ba7257fb9ba605d, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -1832,9 +1832,13 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6558934300710202898, guid: a417d7add2d029849a031c80e442f443, type: 3}
+      propertyPath: m_Name
+      value: Indicators
+      objectReference: {fileID: 0}
     - target: {fileID: 9157527263714706475, guid: a417d7add2d029849a031c80e442f443, type: 3}
       propertyPath: m_Name
-      value: MainCamera
+      value: Main
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

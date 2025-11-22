@@ -56,9 +56,9 @@ public class Engine : Part
     public Counter Fuel { get; private set; } = new Counter(100, 100);
 
     [field: SerializeField]
-    public float FuelUsage { get; private set; } = 1.0f;
+    public float FuelUsage { get; private set; } = 1.0f; // Number of distance units driven per one fuel unit.
 
-    public float Speed { get => Parent.Mass > 0.0f ? Power.Total / Parent.Mass : 0.0f; }
+    public float Speed { get => Parent.Mass > 0 ? Power.Total / (float)Parent.Mass : 0.0f; }
 
-    private float DistanceToDrive { get; set; } = 0.0f;
+    private float DistanceToDrive = 0.0f;
 }

@@ -3,7 +3,7 @@ using System.Linq;
 using UnityEngine;
 
 [DisallowMultipleComponent]
-public class MyGameObject : MonoBehaviour
+public class MyGameObject : MyMonoBehaviour
 {
     protected virtual void Awake()
     {
@@ -34,44 +34,8 @@ public class MyGameObject : MonoBehaviour
 
         Stats.Player = Player;
 
-        // TODO: TEMP
-        Part[] parts = GetComponentsInChildren<Part>();
-        Health = new Progress(parts.Sum(x => x.Health.Current), parts.Sum(x => x.Health.Max));
-        // TEMP
-
-        // TODO: TEMP
-        Dictionary<string, int> current = new Dictionary<string, int>(); // TODO: Refactor. Optimize. Allow changing Max property.
-        Dictionary<string, int> max = new Dictionary<string, int>();
-
-        foreach (Part part in GetComponentsInChildren<Part>())
-        {
-            foreach (Resource resource in part.ConstructionResources.Items)
-            {
-                if (current.ContainsKey(resource.Name))
-                {
-                    current[resource.Name] += resource.Current;
-                }
-                else
-                {
-                    current[resource.Name] = resource.Current;
-                }
-
-                if (max.ContainsKey(resource.Name))
-                {
-                    max[resource.Name] += resource.Max;
-                }
-                else
-                {
-                    max[resource.Name] = resource.Max;
-                }
-            }
-        }
-
-        foreach (KeyValuePair<string, int> resource in current)
-        {
-            ConstructionResources.Init(resource.Key, resource.Value, max[resource.Key]);
-        }
-        // TEMP
+        SetupHealth();
+        SetupConstructionResources();
     }
 
     protected virtual void Start()
@@ -81,9 +45,8 @@ public class MyGameObject : MonoBehaviour
             return;
         }
 
-        CreateSkills();
-
         InitializePosition();
+        InitializeSkills();
 
         UpdateSelection();
         UpdateVisibility();
@@ -557,13 +520,6 @@ public class MyGameObject : MonoBehaviour
         Indicators.OnSelect(status);
     }
 
-    private void InitializePosition()
-    {
-        Map.Instance.SetOccupied(this, Position, 1);
-
-        PreviousPosition = Position;
-    }
-
     private void UpdatePosition()
     {
         if (Map.Instance.ValidatePosition(this, Position, out Vector3 validated))
@@ -802,12 +758,60 @@ public class MyGameObject : MonoBehaviour
         Base.transform.localScale = new Vector3(size.x, 0.5f, size.z);
     }
 
+    private void SetupHealth()
+    {
+        Part[] parts = GetComponentsInChildren<Part>();
+        Health = new Progress(parts.Sum(x => x.Health.Current), parts.Sum(x => x.Health.Max));
+    }
+
     private void SetupIndicators()
     {
         Indicators = Instantiate(Game.Instance.Config.Indicators, transform, false).GetComponent<Indicators>();
     }
 
-    private void CreateSkills()
+    private void SetupConstructionResources()
+    {
+        Dictionary<string, int> current = new Dictionary<string, int>(); // TODO: Refactor. Optimize. Allow changing Max property.
+        Dictionary<string, int> max = new Dictionary<string, int>();
+
+        foreach (Part part in GetComponentsInChildren<Part>())
+        {
+            foreach (Resource resource in part.ConstructionResources.Items)
+            {
+                if (current.ContainsKey(resource.Name))
+                {
+                    current[resource.Name] += resource.Current;
+                }
+                else
+                {
+                    current[resource.Name] = resource.Current;
+                }
+
+                if (max.ContainsKey(resource.Name))
+                {
+                    max[resource.Name] += resource.Max;
+                }
+                else
+                {
+                    max[resource.Name] = resource.Max;
+                }
+            }
+        }
+
+        foreach (KeyValuePair<string, int> resource in current)
+        {
+            ConstructionResources.Init(resource.Key, resource.Value, max[resource.Key]);
+        }
+    }
+
+    private void InitializePosition()
+    {
+        Map.Instance.SetOccupied(this, Position, 1);
+
+        PreviousPosition = Position;
+    }
+
+    private void InitializeSkills()
     {
         foreach (string skillName in SkillsNames)
         {
@@ -886,52 +890,13 @@ public class MyGameObject : MonoBehaviour
         }
     }
 
-    public Vector3 Center { get => new Vector3(Position.x, Position.y + Size.y / 2.0f, Position.z); }
-
-    public Vector3 Direction { get => transform.forward; }
-
     public Vector3 Entrance { get => new Vector3(Position.x + Direction.x * Size.x, Position.y, Position.z + Direction.z * Size.z); }
 
     public Vector3 Exit { get => new Vector3(Position.x - Direction.x * Size.x, Position.y, Position.z - Direction.z * Size.z); }
 
-    public float Radius { get => (Size.x + Size.y + Size.z) / 3.0f; }
-
-    public Vector3 Size
-    {
-        get
-        {
-            Collider[] colliders = Body.GetComponentsInChildren<Collider>();
-
-            if (colliders.Length <= 0)
-            {
-                return Vector3.zero;
-            }
-
-            Quaternion rotation = Utils.ResetRotation(this);
-
-            Vector3 min = new Vector3(float.MaxValue, float.MaxValue, float.MaxValue);
-            Vector3 max = new Vector3(float.MinValue, float.MinValue, float.MinValue);
-
-            foreach (Collider collider in colliders)
-            {
-                min.x = Mathf.Min(min.x, collider.bounds.min.x);
-                min.y = Mathf.Min(min.y, collider.bounds.min.y);
-                min.z = Mathf.Min(min.z, collider.bounds.min.z);
-
-                max.x = Mathf.Max(max.x, collider.bounds.max.x);
-                max.y = Mathf.Max(max.y, collider.bounds.max.y);
-                max.z = Mathf.Max(max.z, collider.bounds.max.z);
-            }
-
-            Utils.RestoreRotation(this, rotation);
-
-            return max - min;
-        }
-    }
-
     public bool Alive { get => Health.Current > 0.0f && (ExpirationTimer.Active == false || ExpirationTimer.Finished == false); }
 
-    public float Mass { get => GetComponentsInChildren<Part>().Sum(x => x.Mass); }
+    public int Mass { get => GetComponentsInChildren<Part>().Sum(x => x.Mass); }
 
     public bool Constructed { get => ConstructionResources.CurrentSum >= ConstructionResources.MaxSum; }
 
@@ -1021,9 +986,6 @@ public class MyGameObject : MonoBehaviour
     public MyGameObjectVisibilityState VisibilityState { get; private set; } = MyGameObjectVisibilityState.Visible;
 
     [field: SerializeField]
-    public bool RotateTowardsTarget { get; private set; } = true;
-
-    [field: SerializeField]
     public bool ShowEntrance { get; private set; } = false;
 
     [field: SerializeField]
@@ -1041,12 +1003,6 @@ public class MyGameObject : MonoBehaviour
         }
     }
     */
-
-    public Vector3 Position { get => transform.position; set => transform.position = value; }
-
-    public Quaternion Rotation { get => transform.rotation; set => transform.rotation = value; }
-
-    public Vector3 Scale { get => transform.localScale; }
 
     public OrderContainer Orders { get; } = new OrderContainer();
 

@@ -22,6 +22,10 @@ public class Drive : Part
         Parent.OrderHandlers[OrderType.Teleport] = new OrderHandlerTeleport();
         Parent.OrderHandlers[OrderType.Turn] = new OrderHandlerTurn();
 
+        InitializeMapLayers();
+    }
+    private void InitializeMapLayers()
+    {
         foreach (MyGameObjectMapLayer layer in MapLayers)
         {
             if (Parent.MapLayers.Contains(layer) == false)
@@ -32,5 +36,5 @@ public class Drive : Part
     }
 
     [field: SerializeField]
-    public List<MyGameObjectMapLayer> MapLayers { get; private set; } = new List<MyGameObjectMapLayer>();
+    public List<MyGameObjectMapLayer> MapLayers { get; private set; } = new List<MyGameObjectMapLayer>(); // TODO: Bake terrain type layer. Add terrain types (solid, dirt, grass, swamp etc.).
 }

@@ -318,9 +318,9 @@ public class PowerPlant : Part
         }
     }
 
-    public float Efficiency { get => PowerUsageNetworkTotal > 0.0f ? Math.Min(PowerGenerationNetworkTotal / PowerUsageNetworkTotal, 1.0f) : 0.0f; }
-
     private HashSet<PowerPlant> Connections { get; } = new HashSet<PowerPlant>();
+
+    private float Efficiency { get => PowerUsageNetworkTotal > 0.0f ? Math.Min(PowerGenerationNetworkTotal / PowerUsageNetworkTotal, 1.0f) : 0.0f; }
 
     private bool PowerUpTimeActive { get; set; } = false;
 

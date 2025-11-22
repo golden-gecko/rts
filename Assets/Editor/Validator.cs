@@ -1,12 +1,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using UnityEditor;
-using UnityEditor.SceneManagement;
 using UnityEngine;
 
 public class Validator : EditorWindow
 {
-    [MenuItem("Tools/Validate", false, 3)]
+    [MenuItem("Tools/Validate", false, 40)]
     public static void Validate()
     {
         Tools.ClearLog();
