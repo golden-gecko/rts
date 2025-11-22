@@ -7,6 +7,7 @@ public enum DiplomacyState
 
 public enum MyGameObjectState
 {
+    Cursor,
     Operational,
     UnderAssembly,
     UnderConstruction,

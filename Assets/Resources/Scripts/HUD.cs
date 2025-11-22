@@ -271,11 +271,6 @@ public class HUD : MonoBehaviour
         return Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out hitInfo);
     }
 
-    private bool MouseToRaycastTerrain(out RaycastHit hitInfo)
-    {
-        return Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out hitInfo, Config.RaycastMaxDistance, LayerMask.GetMask("Terrain"));
-    }
-
     private void ProcessOrder()
     {
         RaycastHit hitInfo;
@@ -559,12 +554,7 @@ public class HUD : MonoBehaviour
 
         if (Cursor != null)
         {
-            RaycastHit hitInfo;
-
-            if (MouseToRaycastTerrain(out hitInfo))
-            {
-                Cursor.transform.position = hitInfo.point;
-            }
+            Cursor.transform.position = Map.Instance.StructurePositionHandler.GetPosition(Camera.main.ScreenPointToRay(Input.mousePosition));
         }
 
         HoverOverObjects();
@@ -601,18 +591,14 @@ public class HUD : MonoBehaviour
 
             if (Cursor != null)
             {
-                GameObject.Destroy(Cursor.gameObject);
+                Destroy(Cursor.gameObject);
             }
 
             if (prefab.Equals(string.Empty) == false)
             {
-                MyGameObject resource = Resources.Load<MyGameObject>(Prefab);
-                MyGameObject myGameObject = Instantiate<MyGameObject>(resource, Vector3.zero, Quaternion.identity);
+                Cursor = Game.Instance.CreateGameObject(Prefab, Vector3.zero, null, MyGameObjectState.Cursor);
 
-                myGameObject.GetComponent<BoxCollider>().enabled = false;
-                myGameObject.GetComponent<MyGameObject>().enabled = false;
-
-                foreach (Renderer renderer in myGameObject.GetComponentsInChildren<Renderer>())
+                foreach (Renderer renderer in Cursor.GetComponentsInChildren<Renderer>())
                 {
                     Color color;
 
@@ -624,8 +610,6 @@ public class HUD : MonoBehaviour
                         material.color = color;
                     }
                 }
-
-                Cursor = myGameObject;
             }
         }
     }

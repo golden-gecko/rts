@@ -265,7 +265,7 @@ public class Order
 
     public MyGameObject TargetGameObject { get; set; } // TODO: Hide setter.
 
-    public Vector3 TargetPosition { get; private set; }
+    public Vector3 TargetPosition { get; set; } // TODO: Hide setter.
 
     public Timer Timer { get; set; } // TODO: Hide setter.
 

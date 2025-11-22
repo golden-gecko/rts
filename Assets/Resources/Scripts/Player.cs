@@ -11,6 +11,13 @@ public class Player : MonoBehaviour
         {
             Groups[i] = new HashSet<MyGameObject>();
         }
+
+        Achievements.Player = this;
+    }
+
+    protected virtual void Update()
+    {
+        Achievements.Update();
     }
 
     public void AssignGroup(KeyCode keyCode)
@@ -67,4 +74,8 @@ public class Player : MonoBehaviour
     public TechnologyTree TechnologyTree { get; } = new TechnologyTree();
 
     public Dictionary<Player, DiplomacyState> Diplomacy { get; } = new Dictionary<Player, DiplomacyState>();
+
+    public AchievementContainer Achievements { get; } = new AchievementContainer();
+
+    public Stats Stats { get; } = new Stats();
 }
