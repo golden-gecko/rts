@@ -47,9 +47,11 @@ public class GameMenu : Menu
 
     private void Update()
     {
-        if (HUD.Instance.Selected.Count > 0 && HUD.Instance.Selected[0] != null)
+        Player activePlayer = HUD.Instance.ActivePlayer;
+
+        if (activePlayer.Selected.Count > 0 && activePlayer.Selected[0] != null)
         {
-            info.text = HUD.Instance.Selected[0].GetInfo();
+            info.text = activePlayer.Selected[0].GetInfo();
         }
         else
         {
@@ -60,7 +62,7 @@ public class GameMenu : Menu
         UpdatePrefabs();
         UpdateTechnologies();
 
-        if (HUD.Instance.Selected.Count > 0)
+        if (activePlayer.Selected.Count > 0)
         {
             bottomPanel.style.display = DisplayStyle.Flex;
             infoPanel.style.display = DisplayStyle.Flex;
@@ -205,7 +207,7 @@ public class GameMenu : Menu
     {
         HashSet<OrderType> whitelist = new HashSet<OrderType>();
 
-        foreach (MyGameObject selected in HUD.Instance.Selected)
+        foreach (MyGameObject selected in HUD.Instance.ActivePlayer.Selected)
         {
             if (selected.State != MyGameObjectState.Operational)
             {
@@ -233,7 +235,7 @@ public class GameMenu : Menu
     {
         HashSet<string> whitelist = new HashSet<string>();
 
-        foreach (MyGameObject selected in HUD.Instance.Selected)
+        foreach (MyGameObject selected in HUD.Instance.ActivePlayer.Selected)
         {
             if (selected.State != MyGameObjectState.Operational)
             {
@@ -269,7 +271,7 @@ public class GameMenu : Menu
     {
         HashSet<string> whitelist = new HashSet<string>();
 
-        foreach (MyGameObject selected in HUD.Instance.Selected)
+        foreach (MyGameObject selected in HUD.Instance.ActivePlayer.Selected)
         {
             if (selected.State != MyGameObjectState.Operational)
             {
