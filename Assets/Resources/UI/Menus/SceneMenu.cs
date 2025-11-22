@@ -2,7 +2,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UIElements;
 
-public class SceneMenu : MonoBehaviour
+public class SceneMenu : Menu
 {
     public static SceneMenu Instance { get; private set; }
 

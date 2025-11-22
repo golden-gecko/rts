@@ -1,73 +1,43 @@
 using System.Collections.Generic;
-using System.IO;
-using UnityEditor.Experimental.GraphView;
+using UnityEngine;
 
 public class TechnologyTree
 {
-    public TechnologyTree()
+    public void Load()
     {
+        // Load structures.
+        MyGameObject[] structures = Resources.LoadAll<MyGameObject>("Objects/Structures");
+
+        foreach (MyGameObject myGameObject in structures)
+        {
+            Technologies[myGameObject.name] = new Technology(myGameObject.name);
+        }
+
+        // Load units.
+        MyGameObject[] units = Resources.LoadAll<MyGameObject>("Objects/Units");
+
+        foreach (MyGameObject myGameObject in units)
+        {
+            Technologies[myGameObject.name] = new Technology(myGameObject.name);
+        }
+
+        // Create technologies to research.
         Dictionary<string, int> cost = new Dictionary<string, int>
         {
             { "Crystal", 50 },
         };
 
-        // Structures
-        Technologies["struct_Barracks_A_yup"] = new Technology("struct_Barracks_A_yup", false);
-        Technologies["struct_Factory_Heavy_A_yup"] = new Technology("struct_Factory_Heavy_A_yup", false);
-        Technologies["struct_Factory_Light_A_yup"] = new Technology("struct_Factory_Light_A_yup", false);
-        Technologies["struct_Headquarters_A_yup"] = new Technology("struct_Headquarters_A_yup", false);
-        Technologies["struct_Misc_Building_A_yup"] = new Technology("struct_Misc_Building_A_yup", false);
-        Technologies["struct_Misc_Building_B_yup"] = new Technology("struct_Misc_Building_B_yup", false);
-        Technologies["struct_Radar_Outpost_A_yup"] = new Technology("struct_Radar_Outpost_A_yup", false);
-        Technologies["struct_Refinery_A_yup"] = new Technology("struct_Refinery_A_yup", false);
-        Technologies["struct_Research_Lab_A_yup"] = new Technology("struct_Research_Lab_A_yup", false);
-        Technologies["struct_Spaceport_A_yup"] = new Technology("struct_Spaceport_A_yup", false);
-        Technologies["struct_Turret_Gun_A_yup"] = new Technology("struct_Turret_Gun_A_yup", false);
-        Technologies["struct_Turret_Missile_A_yup"] = new Technology("struct_Turret_Missile_A_yup", false);
-        Technologies["struct_Wall_A_yup"] = new Technology("struct_Wall_A_yup", false);
+        Technologies["Colonization"] = new Technology("Colonization", cost, new HashSet<string> { "Factory_Light", "Grav_Light", "Harvester", "Headquarters", "Quad", "Refinery", "Research_Lab", "Trike" });
+        Technologies["Infantry"] = new Technology("Infantry", cost, new HashSet<string> { "Barracks", "Infantry_Light" });
+        Technologies["Heavy_Industry"] = new Technology("Heavy_Industry", cost, new HashSet<string> { "Factory_Heavy", "Tank_Combat", "Tank_Missile" });
+        Technologies["Radar"] = new Technology("Radar", cost, new HashSet<string> { "Radar_Outpost" });
+        Technologies["Space_Travels"] = new Technology("Space_Travels", cost, new HashSet<string> { "Spaceport" });
+        Technologies["Static_Defences"] = new Technology("Static_Defences", cost, new HashSet<string> { "Wall" });
+        Technologies["Stationary_Defences"] = new Technology("Stationary_Defences", cost, new HashSet<string> { "Turret_Gun", "Turret_Missile" });
 
-        // Units
-        Technologies["unit_Grav_Light_A_yup"] = new Technology("unit_Grav_Light_A_yup", false);
-        Technologies["unit_Harvester_A_yup"] = new Technology("unit_Harvester_A_yup", false);
-        Technologies["unit_Infantry_Light_B_yup"] = new Technology("unit_Infantry_Light_B_yup", false);
-        Technologies["unit_Quad_A_yup"] = new Technology("unit_Quad_A_yup", false);
-        Technologies["unit_Tank_Combat_A_yup"] = new Technology("unit_Tank_Combat_A_yup", false);
-        Technologies["unit_Tank_Missile_A_yup"] = new Technology("unit_Tank_Missile_A_yup", false);
-        Technologies["unit_Trike_A_yup"] = new Technology("unit_Trike_A_yup", false);
-
-        // Technologies
-        Technologies["Colonization"] = new Technology("Colonization", cost, true, new List<string> {
-            "struct_Barracks_A_yup",
-            "struct_Factory_Light_A_yup",
-            "struct_Headquarters_A_yup",
-            "struct_Misc_Building_A_yup",
-            "struct_Misc_Building_B_yup",
-            "struct_Refinery_A_yup",
-            "struct_Research_Lab_A_yup",
-        });
-
-        Technologies["Heavy Industry"] = new Technology("Heavy Industry", cost, false, new List<string> {
-            "struct_Factory_Heavy_A_yup",
-        });
-
-        Technologies["Radar"] = new Technology("Radar", cost, false, new List<string> {
-            "struct_Radar_Outpost_A_yup",
-        });
-
-        Technologies["Space Travels"] = new Technology("Space Travels", cost, false, new List<string> {
-            "struct_Spaceport_A_yup",
-        });
-
-        Technologies["Static Defences"] = new Technology("Static Defences", cost, false, new List<string> {
-            "struct_Wall_A_yup",
-        });
-
-        Technologies["Stationary Defences"] = new Technology("Stationary Defences", cost, false, new List<string> {
-            "struct_Turret_Gun_A_yup",
-            "struct_Turret_Missile_A_yup",
-        });
-
-        UpdateTechnologies();
+        // Unlock starting technologies.
+        Unlock("Colonization");
+        Unlock("Infantry");
     }
 
     public Dictionary<string, int> GetCost(string name)
@@ -87,25 +57,37 @@ public class TechnologyTree
 
     public void Unlock(string name)
     {
-        if (Technologies.ContainsKey(name) && Technologies[name].Unlocked == false)
+        if (Technologies.ContainsKey(name))
         {
             Technologies[name].Unlocked = true;
-
-            UpdateTechnologies();
         }
+
+        UpdateTechnologies();
     }
 
     private void UpdateTechnologies()
     {
-        foreach (KeyValuePair<string, Technology> i in Technologies)
+        List<string> queue = new List<string>(Technologies.Keys);
+
+        while (queue.Count > 0)
         {
-            if (i.Value.Unlocked)
+            if (Technologies.ContainsKey(queue[0]))
             {
-                foreach (string name in i.Value.Unlocks)
+                if (Technologies[queue[0]].Unlocked)
                 {
-                    Unlock(name);
+                    foreach (string technology in Technologies[queue[0]].Unlocks)
+                    {
+                        if (Technologies.ContainsKey(technology))
+                        {
+                            Technologies[technology].Unlocked = true;
+
+                            queue.Add(technology);
+                        }
+                    }
                 }
             }
+
+            queue.RemoveAt(0);
         }
     }
 

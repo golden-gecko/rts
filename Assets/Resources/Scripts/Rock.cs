@@ -1,3 +1,35 @@
+using System.Collections.Generic;
+
 public class Rock : MyGameObject
 {
+    protected override void Awake()
+    {
+        base.Awake();
+
+        MissileRange = 0.0f;
+        VisibilityRange = 0.0f;
+    }
+
+    protected override void Update()
+    {
+        base.Update();
+
+        if (IsDepleted())
+        {
+            Destroy(0);
+        }
+    }
+
+    private bool IsDepleted()
+    {
+        foreach (KeyValuePair<string, Resource> resource in Resources.Items)
+        {
+            if (resource.Value.Storage() > 0)
+            {
+                return false;
+            }
+        }
+
+        return true;
+    }
 }
