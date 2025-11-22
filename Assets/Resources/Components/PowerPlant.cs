@@ -28,6 +28,8 @@ public class PowerPlant : MyComponent
     {
         base.Update();
 
+        UpdateConnections();
+
         bool state = previousState != Parent.State;
         bool enabled = previousEnabled != Parent.Enabled;
         bool position = Utils.ToGrid(previousPosition, Config.Map.VisibilityScale) != Utils.ToGrid(Parent.Position, Config.Map.VisibilityScale);
@@ -102,18 +104,41 @@ public class PowerPlant : MyComponent
 
     private void MakeConnections()
     {
-        ClearConnections();
-
         foreach (RaycastHit hitInfo in Utils.SphereCastAll(Parent.Position, Range.Total, Utils.GetGameObjectMask()))
         {
             PowerPlant powerPlant = hitInfo.transform.GetComponentInParent<PowerPlant>();
 
-            if (powerPlant != null && powerPlant != this && powerPlant.Parent.Player == Parent.Player)
+            if (powerPlant == null)
             {
-                Connect(powerPlant);
-                powerPlant.Connect(this);
+                continue;
             }
+
+            if (powerPlant == this)
+            {
+                continue;
+            }
+
+            if (powerPlant.Parent.Player != Parent.Player)
+            {
+                continue;
+            }
+
+            Vector3Int position = Utils.ToGrid(powerPlant.Parent.Position, Config.Map.VisibilityScale);
+            Vector3Int center = Utils.ToGrid(Parent.Position, Config.Map.VisibilityScale);
+
+            if (Utils.IsPointInCircle(position.x, position.z, center, Mathf.FloorToInt(Range.Total / Config.Map.VisibilityScale)) == false)
+            {
+                continue;
+            }
+
+            Connect(powerPlant);
+            powerPlant.Connect(this);
         }
+    }
+
+    private void UpdateConnections()
+    {
+        Connections.RemoveWhere(x => x == null);
     }
 
     private void ClearConnections()

@@ -809,12 +809,6 @@ public class MyGameObject : MonoBehaviour
     public bool ShowIndicators { get; set; } = true;
 
     [field: SerializeField]
-    public bool ShowEntrance { get; set; } = true;
-
-    [field: SerializeField]
-    public bool ShowExit { get; set; } = true;
-
-    [field: SerializeField]
     public Timer ExpirationTimer { get; set; } = new Timer(-1.0f, -1.0f);
 
     [field: SerializeField]
