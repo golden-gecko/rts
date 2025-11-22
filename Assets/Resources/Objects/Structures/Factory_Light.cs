@@ -12,11 +12,11 @@ public class Factory_Light : Structure
         Orders.AllowPrefab("Objects/Units/Quad");
         Orders.AllowPrefab("Objects/Units/Trike");
         
-        Resources.Add("Metal", 0, 40);
+        Resources.Add("Iron", 0, 40);
 
-        Recipe r1 = new Recipe("Metal");
+        Recipe r1 = new Recipe("Iron");
 
-        r1.Consumes("Metal", 0);
+        r1.Consumes("Iron", 0);
 
         Recipes.Add(r1);
     }

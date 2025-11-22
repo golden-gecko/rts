@@ -25,8 +25,8 @@ public class Harvester : Unit
 
         Resources.Add("Coal", 0, 10);
         Resources.Add("Crystal", 0, 10);
-        Resources.Add("Metal", 0, 10);
-        Resources.Add("Metal Ore", 0, 10);
+        Resources.Add("Iron", 0, 10);
+        Resources.Add("Iron Ore", 0, 10);
         Resources.Add("Wood", 0, 10);
 
         Skills["Repair"] = new Repair("Repair", 3.0f, 4.0f, 20.0f);

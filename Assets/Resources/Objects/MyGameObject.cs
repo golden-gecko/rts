@@ -36,11 +36,11 @@ public class MyGameObject : MonoBehaviour
         OrderHandlers[OrderType.UseSkill] = new OrderHandlerUseSkill();
         OrderHandlers[OrderType.Wait] = new OrderHandlerWait();
 
-        ConstructionResources.Add("Metal", 0, 30);
+        ConstructionResources.Add("Iron", 0, 30);
 
-        Recipe r1 = new Recipe("Metal");
+        Recipe r1 = new Recipe("Iron");
 
-        r1.Consumes("Metal", 30);
+        r1.Consumes("Iron", 30);
 
         ConstructionRecipies.Add(r1);
     }
@@ -450,7 +450,11 @@ public class MyGameObject : MonoBehaviour
 
     protected virtual void UpdatePosition()
     {
-        Position = Map.Instance.UnitPositionHandler.GetPosition(Position);
+        Vector3 newPosition = Map.Instance.UnitPositionHandler.GetPosition(Position);
+
+        newPosition.y += Altitude;
+
+        Position = newPosition;
     }
 
     public void UpdateSelection()
@@ -647,6 +651,9 @@ public class MyGameObject : MonoBehaviour
 
     [field: SerializeField]
     public string DestroyEffect { get; set; }
+
+    [field: SerializeField]
+    public float Altitude { get; set; } = 0.0f;
 
     public Vector3 Position { get => transform.position; set => transform.position = value; }
 
