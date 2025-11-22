@@ -54,7 +54,7 @@ public class Game : MonoBehaviour
         float minDistance = float.MaxValue;
         MyGameObject closest = null;
 
-        foreach (MyGameObject target in GameObject.FindObjectsByType<MyGameObject>(FindObjectsSortMode.None))
+        foreach (MyGameObject target in FindObjectsByType<MyGameObject>(FindObjectsSortMode.None))
         {
             if (myGameObject.Is(target, DiplomacyState.Enemy) == false)
             {
@@ -95,7 +95,7 @@ public class Game : MonoBehaviour
 
     public MyGameObject CreateGameObject(MyGameObject resource, Vector3 position, Player player, MyGameObjectState state)
     {
-        MyGameObject myGameObject = Object.Instantiate<MyGameObject>(resource, position, resource.transform.rotation);
+        MyGameObject myGameObject = Instantiate(resource, position, resource.transform.rotation);
 
         myGameObject.SetPlayer(player);
         myGameObject.State = state;

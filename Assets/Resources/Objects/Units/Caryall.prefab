@@ -266,6 +266,7 @@ GameObject:
   - component: {fileID: -874361163075168741}
   - component: {fileID: 1828920793867526512}
   - component: {fileID: -2341498463113454575}
+  - component: {fileID: -3863305394958440406}
   m_Layer: 0
   m_Name: Caryall
   m_TagString: Untagged
@@ -381,7 +382,6 @@ MonoBehaviour:
   <Selectable>k__BackingField: 1
   <Health>k__BackingField: 100
   <HealthMax>k__BackingField: 100
-  <VisibilityRange>k__BackingField: 10
   <LoadTime>k__BackingField: 2
   <WaitTime>k__BackingField: 2
   <DestroyEffect>k__BackingField: {fileID: 100006, guid: 7c442b9b6852b8a4f93306f3d154d471, type: 3}
@@ -419,6 +419,20 @@ MonoBehaviour:
   <CooldownTime>k__BackingField: 10
   <MissilePrefab>k__BackingField: {fileID: 3841255586236475405, guid: 86513724c5de2df4da484cb23191a7e5, type: 3}
   <HitEffectPrefab>k__BackingField: {fileID: 0}
+--- !u!114 &-3863305394958440406
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3420214958373469289}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 79a39b5131237dc428a9b67a3936e144, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  <Mass>k__BackingField: 10
+  <Range>k__BackingField: 20
 --- !u!1 &4440565963139744672
 GameObject:
   m_ObjectHideFlags: 0

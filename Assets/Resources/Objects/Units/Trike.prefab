@@ -266,6 +266,7 @@ GameObject:
   - component: {fileID: 407880308323197961}
   - component: {fileID: 3529955628967414671}
   - component: {fileID: 5868722175879569043}
+  - component: {fileID: -1838723375037300516}
   m_Layer: 0
   m_Name: Trike
   m_TagString: Untagged
@@ -380,7 +381,6 @@ MonoBehaviour:
   <Selectable>k__BackingField: 1
   <Health>k__BackingField: 30
   <HealthMax>k__BackingField: 30
-  <VisibilityRange>k__BackingField: 6
   <LoadTime>k__BackingField: 2
   <WaitTime>k__BackingField: 2
   <DestroyEffect>k__BackingField: {fileID: 100006, guid: 7c442b9b6852b8a4f93306f3d154d471, type: 3}
@@ -433,6 +433,20 @@ MonoBehaviour:
   <CooldownTime>k__BackingField: 10
   <MissilePrefab>k__BackingField: {fileID: 3841255586236475405, guid: 0656c8096bd9d064a8c956906564f3d0, type: 3}
   <HitEffectPrefab>k__BackingField: {fileID: 0}
+--- !u!114 &-1838723375037300516
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7348057453300986480}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 79a39b5131237dc428a9b67a3936e144, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  <Mass>k__BackingField: 10
+  <Range>k__BackingField: 6
 --- !u!1 &7993281005162232544
 GameObject:
   m_ObjectHideFlags: 0

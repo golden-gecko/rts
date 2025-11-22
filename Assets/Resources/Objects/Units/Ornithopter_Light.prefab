@@ -98,6 +98,7 @@ GameObject:
   - component: {fileID: 2298237996532758597}
   - component: {fileID: -6367231862042638641}
   - component: {fileID: 1458086187911749725}
+  - component: {fileID: -6277090249591134895}
   m_Layer: 0
   m_Name: Ornithopter_Light
   m_TagString: Untagged
@@ -212,11 +213,10 @@ MonoBehaviour:
   <Selectable>k__BackingField: 1
   <Health>k__BackingField: 100
   <HealthMax>k__BackingField: 100
-  <VisibilityRange>k__BackingField: 20
   <LoadTime>k__BackingField: 2
   <WaitTime>k__BackingField: 2
   <DestroyEffect>k__BackingField: {fileID: 100006, guid: 7c442b9b6852b8a4f93306f3d154d471, type: 3}
-  <Altitude>k__BackingField: 14
+  <Altitude>k__BackingField: 10
   <MapLayers>k__BackingField: 00000000
 --- !u!114 &1458086187911749725
 MonoBehaviour:
@@ -232,6 +232,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <Mass>k__BackingField: 10
   <Power>k__BackingField: 400
+--- !u!114 &-6277090249591134895
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5182510588389146488}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 79a39b5131237dc428a9b67a3936e144, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  <Mass>k__BackingField: 10
+  <Range>k__BackingField: 30
 --- !u!1 &5457191916141336451
 GameObject:
   m_ObjectHideFlags: 0

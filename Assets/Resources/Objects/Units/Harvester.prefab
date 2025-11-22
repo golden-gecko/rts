@@ -16,6 +16,7 @@ GameObject:
   - component: {fileID: -7296574799590733170}
   - component: {fileID: 4793784651987314840}
   - component: {fileID: 2949164819816468667}
+  - component: {fileID: -6714782243480238438}
   m_Layer: 0
   m_Name: Harvester
   m_TagString: Untagged
@@ -135,7 +136,6 @@ MonoBehaviour:
   <Selectable>k__BackingField: 1
   <Health>k__BackingField: 200
   <HealthMax>k__BackingField: 200
-  <VisibilityRange>k__BackingField: 10
   <LoadTime>k__BackingField: 2
   <WaitTime>k__BackingField: 2
   <DestroyEffect>k__BackingField: {fileID: 100006, guid: 7c442b9b6852b8a4f93306f3d154d471, type: 3}
@@ -183,6 +183,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <Mass>k__BackingField: 10
   <GatherTime>k__BackingField: 2
+--- !u!114 &-6714782243480238438
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1578887994438585109}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 79a39b5131237dc428a9b67a3936e144, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  <Mass>k__BackingField: 10
+  <Range>k__BackingField: 4
 --- !u!1 &2488149496584009299
 GameObject:
   m_ObjectHideFlags: 0
