@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -52,6 +51,8 @@ public class MyGameObject : MonoBehaviour
         r1.Consume("Metal", 0);
 
         ConstructionRecipies.Add(r1);
+
+        RallyPoint = Exit;
     }
 
     protected virtual void Update()
@@ -60,7 +61,6 @@ public class MyGameObject : MonoBehaviour
         {
             case MyGameObjectState.Operational:
                 ProcessOrders();
-                AlignPositionToTerrain();
                 RaiseResourceFlags();
                 break;
 
@@ -71,6 +71,8 @@ public class MyGameObject : MonoBehaviour
                 RaiseConstructionResourceFlags();
                 break;
         }
+
+        AlignPositionToTerrain();
     }
 
     public bool IsConstructed()
@@ -138,7 +140,6 @@ public class MyGameObject : MonoBehaviour
 
     public void Move(Vector3 target, int priority = -1)
     {
-        // TODO: Test.
         if (0 <= priority && priority < Orders.Count)
         {
             Orders.Insert(priority, new Order(OrderType.Move, target, priority));
@@ -151,7 +152,6 @@ public class MyGameObject : MonoBehaviour
 
     public void Move(MyGameObject target, int priority = -1)
     {
-        // TODO: Test.
         if (0 <= priority && priority < Orders.Count)
         {
             Orders.Insert(priority, new Order(OrderType.Move, target, priority));
@@ -170,6 +170,18 @@ public class MyGameObject : MonoBehaviour
     public void Patrol(MyGameObject target)
     {
         Orders.Add(new Order(OrderType.Patrol, target));
+    }
+
+    public void Rally(Vector3 target, int priority = -1)
+    {
+        if (0 <= priority && priority < Orders.Count)
+        {
+            Orders.Insert(priority, new Order(OrderType.Rally, target));
+        }
+        else
+        {
+            Orders.Add(new Order(OrderType.Rally, target));
+        }
     }
 
     public void Produce()
@@ -268,6 +280,7 @@ public class MyGameObject : MonoBehaviour
                     if (order.Timer.Finished)
                     {
                         order.TargetGameObject.State = MyGameObjectState.Operational;
+                        order.TargetGameObject.Move(RallyPoint);
                         order.Timer.Reset();
 
                         Orders.Pop();
@@ -498,6 +511,11 @@ public class MyGameObject : MonoBehaviour
 
     protected virtual void OnOrderRally()
     {
+        var order = Orders.First();
+
+        RallyPoint = order.TargetPosition;
+
+        Orders.Pop();
     }
 
     protected virtual void OnOrderResearch()
@@ -626,13 +644,21 @@ public class MyGameObject : MonoBehaviour
     {
         switch (State)
         {
+            case MyGameObjectState.UnderAssembly:
             case MyGameObjectState.UnderConstruction:
-                return string.Format("ID: {0}\nName: {1}\nResources:{2}",
-                    GetInstanceID(), name, ConstructionResources.GetInfo());
+                return string.Format("ID: {0}\nName: {1}\nResources:{2}", GetInstanceID(), name, ConstructionResources.GetInfo());
         }
 
-        return string.Format("ID: {0}\nName: {1}\nHP: {2}\nSpeed: {3}\nResources:{4}\nOrders: {5}\nStats: {6}",
-            GetInstanceID(), name, Health, Speed, Resources.GetInfo(), Orders.GetInfo(), Stats.GetInfo());
+        string info = string.Format("ID: {0}\nName: {1}\nHP: {2}", GetInstanceID(), name, Health);
+
+        if (Speed > 0)
+        {
+            info += string.Format("\nSpeed: {0}", Speed);
+        }
+
+        info += string.Format("\nResources:{0}\nOrders: {1}\nStats: {2}", Resources.GetInfo(), Orders.GetInfo(), Stats.GetInfo());
+
+        return info;
     }
 
     void MoveResources(MyGameObject source, MyGameObject target, Dictionary<string, int> resources)
@@ -802,7 +828,7 @@ public class MyGameObject : MonoBehaviour
 
     public float ProduceTime { get; protected set; } = 4;
 
-    public float Speed { get; protected set; } = 10;
+    public float Speed { get; protected set; } = 0;
 
     public float UnloadTime { get; protected set; } = 2;
 
@@ -815,4 +841,6 @@ public class MyGameObject : MonoBehaviour
     public ResourceContainer ConstructionResources { get; private set; }
 
     public RecipeContainer ConstructionRecipies { get; private set; }
+
+    public Vector3 RallyPoint { get; protected set; }
 }

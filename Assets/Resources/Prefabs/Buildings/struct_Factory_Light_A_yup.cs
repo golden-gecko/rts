@@ -7,6 +7,7 @@ public class struct_Factory_Light_A_yup : MyGameObject
         base.Start();
 
         Orders.AllowOrder(OrderType.Construct);
+        Orders.AllowOrder(OrderType.Rally);
 
         Orders.AllowPrefab("Prefabs/Vehicles/unit_Infantry_Light_B_yup");
         Orders.AllowPrefab("Prefabs/Vehicles/unit_Grav_Light_A_yup");

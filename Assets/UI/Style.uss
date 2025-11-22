@@ -1,5 +1,5 @@
 .panel-background {
-    background-color: rgba(0, 128, 0, 0.25);
+    background-color: rgba(0, 128, 0, 0.75);
 }
 
 .button-construct {

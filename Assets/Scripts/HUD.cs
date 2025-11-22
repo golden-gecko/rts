@@ -283,22 +283,36 @@ public class HUD : MonoBehaviour
     {
         foreach (var selected in Selected)
         {
-            if (IsMulti() == false)
-            {
-                selected.Orders.Clear();
-            }
-
             switch (Order)
             {
                 case OrderType.Attack:
+                    if (IsMulti() == false)
+                    {
+                        selected.Orders.Clear();
+                    }
+
                     selected.Attack(position);
                     break;
 
                 case OrderType.Patrol:
+                    if (IsMulti() == false)
+                    {
+                        selected.Orders.Clear();
+                    }
+
                     selected.Patrol(position);
                     break;
 
+                case OrderType.Rally:
+                    selected.Rally(position, 0);
+                    break;
+
                 default:
+                    if (IsMulti() == false)
+                    {
+                        selected.Orders.Clear();
+                    }
+
                     selected.Move(position);
                     break;
             }

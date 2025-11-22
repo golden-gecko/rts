@@ -19,6 +19,9 @@ public class InGameMenuController : MonoBehaviour
         var uiDocument = GetComponent<UIDocument>();
         var rootVisualElement = uiDocument.rootVisualElement;
 
+        bottomPanel = rootVisualElement.Q<VisualElement>("BottomPanel");
+        infoPanel = rootVisualElement.Q<VisualElement>("InfoPanel");
+
         log = rootVisualElement.Q<Label>("Log");
 
         order = rootVisualElement.Q<Label>("Order");
@@ -55,6 +58,17 @@ public class InGameMenuController : MonoBehaviour
 
         UpdateOrders();
         UpdatePrefabs();
+
+        if (hud.Selected.Count > 0)
+        {
+            bottomPanel.style.display = DisplayStyle.Flex;
+            infoPanel.style.display = DisplayStyle.Flex;
+        }
+        else
+        {
+            bottomPanel.style.display = DisplayStyle.None;
+            infoPanel.style.display = DisplayStyle.None;
+        }
     }
 
     void CreateOrders()
@@ -136,9 +150,9 @@ public class InGameMenuController : MonoBehaviour
 
     void UpdateOrders()
     {
-        var whitelist = new HashSet<OrderType>();
+        HashSet<OrderType> whitelist = new HashSet<OrderType>();
 
-        foreach (var selected in hud.Selected)
+        foreach (MyGameObject selected in hud.Selected)
         {
             if (selected.State != MyGameObjectState.Operational)
             {
@@ -148,12 +162,12 @@ public class InGameMenuController : MonoBehaviour
             whitelist.UnionWith(selected.Orders.OrderWhitelist);
         }
 
-        foreach (var button in ordersButtons)
+        foreach (KeyValuePair<OrderType, Button> button in ordersButtons)
         {
             button.Value.style.display = DisplayStyle.None;
         }
 
-        foreach (var i in whitelist)
+        foreach (OrderType i in whitelist)
         {
             if (ordersButtons.ContainsKey(i))
             {
@@ -164,27 +178,27 @@ public class InGameMenuController : MonoBehaviour
 
     void UpdatePrefabs()
     {
-        var whitelist = new HashSet<string>();
+        HashSet<string> whitelist = new HashSet<string>();
 
-        foreach (var selected in hud.Selected)
+        foreach (MyGameObject selected in hud.Selected)
         {
             if (selected.State != MyGameObjectState.Operational)
             {
                 continue;
             }
 
-            foreach (var prefab in selected.Orders.PrefabWhitelist)
+            foreach (string prefab in selected.Orders.PrefabWhitelist)
             {
                 whitelist.Add(prefab);
             }
         }
 
-        foreach (var button in prefabsButtons)
+        foreach (KeyValuePair<string, Button> button in prefabsButtons)
         {
             button.Value.style.display = DisplayStyle.None;
         }
 
-        foreach (var i in whitelist)
+        foreach (string i in whitelist)
         {
             if (prefabsButtons.ContainsKey(i))
             {
@@ -219,6 +233,9 @@ public class InGameMenuController : MonoBehaviour
     public VisualTreeAsset templateButton;
     
     HUD hud;
+
+    VisualElement bottomPanel;
+    VisualElement infoPanel;
 
     Label log;
 
