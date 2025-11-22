@@ -85,22 +85,16 @@ public class MainCamera : MonoBehaviour
     private void AlignPositionToTerrain()
     {
         RaycastHit hitInfo;
-        Ray ray = new Ray(transform.position + new Vector3(0, 1000, 0), Vector3.down);
 
-        if (Physics.Raycast(ray, out hitInfo, 2000, LayerMask.GetMask("Terrain")))
+        if (HUD.Instance.GeTerrainPosition(transform.position, out hitInfo))
         {
-            if (hitInfo.transform.tag == "Terrain")
-            {
-                float y = Mathf.Clamp(transform.position.y, hitInfo.point.y + minHeight, hitInfo.point.y + maxHeight);
-
-                transform.position = new Vector3(transform.position.x, y, transform.position.z);
-            }
+            transform.position = new Vector3(transform.position.x, Mathf.Clamp(transform.position.y, hitInfo.point.y + minHeight, hitInfo.point.y + maxHeight), transform.position.z);
         }
     }
 
     private float maxHeight = 100.0f;
     
-    private float minHeight = 10.0f;
+    private float minHeight = 2.0f;
 
     private Vector3 speed = new Vector3(10.0f, 10.0f, 10.0f);
 

@@ -52,7 +52,7 @@ public class Game : MonoBehaviour
     {
         foreach (MyGameObject target in GameObject.FindObjectsByType<MyGameObject>(FindObjectsSortMode.None)) // TODO: Optimize.
         {
-            if (myGameObject.IsInRange(target.Position, myGameObject.MissileRange) && myGameObject.IsEnemy(target)) // TODO: Create IsInAttackRange method.
+            if (myGameObject.IsInAttackRange(target.Position) && myGameObject.IsEnemy(target))
             {
                 return Order.Attack(target);
             }

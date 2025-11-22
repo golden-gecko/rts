@@ -29,7 +29,6 @@ public enum OrderType
     Produce,
     Rally,
     Research,
-    Repair,
     Stop,
     Transport,
     Unload,

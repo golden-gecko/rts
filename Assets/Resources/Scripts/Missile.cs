@@ -36,7 +36,7 @@ public class Missile : MyGameObject
 
         if (Physics.Raycast(ray, out hitInfo, 2000, LayerMask.GetMask("Terrain")))
         {
-            if (hitInfo.transform.tag == "Terrain")
+            if (hitInfo.transform.CompareTag("Terrain"))
             {
                 Position = new Vector3(transform.position.x, hitInfo.point.y + 0.1f, transform.position.z);
             }

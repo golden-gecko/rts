@@ -28,7 +28,7 @@ public class OrderHandlerAttackUnit : IOrderHandler
             position = order.TargetPosition;
         }
 
-        if (myGameObject.IsInRange(position, myGameObject.MissileRange) == false)
+        if (myGameObject.IsInAttackRange(position) == false)
         {
             myGameObject.Move(GetPositionToAttack(myGameObject.Position, position, myGameObject.MissileRange), 0);
         }
@@ -39,7 +39,7 @@ public class OrderHandlerAttackUnit : IOrderHandler
             if (myGameObject.ReloadTimer.Finished)
             {
                 MyGameObject resource = Resources.Load<MyGameObject>(myGameObject.MissilePrefab);
-                MyGameObject missile = Object.Instantiate<MyGameObject>(resource, myGameObject.Position, Quaternion.identity);
+                MyGameObject missile = Object.Instantiate(resource, myGameObject.Position, Quaternion.identity);
 
                 missile.Parent = myGameObject;
                 missile.Player = myGameObject.Player;

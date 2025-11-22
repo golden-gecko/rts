@@ -25,7 +25,7 @@ public class Player : MonoBehaviour
     {
         if (Groups.ContainsKey(keyCode))
         {
-            if (IsMulti() == false)
+            if (HUD.Instance.IsMulti() == false)
             {
                 foreach (MyGameObject myGameObject in Selected)
                 {
@@ -40,11 +40,6 @@ public class Player : MonoBehaviour
                 myGameObject.Select(true);
             }
         }
-    }
-
-    private bool IsMulti() // TODO: Refactor.
-    {
-        return Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift);
     }
 
     [SerializeField]
