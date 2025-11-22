@@ -24,27 +24,27 @@ public class PassiveIncreaseRange : Skill
                 continue;
             }
 
-            foreach (Gun gun in target.GetComponents<Gun>())
+            if (target.TryGetComponent(out Gun gun))
             {
                 gun.Range.Factor.Remove(myGameObject);
             }
 
-            foreach (Radar radar in target.GetComponents<Radar>())
+            if (target.TryGetComponent(out Radar radar))
             {
                 radar.Range.Factor.Remove(myGameObject);
             }
 
-            foreach (PowerPlant powerPlant in target.GetComponents<PowerPlant>())
+            if (target.TryGetComponent(out PowerPlant powerPlant))
             {
                 powerPlant.Range.Factor.Remove(myGameObject);
             }
 
-            foreach (Shield shield in target.GetComponents<Shield>())
+            if (target.TryGetComponent(out Shield shield))
             {
                 shield.Range.Factor.Remove(myGameObject);
             }
 
-            foreach (Sight sight in target.GetComponents<Sight>())
+            if (target.TryGetComponent(out Sight sight))
             {
                 sight.Range.Factor.Remove(myGameObject);
             }
@@ -61,27 +61,27 @@ public class PassiveIncreaseRange : Skill
                 continue;
             }
 
-            foreach (Gun gun in target.GetComponents<Gun>())
+            if (target.TryGetComponent(out Gun gun))
             {
                 gun.Range.Factor.Add(myGameObject, Value);
             }
 
-            foreach (Radar radar in target.GetComponents<Radar>())
+            if (target.TryGetComponent(out Radar radar))
             {
                 radar.Range.Factor.Add(myGameObject, Value);
             }
 
-            foreach (PowerPlant powerPlant in target.GetComponents<PowerPlant>())
+            if (target.TryGetComponent(out PowerPlant powerPlant))
             {
                 powerPlant.Range.Factor.Add(myGameObject, Value);
             }
 
-            foreach (Shield shield in target.GetComponents<Shield>())
+            if (target.TryGetComponent(out Shield shield))
             {
                 shield.Range.Factor.Add(myGameObject, Value);
             }
 
-            foreach (Sight sight in target.GetComponents<Sight>())
+            if (target.TryGetComponent(out Sight sight))
             {
                 sight.Range.Factor.Add(myGameObject, Value);
             }
@@ -101,27 +101,27 @@ public class PassiveIncreaseRange : Skill
                 continue;
             }
 
-            foreach (Gun gun in target.GetComponents<Gun>())
+            if (target.TryGetComponent(out Gun gun))
             {
                 gun.Range.Factor.Remove(myGameObject);
             }
 
-            foreach (Radar radar in target.GetComponents<Radar>())
+            if (target.TryGetComponent(out Radar radar))
             {
                 radar.Range.Factor.Remove(myGameObject);
             }
 
-            foreach (PowerPlant powerPlant in target.GetComponents<PowerPlant>())
+            if (target.TryGetComponent(out PowerPlant powerPlant))
             {
                 powerPlant.Range.Factor.Remove(myGameObject);
             }
 
-            foreach (Shield shield in target.GetComponents<Shield>())
+            if (target.TryGetComponent(out Shield shield))
             {
                 shield.Range.Factor.Remove(myGameObject);
             }
 
-            foreach (Sight sight in target.GetComponents<Sight>())
+            if (target.TryGetComponent(out Sight sight))
             {
                 sight.Range.Factor.Remove(myGameObject);
             }

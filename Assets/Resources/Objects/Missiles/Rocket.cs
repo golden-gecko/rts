@@ -10,11 +10,9 @@ public class Rocket : Missile
         {
             Collide(myGameObject);
         }
-        else
+        else if (collision.collider.TryGetComponent(out Terrain _))
         {
-            Terrain terrain = collision.collider.GetComponent<Terrain>();
-
-            if (terrain != null && collision.contacts.Length > 0)
+            if (collision.contacts.Length > 0)
             {
                 Collide(collision.contacts[0].point);
             }
@@ -38,7 +36,7 @@ public class Rocket : Missile
             Instantiate(HitEffectPrefab, Position, Quaternion.identity);
         }
 
-        float damageDealt = myGameObject.OnDamage(Damage.Total);
+        float damageDealt = myGameObject.OnDamage(DamageType, Damage.Total);
 
         if (myGameObject.Alive == false)
         {

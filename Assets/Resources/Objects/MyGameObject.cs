@@ -2,33 +2,15 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
+[DisallowMultipleComponent]
 public class MyGameObject : MonoBehaviour
 {
     protected virtual void Awake()
     {
         Body = transform.Find("Body");
-        Indicators = Instantiate(Resources.Load<Indicators>("Indicators"), transform, false);
 
-        if (CreateBase)
-        {
-            Vector3 size = Size;
-
-            int x = Mathf.CeilToInt(size.x / Config.Map.Scale);
-            int z = Mathf.CeilToInt(size.z / Config.Map.Scale);
-
-            x = Utils.MakeOdd(x);
-            z = Utils.MakeOdd(z);
-
-            size.x = x * Config.Map.Scale;
-            size.z = z * Config.Map.Scale;
-
-            Body.transform.localPosition = new Vector3(0.0f, 0.25f, 0.0f);
-
-            Base = Instantiate(Resources.Load<GameObject>("Base"), transform, false);
-            Base.transform.localScale = new Vector3(size.x, 0.5f, size.z);
-
-            Indicators.transform.localPosition = new Vector3(0.0f, 0.25f, 0.0f);
-        }
+        SetupIndicators();
+        SetupBase();
 
         Orders.AllowOrder(OrderType.Destroy); // TODO: Move to component.
         Orders.AllowOrder(OrderType.Disable);
@@ -43,6 +25,8 @@ public class MyGameObject : MonoBehaviour
         OrderHandlers[OrderType.Destroy] = new OrderHandlerDestroy(); // TODO: Move to component.
         OrderHandlers[OrderType.Disable] = new OrderHandlerDisable();
         OrderHandlers[OrderType.Enable] = new OrderHandlerEnable();
+        OrderHandlers[OrderType.GuardObject] = new OrderHandlerGuardObject();
+        OrderHandlers[OrderType.GuardPosition] = new OrderHandlerGuardPosition();
         OrderHandlers[OrderType.Stop] = new OrderHandlerStop();
         OrderHandlers[OrderType.UseSkill] = new OrderHandlerUseSkill();
         OrderHandlers[OrderType.Wait] = new OrderHandlerWait();
@@ -410,18 +394,24 @@ public class MyGameObject : MonoBehaviour
         return Player.Is(player, state);
     }
 
-    public float OnDamage(float damage)
+    public float OnDamage(List<DamageTypeItem> damageType, float damage)
     {
         float damageLeft = damage;
 
-        foreach (Shield shield in GetComponents<Shield>())
+        if (TryGetComponent(out Shield shield))
         {
-            damageLeft -= shield.Absorb(damageLeft);
+            foreach (DamageTypeItem damageTypeItem in damageType)
+            {
+                damageLeft -= shield.Absorb(damageTypeItem.Type, damageTypeItem.Ratio * damageLeft);
+            }
         }
 
-        foreach (Armour armour in GetComponents<Armour>())
+        if (TryGetComponent(out Armour armour))
         {
-            damageLeft -= armour.Absorb(damageLeft);
+            foreach (DamageTypeItem damageTypeItem in damageType)
+            {
+                damageLeft -= armour.Absorb(damageTypeItem.Type, damageTypeItem.Ratio * damageLeft);
+            }
         }
 
         damageLeft -= Health.Remove(damageLeft);
@@ -463,7 +453,8 @@ public class MyGameObject : MonoBehaviour
 
     public void OnRepair(float value)
     {
-        Stats.Add(Stats.DamageRepaired, Health.Add(value));
+        // TODO: Repair health, armour and shield.
+        // Stats.Add(Stats.DamageRepaired, Health.Add(value));
     }
 
     public void Select(bool status)
@@ -473,7 +464,7 @@ public class MyGameObject : MonoBehaviour
             return;
         }
 
-        Indicators.GetComponent<Indicators>().OnSelect(status);
+        Indicators.OnSelect(status);
     }
 
     private void InitializePosition()
@@ -510,7 +501,7 @@ public class MyGameObject : MonoBehaviour
     {
         if (Player != null)
         {
-            Indicators.GetComponent<Indicators>().OnPlayerChange(Player);
+            Indicators.OnPlayerChange(Player);
         }
     }
 
@@ -655,6 +646,34 @@ public class MyGameObject : MonoBehaviour
         Orders.Clear();
     }
 
+    private void SetupIndicators()
+    {
+        Indicators = Instantiate(Resources.Load<Indicators>("Indicators"), transform, false);
+    }
+
+    private void SetupBase()
+    {
+        if (CreateBase == false)
+        {
+            return;
+        }
+
+        Vector3 size = Size;
+
+        int x = Utils.MakeOdd(Mathf.CeilToInt(size.x / Config.Map.Scale));
+        int z = Utils.MakeOdd(Mathf.CeilToInt(size.z / Config.Map.Scale));
+
+        size.x = x * Config.Map.Scale;
+        size.z = z * Config.Map.Scale;
+
+        Body.transform.localPosition = new Vector3(0.0f, 0.25f, 0.0f);
+
+        Indicators.transform.localPosition = new Vector3(0.0f, 0.25f, 0.0f);
+
+        Base = Instantiate(Resources.Load<GameObject>("Base"), transform, false);
+        Base.transform.localScale = new Vector3(size.x, 0.5f, size.z);
+    }
+
     private void CreateSkills()
     {
         foreach (string skillName in SkillsNames)
@@ -679,7 +698,7 @@ public class MyGameObject : MonoBehaviour
         {
             EnableRenderers(true);
 
-            Indicators.GetComponent<Indicators>().OnShow();
+            Indicators.OnShow();
 
             VisibilityState = MyGameObjectVisibilityState.Visible;
         }
@@ -687,7 +706,7 @@ public class MyGameObject : MonoBehaviour
         {
             EnableRenderers(true);
 
-            Indicators.GetComponent<Indicators>().OnExploration();
+            Indicators.OnExploration();
 
             VisibilityState = MyGameObjectVisibilityState.Explored;
         }
@@ -695,7 +714,7 @@ public class MyGameObject : MonoBehaviour
         {
             EnableRenderers(false);
 
-            Indicators.GetComponent<Indicators>().OnRadar();
+            Indicators.OnRadar();
 
             VisibilityState = MyGameObjectVisibilityState.Radar;
         }
@@ -703,7 +722,7 @@ public class MyGameObject : MonoBehaviour
         {
             EnableRenderers(false);
 
-            Indicators.GetComponent<Indicators>().OnHide();
+            Indicators.OnHide();
 
             VisibilityState = MyGameObjectVisibilityState.Hidden;
         }
@@ -729,6 +748,9 @@ public class MyGameObject : MonoBehaviour
     {
         get
         {
+            // TODO: Fix center of an object.
+
+            /*
             Collider[] colliders = GetComponentsInChildren<Collider>();
 
             if (colliders.Length <= 0)
@@ -744,6 +766,9 @@ public class MyGameObject : MonoBehaviour
             }
 
             return center / colliders.Length;
+            */
+
+            return new Vector3(Position.x, Position.y + Size.y / 2.0f, Position.z);
         }
     }
 

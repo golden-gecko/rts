@@ -24,7 +24,7 @@ public class PassiveIncreasePower : Skill
                 continue;
             }
 
-            foreach (Engine engine in target.GetComponents<Engine>())
+            if (target.TryGetComponent(out Engine engine))
             {
                 engine.Power.Factor.Remove(myGameObject);
             }
@@ -41,7 +41,7 @@ public class PassiveIncreasePower : Skill
                 continue;
             }
 
-            foreach (Engine engine in target.GetComponents<Engine>())
+            if (target.TryGetComponent(out Engine engine))
             {
                 engine.Power.Factor.Add(myGameObject, Value);
             }
@@ -61,17 +61,17 @@ public class PassiveIncreasePower : Skill
                 continue;
             }
 
-            foreach (Gun gun in target.GetComponents<Gun>())
+            if (target.TryGetComponent(out Gun gun))
             {
                 gun.Range.Factor.Remove(myGameObject);
             }
 
-            foreach (Radar radar in target.GetComponents<Radar>())
+            if (target.TryGetComponent(out Radar radar))
             {
                 radar.Range.Factor.Remove(myGameObject);
             }
 
-            foreach (Sight sight in target.GetComponents<Sight>())
+            if (target.TryGetComponent(out Sight sight))
             {
                 sight.Range.Factor.Remove(myGameObject);
             }

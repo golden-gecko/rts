@@ -97,7 +97,7 @@ MonoBehaviour:
   <CreateBase>k__BackingField: 0
   <SnapToGrid>k__BackingField: 0
   <VisibilityState>k__BackingField: 2
-  <FireEffectPrefab>k__BackingField: {fileID: 0}
+  <FireEffectPrefab>k__BackingField: {fileID: 100002, guid: 3b5e16e5f057f6e4c808bd1f3ae53f7e, type: 3}
   <HitEffectPrefab>k__BackingField: {fileID: 100006, guid: 24295e2be01bda1438e5198083b282af, type: 3}
   <Damage>k__BackingField:
     <Value>k__BackingField: 0

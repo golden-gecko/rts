@@ -189,6 +189,7 @@ MonoBehaviour:
   <State>k__BackingField: 1
   <CreateBase>k__BackingField: 0
   <SnapToGrid>k__BackingField: 1
+  <VisibilityState>k__BackingField: 2
 --- !u!114 &-2746926710343751413
 MonoBehaviour:
   m_ObjectHideFlags: 0

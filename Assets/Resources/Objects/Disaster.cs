@@ -20,7 +20,7 @@ public class Disaster : MyGameObject
                 {
                     i.Value.Reset();
 
-                    i.Key.OnDamage(DamagePerSecond);
+                    i.Key.OnDamage(DamageType, DamagePerSecond);
                 }
             }
         }
@@ -46,7 +46,7 @@ public class Disaster : MyGameObject
         {
             Damaged.Add(myGameObject);
 
-            myGameObject.OnDamage(Damage);
+            myGameObject.OnDamage(DamageType, Damage);
         }
     }
 
@@ -80,6 +80,9 @@ public class Disaster : MyGameObject
 
     [field: SerializeField]
     public float DamagePerSecond { get; set; } = 10.0f;
+
+    [field: SerializeField]
+    public List<DamageTypeItem> DamageType { get; private set; } = new List<DamageTypeItem>();
 
     private List<MyGameObject> Damaged = new List<MyGameObject>();
 

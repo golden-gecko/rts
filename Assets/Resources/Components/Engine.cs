@@ -14,8 +14,6 @@ public class Engine : MyComponent
 
         Parent.OrderHandlers[OrderType.Explore] = new OrderHandlerExplore();
         Parent.OrderHandlers[OrderType.Follow] = new OrderHandlerFollow();
-        Parent.OrderHandlers[OrderType.GuardObject] = new OrderHandlerGuardObject();
-        Parent.OrderHandlers[OrderType.GuardPosition] = new OrderHandlerGuardPosition();
         Parent.OrderHandlers[OrderType.Move] = new OrderHandlerMove();
         Parent.OrderHandlers[OrderType.Patrol] = new OrderHandlerPatrol();
         Parent.OrderHandlers[OrderType.Turn] = new OrderHandlerTurn();
@@ -57,7 +55,7 @@ public class Engine : MyComponent
     [field: SerializeField]
     public float FuelUsage { get; private set; } = 1.0f;
 
-    public float Speed { get => Power.Total / GetComponent<MyGameObject>().Mass; }
+    public float Speed { get => Power.Total / Parent.Mass; }
 
     private float distanceToDrive = 0.0f;
 }
