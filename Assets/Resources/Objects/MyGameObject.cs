@@ -55,7 +55,7 @@ public class MyGameObject : MonoBehaviour
             case MyGameObjectState.Operational:
                 if (Alive == false)
                 {
-                    OnDestroy_();
+                    Destroy(0);
                 }
 
                 if (Working)
@@ -71,7 +71,7 @@ public class MyGameObject : MonoBehaviour
             case MyGameObjectState.UnderConstruction:
                 if (Alive == false)
                 {
-                    OnDestroy_();
+                    Destroy(0);
                 }
 
                 RaiseConstructionResourceFlags();
@@ -394,7 +394,7 @@ public class MyGameObject : MonoBehaviour
         return Player.Is(player, state);
     }
 
-    public float OnDamage(List<DamageTypeItem> damageType, float damage)
+    public float OnDamageHandler(List<DamageTypeItem> damageType, float damage)
     {
         float damageLeft = damage;
 
@@ -421,7 +421,7 @@ public class MyGameObject : MonoBehaviour
         return damage - damageLeft;
     }
 
-    public virtual void OnDestroy_() // TODO: Name collision with GameObject.OnDestroy.
+    public void OnDestroyHandler()
     {
         if (DestroyEffect != null)
         {
@@ -430,28 +430,28 @@ public class MyGameObject : MonoBehaviour
 
         foreach (MyComponent myComponent in GetComponents<MyComponent>())
         {
-            myComponent.OnDestroy_();
+            myComponent.OnDestroyHandler();
         }
 
         foreach (Skill skill in Skills.Values)
         {
-            skill.OnDestroy(this);
+            skill.OnDestroyHandler(this);
         }
 
         Destroy(gameObject);
     }
 
-    public void OnMove(Vector3 position)
+    public void OnMoveHandler(Vector3 position)
     {
         foreach (Skill skill in Skills.Values)
         {
-            skill.OnMove(this, position);
+            skill.OnMoveHandler(this, position);
         }
 
         Position = position;
     }
 
-    public float OnRepair(float health)
+    public float OnRepairHandler(float health)
     {
         float healthLeft = health;
 
@@ -528,7 +528,7 @@ public class MyGameObject : MonoBehaviour
 
             if (Orders.IsAllowed(order.Type) && OrderHandlers.ContainsKey(order.Type))
             {
-                OrderHandlers[order.Type].OnExecute(this);
+                OrderHandlers[order.Type].OnExecuteHandler(this);
             }
             else
             {
@@ -537,7 +537,7 @@ public class MyGameObject : MonoBehaviour
         }
         else if (OrderHandlers.ContainsKey(OrderType.Idle))
         {
-            OrderHandlers[OrderType.Idle].OnExecute(this);
+            OrderHandlers[OrderType.Idle].OnExecuteHandler(this);
         }
     }
 
@@ -549,7 +549,7 @@ public class MyGameObject : MonoBehaviour
 
             if (order.Type == OrderType.Enable && Orders.IsAllowed(order.Type) && OrderHandlers.ContainsKey(order.Type))
             {
-                OrderHandlers[order.Type].OnExecute(this);
+                OrderHandlers[order.Type].OnExecuteHandler(this);
             }
             else
             {

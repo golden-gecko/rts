@@ -16,13 +16,13 @@ public class MyComponent : MonoBehaviour
     {
     }
 
+    public virtual void OnDestroyHandler()
+    {
+    }
+
     public virtual string GetInfo()
     {
         return string.Format("Mass: {0:0.}", Mass);
-    }
-
-    public virtual void OnDestroy_()
-    {
     }
 
     [field: SerializeField]

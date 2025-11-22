@@ -47,6 +47,11 @@ public class Validator : EditorWindow
                 {
                     Debug.Log(string.Format("Resource {0} is not kinematic ({1}).", gameObject.name, rigidbody.isKinematic));
                 }
+
+                if (rigidbody.useGravity)
+                {
+                    Debug.Log(string.Format("Resource {0} is using gravity ({1}).", gameObject.name, rigidbody.useGravity));
+                }
             }
         }
     }

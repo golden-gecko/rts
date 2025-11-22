@@ -1,6 +1,6 @@
 public class OrderHandler
 {
-    public virtual void OnExecute(MyGameObject myGameObject)
+    public virtual void OnExecuteHandler(MyGameObject myGameObject)
     {
     }
 

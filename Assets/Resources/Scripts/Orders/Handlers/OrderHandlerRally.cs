@@ -1,6 +1,6 @@
 public class OrderHandlerRally : OrderHandler
 {
-    public override void OnExecute(MyGameObject myGameObject)
+    public override void OnExecuteHandler(MyGameObject myGameObject)
     {
         Order order = myGameObject.Orders.First();
 

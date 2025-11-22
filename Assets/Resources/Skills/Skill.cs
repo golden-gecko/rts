@@ -26,16 +26,16 @@ public class Skill : ICloneable
         Cooldown.Update(Time.deltaTime);
     }
 
-    public virtual void OnDestroy(MyGameObject myGameObject)
+    public virtual void OnDestroyHandler(MyGameObject myGameObject)
     {
     }
 
-    public virtual void OnExecute(MyGameObject myGameObject)
+    public virtual void OnExecuteHandler(MyGameObject myGameObject)
     {
         Cooldown.Reset();
     }
 
-    public virtual void OnMove(MyGameObject myGameObject, Vector3 position)
+    public virtual void OnMoveHandler(MyGameObject myGameObject, Vector3 position)
     {
     }
 

@@ -59,7 +59,7 @@ public class Indicators : MonoBehaviour
     {
         MyGameObject myGameObject = GetComponentInParent<MyGameObject>();
 
-        if (myGameObject.ShowIndicators)
+        if (myGameObject != null && myGameObject.ShowIndicators)
         {
             gameObject.SetActive(true);
 

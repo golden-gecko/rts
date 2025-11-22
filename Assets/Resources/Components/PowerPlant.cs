@@ -28,6 +28,11 @@ public class PowerPlant : MyComponent
     {
         base.Update();
 
+        if (Parent == null)
+        {
+            return;
+        }
+
         UpdateConnections();
 
         bool state = previousState != Parent.State;
@@ -68,6 +73,18 @@ public class PowerPlant : MyComponent
         }
     }
 
+    public override void OnDestroyHandler()
+    {
+        base.OnDestroyHandler();
+
+        ClearConnections();
+
+        if (previousState == MyGameObjectState.Operational && previousEnabled && previousProducerConnected && PowerUpTime.Finished)
+        {
+            PowerDown(previousPosition);
+        }
+    }
+
     public override string GetInfo()
     {
         string info = string.Format("PowerPlant: {0}\n  Range: {1}", base.GetInfo(), Range.Total);
@@ -78,18 +95,6 @@ public class PowerPlant : MyComponent
         }
 
         return info;
-    }
-
-    public override void OnDestroy_()
-    {
-        base.OnDestroy_();
-
-        ClearConnections();
-
-        if (previousState == MyGameObjectState.Operational && previousEnabled && previousProducerConnected && PowerUpTime.Finished)
-        {
-            PowerDown(previousPosition);
-        }
     }
 
     public void Connect(PowerPlant powerPlant)

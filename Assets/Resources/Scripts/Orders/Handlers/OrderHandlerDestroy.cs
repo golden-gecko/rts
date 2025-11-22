@@ -1,8 +1,9 @@
+using UnityEngine;
+
 public class OrderHandlerDestroy : OrderHandler
 {
-    public override void OnExecute(MyGameObject myGameObject)
+    public override void OnExecuteHandler(MyGameObject myGameObject)
     {
-        myGameObject.OnDestroy_();
-        myGameObject.Orders.Pop();
+        myGameObject.OnDestroyHandler();
     }
 }

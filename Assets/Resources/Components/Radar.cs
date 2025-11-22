@@ -20,6 +20,11 @@ public class Radar : MyComponent
     {
         base.Update();
 
+        if (Parent == null)
+        {
+            return;
+        }
+
         if (previousState != Parent.State || previousEnabled != Parent.Enabled || Utils.ToGrid(previousPosition, Config.Map.Scale) != Utils.ToGrid(Parent.Position, Config.Map.Scale))
         {
             if (previousState == MyGameObjectState.Operational && previousEnabled)
@@ -38,19 +43,19 @@ public class Radar : MyComponent
         }
     }
 
-    public override string GetInfo()
+    public override void OnDestroyHandler ()
     {
-        return string.Format("Radar: {0}, Range: {1:0.}, Anti: {2}", base.GetInfo(), Range.Total, Anti);
-    }
-
-    public override void OnDestroy_()
-    {
-        base.OnDestroy_();
+        base.OnDestroyHandler();
 
         if (previousState == MyGameObjectState.Operational && previousEnabled)
         {
             PowerDown(previousPosition);
         }
+    }
+
+    public override string GetInfo()
+    {
+        return string.Format("Radar: {0}, Range: {1:0.}, Anti: {2}", base.GetInfo(), Range.Total, Anti);
     }
 
     public bool IsInRange(Vector3 position)

@@ -19,8 +19,7 @@ public class Disaster : MyGameObject
                 if (i.Value.Update(Time.deltaTime))
                 {
                     i.Value.Reset();
-
-                    i.Key.OnDamage(DamageType, DamagePerSecond);
+                    i.Key.OnDamageHandler(DamageType, DamagePerSecond);
                 }
             }
         }
@@ -46,7 +45,7 @@ public class Disaster : MyGameObject
         {
             Damaged.Add(myGameObject);
 
-            myGameObject.OnDamage(DamageType, Damage);
+            myGameObject.OnDamageHandler(DamageType, Damage);
         }
     }
 

@@ -18,6 +18,11 @@ public class UI_Resources : UI_Element<UI_Resources>
 
         foreach (Storage storage in FindObjectsByType<Storage>(FindObjectsSortMode.None))
         {
+            if (storage == null)
+            {
+                continue;
+            }
+    
             if (storage.GetComponent<MyGameObject>().Player != HUD.Instance.ActivePlayer)
             {
                 continue;
