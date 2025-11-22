@@ -15,33 +15,35 @@ public class InGameMenuController : MonoBehaviour
         var uiDocument = GetComponent<UIDocument>();
         var rootVisualElement = uiDocument.rootVisualElement;
 
-        var extract = rootVisualElement.Q<Button>("Extract");
         var move = rootVisualElement.Q<Button>("Move");
+        var patrol = rootVisualElement.Q<Button>("Patrol");
+        var produce = rootVisualElement.Q<Button>("Produce");
         var stop = rootVisualElement.Q<Button>("Stop");
 
-        extract.RegisterCallback<ClickEvent>(ev => OnExtract());
         move.RegisterCallback<ClickEvent>(ev => OnMove());
+        patrol.RegisterCallback<ClickEvent>(ev => OnPatrol());
+        produce.RegisterCallback<ClickEvent>(ev => OnProduce());
         stop.RegisterCallback<ClickEvent>(ev => OnStop());
-    }
-
-    void Update()
-    {
-    }
-
-    void OnExtract()
-    {
     }
 
     void OnMove()
     {
+        hud.Order = OrderType.Move;
+    }
+
+    void OnPatrol()
+    {
+        hud.Order = OrderType.Patrol;
+    }
+
+    void OnProduce()
+    {
+        hud.Order = OrderType.Produce;
     }
 
     void OnStop()
     {
-        foreach (var item in hud.Selected)
-        {
-            item.Stop();
-        }
+        hud.Stop();
     }
 
     HUD hud;

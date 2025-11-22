@@ -2,10 +2,6 @@ using UnityEngine;
 
 public class MyCamera : MonoBehaviour
 {
-    void Start()
-    {
-    }
-
     void Update()
     {
         var speed = Speed * Time.deltaTime;
@@ -41,5 +37,5 @@ public class MyCamera : MonoBehaviour
         transform.position = transform.position + transform.TransformDirection(movement * speed);
     }
 
-    public float Speed { get; set; }
+    public float Speed { get; } = 10;
 }
