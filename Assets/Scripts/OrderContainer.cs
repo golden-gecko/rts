@@ -1,13 +1,6 @@
-using System.Collections;
 using System.Collections.Generic;
 
-public enum PrefabConstructionType
-{
-    Structure,
-    Unit,
-}
-
-public class OrderContainer : IEnumerable<Order>
+public class OrderContainer
 {
     public OrderContainer()
     {
@@ -52,6 +45,23 @@ public class OrderContainer : IEnumerable<Order>
         return Items[0];
     }
 
+    public string GetInfo()
+    {
+        string info = string.Empty;
+
+        foreach (Order order in Items)
+        {
+            info += order.GetInfo() + ", ";
+        }
+
+        if (info.Length > 2)
+        {
+            info = info.Substring(0, info.Length - 2);
+        }
+
+        return info;
+    }
+
     public void Insert(int index, Order item)
     {
         Items.Insert(index, item);
@@ -63,36 +73,9 @@ public class OrderContainer : IEnumerable<Order>
         Pop();
     }
 
-    public IEnumerator<Order> GetEnumerator()
-    {
-        return Items.GetEnumerator();
-    }
-
-    public string GetInfo()
-    {
-        var info = string.Empty;
-
-        foreach (var i in Items)
-        {
-            info += i.GetInfo() + ", ";
-        }
-
-        if (info.Length > 2)
-        {
-            info = info.Substring(0, info.Length - 2);
-        }
-
-        return info;
-    }
-
     public void Pop()
     {
         Items.RemoveAt(0);
-    }
-
-    IEnumerator IEnumerable.GetEnumerator()
-    {
-        return GetEnumerator();
     }
 
     public List<Order> Items { get; }

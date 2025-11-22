@@ -1,28 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum OrderType
-{
-    Attack,
-    Construct,
-    Destroy,
-    Follow,
-    Guard,
-    Idle,
-    Load,
-    Move,
-    None,
-    Patrol,
-    Produce,
-    Rally,
-    Research,
-    Repair,
-    Stop,
-    Transport,
-    Unload,
-    Wait,
-}
-
 public class Order
 {
     public Order(OrderType type, int maxRetries = 0)
@@ -91,7 +69,7 @@ public class Order
 
     public string GetInfo()
     {
-        var info = string.Format("{0}", Type.ToString());
+        string info = string.Format("{0}", Type.ToString());
 
         if (Timer != null)
         {

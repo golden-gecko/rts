@@ -2,15 +2,22 @@ using UnityEngine;
 
 public class FreeCamera : MonoBehaviour
 {
-    void Update()
+    private void Rotate()
     {
-        Translate();
-        Rotate();
+        if (Input.GetMouseButton(2))
+        {
+            Vector3 localEulerAngles = transform.localEulerAngles;
+
+            localEulerAngles.x -= Input.GetAxis("Mouse Y") * Sensitivity.x;
+            localEulerAngles.y += Input.GetAxis("Mouse X") * Sensitivity.y;
+
+            transform.localEulerAngles = localEulerAngles;
+        }
     }
 
-    void Translate()
+    private void Translate()
     {
-        var direction = Vector3.zero;
+        Vector3 direction = Vector3.zero;
 
         if (Input.GetKey(KeyCode.D))
         {
@@ -42,20 +49,13 @@ public class FreeCamera : MonoBehaviour
         transform.Translate(direction * Time.deltaTime);
     }
 
-    void Rotate()
+    private void Update()
     {
-        if (Input.GetMouseButton(2))
-        {
-            var localEulerAngles = transform.localEulerAngles;
-
-            localEulerAngles.x -= Input.GetAxis("Mouse Y") * Sensitivity.x;
-            localEulerAngles.y += Input.GetAxis("Mouse X") * Sensitivity.y;
-
-            transform.localEulerAngles = localEulerAngles;
-        }
+        Translate();
+        Rotate();
     }
 
-    Vector3 Speed = new Vector3(10, 10, 10);
+    private Vector3 Speed = Vector3.zero;
 
-    Vector2 Sensitivity = new Vector2(3, 3);
+    private Vector2 Sensitivity = new Vector2(3, 3);
 }
