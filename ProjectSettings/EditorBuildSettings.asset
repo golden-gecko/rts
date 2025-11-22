@@ -12,7 +12,7 @@ EditorBuildSettings:
     path: Assets/Resources/Scenes/Level_001.unity
     guid: db4be39f1acb1ac4fbdf88d874ea1810
   - enabled: 1
-    path: Assets/Resources/Scenes/Test_Attack.unity
+    path: Assets/Resources/Scenes/Test_Attack_1.unity
     guid: e28bd0b6b57f88244b98ea0c2eafcf0a
   - enabled: 1
     path: Assets/Resources/Scenes/Test_Construct.unity

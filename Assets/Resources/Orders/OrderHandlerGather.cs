@@ -104,6 +104,9 @@ public class OrderHandlerGather : IOrderHandler
 
     private MyGameObject GetStorage(MyGameObject myGameObject, MyResource myResource)
     {
+        MyResource closest = null;
+        float distance = float.MaxValue;
+
         foreach (MyGameObject i in GameObject.FindObjectsByType<MyGameObject>(FindObjectsSortMode.None)) // TODO: Replace with Storage component.
         {
             if (i == myGameObject)
@@ -126,10 +129,18 @@ public class OrderHandlerGather : IOrderHandler
                     continue;
                 }
 
-                return i;
+                float magnitude = (myGameObject.Position - myResource.Position).magnitude;
+
+                if (magnitude < distance)
+                {
+                    closest = myResource;
+                    distance = magnitude;
+                }
+
+                break;
             }
         }
 
-        return null;
+        return closest;
     }
 }

@@ -1,4 +1,5 @@
 using UnityEngine;
+using static UnityEngine.GraphicsBuffer;
 
 public class Laser : Gun
 {
@@ -22,7 +23,7 @@ public class Laser : Gun
             {
                 continue;
             }
-                
+
             if (target.GetComponent<Missile>())
             {
                 continue;
@@ -39,16 +40,18 @@ public class Laser : Gun
         {
             float damageDealt = closest.OnDamage(Damage);
 
-            if (closest.Alive)
+            if (closest.Alive == false)
             {
-                Instantiate(Resources.Load(HitEffectPrefab), closest.Position, Quaternion.identity);
-            }
-            else
-            {
-                myGameObject.Stats.Inc(Stats.TargetsDestroyed); 
+                myGameObject.Stats.Inc(Stats.TargetsDestroyed);
             }
 
+            Instantiate(Resources.Load(HitEffectPrefab), closest.Position, Quaternion.identity);
+
             myGameObject.Stats.Add(Stats.DamageDealt, damageDealt);
+        }
+        else
+        {
+            Instantiate(Resources.Load(HitEffectPrefab), closest.Position, Quaternion.identity);
         }
 
         Reload.Reset();

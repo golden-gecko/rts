@@ -380,7 +380,7 @@ MonoBehaviour:
   <Selectable>k__BackingField: 1
   <Health>k__BackingField: 30
   <HealthMax>k__BackingField: 30
-  <VisibilityRange>k__BackingField: 10
+  <VisibilityRange>k__BackingField: 6
   <LoadTime>k__BackingField: 2
   <WaitTime>k__BackingField: 2
   <DestroyEffect>k__BackingField: Effects/Units/WFX_ExplosiveSmokeGround Small
@@ -427,8 +427,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <Mass>k__BackingField: 10
   <Damage>k__BackingField: 10
-  <Range>k__BackingField: 10
-  <MissilePrefab>k__BackingField: Objects/Missiles/Rocket
+  <Range>k__BackingField: 4
+  <MissilePrefab>k__BackingField: Objects/Missiles/Bullet
   <HitEffectPrefab>k__BackingField: 
 --- !u!1 &7993281005162232544
 GameObject:
