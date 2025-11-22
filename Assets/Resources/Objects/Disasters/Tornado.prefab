@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: -8587054670987402472}
   - component: {fileID: 6016716768758173154}
   - component: {fileID: -8196451946765936241}
+  - component: {fileID: -6922015923480559394}
   m_Layer: 0
   m_Name: Tornado
   m_TagString: Untagged
@@ -105,10 +106,25 @@ MonoBehaviour:
   <LoadTime>k__BackingField: 0
   <WaitTime>k__BackingField: 0
   <DestroyEffect>k__BackingField: 
-  DisasterFrequencyInSeconds: 6
+  FrequencyInSecondsMin: 3
+  FrequencyInSecondsMax: 3
   <Damage>k__BackingField: 0
   <DamagePerSecond>k__BackingField: 10
   TimeToLive: 20
+--- !u!114 &-6922015923480559394
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7181744628251240676}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 480f2643be9397244bac146d70b54f9f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  <Mass>k__BackingField: 10
+  <Power>k__BackingField: 1
 --- !u!1001 &5657514235957791238
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -227,6 +243,18 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 11400002, guid: 1f2cdbf342b271a4796d6b926fbfa0c4, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 11400004, guid: 1f2cdbf342b271a4796d6b926fbfa0c4, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 19800000, guid: 1f2cdbf342b271a4796d6b926fbfa0c4, type: 3}
+      propertyPath: looping
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 19800000, guid: 1f2cdbf342b271a4796d6b926fbfa0c4, type: 3}
       propertyPath: InitialModule.startSizeY.minMaxState
       value: 3
@@ -240,6 +268,46 @@ PrefabInstance:
       value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 19800000, guid: 1f2cdbf342b271a4796d6b926fbfa0c4, type: 3}
+      propertyPath: InitialModule.startRotationY.minMaxState
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 19800002, guid: 1f2cdbf342b271a4796d6b926fbfa0c4, type: 3}
+      propertyPath: looping
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 19800002, guid: 1f2cdbf342b271a4796d6b926fbfa0c4, type: 3}
+      propertyPath: InitialModule.startSizeY.minMaxState
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 19800002, guid: 1f2cdbf342b271a4796d6b926fbfa0c4, type: 3}
+      propertyPath: InitialModule.startSizeZ.minMaxState
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 19800002, guid: 1f2cdbf342b271a4796d6b926fbfa0c4, type: 3}
+      propertyPath: InitialModule.startRotationX.minMaxState
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 19800002, guid: 1f2cdbf342b271a4796d6b926fbfa0c4, type: 3}
+      propertyPath: InitialModule.startRotationY.minMaxState
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 19800004, guid: 1f2cdbf342b271a4796d6b926fbfa0c4, type: 3}
+      propertyPath: looping
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 19800004, guid: 1f2cdbf342b271a4796d6b926fbfa0c4, type: 3}
+      propertyPath: InitialModule.startSizeY.minMaxState
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 19800004, guid: 1f2cdbf342b271a4796d6b926fbfa0c4, type: 3}
+      propertyPath: InitialModule.startSizeZ.minMaxState
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 19800004, guid: 1f2cdbf342b271a4796d6b926fbfa0c4, type: 3}
+      propertyPath: InitialModule.startRotationX.minMaxState
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 19800004, guid: 1f2cdbf342b271a4796d6b926fbfa0c4, type: 3}
       propertyPath: InitialModule.startRotationY.minMaxState
       value: 3
       objectReference: {fileID: 0}
