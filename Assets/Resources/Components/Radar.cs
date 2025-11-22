@@ -23,11 +23,11 @@ public class Radar : MyComponent
 
         if (Anti)
         {
-            Map.Instance.SetVisibleByAntiRadar(parent, parent.Position, Range, 1);
+            Map.Instance.SetVisibleByAntiRadar(parent, parent.Position, Range.Value, 1);
         }
         else
         {
-            Map.Instance.SetVisibleByRadar(parent, parent.Position, Range, 1);
+            Map.Instance.SetVisibleByRadar(parent, parent.Position, Range.Value, 1);
         }
     }
 
@@ -49,22 +49,22 @@ public class Radar : MyComponent
             {
                 if (Anti)
                 {
-                    Map.Instance.SetVisibleByAntiRadar(parent, parent.Position, Range, 1);
+                    Map.Instance.SetVisibleByAntiRadar(parent, parent.Position, Range.Value, 1);
                 }
                 else
                 {
-                    Map.Instance.SetVisibleByRadar(parent, parent.Position, Range, 1);
+                    Map.Instance.SetVisibleByRadar(parent, parent.Position, Range.Value, 1);
                 }
             }
             else
             {
                 if (Anti)
                 {
-                    Map.Instance.SetVisibleByAntiRadar(parent, parent.Position, Range, -1);
+                    Map.Instance.SetVisibleByAntiRadar(parent, parent.Position, Range.Value, -1);
                 }
                 else
                 {
-                    Map.Instance.SetVisibleByRadar(parent, parent.Position, Range, -1);
+                    Map.Instance.SetVisibleByRadar(parent, parent.Position, Range.Value, -1);
                 }
             }
 
@@ -75,13 +75,13 @@ public class Radar : MyComponent
         {
             if (Anti)
             {
-                Map.Instance.SetVisibleByAntiRadar(parent, PreviousPosition, Range, -1);
-                Map.Instance.SetVisibleByAntiRadar(parent, parent.Position, Range, 1);
+                Map.Instance.SetVisibleByAntiRadar(parent, PreviousPosition, Range.Value, -1);
+                Map.Instance.SetVisibleByAntiRadar(parent, parent.Position, Range.Value, 1);
             }
             else
             {
-                Map.Instance.SetVisibleByRadar(parent, PreviousPosition, Range, -1);
-                Map.Instance.SetVisibleByRadar(parent, parent.Position, Range, 1);
+                Map.Instance.SetVisibleByRadar(parent, PreviousPosition, Range.Value, -1);
+                Map.Instance.SetVisibleByRadar(parent, parent.Position, Range.Value, 1);
             }
 
             PreviousPosition = parent.Position;
@@ -91,16 +91,16 @@ public class Radar : MyComponent
 
     public override string GetInfo()
     {
-        return string.Format("Radar: {0}, Range: {1:0.}, Anti: {2}", base.GetInfo(), Range, Anti);
+        return string.Format("Radar: {0}, Range: {1:0.}, Anti: {2}", base.GetInfo(), Range.Value, Anti);
     }
 
     public bool IsInRange(Vector3 position)
     {
-        return Utils.IsInRange(GetComponent<MyGameObject>().Position, position, Range);
+        return Utils.IsInRange(GetComponent<MyGameObject>().Position, position, Range.Value);
     }
 
     [field: SerializeField]
-    public float Range { get; set; } = 30.0f;
+    public Property Range { get; set; } = new Property();
 
     [field: SerializeField]
     public bool Anti { get; set; } = false;

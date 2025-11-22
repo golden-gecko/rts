@@ -8,6 +8,7 @@ TagManager:
   - Resource
   - HUD
   - Water
+  - FxTemporaire
   layers:
   - Default
   - TransparentFX
@@ -29,6 +30,7 @@ TagManager:
   - 
   - 
   - 
+  - GameObject
   - 
   - 
   - 
@@ -36,8 +38,7 @@ TagManager:
   - 
   - 
   - 
-  - 
-  - 
+  - Cursor
   - 
   - HUD
   - 

@@ -10,12 +10,17 @@ public class Storage : MyComponent
         MyGameObject parent = GetComponent<MyGameObject>();
 
         parent.Orders.AllowOrder(OrderType.Load);
+        parent.Orders.AllowOrder(OrderType.Stock);
         parent.Orders.AllowOrder(OrderType.Transport);
         parent.Orders.AllowOrder(OrderType.Unload);
 
         parent.OrderHandlers[OrderType.Load] = new OrderHandlerLoad();
+        parent.OrderHandlers[OrderType.Stock] = new OrderHandlerStock();
         parent.OrderHandlers[OrderType.Transport] = new OrderHandlerTransport();
         parent.OrderHandlers[OrderType.Unload] = new OrderHandlerUnload();
+
+        parent.ShowEntrance = Resources.In;
+        parent.ShowExit = Resources.Out;
     }
 
     protected override void Update()
@@ -56,7 +61,7 @@ public class Storage : MyComponent
                 }
                 else
                 {
-                    parent.Player.RegisterConsumer(parent, resource.Name, resource.Capacity, resource.Direction);
+                    parent.Player.RegisterConsumer(parent, resource.Name, resource.Available, resource.Direction);
                 }
             }
 
@@ -68,7 +73,7 @@ public class Storage : MyComponent
                 }
                 else
                 {
-                    parent.Player.RegisterProducer(parent, resource.Name, resource.Storage, resource.Direction);
+                    parent.Player.RegisterProducer(parent, resource.Name, resource.Current, resource.Direction);
                 }
             }
         }

@@ -25,29 +25,21 @@ public class Gun : MyComponent
             return;
         }
 
-        // Reload gun.
         Reload.Update(Time.deltaTime);
-
-        // Grab ammunition.
-        // Storage storage = GetComponent<Storage>();
-        // Ammunition.Add(storage.Resources.Remove("Ammunition", Ammunition.Max - Ammunition.Current));
     }
 
     public override string GetInfo()
     {
-        // Storage storage = GetComponent<Storage>();
-        // return string.Format("{0}, Reload: {1} Ammunition: {2}/{3}", base.GetInfo(), Reload.GetInfo(), storage.Resources.Current("Ammunition"), storage.Resources.Max("Ammunition"));
-        return string.Format("Gun: {0}, Reload: {1} Ammunition: {2}", base.GetInfo(), Reload.GetInfo(), Ammunition.GetInfo());
+        return string.Format("Gun: {0}, Damage: {1:0.}, Range: {2:0.}, Reload: {3} Ammunition: {4}", base.GetInfo(), Damage.Value, Range.Value, Reload.GetInfo(), Ammunition.GetInfo());
     }
 
     public bool IsInRange(Vector3 position)
     {
-        return Utils.IsInRange(GetComponent<MyGameObject>().Position, position, Range);
+        return Utils.IsInRange(GetComponent<MyGameObject>().Position, position, Range.Value);
     }
 
     public virtual bool CanFire()
     {
-        // return GetComponent<Storage>().Resources.CanDec("Ammunition") && Reload.Finished;
         return Ammunition.CanDec() && Reload.Finished;
     }
 
@@ -59,10 +51,10 @@ public class Gun : MyComponent
     public GameObject MissilePrefab { get; set; }
 
     [field: SerializeField]
-    public float Damage { get; set; } = 10.0f;
+    public Property Damage { get; private set; } = new Property();
 
     [field: SerializeField]
-    public float Range { get; set; } = 10.0f;
+    public Property Range { get; set; } = new Property();
 
     [field: SerializeField]
     public Timer Reload { get; set; } = new Timer(10.0f, 10.0f);

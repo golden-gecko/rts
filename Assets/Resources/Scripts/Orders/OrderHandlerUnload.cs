@@ -1,0 +1,121 @@
+using UnityEngine;
+
+public class OrderHandlerUnload : OrderHandler
+{
+    public override void OnExecute(MyGameObject myGameObject)
+    {
+        Order order = myGameObject.Orders.First();
+
+        if (IsValid(myGameObject, order) == false)
+        {
+            Fail(myGameObject);
+
+            return;
+        }
+
+        if (Utils.IsCloseTo(myGameObject.Position, order.TargetGameObject.Entrance) == false)
+        {
+            myGameObject.Move(order.TargetGameObject.Entrance, 0);
+
+            return;
+        }
+
+        int valueStart;
+
+        if (order.TargetGameObject.State == MyGameObjectState.UnderConstruction)
+        {
+            int[] values = new int[]
+            {
+                order.Value,
+                order.TargetGameObject.ConstructionResources.Available(order.Resource),
+                myGameObject.GetComponent<Storage>().Resources.Current(order.Resource),
+            };
+
+            valueStart = Mathf.Min(values);
+        }
+        else
+        {
+            int[] values = new int[]
+            {
+                order.Value,
+                order.TargetGameObject.GetComponent<Storage>().Resources.Available(order.Resource),
+                myGameObject.GetComponent<Storage>().Resources.Current(order.Resource)
+            };
+
+            valueStart = Mathf.Min(values);
+        }
+
+        if (valueStart <= 0)
+        {
+            Fail(myGameObject);
+
+            return;
+        }
+
+        if (order.Timer == null)
+        {
+            order.Timer = new Timer(valueStart / myGameObject.GetComponent<Storage>().ResourceUsage);
+        }
+
+        if (order.Timer.Update(Time.deltaTime) == false)
+        {
+            return;
+        }
+
+        int valueEnd;
+
+        if (order.TargetGameObject.State == MyGameObjectState.UnderConstruction)
+        {
+            int[] values = new int[]
+            {
+                order.Value,
+                order.TargetGameObject.ConstructionResources.Available(order.Resource),
+                myGameObject.GetComponent<Storage>().Resources.Current(order.Resource),
+            };
+
+            valueEnd = Mathf.Min(values);
+        }
+        else
+        {
+            int[] values = new int[]
+            {
+                order.Value,
+                order.TargetGameObject.GetComponent<Storage>().Resources.Available(order.Resource),
+                myGameObject.GetComponent<Storage>().Resources.Current(order.Resource)
+            };
+
+            valueEnd = Mathf.Min(values);
+        }
+
+        if (valueStart != valueEnd)
+        {
+            Fail(myGameObject);
+
+            return;
+        }
+
+        MoveResources(myGameObject, order.TargetGameObject, order.Resource, valueEnd);
+
+        myGameObject.Stats.Inc(Stats.OrdersCompleted);
+        myGameObject.Orders.Pop();
+    }
+
+    protected override bool IsValid(MyGameObject myGameObject, Order order)
+    {
+        return order.TargetGameObject != null && order.TargetGameObject != myGameObject;
+    }
+
+    private void MoveResources(MyGameObject source, MyGameObject target, string resource, int value)
+    {
+        source.GetComponent<Storage>().Resources.Remove(resource, value);
+
+        if (target.State == MyGameObjectState.UnderConstruction)
+        {
+            target.ConstructionResources.Add(resource, value);
+        }
+        else
+        {
+            target.GetComponent<Storage>().Resources.Add(resource, value);
+        }
+    }
+}

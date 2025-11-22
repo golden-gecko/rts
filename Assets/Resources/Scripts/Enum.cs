@@ -43,6 +43,7 @@ public enum OrderType
     Produce,
     Rally,
     Research,
+    Stock,
     Stop,
     Transport,
     Unload,
