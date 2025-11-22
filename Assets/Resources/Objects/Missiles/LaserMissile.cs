@@ -4,8 +4,10 @@ public class LaserMissile : Missile
     {
         base.Awake();
 
-        Orders.AllowOrder(OrderType.Attack);
+        Orders.AllowOrder(OrderType.AttackObject);
+        Orders.AllowOrder(OrderType.AttackPosition);
 
-        OrderHandlers[OrderType.Attack] = new OrderHandlerAttackLaser();
+        OrderHandlers[OrderType.AttackObject] = new OrderHandlerAttackObjectGauss();
+        OrderHandlers[OrderType.AttackPosition] = new OrderHandlerAttackPositionGauss();
     }
 }

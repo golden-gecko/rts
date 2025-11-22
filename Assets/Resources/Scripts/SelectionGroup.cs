@@ -71,7 +71,7 @@ public class SelectionGroup
         Items.RemoveWhere(x => x == null);
     }
 
-    public void Attack(Vector3 position, bool append = false)
+    public void AttackObject(MyGameObject myGameObject, bool append = false)
     {
         foreach (MyGameObject selected in Items)
         {
@@ -80,11 +80,11 @@ public class SelectionGroup
                 selected.ClearOrders();
             }
 
-            selected.Attack(position);
+            selected.AttackObject(myGameObject);
         }
     }
 
-    public void Attack(MyGameObject myGameObject, bool append = false)
+    public void AttackPosition(Vector3 position, bool append = false)
     {
         foreach (MyGameObject selected in Items)
         {
@@ -93,7 +93,7 @@ public class SelectionGroup
                 selected.ClearOrders();
             }
 
-            selected.Attack(myGameObject);
+            selected.AttackPosition(position);
         }
     }
 
@@ -150,11 +150,11 @@ public class SelectionGroup
             }
             else if (myGameObject.Is(selected, DiplomacyState.Enemy))
             {
-                selected.Attack(myGameObject);
+                selected.AttackObject(myGameObject);
             }
             else if (myGameObject.Gatherable)
             {
-                selected.Gather(myGameObject);
+                selected.GatherObject(myGameObject);
             }
         }
     }
@@ -224,7 +224,7 @@ public class SelectionGroup
         }
     }
 
-    public void Gather(bool append = false)
+    public void GatherObject(MyGameObject myGameObject, bool append = false)
     {
         foreach (MyGameObject selected in Items)
         {
@@ -233,11 +233,11 @@ public class SelectionGroup
                 selected.ClearOrders();
             }
 
-            selected.Gather();
+            selected.GatherObject(myGameObject);
         }
     }
 
-    public void Guard(Vector3 position, bool append = false)
+    public void GuardObject(MyGameObject myGameObject, bool append = false)
     {
         foreach (MyGameObject selected in Items)
         {
@@ -246,11 +246,11 @@ public class SelectionGroup
                 selected.ClearOrders();
             }
 
-            selected.Guard(position);
+            selected.GuardObject(myGameObject);
         }
     }
 
-    public void Guard(MyGameObject myGameObject, bool append = false)
+    public void GuardPosition(Vector3 position, bool append = false)
     {
         foreach (MyGameObject selected in Items)
         {
@@ -259,7 +259,7 @@ public class SelectionGroup
                 selected.ClearOrders();
             }
 
-            selected.Guard(myGameObject);
+            selected.GuardPosition(position);
         }
     }
 

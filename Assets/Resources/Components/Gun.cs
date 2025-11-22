@@ -6,9 +6,11 @@ public class Gun : MyComponent
     {
         base.Awake();
 
-        Parent.Orders.AllowOrder(OrderType.Attack);
+        Parent.Orders.AllowOrder(OrderType.AttackObject);
+        Parent.Orders.AllowOrder(OrderType.AttackPosition);
 
-        Parent.OrderHandlers[OrderType.Attack] = new OrderHandlerAttack();
+        Parent.OrderHandlers[OrderType.AttackObject] = new OrderHandlerAttackObject();
+        Parent.OrderHandlers[OrderType.AttackPosition] = new OrderHandlerAttackPosition();
         Parent.OrderHandlers[OrderType.Idle] = new OrderHandlerIdleAttacker();
     }
 

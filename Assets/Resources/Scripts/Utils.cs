@@ -2,6 +2,26 @@ using UnityEngine;
 
 public class Utils
 {
+    #region Enum
+    public static string[] GetFormationNames()
+    {
+        string[] names = System.Enum.GetNames(typeof(Formation));
+
+        System.Array.Sort(names);
+
+        return names;
+    }
+
+    public static string[] GetOrderNames()
+    {
+        string[] names = System.Enum.GetNames(typeof(OrderType));
+
+        System.Array.Sort(names);
+
+        return names;
+    }
+    #endregion
+
     #region Instantiate
     public static MyGameObject CreateGameObject(string prefab, Vector3 position, Quaternion rotation, Player player, MyGameObjectState state)
     {
