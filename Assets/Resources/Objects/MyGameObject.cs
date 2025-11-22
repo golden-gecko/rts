@@ -757,18 +757,26 @@ public class MyGameObject : MonoBehaviour
 
     public bool Constructed { get => ConstructionResources.CurrentSum >= ConstructionResources.MaxSum; }
 
-    public bool Powered { get => Map.Instance.IsVisibleByPower(this); }
+    public bool Powered
+    {
+        get
+        {
+            if (TryGetComponent(out PowerPlant powerPlant))
+            {
+                return powerPlant.PowerUpTime.Finished; // powerPlant.IsProducer || Map.Instance.IsVisibleByPower(this);
+            }
 
-    public bool Working { get => Enabled && State == MyGameObjectState.Operational && (Powerable == false || Powered); }
+            return false;
+        }
+    }
+
+    public bool Working { get => false; } // Enabled && State == MyGameObjectState.Operational && (TryGetComponent(out PowerPlant _) == false || Powered); } // TODO: Add orders and fix.
 
     [field: SerializeField]
     public Player Player { get; private set; }
 
     [field: SerializeField]
     public bool Enabled { get; set; } = true;
-
-    [field: SerializeField]
-    public bool Powerable { get; set; } = false;
 
     [field: SerializeField]
     public bool Gatherable { get; set; } = false;

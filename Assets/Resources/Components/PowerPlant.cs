@@ -18,30 +18,51 @@ public class PowerPlant : MyComponent
 
         if (Parent.State == MyGameObjectState.Operational && Parent.Enabled && (IsProducer || IsProducerConnected))
         {
-            PowerUp(Parent.Position);
+            PowerUpTimeActive = true;
         }
     }
+
+    private bool PowerUpTimeActive = false;
 
     protected override void Update()
     {
         base.Update();
 
-        if (previousState != Parent.State || previousEnabled != Parent.Enabled || Utils.ToGrid(previousPosition, Config.Map.VisibilityScale) != Utils.ToGrid(Parent.Position, Config.Map.VisibilityScale) || previousProducerConnected != (IsProducer || IsProducerConnected))
+        bool state = previousState != Parent.State;
+        bool enabled = previousEnabled != Parent.Enabled;
+        bool position = Utils.ToGrid(previousPosition, Config.Map.VisibilityScale) != Utils.ToGrid(Parent.Position, Config.Map.VisibilityScale);
+        bool connected = previousProducerConnected != (IsProducer || IsProducerConnected);
+
+        if (state || enabled || position || connected)
         {
-            if (previousState == MyGameObjectState.Operational && previousEnabled && previousProducerConnected)
+            PowerUpTimeActive = false;
+            PowerUpTime.Reset();
+
+            if (PowerUpStatus)
             {
                 PowerDown(previousPosition);
             }
 
             if (Parent.State == MyGameObjectState.Operational && Parent.Enabled && (IsProducer || IsProducerConnected))
             {
-                PowerUp(Parent.Position);
+                PowerUpTimeActive = true;
+                PowerUpTime.Reset();
             }
 
             previousState = Parent.State;
             previousEnabled = Parent.Enabled;
             previousPosition = Parent.Position;
             previousProducerConnected = (IsProducer || IsProducerConnected);
+        }
+
+        if (PowerUpTimeActive)
+        {
+            if (PowerUpTime.Update(Time.deltaTime))
+            {
+                PowerUp(Parent.Position);
+
+                PowerUpTimeActive = false;
+            }
         }
     }
 
@@ -63,7 +84,7 @@ public class PowerPlant : MyComponent
 
         ClearConnections();
 
-        if (previousState == MyGameObjectState.Operational && previousEnabled)
+        if (previousState == MyGameObjectState.Operational && previousEnabled && previousProducerConnected && PowerUpTime.Finished)
         {
             PowerDown(previousPosition);
         }
@@ -108,11 +129,15 @@ public class PowerPlant : MyComponent
     private void PowerUp(Vector3 position)
     {
         Map.Instance.SetVisibleByPower(Parent, position, Range.Total, 1);
+
+        PowerUpStatus = true;
     }
 
     private void PowerDown(Vector3 position)
     {
         Map.Instance.SetVisibleByPower(Parent, position, Range.Total, -1);
+
+        PowerUpStatus = false;
     }
 
     [field: SerializeField]
@@ -126,6 +151,8 @@ public class PowerPlant : MyComponent
 
     [field: SerializeField]
     public Timer PowerUpTime { get; private set; } = new Timer(0.0f, 1.0f); // TODO: Implement.
+
+    public bool PowerUpStatus { get; private set; } = false;
 
     public bool IsProducer { get => PowerGeneration.Total > 0.0f; }
 
@@ -150,7 +177,7 @@ public class PowerPlant : MyComponent
 
                 visited.Add(powerPlant);
 
-                if (powerPlant.Parent.State != MyGameObjectState.Operational || powerPlant.Parent.Enabled == false)
+                if (powerPlant.PowerUpStatus == false)
                 {
                     continue;
                 }
@@ -192,6 +219,11 @@ public class PowerPlant : MyComponent
                 visited.Add(powerPlant);
 
                 if (powerPlant.Parent.State != MyGameObjectState.Operational || powerPlant.Parent.Enabled == false)
+                {
+                    continue;
+                }
+
+                if (powerPlant.PowerUpTime.Finished == false)
                 {
                     continue;
                 }

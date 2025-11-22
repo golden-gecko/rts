@@ -175,10 +175,12 @@ public class Map : Singleton<Map>
         {
             for (int z = start.z; z < end.z; z++)
             {
+                /*
                 if (x == center.x && z == center.z)
                 {
                     continue;
                 }
+                */
 
                 if (Utils.IsPointInRect(x, z, Config.Map.VisibilitySize) == false)
                 {
