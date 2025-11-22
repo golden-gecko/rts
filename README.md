@@ -4,5 +4,6 @@ Simple RTS game.
 
 ## TODO
 
-* Achievements
-* Unit editor
+* Ammunition storage and factory.
+* Fuel storage and factory.
+* Unit editor.

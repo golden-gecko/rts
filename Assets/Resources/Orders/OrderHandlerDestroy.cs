@@ -1,5 +1,3 @@
-using UnityEngine;
-
 public class OrderHandlerDestroy : IOrderHandler
 {
     public bool IsValid(Order order)
