@@ -433,8 +433,7 @@ MonoBehaviour:
   <Damage>k__BackingField: 10
   <Range>k__BackingField: 4
   <CooldownTime>k__BackingField: 4
-  <MissilePrefab>k__BackingField: {fileID: 3841255586236475405, guid: 0656c8096bd9d064a8c956906564f3d0, type: 3}
-  <HitEffectPrefab>k__BackingField: {fileID: 0}
+  <MissilePrefab>k__BackingField: {fileID: 3841255586236475405, guid: 86513724c5de2df4da484cb23191a7e5, type: 3}
 --- !u!114 &-1838723375037300516
 MonoBehaviour:
   m_ObjectHideFlags: 0

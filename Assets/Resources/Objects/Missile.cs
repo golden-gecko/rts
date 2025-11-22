@@ -11,26 +11,13 @@ public class Missile : MyGameObject
         OrderHandlers[OrderType.Move] = new OrderHandlerMoveMissile();
     }
 
-    protected override void OnTriggerEnter(Collider other)
+    protected override void Start()
     {
-        base.OnTriggerEnter(other);
+        base.Start();
 
-        MyGameObject myGameObject = other.GetComponentInParent<MyGameObject>(); // TODO: Add collision with terrain.
-
-        if (myGameObject != null && myGameObject.Is(this, DiplomacyState.Ally) == false && myGameObject.GetComponent<Missile>() == false)
+        if (FireEffectPrefab != null)
         {
-            float damageDealt = myGameObject.OnDamage(Damage);
-
-            if (myGameObject.Alive == false)
-            {
-                Parent.Stats.Inc(Stats.TargetsDestroyed);
-            }
-
-            Parent.Stats.Add(Stats.DamageDealt, damageDealt);
-
-            Orders.Clear();
-
-            Destroy();
+            Instantiate(FireEffectPrefab, Position, Quaternion.identity);
         }
     }
 
@@ -39,5 +26,15 @@ public class Missile : MyGameObject
     }
 
     [field: SerializeField]
+    public GameObject FireEffectPrefab { get; set; }
+
+    [field: SerializeField]
+    public GameObject HitEffectPrefab { get; set; }
+
+    [field: SerializeField]
     public float Damage { get; set; } = 10.0f;
+
+    public Vector3 Target { get; set; }
+
+    public float Range { get; set; }
 }

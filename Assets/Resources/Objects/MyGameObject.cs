@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class MyGameObject : MonoBehaviour
@@ -7,6 +6,7 @@ public class MyGameObject : MonoBehaviour
     protected virtual void Awake()
     {
         visual = transform.Find("Visual");
+
         rangeGun = visual.transform.Find("Range_Gun");
         rangeRadar = visual.transform.Find("Range_Radar");
         rangeSight = visual.transform.Find("Range_Sight");
@@ -59,8 +59,6 @@ public class MyGameObject : MonoBehaviour
 
     protected virtual void Start()
     {
-        RallyPoint = Exit;
-
         UpdatePosition();
         UpdateSelection();
         UpdateTrace();
@@ -347,6 +345,18 @@ public class MyGameObject : MonoBehaviour
         }
     }
 
+    public void Wait(float time, int priority = -1)
+    {
+        if (0 <= priority && priority < Orders.Count)
+        {
+            Orders.Insert(priority, Order.Wait(time));
+        }
+        else
+        {
+            Orders.Add(Order.Wait(time));
+        }
+    }
+
     public virtual string GetInfo(bool ally)
     {
         string info = string.Empty;
@@ -453,7 +463,7 @@ public class MyGameObject : MonoBehaviour
         return damageDealt;
     }
 
-    public void OnDestroy_() // TODO: Rename.
+    public virtual void OnDestroy_() // TODO: Rename.
     {
         if (DestroyEffect != null)
         {
@@ -814,8 +824,6 @@ public class MyGameObject : MonoBehaviour
     public ResourceContainer ConstructionResources { get; } = new ResourceContainer();
 
     public RecipeContainer ConstructionRecipies { get; } = new RecipeContainer();
-
-    public Vector3 RallyPoint { get; set; } = Vector3.zero;
 
     public MyGameObject Parent { get; set; } // TODO: Hide setter.
 

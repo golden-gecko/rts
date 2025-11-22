@@ -4,57 +4,17 @@ public class Laser : Gun
 {
     public override void Fire(MyGameObject myGameObject, Vector3 position)
     {
-        // TODO: Create missile prefab.
-        RaycastHit[] hits = Physics.RaycastAll(new Ray(myGameObject.Center, position - myGameObject.Center), Config.RaycastMaxDistance);
+        GameObject gameObject = Instantiate(MissilePrefab, myGameObject.Center, Quaternion.identity);
+        Missile missile = gameObject.GetComponent<Missile>();
 
-        MyGameObject closest = null;
-        Vector3 hitPoint = Vector3.zero;
-        float distance = float.MaxValue;
+        missile.Parent = myGameObject;
+        missile.Player = myGameObject.Player;
 
-        foreach (RaycastHit hit in hits)
-        {
-            MyGameObject target = hit.transform.GetComponentInParent<MyGameObject>();
+        missile.Target = position; // TODO: ???
+        missile.Range = Range;
 
-            if (target == null)
-            {
-                continue;
-            }
-
-            if (target.Is(myGameObject, DiplomacyState.Ally))
-            {
-                continue;
-            }
-
-            if (target.GetComponent<Missile>())
-            {
-                continue;
-            }
-
-            if (hit.distance < distance)
-            {
-                closest = target;
-                hitPoint = hit.point;
-                distance = hit.distance;
-            }
-        }
-
-        if (closest == null)
-        {
-            Instantiate(HitEffectPrefab, position, Quaternion.identity);
-        }
-        else
-        {
-            float damageDealt = closest.OnDamage(Damage);
-
-            if (closest.Alive == false)
-            {
-                myGameObject.Stats.Inc(Stats.TargetsDestroyed);
-            }
-
-            Instantiate(HitEffectPrefab, hitPoint, Quaternion.identity);
-
-            myGameObject.Stats.Add(Stats.DamageDealt, damageDealt);
-        }
+        missile.Wait(0.2f); // TODO: Hardcoded.
+        missile.Destroy();
 
         Reload.Reset();
     }

@@ -39,7 +39,7 @@ public class OrderHandlerAssemble : IOrderHandler
         MoveResources(myGameObject, recipe);
 
         order.TargetGameObject.State = MyGameObjectState.Operational;
-        order.TargetGameObject.Move(myGameObject.RallyPoint, 0);
+        order.TargetGameObject.Move(myGameObject.GetComponent<Constructor>().RallyPoint, 0);
 
         myGameObject.Stats.Inc(Stats.OrdersCompleted);
         myGameObject.Stats.Inc(Stats.ObjectsAssembled);
