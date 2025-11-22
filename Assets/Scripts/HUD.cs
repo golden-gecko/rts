@@ -5,22 +5,40 @@ using UnityEngine.UIElements;
 
 public class HUD : MonoBehaviour
 {
-    void Start()
+    private void Awake()
     {
         Selected = new List<MyGameObject>();
+    }
 
+    private void Start()
+    {
         ResetVisual();
         DrawVisual();
         DrawSelection();
     }
 
-    void Update()
+    private void Update()
     {
+        HashSet<MyGameObject> destroyed = new HashSet<MyGameObject>();
+
+        foreach (MyGameObject selected in Selected)
+        {
+            if (selected == null)
+            {
+                destroyed.Add(selected);
+            }
+        }
+
+        foreach (MyGameObject x in destroyed)
+        {
+            Selected.Remove(x);
+        }
+
         UpdateMouse();
         UpdateKeyboard();
     }
 
-    void UpdateMouse()
+    private void UpdateMouse()
     {
         if (Input.GetMouseButtonDown(0))
         {
@@ -118,13 +136,13 @@ public class HUD : MonoBehaviour
         }
     }
 
-    void ResetVisual()
+    private void ResetVisual()
     {
         startPosition = Vector2.zero;
         endPosition = Vector2.zero;
     }
 
-    void DrawVisual()
+    private void DrawVisual()
     {
         Vector2 boxCenter = (startPosition + endPosition) / 2;
         boxVisual.position = boxCenter;
@@ -133,7 +151,7 @@ public class HUD : MonoBehaviour
         boxVisual.sizeDelta = boxSize;
     }
 
-    void DrawSelection()
+    private void DrawSelection()
     {
         if (Input.mousePosition.x < startPosition.x)
         {
@@ -162,7 +180,7 @@ public class HUD : MonoBehaviour
         }
     }
 
-    void SelectUnitInBox()
+    private void SelectUnitInBox()
     {
         if (IsMulti() == false)
         {
@@ -209,7 +227,7 @@ public class HUD : MonoBehaviour
         }
     }
 
-    void ProcessSelection()
+    private void ProcessSelection()
     {
         RaycastHit hitInfo;
 
@@ -226,7 +244,7 @@ public class HUD : MonoBehaviour
         }
     }
 
-    void ProcessOrder()
+    private void ProcessOrder()
     {
         RaycastHit hitInfo;
 
@@ -269,7 +287,7 @@ public class HUD : MonoBehaviour
         }
     }
 
-    void Construct(Vector3 position)
+    private void Construct(Vector3 position)
     {
         foreach (MyGameObject selected in Selected)
         {
@@ -359,7 +377,7 @@ public class HUD : MonoBehaviour
         }
     }
 
-    void Select(MyGameObject gameObject)
+    private void Select(MyGameObject gameObject)
     {
         if (IsMulti() == false)
         {
@@ -385,21 +403,21 @@ public class HUD : MonoBehaviour
             }
         }
     }
-     
-    bool IsMulti()
+
+    private bool IsMulti()
     {
         return Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift);
     }
 
     public RectTransform boxVisual;
 
-    Rect selectionBox;
+    private Rect selectionBox;
 
-    Vector2 startPosition = Vector2.zero;
+    private Vector2 startPosition = Vector2.zero;
 
-    Vector2 endPosition = Vector2.zero;
+    private Vector2 endPosition = Vector2.zero;
 
-    bool drag = false;
+    private bool drag = false;
 
     public List<MyGameObject> Selected { get; private set; }
 
@@ -431,7 +449,6 @@ public class HUD : MonoBehaviour
         }
     }
 
-    private OrderType order = OrderType.None;
 
     public string Prefab
     {
@@ -477,7 +494,9 @@ public class HUD : MonoBehaviour
 
     public PrefabConstructionType PrefabConstructionType { get; set; }
 
+    private OrderType order = OrderType.None;
+
     private string prefab = string.Empty;
 
-    private MyGameObject Cursor { get; set; } = null;
+    private MyGameObject Cursor { get; set; }
 }

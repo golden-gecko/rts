@@ -12,6 +12,7 @@ public class Order
     public Order(OrderType type, MyGameObject target, int maxRetries = 0)
     {
         Type = type;
+        IsTargetGameObject = true;
         TargetGameObject = target;
         MaxRetries = maxRetries;
     }
@@ -26,6 +27,7 @@ public class Order
     public Order(OrderType type, MyGameObject target, Dictionary<string, int> resources, float time, int maxRetries = 0)
     {
         Type = type;
+        IsTargetGameObject = true;
         TargetGameObject = target;
         Resources = resources;
         Timer = new Timer(time);
@@ -36,6 +38,7 @@ public class Order
     {
         Type = type;
         SourceGameObject = source;
+        IsTargetGameObject = true;
         TargetGameObject = target;
         Resources = resources;
         MaxRetries = maxRetries;
@@ -90,6 +93,8 @@ public class Order
     }
 
     public OrderType Type { get; }
+
+    public bool IsTargetGameObject { get; set; }
 
     public MyGameObject SourceGameObject { get; }
 
