@@ -47,8 +47,7 @@ public class InGameMenuController : MonoBehaviour
     {
         prefabs.Clear();
 
-        // TODO: AssetDatabase does not work outside editor.
-        Dictionary<string, PrefabConstructionType> prefabList = new Dictionary<string, PrefabConstructionType>()
+        Dictionary<string, PrefabConstructionType> prefabList = new Dictionary<string, PrefabConstructionType>() // TODO: AssetDatabase does not work outside editor.
         {
             { "Objects/Structures/struct_Barracks_A_yup", PrefabConstructionType.Structure },
             { "Objects/Structures/struct_Factory_Heavy_A_yup", PrefabConstructionType.Structure },
@@ -76,7 +75,17 @@ public class InGameMenuController : MonoBehaviour
             TemplateContainer buttonContainer = templateButton.Instantiate();
             Button button = buttonContainer.Q<Button>();
 
-            button.RegisterCallback<ClickEvent>(ev => OnConstruct(i.Key, i.Value));
+            switch (i.Value)
+            {
+                case PrefabConstructionType.Structure:
+                    button.RegisterCallback<ClickEvent>(ev => OnConstruct(i.Key));
+                    break;
+
+                case PrefabConstructionType.Unit:
+                    button.RegisterCallback<ClickEvent>(ev => OnAssemble(i.Key));
+                    break;
+            }
+
             button.style.display = DisplayStyle.None;
             button.text = Path.GetFileName(i.Key).Replace("struct_", "").Replace("unit_", "").Replace("_A_yup", "").Replace("_B_yup", "").Replace("_", " ");
             button.userData = i;
@@ -86,19 +95,14 @@ public class InGameMenuController : MonoBehaviour
         }
     }
 
-    private void OnAssemble(string prefab, PrefabConstructionType prefabConstructionType)
+    private void OnAssemble(string prefab)
     {
-        hud.Order = OrderType.Assemble;
-        hud.PrefabConstructionType = prefabConstructionType; // TODO: Put both into class. Order is important.
-        hud.Prefab = prefab;
-
-        hud.Assemble();
+        hud.Assemble(prefab);
     }
 
-    private void OnConstruct(string prefab, PrefabConstructionType prefabConstructionType)
+    private void OnConstruct(string prefab)
     {
         hud.Order = OrderType.Construct;
-        hud.PrefabConstructionType = prefabConstructionType; // TODO: Put both into class. Order is important.
         hud.Prefab = prefab;
     }
 
