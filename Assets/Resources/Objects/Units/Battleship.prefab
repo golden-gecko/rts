@@ -180,6 +180,7 @@ GameObject:
   - component: {fileID: -794089965590381253}
   - component: {fileID: -1905707371472494572}
   - component: {fileID: -2187779484248275721}
+  - component: {fileID: 6444001453739872034}
   m_Layer: 0
   m_Name: Battleship
   m_TagString: Untagged
@@ -245,10 +246,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <Mass>k__BackingField: 10
   <Power>k__BackingField: 50
-  <Fuel>k__BackingField:
-    <Current>k__BackingField: 100
-    <Max>k__BackingField: 100
-  <FuelUsage>k__BackingField: 1
+  <FuelUsage>k__BackingField: 0.1
 --- !u!114 &-1905707371472494572
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -265,9 +263,6 @@ MonoBehaviour:
   <MissilePrefab>k__BackingField: {fileID: 3841255586236475405, guid: 86513724c5de2df4da484cb23191a7e5, type: 3}
   <Damage>k__BackingField: 10
   <Range>k__BackingField: 20
-  <Ammunition>k__BackingField:
-    <Current>k__BackingField: 100
-    <Max>k__BackingField: 100
   <Reload>k__BackingField:
     <Current>k__BackingField: 4
     <Max>k__BackingField: 4
@@ -285,6 +280,31 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <Mass>k__BackingField: 10
   <Range>k__BackingField: 10
+--- !u!114 &6444001453739872034
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 827890342975937740}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9f7fc2f43637b07428d9ff8d0e38edaa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  <Mass>k__BackingField: 10
+  RaiseResourceFlags: 0
+  <ResourceUsage>k__BackingField: 1
+  <Resources>k__BackingField:
+    <Items>k__BackingField:
+    - <Current>k__BackingField: 100
+      <Max>k__BackingField: 100
+      <Name>k__BackingField: Ammunition
+      <Direction>k__BackingField: 1
+    - <Current>k__BackingField: 100
+      <Max>k__BackingField: 100
+      <Name>k__BackingField: Fuel
+      <Direction>k__BackingField: 1
 --- !u!1 &1966768037852259934
 GameObject:
   m_ObjectHideFlags: 0

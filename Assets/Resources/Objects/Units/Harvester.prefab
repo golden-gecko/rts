@@ -179,10 +179,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <Mass>k__BackingField: 10
   <Power>k__BackingField: 100
-  <Fuel>k__BackingField:
-    <Current>k__BackingField: 100
-    <Max>k__BackingField: 100
-  <FuelUsage>k__BackingField: 1
+  <FuelUsage>k__BackingField: 0.1
 --- !u!114 &2949164819816468667
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -227,34 +224,14 @@ MonoBehaviour:
   <ResourceUsage>k__BackingField: 4
   <Resources>k__BackingField:
     <Items>k__BackingField:
-    - <Current>k__BackingField: 0
-      <Max>k__BackingField: 10
+    - <Current>k__BackingField: 100
+      <Max>k__BackingField: 100
       <Name>k__BackingField: Ammunition
-      <Direction>k__BackingField: 0
-    - <Current>k__BackingField: 0
-      <Max>k__BackingField: 10
-      <Name>k__BackingField: Coal
-      <Direction>k__BackingField: 0
-    - <Current>k__BackingField: 0
-      <Max>k__BackingField: 10
-      <Name>k__BackingField: Crystal
-      <Direction>k__BackingField: 0
-    - <Current>k__BackingField: 0
-      <Max>k__BackingField: 10
+      <Direction>k__BackingField: 1
+    - <Current>k__BackingField: 100
+      <Max>k__BackingField: 100
       <Name>k__BackingField: Fuel
-      <Direction>k__BackingField: 0
-    - <Current>k__BackingField: 0
-      <Max>k__BackingField: 10
-      <Name>k__BackingField: Iron
-      <Direction>k__BackingField: 0
-    - <Current>k__BackingField: 0
-      <Max>k__BackingField: 10
-      <Name>k__BackingField: Iron Ore
-      <Direction>k__BackingField: 0
-    - <Current>k__BackingField: 0
-      <Max>k__BackingField: 10
-      <Name>k__BackingField: Wood
-      <Direction>k__BackingField: 0
+      <Direction>k__BackingField: 1
 --- !u!1 &1825437508637459598
 GameObject:
   m_ObjectHideFlags: 0

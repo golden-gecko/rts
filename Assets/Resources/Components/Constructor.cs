@@ -1,5 +1,6 @@
 using UnityEngine;
 
+[RequireComponent(typeof(Storage))]
 public class Constructor : MyComponent
 {
     protected override void Awake()

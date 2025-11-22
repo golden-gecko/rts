@@ -1,5 +1,6 @@
 using UnityEngine;
 
+[RequireComponent(typeof(Storage))]
 public class Gun : MyComponent
 {
     protected override void Awake()
@@ -28,7 +29,9 @@ public class Gun : MyComponent
 
     public override string GetInfo()
     {
-        return string.Format("{0}, Reload: {1} Ammunition: {2}", base.GetInfo(), Reload.GetInfo(), Ammunition.GetInfo());
+        Storage storage = GetComponent<Storage>();
+
+        return string.Format("{0}, Reload: {1} Ammunition: {2}/{3}", base.GetInfo(), Reload.GetInfo(), storage.Resources.Current("Ammunition"), storage.Resources.Max("Ammunition"));
     }
 
     public bool IsInRange(Vector3 position)
@@ -38,7 +41,7 @@ public class Gun : MyComponent
 
     public virtual bool CanFire()
     {
-        return Ammunition.CanDec() && Reload.Finished;
+        return GetComponent<Storage>().Resources.CanDec("Ammunition") && Reload.Finished;
     }
 
     public virtual void Fire(MyGameObject myGameObject, Vector3 position)
@@ -53,9 +56,6 @@ public class Gun : MyComponent
 
     [field: SerializeField]
     public float Range { get; set; } = 10.0f;
-
-    [field: SerializeField]
-    public Counter Ammunition { get; set; } = new Counter(100, 100);
 
     [field: SerializeField]
     public Timer Reload { get; set; } = new Timer(10.0f, 10.0f);

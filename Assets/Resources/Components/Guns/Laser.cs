@@ -23,7 +23,7 @@ public class Laser : Gun
         missile.Wait();
         missile.Destroy();
 
-        Ammunition.Dec();
+        GetComponent<Storage>().Resources.Dec("Ammunition");
 
         myGameObject.Stats.Inc(Stats.MissilesFired);
     }

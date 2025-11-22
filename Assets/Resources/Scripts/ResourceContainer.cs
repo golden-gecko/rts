@@ -48,13 +48,33 @@ public class ResourceContainer
         }
     }
 
-    public void Remove(string name, int value)
+    public void Remove(string name, int value) // TODO: Return removed value.
     {
         Resource resource = Items.Find(x => x.Name == name);
 
         if (resource != null)
         {
             resource.Remove(value);
+        }
+    }
+
+    public void Inc(string name)
+    {
+        Resource resource = Items.Find(x => x.Name == name);
+
+        if (resource != null)
+        {
+            resource.Inc();
+        }
+    }
+
+    public void Dec(string name)
+    {
+        Resource resource = Items.Find(x => x.Name == name);
+
+        if (resource != null)
+        {
+            resource.Dec();
         }
     }
 
@@ -70,6 +90,34 @@ public class ResourceContainer
         Resource resource = Items.Find(x => x.Name == name);
 
         return resource != null && resource.CanRemove(value);
+    }
+
+    public bool CanInc(string name)
+    {
+        Resource resource = Items.Find(x => x.Name == name);
+
+        return resource != null && resource.CanAdd(1);
+    }
+
+    public bool CanDec(string name)
+    {
+        Resource resource = Items.Find(x => x.Name == name);
+
+        return resource != null && resource.CanRemove(1);
+    }
+
+    public int Current(string name)
+    {
+        Resource resource = Items.Find(x => x.Name == name);
+
+        return resource != null ? resource.Current : 0;
+    }
+
+    public int Max(string name)
+    {
+        Resource resource = Items.Find(x => x.Name == name);
+
+        return resource != null ? resource.Max : 0;
     }
 
     public int Capacity(string name)

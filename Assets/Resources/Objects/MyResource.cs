@@ -1,3 +1,6 @@
+using UnityEngine;
+
+[RequireComponent(typeof(Storage))]
 public class MyResource : MyGameObject
 {
     protected override void Update()

@@ -1,5 +1,6 @@
 using UnityEngine;
 
+[RequireComponent(typeof(Storage))]
 public class Assembler : MyComponent
 {
     protected override void Start()
