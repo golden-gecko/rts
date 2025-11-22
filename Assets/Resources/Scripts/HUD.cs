@@ -338,14 +338,14 @@ public class HUD : MonoBehaviour
         {
             if (Order == OrderType.Construct)
             {
-                if (hitInfo.transform.CompareTag("Terrain") || hitInfo.transform.CompareTag("Water")) // TODO: Hardcoded.
+                if (Map.Instance.IsTerrain(hitInfo) || Map.Instance.IsWater(hitInfo))
                 {
                     Construct(hitInfo.point); // TODO: Check if objects is allowed to build on selected layer.
                 }
             }
             else
             {
-                if (hitInfo.transform.CompareTag("Terrain") || hitInfo.transform.CompareTag("Water")) // TODO: Hardcoded.
+                if (Map.Instance.IsTerrain(hitInfo) || Map.Instance.IsWater(hitInfo))
                 {
                     IssueOrder(hitInfo.point);
                 }

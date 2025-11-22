@@ -201,16 +201,7 @@ public class GameMenu : Menu
 
     private void CreateRecipes()
     {
-        // TODO: Put this somewhere.
-        List<string> _recipies = new List<string>()
-        {
-            "Metal using coal",
-            "Metal using wood",
-        };
-
-        recipes.Clear();
-
-        foreach (string i in _recipies)
+        foreach (string i in Config.Recipies)
         {
             TemplateContainer buttonContainer = templateButton.Instantiate();
             Button button = buttonContainer.Q<Button>();
@@ -227,16 +218,9 @@ public class GameMenu : Menu
 
     private void CreateSkills()
     {
-        // TODO: Put this somewhere.
-        List<string> _skills = new List<string>()
-        {
-            "Damage",
-            "Repair",
-        };
-
         skills.Clear();
 
-        foreach (string i in _skills)
+        foreach (string i in Config.Skills)
         {
             TemplateContainer buttonContainer = templateButton.Instantiate();
             Button button = buttonContainer.Q<Button>();

@@ -218,6 +218,15 @@ public class Map : MonoBehaviour
         return Cells[position.x, position.z].VisibleBySight.ContainsKey(active) && Cells[position.x, position.z].VisibleBySight[active] > 0;
     }
 
+    public bool IsTerrain(RaycastHit hit)
+    {
+        return hit.transform.CompareTag("Terrain");
+    }
+
+    public bool IsWater(RaycastHit hit)
+    {
+        return hit.transform.CompareTag("Water");
+    }
     protected void Clear()
     {
         for (int x = 0; x < Config.TerrainVisibilitySize; x++)
@@ -246,16 +255,6 @@ public class Map : MonoBehaviour
                 }
             }
         }
-    }
-
-    private bool IsTerrain(RaycastHit hit)
-    {
-        return hit.transform.CompareTag("Terrain");
-    }
-
-    private bool IsWater(RaycastHit hit)
-    {
-        return hit.transform.CompareTag("Water");
     }
 
     public ITerrainPosition CameraPositionHandler { get; } = new TerrainPositionAnywhere();

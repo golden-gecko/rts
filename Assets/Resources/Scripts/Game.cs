@@ -141,8 +141,8 @@ public class Game : MonoBehaviour
     {
         Vector3 position = Camera.main.transform.position;
 
-        position.x += Random.Range(-20.0f, 20.0f); // TODO: Hardcoded.
-        position.z += Random.Range(-20.0f, 20.0f);
+        position.x += Random.Range(-Config.DisasterRange, Config.DisasterRange);
+        position.z += Random.Range(-Config.DisasterRange, Config.DisasterRange);
 
         return Map.Instance.ValidatePosition(position);
     }
