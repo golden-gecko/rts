@@ -330,6 +330,18 @@ public class MyGameObject : MonoBehaviour
     }
     #endregion
 
+    public void AssignWorker(MyGameObject myGameObject)
+    {
+        Workers.Add(myGameObject);
+        myGameObject.Workplaces.Add(this);
+    }
+
+    public void UnassignWorker(MyGameObject myGameObject)
+    {
+        Workers.Remove(myGameObject);
+        myGameObject.Workplaces.Remove(this);
+    }
+
     public virtual string GetInfo(bool ally)
     {
         string info = string.Empty;
@@ -930,21 +942,7 @@ public class MyGameObject : MonoBehaviour
 
     private Vector3 PreviousPosition { get; set; }
 
-    /*
-    public void AssignWorker(MyGameObject myGameObject)
-    {
-        Workers.Add(myGameObject);
-        myGameObject.Workplaces.Add(this);
-    }
-
-    public void RemoveWorker(MyGameObject myGameObject)
-    {
-        Workers.Remove(myGameObject);
-        myGameObject.Workplaces.Remove(this);
-    }
-
     public HashSet<MyGameObject> Workers { get; } = new HashSet<MyGameObject>();
 
     public HashSet<MyGameObject> Workplaces { get; } = new HashSet<MyGameObject>();
-    */
 }
