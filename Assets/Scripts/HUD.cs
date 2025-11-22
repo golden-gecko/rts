@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.UIElements;
 
 public class HUD : MonoBehaviour
 {
@@ -159,6 +160,21 @@ public class HUD : MonoBehaviour
         {
             Application.Quit();
         }
+
+        if (Input.GetKeyDown(KeyCode.F10))
+        {
+            var canvas = GameObject.Find("Canvas");
+
+            foreach (var i in canvas.GetComponentsInChildren<UIDocument>(true))
+            {
+                if (i.name == "MainMenu")
+                {
+                    i.enabled = !i.enabled;
+
+                    break;
+                }
+            }
+        }
     }
 
     void ProcessSelection()
@@ -215,22 +231,7 @@ public class HUD : MonoBehaviour
 
     void Construct(Vector3 position)
     {
-        /*
-        var prefabs = new Dictionary<string, string>()
-        {
-            { "HeavyFactory", "Prefabs/Buildings/struct_Factory_Heavy_A_yup" },
-            { "LightFactory", "Prefabs/Buildings/struct_Factory_Light_A_yup" },
-            { "Headquarters", "Prefabs/Buildings/struct_Headquarters_A_yup" },
-            { "Storage", "Prefabs/Buildings/struct_Misc_Building_B_yup" },
-            { "Radar", "Prefabs/Buildings/struct_Radar_Outpost_A_yup" },
-            { "Refinery", "Prefabs/Buildings/struct_Refinery_A_yup" },
-            { "ResearchLab", "Prefabs/Buildings/struct_Research_Lab_A_yup" },
-        };
-        */
-
-        var resource = Resources.Load<MyGameObject>(Prefab);
-
-        Instantiate<MyGameObject>(resource, position, Quaternion.identity);
+        Instantiate<MyGameObject>(Resources.Load<MyGameObject>(Prefab), position, Quaternion.identity);
     }
 
     void IssueOrder(Vector3 position)
@@ -266,24 +267,15 @@ public class HUD : MonoBehaviour
             switch (Order)
             {
                 case OrderType.Attack:
-                    gameObject.Attack(gameObject);
+                    gameObject.Attack(myGameObject);
                     break;
 
-                case OrderType.Transport:
-                    var resources = new Dictionary<string, int>
-                    {
-                        { "Coal", 10 },
-                    };
+                case OrderType.Guard:
+                    gameObject.Guard(myGameObject);
+                    break;
 
-                    var source = GameObject.Find("struct_Headquarters_A_yup").GetComponent<MyGameObject>();
-                    var target = GameObject.Find("struct_Misc_Building_B_yup").GetComponent<MyGameObject>();
-
-                    if (IsMulti() == false)
-                    {
-                        gameObject.Orders.Clear();
-                    }
-
-                    gameObject.Transport(source, target, resources);
+                case OrderType.Patrol:
+                    gameObject.Patrol(myGameObject);
                     break;
             }
         }

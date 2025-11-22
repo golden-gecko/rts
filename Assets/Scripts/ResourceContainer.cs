@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine;
 
 public class ResourceContainer : IEnumerable<KeyValuePair<string, Resource>>
 {
@@ -50,6 +51,16 @@ public class ResourceContainer : IEnumerable<KeyValuePair<string, Resource>>
         return Items[name].CanRemove(value);
     }
 
+    public int Capacity(string name)
+    {
+        if (Items.ContainsKey(name) == false)
+        {
+            Items.Add(name, new Resource(name, 0, 0));
+        }
+
+        return Items[name].Capacity();
+    }
+
     public IEnumerator<KeyValuePair<string, Resource>> GetEnumerator()
     {
         return Items.GetEnumerator();
@@ -61,7 +72,7 @@ public class ResourceContainer : IEnumerable<KeyValuePair<string, Resource>>
 
         foreach (var i in Items)
         {
-            info += string.Format("\n  {0} {1}", i.Key, i.Value.Value);
+            info += string.Format("\n  {0} {1}/{2}", i.Key, i.Value.Value, i.Value.Max);
         }
 
         return info;
@@ -75,6 +86,16 @@ public class ResourceContainer : IEnumerable<KeyValuePair<string, Resource>>
         }
 
         Items[name].Remove(value);
+    }
+
+    public int Storage(string name)
+    {
+        if (Items.ContainsKey(name) == false)
+        {
+            Items.Add(name, new Resource(name, 0, 0));
+        }
+
+        return Items[name].Storage();
     }
 
     IEnumerator IEnumerable.GetEnumerator()
