@@ -1,3 +1,0 @@
-# RTS
-
-Simple RTS game.

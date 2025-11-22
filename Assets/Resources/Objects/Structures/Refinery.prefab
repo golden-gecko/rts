@@ -80,9 +80,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <Mass>k__BackingField: 10
   <Recipes>k__BackingField:
+  - Ammunition
+  - Fuel
   - Iron
   - Plastic
-  - Fuel
   - Charcoal
   <ResourceUsage>k__BackingField: 1
 --- !u!114 &-8543086153947244168

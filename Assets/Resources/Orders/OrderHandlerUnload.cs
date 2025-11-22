@@ -13,6 +13,13 @@ public class OrderHandlerUnload : OrderHandler
             return;
         }
 
+        if (Utils.IsCloseTo(myGameObject.Position, order.TargetGameObject.Entrance) == false)
+        {
+            myGameObject.Move(order.TargetGameObject.Entrance, 0);
+
+            return;
+        }
+
         int valueStart = Mathf.Min(new int[]
             {
                 order.Value,

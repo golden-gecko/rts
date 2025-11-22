@@ -39,10 +39,18 @@ public class RecipeManager : MonoBehaviour
         // =>
         r4.Produces("Part", 1);
 
+        Recipe r5 = new Recipe("Ammunition");
+        // <=
+        r5.Consumes("Iron", 2);
+        r5.Consumes("Plastic", 2);
+        // =>
+        r5.Produces("Ammunition", 1);
+
         Recipes.Add(r1);
         Recipes.Add(r2);
         Recipes.Add(r3);
         Recipes.Add(r4);
+        Recipes.Add(r5);
     }
 
     public RecipeContainer Recipes { get; } = new RecipeContainer();

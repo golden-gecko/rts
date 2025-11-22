@@ -606,8 +606,12 @@ public class MyGameObject : MonoBehaviour
 
     public Vector3 Size
     {
-        get 
+        get
         {
+            Quaternion rotation = Rotation;
+            Rotation = Quaternion.identity;
+            Physics.SyncTransforms();
+
             Vector3 min = new Vector3(float.MaxValue, float.MaxValue, float.MaxValue);
             Vector3 max = new Vector3(float.MinValue, float.MinValue, float.MinValue);
 
@@ -621,6 +625,9 @@ public class MyGameObject : MonoBehaviour
                 max.y = Mathf.Max(max.y, collider.bounds.max.y);
                 max.z = Mathf.Max(max.z, collider.bounds.max.z);
             }
+
+            Rotation = rotation;
+            Physics.SyncTransforms();
 
             return max - min;
         }
@@ -684,7 +691,7 @@ public class MyGameObject : MonoBehaviour
 
     public Vector3 Position { get => transform.position; set => transform.position = value; }
 
-    public Quaternion Rotation { get => transform.rotation; }
+    public Quaternion Rotation { get => transform.rotation; set => transform.rotation = value; }
 
     public Vector3 Scale { get => transform.localScale; }
 

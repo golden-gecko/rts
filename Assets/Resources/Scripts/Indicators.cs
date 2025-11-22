@@ -197,7 +197,40 @@ public class Indicators : MonoBehaviour
     {
         MyGameObject myGameObject = GetComponentInParent<MyGameObject>();
 
+        Vector3 scale = myGameObject.Scale;
         Vector3 size = myGameObject.Size;
+
+        Gun gun = myGameObject.GetComponent<Gun>();
+
+        if (gun != null)
+        {
+            rangeGun.gameObject.SetActive(status);
+            rangeGun.localScale = new Vector3(gun.Range * 2.0f / scale.x, gun.Range * 2.0f / scale.z, 1.0f);
+        }
+
+        PowerPlant powerPlant = myGameObject.GetComponent<PowerPlant>();
+
+        if (powerPlant != null)
+        {
+            rangePower.gameObject.SetActive(status);
+            rangePower.localScale = new Vector3(powerPlant.Range * 2.0f / scale.x, powerPlant.Range * 2.0f / scale.z, 1.0f);
+        }
+
+        Radar radar = myGameObject.GetComponent<Radar>();
+
+        if (radar != null)
+        {
+            rangeRadar.gameObject.SetActive(status);
+            rangeRadar.localScale = new Vector3(radar.Range * 2.0f / scale.x, radar.Range * 2.0f / scale.z, 1.0f);
+        }
+
+        Sight sight = myGameObject.GetComponent<Sight>();
+
+        if (sight != null)
+        {
+            rangeSight.gameObject.SetActive(status);
+            rangeSight.localScale = new Vector3(sight.Range * 2.0f / scale.x, sight.Range * 2.0f / scale.z, 1.0f);
+        }
 
         selection.gameObject.SetActive(status);
         selection.localScale = new Vector3(size.x * Config.IndicatorMargin, size.z * Config.IndicatorMargin, 1.0f);
