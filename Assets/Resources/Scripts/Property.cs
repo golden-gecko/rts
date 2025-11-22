@@ -3,23 +3,23 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
+[Serializable]
 public class Property: ICloneable
 {
     public object Clone()
     {
-        return new Property(Base);
+        return new Property(Value);
     }
 
-    public Property(float base_ = 10.0f) // TODO: Name collision.
+    public Property(float value = 0.0f)
     {
-        Base = base_;
+        Value = value;
     }
 
     [field: SerializeField]
-    public float Base { get; set; }
+    public float Value { get; set; }
 
-    [field: SerializeField]
     public Dictionary<MyGameObject, float> Factor { get; set; } = new Dictionary<MyGameObject, float>();
 
-    public float Value { get => Base * (Factor.Count > 0 ? Factor.Max(x => x.Value) : 1.0f); }
+    public float Total { get => Value * (Factor.Count > 0 ? Factor.Max(x => x.Value) : 1.0f); }
 }

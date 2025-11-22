@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class TechnologyTree
@@ -15,50 +16,78 @@ public class TechnologyTree
             Technologies[myGameObject.name] = new Technology(myGameObject.name) { Discovered = true };
         }
 
-        // Starting set of technologies.
-        Technologies["Colonization"] = new Technology("Colonization", new HashSet<string> { "Electricity", "Factory_Light", "Harvester", "Headquarters", "Heavy_Industry", "Gas_Station", "Infantry", "Laser",  "Quad", "Radar 1", "Refinery", "Research_Lab", "Space_Travels", "Static_Defences", "Stationary_Defences", "Trike" });
+        // Starting technologies.
+        Technologies["Colonization"] = new Technology("Colonization");
         Technologies["Colonization"].Cost.Init("Crystal", 0, 20, ResourceDirection.In);
 
-        // Allows power plants.
-        Technologies["Electricity"] = new Technology("Electricity", new HashSet<string> { "Power_Pole", "Windtrap" });
+        Technologies["Electricity"] = new Technology("Electricity", new HashSet<string> { "Colonization" });
         Technologies["Electricity"].Cost.Init("Crystal", 0, 20, ResourceDirection.In);
 
-        // Allows infantry.
-        Technologies["Infantry"] = new Technology("Infantry", new HashSet<string> { "Barracks", "Infantry_Light" });
-        Technologies["Infantry"].Cost.Init("Crystal", 0, 20, ResourceDirection.In);
+        // Flight.
+        Technologies["Flight"] = new Technology("Flight", new HashSet<string> { "Electricity" });
+        Technologies["Flight"].Cost.Init("Crystal", 0, 20, ResourceDirection.In);
 
-        // Allows heavy tanks.
-        Technologies["Heavy_Industry"] = new Technology("Heavy_Industry", new HashSet<string> { "Factory_Heavy", "Tank_Missile" });
+        Technologies["Caryall"] = new Technology("Caryall", new HashSet<string> { "Flight" });
+        Technologies["Ornithopter_Light"] = new Technology("Ornithopter_Light", new HashSet<string> { "Flight" });
+
+        // Heavy industry.
+        Technologies["Heavy_Industry"] = new Technology("Heavy_Industry", new HashSet<string> { "Electricity" });
         Technologies["Heavy_Industry"].Cost.Init("Crystal", 0, 20, ResourceDirection.In);
 
-        // Allows laser.
-        Technologies["Laser"] = new Technology("Laser", new HashSet<string> { "Grav_Light", "Tank_Combat", "Turret_Gun" });
+        Technologies["Factory_Heavy"] = new Technology("Factory_Heavy", new HashSet<string> { "Heavy_Industry" });
+        Technologies["Tank_Combat"] = new Technology("Tank_Combat", new HashSet<string> { "Heavy_Industry", "Laser" });
+        Technologies["Tank_Missile"] = new Technology("Tank_Missile", new HashSet<string> { "Heavy_Industry" });
+        Technologies["Tank_Special"] = new Technology("Tank_Special", new HashSet<string> { "Heavy_Industry" });
+
+        // Infantry.
+        Technologies["Infantry"] = new Technology("Infantry", new HashSet<string> { "Electricity" });
+        Technologies["Infantry"].Cost.Init("Crystal", 0, 20, ResourceDirection.In);
+
+        Technologies["Barracks"] = new Technology("Barracks", new HashSet<string> { "Infantry" });
+        Technologies["Infantry_Light"] = new Technology("Infantry_Light", new HashSet<string> { "Infantry" });
+
+        // Laser.
+        Technologies["Laser"] = new Technology("Laser", new HashSet<string> { "Electricity" });
         Technologies["Laser"].Cost.Init("Crystal", 0, 20, ResourceDirection.In);
 
-        // Allows radar to detect objects.
-        Technologies["Radar 1"] = new Technology("Radar 1", new HashSet<string> { "Radar_Outpost", "Radar 2" });
-        Technologies["Radar 1"].Cost.Init("Crystal", 0, 20, ResourceDirection.In);
+        Technologies["Grav_Light"] = new Technology("Laser", new HashSet<string> { "Laser" });
+        Technologies["Turret_Gun"] = new Technology("Laser", new HashSet<string> { "Laser", "Stationary_Defences" });
 
-        // Allows radar to detect objects and its size.
-        Technologies["Radar 2"] = new Technology("Radar 2", new HashSet<string> { "Radar 3" });
-        Technologies["Radar 2"].Cost.Init("Crystal", 0, 40, ResourceDirection.In);
+        // Radar.
+        Technologies["Radar_1"] = new Technology("Radar1", new HashSet<string> { "Electricity" });
+        Technologies["Radar_1"].Cost.Init("Crystal", 0, 20, ResourceDirection.In);
 
-        // Allows radar to detect objects, its size and bars.
-        Technologies["Radar 3"] = new Technology("Radar 3");
-        Technologies["Radar 3"].Cost.Init("Crystal", 0, 60, ResourceDirection.In);
+        Technologies["Radar_2"] = new Technology("Radar_2", new HashSet<string> { "Radar_1" });
+        Technologies["Radar_2"].Cost.Init("Crystal", 0, 40, ResourceDirection.In);
 
-        // TODO: Allows space rockets (not implemented).
-        Technologies["Space_Travels"] = new Technology("Space_Travels", new HashSet<string> { "Spaceport" });
+        Technologies["Radar_3"] = new Technology("Radar_3", new HashSet<string> { "Radar_2" });
+        Technologies["Radar_3"].Cost.Init("Crystal", 0, 60, ResourceDirection.In);
+
+        Technologies["Radar_Outpost"] = new Technology("Radar_Outpost", new HashSet<string> { "Radar_1" });
+        Technologies["Radar_Outpost"].Cost.Init("Crystal", 0, 60, ResourceDirection.In);
+
+        // Space travels.
+        Technologies["Space_Travels"] = new Technology("Space_Travels", new HashSet<string> { "Heavy_Industry" });
         Technologies["Space_Travels"].Cost.Init("Crystal", 0, 20, ResourceDirection.In);
 
-        // Allows walls.
-        Technologies["Static_Defences"] = new Technology("Static_Defences", new HashSet<string> { "Wall" });
+        Technologies["Spaceport"] = new Technology("Space_Travels", new HashSet<string> { "Space_Travels" });
+        Technologies["Spaceport"].Cost.Init("Crystal", 0, 20, ResourceDirection.In);
+
+        // Static defences.
+        Technologies["Static_Defences"] = new Technology("Static_Defences", new HashSet<string> { "Colonization" });
         Technologies["Static_Defences"].Cost.Init("Crystal", 0, 20, ResourceDirection.In);
 
-        // Allows turrets.
+        Technologies["Wall"] = new Technology("Static_Defences", new HashSet<string> { "Static_Defences" });
+        Technologies["Wall"].Cost.Init("Crystal", 0, 20, ResourceDirection.In);
+
+        // Stationary defences.
         Technologies["Stationary_Defences"] = new Technology("Stationary_Defences", new HashSet<string> { "Turret_Missile" });
         Technologies["Stationary_Defences"].Cost.Init("Crystal", 0, 20, ResourceDirection.In);
 
+        Technologies["Turret_Missile"] = new Technology("Turret_Missile", new HashSet<string> { "Stationary_Defences" });
+        Technologies["Turret_Missile"].Cost.Init("Crystal", 0, 20, ResourceDirection.In);
+
+        // Discover starting technologies.
         Discover("Colonization");
         Discover("Electricity");
         Discover("Infantry");
@@ -66,30 +95,47 @@ public class TechnologyTree
 
     public bool IsDiscovered(string name)
     {
-        return Technologies.ContainsKey(name) && Technologies[name].Discovered;
+        if (Technologies.TryGetValue(name, out Technology technology))
+        {
+            foreach (string requirement in technology.Requirements)
+            {
+                if (Technologies.Values.Any(x => x.Name == requirement && x.Discovered) == false)
+                {
+                    return false;
+                }
+            }
+
+            return technology.Discovered;
+        }
+
+        return false;
     }
 
-    public bool IsUnlocked(string name)
+    public bool IsReadyToDiscover(string name)
     {
-        return Technologies.ContainsKey(name) && Technologies[name].Unlocked;
+        if (Technologies.TryGetValue(name, out Technology technology))
+        {
+            foreach (string requirement in technology.Requirements)
+            {
+                if (Technologies.Values.Any(x => x.Name == requirement && x.Discovered) == false)
+                {
+                    return false;
+                }
+            }
+
+            return technology.Discovered == false;
+        }
+
+        return false;
     }
 
     public void Discover(string name)
     {
-        if (Technologies.ContainsKey(name))
+        if (Technologies.TryGetValue(name, out Technology technology))
         {
-            Technologies[name].Discovered = true;
-            Technologies[name].Unlocked = true;
-
-            foreach (string technology in Technologies[name].Unlocks)
-            {
-                if (Technologies.ContainsKey(technology))
-                {
-                    Technologies[technology].Unlocked = true;
-                }
-            }
+            technology.Discovered = true;
         }
     }
 
-    public Dictionary<string, Technology> Technologies = new Dictionary<string, Technology>();
+    public Dictionary<string, Technology> Technologies { get; } = new Dictionary<string, Technology>();
 }

@@ -315,12 +315,10 @@ public class GameMenu : MonoBehaviour
         {
             foreach (MyGameObject selected in HUD.Instance.ActivePlayer.Selection.Items)
             {
-                if (selected.State != MyGameObjectState.Operational)
+                if (selected.State == MyGameObjectState.Operational)
                 {
-                    continue;
+                    whitelist.UnionWith(selected.Orders.OrderWhitelist);
                 }
-
-                whitelist.UnionWith(selected.Orders.OrderWhitelist);
             }
         }
 
@@ -331,9 +329,9 @@ public class GameMenu : MonoBehaviour
 
         foreach (OrderType i in whitelist)
         {
-            if (ordersButtons.ContainsKey(i))
+            if (ordersButtons.TryGetValue(i, out Button button))
             {
-                ordersButtons[i].style.display = DisplayStyle.Flex;
+                button.style.display = DisplayStyle.Flex;
             }
         }
     }
@@ -374,12 +372,12 @@ public class GameMenu : MonoBehaviour
 
         foreach (string i in whitelist)
         {
-            if (prefabsButtons.ContainsKey(i))
+            if (prefabsButtons.TryGetValue(i, out Button button))
             {
-                bool enabled = technologyTree.IsUnlocked(Path.GetFileName(i)) && technologyTree.IsDiscovered(Path.GetFileName(i));
+                bool enabled = technologyTree.IsDiscovered(Path.GetFileName(i));
 
-                prefabsButtons[i].style.display = DisplayStyle.Flex;
-                prefabsButtons[i].SetEnabled(enabled);
+                button.style.display = DisplayStyle.Flex;
+                button.SetEnabled(enabled);
             }
         }
     }
@@ -423,9 +421,9 @@ public class GameMenu : MonoBehaviour
 
         foreach (string i in whitelist)
         {
-            if (recipesButtons.ContainsKey(i))
+            if (recipesButtons.TryGetValue(i, out Button button))
             {
-                recipesButtons[i].style.display = DisplayStyle.Flex;
+                button.style.display = DisplayStyle.Flex;
             }
         }
     }
@@ -442,7 +440,7 @@ public class GameMenu : MonoBehaviour
                 {
                     if (whitelist.ContainsKey(skill.Name) == false || whitelist[skill.Name] == false)
                     {
-                        whitelist[skill.Name] = skill.Cooldown.Finished;
+                        whitelist[skill.Name] = skill.Cooldown.Finished && skill.Passive == false;
                     }
                 }
             }
@@ -460,7 +458,7 @@ public class GameMenu : MonoBehaviour
                 {
                     if (whitelist.ContainsKey(skill.Name) == false || whitelist[skill.Name] == false)
                     {
-                        whitelist[skill.Name] = skill.Cooldown.Finished;
+                        whitelist[skill.Name] = skill.Cooldown.Finished && skill.Passive == false;
                     }
                 }
             }
@@ -473,10 +471,10 @@ public class GameMenu : MonoBehaviour
 
         foreach (KeyValuePair<string, bool> i in whitelist)
         {
-            if (skillsButtons.ContainsKey(i.Key))
+            if (skillsButtons.TryGetValue(i.Key, out Button button))
             {
-                skillsButtons[i.Key].style.display = DisplayStyle.Flex;
-                skillsButtons[i.Key].SetEnabled(i.Value);
+                button.style.display = DisplayStyle.Flex;
+                button.SetEnabled(i.Value);
             }
         }
     }
@@ -517,17 +515,15 @@ public class GameMenu : MonoBehaviour
 
         foreach (string i in whitelist)
         {
-            if (technologiesButtons.ContainsKey(i))
+            if (technologiesButtons.TryGetValue(i, out Button button))
             {
-                bool enabled = technologyTree.IsUnlocked(i) && technologyTree.IsDiscovered(i) == false;
+                bool enabled = technologyTree.IsReadyToDiscover(i);
 
-                technologiesButtons[i].style.display = DisplayStyle.Flex;
-                technologiesButtons[i].SetEnabled(enabled);
+                button.style.display = DisplayStyle.Flex;
+                button.SetEnabled(enabled);
             }
         }
     }
-
-    
 
     [SerializeField]
     private VisualTreeAsset templateButton;

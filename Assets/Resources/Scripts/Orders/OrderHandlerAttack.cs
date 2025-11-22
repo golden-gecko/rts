@@ -38,7 +38,7 @@ public class OrderHandlerAttack : OrderHandler
         {
             if (myGameObject.GetComponent<Gun>().IsInRange(position) == false)
             {
-                myGameObject.Move(GetPositionToAttack(myGameObject.Position, position, myGameObject.GetComponent<Gun>().Range.Value), 0);
+                myGameObject.Move(GetPositionToAttack(myGameObject.Position, position, myGameObject.GetComponent<Gun>().Range.Total), 0);
             }
             else
             {

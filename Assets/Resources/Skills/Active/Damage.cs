@@ -7,13 +7,15 @@ public class Damage : Skill
         return new Damage(Name, Range, Cooldown.Max, Value);
     }
 
-    public Damage(string name, float range, float cooldown, float value) : base(name, range, cooldown, "Effects/Skills/Green hit")
+    public Damage(string name, float range, float cooldown, float value) : base(name, range, cooldown, "Effects/Skills/Green hit", false)
     {
         Value = value;
     }
 
-    public override void Execute(MyGameObject myGameObject)
+    public override void OnExecute(MyGameObject myGameObject)
     {
+        base.OnExecute(myGameObject);
+
         RaycastHit[] hitInfos = Utils.SphereCastAll(myGameObject.Position, Range, LayerMask.GetMask("GameObject"));
 
         foreach (RaycastHit hitInfo in hitInfos)

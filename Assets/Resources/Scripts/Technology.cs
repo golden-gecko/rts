@@ -7,10 +7,10 @@ public class Technology
         Name = name;
     }
 
-    public Technology(string name, HashSet<string> unlocks)
+    public Technology(string name, HashSet<string> requirements)
     {
         Name = name;
-        Unlocks = unlocks;
+        Requirements = requirements;
     }
 
     public string Name { get; }
@@ -19,9 +19,7 @@ public class Technology
 
     public int MaxSum { get => Cost.MaxSum; }
 
-    public bool Unlocked { get; set; } = false;
-
-    public HashSet<string> Unlocks { get; } = new HashSet<string>();
+    public HashSet<string> Requirements { get; } = new HashSet<string>();
 
     public bool Discovered { get; set; } = false;
 }

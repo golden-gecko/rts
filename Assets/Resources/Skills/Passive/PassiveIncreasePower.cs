@@ -1,27 +1,32 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PassiveIncreaseDamage : Skill
+public class PassiveIncreasePower : Skill
 {
     public override object Clone()
     {
-        return new PassiveIncreaseDamage(Name, Range, Cooldown.Max, Value);
+        return new PassiveIncreasePower(Name, Range, Cooldown.Max, Value);
     }
 
-    public PassiveIncreaseDamage(string name, float range, float cooldown, float value) : base(name, range, cooldown, null, true)
+    public PassiveIncreasePower(string name, float range, float cooldown, float value) : base(name, range, cooldown, null, true)
     {
         Value = value;
     }
 
-    public override void Update(MyGameObject myGameObject) // TODO: Consider setting factor to map cell instead of an object directly.
+    public override void Update(MyGameObject myGameObject)
     {
         base.Update(myGameObject);
 
         foreach (MyGameObject target in targets)
         {
-            foreach (Gun gun in target.GetComponents<Gun>())
+            if (target == null)
             {
-                gun.Damage.Factor.Remove(myGameObject);
+                continue;
+            }
+
+            foreach (Engine engine in target.GetComponents<Engine>())
+            {
+                engine.Power.Factor.Remove(myGameObject);
             }
         }
 
@@ -36,10 +41,9 @@ public class PassiveIncreaseDamage : Skill
                 continue;
             }
 
-            foreach (Gun gun in target.GetComponents<Gun>())
+            foreach (Engine engine in target.GetComponents<Engine>())
             {
-                gun.Damage.Factor.Add(myGameObject, Value);
-
+                engine.Power.Factor.Add(myGameObject, Value);
             }
 
             targets.Add(target);
@@ -52,9 +56,24 @@ public class PassiveIncreaseDamage : Skill
 
         foreach (MyGameObject target in targets)
         {
+            if (target == null)
+            {
+                continue;
+            }
+
             foreach (Gun gun in target.GetComponents<Gun>())
             {
-                gun.Damage.Factor.Remove(myGameObject);
+                gun.Range.Factor.Remove(myGameObject);
+            }
+
+            foreach (Radar radar in target.GetComponents<Radar>())
+            {
+                radar.Range.Factor.Remove(myGameObject);
+            }
+
+            foreach (Sight sight in target.GetComponents<Sight>())
+            {
+                sight.Range.Factor.Remove(myGameObject);
             }
         }
     }

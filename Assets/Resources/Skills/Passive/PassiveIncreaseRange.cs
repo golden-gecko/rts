@@ -8,7 +8,7 @@ public class PassiveIncreaseRange : Skill
         return new PassiveIncreaseRange(Name, Range, Cooldown.Max, Value);
     }
 
-    public PassiveIncreaseRange(string name, float range, float cooldown, float value) : base(name, range, cooldown, "Effects/Skills/Green hit")
+    public PassiveIncreaseRange(string name, float range, float cooldown, float value) : base(name, range, cooldown, null, true)
     {
         Value = value;
     }
@@ -32,6 +32,11 @@ public class PassiveIncreaseRange : Skill
             foreach (Radar radar in target.GetComponents<Radar>())
             {
                 radar.Range.Factor.Remove(myGameObject);
+            }
+
+            foreach (Shield shield in target.GetComponents<Shield>())
+            {
+                shield.Range.Factor.Remove(myGameObject);
             }
 
             foreach (Sight sight in target.GetComponents<Sight>())
@@ -59,6 +64,11 @@ public class PassiveIncreaseRange : Skill
             foreach (Radar radar in target.GetComponents<Radar>())
             {
                 radar.Range.Factor.Add(myGameObject, Value);
+            }
+
+            foreach (Shield shield in target.GetComponents<Shield>())
+            {
+                shield.Range.Factor.Add(myGameObject, Value);
             }
 
             foreach (Sight sight in target.GetComponents<Sight>())

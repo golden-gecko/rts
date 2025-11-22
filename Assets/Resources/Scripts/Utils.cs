@@ -37,7 +37,26 @@ public class Utils
 
     public static string FormatName(string name)
     {
-        return name.Replace("_", " ");
+        string formatted = string.Empty;
+
+        foreach (char c in name)
+        {
+            if (c >= 'A' && c <= 'Z')
+            {
+                formatted += ' ';
+                formatted += c;
+            }
+            else if (c == '_')
+            {
+                formatted += ' ';
+            }
+            else
+            {
+                formatted += c;
+            }
+        }
+
+        return formatted.Trim();
     }
 
     public static MyGameObject GetGameObject(RaycastHit hitInfo)

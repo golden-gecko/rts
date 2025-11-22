@@ -30,12 +30,12 @@ public class Gun : MyComponent
 
     public override string GetInfo()
     {
-        return string.Format("Gun: {0}, Damage: {1:0.}, Range: {2:0.}, Reload: {3} Ammunition: {4}", base.GetInfo(), Damage.Value, Range.Value, Reload.GetInfo(), Ammunition.GetInfo());
+        return string.Format("Gun: {0}, Damage: {1:0.}, Range: {2:0.}, Reload: {3} Ammunition: {4}", base.GetInfo(), Damage.Total, Range.Total, Reload.GetInfo(), Ammunition.GetInfo());
     }
 
     public bool IsInRange(Vector3 position)
     {
-        return Utils.IsInRange(GetComponent<MyGameObject>().Position, position, Range.Value);
+        return Utils.IsInRange(GetComponent<MyGameObject>().Position, position, Range.Total);
     }
 
     public virtual bool CanFire()

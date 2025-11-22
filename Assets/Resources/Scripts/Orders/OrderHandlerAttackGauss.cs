@@ -36,7 +36,7 @@ public class OrderHandlerAttackGauss : OrderHandler
             }
 
             Missile missile = myGameObject.GetComponent<Missile>();
-            float damageDealt = target.OnDamage(missile.Damage.Value);
+            float damageDealt = target.OnDamage(missile.Damage.Total);
 
             if (target.Alive == false)
             {
@@ -56,7 +56,7 @@ public class OrderHandlerAttackGauss : OrderHandler
             Object.Instantiate(myGameObject.GetComponent<Missile>().HitEffectPrefab, order.TargetPosition, Quaternion.identity);
         }
 
-        float range = myGameObject.GetComponent<Missile>().Range.Value;
+        float range = myGameObject.GetComponent<Missile>().Range.Total;
 
         myGameObject.Body.transform.localPosition = new Vector3(0.0f, 0.0f, range / 2.0f);
         myGameObject.Body.transform.localScale = new Vector3(myGameObject.Body.transform.localScale.x, myGameObject.Body.transform.localScale.y, range);

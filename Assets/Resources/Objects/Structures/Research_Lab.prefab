@@ -173,6 +173,7 @@ MonoBehaviour:
     <Current>k__BackingField: -1
     <Max>k__BackingField: -1
   <SkillsNames>k__BackingField: []
+  <State>k__BackingField: 2
 --- !u!114 &4576625105702019730
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -188,14 +189,17 @@ MonoBehaviour:
   <Mass>k__BackingField: 10
   Technologies:
   - Colonization
-  - Infantry
+  - Electricity
   - Heavy_Industry
+  - Infantry
+  - Laser
   - Radar 1
   - Radar 2
+  - Radar 3
   - Space_Travels
   - Static_Defences
   - Stationary_Defences
-  <ResourceUsage>k__BackingField: 4
+  <ResourceUsage>k__BackingField: 10
 --- !u!114 &-3540461504229549173
 MonoBehaviour:
   m_ObjectHideFlags: 0

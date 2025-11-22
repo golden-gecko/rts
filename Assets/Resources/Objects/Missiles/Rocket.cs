@@ -28,7 +28,7 @@ public class Rocket : Missile
             Instantiate(HitEffectPrefab, Position, Quaternion.identity);
         }
 
-        float damageDealt = myGameObject.OnDamage(Damage.Value);
+        float damageDealt = myGameObject.OnDamage(Damage.Total);
 
         if (myGameObject.Alive == false)
         {
