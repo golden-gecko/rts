@@ -180,11 +180,10 @@ public class MyGameObject : MonoBehaviour
 
             if (selection)
             {
-                Vector3 scale = transform.localScale;
-                Vector3 size = GetComponent<BoxCollider>().size;
+                Vector3 size = GetComponent<BoxCollider>().size; // TODO: Add check.
 
                 selection.gameObject.SetActive(status);
-                selection.localScale = new Vector3(size.x, size.z, size.y); // TODO: Why y and z are replaced?
+                selection.localScale = new Vector3(size.x * 1.1f, size.z * 1.1f, 1.0f); // TODO: Why y and z are replaced?
             }
         }
     }
