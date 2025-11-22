@@ -18,7 +18,7 @@ public class SceneMenu : MonoBehaviour
         }
     }
 
-    private void Start()
+    private void OnEnable()
     {
         UIDocument uiDocument = GetComponent<UIDocument>();
         VisualElement rootVisualElement = uiDocument.rootVisualElement;

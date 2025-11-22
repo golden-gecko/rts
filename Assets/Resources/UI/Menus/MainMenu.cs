@@ -1,5 +1,4 @@
 using UnityEngine;
-using UnityEngine.SceneManagement;
 using UnityEngine.UIElements;
 
 public class MainMenu : MonoBehaviour
@@ -18,15 +17,15 @@ public class MainMenu : MonoBehaviour
         }
     }
 
-    private void Start()
+    private void OnEnable()
     {
         GetButton("New").RegisterCallback<ClickEvent>(ev => OnButtonNew());
         GetButton("Quit").RegisterCallback<ClickEvent>(ev => OnButtonQuit());
     }
 
-    private void OnButtonScene(string scene)
+    private Button GetButton(string name)
     {
-        SceneManager.LoadScene(scene, LoadSceneMode.Single);
+        return GetComponent<UIDocument>().rootVisualElement.Q<Button>(name);
     }
 
     private void OnButtonNew()
@@ -38,10 +37,5 @@ public class MainMenu : MonoBehaviour
     private void OnButtonQuit()
     {
         Application.Quit();
-    }
-
-    private Button GetButton(string name)
-    {
-        return GetComponent<UIDocument>().rootVisualElement.Q<Button>(name);
     }
 }
