@@ -60,7 +60,11 @@ public class OrderHandlerAttackObjectGauss : OrderHandler
 
         myGameObject.Body.transform.localPosition = new Vector3(0.0f, 0.0f, range / 2.0f);
         myGameObject.Body.transform.localScale = new Vector3(myGameObject.Body.transform.localScale.x, myGameObject.Body.transform.localScale.y, range);
-        myGameObject.transform.LookAt(order.TargetGameObject.Position);
+
+        if (myGameObject.RotateTowardsTarget)
+        {
+            myGameObject.transform.LookAt(order.TargetGameObject.Position);
+        }
 
         myGameObject.Orders.Pop();
     }

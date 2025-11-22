@@ -130,7 +130,7 @@ MonoBehaviour:
   <Player>k__BackingField: {fileID: 0}
   <Enabled>k__BackingField: 1
   <Gatherable>k__BackingField: 0
-  <Selectable>k__BackingField: 1
+  <Selectable>k__BackingField: 0
   <Health>k__BackingField:
     <Current>k__BackingField: 100
     <Max>k__BackingField: 100

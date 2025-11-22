@@ -10,11 +10,10 @@ GameObject:
   m_Component:
   - component: {fileID: 5913490181949494746}
   - component: {fileID: 5835790162013295089}
-  - component: {fileID: -610857997906868978}
+  - component: {fileID: 1803477458616272879}
   - component: {fileID: 2314022501189633522}
-  - component: {fileID: 9050757254007650475}
   m_Layer: 21
-  m_Name: Projectile
+  m_Name: Rocket
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -63,7 +62,7 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!114 &-610857997906868978
+--- !u!114 &1803477458616272879
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -72,7 +71,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 3841255586236475405}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ea05d08f5969b634bba4bc266b62bb5a, type: 3}
+  m_Script: {fileID: 11500000, guid: d9b53262ac6949845a04cf4bf73263af, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   <Player>k__BackingField: {fileID: 0}
@@ -97,12 +96,17 @@ MonoBehaviour:
   <CreateBase>k__BackingField: 0
   <SnapToGrid>k__BackingField: 0
   <VisibilityState>k__BackingField: 2
+  <RotateTowardsTarget>k__BackingField: 1
   <FireEffectPrefab>k__BackingField: {fileID: 100002, guid: 3b5e16e5f057f6e4c808bd1f3ae53f7e, type: 3}
-  <HitEffectPrefab>k__BackingField: {fileID: 100006, guid: 24295e2be01bda1438e5198083b282af, type: 3}
+  <MoveEffectPrefab>k__BackingField: {fileID: 0}
+  <HitEffectPrefab>k__BackingField: {fileID: 108048, guid: bef0671c561d074428627f6ef5e140b6, type: 3}
   <Damage>k__BackingField:
     <Value>k__BackingField: 0
+  <DamageRange>k__BackingField:
+    <Value>k__BackingField: 10
   <Range>k__BackingField:
     <Value>k__BackingField: 0
+  <DamageType>k__BackingField: []
 --- !u!114 &2314022501189633522
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -117,25 +121,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <Mass>k__BackingField: 1
   <Power>k__BackingField:
-    <Value>k__BackingField: 50
+    <Value>k__BackingField: 10
   <FuelUsage>k__BackingField: 1
---- !u!114 &9050757254007650475
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3841255586236475405}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9f7fc2f43637b07428d9ff8d0e38edaa, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  <Mass>k__BackingField: 10
-  <RaiseResourceFlags>k__BackingField: 1
-  <ResourceUsage>k__BackingField: 1
-  <Resources>k__BackingField:
-    <Items>k__BackingField: []
 --- !u!1 &8178223464893241826
 GameObject:
   m_ObjectHideFlags: 0
@@ -165,7 +152,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.03, y: 0.03, z: 0.1}
+  m_LocalScale: {x: 0.05, y: 0.05, z: 0.3}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 5913490181949494746}
@@ -198,7 +185,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 13108c59709dae94cbd155536c466634, type: 2}
+  - {fileID: 2100000, guid: 46f857c0563ce4b4b90bfca061fb9dab, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class Projectile : Missile
+public class Rocket : Missile
 {
     protected override void OnCollisionEnter(Collision collision)
     {
