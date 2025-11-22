@@ -82,6 +82,7 @@ public enum OrderType
     Research = 17,
     Stock = 18,
     Stop = 19,
+    Teleport = 28,
     Transport = 20,
     Turn = 24,
     Unload = 21,

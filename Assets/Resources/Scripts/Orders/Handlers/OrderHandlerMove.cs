@@ -2,17 +2,6 @@ using UnityEngine;
 
 public class OrderHandlerMove : OrderHandler
 {
-    public float GetDistance(MyGameObject myGameObject, ref Vector3 a, ref Vector3 b)
-    {
-        if (myGameObject.MapLayers.Contains(MyGameObjectMapLayer.Air) == false)
-        {
-            a.y = 0.0f;
-            b.y = 0.0f;
-        }
-
-        return (a - b).magnitude;
-    }
-
     public override void OnExecuteHandler(MyGameObject myGameObject)
     {
         Order order = myGameObject.Orders.First();
@@ -78,5 +67,16 @@ public class OrderHandlerMove : OrderHandler
 
             Success(myGameObject);
         }
+    }
+
+    private float GetDistance(MyGameObject myGameObject, ref Vector3 a, ref Vector3 b)
+    {
+        if (myGameObject.MapLayers.Contains(MyGameObjectMapLayer.Air) == false)
+        {
+            a.y = 0.0f;
+            b.y = 0.0f;
+        }
+
+        return (a - b).magnitude;
     }
 }
