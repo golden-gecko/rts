@@ -40,7 +40,7 @@ public class MyGameObject : MonoBehaviour
 
         Recipe r1 = new Recipe("Metal");
 
-        r1.Consumes("Metal", 0);
+        r1.Consumes("Metal", 30);
 
         ConstructionRecipies.Add(r1);
     }
@@ -98,7 +98,7 @@ public class MyGameObject : MonoBehaviour
 
     public void Assemble(string prefab)
     {
-        Orders.Add(Order.Assemble(prefab, GetComponent<Constructor>().ConstructionTime));
+        Orders.Add(Order.Assemble(prefab, GetComponent<Constructor>().ResourceUsage));
     }
 
     public void Attack(Vector3 position)
@@ -111,9 +111,9 @@ public class MyGameObject : MonoBehaviour
         Orders.Add(Order.Attack(target));
     }
 
-    public void Construct(string prefab, MyGameObject myGameObject)
+    public void Construct(string prefab, Vector3 position)
     {
-        Orders.Add(Order.Construct(prefab, myGameObject, GetComponent<Constructor>().ConstructionTime));
+        Orders.Add(Order.Construct(prefab, position, GetComponent<Constructor>().ResourceUsage));
     }
 
     public void Destroy(int priority = -1)

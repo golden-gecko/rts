@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class Game : MonoBehaviour
@@ -111,7 +112,7 @@ public class Game : MonoBehaviour
 
         if (closest != null)
         {
-            return Order.Construct(closest, myGameObject.GetComponent<Constructor>().ConstructionTime);
+            return Order.Construct(closest, myGameObject.GetComponent<Constructor>().ResourceUsage);
         }
 
         return null;
@@ -121,7 +122,7 @@ public class Game : MonoBehaviour
     {
         foreach (ConsumerProducerRequest producer in Producers[myGameObject.Player].Items) // TODO: Return closest object.
         {
-            foreach (ConsumerProducerRequest consumer in Consumers[myGameObject.Player].Items)
+            foreach (ConsumerProducerRequest consumer in Consumers[myGameObject.Player].Items) // TODO: Return closest object.
             {
                 if (producer.MyGameObject == consumer.MyGameObject)
                 {

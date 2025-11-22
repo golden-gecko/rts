@@ -97,6 +97,7 @@ GameObject:
   - component: {fileID: 420371540457613136}
   - component: {fileID: -1140763672939147438}
   - component: {fileID: 3301308007979738254}
+  - component: {fileID: -8329330545497116688}
   m_Layer: 0
   m_Name: Factory_Heavy
   m_TagString: Untagged
@@ -205,8 +206,27 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   <Player>k__BackingField: {fileID: 0}
+  <Selectable>k__BackingField: 1
   <Health>k__BackingField: 100
   <HealthMax>k__BackingField: 100
+  <VisibilityRange>k__BackingField: 10
+  <LoadTime>k__BackingField: 2
+  <WaitTime>k__BackingField: 2
+  <DestroyEffect>k__BackingField: Effects/WFXMR_Explosion StarSmoke
+--- !u!114 &-8329330545497116688
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2221833450515023493}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b9a00f16555428d49958a19db20e17a2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  <Mass>k__BackingField: 10
+  <ResourceUsage>k__BackingField: 2
 --- !u!1 &6283097865136294372
 GameObject:
   m_ObjectHideFlags: 0

@@ -209,12 +209,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   <Player>k__BackingField: {fileID: 0}
+  <Selectable>k__BackingField: 1
   <Health>k__BackingField: 40
   <HealthMax>k__BackingField: 40
   <VisibilityRange>k__BackingField: 10
-  <GatherTime>k__BackingField: 2
   <LoadTime>k__BackingField: 2
   <WaitTime>k__BackingField: 2
+  <DestroyEffect>k__BackingField: Effects/WFXMR_Explosion StarSmoke
 --- !u!114 &-5060554700228019553
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -258,8 +259,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <Mass>k__BackingField: 10
   <Damage>k__BackingField: 10
-  <Range>k__BackingField: 20
+  <Range>k__BackingField: 10
   <MissilePrefab>k__BackingField: Objects/Missiles/Rocket
+  <HitEffectPrefab>k__BackingField: Effects/CFXR3 Hit Electric C (Air)
 --- !u!1 &3808708150353009590
 GameObject:
   m_ObjectHideFlags: 0

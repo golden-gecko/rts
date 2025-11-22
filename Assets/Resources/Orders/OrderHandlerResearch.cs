@@ -38,11 +38,10 @@ public class OrderHandlerResearch : IOrderHandler
             return;
         }
 
-        order.Timer.Reset();
-
         MoveResources(myGameObject, technology);
 
         myGameObject.Player.TechnologyTree.Unlock(order.Technology);
+        myGameObject.Stats.Add(Stats.TimeResearching, order.Timer.Max);
         myGameObject.Orders.Pop();
     }
 
@@ -64,7 +63,7 @@ public class OrderHandlerResearch : IOrderHandler
         foreach (Resource i in technology.Cost.Items.Values)
         {
             myGameObject.Resources.Remove(i.Name, i.Max);
-            myGameObject.Stats.Add(Stats.ResourcesProduced, i.Max);
+            myGameObject.Stats.Add(Stats.ResourcesUsed, i.Max);
         }
     }
 }
