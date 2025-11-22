@@ -12,9 +12,9 @@ public class PowerPlant : MyComponent
         PreviousPowered = parent.Powered;
         PreviousPosition = parent.Position;
         PreviousPositionInt = new Vector3Int(
-            Mathf.FloorToInt(parent.Position.x / Config.TerrainVisibilityScale),
+            Mathf.FloorToInt(parent.Position.x / Config.Map.VisibilityScale),
             0,
-            Mathf.FloorToInt(parent.Position.z / Config.TerrainVisibilityScale)
+            Mathf.FloorToInt(parent.Position.z / Config.Map.VisibilityScale)
         );
 
         if (parent.Working == false)
@@ -35,9 +35,9 @@ public class PowerPlant : MyComponent
         MyGameObject parent = GetComponent<MyGameObject>();
 
         Vector3Int CurrentPositionInt = new Vector3Int(
-            Mathf.FloorToInt(parent.Position.x / Config.TerrainVisibilityScale),
+            Mathf.FloorToInt(parent.Position.x / Config.Map.VisibilityScale),
             0,
-            Mathf.FloorToInt(parent.Position.z / Config.TerrainVisibilityScale)
+            Mathf.FloorToInt(parent.Position.z / Config.Map.VisibilityScale)
         );
 
         if (PreviousEnabled != parent.Enabled)

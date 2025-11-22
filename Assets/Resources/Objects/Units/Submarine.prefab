@@ -189,8 +189,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <Mass>k__BackingField: 10
   <Power>k__BackingField:
-    <Value>k__BackingField: 100
-  <FuelUsage>k__BackingField: 1
+    <Value>k__BackingField: 200
+  <FuelUsage>k__BackingField: 10
 --- !u!1 &4067676291938002347
 GameObject:
   m_ObjectHideFlags: 0

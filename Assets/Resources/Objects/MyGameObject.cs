@@ -7,7 +7,7 @@ public class MyGameObject : MonoBehaviour
     protected virtual void Awake()
     {
         Body = transform.Find("Body");
-        Indicators = Instantiate( Resources.Load<Indicators>("Indicators"), transform, false);
+        Indicators = Instantiate(Resources.Load<Indicators>("Indicators"), transform, false);
 
         Orders.AllowOrder(OrderType.Destroy); // TODO: Move to component.
         Orders.AllowOrder(OrderType.Disable);
@@ -35,6 +35,7 @@ public class MyGameObject : MonoBehaviour
     {
         UpdatePosition();
         UpdateSelection();
+        UpdateVisibility();
     }
 
     protected virtual void Update()
@@ -586,11 +587,9 @@ public class MyGameObject : MonoBehaviour
 
     private void CreateSkills()
     {
-        SkillManager skillManager = Game.Instance.GetComponent<SkillManager>();
-
         foreach (string skillName in SkillsNames)
         {
-            Skills[skillName] = skillManager.Get(skillName).Clone() as Skill;
+            Skills[skillName] = SkillManager.Instance.Get(skillName).Clone() as Skill;
         }
     }
 
@@ -627,6 +626,17 @@ public class MyGameObject : MonoBehaviour
             Indicators.GetComponent<Indicators>().OnRadar();
 
             VisibilityState = MyGameObjectVisibilityState.Radar;
+        }
+        else if (Map.Instance.IsExplored(this, active))
+        {
+            foreach (Renderer renderer in Body.GetComponentsInChildren<Renderer>(true))
+            {
+                renderer.enabled = false;
+            }
+
+            Indicators.GetComponent<Indicators>().OnHide();
+
+            VisibilityState = MyGameObjectVisibilityState.Explored;
         }
         else
         {

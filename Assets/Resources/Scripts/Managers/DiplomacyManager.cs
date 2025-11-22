@@ -2,6 +2,20 @@ using UnityEngine;
 
 public class DiplomacyManager : MonoBehaviour
 {
+    public static DiplomacyManager Instance { get; private set; }
+
+    void Awake()
+    {
+        if (Instance != null && Instance != this)
+        {
+            Destroy(this);
+        }
+        else
+        {
+            Instance = this;
+        }
+    }
+
     void Start()
     {
         Player cpu = GameObject.Find("CPU").GetComponent<Player>();

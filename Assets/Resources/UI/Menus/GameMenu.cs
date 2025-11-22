@@ -143,9 +143,9 @@ public class GameMenu : MonoBehaviour
     {
         prefabs.Clear();
 
-        foreach (MyGameObject myGameObject in Resources.LoadAll<MyGameObject>(Config.DirectoryStructures))
+        foreach (MyGameObject myGameObject in Resources.LoadAll<MyGameObject>(Config.Asset.Structures))
         {
-            string path = Path.Combine(Config.DirectoryStructures, myGameObject.name);
+            string path = Path.Combine(Config.Asset.Structures, myGameObject.name);
 
             TemplateContainer buttonContainer = templateButton.Instantiate();
             Button button = buttonContainer.Q<Button>();
@@ -159,9 +159,9 @@ public class GameMenu : MonoBehaviour
             prefabsButtons[path] = button;
         }
 
-        foreach (MyGameObject myGameObject in Resources.LoadAll<MyGameObject>(Config.DirectoryUnits))
+        foreach (MyGameObject myGameObject in Resources.LoadAll<MyGameObject>(Config.Asset.Units))
         {
-            string path = Path.Combine(Config.DirectoryUnits, myGameObject.name);
+            string path = Path.Combine(Config.Asset.Units, myGameObject.name);
 
             TemplateContainer buttonContainer = templateButton.Instantiate();
             Button button = buttonContainer.Q<Button>();
@@ -180,7 +180,7 @@ public class GameMenu : MonoBehaviour
     {
         recipes.Clear();
 
-        foreach (string i in Game.Instance.GetComponent<RecipeManager>().Recipes.Items.Keys)
+        foreach (string i in RecipeManager.Instance.Recipes.Items.Keys)
         {
             TemplateContainer buttonContainer = templateButton.Instantiate();
             Button button = buttonContainer.Q<Button>();
@@ -199,7 +199,7 @@ public class GameMenu : MonoBehaviour
     {
         skills.Clear();
 
-        foreach (string i in Game.Instance.GetComponent<SkillManager>().Skills.Keys)
+        foreach (string i in SkillManager.Instance.Skills.Keys)
         {
             TemplateContainer buttonContainer = templateButton.Instantiate();
             Button button = buttonContainer.Q<Button>();
