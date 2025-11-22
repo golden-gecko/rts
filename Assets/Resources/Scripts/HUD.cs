@@ -203,7 +203,7 @@ public class HUD : MonoBehaviour
     {
         if (Cursor == null)
         {
-            Hovered = GetGameObjectUnderMouse();
+            Hovered = Utils.RaycastGameObjectFromMouse();
         }
         else
         {
@@ -280,12 +280,24 @@ public class HUD : MonoBehaviour
     {
         RaycastHit hitInfo;
 
-        if (Utils.RaycastFromMouse(out hitInfo, LayerMask.GetMask("GameObject")))
+        if (Utils.RaycastFromMouse(out hitInfo, Utils.GetGameObjectMask()) == false)
         {
-            return hitInfo.transform.GetComponentInParent<MyGameObject>();
+            return null;
         }
 
-        return null;
+        MyGameObject myGameObject = hitInfo.transform.GetComponentInParent<MyGameObject>();
+
+        if (myGameObject == null)
+        {
+            return null;
+        }
+
+        if (myGameObject.VisibilityState == MyGameObjectVisibilityState.Hidden)
+        {
+            return null;
+        }
+
+        return myGameObject;
     }
 
     private void SelectUnitInBox()
@@ -381,22 +393,22 @@ public class HUD : MonoBehaviour
         }
         else
         {
-            RaycastHit hitInfo;
+            MyGameObject myGameObject = Utils.RaycastGameObjectFromMouse();
 
-            if (Utils.RaycastFromMouse(out hitInfo, LayerMask.GetMask("GameObject")))
+            if (myGameObject != null)
             {
                 if (Order == OrderType.None)
                 {
-                    IssueOrderDefault(hitInfo.transform.GetComponentInParent<MyGameObject>());
+                    IssueOrderDefault(myGameObject);
                 }
                 else
                 {
-                    IssueOrder(hitInfo.transform.GetComponentInParent<MyGameObject>());
+                    IssueOrder(myGameObject);
                 }
 
                 return true;
             }
-            else if (Utils.RaycastFromMouse(out hitInfo, LayerMask.GetMask("Terrain") | LayerMask.GetMask("Water")))
+            else if (Utils.RaycastFromMouse(out RaycastHit hitInfo, Utils.GetMapMask()))
             {
                 if (Order == OrderType.None)
                 {

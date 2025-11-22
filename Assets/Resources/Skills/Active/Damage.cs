@@ -16,7 +16,7 @@ public class Damage : Skill
     {
         base.OnExecute(myGameObject);
 
-        RaycastHit[] hitInfos = Utils.SphereCastAll(myGameObject.Position, Range, LayerMask.GetMask("GameObject"));
+        RaycastHit[] hitInfos = Utils.SphereCastAll(myGameObject.Position, Range, Utils.GetGameObjectMask());
 
         foreach (RaycastHit hitInfo in hitInfos)
         {

@@ -41,12 +41,12 @@ public class Map : MonoBehaviour
         {
             for (int z = start.z; z < end.z; z++)
             {
-                if (Utils.PointInRect(x, z, Config.TerrainVisibilitySize) == false)
+                if (Utils.IsPointInRect(x, z, Config.TerrainVisibilitySize) == false)
                 {
                     continue;
                 }
 
-                if (Utils.PointInCircle(x, z, center, radius) == false)
+                if (Utils.IsPointInCircle(x, z, center, radius) == false)
                 {
                     continue;
                 }
@@ -69,12 +69,12 @@ public class Map : MonoBehaviour
         {
             for (int z = start.z; z < end.z; z++)
             {
-                if (Utils.PointInRect(x, z, Config.TerrainVisibilitySize) == false)
+                if (Utils.IsPointInRect(x, z, Config.TerrainVisibilitySize) == false)
                 {
                     continue;
                 }
 
-                if (Utils.PointInCircle(x, z, center, radius) == false)
+                if (Utils.IsPointInCircle(x, z, center, radius) == false)
                 {
                     continue;
                 }
@@ -97,12 +97,12 @@ public class Map : MonoBehaviour
         {
             for (int z = start.z; z < end.z; z++)
             {
-                if (Utils.PointInRect(x, z, Config.TerrainVisibilitySize) == false)
+                if (Utils.IsPointInRect(x, z, Config.TerrainVisibilitySize) == false)
                 {
                     continue;
                 }
 
-                if (Utils.PointInCircle(x, z, center, radius) == false)
+                if (Utils.IsPointInCircle(x, z, center, radius) == false)
                 {
                     continue;
                 }
@@ -125,12 +125,12 @@ public class Map : MonoBehaviour
         {
             for (int z = start.z; z < end.z; z++)
             {
-                if (Utils.PointInRect(x, z, Config.TerrainVisibilitySize) == false)
+                if (Utils.IsPointInRect(x, z, Config.TerrainVisibilitySize) == false)
                 {
                     continue;
                 }
 
-                if (Utils.PointInCircle(x, z, center, radius) == false)
+                if (Utils.IsPointInCircle(x, z, center, radius) == false)
                 {
                     continue;
                 }
@@ -166,7 +166,7 @@ public class Map : MonoBehaviour
 
     public bool GetPosition(MyGameObject myGameObject, Vector3 origin, out Vector3 position, out MyGameObjectMapLayer mapLayer)
     {
-        RaycastHit[] hits = Utils.RaycastAllFromTop(origin, LayerMask.GetMask("Terrain") | LayerMask.GetMask("Water"));
+        RaycastHit[] hits = Utils.RaycastAllFromTop(origin, Utils.GetMapMask());
 
         if (hits.Length <= 0)
         {
@@ -220,7 +220,7 @@ public class Map : MonoBehaviour
 
     public bool GetPositionForCamera(Vector3 origin, out Vector3 position, out MyGameObjectMapLayer mapLayer)
     {
-        RaycastHit[] hits = Utils.RaycastAllFromTop(origin, LayerMask.GetMask("Terrain") | LayerMask.GetMask("Water"));
+        RaycastHit[] hits = Utils.RaycastAllFromTop(origin, Utils.GetMapMask());
 
         if (hits.Length <= 0)
         {
@@ -261,7 +261,7 @@ public class Map : MonoBehaviour
 
     public bool MouseToPosition(MyGameObject myGameObject, out Vector3 position, out MyGameObjectMapLayer mapLayer)
     {
-        RaycastHit[] hits = Utils.RaycastAllFromMouse(LayerMask.GetMask("Terrain") | LayerMask.GetMask("Water"));
+        RaycastHit[] hits = Utils.RaycastAllFromMouse(Utils.GetMapMask());
 
         if (hits.Length <= 0)
         {
@@ -315,7 +315,7 @@ public class Map : MonoBehaviour
 
     public bool ValidatePosition(MyGameObject myGameObject, Vector3 position, out Vector3 validated)
     {
-        RaycastHit[] hits = Utils.RaycastAllFromTop(position, LayerMask.GetMask("Terrain") | LayerMask.GetMask("Water"));
+        RaycastHit[] hits = Utils.RaycastAllFromTop(position, Utils.GetMapMask());
 
         if (hits.Length <= 0)
         {
