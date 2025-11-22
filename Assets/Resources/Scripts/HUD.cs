@@ -58,7 +58,7 @@ public class HUD : MonoBehaviour
     {
         foreach (MyGameObject selected in ActivePlayer.Selected)
         {
-            if (IsMulti() == false)
+            if (IsShift() == false)
             {
                 selected.Orders.Clear();
             }
@@ -71,7 +71,7 @@ public class HUD : MonoBehaviour
     {
         foreach (MyGameObject selected in ActivePlayer.Selected)
         {
-            if (IsMulti() == false)
+            if (IsShift() == false)
             {
                 selected.Orders.Clear();
             }
@@ -84,7 +84,7 @@ public class HUD : MonoBehaviour
     {
         foreach (MyGameObject selected in ActivePlayer.Selected)
         {
-            if (IsMulti() == false)
+            if (IsShift() == false)
             {
                 selected.Orders.Clear();
             }
@@ -97,7 +97,7 @@ public class HUD : MonoBehaviour
     {
         foreach (MyGameObject selected in ActivePlayer.Selected)
         {
-            if (IsMulti() == false)
+            if (IsShift() == false)
             {
                 selected.Orders.Clear();
             }
@@ -110,7 +110,7 @@ public class HUD : MonoBehaviour
     {
         foreach (MyGameObject selected in ActivePlayer.Selected)
         {
-            if (IsMulti() == false)
+            if (IsShift() == false)
             {
                 selected.Orders.Clear();
             }
@@ -123,7 +123,7 @@ public class HUD : MonoBehaviour
     {
         foreach (MyGameObject selected in ActivePlayer.Selected)
         {
-            if (IsMulti() == false)
+            if (IsShift() == false)
             {
                 selected.Orders.Clear();
             }
@@ -170,16 +170,11 @@ public class HUD : MonoBehaviour
         boxVisual.sizeDelta = boxSize;
     }
 
-    public bool IsMulti()
-    {
-        return Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift);
-    }
-
     private void IssueOrder(Vector3 position)
     {
         foreach (MyGameObject selected in ActivePlayer.Selected)
         {
-            if (IsMulti() == false)
+            if (IsShift() == false)
             {
                 selected.Orders.Clear();
             }
@@ -209,7 +204,7 @@ public class HUD : MonoBehaviour
     {
         foreach (MyGameObject selected in ActivePlayer.Selected)
         {
-            if (IsMulti() == false)
+            if (IsShift() == false)
             {
                 selected.Orders.Clear();
             }
@@ -309,7 +304,7 @@ public class HUD : MonoBehaviour
 
     private void Select(MyGameObject myGameObject)
     {
-        if (IsMulti() == false)
+        if (IsShift() == false)
         {
             foreach (MyGameObject selected in ActivePlayer.Selected)
             {
@@ -321,7 +316,7 @@ public class HUD : MonoBehaviour
 
         if (myGameObject != null && myGameObject.Player == ActivePlayer)
         {
-            if (IsMulti() && ActivePlayer.Selected.Contains(myGameObject))
+            if (IsShift() && ActivePlayer.Selected.Contains(myGameObject))
             {
                 myGameObject.Select(false);
                 ActivePlayer.Selected.Remove(myGameObject);
@@ -336,7 +331,7 @@ public class HUD : MonoBehaviour
 
     private void SelectUnitInBox()
     {
-        if (IsMulti() == false)
+        if (IsShift() == false)
         {
             foreach (MyGameObject selected in ActivePlayer.Selected)
             {
@@ -401,12 +396,39 @@ public class HUD : MonoBehaviour
                 ActivePlayer.SelectGroup(i);
             }
         }
+
+        // Change players.
+        if (IsControl() && IsShift())
+        {
+            Player cpu = GameObject.Find("CPU").GetComponent<Player>();
+            Player gaia = GameObject.Find("Gaia").GetComponent<Player>();
+            Player human = GameObject.Find("Human").GetComponent<Player>();
+
+            if (Input.GetKeyDown(KeyCode.F1))
+            {
+                HUD.Instance.ActivePlayer = human;
+            }
+            else if (Input.GetKeyDown(KeyCode.F2))
+            {
+                HUD.Instance.ActivePlayer = cpu;
+            }
+            else if (Input.GetKeyDown(KeyCode.F3))
+            {
+                HUD.Instance.ActivePlayer = gaia;
+            }
+        }
     }
 
-    private bool IsControl()
+    public bool IsControl()
     {
         return Input.GetKey(KeyCode.LeftControl) || Input.GetKey(KeyCode.RightControl);
     }
+
+    public bool IsShift()
+    {
+        return Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift);
+    }
+
 
     private void UpdateMouse()
     {
@@ -464,7 +486,7 @@ public class HUD : MonoBehaviour
                 {
                     ProcessOrder();
 
-                    if (IsMulti() == false)
+                    if (IsShift() == false)
                     {
                         Order = OrderType.None;
                         Prefab = string.Empty;
@@ -491,7 +513,7 @@ public class HUD : MonoBehaviour
             }
             else
             {
-                if (IsMulti() == false)
+                if (IsShift() == false)
                 {
                     Order = OrderType.None;
                     Prefab = string.Empty;
