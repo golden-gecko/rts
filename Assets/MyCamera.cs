@@ -4,7 +4,6 @@ public class MyCamera : MonoBehaviour
 {
     void Start()
     {
-        Speed = 10;
     }
 
     void Update()
@@ -33,5 +32,8 @@ public class MyCamera : MonoBehaviour
         transform.position = transform.position + transform.TransformDirection(movement * speed);
     }
 
-    public float Speed { get; set; }
+    public float Speed { get => _speed; set => _speed = value; }
+
+    [SerializeField]
+    private float _speed = 10;
 }

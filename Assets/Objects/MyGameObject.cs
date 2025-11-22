@@ -10,13 +10,19 @@ public class MyGameObject : MonoBehaviour
 {
     void Start()
     {
-        Target = new Vector3(10, 0, 10);
     }
 
     void Update()
     {
     }
 
-    public OrderType Order { get; set; }
-    public Vector3 Target { get; set; }
+    public OrderType Order { get => _orderType; set => _orderType = value; }
+
+    public Vector3 Target { get => _target; set => _target = value; }
+
+    [SerializeField]
+    private OrderType _orderType = OrderType.Idle;
+
+    [SerializeField]
+    private Vector3 _target = new Vector3(0, 0, 0);
 }
