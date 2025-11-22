@@ -52,4 +52,6 @@ public class Timer
     public bool Active { get => Max > 0.0f; }
 
     public bool Finished { get => Current >= Max; }
+
+    public float Percent { get => Current / Max; }
 }

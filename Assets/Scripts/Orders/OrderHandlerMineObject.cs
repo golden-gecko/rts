@@ -1,5 +1,3 @@
-using System.Linq;
-
 public class OrderHandlerMineObject : OrderHandler
 {
     public override void OnExecuteHandler(MyGameObject myGameObject)
@@ -20,32 +18,12 @@ public class OrderHandlerMineObject : OrderHandler
             return;
         }
 
-        Engine engine = myGameObject.GetComponentInChildren<Engine>();
-
-        if (engine == null)
-        {
-            GatherFromResourceInRange(myGameObject, order);
-        }
-        else
-        {
-            ProcessTargetObject(myGameObject, order);
-        }
+        ProcessTargetObject(myGameObject, order);
     }
 
     protected override bool IsValid(MyGameObject myGameObject, Order order)
     {
         return order.TargetGameObject != null && order.TargetGameObject != myGameObject;
-    }
-
-    private void GatherFromResourceInRange(MyGameObject myGameObject, Order order)
-    {
-        MyGameObject resourceToGather = order.TargetGameObject; // myGameObject.Player.GetResourceToGatherInRange(myGameObject, myGameObject.GetComponentInChildren<Gatherer>().Range);
-        Storage targetGameObjectStorage = resourceToGather.GetComponentInChildren<Storage>();
-
-        // TODO: Check if resource can be gathered.
-
-        myGameObject.Orders.Pop();
-        myGameObject.Load(resourceToGather, targetGameObjectStorage.Resources.Items.First().Name, targetGameObjectStorage.Resources.Items.First().Current); // TODO: Or 1 or ResourceUsage?
     }
 
     private void ProcessTargetObject(MyGameObject myGameObject, Order order)
@@ -99,7 +77,16 @@ public class OrderHandlerMineObject : OrderHandler
             return;
         }
 
+        Miner miner = myGameObject.GetComponentInChildren<Miner>();
+
+        if (miner == null)
+        {
+            Fail(myGameObject);
+
+            return;
+        }
+
         myGameObject.Orders.Pop();
-        myGameObject.Transport(myResource, storage, resource, value);
+        myGameObject.Load(myResource, miner.Range, resource, value);
     }
 }

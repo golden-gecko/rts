@@ -38,9 +38,9 @@ public class Cursor2D : Singleton<Cursor2D>
 
     public void Set(OrderType orderType)
     {
-        if (Cursors.ContainsKey(orderType))
+        if (Cursors.TryGetValue(orderType, out Texture2D texture))
         {
-            Cursor.SetCursor(Cursors[orderType], Vector2.zero, CursorMode.Auto);
+            Cursor.SetCursor(texture, Vector2.zero, CursorMode.Auto);
         }
     }
 

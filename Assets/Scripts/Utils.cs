@@ -4,6 +4,30 @@ using UnityEngine;
 
 public class Utils
 {
+    #region Blueprints
+    public static List<Blueprint> CreateBlueprints()
+    {
+        List<Blueprint> blueprints = new List<Blueprint>();
+
+        if (Directory.Exists(Config.Blueprints.Directory) == false)
+        {
+            return blueprints;
+        }
+
+        foreach (string file in Directory.EnumerateFiles(Config.Blueprints.Directory))
+        {
+            if (Path.GetExtension(file).ToLower() != ".json")
+            {
+                continue;
+            }
+
+            blueprints.Add(JsonUtility.FromJson<Blueprint>(File.ReadAllText(file)));
+        }
+
+        return blueprints;
+    }
+    #endregion
+
     #region Enum
     public static string[] GetFormationNames()
     {
@@ -25,28 +49,77 @@ public class Utils
     #endregion
 
     #region Grid
+    public static float SnapToCorner(float value, float scale)
+    {
+        return Mathf.Round(value / scale) * scale;
+    }
+
     public static Vector3 SnapToCorner(Vector3 position, float scale)
     {
-        float x = Mathf.Floor(position.x / scale) * scale;
-        float z = Mathf.Floor(position.z / scale) * scale;
+        return new Vector3(SnapToCorner(position.x, scale), position.y, SnapToCorner(position.z, scale));
+    }
 
-        return new Vector3(x, position.y, z);
+    public static Vector3 SnapToGrid(Vector3 position, Vector3Int sizeGrid, float scale, bool yAxis = false)
+    {
+        float x;
+        float y;
+        float z;
+
+        if (sizeGrid.x % 2 == 0)
+        {
+            x = SnapToCorner(position.x, scale);
+        }
+        else
+        {
+            x = SnapToCenter(position.x, scale);
+        }
+
+        if (yAxis)
+        {
+            if (sizeGrid.y % 2 == 0)
+            {
+                y = SnapToCorner(position.y, scale);
+            }
+            else
+            {
+                y = SnapToCenter(position.y, scale);
+            }
+        }
+        else
+        {
+            y = position.y;
+        }
+
+        if (sizeGrid.z % 2 == 0)
+        {
+            z = SnapToCorner(position.z, scale);
+        }
+        else
+        {
+            z = SnapToCenter(position.z, scale);
+        }
+
+        return new Vector3(x, y, z);
+    }
+
+    public static float SnapToCenter(float value, float scale)
+    {
+        return Mathf.Floor(value / scale) * scale + scale / 2.0f;
     }
 
     public static Vector3 SnapToCenter(Vector3 position, float scale)
     {
-        float x = Mathf.Floor(position.x / scale) * scale + scale / 2.0f;
-        float z = Mathf.Floor(position.z / scale) * scale + scale / 2.0f;
+        return new Vector3(SnapToCenter(position.x, scale), position.y, SnapToCenter(position.z, scale));
+    }
 
-        return new Vector3(x, position.y, z);
+    public static int ToGrid(float value, float scale)
+    {
+        return Mathf.RoundToInt(value / scale);
     }
 
     public static Vector3Int ToGrid(Vector3 position, float scale)
     {
-        int x = Mathf.FloorToInt(position.x / scale);
-        int z = Mathf.FloorToInt(position.z / scale);
-
-        return new Vector3Int(x, 0, z);
+        return new Vector3Int(ToGrid(position.x, scale), 0, ToGrid(position.z, scale));
     }
     #endregion
 
@@ -177,12 +250,17 @@ public class Utils
     #region Mask
     public static int GetGameObjectMask()
     {
-        return LayerMask.GetMask("GameObject");
+        return LayerMask.GetMask("Foundation") | LayerMask.GetMask("GameObject");
     }
 
     public static int GetMapMask()
     {
-        return LayerMask.GetMask("Terrain") | LayerMask.GetMask("Water");
+        return /* TODO: LayerMask.GetMask("Foundation") | */ LayerMask.GetMask("Terrain") | LayerMask.GetMask("Water");
+    }
+
+    public static int GetTerrainMask()
+    {
+        return /* TODO: LayerMask.GetMask("Foundation") | */ LayerMask.GetMask("Terrain");
     }
     #endregion
 
@@ -255,6 +333,11 @@ public class Utils
         return true;
     }
 
+    public static int MakeEven(int value)
+    {
+        return value % 2 == 0 ? value : value + 1;
+    }
+
     public static int MakeOdd(int value)
     {
         return value % 2 == 0 ? value + 1 : value;
@@ -301,9 +384,20 @@ public class Utils
         return Raycast(new Ray(new Vector3(position.x, Config.Map.MaxHeight, position.z), Vector3.down), out hitInfo, layerMask);
     }
 
-    public static RaycastHit[] RaycastAllFromTop(Vector3 position, int layerMask = Physics.DefaultRaycastLayers)
+    public static RaycastHit[] RaycastAllFromTop(Vector3 position, int layerMask = Physics.DefaultRaycastLayers, RaycastSortOrder sortOrder = RaycastSortOrder.None)
     {
-        return RaycastAll(new Ray(new Vector3(position.x, Config.Map.MaxHeight, position.z), Vector3.down), layerMask);
+        RaycastHit[] hits = RaycastAll(new Ray(new Vector3(position.x, Config.Map.MaxHeight, position.z), Vector3.down), layerMask);
+
+        if (sortOrder == RaycastSortOrder.Ascending)
+        {
+            System.Array.Sort(hits, (a, b) => a.distance > b.distance ? -1 : 1);
+        }
+        else if (sortOrder == RaycastSortOrder.Descending)
+        {
+            System.Array.Sort(hits, (a, b) => a.distance < b.distance ? -1 : 1);
+        }
+
+        return hits;
     }
 
     public static bool Raycast(Ray ray, out RaycastHit hitInfo, int layerMask = Physics.DefaultRaycastLayers)
@@ -364,7 +458,7 @@ public class Utils
     #region String
     public static string FormatName(string name)
     {
-        string formatted = string.Empty;
+        string formatted = "";
 
         foreach (char c in name)
         {
@@ -387,27 +481,10 @@ public class Utils
     }
     #endregion
 
-    #region Blueprints
-    public static List<Blueprint> CreateBlueprints()
+    #region Time
+    public static float GetTimeFromUsage(int sum, int usage)
     {
-        List<Blueprint> blueprints = new List<Blueprint>();
-
-        if (Directory.Exists(Config.Blueprints.Directory) == false)
-        {
-            return blueprints;
-        }
-
-        foreach (string file in Directory.EnumerateFiles(Config.Blueprints.Directory))
-        {
-            if (Path.GetExtension(file).ToLower() != ".json")
-            {
-                continue;
-            }
-
-            blueprints.Add(JsonUtility.FromJson<Blueprint>(File.ReadAllText(file)));
-        }
-
-        return blueprints;
+        return Mathf.Ceil((float)sum / (float)usage);
     }
     #endregion
 
@@ -432,21 +509,21 @@ public class Utils
 
     public static bool IsTerrain(Collision collision)
     {
-        return collision.collider.CompareTag("Terrain");
+        return collision.collider.gameObject.layer == LayerMask.NameToLayer("Foundation") || collision.collider.gameObject.layer == LayerMask.NameToLayer("Terrain");
     }
 
     public static bool IsWater(Collision collision)
     {
-        return collision.collider.CompareTag("Water");
+        return collision.collider.gameObject.layer == LayerMask.NameToLayer("Water");
     }
 
     public static bool IsTerrain(RaycastHit hitInfo)
     {
-        return hitInfo.transform.CompareTag("Terrain");
+        return hitInfo.transform.gameObject.layer == LayerMask.NameToLayer("Foundation") || hitInfo.transform.gameObject.layer == LayerMask.NameToLayer("Terrain");
     }
 
     public static bool IsWater(RaycastHit hitInfo)
     {
-        return hitInfo.transform.CompareTag("Water");
+        return hitInfo.transform.gameObject.layer == LayerMask.NameToLayer("Water");
     }
 }

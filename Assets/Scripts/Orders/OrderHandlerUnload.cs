@@ -1,3 +1,4 @@
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class OrderHandlerUnload : OrderHandler
@@ -13,7 +14,7 @@ public class OrderHandlerUnload : OrderHandler
             return;
         }
 
-        if (Utils.IsCloseTo(myGameObject.Position, order.TargetGameObject.Entrance) == false)
+        if (Utils.IsInRange(myGameObject.Position, order.TargetGameObject.Entrance, order.Range) == false)
         {
             myGameObject.Move(order.TargetGameObject.Entrance, 0);
 
@@ -106,15 +107,20 @@ public class OrderHandlerUnload : OrderHandler
 
     private void MoveResources(MyGameObject source, MyGameObject target, string resource, int value)
     {
-        source.GetComponentInChildren<Storage>().Resources.Remove(resource, value);
+        int added;
 
         if (target.State == MyGameObjectState.UnderConstruction)
         {
-            target.ConstructionResources.Add(resource, value);
+            added = target.ConstructionResources.Add(resource, value);
         }
         else
         {
-            target.GetComponentInChildren<Storage>().Resources.Add(resource, value);
+            added = target.GetComponentInChildren<Storage>().Resources.Add(resource, value);
+        }
+
+        if (added > 0)
+        {
+            source.GetComponentInChildren<Storage>().Resources.Remove(resource, added);
         }
     }
 }

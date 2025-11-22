@@ -16,10 +16,14 @@ public class OrderHandler
         myGameObject.Wait(0);
     }
 
-    protected void Success(MyGameObject myGameObject)
+    protected void Success(MyGameObject myGameObject, bool repeat = false)
     {
         myGameObject.Stats.Inc(Stats.OrdersCompleted);
-        myGameObject.Orders.Pop();
+
+        if (repeat == false)
+        {
+            myGameObject.Orders.Pop();
+        }
     }
 
     protected void Wait(MyGameObject myGameObject)

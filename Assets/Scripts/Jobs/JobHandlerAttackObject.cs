@@ -4,6 +4,11 @@ public class JobHandlerAttackObject : JobHandler
 {
     public override Order OnExecute(MyGameObject myGameObject)
     {
+        if (myGameObject.Gun == null)
+        {
+            return null;
+        }
+
         float minDistance = float.MaxValue;
         MyGameObject closest = null;
 
@@ -14,14 +19,7 @@ public class JobHandlerAttackObject : JobHandler
                 continue;
             }
 
-            Gun gun = myGameObject.GetComponentInChildren<Gun>();
-
-            if (gun == null)
-            {
-                continue;
-            }
-
-            if (gun.IsInRange(target.Position) == false)
+            if (myGameObject.Gun.IsInRange(target.Position) == false)
             {
                 continue;
             }
@@ -40,11 +38,11 @@ public class JobHandlerAttackObject : JobHandler
             }
         }
 
-        if (closest != null)
+        if (closest == null)
         {
-            return Order.AttackObject(closest);
+            return null;
         }
 
-        return null;
+        return Order.AttackObject(closest);
     }
 }

@@ -11,6 +11,9 @@ public class MyGameObject : MyMonoBehaviour
 
         SetupIndicators();
         SetupBase();
+        SetupConstructionResources();
+        SetupHealth();
+        SetupParts();
 
         Orders.AllowOrder(OrderType.Destroy); // TODO: Move to component.
         Orders.AllowOrder(OrderType.Disable);
@@ -33,9 +36,6 @@ public class MyGameObject : MyMonoBehaviour
         OrderHandlers[OrderType.Wait] = new OrderHandlerWait();
 
         Stats.Player = Player;
-
-        SetupHealth();
-        SetupConstructionResources();
     }
 
     protected virtual void Start()
@@ -214,15 +214,15 @@ public class MyGameObject : MyMonoBehaviour
         Orders.Add(Order.GuardPosition(position));
     }
 
-    public void Load(MyGameObject myGameObject, string resource, int value, int priority = -1)
+    public void Load(MyGameObject myGameObject, float range, string resource, int value, int priority = -1)
     {
         if (0 <= priority && priority < Orders.Count)
         {
-            Orders.Insert(priority, Order.Load(myGameObject, resource, value));
+            Orders.Insert(priority, Order.Load(myGameObject, range, resource, value));
         }
         else
         {
-            Orders.Add(Order.Load(myGameObject, resource, value));
+            Orders.Add(Order.Load(myGameObject, range, resource, value));
         }
     }
 
@@ -311,15 +311,15 @@ public class MyGameObject : MyMonoBehaviour
         Orders.Add(Order.Turn(target));
     }
 
-    public void Unload(MyGameObject myGameObject, string resource, int value, int priority = -1)
+    public void Unload(MyGameObject myGameObject, float range, string resource, int value, int priority = -1)
     {
         if (0 <= priority && priority < Orders.Count)
         {
-            Orders.Insert(priority, Order.Unload(myGameObject, resource, value));
+            Orders.Insert(priority, Order.Unload(myGameObject, range, resource, value));
         }
         else
         {
-            Orders.Add(Order.Unload(myGameObject, resource, value));
+            Orders.Add(Order.Unload(myGameObject, range, resource, value));
         }
     }
 
@@ -355,7 +355,7 @@ public class MyGameObject : MyMonoBehaviour
 
     public virtual string GetInfo(bool ally)
     {
-        string info = string.Empty;
+        string info = "";
 
         switch (State)
         {
@@ -419,7 +419,7 @@ public class MyGameObject : MyMonoBehaviour
             }
         }
 
-        return string.Empty;
+        return "";
     }
 
     public bool Is(MyGameObject myGameObject, DiplomacyState state)
@@ -526,7 +526,7 @@ public class MyGameObject : MyMonoBehaviour
         {
             if (SnapToGrid)
             {
-                Position = Utils.SnapToCenter(validated, Config.Map.Scale);
+                Position = Utils.SnapToGrid(validated, SizeGrid, Config.Map.Scale);
             }
             else
             {
@@ -534,12 +534,12 @@ public class MyGameObject : MyMonoBehaviour
             }
         }
 
-        if (Utils.ToGrid(PreviousPosition, Config.Map.Scale) != Utils.ToGrid(Position, Config.Map.Scale))
+        if (PreviousBoundsGrid != BoundsGrid)
         {
-            Map.Instance.SetOccupied(this, PreviousPosition, -1);
-            Map.Instance.SetOccupied(this, Position, 1);
+            Map.Instance.SetOccupied(this, PreviousBoundsGrid, -1);
+            Map.Instance.SetOccupied(this, BoundsGrid, 1);
 
-            PreviousPosition = Position;
+            PreviousBoundsGrid = BoundsGrid;
         }
     }
 
@@ -680,8 +680,6 @@ public class MyGameObject : MyMonoBehaviour
                 ShowEntrance = false;
                 ShowExit = false;
 
-                EnableColliders(false);
-
                 Indicators.OnConstruction();
                 break;
 
@@ -689,8 +687,6 @@ public class MyGameObject : MyMonoBehaviour
                 ShowIndicators = false;
                 ShowEntrance = false;
                 ShowExit = false;
-
-                EnableColliders(false);
                 break;
 
             case MyGameObjectState.Operational:
@@ -743,12 +739,7 @@ public class MyGameObject : MyMonoBehaviour
         }
 
         Vector3 size = Size;
-
-        int x = Utils.MakeOdd(Mathf.CeilToInt(size.x / Config.Map.Scale));
-        int z = Utils.MakeOdd(Mathf.CeilToInt(size.z / Config.Map.Scale));
-
-        size.x = x * Config.Map.Scale;
-        size.z = z * Config.Map.Scale;
+        Vector3 sizeGrid = SizeGrid;
 
         Body.transform.localPosition = new Vector3(0.0f, 0.25f, 0.0f);
 
@@ -756,17 +747,6 @@ public class MyGameObject : MyMonoBehaviour
 
         Base = Instantiate(Game.Instance.Config.Base, transform, false);
         Base.transform.localScale = new Vector3(size.x, 0.5f, size.z);
-    }
-
-    private void SetupHealth()
-    {
-        Part[] parts = GetComponentsInChildren<Part>();
-        Health = new Progress(parts.Sum(x => x.Health.Current), parts.Sum(x => x.Health.Max));
-    }
-
-    private void SetupIndicators()
-    {
-        Indicators = Instantiate(Game.Instance.Config.Indicators, transform, false).GetComponent<Indicators>();
     }
 
     private void SetupConstructionResources()
@@ -804,11 +784,36 @@ public class MyGameObject : MyMonoBehaviour
         }
     }
 
+    private void SetupHealth()
+    {
+        Part[] parts = GetComponentsInChildren<Part>();
+        Health = new Progress(parts.Sum(x => x.Health.Current), parts.Sum(x => x.Health.Max));
+    }
+
+    private void SetupIndicators()
+    {
+        Indicators = Instantiate(Game.Instance.Config.Indicators, transform, false).GetComponent<Indicators>();
+    }
+
+    private void SetupParts()
+    {
+        Armour = GetComponentInChildren<Armour>();
+        Assembler = GetComponentInChildren<Assembler>();
+        Constructor = GetComponentInChildren<Constructor>();
+        Drive = GetComponentInChildren<Drive>();
+        Engine = GetComponentInChildren<Engine>();
+        Gun = GetComponentInChildren<Gun>();
+        Miner = GetComponentInChildren<Miner>();
+        Producer = GetComponentInChildren<Producer>();
+        Shield = GetComponentInChildren<Shield>();
+        Storage = GetComponentInChildren<Storage>();
+    }
+
     private void InitializePosition()
     {
-        Map.Instance.SetOccupied(this, Position, 1);
+        Map.Instance.SetOccupied(this, BoundsGrid, 1);
 
-        PreviousPosition = Position;
+        PreviousBoundsGrid = BoundsGrid;
     }
 
     private void InitializeSkills()
@@ -991,67 +996,14 @@ public class MyGameObject : MyMonoBehaviour
     [field: SerializeField]
     public bool ShowExit { get; private set; } = false;
 
-    [field: SerializeField]
     public Progress Health { get; private set; } = new Progress();
-    /*
-    {
-        get
-        {
-            Part[] parts = GetComponentsInChildren<Part>();
-
-            return new Progress(parts.Sum(x => x.Health.Current), parts.Sum(x => x.Health.Max));
-        }
-    }
-    */
 
     public OrderContainer Orders { get; } = new OrderContainer();
 
     public Stats Stats { get; } = new Stats();
 
     [field: SerializeField]
-    public ResourceContainer ConstructionResources { get; private set; } = new ResourceContainer();
-    /*
-    {
-        get
-        {
-            Dictionary<string, int> current = new Dictionary<string, int>(); // TODO: Refactor. Optimize. Allow changing Max property.
-            Dictionary<string, int> max = new Dictionary<string, int>();
-
-            foreach (Part part in GetComponentsInChildren<Part>())
-            {
-                foreach (Resource resource in part.ConstructionResources.Items)
-                {
-                    if (current.ContainsKey(resource.Name))
-                    {
-                        current[resource.Name] += resource.Current;
-                    }
-                    else
-                    {
-                        current[resource.Name] = resource.Current;
-                    }
-
-                    if (max.ContainsKey(resource.Name))
-                    {
-                        max[resource.Name] += resource.Max;
-                    }
-                    else
-                    {
-                        max[resource.Name] = resource.Max;
-                    }
-                }
-            }
-
-            ResourceContainer constructionResources = new ResourceContainer();
-
-            foreach (KeyValuePair<string, int> resource in current)
-            {
-                constructionResources.Init(resource.Key, resource.Value, max[resource.Key]);
-            }
-
-            return constructionResources;
-        }
-    }
-    */
+    public ResourceContainer ConstructionResources { get; } = new ResourceContainer();
 
     public MyGameObject Parent { get; private set; }
 
@@ -1065,9 +1017,31 @@ public class MyGameObject : MyMonoBehaviour
 
     public Indicators Indicators { get; private set; }
 
-    private Vector3 PreviousPosition { get; set; }
+    private BoundsInt PreviousBoundsGrid { get; set; }
 
     public HashSet<MyGameObject> Workers { get; } = new HashSet<MyGameObject>(); // TODO: Implement workers mechanic.
 
     public HashSet<MyGameObject> Workplaces { get; } = new HashSet<MyGameObject>(); // TODO: Implement workers mechanic.
+
+    #region Parts
+    public Armour Armour { get; private set; }
+
+    public Assembler Assembler { get; private set; }
+
+    public Constructor Constructor { get; private set; }
+
+    public Drive Drive { get; private set; }
+
+    public Engine Engine { get; private set; }
+
+    public Gun Gun { get; private set; }
+
+    public Miner Miner { get; private set; }
+
+    public Producer Producer { get; private set; }
+
+    public Shield Shield { get; private set; }
+
+    public Storage Storage { get; private set; }
+    #endregion
 }

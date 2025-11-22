@@ -64,6 +64,7 @@ public class Config : MonoBehaviour
     public static class Objects // TODO: Rename.
     {
         public static string Directory = Path.Join(Prefabs.Directory, "Objects", "Blueprints");
+        public static float MinDistance = 1.0f;
     }
 
     public static class Prefabs

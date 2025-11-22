@@ -18,48 +18,47 @@ public class Validator : EditorWindow
         ValidateProperties(prefabs);
         ValidateStorage(prefabs);
 
-        GameObject[] gameObjects = Tools.GetGameObjects();
+        MyGameObject[] myGameObjects = Tools.GetGameObjects();
 
-        ValidateGameObjects(gameObjects);
+        ValidateGameObjects(myGameObjects);
     }
 
     private static void ValidateConstructionResources(IEnumerable<GameObject> gameObjects)
     {
         foreach (GameObject gameObject in gameObjects)
         {
-            if (gameObject.TryGetComponent(out Part part))
+            if (gameObject.TryGetComponent(out Part part) == false)
             {
-                if (part.ConstructionResources.Items.Count <= 0)
+                continue;
+            }
+
+            if (part.ConstructionResources.Items.Count <= 0)
+            {
+                Debug.Log(string.Format("Resource {0} has invalid construction resource count ({1}).", part.name, part.ConstructionResources.Items.Count));
+            }
+
+            foreach (Resource resource in part.ConstructionResources.Items)
+            {
+                if (resource.Current <= 0)
                 {
-                    Debug.Log(string.Format("Resource {0} has invalid construction resource count ({1}).", part.name, part.ConstructionResources.Items.Count));
+                    Debug.Log(string.Format("Resource {0} has invalid construction resource current value ({1}).", part.name, part.ConstructionResources.Items.Count));
                 }
 
-                foreach (Resource resource in part.ConstructionResources.Items)
+                if (resource.Max <= 0)
                 {
-                    if (resource.Current <= 0)
-                    {
-                        Debug.Log(string.Format("Resource {0} has invalid construction resource current value ({1}).", part.name, part.ConstructionResources.Items.Count));
-                    }
-
-                    if (resource.Max <= 0)
-                    {
-                        Debug.Log(string.Format("Resource {0} has invalid construction resource max value ({1}).", part.name, part.ConstructionResources.Items.Count));
-                    }
+                    Debug.Log(string.Format("Resource {0} has invalid construction resource max value ({1}).", part.name, part.ConstructionResources.Items.Count));
                 }
             }
         }
     }
 
-    private static void ValidateGameObjects(GameObject[] gameObjects)
+    private static void ValidateGameObjects(MyGameObject[] myGameObjects)
     {
-        foreach (GameObject gameObject in gameObjects)
+        foreach (MyGameObject myGameObject in myGameObjects)
         {
-            if (gameObject.TryGetComponent(out MyGameObject myGameObject))
+            if (myGameObject.Player == null)
             {
-                if (myGameObject.Player == null)
-                {
-                    Debug.Log(string.Format("Game object {0} has no player.", gameObject.name));
-                }
+                Debug.Log(string.Format("Game object {0} has no player.", myGameObject.name));
             }
         }
     }

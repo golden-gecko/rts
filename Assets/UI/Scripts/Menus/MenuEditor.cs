@@ -31,7 +31,7 @@ public class MenuEditor : UI_Element
         Preview.RegisterCallback<MouseLeaveEvent>(x => OnMouseLeaveEvent());
 
         Info = Root.Q<Label>("Info");
-        Info.text = string.Empty;
+        Info.text = "";
 
         ButtonPrevious = Root.Q<Button>("Previous");
         ButtonPrevious.RegisterCallback<ClickEvent>(x => OnButtonPrevious());
@@ -144,8 +144,8 @@ public class MenuEditor : UI_Element
     private void OnButtonNew()
     {
         Blueprints.index = -1;
-        Name.value = string.Empty;
-        Info.text = string.Empty;
+        Name.value = "";
+        Info.text = "";
 
         DestroyGameObjectFromBlueprint();
     }
@@ -458,7 +458,7 @@ public class MenuEditor : UI_Element
 
     private void UpdateInfo()
     {
-        string info = string.Empty;
+        string info = "";
 
         foreach (BlueprintComponent i in blueprint.Parts)
         {

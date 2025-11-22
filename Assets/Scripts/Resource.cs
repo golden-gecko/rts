@@ -10,11 +10,16 @@ public class Resource : Counter
         Direction = direction;
     }
 
+    public override string GetInfo()
+    {
+        return string.Format("{0} {1}", Name, base.GetInfo());
+    }
+
     [field: SerializeField]
     public string Name { get; private set; }
 
     [field: SerializeField]
-    public ResourceDirection Direction { get; private set; }
+    public ResourceDirection Direction { get; set; }
 
     public int Available { get => Max - Current; }
 

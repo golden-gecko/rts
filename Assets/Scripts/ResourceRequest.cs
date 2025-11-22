@@ -7,6 +7,11 @@ public class ResourceRequest
         Value = value;
         Direction = direction;
     }
+    
+    public string GetInfo()
+    {
+        return string.Format("{0} {1} {2}", Name, Value, Direction);
+    }
 
     public MyGameObject MyGameObject { get; }
 

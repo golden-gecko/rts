@@ -10,9 +10,14 @@ using UnityEngine.SceneManagement;
 
 public static class Tools
 {
-    public static GameObject[] GetGameObjects()
+    public static MyGameObject[] GetGameObjects()
     {
-        return EditorSceneManager.GetActiveScene().GetRootGameObjects();
+        return SceneManager
+            .GetActiveScene()
+            .GetRootGameObjects()
+            .Where(x => x.TryGetComponent(out MyGameObject _))
+            .Select(x => x.GetComponent<MyGameObject>())
+            .ToArray();
     }
 
     public static IEnumerable<GameObject> GetPrefabs()
@@ -42,7 +47,7 @@ public static class Tools
 
     public static string GetSceneName()
     {
-        return EditorSceneManager.GetActiveScene().name;
+        return SceneManager.GetActiveScene().name;
     }
 
     public static void RestoreScene(string sceneName)
@@ -52,6 +57,6 @@ public static class Tools
 
     public static void SaveScene()
     {
-        EditorSceneManager.SaveScene(EditorSceneManager.GetActiveScene());
+        EditorSceneManager.SaveScene(SceneManager.GetActiveScene());
     }
 }

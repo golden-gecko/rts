@@ -35,6 +35,7 @@ public class Storage : Part
         switch (Parent.State)
         {
             case MyGameObjectState.Operational:
+                RemoveResourceFlags(); // TODO: Remove and fix ResourceContainer::Request() method.
                 CreateResourceFlags();
                 break;
 

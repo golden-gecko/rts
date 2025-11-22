@@ -13,7 +13,7 @@ public class OrderHandlerLoad : OrderHandler
             return;
         }
 
-        if (Utils.IsCloseTo(myGameObject.Position, order.SourceGameObject.Exit) == false)
+        if (Utils.IsInRange(myGameObject.Position, order.SourceGameObject.Exit, order.Range) == false)
         {
             myGameObject.Move(order.SourceGameObject.Exit, 0);
 
@@ -24,7 +24,8 @@ public class OrderHandlerLoad : OrderHandler
             {
                 order.Value,
                 order.SourceGameObject.GetComponentInChildren<Storage>().Resources.Current(order.Resource),
-                myGameObject.GetComponentInChildren<Storage>().Resources.Available(order.Resource)
+                myGameObject.GetComponentInChildren<Storage>().Resources.Available(order.Resource),
+                10, // TODO: Hardcoded.
             }
         );
 
@@ -49,7 +50,8 @@ public class OrderHandlerLoad : OrderHandler
             {
                 order.Value,
                 order.SourceGameObject.GetComponentInChildren<Storage>().Resources.Current(order.Resource),
-                myGameObject.GetComponentInChildren<Storage>().Resources.Available(order.Resource)
+                myGameObject.GetComponentInChildren<Storage>().Resources.Available(order.Resource),
+                10, // TODO: Hardcoded.
             }
         );
 
