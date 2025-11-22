@@ -1,4 +1,4 @@
-public class struct_Wall_A_yup : MyGameObject
+public class struct_Wall_A_yup : Structure
 {
     protected override void Awake()
     {

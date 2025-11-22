@@ -2,12 +2,6 @@ using System.Collections.Generic;
 
 public class Recipe
 {
-    public Recipe()
-    {
-        ToConsume = new List<RecipeComponent>();
-        ToProduce = new List<RecipeComponent>();
-    }
-
     public void Consume(string name, int count)
     {
         ToConsume.Add(new RecipeComponent(name, count));
@@ -18,7 +12,7 @@ public class Recipe
         ToProduce.Add(new RecipeComponent(name, count));
     }
 
-    public List<RecipeComponent> ToConsume { get; }
+    public List<RecipeComponent> ToConsume { get; } = new();
 
-    public List<RecipeComponent> ToProduce { get; }
+    public List<RecipeComponent> ToProduce { get; } = new();
 }

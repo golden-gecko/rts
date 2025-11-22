@@ -25,48 +25,19 @@ public class unit_Harvester_A_yup : MyGameObject
         Orders.AllowPrefab("Buildings/struct_Turret_Missile_A_yup");
         Orders.AllowPrefab("Buildings/struct_Wall_A_yup");
 
+        OrderHandlers[OrderType.Idle] = new OrderHandlerIdleWorker();
+
         Resources.Add("Coal", 0, 10);
         Resources.Add("Crystal", 0, 10);
         Resources.Add("Metal", 0, 10);
         Resources.Add("Metal Ore", 0, 10);
         Resources.Add("Wood", 0, 10);
 
-        Speed = 4.0f;
         Health = 50.0f;
         MaxHealth = 50.0f;
-    }
-
-    protected override void OnOrderIdle()
-    {
-        Game game = GameObject.Find("Game").GetComponent<Game>();
-
-        Order order;
-
-        order = game.CreateOrderUnload();
-
-        if (order != null)
-        {
-            Orders.Add(order);
-
-            return;
-        }
-
-        order = game.CreateOrderTransport();
-
-        if (order != null)
-        {
-            Orders.Add(order);
-
-            return;
-        }
-
-        order = game.CreateOrderConstruction();
-
-        if (order != null)
-        {
-            Orders.Add(order);
-
-            return;
-        }
+        LoadTime = 2.0f;
+        Speed = 4.0f;
+        UnloadTime = 2.0f;
+        WaitTime = 2.0f;
     }
 }

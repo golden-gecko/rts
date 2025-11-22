@@ -1,13 +1,7 @@
-using System.Collections;
 using System.Collections.Generic;
 
-public class ResourceContainer : IEnumerable<KeyValuePair<string, Resource>>
+public class ResourceContainer
 {
-    public ResourceContainer()
-    {
-        Items = new Dictionary<string, Resource>();
-    }
-
     public void Add(string name, int value)
     {
         if (Items.ContainsKey(name) == false)
@@ -25,7 +19,6 @@ public class ResourceContainer : IEnumerable<KeyValuePair<string, Resource>>
             Items.Add(name, new Resource(name, 0, 0));
         }
 
-        // TODO: Order of initialization.
         Items[name].Max = max;
         Items[name].Add(value);
     }
@@ -60,18 +53,16 @@ public class ResourceContainer : IEnumerable<KeyValuePair<string, Resource>>
         return Items[name].Capacity();
     }
 
-    public IEnumerator<KeyValuePair<string, Resource>> GetEnumerator()
-    {
-        return Items.GetEnumerator();
-    }
-
     public string GetInfo()
     {
         string info = string.Empty;
 
         foreach (KeyValuePair<string, Resource> i in Items)
         {
-            info += string.Format("\n  {0} {1}/{2}", i.Key, i.Value.Value, i.Value.Max);
+            if (i.Value.Value > 0)
+            {
+                info += string.Format("\n  {0} {1}/{2}", i.Key, i.Value.Value, i.Value.Max);
+            }
         }
 
         return info;
@@ -97,10 +88,5 @@ public class ResourceContainer : IEnumerable<KeyValuePair<string, Resource>>
         return Items[name].Storage();
     }
 
-    IEnumerator IEnumerable.GetEnumerator()
-    {
-        return GetEnumerator();
-    }
-
-    public Dictionary<string, Resource> Items { get; }
+    public Dictionary<string, Resource> Items { get; } = new();
 }

@@ -1,12 +1,9 @@
-public class struct_Turret_Gun_A_yup : MyGameObject
+public class struct_Turret_Gun_A_yup : Structure
 {
     protected override void Awake()
     {
         base.Awake();
 
         Orders.AllowOrder(OrderType.Attack);
-
-        Health = 100.0f;
-        MaxHealth = 100.0f;
     }
 }

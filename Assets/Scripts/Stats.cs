@@ -15,11 +15,6 @@ public class Stats
     public static string TimeProducing = "Time Producing";
     public static string TimeWaiting = "Time Waiting";
 
-    public Stats()
-    {
-        Items = new Dictionary<string, float>();
-    }
-
     public void Add(string name, float value)
     {
         if (Items.ContainsKey(name))
@@ -44,5 +39,5 @@ public class Stats
         return info;
     }
 
-    public Dictionary<string, float> Items { get; }
+    public Dictionary<string, float> Items { get; } = new();
 }

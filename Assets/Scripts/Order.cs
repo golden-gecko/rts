@@ -92,27 +92,27 @@ public class Order
         Retries += 1;
     }
 
-    public OrderType Type { get; }
+    public bool CanRetry { get => Retries < MaxRetries; }
 
-    public bool IsTargetGameObject { get; set; }
+    public bool IsTargetGameObject { get; private set; }
 
-    public MyGameObject SourceGameObject { get; }
-
-    public MyGameObject TargetGameObject { get; set; }
-
-    public Vector3 TargetPosition { get; }
-
-    public Dictionary<string, int> Resources { get; }
-
-    public Timer Timer { get; }
+    public int MaxRetries { get; } = 0;
 
     public string Prefab { get; }
 
     public PrefabConstructionType PrefabConstructionType { get; }
 
-    public int Retries { get; private set; } = 1;
+    public Dictionary<string, int> Resources { get; }
 
-    public int MaxRetries { get; } = 0;
+    public int Retries { get; private set; } = 0;
 
-    public bool CanRetry { get => Retries < MaxRetries; }
+    public MyGameObject SourceGameObject { get; }
+
+    public MyGameObject TargetGameObject { get; set; } // TODO: Hide setter.
+
+    public Vector3 TargetPosition { get; }
+
+    public Timer Timer { get; }
+
+    public OrderType Type { get; }
 }
