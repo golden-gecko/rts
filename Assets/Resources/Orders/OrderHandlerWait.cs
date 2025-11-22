@@ -2,13 +2,24 @@ using UnityEngine;
 
 public class OrderHandlerWait : IOrderHandler
 {
+    public bool IsValid(Order order)
+    {
+        return order.Timer.Max > 0.0f;
+    }
+
     public void OnExecute(MyGameObject myGameObject)
     {
         Order order = myGameObject.Orders.First();
 
-        order.Timer.Update(Time.deltaTime);
+        if (IsValid(order) == false)
+        {
+            myGameObject.Stats.Add(Stats.OrdersFailed, 1);
+            myGameObject.Orders.Pop();
 
-        if (order.Timer.Finished)
+            return;
+        }
+
+        if (order.Timer.Update(Time.deltaTime))
         {
             order.Timer.Reset();
 

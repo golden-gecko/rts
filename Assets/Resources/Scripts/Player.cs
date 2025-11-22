@@ -59,10 +59,11 @@ public class Player : MonoBehaviour
         Diplomacy[player] = state;
     }
 
-    [SerializeField]
-    public Sprite SelectionSprite;
+    [field: SerializeField]
+    public Sprite SelectionSprite { get; set; }
 
-    public bool Gatherable { get; protected set; } = false;
+    [field: SerializeField]
+    public bool Gatherable { get; set; } = false;
 
     public HashSet<MyGameObject> Selected { get; } = new HashSet<MyGameObject>();
 

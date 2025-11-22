@@ -25,6 +25,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1112021919535837592}
+  serializedVersion: 2
   m_LocalRotation: {x: 0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: -0, y: 4.516533, z: 0.0000009155273}
   m_LocalScale: {x: 1, y: 1, z: 1}
@@ -32,7 +33,6 @@ Transform:
   m_Children:
   - {fileID: 199477215824272259}
   m_Father: {fileID: 6301738263044792862}
-  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &6636679757564409088
 MeshFilter:
@@ -109,13 +109,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1309042285603929841}
+  serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0.00000008742278, w: 1}
   m_LocalPosition: {x: -0, y: 1.3622265, z: -0.33895874}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 8669808382595332711}
-  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &3286612543942953322
 MeshFilter:
@@ -180,6 +180,8 @@ GameObject:
   - component: {fileID: 5133937906508519793}
   - component: {fileID: -4166326798546642788}
   - component: {fileID: 2969536516148908014}
+  - component: {fileID: -1034757096108681396}
+  - component: {fileID: 1663271716841619100}
   m_Layer: 0
   m_Name: Turret_Missile
   m_TagString: Untagged
@@ -194,6 +196,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6647195554574366884}
+  serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.4, y: 0.4, z: 0.4}
@@ -202,7 +205,6 @@ Transform:
   - {fileID: 8669808382595332711}
   - {fileID: 2981523266985753128}
   m_Father: {fileID: 0}
-  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &6979345884904074683
 MeshFilter:
@@ -284,10 +286,50 @@ MonoBehaviour:
   m_GameObject: {fileID: 6647195554574366884}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c5e76a5fa2cd7e447b1121f04ead9a28, type: 3}
+  m_Script: {fileID: 11500000, guid: 03a47f7f68b95624ab7e26efbc3c80aa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   <Player>k__BackingField: {fileID: 0}
+  <Health>k__BackingField: 100
+  <HealthMax>k__BackingField: 100
+  <VisibilityRange>k__BackingField: 10
+  <ConstructionTime>k__BackingField: 10
+  <GatherTime>k__BackingField: 2
+  <LoadTime>k__BackingField: 2
+  <ProduceTime>k__BackingField: 2
+  <ResearchTime>k__BackingField: 2
+  <WaitTime>k__BackingField: 2
+--- !u!114 &-1034757096108681396
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6647195554574366884}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4248ce16722b7444fac5deb395c690e8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  <Mass>k__BackingField: 10
+  <Value>k__BackingField: 10
+  <ValueMax>k__BackingField: 10
+--- !u!114 &1663271716841619100
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6647195554574366884}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3a403fb22d2914049ac162610b2aebf2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  <Mass>k__BackingField: 10
+  <Damage>k__BackingField: 7
+  <Range>k__BackingField: 5
+  <MissilePrefab>k__BackingField: Objects/Missiles/Rocket
 --- !u!1001 &4586973340312065434
 PrefabInstance:
   m_ObjectHideFlags: 0

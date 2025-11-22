@@ -2,16 +2,24 @@ using UnityEngine;
 
 public class OrderHandlerConstruct : IOrderHandler
 {
+    public bool IsValid(Order order)
+    {
+        return order.TargetGameObject != null; // TODO: Move object creation to order.
+    }
+
     public void OnExecute(MyGameObject myGameObject)
     {
         Order order = myGameObject.Orders.First();
 
-        if (order.TargetGameObject == null)
+        if (IsValid(order) == false)
         {
             myGameObject.Stats.Add(Stats.OrdersFailed, 1);
             myGameObject.Orders.Pop();
+
+            return;
         }
-        else if (myGameObject.IsCloseTo(order.TargetGameObject.Entrance) == false)
+
+        if (myGameObject.IsCloseTo(order.TargetGameObject.Entrance) == false)
         {
             myGameObject.Move(order.TargetGameObject.Entrance, 0);
         }

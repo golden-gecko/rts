@@ -6,7 +6,7 @@ public class Timer
         Max = max;
     }
 
-    public void Update(float time)
+    public bool Update(float time)
     {
         Current += time;
 
@@ -14,6 +14,8 @@ public class Timer
         {
             Current = Max;
         }
+
+        return Finished;
     }
 
     public void Reset()

@@ -27,9 +27,5 @@ public class Harvester : Unit
         Resources.Add("Metal", 0, 10);
         Resources.Add("Metal Ore", 0, 10);
         Resources.Add("Wood", 0, 10);
-
-        Engine = new Engine(this, "Diesel", 1.0f, 4.0f);
-
-        LoadTime = 2.0f;
     }
 }

@@ -176,7 +176,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3ea7a276b6ae0904e89e87abeab0e4e8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Player: {fileID: 0}
+  <Player>k__BackingField: {fileID: 0}
+  <Health>k__BackingField: 10
+  <HealthMax>k__BackingField: 10
+  <VisibilityRange>k__BackingField: 10
+  <ConstructionTime>k__BackingField: 10
+  <GatherTime>k__BackingField: 2
+  <LoadTime>k__BackingField: 2
+  <ProduceTime>k__BackingField: 2
+  <ResearchTime>k__BackingField: 2
+  <WaitTime>k__BackingField: 2
 --- !u!1 &7155140798900432468
 GameObject:
   m_ObjectHideFlags: 0

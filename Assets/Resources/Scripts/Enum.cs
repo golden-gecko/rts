@@ -5,6 +5,16 @@ public enum DiplomacyState
     Neutral,
 }
 
+public enum MyComponentType
+{
+    Armour,
+    Constructor, // TODO: Implement.
+    Engine,
+    Gun,
+    Storage, // TODO: Implement.
+    Radar, // TODO: Implement.
+}
+
 public enum MyGameObjectState
 {
     Operational,

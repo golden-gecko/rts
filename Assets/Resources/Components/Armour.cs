@@ -1,17 +1,15 @@
+using UnityEngine;
+
 public class Armour : MyComponent
 {
-    public Armour(MyGameObject parent, string name, float mass, float value) : base(parent, name, mass)
-    {
-        Value = value;
-        ValueMax = value;
-    }
-
     public override string GetInfo()
     {
-        return string.Format("Name: {0}, Value: {1:0.}/{2:0.}", Name, Value, ValueMax);
+        return string.Format("{0}, Value: {1:0.}/{2:0.}", base.GetInfo(), Value, ValueMax);
     }
 
-    public float Value { get; set; }  // TODO: Hide setter.
+    [field: SerializeField]
+    public float Value { get; set; } = 10.0f;
 
-    public float ValueMax { get; }
+    [field: SerializeField]
+    public float ValueMax { get; set; } = 10.0f;
 }
