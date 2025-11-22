@@ -1,0 +1,331 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using UnityEngine;
+
+[DisallowMultipleComponent]
+public class PowerPlant : Part
+{
+    protected override void Start()
+    {
+        base.Start();
+
+        MakeConnections();
+
+        if (Parent.State == MyGameObjectState.Operational && Parent.Enabled && (IsProducer || IsProducerConnected))
+        {
+            PowerUpTimeActive = true;
+        }
+
+        previousState = Parent.State;
+        previousEnabled = Parent.Enabled;
+        previousPosition = Parent.Position;
+        previousProducerConnected = (IsProducer || IsProducerConnected);
+    }
+
+    protected override void Update()
+    {
+        base.Update();
+
+        if (Alive == false)
+        {
+            return;
+        }
+
+        UpdateConnections();
+
+        bool state = previousState != Parent.State;
+        bool enabled = previousEnabled != Parent.Enabled;
+        bool position = Utils.ToGrid(previousPosition, Config.Map.Scale) != Utils.ToGrid(Parent.Position, Config.Map.Scale);
+        bool connected = previousProducerConnected != (IsProducer || IsProducerConnected);
+
+        if (state || enabled || position || connected)
+        {
+            PowerUpTimeActive = false;
+            PowerUpTime.Reset();
+
+            if (PowerUpStatus)
+            {
+                PowerDown(previousPosition);
+            }
+
+            if (Parent.State == MyGameObjectState.Operational && Parent.Enabled && (IsProducer || IsProducerConnected))
+            {
+                PowerUpTimeActive = true;
+                PowerUpTime.Reset();
+            }
+
+            previousState = Parent.State;
+            previousEnabled = Parent.Enabled;
+            previousPosition = Parent.Position;
+            previousProducerConnected = (IsProducer || IsProducerConnected);
+        }
+
+        if (PowerUpTimeActive)
+        {
+            if (PowerUpTime.Update(Time.deltaTime))
+            {
+                PowerUp(Parent.Position);
+
+                PowerUpTimeActive = false;
+            }
+        }
+    }
+
+    public override void OnDestroyHandler()
+    {
+        base.OnDestroyHandler();
+
+        ClearConnections();
+
+        if (previousState == MyGameObjectState.Operational && previousEnabled && previousProducerConnected && PowerUpTime.Finished)
+        {
+            PowerDown(previousPosition);
+        }
+    }
+
+    public override string GetInfo()
+    {
+        string info = string.Format("PowerPlant - {0}", base.GetInfo());
+
+        if (Range.Total > 0.0f)
+        {
+            info += string.Format(", Range: {0}", Range.Total);
+        }
+
+        if (IsConsumer)
+        {
+            info += string.Format(", Efficiency: {0:0.}%", Efficiency * 100.0f);
+        }
+
+        return info;
+    }
+
+    private void Connect(PowerPlant powerPlant)
+    {
+        Connections.Add(powerPlant);
+    }
+
+    private void Disconnect(PowerPlant powerPlant)
+    {
+        Connections.Remove(powerPlant);
+    }
+
+    private void MakeConnections()
+    {
+        foreach (RaycastHit hitInfo in Utils.SphereCastAll(Parent.Position, Range.Total, Utils.GetGameObjectMask()))
+        {
+            PowerPlant powerPlant = hitInfo.transform.GetComponentInParent<PowerPlant>();
+
+            if (powerPlant == null)
+            {
+                continue;
+            }
+
+            if (powerPlant == this)
+            {
+                continue;
+            }
+
+            if (powerPlant.Parent.Player != Parent.Player)
+            {
+                continue;
+            }
+
+            Vector3Int position = Utils.ToGrid(powerPlant.Parent.Position, Config.Map.Scale);
+            Vector3Int center = Utils.ToGrid(Parent.Position, Config.Map.Scale);
+
+            if (Utils.IsPointInCircle(position.x, position.z, center, Mathf.FloorToInt(Range.Total / Config.Map.Scale)) == false)
+            {
+                continue;
+            }
+
+            Connect(powerPlant);
+            powerPlant.Connect(this);
+        }
+    }
+
+    private void UpdateConnections()
+    {
+        Connections.RemoveWhere(x => x == null);
+    }
+
+    private void ClearConnections()
+    {
+        foreach (PowerPlant powerPlant in Connections)
+        {
+            powerPlant.Disconnect(this);
+        }
+
+        Connections.Clear();
+    }
+
+    private void PowerUp(Vector3 position)
+    {
+        Map.Instance.SetVisibleByPower(Parent, position, Range.Total, 1);
+
+        PowerUpStatus = true;
+    }
+
+    private void PowerDown(Vector3 position)
+    {
+        Map.Instance.SetVisibleByPower(Parent, position, Range.Total, -1);
+
+        PowerUpStatus = false;
+    }
+
+    [field: SerializeField]
+    public Property PowerGeneration { get; private set; } = new Property();
+
+    [field: SerializeField]
+    public Property PowerUsage { get; private set; } = new Property();
+
+    [field: SerializeField]
+    public Property Range { get; private set; } = new Property();
+
+    [field: SerializeField]
+    public Timer PowerUpTime { get; private set; } = new Timer(0.0f, 1.0f);
+
+    public bool PowerUpStatus { get; private set; } = false;
+
+    public bool IsProducer { get => PowerGeneration.Total > 0.0f; }
+
+    public bool IsConsumer { get => PowerUsage.Total > 0.0f; }
+
+    public bool IsProducerConnected
+    {
+        get
+        {
+            HashSet<PowerPlant> queue = new HashSet<PowerPlant>(Connections);
+            HashSet<PowerPlant> visited = new HashSet<PowerPlant>();
+
+            while (queue.Count > 0)
+            {
+                PowerPlant powerPlant = queue.First();
+                queue.Remove(powerPlant);
+
+                if (visited.Contains(powerPlant))
+                {
+                    continue;
+                }
+
+                visited.Add(powerPlant);
+
+                if (powerPlant.PowerUpStatus == false)
+                {
+                    continue;
+                }
+
+                if (powerPlant.IsProducer)
+                {
+                    return true;
+                }
+
+                foreach (PowerPlant i in powerPlant.Connections)
+                {
+                    queue.Add(i);
+                }
+            }
+
+            return false;
+        }
+    }
+
+    public float PowerGenerationNetworkTotal
+    {
+        get
+        {
+            float powerGenerationNetworkTotal = 0.0f;
+
+            HashSet<PowerPlant> queue = new HashSet<PowerPlant>(Connections);
+            HashSet<PowerPlant> visited = new HashSet<PowerPlant>();
+
+            while (queue.Count > 0)
+            {
+                PowerPlant powerPlant = queue.First();
+                queue.Remove(powerPlant);
+
+                if (visited.Contains(powerPlant))
+                {
+                    continue;
+                }
+
+                visited.Add(powerPlant);
+
+                if (powerPlant.Parent.State != MyGameObjectState.Operational || powerPlant.Parent.Enabled == false)
+                {
+                    continue;
+                }
+
+                if (powerPlant.PowerUpTime.Finished == false)
+                {
+                    continue;
+                }
+
+                if (powerPlant.IsProducer)
+                {
+                    powerGenerationNetworkTotal += powerPlant.PowerGeneration.Total;
+                }
+
+                foreach (PowerPlant i in powerPlant.Connections)
+                {
+                    queue.Add(i);
+                }
+            }
+
+            return powerGenerationNetworkTotal;
+        }
+    }
+
+    public float PowerUsageNetworkTotal
+    {
+        get
+        {
+            float powerUsageNetworkTotal = 0.0f;
+
+            HashSet<PowerPlant> queue = new HashSet<PowerPlant>(Connections);
+            HashSet<PowerPlant> visited = new HashSet<PowerPlant>();
+
+            while (queue.Count > 0)
+            {
+                PowerPlant powerPlant = queue.First();
+                queue.Remove(powerPlant);
+
+                if (visited.Contains(powerPlant))
+                {
+                    continue;
+                }
+
+                visited.Add(powerPlant);
+
+                if (powerPlant.Parent.State != MyGameObjectState.Operational || powerPlant.Parent.Enabled == false)
+                {
+                    continue;
+                }
+
+                if (powerPlant.IsConsumer)
+                {
+                    powerUsageNetworkTotal += powerPlant.PowerUsage.Total;
+                }
+
+                foreach (PowerPlant i in powerPlant.Connections)
+                {
+                    queue.Add(i);
+                }
+            }
+
+            return powerUsageNetworkTotal;
+        }
+    }
+
+    public float Efficiency { get => PowerUsageNetworkTotal > 0.0f ? Math.Min(PowerGenerationNetworkTotal / PowerUsageNetworkTotal, 1.0f) : 0.0f; }
+
+    private HashSet<PowerPlant> Connections { get; } = new HashSet<PowerPlant>();
+
+    private bool PowerUpTimeActive { get; set; } = false;
+
+    private MyGameObjectState previousState;
+    private bool previousEnabled;
+    private Vector3 previousPosition;
+    private bool previousProducerConnected;
+}

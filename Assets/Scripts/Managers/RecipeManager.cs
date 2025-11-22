@@ -1,9 +1,9 @@
-public class RecipeManager : Singleton<RecipeManager>
-{
-    protected override void Awake()
-    {
-        base.Awake();
+using UnityEngine;
 
+public class RecipeManager : MonoBehaviour
+{
+    private void Awake()
+    {
         CreateRecipes();
     }
 

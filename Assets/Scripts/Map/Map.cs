@@ -58,6 +58,11 @@ public class Map : Singleton<Map>
 
     public void SetOccupied(MyGameObject myGameObject, Vector3 position, int value)
     {
+        if (myGameObject.Player == null)
+        {
+            return;
+        }
+
         Vector3Int positionGrid = Utils.ToGrid(position, Config.Map.Scale);
 
         SetVisible(Cells[positionGrid.x, positionGrid.z].Occupied, myGameObject.Player, value);
@@ -68,11 +73,11 @@ public class Map : Singleton<Map>
 
             if (Cells[positionGrid.x, positionGrid.z].Occupied[myGameObject.Player] == 0)
             {
-                ocupationTexture.SetPixel(positionGrid.x, positionGrid.z, Config.Map.DataLayerColorEmpty);
+                ocupationTexture.SetPixel(positionGrid.x, positionGrid.z, Config.DataLayer.ColorEmpty);
             }
             else
             {
-                ocupationTexture.SetPixel(positionGrid.x, positionGrid.z, Config.Map.DataLayerColorOccupation);
+                ocupationTexture.SetPixel(positionGrid.x, positionGrid.z, Config.DataLayer.ColorOccupation);
             }
 
             ocupationTexture.Apply();
@@ -81,6 +86,11 @@ public class Map : Singleton<Map>
 
     public void SetVisibleByRadar(MyGameObject myGameObject, Vector3 position, float range, int value)
     {
+        if (myGameObject.Player == null)
+        {
+            return;
+        }
+
         Vector3Int start = Utils.ToGrid(new Vector3(position.x - range, 0.0f, position.z - range), Config.Map.Scale);
         Vector3Int end = Utils.ToGrid(new Vector3(position.x + range, 0.0f, position.z + range), Config.Map.Scale);
 
@@ -109,11 +119,11 @@ public class Map : Singleton<Map>
                 {
                     if (Cells[x, z].VisibleByRadar[myGameObject.Player] > (Cells[x, z].VisibleByAntiRadar.ContainsKey(myGameObject.Player) ? Cells[x, z].VisibleByAntiRadar[myGameObject.Player] : 0))
                     {
-                        radarTexture.SetPixel(x, z, Config.Map.DataLayerColorRadar);
+                        radarTexture.SetPixel(x, z, Config.DataLayer.ColorRadar);
                     }
                     else
                     {
-                        radarTexture.SetPixel(x, z, Config.Map.DataLayerColorEmpty);
+                        radarTexture.SetPixel(x, z, Config.DataLayer.ColorEmpty);
                     }
                 }
             }
@@ -124,6 +134,11 @@ public class Map : Singleton<Map>
 
     public void SetVisibleByAntiRadar(MyGameObject myGameObject, Vector3 position, float range, int value)
     {
+        if (myGameObject.Player == null)
+        {
+            return;
+        }
+
         Vector3Int start = Utils.ToGrid(new Vector3(position.x - range, 0.0f, position.z - range), Config.Map.Scale);
         Vector3Int end = Utils.ToGrid(new Vector3(position.x + range, 0.0f, position.z + range), Config.Map.Scale);
 
@@ -152,11 +167,11 @@ public class Map : Singleton<Map>
                 {
                     if (Cells[x, z].VisibleByRadar[myGameObject.Player] > Cells[x, z].VisibleByAntiRadar[myGameObject.Player])
                     {
-                        radarTexture.SetPixel(x, z, Config.Map.DataLayerColorRadar);
+                        radarTexture.SetPixel(x, z, Config.DataLayer.ColorRadar);
                     }
                     else
                     {
-                        radarTexture.SetPixel(x, z, Config.Map.DataLayerColorEmpty);
+                        radarTexture.SetPixel(x, z, Config.DataLayer.ColorEmpty);
                     }
                 }
             }
@@ -167,6 +182,11 @@ public class Map : Singleton<Map>
 
     public void VisibleByPassiveDamage(MyGameObject myGameObject, Vector3 position, float range, float value)
     {
+        if (myGameObject.Player == null)
+        {
+            return;
+        }
+
         Vector3Int start = Utils.ToGrid(new Vector3(position.x - range, 0.0f, position.z - range), Config.Map.Scale);
         Vector3Int end = Utils.ToGrid(new Vector3(position.x + range, 0.0f, position.z + range), Config.Map.Scale);
 
@@ -195,11 +215,11 @@ public class Map : Singleton<Map>
                 {
                     if (Cells[x, z].VisibleByPassiveDamage[myGameObject.Player] > 0)
                     {
-                        passiveDamage.SetPixel(x, z, Config.Map.DataLayerColorPassiveDamage);
+                        passiveDamage.SetPixel(x, z, Config.DataLayer.ColorPassiveDamage);
                     }
                     else
                     {
-                        passiveDamage.SetPixel(x, z, Config.Map.DataLayerColorEmpty);
+                        passiveDamage.SetPixel(x, z, Config.DataLayer.ColorEmpty);
                     }
                 }
             }
@@ -210,6 +230,11 @@ public class Map : Singleton<Map>
 
     public void VisibleByPassivePower(MyGameObject myGameObject, Vector3 position, float range, float value)
     {
+        if (myGameObject.Player == null)
+        {
+            return;
+        }
+
         Vector3Int start = Utils.ToGrid(new Vector3(position.x - range, 0.0f, position.z - range), Config.Map.Scale);
         Vector3Int end = Utils.ToGrid(new Vector3(position.x + range, 0.0f, position.z + range), Config.Map.Scale);
 
@@ -238,11 +263,11 @@ public class Map : Singleton<Map>
                 {
                     if (Cells[x, z].VisibleByPassivePower[myGameObject.Player] > 0)
                     {
-                        passivePower.SetPixel(x, z, Config.Map.DataLayerColorPassivePower);
+                        passivePower.SetPixel(x, z, Config.DataLayer.ColorPassivePower);
                     }
                     else
                     {
-                        passivePower.SetPixel(x, z, Config.Map.DataLayerColorEmpty);
+                        passivePower.SetPixel(x, z, Config.DataLayer.ColorEmpty);
                     }
                 }
             }
@@ -253,6 +278,11 @@ public class Map : Singleton<Map>
 
     public void VisibleByPassiveRange(MyGameObject myGameObject, Vector3 position, float range, float value)
     {
+        if (myGameObject.Player == null)
+        {
+            return;
+        }
+
         Vector3Int start = Utils.ToGrid(new Vector3(position.x - range, 0.0f, position.z - range), Config.Map.Scale);
         Vector3Int end = Utils.ToGrid(new Vector3(position.x + range, 0.0f, position.z + range), Config.Map.Scale);
 
@@ -281,11 +311,11 @@ public class Map : Singleton<Map>
                 {
                     if (Cells[x, z].VisibleByPassiveRange[myGameObject.Player] > 0)
                     {
-                        passiveRange.SetPixel(x, z, Config.Map.DataLayerColorPassiveRange);
+                        passiveRange.SetPixel(x, z, Config.DataLayer.ColorPassiveRange);
                     }
                     else
                     {
-                        passiveRange.SetPixel(x, z, Config.Map.DataLayerColorEmpty);
+                        passiveRange.SetPixel(x, z, Config.DataLayer.ColorEmpty);
                     }
                 }
             }
@@ -296,6 +326,11 @@ public class Map : Singleton<Map>
 
     public void SetVisibleBySight(MyGameObject myGameObject, Vector3 position, float range, int value)
     {
+        if (myGameObject.Player == null)
+        {
+            return;
+        }
+
         Vector3Int start = Utils.ToGrid(new Vector3(position.x - range, 0.0f, position.z - range), Config.Map.Scale);
         Vector3Int end = Utils.ToGrid(new Vector3(position.x + range, 0.0f, position.z + range), Config.Map.Scale);
 
@@ -327,7 +362,7 @@ public class Map : Singleton<Map>
 
                     if (HUD.Instance.ActivePlayer == myGameObject.Player)
                     {
-                        explorationTexture.SetPixel(x, z, Config.Map.DataLayerColorExploration);
+                        explorationTexture.SetPixel(x, z, Config.DataLayer.ColorExploration);
                     }
                 }
 
@@ -335,11 +370,11 @@ public class Map : Singleton<Map>
                 {
                     if (Cells[x, z].VisibleBySight[myGameObject.Player] > 0)
                     {
-                        sightTexture.SetPixel(x, z, Config.Map.DataLayerColorSight);
+                        sightTexture.SetPixel(x, z, Config.DataLayer.ColorSight);
                     }
                     else
                     {
-                        sightTexture.SetPixel(x, z, Config.Map.DataLayerColorEmpty);
+                        sightTexture.SetPixel(x, z, Config.DataLayer.ColorEmpty);
                     }
                 }
             }
@@ -351,6 +386,11 @@ public class Map : Singleton<Map>
 
     public void SetVisibleByPower(MyGameObject myGameObject, Vector3 position, float range, int value)
     {
+        if (myGameObject.Player == null)
+        {
+            return;
+        }
+
         Vector3Int start = Utils.ToGrid(new Vector3(position.x - range, 0.0f, position.z - range), Config.Map.Scale);
         Vector3Int end = Utils.ToGrid(new Vector3(position.x + range, 0.0f, position.z + range), Config.Map.Scale);
 
@@ -386,11 +426,11 @@ public class Map : Singleton<Map>
                 {
                     if (Cells[x, z].VisibleByPower[myGameObject.Player] > 0)
                     {
-                        powerTexture.SetPixel(x, z, Config.Map.DataLayerColorPower);
+                        powerTexture.SetPixel(x, z, Config.DataLayer.ColorPower);
                     }
                     else
                     {
-                        powerTexture.SetPixel(x, z, Config.Map.DataLayerColorEmpty);
+                        powerTexture.SetPixel(x, z, Config.DataLayer.ColorEmpty);
                     }
                 }
             }
@@ -408,6 +448,11 @@ public class Map : Singleton<Map>
 
     public bool IsVisibleByRadar(MyGameObject myGameObject, Player active)
     {
+        if (myGameObject.Player == null)
+        {
+            return false;
+        }
+
         Vector3Int position = Utils.ToGrid(myGameObject.Position, Config.Map.Scale);
 
         int byRadar = Cells[position.x, position.z].VisibleByRadar.ContainsKey(active) ? Cells[position.x, position.z].VisibleByRadar[active] : 0;
@@ -425,6 +470,11 @@ public class Map : Singleton<Map>
 
     public bool IsVisibleByPower(MyGameObject myGameObject)
     {
+        if (myGameObject.Player == null)
+        {
+            return false;
+        }
+
         Vector3Int position = Utils.ToGrid(myGameObject.Position, Config.Map.Scale);
 
         return Cells[position.x, position.z].VisibleByPower.ContainsKey(myGameObject.Player) && Cells[position.x, position.z].VisibleByPower[myGameObject.Player] > 0;

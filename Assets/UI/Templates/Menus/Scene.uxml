@@ -1,0 +1,11 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" editor-extension-mode="False">
+    <ui:Template name="Button" src="project://database/Assets/UI/Templates/Button.uxml?fileID=9197481963319205126&amp;guid=a3fb7fe5ff2f5a5498b9a348c95d0ca1&amp;type=3#Button" />
+    <Style src="project://database/Assets/UI/Styles/Style.uss?fileID=7433441132597879392&amp;guid=231d51774ac67094591621cc55974d8c&amp;type=3#Style" />
+    <ui:VisualElement class="container background">
+        <ui:VisualElement name="Menu" class="menu" style="flex-grow: 1; align-items: center; justify-content: center;">
+            <ui:Instance template="Button" />
+            <ui:Instance template="Button" />
+            <ui:Instance template="Button" />
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>

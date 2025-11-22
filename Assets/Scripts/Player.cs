@@ -3,14 +3,12 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
-    protected virtual void Awake()
+    private void Awake()
     {
         for (KeyCode i = KeyCode.Alpha0; i <= KeyCode.Alpha9; i++)
         {
             SelectionGroups[i] = new SelectionGroup();
         }
-
-        TechnologyTree.Load();
 
         Achievements.Player = this;
 
@@ -21,7 +19,12 @@ public class Player : MonoBehaviour
         JobHandlers[OrderType.Unload] = new JobHandlerUnload();
     }
 
-    protected virtual void Update()
+    private void Start()
+    {
+        TechnologyTree.Load();
+    }
+
+    private void Update()
     {
         RemoveEmptyObjectsFromSelection();
 
@@ -120,24 +123,26 @@ public class Player : MonoBehaviour
         return target;
     }
 
-    public MyResource GetResource(MyGameObject myGameObject, string resource = "")
+    public MyGameObject GetResource(MyGameObject myGameObject, string resource = "")
     {
-        MyResource closest = null;
+        MyGameObject closest = null;
         float distance = float.MaxValue;
 
-        foreach (MyResource myResource in FindObjectsByType<MyResource>(FindObjectsSortMode.None))
+        foreach (MyGameObject myResource in FindObjectsByType<MyGameObject>(FindObjectsSortMode.None))
         {
             if (myResource == myGameObject)
             {
                 continue;
             }
 
-            if (myResource.Gatherable == false)
+            Storage storage = myResource.GetComponentInChildren<Storage>();
+
+            if (storage.Gatherable == false)
             {
                 continue;
             }
 
-            if (resource != "" && myResource.GetComponent<Storage>().Resources.Current(resource) <= 0)
+            if (resource.Length > 0 && storage.Resources.Current(resource) <= 0)
             {
                 continue;
             }
@@ -154,7 +159,7 @@ public class Player : MonoBehaviour
         return closest;
     }
 
-    public MyGameObject GetStorage(MyGameObject myGameObject, string resource, int value)
+    public MyGameObject GetStorage(MyGameObject myGameObject, string resource, int value) // TODO: Implement.
     {
         MyGameObject closest = null;
         float distance = float.MaxValue;
@@ -171,11 +176,6 @@ public class Player : MonoBehaviour
                 continue;
             }
 
-            if (i.Value < value)
-            {
-                continue;
-            }
-
             float magnitude = (myGameObject.Position - i.MyGameObject.Position).magnitude;
 
             if (magnitude < distance)
@@ -188,19 +188,21 @@ public class Player : MonoBehaviour
         return closest;
     }
 
-    public MyResource GetResourceToGather(MyGameObject myGameObject, string resource = "", int value = 0) // TODO: Implement.
+    public MyGameObject GetResourceToGather(MyGameObject myGameObject, string resource = "", int value = 0) // TODO: Implement.
     {
-        MyResource closest = null;
+        MyGameObject closest = null;
         float distance = float.MaxValue;
 
-        foreach (MyResource myResource in FindObjectsByType<MyResource>(FindObjectsSortMode.None))
+        foreach (MyGameObject myResource in FindObjectsByType<MyGameObject>(FindObjectsSortMode.None))
         {
             if (myResource == myGameObject)
             {
                 continue;
             }
 
-            if (myResource.Gatherable == false)
+            Storage storage = myResource.GetComponentInChildren<Storage>();
+
+            if (storage == null || storage.Gatherable == false)
             {
                 continue;
             }
@@ -214,23 +216,64 @@ public class Player : MonoBehaviour
 
             if (magnitude < distance)
             {
-                MyGameObject storage = null;
+                MyGameObject myStorage = null;
 
-                foreach (Resource i in myResource.GetComponent<Storage>().Resources.Items)
+                foreach (Resource i in myResource.GetComponentInChildren<Storage>().Resources.Items) // TODO: Check each part.
                 {
-                    storage = myGameObject.Player.GetStorage(myGameObject, i.Name, i.Current);
+                    myStorage = myGameObject.Player.GetStorage(myGameObject, i.Name, i.Current);
 
-                    if (storage != null)
+                    if (myStorage != null)
                     {
                         break;
                     }
                 }
 
-                if (storage == null)
+                if (myStorage == null)
                 {
                     continue;
                 }
 
+                closest = myResource;
+                distance = magnitude;
+            }
+        }
+
+        return closest;
+    }
+
+    public MyGameObject GetResourceToGatherInRange(MyGameObject myGameObject, float range, string resource = "", int value = 0) // TODO: Implement.
+    {
+        MyGameObject closest = null;
+        float distance = float.MaxValue;
+
+        foreach (MyGameObject myResource in FindObjectsByType<MyGameObject>(FindObjectsSortMode.None))
+        {
+            if (myResource == myGameObject)
+            {
+                continue;
+            }
+
+            Storage storage = myResource.GetComponentInChildren<Storage>();
+
+            if (storage == null || storage.Gatherable == false)
+            {
+                continue;
+            }
+
+            if (myResource.VisibilityState != MyGameObjectVisibilityState.Explored && myResource.VisibilityState != MyGameObjectVisibilityState.Visible)
+            {
+                continue;
+            }
+
+            float magnitude = (myGameObject.Position - myResource.Position).magnitude;
+
+            if (magnitude > range)
+            {
+                continue;
+            }
+
+            if (magnitude < distance)
+            {
                 closest = myResource;
                 distance = magnitude;
             }

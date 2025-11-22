@@ -1,0 +1,53 @@
+{
+    "Name": "Scout",
+    "BaseGameObject": {
+        "instanceID": -245680
+    },
+    "Parts": [
+        {
+            "PartType": 1,
+            "Name": "Chassis_Mini",
+            "Position": {
+                "x": 0.0,
+                "y": 0.1043243408203125,
+                "z": 0.0
+            }
+        },
+        {
+            "PartType": 2,
+            "Name": "Drive_Wheel",
+            "Position": {
+                "x": 0.0,
+                "y": 0.16480255126953126,
+                "z": 0.0
+            }
+        },
+        {
+            "PartType": 4,
+            "Name": "Engine_Small",
+            "Position": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            }
+        },
+        {
+            "PartType": 6,
+            "Name": "Sight_Far",
+            "Position": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            }
+        },
+        {
+            "PartType": 8,
+            "Name": "Radar",
+            "Position": {
+                "x": 0.0,
+                "y": 0.623321533203125,
+                "z": -0.32899999618530276
+            }
+        }
+    ]
+}

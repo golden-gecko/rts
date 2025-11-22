@@ -58,5 +58,5 @@ public class Cursor3D : Singleton<Cursor3D>
 
     public bool Visible { get => GameObject != null; }
 
-    private MyGameObject GameObject { get; set; }
+    private MyGameObject GameObject;
 }

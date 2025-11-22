@@ -27,19 +27,62 @@ public class MyGameObject : MonoBehaviour
         OrderHandlers[OrderType.Enable] = new OrderHandlerEnable();
         OrderHandlers[OrderType.GuardObject] = new OrderHandlerGuardObject();
         OrderHandlers[OrderType.GuardPosition] = new OrderHandlerGuardPosition();
+        OrderHandlers[OrderType.Idle] = new OrderHandlerIdle();
         OrderHandlers[OrderType.Stop] = new OrderHandlerStop();
         OrderHandlers[OrderType.UseSkill] = new OrderHandlerUseSkill();
         OrderHandlers[OrderType.Wait] = new OrderHandlerWait();
 
-        ConstructionResources.Init("Iron", 0, 30, ResourceDirection.In);
-
         Stats.Player = Player;
 
-        CreateSkills();
+        // TODO: TEMP
+        Part[] parts = GetComponentsInChildren<Part>();
+        Health = new Progress(parts.Sum(x => x.Health.Current), parts.Sum(x => x.Health.Max));
+        // TEMP
+
+        // TODO: TEMP
+        Dictionary<string, int> current = new Dictionary<string, int>(); // TODO: Refactor. Optimize. Allow changing Max property.
+        Dictionary<string, int> max = new Dictionary<string, int>();
+
+        foreach (Part part in GetComponentsInChildren<Part>())
+        {
+            foreach (Resource resource in part.ConstructionResources.Items)
+            {
+                if (current.ContainsKey(resource.Name))
+                {
+                    current[resource.Name] += resource.Current;
+                }
+                else
+                {
+                    current[resource.Name] = resource.Current;
+                }
+
+                if (max.ContainsKey(resource.Name))
+                {
+                    max[resource.Name] += resource.Max;
+                }
+                else
+                {
+                    max[resource.Name] = resource.Max;
+                }
+            }
+        }
+
+        foreach (KeyValuePair<string, int> resource in current)
+        {
+            ConstructionResources.Init(resource.Key, resource.Value, max[resource.Key]);
+        }
+        // TEMP
     }
 
     protected virtual void Start()
     {
+        if (State == MyGameObjectState.Cursor || State == MyGameObjectState.Preview)
+        {
+            return;
+        }
+
+        CreateSkills();
+
         InitializePosition();
 
         UpdateSelection();
@@ -48,6 +91,11 @@ public class MyGameObject : MonoBehaviour
 
     protected virtual void Update()
     {
+        if (State == MyGameObjectState.Cursor || State == MyGameObjectState.Preview)
+        {
+            return;
+        }
+
         ExpirationTimer.Update(Time.deltaTime);
 
         switch (State)
@@ -69,10 +117,10 @@ public class MyGameObject : MonoBehaviour
                 break;
 
             case MyGameObjectState.UnderConstruction:
-                if (Alive == false)
+                /* if (Alive == false) TODO: Fix and enable.
                 {
                     Destroy(0);
-                }
+                } */
 
                 RaiseConstructionResourceFlags();
                 break;
@@ -351,13 +399,13 @@ public class MyGameObject : MonoBehaviour
             case MyGameObjectState.Operational:
                 info += string.Format("{0}\n\nHP: {1}", name, Health.GetInfo());
 
-                MyComponent[] myComponents = GetComponents<MyComponent>();
+                Part[] myComponents = GetComponentsInChildren<Part>();
 
                 if (myComponents.Length > 0)
                 {
-                    info += "\n\nComponents:";
+                    info += "\n\nParts:";
 
-                    foreach (MyComponent myComponent in myComponents)
+                    foreach (Part myComponent in myComponents)
                     {
                         info += string.Format("\n  {0}", myComponent.GetInfo());
                     }
@@ -455,7 +503,7 @@ public class MyGameObject : MonoBehaviour
             Instantiate(DestroyEffect, Position, Quaternion.identity);
         }
 
-        foreach (MyComponent myComponent in GetComponents<MyComponent>())
+        foreach (Part myComponent in GetComponents<Part>())
         {
             myComponent.OnDestroyHandler();
         }
@@ -541,7 +589,7 @@ public class MyGameObject : MonoBehaviour
 
     private void UpdateSelection()
     {
-        if (Player != null)
+        if (Player != null && Indicators)
         {
             Indicators.OnPlayerChange(Player);
         }
@@ -645,13 +693,48 @@ public class MyGameObject : MonoBehaviour
 
     public void SetState(MyGameObjectState state)
     {
+        if (State == MyGameObjectState.UnderConstruction && state == MyGameObjectState.Operational) // TODO: Refactor.
+        {
+            // TODO: TEMP
+            Part[] parts = GetComponentsInChildren<Part>();
+
+            foreach (Part part in parts)
+            {
+                foreach (Resource resource in part.ConstructionResources.Items)
+                {
+                    resource.Add(resource.Max);
+                }
+            }
+
+            Health = new Progress(parts.Sum(x => x.Health.Current), parts.Sum(x => x.Health.Max));
+            // TEMP
+        }
+
         State = state;
+
+        if (Indicators == null)
+        {
+            return;
+        }
 
         switch (state)
         {
             case MyGameObjectState.Cursor:
-            case MyGameObjectState.UnderAssembly:
+                ShowIndicators = false;
+                ShowEntrance = false;
+                ShowExit = false;
+
+                EnableColliders(false);
+
                 Indicators.OnConstruction();
+                break;
+
+            case MyGameObjectState.Preview:
+                ShowIndicators = false;
+                ShowEntrance = false;
+                ShowExit = false;
+
+                EnableColliders(false);
                 break;
 
             case MyGameObjectState.Operational:
@@ -660,7 +743,15 @@ public class MyGameObject : MonoBehaviour
                 Indicators.OnConstructionEnd();
                 break;
 
+            case MyGameObjectState.UnderAssembly:
+                ConstructionResources.RemoveAll();
+
+                Indicators.OnConstruction();
+                break;
+
             case MyGameObjectState.UnderConstruction:
+                ConstructionResources.RemoveAll();
+
                 RaiseConstructionResourceFlags();
 
                 Indicators.OnConstruction();
@@ -707,20 +798,20 @@ public class MyGameObject : MonoBehaviour
 
         Indicators.transform.localPosition = new Vector3(0.0f, 0.25f, 0.0f);
 
-        Base = Instantiate(Resources.Load<GameObject>(Config.Prefab.Base), transform, false);
+        Base = Instantiate(Game.Instance.Config.Base, transform, false);
         Base.transform.localScale = new Vector3(size.x, 0.5f, size.z);
     }
 
     private void SetupIndicators()
     {
-        Indicators = Instantiate(Resources.Load<Indicators>(Config.Prefab.Indicators), transform, false);
+        Indicators = Instantiate(Game.Instance.Config.Indicators, transform, false).GetComponent<Indicators>();
     }
 
     private void CreateSkills()
     {
         foreach (string skillName in SkillsNames)
         {
-            Skills[skillName] = SkillManager.Instance.Get(skillName).Clone() as Skill;
+            Skills[skillName] = Game.Instance.SkillManager.Get(skillName).Clone() as Skill;
             Skills[skillName].Start(this);
         }
     }
@@ -737,7 +828,7 @@ public class MyGameObject : MonoBehaviour
     {
         Player active = HUD.Instance.ActivePlayer;
 
-        if (Player == active || Map.Instance.IsVisibleBySight(this.Position, active))
+        if (Player == active || Map.Instance.IsVisibleBySight(Position, active))
         {
             EnableRenderers(true);
 
@@ -771,6 +862,14 @@ public class MyGameObject : MonoBehaviour
         }
     }
 
+    private void EnableColliders(bool enabled)
+    {
+        foreach (Collider collider in Body.GetComponents<Collider>())
+        {
+            collider.enabled = enabled;
+        }
+    }
+
     private void EnableRenderers(bool enabled)
     {
         foreach (Renderer renderer in Body.GetComponentsInChildren<Renderer>(true))
@@ -787,13 +886,7 @@ public class MyGameObject : MonoBehaviour
         }
     }
 
-    public Vector3 Center
-    {
-        get
-        {
-            return new Vector3(Position.x, Position.y + Size.y / 2.0f, Position.z);
-        }
-    }
+    public Vector3 Center { get => new Vector3(Position.x, Position.y + Size.y / 2.0f, Position.z); }
 
     public Vector3 Direction { get => transform.forward; }
 
@@ -807,12 +900,19 @@ public class MyGameObject : MonoBehaviour
     {
         get
         {
+            Collider[] colliders = Body.GetComponentsInChildren<Collider>();
+
+            if (colliders.Length <= 0)
+            {
+                return Vector3.zero;
+            }
+
             Quaternion rotation = Utils.ResetRotation(this);
 
             Vector3 min = new Vector3(float.MaxValue, float.MaxValue, float.MaxValue);
             Vector3 max = new Vector3(float.MinValue, float.MinValue, float.MinValue);
 
-            foreach (Collider collider in Body.GetComponentsInChildren<Collider>())
+            foreach (Collider collider in colliders)
             {
                 min.x = Mathf.Min(min.x, collider.bounds.min.x);
                 min.y = Mathf.Min(min.y, collider.bounds.min.y);
@@ -831,7 +931,7 @@ public class MyGameObject : MonoBehaviour
 
     public bool Alive { get => Health.Current > 0.0f && (ExpirationTimer.Active == false || ExpirationTimer.Finished == false); }
 
-    public float Mass { get => GetComponents<MyComponent>().Sum(x => x.Mass); }
+    public float Mass { get => GetComponentsInChildren<Part>().Sum(x => x.Mass); }
 
     public bool Constructed { get => ConstructionResources.CurrentSum >= ConstructionResources.MaxSum; }
 
@@ -841,7 +941,7 @@ public class MyGameObject : MonoBehaviour
         {
             if (TryGetComponent(out PowerPlant powerPlant))
             {
-                return powerPlant.PowerUpTime.Finished; // powerPlant.IsProducer || Map.Instance.IsVisibleByPower(this);
+                return powerPlant.PowerUpTime.Finished; // powerPlant.IsProducer || Map.Instance.IsVisibleByPower(this); // TODO: Check.
             }
 
             return false;
@@ -860,13 +960,7 @@ public class MyGameObject : MonoBehaviour
     public bool Enabled { get; set; } = true;
 
     [field: SerializeField]
-    public bool Gatherable { get; private set; } = false;
-
-    [field: SerializeField]
     public bool Selectable { get; private set; } = true;
-
-    [field: SerializeField]
-    public Progress Health { get; private set; } = new Progress(100.0f, 100.0f);
 
     [field: SerializeField]
     public float EnableTime { get; private set; } = 2.0f;
@@ -883,8 +977,27 @@ public class MyGameObject : MonoBehaviour
     [field: SerializeField]
     public float Depth { get; private set; } = -1.0f;
 
-    [field: SerializeField]
-    public List<MyGameObjectMapLayer> MapLayers { get; private set; } = new List<MyGameObjectMapLayer>();
+    public List<MyGameObjectMapLayer> MapLayers
+    {
+        get
+        {
+            Drive drive = GetComponentInChildren<Drive>();
+
+            if (drive)
+            {
+                return drive.MapLayers;
+            }
+
+            Foundation foundation = GetComponentInChildren<Foundation>();
+
+            if (foundation)
+            {
+                return foundation.MapLayers;
+            }
+
+            return new List<MyGameObjectMapLayer>();
+        }
+    }
 
     [field: SerializeField]
     public bool ShowIndicators { get; private set; } = true;
@@ -916,6 +1029,19 @@ public class MyGameObject : MonoBehaviour
     [field: SerializeField]
     public bool ShowExit { get; private set; } = false;
 
+    [field: SerializeField]
+    public Progress Health { get; private set; } = new Progress();
+    /*
+    {
+        get
+        {
+            Part[] parts = GetComponentsInChildren<Part>();
+
+            return new Progress(parts.Sum(x => x.Health.Current), parts.Sum(x => x.Health.Max));
+        }
+    }
+    */
+
     public Vector3 Position { get => transform.position; set => transform.position = value; }
 
     public Quaternion Rotation { get => transform.rotation; set => transform.rotation = value; }
@@ -926,7 +1052,50 @@ public class MyGameObject : MonoBehaviour
 
     public Stats Stats { get; } = new Stats();
 
-    public ResourceContainer ConstructionResources { get; } = new ResourceContainer();
+    [field: SerializeField]
+    public ResourceContainer ConstructionResources { get; private set; } = new ResourceContainer();
+    /*
+    {
+        get
+        {
+            Dictionary<string, int> current = new Dictionary<string, int>(); // TODO: Refactor. Optimize. Allow changing Max property.
+            Dictionary<string, int> max = new Dictionary<string, int>();
+
+            foreach (Part part in GetComponentsInChildren<Part>())
+            {
+                foreach (Resource resource in part.ConstructionResources.Items)
+                {
+                    if (current.ContainsKey(resource.Name))
+                    {
+                        current[resource.Name] += resource.Current;
+                    }
+                    else
+                    {
+                        current[resource.Name] = resource.Current;
+                    }
+
+                    if (max.ContainsKey(resource.Name))
+                    {
+                        max[resource.Name] += resource.Max;
+                    }
+                    else
+                    {
+                        max[resource.Name] = resource.Max;
+                    }
+                }
+            }
+
+            ResourceContainer constructionResources = new ResourceContainer();
+
+            foreach (KeyValuePair<string, int> resource in current)
+            {
+                constructionResources.Init(resource.Key, resource.Value, max[resource.Key]);
+            }
+
+            return constructionResources;
+        }
+    }
+    */
 
     public MyGameObject Parent { get; private set; }
 
@@ -942,7 +1111,7 @@ public class MyGameObject : MonoBehaviour
 
     private Vector3 PreviousPosition { get; set; }
 
-    public HashSet<MyGameObject> Workers { get; } = new HashSet<MyGameObject>();
+    public HashSet<MyGameObject> Workers { get; } = new HashSet<MyGameObject>(); // TODO: Implement workers mechanic.
 
-    public HashSet<MyGameObject> Workplaces { get; } = new HashSet<MyGameObject>();
+    public HashSet<MyGameObject> Workplaces { get; } = new HashSet<MyGameObject>(); // TODO: Implement workers mechanic.
 }

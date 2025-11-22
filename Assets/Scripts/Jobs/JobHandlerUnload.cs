@@ -2,7 +2,7 @@ public class JobHandlerUnload : JobHandler
 {
     public override Order OnExecute(MyGameObject myGameObject)
     {
-        Storage storage = myGameObject.GetComponent<Storage>();
+        Storage storage = myGameObject.GetComponentInChildren<Storage>();
 
         if (storage == null)
         {

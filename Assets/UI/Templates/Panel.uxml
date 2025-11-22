@@ -1,8 +1,0 @@
-<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" editor-extension-mode="False">
-    <ui:VisualElement name="Panel" style="flex-grow: 1;">
-        <ui:VisualElement name="Header" style="background-color: rgb(192, 192, 64); -unity-font-style: bold;">
-            <ui:Label tabindex="-1" text="Title" display-tooltip-when-elided="true" style="margin-top: 10px; margin-right: 10px; margin-bottom: 10px; margin-left: 10px; padding-top: 0; padding-right: 0; padding-bottom: 0; padding-left: 0; -unity-font-style: normal; font-size: 15px; -unity-font-definition: url(&apos;project://database/Assets/UI%20Toolkit/UnityThemes/UnityDefaultRuntimeTheme.tss?fileID=2230732570650464555&amp;guid=e852893d7957f1c4fa6c211d02a41794&amp;type=3#NotInter-Regular&apos;); letter-spacing: 4px;" />
-        </ui:VisualElement>
-        <ui:VisualElement name="Body" style="flex-grow: 1; background-color: rgb(217, 217, 171); padding-top: 10px; padding-right: 10px; padding-bottom: 10px; padding-left: 10px;" />
-    </ui:VisualElement>
-</ui:UXML>

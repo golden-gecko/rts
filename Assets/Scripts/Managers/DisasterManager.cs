@@ -1,12 +1,11 @@
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
-public class DisasterManager : Singleton<DisasterManager>
+public class DisasterManager : MonoBehaviour
 {
-    protected override void Awake()
+    private void Start()
     {
-        base.Awake();
-
         CreateTimers();
     }
 
@@ -38,7 +37,7 @@ public class DisasterManager : Singleton<DisasterManager>
 
     private void CreateTimers()
     {
-        foreach (Disaster disaster in Resources.LoadAll<Disaster>(Config.Directory.Disasters))
+        foreach (Disaster disaster in Game.Instance.Config.Disasters.Select(x => x.GetComponent<Disaster>()))
         {
             DisasterTimer[disaster] = new Timer(Random.Range(disaster.FrequencyInSecondsMin, disaster.FrequencyInSecondsMax));
         }
