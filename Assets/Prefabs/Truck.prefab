@@ -12,8 +12,7 @@ GameObject:
   - component: {fileID: 3002973583267515421}
   - component: {fileID: 7840807501020488163}
   - component: {fileID: 6438544620514185536}
-  - component: {fileID: 2422795682312026250}
-  - component: {fileID: 7595969138014149540}
+  - component: {fileID: 1102902973644913887}
   m_Layer: 0
   m_Name: Truck
   m_TagString: Untagged
@@ -34,7 +33,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 8
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &3002973583267515421
 MeshFilter:
@@ -107,7 +106,7 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &2422795682312026250
+--- !u!114 &1102902973644913887
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -116,23 +115,6 @@ MonoBehaviour:
   m_GameObject: {fileID: 6792906497394045524}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e741851cba3ad425c91ecf922cc6b379, type: 3}
+  m_Script: {fileID: 11500000, guid: 54f4f69dbccd7e2499b4f46de713fb82, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _data:
-    _json: '{"declarations":{"Kind":"Object","collection":{"$content":[],"$version":"A"},"$version":"A"}}'
-    _objectReferences: []
---- !u!114 &7595969138014149540
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6792906497394045524}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 84d3480c530f3404bbb17ae1dfd0e985, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _orderType: 0
-  _target: {x: 0, y: 0, z: 0}

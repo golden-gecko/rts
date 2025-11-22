@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -5,7 +6,7 @@ public class HUD : MonoBehaviour
 {
     void Start()
     {
-        selected = new List<MyGameObject>();
+        Selected = new List<MyGameObject>();
     }
 
     void Update()
@@ -18,28 +19,30 @@ public class HUD : MonoBehaviour
             {
                 if (hitInfo.transform.tag == "Terrain")
                 {
-                    foreach (var gameObject in selected)
+                    foreach (var gameObject in Selected)
                     {
-                        gameObject.Order = OrderType.Move;
-                        gameObject.Target = hitInfo.point;
+                        gameObject.Move(hitInfo.point);
                     }
                 }
                 else
                 {
-                    var result = hitInfo.transform.GetComponent<MyGameObject>();
+                    Selected.Clear();
 
-                    if (selected.Contains(result))
+                    var myGameObject = hitInfo.transform.GetComponentInParent<MyGameObject>();
+
+                    if (myGameObject != null)
                     {
-                        selected.Remove(result);
-                    }
-                    else
-                    {
-                        selected.Add(result);
+                        Selected.Add(myGameObject);
+
+                        foreach (var item in myGameObject.Resources)
+                        {
+                            Debug.Log(item.Key + " " + item.Value.Value);
+                        }
                     }
                 }
             }
         }
     }
 
-    private List<MyGameObject> selected;
+    public List<MyGameObject> Selected { get; private set; }
 }
