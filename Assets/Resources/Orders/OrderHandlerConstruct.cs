@@ -31,7 +31,7 @@ public class OrderHandlerConstruct : IOrderHandler
             return;
         }
 
-        if (HaveResources(myGameObject, recipe) == false)
+        if (HaveResources(myGameObject, order, recipe) == false)
         {
             myGameObject.Wait(0);
 
@@ -43,7 +43,7 @@ public class OrderHandlerConstruct : IOrderHandler
             return;
         }
 
-        MoveResources(myGameObject, recipe);
+        MoveResources(myGameObject, order, recipe);
 
         order.TargetGameObject.State = MyGameObjectState.Operational;
 
@@ -53,19 +53,11 @@ public class OrderHandlerConstruct : IOrderHandler
         myGameObject.Orders.Pop();
     }
 
-    private bool HaveResources(MyGameObject myGameObject, Recipe recipe)
+    private bool HaveResources(MyGameObject myGameObject, Order order, Recipe recipe)
     {
         foreach (Resource i in recipe.ToConsume.Items.Values)
         {
-            if (myGameObject.ConstructionResources.CanRemove(i.Name, i.Max) == false)
-            {
-                return false;
-            }
-        }
-
-        foreach (Resource i in recipe.ToProduce.Items.Values)
-        {
-            if (myGameObject.ConstructionResources.CanAdd(i.Name, i.Max) == false)
+            if (order.TargetGameObject.ConstructionResources.CanRemove(i.Name, i.Max) == false)
             {
                 return false;
             }
@@ -74,18 +66,12 @@ public class OrderHandlerConstruct : IOrderHandler
         return true;
     }
 
-    private void MoveResources(MyGameObject myGameObject, Recipe recipe)
+    private void MoveResources(MyGameObject myGameObject, Order order, Recipe recipe)
     {
         foreach (Resource i in recipe.ToConsume.Items.Values)
         {
-            myGameObject.ConstructionResources.Remove(i.Name, i.Max);
+            order.TargetGameObject.ConstructionResources.Remove(i.Name, i.Max);
             myGameObject.Stats.Add(Stats.ResourcesUsed, i.Max);
-        }
-
-        foreach (Resource i in recipe.ToProduce.Items.Values)
-        {
-            myGameObject.ConstructionResources.Add(i.Name, i.Max);
-            myGameObject.Stats.Add(Stats.ResourcesProduced, i.Max);
         }
     }
 }
