@@ -190,6 +190,11 @@ public class Indicators : MonoBehaviour
         }
     }
 
+    public void OnToggleRange(bool value)
+    {
+        range.gameObject.SetActive(value);
+    }
+
     private void UpdateBars(MyGameObject myGameObject)
     {
         Vector3 size = myGameObject.Size;
@@ -315,7 +320,8 @@ public class Indicators : MonoBehaviour
 
     private void UpdateIconWork(MyGameObject myGameObject)
     {
-        // TODO: Implement.
+        iconWorkOn.gameObject.SetActive(myGameObject.Working);
+        iconWorkOff.gameObject.SetActive(myGameObject.Working == false);
     }
 
     private void UpdateRange(MyGameObject myGameObject)
