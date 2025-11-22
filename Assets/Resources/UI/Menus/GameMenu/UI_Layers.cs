@@ -1,22 +1,34 @@
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UIElements;
 
 public class UI_Layers : MonoBehaviour
 {
+    public static UI_Layers Instance { get; private set; } // TODO: Remove singleton from this class.
+
     void Awake()
     {
+        if (Instance != null && Instance != this)
+        {
+            Destroy(this);
+        }
+        else
+        {
+            Instance = this;
+        }
+
         UIDocument uiDocument = GetComponent<UIDocument>();
         VisualElement rootVisualElement = uiDocument.rootVisualElement;
 
         panel = rootVisualElement.Q<VisualElement>("Panel_Layers");
         grid = panel.Q<Toggle>("Grid");
+        range = panel.Q<Toggle>("Range");
         exploration = panel.Q<Toggle>("Exploration");
         power = panel.Q<Toggle>("Power");
         radar = panel.Q<Toggle>("Radar");
         sight = panel.Q<Toggle>("Sight");
 
         grid.RegisterValueChangedCallback(OnToggleGrid);
+        range.RegisterValueChangedCallback(OnToggleRange);
         exploration.RegisterValueChangedCallback(OnToggleExploration);
         power.RegisterValueChangedCallback(OnTogglePower);
         radar.RegisterValueChangedCallback(OnToggleRadar);
@@ -26,6 +38,11 @@ public class UI_Layers : MonoBehaviour
     private void OnToggleGrid(ChangeEvent<bool> evt)
     {
         Map.Instance.transform.Find("Grid").GetComponent<Projector>().enabled = evt.newValue;
+    }
+
+    private void OnToggleRange(ChangeEvent<bool> evt)
+    {
+        // TODO: Implement.
     }
 
     private void OnToggleExploration(ChangeEvent<bool> evt)
@@ -113,6 +130,7 @@ public class UI_Layers : MonoBehaviour
     private VisualElement panel;
 
     private Toggle grid;
+    public Toggle range; // TODO: Make private.
 
     private Toggle exploration;
     private Toggle power;

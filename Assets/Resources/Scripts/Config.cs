@@ -22,6 +22,11 @@ public class Config
         public static bool SnapToGrid { get; } = true;
     }
 
+    public class Formation
+    {
+        public static float Spacing { get; } = 5.0f;
+    }
+
     public class Indicator
     {
         public static float Margin { get; } = 1.1f;

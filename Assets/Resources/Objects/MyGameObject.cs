@@ -281,6 +281,11 @@ public class MyGameObject : MonoBehaviour
         }
     }
 
+    public void Turn(Vector3 target)
+    {
+        Orders.Add(Order.Turn(target));
+    }
+
     public void Unload(MyGameObject myGameObject, string resource, int value, int priority = -1)
     {
         if (0 <= priority && priority < Orders.Count)
