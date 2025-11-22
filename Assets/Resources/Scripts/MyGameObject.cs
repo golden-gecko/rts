@@ -1,8 +1,88 @@
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
+using UnityEngine.Assertions;
 
 public class MyGameObject : MonoBehaviour
 {
+    protected virtual void Awake()
+    {
+        Assert.IsNotNull(Player);
+
+        Orders.AllowOrder(OrderType.Destroy);
+        Orders.AllowOrder(OrderType.Idle);
+        Orders.AllowOrder(OrderType.Stop);
+        Orders.AllowOrder(OrderType.Wait);
+
+        OrderHandlers[OrderType.Assemble] = new OrderHandlerAssemble();
+        OrderHandlers[OrderType.Construct] = new OrderHandlerConstruct();
+        OrderHandlers[OrderType.Destroy] = new OrderHandlerDestroy();
+        OrderHandlers[OrderType.Follow] = new OrderHandlerFollow();
+        OrderHandlers[OrderType.Guard] = new OrderHandlerGuard();
+        OrderHandlers[OrderType.Load] = new OrderHandlerLoad();
+        OrderHandlers[OrderType.Move] = new OrderHandlerMove();
+        OrderHandlers[OrderType.Patrol] = new OrderHandlerPatrol();
+        OrderHandlers[OrderType.Produce] = new OrderHandlerProduce();
+        OrderHandlers[OrderType.Rally] = new OrderHandlerRally();
+        OrderHandlers[OrderType.Repair] = new OrderHandlerRepair();
+        OrderHandlers[OrderType.Research] = new OrderHandlerResearch();
+        OrderHandlers[OrderType.Stop] = new OrderHandlerStop();
+        OrderHandlers[OrderType.Transport] = new OrderHandlerTransport();
+        OrderHandlers[OrderType.Unload] = new OrderHandlerUnload();
+        OrderHandlers[OrderType.Wait] = new OrderHandlerWait();
+
+        ConstructionResources.Add("Metal", 0, 30);
+
+        Recipe r1 = new Recipe();
+
+        r1.Consume("Metal", 0);
+
+        ConstructionRecipies.Add(r1);
+    }
+
+    protected virtual void Start()
+    {
+        RallyPoint = Exit;
+
+        Transform visual = transform.Find("Visual");
+        
+        if (visual)
+        {
+            Transform selection = visual.Find("Selection");
+
+            if (selection)
+            {
+                selection.GetComponent<SpriteRenderer>().sprite = Player.Selection;
+            }
+        }
+    }
+
+    protected virtual void Update()
+    {
+        if (Alive == false)
+        {
+            Destroy(0);
+        }
+
+        switch (State)
+        {
+            case MyGameObjectState.Operational:
+                ProcessOrders();
+                RaiseResourceFlags();
+                break;
+
+            case MyGameObjectState.UnderAssembly:
+                break;
+
+            case MyGameObjectState.UnderConstruction:
+                RaiseConstructionResourceFlags();
+                break;
+        }
+
+        AlignPositionToTerrain();
+        Reload();
+    }
+
     public void Assemble(string prefab)
     {
         Orders.Add(Order.Assemble(prefab, ConstructionTime));
@@ -226,70 +306,6 @@ public class MyGameObject : MonoBehaviour
         return radiusMin <= magnitude && magnitude <= radiusMax;
     }
 
-    protected virtual void Awake()
-    {
-        Orders.AllowOrder(OrderType.Destroy);
-        Orders.AllowOrder(OrderType.Idle);
-        Orders.AllowOrder(OrderType.Stop);
-        Orders.AllowOrder(OrderType.Wait);
-
-        OrderHandlers[OrderType.Assemble] = new OrderHandlerAssemble();
-        OrderHandlers[OrderType.Construct] = new OrderHandlerConstruct();
-        OrderHandlers[OrderType.Destroy] = new OrderHandlerDestroy();
-        OrderHandlers[OrderType.Follow] = new OrderHandlerFollow();
-        OrderHandlers[OrderType.Guard] = new OrderHandlerGuard();
-        OrderHandlers[OrderType.Load] = new OrderHandlerLoad();
-        OrderHandlers[OrderType.Move] = new OrderHandlerMove();
-        OrderHandlers[OrderType.Patrol] = new OrderHandlerPatrol();
-        OrderHandlers[OrderType.Produce] = new OrderHandlerProduce();
-        OrderHandlers[OrderType.Rally] = new OrderHandlerRally();
-        OrderHandlers[OrderType.Repair] = new OrderHandlerRepair();
-        OrderHandlers[OrderType.Research] = new OrderHandlerResearch();
-        OrderHandlers[OrderType.Stop] = new OrderHandlerStop();
-        OrderHandlers[OrderType.Transport] = new OrderHandlerTransport();
-        OrderHandlers[OrderType.Unload] = new OrderHandlerUnload();
-        OrderHandlers[OrderType.Wait] = new OrderHandlerWait();
-
-        ConstructionResources.Add("Metal", 0, 30);
-
-        Recipe r1 = new Recipe();
-
-        r1.Consume("Metal", 0);
-
-        ConstructionRecipies.Add(r1);
-    }
-
-    protected virtual void Start()
-    {
-        RallyPoint = Exit;
-    }
-
-    protected virtual void Update()
-    {
-        if (Alive == false)
-        {
-            Destroy(0);
-        }
-
-        switch (State)
-        {
-            case MyGameObjectState.Operational:
-                ProcessOrders();
-                RaiseResourceFlags();
-                break;
-
-            case MyGameObjectState.UnderAssembly:
-                break;
-
-            case MyGameObjectState.UnderConstruction:
-                RaiseConstructionResourceFlags();
-                break;
-        }
-
-        AlignPositionToTerrain();
-        Reload();
-    }
-
     private void Reload()
     {
         ReloadTimer?.Update(Time.deltaTime);
@@ -409,7 +425,7 @@ public class MyGameObject : MonoBehaviour
     public bool Alive { get => Health > 0.0f; }
 
     [field: SerializeField]
-    public Player Player { get; set; }
+    public Player Player;
 
     public float Damage { get; protected set; } = 0.0f;
 
