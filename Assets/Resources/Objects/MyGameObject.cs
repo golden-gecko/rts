@@ -56,13 +56,10 @@ public class MyGameObject : MonoBehaviour
 
     protected virtual void Start()
     {
-        UpdatePosition();
+        InitializePosition();
+
         UpdateSelection();
         UpdateVisibility();
-
-        PreviousPosition = Position;
-
-        Map.Instance.SetOccupied(this, Position, 1);
     }
 
     protected virtual void Update()
@@ -79,11 +76,11 @@ public class MyGameObject : MonoBehaviour
 
                 if (Working)
                 {
-                    ProcessOrders();
+                    ProcessOrdersWhenEnabled();
                 }
                 else
                 {
-                    ProcessOrdersWhenInactive();
+                    ProcessOrdersWhenDisabled();
                 }
                 break;
 
@@ -97,16 +94,9 @@ public class MyGameObject : MonoBehaviour
                 break;
         }
 
+        UpdatePosition();
         UpdateSkills();
         UpdateVisibility();
-
-        if (Utils.ToGrid(PreviousPosition, Config.Map.Scale) != Utils.ToGrid(Position, Config.Map.Scale))
-        {
-            Map.Instance.SetOccupied(this, PreviousPosition, -1);
-            Map.Instance.SetOccupied(this, Position, 1);
-
-            PreviousPosition = Position;
-        }
     }
 
     protected virtual void OnCollisionEnter(Collision collision)
@@ -192,7 +182,7 @@ public class MyGameObject : MonoBehaviour
 
     public void Explore()
     {
-        Orders.Add(Order.Explore());
+        Orders.Add(Order.Explore(Position));
     }
 
     public void Follow(MyGameObject myGameObject, int priority = -1)
@@ -486,7 +476,14 @@ public class MyGameObject : MonoBehaviour
         Indicators.GetComponent<Indicators>().OnSelect(status);
     }
 
-    protected virtual void UpdatePosition()
+    private void InitializePosition()
+    {
+        Map.Instance.SetOccupied(this, Position, 1);
+
+        PreviousPosition = Position;
+    }
+
+    private void UpdatePosition()
     {
         if (Map.Instance.ValidatePosition(this, Position, out Vector3 validated))
         {
@@ -499,9 +496,17 @@ public class MyGameObject : MonoBehaviour
                 Position = validated;
             }
         }
+
+        if (Utils.ToGrid(PreviousPosition, Config.Map.Scale) != Utils.ToGrid(Position, Config.Map.Scale))
+        {
+            Map.Instance.SetOccupied(this, PreviousPosition, -1);
+            Map.Instance.SetOccupied(this, Position, 1);
+
+            PreviousPosition = Position;
+        }
     }
 
-    public void UpdateSelection()
+    private void UpdateSelection()
     {
         if (Player != null)
         {
@@ -509,7 +514,7 @@ public class MyGameObject : MonoBehaviour
         }
     }
 
-    private void ProcessOrders()
+    private void ProcessOrdersWhenEnabled()
     {
         if (Orders.Count > 0)
         {
@@ -530,7 +535,7 @@ public class MyGameObject : MonoBehaviour
         }
     }
 
-    private void ProcessOrdersWhenInactive() // TODO: Refactor.
+    private void ProcessOrdersWhenDisabled()
     {
         if (Orders.Count > 0)
         {

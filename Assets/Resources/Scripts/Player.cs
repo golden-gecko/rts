@@ -193,7 +193,7 @@ public class Player : MonoBehaviour
         MyResource closest = null;
         float distance = float.MaxValue;
 
-        foreach (MyResource myResource in FindObjectsByType<MyResource>(FindObjectsSortMode.None)) // TODO: Refactor.  
+        foreach (MyResource myResource in FindObjectsByType<MyResource>(FindObjectsSortMode.None))
         {
             if (myResource == myGameObject)
             {

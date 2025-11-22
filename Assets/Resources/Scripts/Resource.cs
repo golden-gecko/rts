@@ -11,10 +11,10 @@ public class Resource : Counter
     }
 
     [field: SerializeField]
-    public string Name { get; }
+    public string Name { get; private set; }
 
     [field: SerializeField]
-    public ResourceDirection Direction { get; }
+    public ResourceDirection Direction { get; private set; }
 
     public int Available { get => Max - Current; }
 

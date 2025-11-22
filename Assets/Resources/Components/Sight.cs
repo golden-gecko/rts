@@ -6,14 +6,14 @@ public class Sight : MyComponent
     {
         base.Start();
 
-        previousState = Parent.State;
-        previousEnabled = Parent.Enabled;
-        previousPosition = Parent.Position;
-
         if (Parent.State == MyGameObjectState.Operational && Parent.Enabled)
         {
             PowerUp(Parent.Position);
         }
+
+        previousState = Parent.State;
+        previousEnabled = Parent.Enabled;
+        previousPosition = Parent.Position;
     }
 
     protected override void Update()

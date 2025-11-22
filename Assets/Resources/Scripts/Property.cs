@@ -17,7 +17,7 @@ public class Property: ICloneable
     }
 
     [field: SerializeField]
-    public float Value { get; }
+    public float Value { get; private set; }
 
     public Dictionary<MyGameObject, float> Factor { get; } = new Dictionary<MyGameObject, float>();
 

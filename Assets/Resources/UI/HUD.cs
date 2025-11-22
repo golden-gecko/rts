@@ -81,11 +81,6 @@ public class HUD : Singleton<HUD>
 
         if (Input.GetMouseButton(0))
         {
-            if (EventSystem.current.IsPointerOverGameObject())
-            {
-                return;
-            }
-
             if (drag)
             {
                 DragUpdate();
