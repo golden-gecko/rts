@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class MyGameObject : MonoBehaviour
 {
@@ -9,10 +10,17 @@ public class MyGameObject : MonoBehaviour
         body = transform.Find("Body");
         visual = transform.Find("Visual");
 
-        rangeGun = visual.transform.Find("Range_Gun");
-        rangePower = visual.transform.Find("Range_Power");
-        rangeRadar = visual.transform.Find("Range_Radar");
-        rangeSight = visual.transform.Find("Range_Sight");
+        bar = visual.transform.Find("Bar");
+        barHealth = bar.Find("Health").GetComponent<Image>();
+        barAmmunition = bar.Find("Ammunition").GetComponent<Image>();
+        barFuel = bar.Find("Fuel").GetComponent<Image>();
+
+        range = visual.transform.Find("Range");
+        rangeGun = range.Find("Gun");
+        rangePower = range.Find("Power");
+        rangeRadar = range.Find("Radar");
+        rangeSight = range.Find("Sight");
+
         selection = visual.transform.Find("Selection");
         trace = visual.transform.Find("Trace");
 
@@ -86,7 +94,7 @@ public class MyGameObject : MonoBehaviour
             RemoveConstructionResourceFlags();
         }
 
-        UpdateSelectionPosition();
+        UpdateVisual();
         UpdateVisibility();
     }
 
@@ -110,14 +118,41 @@ public class MyGameObject : MonoBehaviour
         }
     }
 
-    protected void UpdateSelectionPosition()
+    protected void UpdateVisual()
     {
-        Vector3 position = Map.Instance.CameraPositionHandler.GetPosition(Position);
+        bar.transform.localPosition = new Vector3(0.0f, 3.0f, 0.0f);
+        bar.transform.localScale = new Vector3(1.0f, 1.0f, 1.0f);
+        bar.transform.LookAt(Camera.main.transform.position);
+        bar.transform.Rotate(0.0f, 180.0f, 0.0f);
 
-        rangeGun.position = position;
-        rangePower.position = position;
-        rangeRadar.position = position;
-        rangeSight.position = position;
+        // Update health.
+        barHealth.fillAmount = Health.Percent;
+
+        // Update ammunition.
+        Gun gun = GetComponent<Gun>(); // TODO: Add support for multiple components.
+
+        if (gun != null)
+        {
+            barAmmunition.fillAmount = gun.Ammunition.Percent;
+            barAmmunition.gameObject.SetActive(true);
+        }
+        else
+        {
+            barAmmunition.gameObject.SetActive(false);
+        }
+
+        // Update fuel.
+        Engine engine = GetComponent<Engine>(); // TODO: Add support for multiple components.
+
+        if (engine != null)
+        {
+            barFuel.fillAmount = engine.Fuel.Percent;
+            barFuel.gameObject.SetActive(true);
+        }
+        else
+        {
+            barFuel.gameObject.SetActive(false);
+        }
     }
 
     protected void UpdateVisibility()
@@ -760,6 +795,9 @@ public class MyGameObject : MonoBehaviour
     [field: SerializeField]
     public List<MyGameObjectMapLayer> MapLayers { get; set; } = new List<MyGameObjectMapLayer>();
 
+    [field: SerializeField]
+    public bool ShowIndicators = true;
+
     public Vector3 Position { get => transform.position; set => transform.position = value; }
 
     public Vector3 Scale { get => transform.localScale; }
@@ -782,10 +820,18 @@ public class MyGameObject : MonoBehaviour
 
     private Transform body;
     private Transform visual;
+
+    private Transform bar;
+    private Image barHealth;
+    private Image barAmmunition;
+    private Image barFuel;
+
+    private Transform range;
     private Transform rangeGun;
     private Transform rangePower;
     private Transform rangeRadar;
     private Transform rangeSight;
+
     private Transform selection;
     private Transform trace;
 

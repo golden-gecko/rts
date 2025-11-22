@@ -58,4 +58,6 @@ public class Progress
 
     [field: SerializeField]
     public float Max { get; private set; }
+
+    public float Percent { get => Current / Max; }
 }

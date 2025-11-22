@@ -70,4 +70,6 @@ public class Counter
 
     [field: SerializeField]
     public int Max { get; private set; }
+
+    public float Percent { get => (float)Current / (float)Max; }
 }

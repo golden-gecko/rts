@@ -372,6 +372,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: -1134350671883856829, guid: 0724eebae05d77a4f9efb0701d38dc78, type: 3}
+      propertyPath: <Player>k__BackingField
+      value: 
+      objectReference: {fileID: 939059053}
     - target: {fileID: -756073528101837539, guid: 0724eebae05d77a4f9efb0701d38dc78, type: 3}
       propertyPath: <Player>k__BackingField
       value: 
@@ -864,6 +868,10 @@ PrefabInstance:
       propertyPath: <Player>k__BackingField
       value: 
       objectReference: {fileID: 939059053}
+    - target: {fileID: -808385319535097624, guid: c2645b10e4156a14f9b5c790e2c89b02, type: 3}
+      propertyPath: <Player>k__BackingField
+      value: 
+      objectReference: {fileID: 939059053}
     - target: {fileID: 5150371391053672082, guid: c2645b10e4156a14f9b5c790e2c89b02, type: 3}
       propertyPath: m_Name
       value: Rock_Large_0001
@@ -921,6 +929,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: -6609595616164425615, guid: 990d99b0147837c4fbfd88fe1a524ef5, type: 3}
+      propertyPath: <Player>k__BackingField
+      value: 
+      objectReference: {fileID: 939059053}
     - target: {fileID: 3495096790598703179, guid: 990d99b0147837c4fbfd88fe1a524ef5, type: 3}
       propertyPath: m_Name
       value: Rock_Small_0001
@@ -1105,6 +1117,10 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: -4426931651826566218, guid: aa8c9ea0f8ff2584abc9d2c41a409ca7, type: 3}
+      propertyPath: <Player>k__BackingField
+      value: 
+      objectReference: {fileID: 939059053}
+    - target: {fileID: 5727043864081485724, guid: aa8c9ea0f8ff2584abc9d2c41a409ca7, type: 3}
       propertyPath: <Player>k__BackingField
       value: 
       objectReference: {fileID: 939059053}
@@ -1806,6 +1822,10 @@ PrefabInstance:
       propertyPath: <Player>k__BackingField
       value: 
       objectReference: {fileID: 939059053}
+    - target: {fileID: -2050113657392743181, guid: db55b7ec92afd89458b89889e498a3a7, type: 3}
+      propertyPath: <Player>k__BackingField
+      value: 
+      objectReference: {fileID: 939059053}
     - target: {fileID: 1649971028671782476, guid: db55b7ec92afd89458b89889e498a3a7, type: 3}
       propertyPath: m_Name
       value: Coal
@@ -1863,6 +1883,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: -9074478250652064254, guid: 9b1b6d56c457fee4c9e8d5a341317e2a, type: 3}
+      propertyPath: <Player>k__BackingField
+      value: 
+      objectReference: {fileID: 939059053}
     - target: {fileID: 1231909215900800693, guid: 9b1b6d56c457fee4c9e8d5a341317e2a, type: 3}
       propertyPath: m_Name
       value: Crystal
@@ -1986,6 +2010,10 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: -4665957233964652146, guid: 449ac083adb37974583159bb0465f622, type: 3}
+      propertyPath: <Player>k__BackingField
+      value: 
+      objectReference: {fileID: 939059053}
+    - target: {fileID: 1369289194494916589, guid: 449ac083adb37974583159bb0465f622, type: 3}
       propertyPath: <Player>k__BackingField
       value: 
       objectReference: {fileID: 939059053}
