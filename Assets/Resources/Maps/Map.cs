@@ -26,9 +26,9 @@ public class Map : MonoBehaviour
             Instance = this;
         }
 
-        for (int x = 0; x < Size; x++)
+        for (int x = 0; x < Config.TerrainVisibilitySize; x++)
         {
-            for (int z = 0; z < Size; z++)
+            for (int z = 0; z < Config.TerrainVisibilitySize; z++)
             {
                 Cells[x, z] = new Cell();
             }
@@ -89,14 +89,14 @@ public class Map : MonoBehaviour
             return true;
         }
 
-        if (terrain && hitInfo.transform.CompareTag("Terrain")) // TODO: Hardcoded.
+        if (terrain && IsTerrain(hitInfo))
         {
             validated = hitInfo.point;
 
             return true;
         }
 
-        if (water && hitInfo.transform.CompareTag("Water")) // TODO: Hardcoded.
+        if (water && IsWater(hitInfo))
         {
             validated = hitInfo.point;
 
@@ -110,19 +110,19 @@ public class Map : MonoBehaviour
 
     public void SetVisibleByRadar(MyGameObject myGameObject, float range)
     {
-        Vector3Int start = new Vector3Int(Mathf.FloorToInt((myGameObject.Position.x - range) / Scale), 0, Mathf.FloorToInt((myGameObject.Position.z - range) / Scale));
-        Vector3Int end = new Vector3Int(Mathf.FloorToInt((myGameObject.Position.x + range) / Scale), 0, Mathf.FloorToInt((myGameObject.Position.z + range) / Scale));
+        Vector3Int start = new Vector3Int(Mathf.FloorToInt((myGameObject.Position.x - range) / Config.TerrainVisibilityScale), 0, Mathf.FloorToInt((myGameObject.Position.z - range) / Config.TerrainVisibilityScale));
+        Vector3Int end = new Vector3Int(Mathf.FloorToInt((myGameObject.Position.x + range) / Config.TerrainVisibilityScale), 0, Mathf.FloorToInt((myGameObject.Position.z + range) / Config.TerrainVisibilityScale));
 
         for (int x = start.x; x < end.x; x++)
         {
             for (int z = start.z; z < end.z; z++)
             {
-                if (x < 0 || x > Size - 1)
+                if (x < 0 || x > Config.TerrainVisibilitySize - 1)
                 {
                     continue;
                 }
 
-                if (z < 0 || z > Size - 1)
+                if (z < 0 || z > Config.TerrainVisibilitySize - 1)
                 {
                     continue;
                 }
@@ -141,19 +141,19 @@ public class Map : MonoBehaviour
 
     public void SetVisibleByAntiRadar(MyGameObject myGameObject, float range)
     {
-        Vector3Int start = new Vector3Int(Mathf.FloorToInt((myGameObject.Position.x - range) / Scale), 0, Mathf.FloorToInt((myGameObject.Position.z - range) / Scale));
-        Vector3Int end = new Vector3Int(Mathf.FloorToInt((myGameObject.Position.x + range) / Scale), 0, Mathf.FloorToInt((myGameObject.Position.z + range) / Scale));
+        Vector3Int start = new Vector3Int(Mathf.FloorToInt((myGameObject.Position.x - range) / Config.TerrainVisibilityScale), 0, Mathf.FloorToInt((myGameObject.Position.z - range) / Config.TerrainVisibilityScale));
+        Vector3Int end = new Vector3Int(Mathf.FloorToInt((myGameObject.Position.x + range) / Config.TerrainVisibilityScale), 0, Mathf.FloorToInt((myGameObject.Position.z + range) / Config.TerrainVisibilityScale));
 
         for (int x = start.x; x < end.x; x++)
         {
             for (int z = start.z; z < end.z; z++)
             {
-                if (x < 0 || x > Size - 1)
+                if (x < 0 || x > Config.TerrainVisibilitySize - 1)
                 {
                     continue;
                 }
 
-                if (z < 0 || z > Size - 1)
+                if (z < 0 || z > Config.TerrainVisibilitySize - 1)
                 {
                     continue;
                 }
@@ -172,19 +172,19 @@ public class Map : MonoBehaviour
 
     public void SetVisibleBySight(MyGameObject myGameObject, float range)
     {
-        Vector3Int start = new Vector3Int(Mathf.FloorToInt((myGameObject.Position.x - range) / Scale), 0, Mathf.FloorToInt((myGameObject.Position.z - range) / Scale));
-        Vector3Int end = new Vector3Int(Mathf.FloorToInt((myGameObject.Position.x + range) / Scale), 0, Mathf.FloorToInt((myGameObject.Position.z + range) / Scale));
+        Vector3Int start = new Vector3Int(Mathf.FloorToInt((myGameObject.Position.x - range) / Config.TerrainVisibilityScale), 0, Mathf.FloorToInt((myGameObject.Position.z - range) / Config.TerrainVisibilityScale));
+        Vector3Int end = new Vector3Int(Mathf.FloorToInt((myGameObject.Position.x + range) / Config.TerrainVisibilityScale), 0, Mathf.FloorToInt((myGameObject.Position.z + range) / Config.TerrainVisibilityScale));
 
         for (int x = start.x; x < end.x; x++)
         {
             for (int z = start.z; z < end.z; z++)
             {
-                if (x < 0 || x > Size - 1)
+                if (x < 0 || x > Config.TerrainVisibilitySize - 1)
                 {
                     continue;
                 }
 
-                if (z < 0 || z > Size - 1)
+                if (z < 0 || z > Config.TerrainVisibilitySize - 1)
                 {
                     continue;
                 }
@@ -203,7 +203,7 @@ public class Map : MonoBehaviour
 
     public bool IsVisibleByRadar(MyGameObject myGameObject, Player active)
     {
-        Vector3Int position = new Vector3Int(Mathf.FloorToInt(myGameObject.Position.x / Scale), 0, Mathf.FloorToInt(myGameObject.Position.z / Scale));
+        Vector3Int position = new Vector3Int(Mathf.FloorToInt(myGameObject.Position.x / Config.TerrainVisibilityScale), 0, Mathf.FloorToInt(myGameObject.Position.z / Config.TerrainVisibilityScale));
 
         int byRadar = Cells[position.x, position.z].VisibleByRadar.ContainsKey(active) ? Cells[position.x, position.z].VisibleByRadar[active] : 0;
         int byAntiRadar = Cells[position.x, position.z].VisibleByAntiRadar.ContainsKey(myGameObject.Player) ? Cells[position.x, position.z].VisibleByAntiRadar[myGameObject.Player] : 0;
@@ -213,16 +213,16 @@ public class Map : MonoBehaviour
 
     public bool IsVisibleBySight(MyGameObject myGameObject, Player active)
     {
-        Vector3Int position = new Vector3Int(Mathf.FloorToInt(myGameObject.Position.x / Scale), 0, Mathf.FloorToInt(myGameObject.Position.z / Scale));
+        Vector3Int position = new Vector3Int(Mathf.FloorToInt(myGameObject.Position.x / Config.TerrainVisibilityScale), 0, Mathf.FloorToInt(myGameObject.Position.z / Config.TerrainVisibilityScale));
 
         return Cells[position.x, position.z].VisibleBySight.ContainsKey(active) && Cells[position.x, position.z].VisibleBySight[active] > 0;
     }
 
     protected void Clear()
     {
-        for (int x = 0; x < Size; x++)
+        for (int x = 0; x < Config.TerrainVisibilitySize; x++)
         {
-            for (int z = 0; z < Size; z++)
+            for (int z = 0; z < Config.TerrainVisibilitySize; z++)
             {
                 Player[] players1 = Cells[x, z].VisibleByRadar.Keys.ToArray();
 
@@ -248,13 +248,19 @@ public class Map : MonoBehaviour
         }
     }
 
+    private bool IsTerrain(RaycastHit hit)
+    {
+        return hit.transform.CompareTag("Terrain");
+    }
+
+    private bool IsWater(RaycastHit hit)
+    {
+        return hit.transform.CompareTag("Water");
+    }
+
     public ITerrainPosition CameraPositionHandler { get; } = new TerrainPositionAnywhere();
 
     public ITerrainPosition StructurePositionHandler { get; } = new TerrainPositionCenterGrid();
 
-    private static float Scale = 5.0f; // TODO: Hardcoded.
-
-    private static int Size = 100; // TODO: Hardcoded.
-
-    private Cell[,] Cells = new Cell[Size, Size];
+    private Cell[,] Cells = new Cell[Config.TerrainVisibilitySize, Config.TerrainVisibilitySize];
 }

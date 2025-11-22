@@ -2,7 +2,7 @@ using System;
 
 public class Achievement
 {
-    public Achievement(string name, string description, Func<bool> handler) // TODO: Add rewards for completion.
+    public Achievement(string name, string description, Func<bool> handler)
     {
         Name = name;
         Description = description;

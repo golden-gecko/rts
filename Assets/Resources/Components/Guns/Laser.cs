@@ -10,10 +10,10 @@ public class Laser : Gun
         missile.Parent = myGameObject;
         missile.Player = myGameObject.Player;
 
-        missile.Target = position; // TODO: ???
+        missile.Target = position;  // TODO: Replace with order.
         missile.Range = Range;
 
-        missile.Wait(0.2f); // TODO: Hardcoded.
+        missile.Wait();
         missile.Destroy();
 
         Reload.Reset();
