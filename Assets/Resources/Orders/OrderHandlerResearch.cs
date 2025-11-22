@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using UnityEngine;
 
 public class OrderHandlerResearch : IOrderHandler
@@ -20,40 +19,36 @@ public class OrderHandlerResearch : IOrderHandler
             return;
         }
 
-        if (HasResources(myGameObject, order))
+        if (CanMoveResource(myGameObject, order, myGameObject.Player.TechnologyTree.Technologies[order.Technology]) == false)
         {
-            order.Timer.Update(Time.deltaTime);
+            myGameObject.Wait(0);
 
-            if (order.Timer.Finished)
-            {
-                if (HasResources(myGameObject, order))
-                {
-                    RemoveResources(myGameObject, order);
+            return;
+        }
 
-                    myGameObject.Player.TechnologyTree.Unlock(order.Technology);
+        if (order.Timer.Update(Time.deltaTime) == false)
+        {
+            return;
+        }
 
-                    myGameObject.Stats.Add(Stats.OrdersExecuted, 1);
-                    myGameObject.Stats.Add(Stats.ResourcesUsed, 1);
-                    myGameObject.Stats.Add(Stats.TechnologiesDiscovered, 1);
-                    myGameObject.Stats.Add(Stats.TimeResearching, order.Timer.Max);
-                }
-                else
-                {
-                    myGameObject.Stats.Add(Stats.OrdersFailed, 1);
-                }
+        order.Timer.Reset();
 
-                myGameObject.Orders.Pop();
-            }
+        MoveResource(myGameObject, order, myGameObject.Player.TechnologyTree.Technologies[order.Technology]);
+
+        if (myGameObject.Player.TechnologyTree.Technologies[order.Technology].Researched)
+        {
+            myGameObject.Player.TechnologyTree.Unlock(order.Technology);
+            myGameObject.Orders.Pop();
         }
     }
 
-    private bool HasResources(MyGameObject myGameObject, Order order)
+    private bool CanMoveResource(MyGameObject myGameObject, Order order, Technology technology)
     {
-        Dictionary<string, int> cost = myGameObject.Player.TechnologyTree.GetCost(order.Technology);
-
-        foreach (KeyValuePair<string, int> i in cost)
+        foreach (Resource resource in technology.Cost.Items.Values)
         {
-            if (myGameObject.Resources.Storage(i.Key) < i.Value)
+            int resouceToMove = Mathf.Min(new int[] { order.ResourceUsage, resource.Capacity, myGameObject.Resources.Storage(resource.Name) });
+
+            if (resouceToMove <= 0)
             {
                 return false;
             }
@@ -62,13 +57,23 @@ public class OrderHandlerResearch : IOrderHandler
         return true;
     }
 
-    private void RemoveResources(MyGameObject myGameObject, Order order)
+    private void MoveResource(MyGameObject myGameObject, Order order, Technology technology)
     {
-        Dictionary<string, int> cost = myGameObject.Player.TechnologyTree.GetCost(order.Technology);
-
-        foreach (KeyValuePair<string, int> i in cost)
+        foreach (Resource resource in technology.Cost.Items.Values)
         {
-            myGameObject.Resources.Remove(i.Key, i.Value);
+            int resouceToMove = Mathf.Min(new int[] { order.ResourceUsage, resource.Capacity, myGameObject.Resources.Storage(resource.Name) });
+
+            if (resouceToMove <= 0)
+            {
+                continue;
+            }
+
+            resource.Add(resouceToMove);
+
+            myGameObject.Resources.Remove(resource.Name, resouceToMove);
+            myGameObject.Stats.Add(Stats.ResourcesUsed, resouceToMove);
+
+            break;
         }
     }
 }

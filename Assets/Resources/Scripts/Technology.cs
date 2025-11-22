@@ -7,14 +7,14 @@ public class Technology
         Name = name;
     }
 
-    public Technology(string name, Dictionary<string, int> cost, bool unlocked)
+    public Technology(string name, ResourceContainer cost, bool unlocked)
     {
         Name = name;
         Cost = cost;
         Unlocked = unlocked;
     }
 
-    public Technology(string name, Dictionary<string, int> cost, HashSet<string> unlocks)
+    public Technology(string name, ResourceContainer cost, HashSet<string> unlocks)
     {
         Name = name;
         Cost = cost;
@@ -23,7 +23,23 @@ public class Technology
 
     public string Name { get; }
 
-    public Dictionary<string, int> Cost { get; } = new Dictionary<string, int>();
+    public ResourceContainer Cost { get; } = new ResourceContainer();
+
+    public bool Researched
+    {
+        get
+        {
+            foreach (Resource resource in Cost.Items.Values)
+            {
+                if (resource.Capacity > 0)
+                {
+                    return false;
+                }
+            }
+
+            return true;
+        }
+    }
 
     public bool Unlocked { get; set; } = false;
 

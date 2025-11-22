@@ -137,6 +137,7 @@ MonoBehaviour:
   <VisibilityRange>k__BackingField: 10
   <LoadTime>k__BackingField: 2
   <WaitTime>k__BackingField: 2
+  <DestroyEffect>k__BackingField: Effects/WFXMR_Explosion StarSmoke
 --- !u!114 &-7296574799590733170
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -164,7 +165,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   <Mass>k__BackingField: 10
-  <Power>k__BackingField: 50
+  <Power>k__BackingField: 80
 --- !u!114 &2949164819816468667
 MonoBehaviour:
   m_ObjectHideFlags: 0

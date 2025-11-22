@@ -5,15 +5,9 @@ public class Resource : Counter
         Name = name;
     }
 
-    public int Capacity()
-    {
-        return Max - Current;
-    }
-
-    public int Storage()
-    {
-        return Current;
-    }
-
     public string Name { get; }
+
+    public int Capacity { get => Max - Current; }
+
+    public int Storage { get => Current; }
 }

@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class TechnologyTree
@@ -22,32 +23,38 @@ public class TechnologyTree
         }
 
         // Create technologies to research.
-        Dictionary<string, int> cost = new Dictionary<string, int>
-        {
-            { "Crystal", 50 }, // TODO: Add cost to technology.
-        };
+        ResourceContainer cost1 = new ResourceContainer(); // TODO: Make clone method.
+        ResourceContainer cost2 = new ResourceContainer();
+        ResourceContainer cost3 = new ResourceContainer();
+        ResourceContainer cost4 = new ResourceContainer();
+        ResourceContainer cost5 = new ResourceContainer();
+        ResourceContainer cost6 = new ResourceContainer();
+        ResourceContainer cost7 = new ResourceContainer();
 
-        Technologies["Colonization"] = new Technology("Colonization", cost, new HashSet<string> { "Factory_Light", "Grav_Light", "Harvester", "Headquarters", "Quad", "Refinery", "Research_Lab", "Trike" });
-        Technologies["Infantry"] = new Technology("Infantry", cost, new HashSet<string> { "Barracks", "Infantry_Light" });
-        Technologies["Heavy_Industry"] = new Technology("Heavy_Industry", cost, new HashSet<string> { "Factory_Heavy", "Tank_Combat", "Tank_Missile" });
-        Technologies["Radar"] = new Technology("Radar", cost, new HashSet<string> { "Radar_Outpost" });
-        Technologies["Space_Travels"] = new Technology("Space_Travels", cost, new HashSet<string> { "Spaceport" });
-        Technologies["Static_Defences"] = new Technology("Static_Defences", cost, new HashSet<string> { "Wall" });
-        Technologies["Stationary_Defences"] = new Technology("Stationary_Defences", cost, new HashSet<string> { "Turret_Gun", "Turret_Missile" });
+        cost1.Add("Crystal", 0, 20); // TODO: Move to configuration.
+        cost2.Add("Crystal", 0, 20);
+        cost3.Add("Crystal", 0, 20);
+        cost4.Add("Crystal", 0, 20);
+        cost5.Add("Crystal", 0, 20);
+        cost6.Add("Crystal", 0, 20);
+        cost7.Add("Crystal", 0, 20);
+
+        Technologies["Colonization"] = new Technology("Colonization", cost1, new HashSet<string> { "Factory_Light", "Grav_Light", "Harvester", "Headquarters", "Quad", "Refinery", "Research_Lab", "Trike" });
+        Technologies["Infantry"] = new Technology("Infantry", cost2, new HashSet<string> { "Barracks", "Infantry_Light" });
+        Technologies["Heavy_Industry"] = new Technology("Heavy_Industry", cost3, new HashSet<string> { "Factory_Heavy", "Tank_Combat", "Tank_Missile" });
+        Technologies["Radar"] = new Technology("Radar", cost4, new HashSet<string> { "Radar_Outpost" });
+        Technologies["Space_Travels"] = new Technology("Space_Travels", cost5, new HashSet<string> { "Spaceport" });
+        Technologies["Static_Defences"] = new Technology("Static_Defences", cost6, new HashSet<string> { "Wall" });
+        Technologies["Stationary_Defences"] = new Technology("Stationary_Defences", cost7, new HashSet<string> { "Turret_Gun", "Turret_Missile" });
 
         // Unlock starting technologies.
         Unlock("Colonization");
         Unlock("Infantry");
     }
 
-    public Dictionary<string, int> GetCost(string name)
+    public ResourceContainer GetCost(string name)
     {
-        if (Technologies.ContainsKey(name))
-        {
-            return Technologies[name].Cost;
-        }
-
-        return new Dictionary<string, int>();
+        return Technologies[name].Cost;
     }
 
     public bool IsUnlocked(string name)

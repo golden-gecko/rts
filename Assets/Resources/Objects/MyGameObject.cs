@@ -188,7 +188,7 @@ public class MyGameObject : MonoBehaviour
 
     public void Research(string technology)
     {
-        Orders.Add(Order.Research(technology, GetComponent<Researcher>().ResearchTime));
+        Orders.Add(Order.Research(technology, GetComponent<Researcher>().ResourceUsage));
     }
 
     public void Skill(string skill)
@@ -469,9 +469,9 @@ public class MyGameObject : MonoBehaviour
 
     private void RaiseConstructionResourceFlags()
     {
-        foreach (KeyValuePair<string, Recipe> recipe in ConstructionRecipies.Items)
+        foreach (Recipe recipe in ConstructionRecipies.Items.Values)
         {
-            foreach (RecipeComponent resource in recipe.Value.ToConsume)
+            foreach (RecipeComponent resource in recipe.ToConsume)
             {
                 int capacity = ConstructionResources.Capacity(resource.Name);
 
@@ -489,9 +489,9 @@ public class MyGameObject : MonoBehaviour
 
     private void RaiseResourceFlags()
     {
-        foreach (KeyValuePair<string, Recipe> recipe in Recipes.Items)
+        foreach (Recipe recipe in Recipes.Items.Values)
         {
-            foreach (RecipeComponent resource in recipe.Value.ToConsume)
+            foreach (RecipeComponent resource in recipe.ToConsume)
             {
                 int capacity = Resources.Capacity(resource.Name);
 
@@ -505,7 +505,7 @@ public class MyGameObject : MonoBehaviour
                 }
             }
 
-            foreach (RecipeComponent resource in recipe.Value.ToProduce)
+            foreach (RecipeComponent resource in recipe.ToProduce)
             {
                 int storage = Resources.Storage(resource.Name);
 
@@ -525,9 +525,9 @@ public class MyGameObject : MonoBehaviour
     {
         get
         {
-            foreach (KeyValuePair<string, Resource> i in ConstructionResources.Items)
+            foreach (Resource resource in ConstructionResources.Items.Values)
             {
-                if (i.Value.Current < i.Value.Max)
+                if (resource.Current < resource.Max)
                 {
                     return false;
                 }
