@@ -12,8 +12,8 @@ public class OrderHandlerWait : IOrderHandler
         {
             order.Timer.Reset();
 
-            myGameObject.Orders.Pop();
             myGameObject.Stats.Add(Stats.TimeWaiting, order.Timer.Max);
+            myGameObject.Orders.Pop();
         }
     }
 }

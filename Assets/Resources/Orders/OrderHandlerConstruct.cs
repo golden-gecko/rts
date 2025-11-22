@@ -8,9 +8,8 @@ public class OrderHandlerConstruct : IOrderHandler
 
         if (order.TargetGameObject == null)
         {
-            myGameObject.Orders.Pop();
-
             myGameObject.Stats.Add(Stats.OrdersFailed, 1);
+            myGameObject.Orders.Pop();
         }
         else if (myGameObject.IsCloseTo(order.TargetGameObject.Entrance) == false)
         {
@@ -25,10 +24,9 @@ public class OrderHandlerConstruct : IOrderHandler
                 order.TargetGameObject.State = MyGameObjectState.Operational;
                 order.Timer.Reset();
 
-                myGameObject.Orders.Pop();
-
                 myGameObject.Stats.Add(Stats.OrdersExecuted, 1);
                 myGameObject.Stats.Add(Stats.TimeConstructing, order.Timer.Max);
+                myGameObject.Orders.Pop();
             }
         }
         else

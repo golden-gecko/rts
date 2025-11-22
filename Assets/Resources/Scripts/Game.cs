@@ -53,12 +53,12 @@ public class Game : MonoBehaviour
 
         foreach (MyGameObject target in GameObject.FindObjectsByType<MyGameObject>(FindObjectsSortMode.None))
         {
-            if (myGameObject.IsInAttackRange(target.Position) == false)
+            if (target.IsEnemy(myGameObject) == false)
             {
                 continue;
             }
 
-            if (myGameObject.IsEnemy(target) == false)
+            if (target.IsInAttackRange(myGameObject.Position) == false)
             {
                 continue;
             }
@@ -68,7 +68,7 @@ public class Game : MonoBehaviour
                 continue;
             }
 
-            float distance = myGameObject.DistanceTo(target);
+            float distance = target.DistanceTo(myGameObject);
 
             if (distance < minDistance)
             {
@@ -92,17 +92,17 @@ public class Game : MonoBehaviour
 
         foreach (MyGameObject underConstruction in GameObject.FindObjectsByType<MyGameObject>(FindObjectsSortMode.None))
         {
-            if (underConstruction.Player != this)
-            {
-                continue;
-            }
-
             if (underConstruction.State != MyGameObjectState.UnderConstruction)
             {
                 continue;
             }
 
-            float distance = myGameObject.DistanceTo(underConstruction);
+            if (underConstruction.IsAlly(myGameObject) == false)
+            {
+                continue;
+            }
+
+            float distance = underConstruction.DistanceTo(myGameObject);
 
             if (distance < minDistance)
             {
@@ -113,7 +113,7 @@ public class Game : MonoBehaviour
 
         if (closest != null)
         {
-            return null; // Order.Construct(closest, myGameObject.ConstructionTime);
+            return Order.Construct(closest, myGameObject.ConstructionTime);
         }
 
         return null;

@@ -29,6 +29,7 @@ public enum OrderType
     Produce,
     Rally,
     Research,
+    Skill, // TODO: Rename to verb.
     Stop,
     Transport,
     Unload,

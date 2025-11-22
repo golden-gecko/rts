@@ -32,22 +32,22 @@ public class Order
         };
     }
 
+    public static Order Construct(MyGameObject myGameObject, float time)
+    {
+        return new Order
+        {
+            Type = OrderType.Construct,
+            TargetGameObject = myGameObject,
+            Timer = new Timer(time),
+        };
+    }
+
     public static Order Construct(string prefab, MyGameObject myGameObject, float time)
     {
         return new Order
         {
             Type = OrderType.Construct,
             Prefab = prefab,
-            TargetGameObject = myGameObject,
-            Timer = new Timer(time),
-        };
-    }
-
-    public static Order Construct(MyGameObject myGameObject, float time)
-    {
-        return new Order
-        {
-            Type = OrderType.Construct,
             TargetGameObject = myGameObject,
             Timer = new Timer(time),
         };
@@ -152,6 +152,15 @@ public class Order
             Type = OrderType.Research,
             Technology = technology,
             Timer = new Timer(time),
+        };
+    }
+
+    public static Order Skill(string skill)
+    {
+        return new Order
+        {
+            Type = OrderType.Skill,
+            Prefab = skill, // TODO: Add new property for skill.
         };
     }
 
