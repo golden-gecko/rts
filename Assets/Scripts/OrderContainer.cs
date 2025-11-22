@@ -47,6 +47,18 @@ public class OrderContainer
         Pop();
     }
 
+    public string GetInfo()
+    {
+        var info = "";
+
+        foreach (var i in Items)
+        {
+            info += i.GetInfo() + ", ";
+        }
+
+        return info.Substring(0, info.Length - 2);
+    }
+
     public void Pop()
     {
         Items.RemoveAt(0);

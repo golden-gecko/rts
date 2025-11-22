@@ -188,13 +188,23 @@ public class HUD : MonoBehaviour
 
         if (Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out hitInfo))
         {
-            if (hitInfo.transform.tag == "Terrain")
+            if (Order == OrderType.Construct)
             {
-                IssueOrder(hitInfo.point);
+                if (hitInfo.transform.tag == "Terrain")
+                {
+                    Construct(hitInfo.point);
+                }
             }
             else
             {
-                IssueOrder(hitInfo.transform.GetComponentInParent<MyGameObject>());
+                if (hitInfo.transform.tag == "Terrain")
+                {
+                    IssueOrder(hitInfo.point);
+                }
+                else
+                {
+                    IssueOrder(hitInfo.transform.GetComponentInParent<MyGameObject>());
+                }
             }
         }
     }
@@ -207,7 +217,7 @@ public class HUD : MonoBehaviour
         }
     }
 
-    public bool IsOverlappingUI()
+    bool IsOverlappingUI()
     {
         var ui = GameObject.Find("InGameMenu");
         var uiDocument = ui.GetComponent<UIDocument>();
@@ -224,7 +234,28 @@ public class HUD : MonoBehaviour
         return false;
     }
 
-    public void IssueOrder(Vector3 position)
+    void Construct(Vector3 position)
+    {
+        var prefabs = new Dictionary<string, string>()
+        {
+            { "HeavyFactory", "Prefabs/Buildings/struct_Factory_Heavy_A_yup" },
+            { "LightFactory", "Prefabs/Buildings/struct_Factory_Light_A_yup" },
+            { "Headquarters", "Prefabs/Buildings/struct_Headquarters_A_yup" },
+            { "Storage", "Prefabs/Buildings/struct_Misc_Building_B_yup" },
+            { "Radar", "Prefabs/Buildings/struct_Radar_Outpost_A_yup" },
+            { "Refinery", "Prefabs/Buildings/struct_Refinery_A_yup" },
+            { "ResearchLab", "Prefabs/Buildings/struct_Research_Lab_A_yup" },
+        };
+
+        var prefabName = prefabs[Prefab];
+        var resource = Resources.Load(prefabName) as GameObject;
+
+        // TODO: Check if prefab exists.
+        var result = Instantiate(resource, position, Quaternion.identity);
+        Debug.Log(result);
+    }
+
+    void IssueOrder(Vector3 position)
     {
         foreach (var gameObject in Selected)
         {
@@ -250,7 +281,7 @@ public class HUD : MonoBehaviour
         }
     }
 
-    public void IssueOrder(MyGameObject myGameObject)
+    void IssueOrder(MyGameObject myGameObject)
     {
         foreach (var gameObject in Selected)
         {
@@ -280,7 +311,7 @@ public class HUD : MonoBehaviour
         }
     }
 
-    public void Select(MyGameObject myGameObject)
+    void Select(MyGameObject myGameObject)
     {
         if (IsMulti() == false)
         {

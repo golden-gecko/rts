@@ -1,5 +1,5 @@
+using System;
 using System.Collections.Generic;
-using UnityEngine;
 
 public class ResourceContainer
 {
@@ -48,6 +48,18 @@ public class ResourceContainer
         }
 
         return Items[name].CanRemove(value);
+    }
+
+    public string GetInfo()
+    {
+        var info = "";
+
+        foreach (var i in Items)
+        {
+            info += string.Format("\n  {0} {1}", i.Key, i.Value.Value);
+        }
+
+        return info;
     }
 
     public void Remove(string name, int value)
