@@ -26,9 +26,17 @@ public class Gauss : Gun
             }
 
             float damageDealt = target.OnDamage(Damage);
-            myGameObject.Stats.Add(Stats.DamageDealt, damageDealt);
 
-            Object.Instantiate(Resources.Load("Effects/CFXR3 Hit Electric C (Air)"), target.Position, Quaternion.identity); // TODO: Move effect name to configuration.
+            if (target.Alive)
+            {
+                Instantiate(Resources.Load(HitEffectPrefab), target.Position, Quaternion.identity); 
+            }
+            else
+            {
+                myGameObject.Stats.Add(Stats.TargetsDestroyed, 1);
+            }
+
+            myGameObject.Stats.Add(Stats.DamageDealt, damageDealt);
         }
 
         Reload.Reset();

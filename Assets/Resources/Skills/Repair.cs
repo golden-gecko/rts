@@ -5,6 +5,7 @@ public class Repair : Skill
     public Repair(string name, float cooldown, float range, float value) : base(name, cooldown, range)
     {
         Value = value;
+        Effect = "Effects/CFXR3 Hit Misc A";
     }
 
     public override void Execute(MyGameObject myGameObject)
@@ -24,7 +25,7 @@ public class Repair : Skill
             target.OnRepair(Value);
         }
 
-        Object.Instantiate(Resources.Load("Effects/CFXR3 Hit Misc A"), myGameObject.Position, Quaternion.identity); // TODO: Move effect name to configuration.
+        Object.Instantiate(Resources.Load(Effect), myGameObject.Position, Quaternion.identity); // TODO: Move effect name to configuration.
     }
 
     public float Value { get; } = 0.0f;

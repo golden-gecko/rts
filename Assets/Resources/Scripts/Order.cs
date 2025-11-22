@@ -160,7 +160,7 @@ public class Order
         return new Order
         {
             Type = OrderType.Skill,
-            Prefab = skill, // TODO: Add new property for skill.
+            Skill_ = skill,
         };
     }
 
@@ -272,4 +272,6 @@ public class Order
     public string Technology { get; private set; }
 
     public string Recipe { get; private set; }
+
+    public string Skill_ { get; private set; } // TODO: Rename.
 }

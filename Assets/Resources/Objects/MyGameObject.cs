@@ -1,6 +1,4 @@
 using System.Collections.Generic;
-using System.Linq;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class MyGameObject : MonoBehaviour
@@ -395,9 +393,9 @@ public class MyGameObject : MonoBehaviour
         return IsInRange(position, 0.0f, 1.0f);
     }
 
-    public bool IsInAttackRange(Vector3 position)
+    public bool IsInAttackRange(Vector3 position) // TODO: Remove?
     {
-        return IsInRange(position, GetComponent<Gun>().Range); // TODO: Remove?
+        return IsInRange(position, GetComponent<Gun>().Range);
     }
 
     public bool IsInVisibilityRange(Vector3 position)
@@ -426,6 +424,12 @@ public class MyGameObject : MonoBehaviour
     public void UpdateSelection()
     {
         selection.GetComponent<SpriteRenderer>().sprite = Player.SelectionSprite;
+    }
+
+    public void OnDestroy_() // TODO: Rename.
+    {
+        Instantiate(UnityEngine.Resources.Load(DestroyEffect), Position, Quaternion.identity);
+        Destroy(gameObject);
     }
 
     protected virtual void AlignPositionToTerrain()
@@ -586,13 +590,13 @@ public class MyGameObject : MonoBehaviour
     public float VisibilityRange { get; set; } = 10.0f;
 
     [field: SerializeField]
-    public float GatherTime { get; set; } = 2.0f; // TODO: Implement as Gather order.
-
-    [field: SerializeField]
     public float LoadTime { get; set; } = 2.0f;
 
     [field: SerializeField]
     public float WaitTime { get; set; } = 2.0f;
+
+    [field: SerializeField]
+    public string DestroyEffect { get; set; } = "Effects/WFXMR_Explosion StarSmoke";
 
     public Vector3 Position { get => transform.position; set => transform.position = value; }
 

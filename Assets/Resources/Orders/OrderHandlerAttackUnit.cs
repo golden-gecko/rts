@@ -26,7 +26,6 @@ public class OrderHandlerAttackUnit : IOrderHandler
             if (order.TargetGameObject == null)
             {
                 myGameObject.Stats.Add(Stats.OrdersExecuted, 1);
-                myGameObject.Stats.Add(Stats.TargetsDestroyed, 1); // TODO: Move to missile.
                 myGameObject.Orders.Pop();
 
                 return;
