@@ -89,7 +89,7 @@ public class Player : MonoBehaviour
         int max = 0;
         MyGameObject target = null;
 
-        foreach (ResourceRequest i in Producers.Items) // TODO: Return closest object.
+        foreach (ResourceRequest i in Producers.Items)
         {
             if (i.MyGameObject == myGameObject)
             {

@@ -226,7 +226,7 @@ public class HUD : Singleton<HUD>
             ActivePlayer.Selection.Clear();
         }
 
-        foreach (MyGameObject myGameObject in FindObjectsByType<MyGameObject>(FindObjectsSortMode.None)) // TODO: Not very efficient. Refactor into raycast.
+        foreach (MyGameObject myGameObject in FindObjectsByType<MyGameObject>(FindObjectsSortMode.None))
         {
             if (selectionBox.Contains(Camera.main.WorldToScreenPoint(myGameObject.Position)))
             {
